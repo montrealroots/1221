@@ -183,9 +183,9 @@
  },
  "src/ui/career/WorkPane.tsx#PaymentLine": {
   "status": "Rewritten",
-  "hash": "9da9bf182f1f",
+  "hash": "3ea0a5382aa8",
   "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
+  "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/ui/career/WorkPane.tsx#STATUS": {

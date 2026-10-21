@@ -261,7 +261,7 @@ describe('G3: what a request for more refuses until it’s made', () => {
     reel(sim);
     const shots = currentOf(sim.player.pro, 'headshot')!;
     shots.made -= 3 * 365 * MS_DAY;
-    finishedJob(sim, 'strong', 'winter-ledger');
+    finishedJob(sim, 'strong', 'winter-ledger-hester');
     sim.must({ kind: 'pro.send_materials', payload: {} });
     tended(sim, at(2026, 9, 21, 12));
     sim = cross(sim);
@@ -298,7 +298,7 @@ describe('V6 and G4: a pass, an approach refused too soon or with nothing new, a
     sim = cross(sim);
     expect(run(sim, 'pro.send_materials').error).toBe('His office already looked at everything on your record, on September 17, 2026. In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral.');
     // Something new: a new credit (TEST SETUP: a second job finished), and the résumé brought up to date.
-    finishedJob(sim, 'strong', 'winter-ledger');
+    finishedJob(sim, 'strong', 'winter-ledger-hester');
     sim.must({ kind: 'pro.update_resume', payload: {} });
     expect(sendRefusal(sim, sim.player, AGENT)).toBeUndefined();
     // And a reel, so nothing his office could ask for is missing.
@@ -318,7 +318,7 @@ describe('V6 and G4: a pass, an approach refused too soon or with nothing new, a
     // approach, so its credit is one his office has already considered, and only its referral is new.
     const seed = seedWhere('agent-v6', (d) => passes(d(1, 'interest')) && d(2, 'interest') < SURE.meet);
     let { sim } = referredGraduate(seed);
-    const second = finishedJob(sim, 'strong', 'winter-ledger');
+    const second = finishedJob(sim, 'strong', 'winter-ledger-hester');
     sim.must({ kind: 'pro.update_resume', payload: {} });
     reel(sim);
     sim.must({ kind: 'pro.send_materials', payload: {} });
@@ -515,7 +515,7 @@ describe('V9 and G8: representation ends by its terms, with what it leaves owed'
     // extends. TEST SETUP: his offer on November 2 and its run, November 20 to December 20, finished, as the work loop and
     // the opportunity record leave them.
     const { sim, agreement } = represented('agent-ninety');
-    const t = projectById('winter-ledger')!;
+    const t = projectById('winter-ledger-hester')!;
     sim.player.pro!.opportunities.push({ id: 'o-run', projectId: t.id, via: 'agent', agentId: AGENT.id, status: 'booked', postedAt: at(2026, 10, 20), submitBy: at(2026, 10, 27), offer: { at: at(2026, 11, 2), until: at(2026, 11, 9), rate: 'lort-c', per: 'week', units: 4 }, resolvedAt: at(2026, 11, 3), history: [], counts: {} });
     sim.player.pro!.engagements.push({ id: 'e-run', opportunityId: 'o-run', projectId: t.id, role: t.role.part, status: 'finished', days: [{ from: at(2026, 11, 20, 10), to: at(2026, 11, 20, 18), label: t.project }, { from: at(2026, 12, 20, 19), to: at(2026, 12, 20, 22), label: t.project }], agreementId: agreement.id, agentId: AGENT.id, pay: [], history: [], counts: {}, finishedAt: at(2026, 12, 20, 22) });
     tended(sim, at(2027, 1, 31, 12));
@@ -531,14 +531,14 @@ describe('V9 and G8: representation ends by its terms, with what it leaves owed'
     expect(run(sim, 'pro.end_agreement', { how: 'no-offer' }).error).toBe('Equity’s rule lets you end it once 90 days go by with no real offer of covered work through him. You signed on September 30, 2026, so that’s from December 29, 2026.');
     expect(run(sim, 'pro.end_agreement', { how: 'too-little-work' }).error).toBe('SAG-AFTRA’s rule lets you end it this way only after 151 days, from February 28, 2027.');
     // TEST SETUP: an offer of covered work through him on November 2, as the work loop records one: the 90 days start again.
-    const offer: Opportunity = { id: 'o-1', projectId: 'winter-ledger', via: 'agent', agentId: AGENT.id, status: 'declined', postedAt: at(2026, 10, 20), submitBy: at(2026, 10, 27), offer: { at: at(2026, 11, 2), until: at(2026, 11, 9), rate: 'lort-c', per: 'week', units: 9 }, resolvedAt: at(2026, 11, 9), history: [], counts: {} };
+    const offer: Opportunity = { id: 'o-1', projectId: 'winter-ledger-hester', via: 'agent', agentId: AGENT.id, status: 'declined', postedAt: at(2026, 10, 20), submitBy: at(2026, 10, 27), offer: { at: at(2026, 11, 2), until: at(2026, 11, 9), rate: 'lort-c', per: 'week', units: 9 }, resolvedAt: at(2026, 11, 9), history: [], counts: {} };
     sim.player.pro!.opportunities.push(offer);
     tended(sim, at(2026, 12, 29, 12));
     expect(run(sim, 'pro.end_agreement', { how: 'no-offer' }).error).toBe('Equity’s rule lets you end it once 90 days go by with no real offer of covered work through him. His last came on November 2, 2026, so that’s from January 31, 2027.');
     tended(sim, at(2027, 1, 31, 12));
     sim.must({ kind: 'pro.end_agreement', payload: { how: 'no-offer' } });
     expect(agreement).toMatchObject({ status: 'ended', endedHow: 'no-offer' });
-    expect(notices(sim).at(-1)).toContain('ended on January 31, 2027, by you, under Equity’s rule, after 90 days with no real offer of covered work.');
+    expect(notices(sim).at(-1)).toContain('ended on January 31, 2027, by you, under Equity’s rule, after 90 days with no real offer of covered work through him.');
     cross(sim);
     // SAG-AFTRA's: in another life, ten days worked in the last 91 hold it; with fewer, it goes.
     const { sim: other, agreement: a2 } = represented('agent-sag');

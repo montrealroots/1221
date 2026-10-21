@@ -929,7 +929,7 @@
   ],
   "outcome": "Revised",
   "why": "Read in the walk’s plan form and an entry: the form says before Put It On that you’ll need to be in New Haven, that the clock stops when it’s time and that a clash is allowed; an entry says whether you need to be there and, for your own, that you can take it off; each refusal says the one thing to change (\"Pick a time that’s still to come.\"), and a plan missed \"costs nothing else\". The form said \"the calendar marks the clash\", where the screen above it says overlapping things are \"marked Clash\", the chip’s word.",
-  "changes": "\"and the calendar marks the clash\" became \"and the calendar marks them Clash\".",
+  "changes": "\"and the calendar marks the clash\" became \"and the calendar marks them Clash\". From 2026-10-21 (the app's second walk): a commitment that carries its own trip says it (“Getting there takes two hours each way, and the trip is part of it.”), as the meeting's notice promised.",
   "evidence": [
    {
     "kind": "walk",
@@ -942,6 +942,10 @@
    {
     "kind": "test",
     "ref": "tests/evidence-g02-life.test.ts: 'refuses a second call-off, an unknown id, the world’s own item and a plan begun, each in its words, and offers the world’s item no Call It Off'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/calendar-entry-trip.test.ts: 'says the trip each way and that it’s part of the commitment, as the meeting’s notice and the day’s look say; a commitment with no trip says none'"
    }
   ]
  },

@@ -33,6 +33,7 @@ import { type Agreement, type Opportunity, activeAgreement } from '@/engine/syst
 import {
   AUDITION_KIND, CASTING, POSTING, WORK, WORK_DAY_KIND, acceptRefusal, acceptWarning, awayAt, castingDraw, chanceOf, conditionsFor, datesOf,
   classDaysIn, clashesAt, fitOf, inSessionAt, moveRefusal, payGroups, payTermsOf, payWords, postingTimes, postingsAt, projectOf, reachOf, requestRefusal, roundToCome, submitRefusal, tapeRefusal,
+  writtenFor,
 } from '@/engine/systems/projobs';
 
 const zone = 'America/New_York';
@@ -173,6 +174,35 @@ function offerIn(seeds: readonly string[], make: (seed: string) => Simulation, m
 }
 
 describe('J1: fictional roles, posted on a schedule', () => {
+  it('posts an actor the parts written for an actor or for either, and an actress those for an actress or for either, signed and unsigned, so each is posted every project and every kind (the owner’s word, 2026-10-21)', () => {
+    const seen = (pronouns: string) => {
+      const sim = graduate(`work-written-${pronouns}`, { pronouns });
+      const monday = at(2026, 9, 7, 9);
+      const weeks = (n: number) => Array.from({ length: n }, (_, w) => postingsAt(sim, sim.player, monday + w * 7 * MS_DAY)).flat();
+      const open = weeks(104);
+      const agreement = represent(sim);
+      const through = weeks(50);
+      return { sim, agreement, open, through };
+    };
+    const actor = seen('he/him');
+    const actress = seen('she/her');
+    expect([actor.sim.player.performerTitle, actress.sim.player.performerTitle]).toEqual(['actor', 'actress']);
+    for (const { sim, agreement, open, through } of [actor, actress]) {
+      // Never a part written for someone else: every posting is the player's or either's.
+      for (const p of [...open, ...through]) expect(p.project.role.for === 'either' || p.project.role.for === sim.player.performerTitle).toBe(true);
+      // And every part that is the player's comes round, each way it can reach them.
+      const ids = (list: typeof open, via: 'open' | 'agent') => [...new Set(list.filter((p) => p.via === via).map((p) => p.project.id))].sort();
+      expect(ids(open, 'open')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, undefined) === 'open').map((t) => t.id).sort());
+      expect(ids(through, 'agent')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, agreement) === 'agent').map((t) => t.id).sort());
+    }
+    // The same projects reach each, the parts in them their own.
+    const projects = (x: typeof actor, via: 'open' | 'agent') => [...new Set([...x.open, ...x.through].filter((p) => p.via === via).map((p) => p.project.project))].sort();
+    for (const via of ['open', 'agent'] as const) expect(projects(actor, via)).toEqual(projects(actress, via));
+    expect(actor.open.map((p) => p.project.role.part)).toContain('Theo');
+    expect(actress.open.map((p) => p.project.role.part)).toContain('Ivy');
+    expect(actress.open.map((p) => p.project.role.part)).not.toContain('Theo');
+  });
+
   it('PLAYER JOURNEY: posts open roles each Monday at nine for a week, each with its project, role, dates, place and pay, and never an agent-only role to an actor nobody represents', () => {
     const sim = student('work-posting');
     tended(sim, at(2026, 11, 30, 12));
@@ -356,7 +386,9 @@ describe('the whole loop, played', () => {
   const seeds = Array.from({ length: 20 }, (_, n) => `work-loop-${n}`);
 
   it('PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice', () => {
-    let { sim, o } = offerIn(seeds, (seed) => { const s = graduate(seed); skilled(s); portfolio(s); return s; }, (x) => projectById(x.projectId)!.kind === 'student-film');
+    // An actor, as Theo is written for one (from 2026-10-21, the owner's word: a part is written for an actor, an actress or
+    // either, and only one written for the player or either is posted to them).
+    let { sim, o } = offerIn(seeds, (seed) => { const s = graduate(seed, { pronouns: 'he/him' }); skilled(s); portfolio(s); return s; }, (x) => projectById(x.projectId)!.kind === 'student-film');
     const t = projectOf(o);
     // What the player read, in order: the degree's Equity bill (the pay's, read here since the parts were merged on
     // 2026-10-21), then the casting office's answer, then the offer to decide on.
@@ -368,7 +400,7 @@ describe('the whole loop, played', () => {
     expect(o.history[4]!.words).toMatch(/^The film’s director offered you Theo in Paper Moons, a fictional student film\. The pay is deferred: .+ The work was from \w+ \d+, 2026 to \w+ \d+, 2026, in New York, and the offer stood until .+ at 5:00 PM\.$/);
     const decision = Object.values(sim.universe.decisions).find((d) => d.refId === o.id && !d.resolvedAt)!;
     expect(decision.title).toBe('An Offer For Theo');
-    expect(decision.detail).toMatch(/^The film’s director offers you Theo in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its three days of work\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);
+    expect(decision.detail).toMatch(/^The film’s director offers you Theo in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);
     expect(decision.actions.map((a) => a.label)).toEqual(['Accept The Offer', 'Decline The Offer']);
     // The audition was judged by the evaluation, kept on the work record with its band, and casting read it apart from the fit and the field.
     const round = o.rounds![0]!;
@@ -428,7 +460,8 @@ describe('a callback, a run and its nights', () => {
     let sim: Simulation | undefined;
     let id = '';
     for (const seed of seeds) {
-      let s = graduate(seed);
+      // An actor, as Tobias Marsh is written for one (from 2026-10-21).
+      let s = graduate(seed, { pronouns: 'he/him' });
       skilled(s);
       portfolio(s);
       const o = waitFor(s, (x) => projectById(x.projectId)!.kind === 'lort', 40);
@@ -629,7 +662,8 @@ describe('A3: work while enrolled, by the Bulletin', () => {
   it('PLAYER JOURNEY: work taken in term without approval brings the academic warning at its first day, its classes missed unexcused; and a second time, dismissal', () => {
     let found: { sim: Simulation; o: Opportunity } | undefined;
     for (const seed of Array.from({ length: 30 }, (_, n) => `work-unapproved-${n}`)) {
-      const sim = firstYear(seed);
+      // An actor, the life this was written on (from 2026-10-21: an actress's first in-term offer here takes one class day).
+      const sim = firstYear(seed, { pronouns: 'he/him' });
       const o = waitFor(sim, inTerm(sim, ['non-union-short', 'ultra-low-budget', 'student-film']), 10);
       if (!o) continue;
       playToOffer(sim, o);
@@ -758,7 +792,8 @@ describe('V12: a scheduling conflict, said and handled', () => {
   it('PLAYER JOURNEY: a student’s audition in person in term clashes with classes, said; Ask For Another Time finds a time clear of them or says casting has none, and going at the first time counts the day’s classes missed', () => {
     let found: { sim: Simulation; o: Opportunity } | undefined;
     for (const seed of Array.from({ length: 20 }, (_, n) => `work-class-clash-${n}`)) {
-      const sim = firstYear(seed, {}, false);
+      // An actor, as Theo is written for one (from 2026-10-21).
+      const sim = firstYear(seed, { pronouns: 'he/him' }, false);
       const o = waitFor(sim, inTerm(sim, ['student-film']), 12);
       if (!o) continue;
       sim.must({ kind: 'pro.submit', payload: { opportunityId: o.id } });

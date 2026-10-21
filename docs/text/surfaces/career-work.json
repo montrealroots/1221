@@ -11,6 +11,8 @@
    "src/engine/systems/projobs.ts#NY",
    "src/engine/systems/projobs.ts#KIND_WORDS",
    "src/engine/systems/projobs.ts#payWords",
+   "src/engine/systems/projobs.ts#DEFERRED_WHY",
+   "src/engine/systems/projobs.ts#writtenForWords",
    "src/engine/systems/projobs.ts#demandsWords",
    "src/engine/systems/projobs.ts#eligibilityProblems",
    "src/engine/systems/projobs.ts#materialProblems",
@@ -32,7 +34,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19's work loop: the roles posted each Monday, each a fictional project's, said fictional at the tab's head and in its own facts.",
-  "changes": "Written new to docs/STYLE.md: each role's project, part, what it asks, when and where with the trip, its pay (“It pays $125.00 a day for two days, an estimate.”) and its audition, each refusal under Submit Yourself in its practical words (“You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.”), and the agent-only offices named with why a player can’t reach them alone.",
+  "changes": "Written new to docs/STYLE.md: each role's project, part, what it asks, when and where with the trip, its pay (“It pays $125.00 a day for two days, an estimate.”) and its audition, each refusal under Submit Yourself in its practical words (“You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.”), and the agent-only offices named with why a player can’t reach them alone. From 2026-10-21, at the owner's word, What It Asks says first who the part is written for (“Written for an actress.”), and only a part written for the player or for either is posted to them; the agent-only offices are named once a project. The same day a student film's pay said why it's never paid in one sentence (`DEFERRED_WHY`), which Booked Work and the Work tab say too.",
   "evidence": [
    {
     "kind": "test",
@@ -41,6 +43,10 @@
    {
     "kind": "test",
     "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term'"
    }
   ]
  },
@@ -216,7 +222,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19: booked work with its days and the pay promised, not yet paid, and each consequence of a missed day said as the project states it.",
-  "changes": "Written new: the days to come (“Each stops the clock: press Go to be there.”), the pay promised (“It’s promised, not yet paid.”), the written warning and the understudy, the replacement with what’s still paid, the wrap and the release with the reel. From 2026-10-21 (brief 19's app walk): one week's promised pay is said for one week, where it said over one week, each week due.",
+  "changes": "Written new: the days to come (“Each stops the clock: press Go to be there.”), the pay promised (“It’s promised, not yet paid.”), the written warning and the understudy, the replacement with what’s still paid, the wrap and the release with the reel. From 2026-10-21 (brief 19's app walk): one week's promised pay is said for one week, where it said over one week, each week due. From 2026-10-21 (the app's second walk): a student film's deferred pay says why it's never paid, in the offer's words, where it said only that nothing is paid.",
   "evidence": [
    {
     "kind": "test",
@@ -229,6 +235,10 @@
    {
     "kind": "test",
     "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a student film accepted, Booked Work says why its deferred pay is never paid, in the offer’s own words (the app’s second walk, 2026-10-21)'"
    }
   ]
  },

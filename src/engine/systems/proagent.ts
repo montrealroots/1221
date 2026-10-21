@@ -720,7 +720,10 @@ export type EndHow = Exclude<EndedHow, 'term'>;
  * employed on covered work (`employedDays`), and not while working (Equity's, S29 and S27: "You may not terminate if you
  * are currently employed"); after 151 days, with fewer than ten
  * days of covered work in the last 91 (SAG-AFTRA's, S2). Equity's rule asks the offer to be for four weeks at the
- * actor's usual salary: the agreement's own words say a real offer of covered work, and the game counts any.
+ * actor's usual salary: the agreement's own words say a real offer of covered work through him, and the game counts any
+ * he secured. Until 2026-10-21 its Ending It term and the ending's record left out "through him", which the refusal and
+ * the guide said, so the term promised more than the button read (the app's second walk): an offer on the actor's own
+ * submission, passed on by him, doesn't count, as S29's "the Agent fails to secure" has it.
  */
 export function endRefusal(sim: Simulation, person: Person, agent: Agent, how: EndHow): string | undefined {
   const a = agreementInForce(person, agent, sim.now);
@@ -758,7 +761,7 @@ export const TEN = AGREEMENT.sag.fewerThanDays === 10 ? 'ten' : countWords(AGREE
 const ENDED_WORDS: Readonly<Record<EndedHow, string>> = {
   term: 'at the end of its year',
   agreement: 'by agreement',
-  'no-offer': `by you, under Equity’s rule, after ${AGREEMENT.noOfferDays} days with no real offer of covered work`,
+  'no-offer': `by you, under Equity’s rule, after ${AGREEMENT.noOfferDays} days with no real offer of covered work through him`,
   'too-little-work': `by you, under SAG-AFTRA’s rule, with fewer than ${TEN} days of covered work in the last ${AGREEMENT.sag.windowDays}`,
 };
 

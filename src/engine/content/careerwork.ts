@@ -20,7 +20,7 @@
 
 import type { Family } from './genres';
 import type { Skill } from './school';
-import type { PartSize } from './plays';
+import type { PartFor, PartSize } from './plays';
 
 export type Basis = 'verified' | 'assumption';
 
@@ -171,6 +171,14 @@ export interface ProjectTemplate {
   role: {
     part: string;
     size: RoleSize;
+    /**
+     * Who the part is written for, as the School's plays say it (`content/plays.ts`): an actor, an actress, or either, and
+     * only a part written for the player or for either is posted to them (`writtenFor`). From 2026-10-21, at the owner's
+     * word ("There should be gender neutral and different parts for each genders. We need versatility always."): until
+     * then nothing read it, and the breakdowns that named a sister, a brother or two fiancées went to anyone, so an
+     * actress was offered Theo, "an older brother", by the app's second walk.
+     */
+    for: PartFor;
     /** The part, said as a breakdown says it. */
     about: string;
     /** What it asks, for the judge (`content/tasks.ts`): the task, its families and the techniques it reads. */
@@ -204,6 +212,12 @@ export interface ProjectTemplate {
 /**
  * Seven fictional projects, one of each kind the design names. Every name, company, casting office and schedule here is
  * invented; the schedules' lengths are assumed. Each one's pay is a rate above, verified or assumed as it says.
+ *
+ * Eleven parts in them (from 2026-10-21, the owner's word): three written for either, and four each for an actor and an
+ * actress, so each sees all seven projects and each kind as often. Where a project's part is written for one, a second
+ * part in it is written for the other, its own person in the same story, not the first one renamed, and named as no
+ * classmate can be (`school.ts`'s given names): Callum beside Nell, Hester Vane beside Tobias Marsh, Ferris beside Wren,
+ * Ivy beside Theo. Until then there were seven parts, one a project.
  */
 export const PROJECTS: readonly ProjectTemplate[] = [
   {
@@ -211,7 +225,19 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'A House On Calder Street', company: 'Marrow Lane Theater Company', casting: 'Pennick Casting',
     medium: 'stage', genres: ['domestic_drama', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a 199-seat theater in Manhattan' },
-    role: { part: 'Nell', size: 'supporting', about: 'The younger sister, home for the first time in six years, who says what the family won’t.', task: 'performance', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Nell', size: 'supporting', for: 'actress', about: 'The younger sister, home for the first time in six years, who says what the family won’t.', task: 'performance', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
+    union: 'equity', contract: 'Equity Off-Broadway',
+    requirements: { ages: [22, 32], sends: ['headshot', 'resume'] },
+    stages: { audition: 'in-person', callback: true },
+    schedule: { kind: 'run', rehearsalWeeks: 4, performanceWeeks: 6 },
+    access: { agent: true, open: false }, pay: 'off-broadway',
+  },
+  {
+    id: 'calder-street-callum', kind: 'off-broadway', fictional: true,
+    project: 'A House On Calder Street', company: 'Marrow Lane Theater Company', casting: 'Pennick Casting',
+    medium: 'stage', genres: ['domestic_drama', 'drama'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a 199-seat theater in Manhattan' },
+    role: { part: 'Callum', size: 'supporting', for: 'actor', about: 'The older brother who stayed, who has kept the house going and the family’s secret better than anyone.', task: 'performance', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
     union: 'equity', contract: 'Equity Off-Broadway',
     requirements: { ages: [22, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
@@ -225,7 +251,19 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     // In Providence until 2026-10-21, a town the gazetteer doesn't hold, so the tax return couldn't read where the work
     // was done; Hudson, New York, is held, and its work is taxed as a nonresident's New York wages like the city's.
     place: { city: 'Hudson', cityId: 'us-ny-hudson', venue: 'the company’s main stage' },
-    role: { part: 'Tobias Marsh', size: 'lead', about: 'A young clerk who keeps two sets of books and two fiancées, and loses track of both in one night.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
+    role: { part: 'Tobias Marsh', size: 'lead', for: 'actor', about: 'A young clerk who keeps two sets of books and two fiancées, and loses track of both in one night.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
+    union: 'equity', contract: 'Equity LORT C',
+    requirements: { ages: [22, 30], sends: ['headshot', 'resume'] },
+    stages: { audition: 'in-person', callback: true },
+    schedule: { kind: 'run', rehearsalWeeks: 4, performanceWeeks: 5 },
+    access: { agent: true, open: 'equity-members' }, pay: 'lort-c',
+  },
+  {
+    id: 'winter-ledger-hester', kind: 'lort', fictional: true,
+    project: 'The Winter Ledger', company: 'Harrow Point Repertory Theater', casting: 'Ostrander Vale Casting',
+    medium: 'stage', genres: ['comedy', 'farce'],
+    place: { city: 'Hudson', cityId: 'us-ny-hudson', venue: 'the company’s main stage' },
+    role: { part: 'Hester Vane', size: 'lead', for: 'actress', about: 'A young widow who runs the inn where both fiancées arrive on the same night, and tells each of the three a different lie to keep the peace.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
     union: 'equity', contract: 'Equity LORT C',
     requirements: { ages: [22, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
@@ -237,7 +275,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'The Calloway Files', company: 'Bright Harbor Television', casting: 'Kettering Casting',
     medium: 'television', genres: ['police_procedural', 'crime'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a studio in Queens' },
-    role: { part: 'Desk Clerk', size: 'co-star', about: 'A night clerk at a hotel who saw the victim leave and lies about when.', task: 'camera', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
+    role: { part: 'Desk Clerk', size: 'co-star', for: 'either', about: 'A night clerk at a hotel who saw the victim leave and lies about when.', task: 'camera', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
     requirements: { ages: [22, 35], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: false },
@@ -249,7 +287,19 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'Gull Season', company: 'Tern Island Pictures', casting: 'Quillon Casting',
     medium: 'film', genres: ['psychological_thriller', 'thriller'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'locations on Long Island' },
-    role: { part: 'Wren', size: 'supporting', about: 'A ferry deckhand who befriends the new arrival and knows more about the drowning than she says.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Wren', size: 'supporting', for: 'actress', about: 'A ferry deckhand who befriends the new arrival and knows more about the drowning than she says.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Low Budget Theatrical',
+    requirements: { ages: [22, 34], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 6 },
+    access: { agent: true, open: false }, pay: 'low-budget-day',
+  },
+  {
+    id: 'gull-season-ferris', kind: 'low-budget', fictional: true,
+    project: 'Gull Season', company: 'Tern Island Pictures', casting: 'Quillon Casting',
+    medium: 'film', genres: ['psychological_thriller', 'thriller'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'locations on Long Island' },
+    role: { part: 'Ferris', size: 'supporting', for: 'actor', about: 'The ferry’s pilot, who pulled the body from the water and has told the police three different stories about it.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Low Budget Theatrical',
     requirements: { ages: [22, 34], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
@@ -261,7 +311,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'Static On Route 9', company: 'Dead Air Films', casting: 'Brisbane Hall Casting',
     medium: 'film', genres: ['psychological_horror', 'horror'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a motel upstate' },
-    role: { part: 'Jess', size: 'lead', about: 'One of two night-shift radio hosts who start hearing their own voices call in.', task: 'camera', families: ['horror'], techniques: { screen: 2, emotion: 1 }, stakes: 2 },
+    role: { part: 'Jess', size: 'lead', for: 'either', about: 'One of two night-shift radio hosts who start hearing their own voices call in.', task: 'camera', families: ['horror'], techniques: { screen: 2, emotion: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Ultra Low Budget',
     requirements: { ages: [21, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
@@ -273,7 +323,19 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'Paper Moons', company: 'a graduate film program’s thesis production', casting: 'the film’s director',
     medium: 'film', genres: ['coming_of_age', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an apartment in Brooklyn' },
-    role: { part: 'Theo', size: 'lead', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
+    role: { part: 'Theo', size: 'lead', for: 'actor', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Student Film',
+    requirements: { ages: [21, 30], sends: ['headshot', 'resume'] },
+    stages: { audition: 'in-person', callback: false },
+    schedule: { kind: 'shoot', days: 3 },
+    access: { agent: false, open: 'anyone' }, pay: 'student-film',
+  },
+  {
+    id: 'paper-moons-ivy', kind: 'student-film', fictional: true,
+    project: 'Paper Moons', company: 'a graduate film program’s thesis production', casting: 'the film’s director',
+    medium: 'film', genres: ['coming_of_age', 'drama'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an apartment in Brooklyn' },
+    role: { part: 'Ivy', size: 'lead', for: 'actress', about: 'The sister who stayed home, who learns first that her brother isn’t going back and has the summer to decide whether to say so.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Student Film',
     requirements: { ages: [21, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: false },
@@ -285,7 +347,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'Last Bus To Eastview', company: 'Ferrous Pictures', casting: 'the producers',
     medium: 'film', genres: ['romantic_comedy'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a bus depot in the Bronx' },
-    role: { part: 'Sam', size: 'lead', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', task: 'camera', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
+    role: { part: 'Sam', size: 'lead', for: 'either', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', task: 'camera', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
     union: 'none', contract: 'Non-Union',
     requirements: { ages: [21, 35], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
@@ -365,7 +427,7 @@ export const AGREEMENT_TERMS: readonly AgreementTerm[] = [
   { id: 'responsibilities', heading: 'What The Agent Does', words: 'Looks for and submits you for covered work, passes on every offer in writing, negotiates your terms, and collects your pay into the agency’s client trust account.', basis: 'verified', sources: [AGENT_ROLE, EQUITY_FORM] },
   { id: 'actor', heading: 'What You Do', words: 'Tell the agent when you’re available, keep the appointments made for you, and don’t take covered work without them.', basis: 'simulation' },
   { id: 'payment', heading: 'How Pay Reaches You', words: 'Pay for covered work goes to the agency’s client trust account, and comes on to you within three business days, less commission.', basis: 'simulation', sources: [TRUST] },
-  { id: 'termination', heading: 'Ending It', words: 'Either of you can end it by agreement at any time. You can end it if 90 days pass with no real offer of covered work, or, after 151 days, if you’ve had fewer than ten days of covered work in the last 91. Otherwise it ends when the year is up.', basis: 'verified', sources: [EQUITY_ENDS, SAG_ENDS] },
+  { id: 'termination', heading: 'Ending It', words: 'Either of you can end it by agreement at any time. You can end it if 90 days pass with no real offer of covered work through him, or, after 151 days, if you’ve had fewer than ten days of covered work in the last 91. Otherwise it ends when the year is up.', basis: 'verified', sources: [EQUITY_ENDS, SAG_ENDS] },
   { id: 'continuing', heading: 'What You Still Owe After It Ends', words: 'Commission stays owed on contracts you made while it ran, and on their renewals, whoever represents you when you’re paid. An offer the agent passed on in the term that you accept within 60 days after it ends is owed too.', basis: 'verified', sources: [EQUITY_ONGOING, EQUITY_TAIL] },
   { id: 'offer', heading: 'How Long The Offer Stands', words: 'Fourteen days. After that it lapses.', basis: 'simulation' },
 ];

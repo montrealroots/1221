@@ -102,7 +102,7 @@ describe('a payment promised and received once', () => {
 
   it('shows deferred pay as deferred and never posts it: a student film', () => {
     const sim = graduate('pay-deferred');
-    const e = booked(sim, { project: 'paper-moons', days: [at(2026, 9, 14), at(2026, 9, 15), at(2026, 9, 16)], amount: 0, per: 'day' });
+    const e = booked(sim, { project: 'paper-moons-ivy', days: [at(2026, 9, 14), at(2026, 9, 15), at(2026, 9, 16)], amount: 0, per: 'day' });
     expect(schedulePay(sim, sim.player, e)).toEqual({ scheduled: 0, deferred: 1 });
     const n = sim.universe.transactions.length;
     tended(sim, at(2026, 10, 1));

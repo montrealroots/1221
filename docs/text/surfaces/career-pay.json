@@ -25,7 +25,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19's pay: the Work tab came with the engagements' pay, and nothing on it said anything before.",
-  "changes": "Written new to docs/STYLE.md: each payment in a sentence with whom it's from and when it's due (“The week of September 20, 2026: $2,822.60 promised by Bright Harbor Television, due October 1, 2026. It isn’t paid until then, so it isn’t in your accounts yet.”), the figures received as posted, the commission on a line of its own and its reason from the rule that takes it (“Commission expected: $256.60. $256.60, what’s paid over scale ($2,566.00), so you keep scale.”), the empty state naming what appears there, and the estimates under Sources And Estimates. From 2026-10-21 (brief 19's app walk, read with the life docs/verification/career-2026-10-20/app/make-saves.ts plays): commission over scale is said after its amount without the amount again, and an engagement's days are counted in words under ten, as the Opportunities tab counts the same days.",
+  "changes": "Written new to docs/STYLE.md: each payment in a sentence with whom it's from and when it's due (“The week of September 20, 2026: $2,822.60 promised by Bright Harbor Television, due October 1, 2026. It isn’t paid until then, so it isn’t in your accounts yet.”), the figures received as posted, the commission on a line of its own and its reason from the rule that takes it (“Commission expected: $256.60. $256.60, what’s paid over scale ($2,566.00), so you keep scale.”), the empty state naming what appears there, and the estimates under Sources And Estimates. From 2026-10-21 (brief 19's app walk, read with the life docs/verification/career-2026-10-20/app/make-saves.ts plays): commission over scale is said after its amount without the amount again, and an engagement's days are counted in words under ten, as the Opportunities tab counts the same days. From 2026-10-21 (the app's second walk): a student film's week reads deferred with why it's never paid, in the offer's words, where it said “$0.00 promised” and “never paid”.",
   "evidence": [
    {
     "kind": "test",
@@ -46,6 +46,10 @@
    {
     "kind": "transcript",
     "ref": "docs/verification/career-2026-10-20/app/make-saves.log"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/propay-screen.test.ts: 'PLAYER JOURNEY: a student film’s week reads deferred, with why, in the words the offer said, and nothing promised, owed or paid (the app’s second walk, 2026-10-21)'"
    }
   ]
  },

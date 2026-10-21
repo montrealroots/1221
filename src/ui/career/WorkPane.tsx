@@ -21,7 +21,7 @@ import type { Person } from '@/engine/domain/model';
 import { UNIONS } from '@/engine/content/careerwork';
 import { finished, type Engagement, type ProPayment, type UnionBill } from '@/engine/systems/pro';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { counted } from '@/engine/systems/projobs';
+import { DEFERRED_WHY, counted } from '@/engine/systems/projobs';
 import {
   commissionOn, joinSagRefusal, owedAfterEnding, placeKnown, projectOf, sagJoinUsd, sagMembershipFrom, weekWords, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, DUES_KIND,
 } from '@/engine/systems/propay';
@@ -54,7 +54,9 @@ function PaymentLine({ person, e, p }: { person: Person; e: Engagement; p: ProPa
   const project = projectOf(e);
   const from = project?.company ?? 'the production';
   const promised = `${weekWords(p, zone)[0]!.toUpperCase()}${weekWords(p, zone).slice(1)}: ${formatMoney(p.promised, p.currency)} promised by ${from}`;
-  if (p.deferred) return <li>{`${promised}, deferred. SAG-AFTRA’s Student Film Agreement defers the pay, so it’s shown here and never paid.`}</li>;
+  // One sentence for deferred pay wherever it's said (`DEFERRED_WHY`, from 2026-10-21): until then this said "$0.00
+  // promised by" and "never paid" where the offer said it pays only if the film earns money later.
+  if (p.deferred) return <li>{`${weekWords(p, zone)[0]!.toUpperCase()}${weekWords(p, zone).slice(1)}: deferred by ${from}. SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it.`}</li>;
   const r = p.received;
   if (r) {
     return (

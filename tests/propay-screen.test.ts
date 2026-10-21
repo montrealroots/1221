@@ -17,6 +17,7 @@ import { READ_KIND } from '@/engine/world/tutorial';
 import { RATES } from '@/engine/content/careerwork';
 import { activity } from '@/engine/systems/statements';
 import { negotiatedAmount, schedulePay } from '@/engine/systems/propay';
+import { DEFERRED_WHY } from '@/engine/systems/projobs';
 import { MS_DAY, formatDate } from '@/engine/core/time';
 import { f1Of, optRunsOut } from '@/engine/systems/permission';
 import { documentsOf } from '@/engine/systems/documents';
@@ -103,6 +104,16 @@ describe('the Work tab', () => {
     const lines = activity(sim, account, at(2026, 10, 1), sim.now).lines.filter((l) => l.memo.includes('Calloway'));
     expect(lines.map((l) => [l.memo, l.amount])).toEqual([['The Calloway Files, the week of September 20, 2026: paid on from Halberd Talent’s client trust account, less $256.60 commission', r.net]]);
   }, 90_000);
+
+  it('PLAYER JOURNEY: a student film’s week reads deferred, with why, in the words the offer said, and nothing promised, owed or paid (the app’s second walk, 2026-10-21)', () => {
+    const sim = graduate('screen-work-deferred');
+    const e = booked(sim, { project: 'paper-moons-ivy', days: [at(2026, 9, 21), at(2026, 9, 22), at(2026, 9, 23)], amount: 0, per: 'day' });
+    expect(schedulePay(sim, sim.player, e)).toEqual({ scheduled: 0, deferred: 1 });
+    const { shown } = drawn(sim);
+    expect(shown).toContain('Ivy, Paper Moons');
+    expect(shown).toContain(`The week of September 20, 2026: deferred by a graduate film program’s thesis production. SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it.`);
+    expect(shown).not.toMatch(/never paid|\$0\.00 promised/);
+  });
 
   it('PLAYER JOURNEY: once the agreement has ended, Still Owed After An Agreement Ended lists the payments still to come with the commission each carries', () => {
     const sim = graduate('screen-work-owed');

@@ -91,9 +91,9 @@
  },
  "src/engine/content/careerwork.ts#AGREEMENT_TERMS [termination]": {
   "status": "Rewritten And Verified",
-  "hash": "d13dbb48c694",
+  "hash": "25042794eda5",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Rewritten 2026-10-21 to say 'through him' as the refusal and the guide say it (the app's second walk), to docs/STYLE.md; read in tests/pro-core.test.ts ('says Equity’s 90 days one way…') and tests/journey-agent.test.ts (the ending's notice)"
  },
  "src/engine/content/careerwork.ts#AGREEMENT_TERMS [territory]": {
   "status": "Rewritten And Verified",
@@ -149,6 +149,12 @@
   "on": "2026-10-21",
   "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
  },
+ "src/engine/content/careerwork.ts#PROJECTS [calder-street-callum]": {
+  "status": "Rewritten And Verified",
+  "hash": "28e0b0aa235d",
+  "on": "2026-10-21",
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
  "src/engine/content/careerwork.ts#PROJECTS [calder-street]": {
   "status": "Rewritten And Verified",
   "hash": "28e0b0aa235d",
@@ -163,9 +169,9 @@
  },
  "src/engine/content/careerwork.ts#PROJECTS [camera]": {
   "status": "Rewritten And Verified",
-  "hash": "82e987eddb94",
+  "hash": "e40db40227dd",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/careerwork.ts#PROJECTS [eastview]": {
   "status": "Rewritten And Verified",
@@ -173,11 +179,23 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/content/careerwork.ts#PROJECTS [gull-season-ferris]": {
+  "status": "Rewritten And Verified",
+  "hash": "ecd839d334f4",
+  "on": "2026-10-21",
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
  "src/engine/content/careerwork.ts#PROJECTS [gull-season]": {
   "status": "Rewritten And Verified",
   "hash": "ecd839d334f4",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [paper-moons-ivy]": {
+  "status": "Rewritten And Verified",
+  "hash": "1ea6c461efbe",
+  "on": "2026-10-21",
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/careerwork.ts#PROJECTS [paper-moons]": {
   "status": "Rewritten And Verified",
@@ -187,15 +205,21 @@
  },
  "src/engine/content/careerwork.ts#PROJECTS [performance]": {
   "status": "Rewritten And Verified",
-  "hash": "e31ee110522b",
+  "hash": "c6b14128900e",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/careerwork.ts#PROJECTS [route-nine]": {
   "status": "Rewritten And Verified",
   "hash": "1b56c69418be",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [winter-ledger-hester]": {
+  "status": "Rewritten And Verified",
+  "hash": "6340861f8b86",
+  "on": "2026-10-21",
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/careerwork.ts#PROJECTS [winter-ledger]": {
   "status": "Rewritten And Verified",

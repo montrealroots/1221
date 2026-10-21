@@ -149,7 +149,7 @@ describe('G2: a referral’s rules', () => {
     portfolio(sim);
     const working = finishedJob(sim, 'working');
     const unjudged = finishedJob(sim, null, 'eastview');
-    const live = finishedJob(sim, 'exceptional', 'winter-ledger');
+    const live = finishedJob(sim, 'exceptional', 'winter-ledger-hester');
     live.status = 'working';
     expect(run(sim, 'pro.ask_referral', { engagementId: working.id }).error).toBe('Check your materials first. A referral passes them on.');
     sim.must({ kind: 'pro.update_resume', payload: {} });

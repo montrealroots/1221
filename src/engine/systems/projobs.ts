@@ -293,11 +293,19 @@ export function payTermsOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): PayT
 }
 
 /**
+ * Why deferred pay is never paid, in the one sentence the offer, Booked Work and the Work tab all say. From 2026-10-21
+ * (the app's second walk): until then the offer said a student film pays "only if it earns money later", Booked Work
+ * "nothing is paid for it" and the Work tab "never paid", and the first and last can't both be true of a game in which
+ * no film earns anything later.
+ */
+export const DEFERRED_WHY = 'a student film pays its actors only if it earns money later, and no film in the game does';
+
+/**
  * The pay in a sentence: "It pays $1,283.00 a day for two days, the SAG-AFTRA Day Performer minimum." An offer's own
  * amount, where it's more than the scale (the pay's `negotiatedAmount`, at the offer), is said with the scale it's above.
  */
 export function payWords(terms: PayTerms, amount: Money | undefined = terms.each): string {
-  if (terms.deferred) return `The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its ${counted(terms.units, terms.per)} of work.`;
+  if (terms.deferred) return `The pay is deferred: ${DEFERRED_WHY}, so nothing is paid for its ${counted(terms.units, terms.per)} of work.`;
   const basis = terms.rate.basis === 'verified' ? `the ${/Minimum$/.test(terms.rate.label) ? terms.rate.label : `${terms.rate.label} minimum`}` : 'an estimate';
   const over = amount !== undefined && terms.each !== undefined && amount > terms.each;
   return `It pays ${formatMoney((amount ?? terms.each)!, 'USD')} a ${terms.per} for ${counted(terms.units, terms.per)}, ${over ? `above ${basis} of ${formatMoney(terms.each!, 'USD')}` : basis}.`;
@@ -392,15 +400,27 @@ export function reachOf(t: ProjectTemplate, agreement: Agreement | undefined): '
 }
 
 /**
+ * Whether a part is written for the actor: for either, or for an actor or an actress as their title says, as the
+ * School casts its plays (`coveredPart`). From 2026-10-21, at the owner's word; until then every part went to anyone.
+ */
+export const writtenFor = (t: ProjectTemplate, person: Person): boolean => t.role.for === 'either' || t.role.for === person.performerTitle;
+
+/** "Written for an actress.": who a part is written for, as a breakdown says it. */
+export const writtenForWords = (t: ProjectTemplate): string => `Written for ${t.role.for === 'either' ? 'an actor or an actress' : `an ${t.role.for}`}.`;
+
+/**
  * What a week's postings bring the actor (the decider `pro.posting`): each project drawn at its chance, its own draw
  * by the week and the way it comes, and none posted again within `POSTING.againDays` of its last. Reads the
- * representation in force that Monday and the postings the record holds; draws nothing else.
+ * representation in force that Monday, who each part is written for (`writtenFor`) and the postings the record holds;
+ * draws nothing else. A part written for someone else isn't drawn for, and each project's draw is its own, so leaving
+ * one out moves no other's.
  */
 export function postingsAt(sim: Simulation, person: Person, at: Instant): { project: ProjectTemplate; via: 'agent' | 'open' }[] {
   const agreement = activeAgreement(person, at);
   const week = dateKey(at, NY);
   const out: { project: ProjectTemplate; via: 'agent' | 'open' }[] = [];
   for (const t of PROJECTS) {
+    if (!writtenFor(t, person)) continue;
     const via = reachOf(t, agreement);
     if (!via) continue;
     if (person.pro?.opportunities.some((o) => o.projectId === t.id && o.postedAt < at && at - o.postedAt < POSTING.againDays * MS_DAY)) continue;

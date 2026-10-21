@@ -202,7 +202,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19’s agent: nothing on this surface said anything before.",
-  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed. From 2026-10-21 (brief 19's app walk): accepting, declining and a lapse are said in History With His Office without the date their line already gives, and the meeting kept names Stewart Talent's office once, not his office and its office.",
+  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed. From 2026-10-21 (brief 19's app walk): accepting, declining and a lapse are said in History With His Office without the date their line already gives, and the meeting kept names Stewart Talent's office once, not his office and its office. From 2026-10-21 (the app's second walk): Equity's ending says “no real offer of covered work through him”, as the refusal and the guide say it.",
   "evidence": [
    {
     "kind": "test",
@@ -215,6 +215,10 @@
    {
     "kind": "transcript",
     "ref": "docs/verification/career-2026-10-20/app/make-saves.log"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him'"
    }
   ]
  },

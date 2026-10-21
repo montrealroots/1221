@@ -10,6 +10,7 @@ import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CA
 import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
 import { CITIES } from '@/engine/content/geography';
+import { tripWords } from '@/engine/systems/proagent';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
 import { canPlan, dayLabel, firstFreeSlot, hiddenIn, holidayChips, openSlots, roomFor, standingIn, stillStands } from './cell';
 
@@ -343,13 +344,17 @@ function statusOf(entry: CalendarEntry): string {
  * nothing else on the calendar can be argued with — a holiday is a country's
  * and a world event belongs to the clock.
  */
-function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
+export function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => void }) {
   const { sim, run, refresh } = useGame();
   const legend = LEGEND_BY_CATEGORY[entry.category];
   const status = statusOf(entry);
   const city = entry.locationId ? CITIES.get(entry.locationId)?.name : undefined;
   const [error, setError] = useState<string | undefined>();
   const mine = sim.timeline.get(entry.id)?.kind === PLAN_KIND && entry.status === 'pending';
+  // The trip a commitment carries inside its time (a career meeting, audition or work day), said as the day's look says
+  // it. From 2026-10-21 (the app's second walk): until then the meeting's notice said it was "on your calendar with two
+  // hours to get there" and the entry the Calendar opened said nothing of the trip.
+  const trip = sim.timeline.get(entry.id)?.travelMinutes;
 
   const callOff = () => {
     const result = run<PlanResult>('calendar.cancel', { entryId: entry.id });
@@ -384,7 +389,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         {entry.status === 'observance'
           ? 'An observance. It’s on the calendar so you know, and there’s nothing for you to do about it.'
           : entry.requiresPlayer
-            ? 'You need to be there. The clock stops when it’s time, so you can go.'
+            ? `You need to be there. The clock stops when it’s time, so you can go.${trip ? ` Getting there takes ${tripWords(trip)} each way, and the trip is part of it.` : ''}`
             : 'It happens on its own when the clock reaches it.'}
         {mine && ' You put it there, so you can take it off again.'}
       </p>

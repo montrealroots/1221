@@ -601,26 +601,33 @@ defineDecider<{ sim: Simulation; year: number }, string>({
 // Professional work (from 2026-10-21, brief 19's J1 and J5, `systems/projobs.ts`)
 // ---------------------------------------------------------------------------
 
-/** TEST SETUP for the sweep: an agreement signed a day before and running a year, or none (`activeAgreement` reads it). */
+/**
+ * TEST SETUP for the sweep: an agreement signed a day before and running a year, or none (`activeAgreement` reads it).
+ * With the agent in the data: until 2026-10-21 it named 'jordan-parente', which the fictional agent's swap that day left
+ * naming nobody, so no project was in its department's scope and `represented` was swept to no effect (the suite found it).
+ */
 function represent(sim: Simulation, on: boolean): void {
   const pro = sim.player.pro!;
-  pro.agreements = on ? [{ id: 'sweep-agreement', agentId: 'jordan-parente', offeredAt: sim.now - 2 * MS_DAY, standsUntil: sim.now, status: 'accepted', terms: [], signedAt: sim.now - MS_DAY, endsAt: sim.now + 400 * MS_DAY }] : [];
+  pro.agreements = on ? [{ id: 'sweep-agreement', agentId: AGENTS[0]!.id, offeredAt: sim.now - 2 * MS_DAY, standsUntil: sim.now, status: 'accepted', terms: [], signedAt: sim.now - MS_DAY, endsAt: sim.now + 400 * MS_DAY }] : [];
 }
 
-defineDecider<{ sim: Simulation; week: number; represented: number }, string>({
+defineDecider<{ sim: Simulation; week: number; represented: number; title: number }, string>({
   id: 'pro.posting',
-  decides: 'Which fictional projects post a role to the actor in a week, openly or through an agent, each at its chance (POSTING).',
+  decides: 'Which fictional projects post a role to the actor in a week, openly or through an agent, each at its chance (POSTING), and only parts written for the actor or for either.',
   drawnIn: 'src/engine/systems/projobs.ts',
   reads: {
     // Which weeks: each Monday draws its own.
     week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
     // Represented or not: an agent's breakdowns bring roles open postings never do.
     represented: (o, t) => ({ ...o, represented: Math.round(t) }),
+    // An actor or an actress (from 2026-10-21, the owner's word): only a part written for them or for either is posted.
+    title: (o, t) => ({ ...o, title: Math.round(t) }),
     world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
   },
-  sample: (seed) => ({ sim: atYale(seed), week: seed * 3, represented: seed % 2 }),
-  decide: ({ sim, week, represented }) => {
+  sample: (seed) => ({ sim: atYale(seed), week: seed * 3, represented: seed % 2, title: (seed >> 1) % 2 }),
+  decide: ({ sim, week, represented, title }) => {
     represent(sim, represented === 1);
+    sim.player.performerTitle = title === 1 ? 'actress' : 'actor';
     return Array.from({ length: 12 }, (_, n) => postingsAt(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((x) => `${x.project.id}:${x.via}`).join('+') || '-').join(' ');
   },
 });

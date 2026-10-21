@@ -90,6 +90,13 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#DEFERRED_WHY": {
+  "status": "Rewritten",
+  "hash": "b0591c241c58",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/projobs.ts#demandsWords": {
   "status": "Rewritten",
   "hash": "726cb274e87a",
@@ -218,9 +225,9 @@
  },
  "src/engine/systems/projobs.ts#payWords": {
   "status": "Rewritten",
-  "hash": "7270e2b11cd5",
+  "hash": "eb30d33b152d",
   "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21: the offer is left at the rate's scale, the agreement's scale plus ten passing to the pay's negotiatedAmount, and an amount above the scale is said with the minimum it's above; read where the player meets it in tests/pro-work.test.ts (J3's offer, V11's) and tests/pro-opportunities-screen.test.ts (Pay, and an offer above the scale), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/projobs.ts#post [opportunity]": {
@@ -370,11 +377,18 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#writtenForWords": {
+  "status": "Rewritten",
+  "hash": "2bf6b0e3cb9a",
+  "on": "2026-10-21",
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/career/OpportunitiesPane.tsx#BookedCard": {
   "status": "Rewritten",
-  "hash": "8fb88efa9f00",
+  "hash": "01269ca10bf8",
   "on": "2026-10-21",
-  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
+  "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/ui/career/OpportunitiesPane.tsx#History": {
@@ -428,9 +442,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
   "status": "Rewritten",
-  "hash": "7cea043996ba",
+  "hash": "2f64bdbe4195",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {

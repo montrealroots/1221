@@ -50,9 +50,9 @@
  },
  "src/engine/systems/proagent.ts#ENDED_WORDS": {
   "status": "Rewritten",
-  "hash": "afff6fef42f0",
+  "hash": "c48da79af02b",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Rewritten 2026-10-21 to say 'through him' as the refusal and the guide say it (the app's second walk), to docs/STYLE.md; read in tests/pro-core.test.ts ('says Equity’s 90 days one way…') and tests/journey-agent.test.ts (the ending's notice)",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proagent.ts#endRefusal": {

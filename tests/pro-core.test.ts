@@ -459,8 +459,36 @@ describe('the agent and the work, as data', () => {
     expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent|Ashgrove|thomas-ashgrove|Halberd/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
+  it('writes each part for an actor, an actress or either, three for either and four for each, so an actor and an actress each have a part in all seven projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
+    const forWhom = (title: 'actor' | 'actress') => PROJECTS.filter((p) => p.role.for === 'either' || p.role.for === title);
+    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(3).fill('either'), ...Array(4).fill('actor'), ...Array(4).fill('actress')].sort());
+    const actor = forWhom('actor');
+    const actress = forWhom('actress');
+    // Each sees every project once, and the same kinds, sizes, ways in and pay: the counterpart is the same work for the other.
+    for (const seen of [actor, actress]) expect(seen.map((p) => p.project).sort()).toEqual([...new Set(PROJECTS.map((p) => p.project))].sort());
+    const shape = (p: (typeof PROJECTS)[number]) => JSON.stringify([p.project, p.kind, p.role.size, p.role.task, p.role.stakes, p.access, p.pay, p.stages, p.schedule, p.place]);
+    expect(actor.map(shape).sort()).toEqual(actress.map(shape).sort());
+    // A part written for one is its own person, not the other renamed: its own name and its own breakdown.
+    for (const p of PROJECTS.filter((x) => x.role.for !== 'either')) {
+      const twin = PROJECTS.find((x) => x.project === p.project && x.id !== p.id)!;
+      expect(twin.role.for).toBe(p.role.for === 'actor' ? 'actress' : 'actor');
+      expect(twin.role.part).not.toBe(p.role.part);
+      expect(twin.role.about).not.toBe(p.role.about);
+    }
+    // A part for either says nobody's sex; the four that name it say the one they're written for.
+    for (const p of PROJECTS.filter((x) => x.role.for === 'either')) expect(p.role.about).not.toMatch(/\b(he|she|his|her|him|brother|sister|widow|fiancées?)\b/i);
+  });
+
+  it('says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him', () => {
+    expect(AGREEMENT_TERMS.find((t) => t.id === 'termination')!.words).toContain('if 90 days pass with no real offer of covered work through him,');
+    expect(readFileSync('src/engine/systems/proagent.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
+    expect(readFileSync('src/engine/content/guide/career.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
+  });
+
   it('gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
-    expect(PROJECTS.map((p) => p.kind)).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short']);
+    // Seven projects, one of each kind, some with a part for each (from 2026-10-21): the kinds read once a project.
+    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short']);
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(7);
     for (const p of PROJECTS) {
       expect(p.fictional).toBe(true);
       const rate = RATES[p.pay];
@@ -468,7 +496,7 @@ describe('the agent and the work, as data', () => {
       if (rate.basis === 'verified') expect(rate.source).toBeDefined();
       else expect(rate.words).toMatch(/estimated/);
     }
-    expect(PROJECTS.filter((p) => p.access.open).map((p) => p.kind)).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short']);
+    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short']);
     for (const t of AGREEMENT_TERMS) expect(['verified', 'simulation']).toContain(t.basis);
     expect(AGREEMENT_TERMS.filter((t) => t.basis === 'verified').every((t) => (t.sources ?? []).length > 0)).toBe(true);
   });

@@ -1229,8 +1229,15 @@ taxed on what it comes to in dollars.
 The performer title: this page said nothing read it, which was wrong since
 the school's plays were cast (`systems/school.ts`): a part written for an
 actor or an actress goes to one, and the title says which the player is.
-The creation screen says so now. Parts after school aren't written for
-either.
+The creation screen says so now. Parts after school weren't written for
+either until 2026-10-21, though four of their breakdowns named a sister, a
+brother or two fiancées, and the app's second walk found an actress offered
+Theo, "an older brother". From then, at the owner's word ("There should be
+gender neutral and different parts for each genders. We need versatility
+always."), each is written for an actor, an actress or either, and only one
+written for the player or for either is posted to them (`writtenFor` in
+`systems/projobs.ts`): three for either, and four for each, so an actor and an
+actress each have a part in all seven projects.
 
 What was kept and only told back, made to count: an agency remembers how a
 client left (`takesBack`); a showcase's buzz brings managers for half a year

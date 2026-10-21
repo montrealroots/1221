@@ -1675,9 +1675,9 @@
  },
  "src/engine/decided.ts#top [pro.posting]": {
   "status": "Reviewed And Retained",
-  "hash": "9f5280e59f15",
+  "hash": "b4e89d347068",
   "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them."
  },
  "src/engine/decided.ts#top [pro.roster]": {
   "status": "Rewritten And Verified",
@@ -2923,9 +2923,9 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {
   "status": "Rewritten And Verified",
-  "hash": "db701eded3e7",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g02-life.test.ts (a plan opened: You need to be there. The clock stops when it comes round, so you can go.)"
+  "hash": "f3f6f44f997b",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the entry says the trip the meeting's notice promises (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/calendar-entry-trip.test.ts"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS": {
   "status": "Reviewed And Retained",

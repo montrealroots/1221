@@ -21,7 +21,7 @@ import { PROJECTS } from '@/engine/content/careerwork';
 import { TECHNIQUE_LABEL } from '@/engine/content/abilities';
 import type { Skill } from '@/engine/content/school';
 import type { Opportunity } from '@/engine/systems/pro';
-import { payTermsOf } from '@/engine/systems/projobs';
+import { DEFERRED_WHY, payTermsOf, writtenForWords } from '@/engine/systems/projobs';
 
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation, tab: 'opportunities' }));
 
@@ -96,6 +96,9 @@ describe('the Opportunities tab', () => {
     expect(shown).toContain(`${t.role.part}, ${t.project}`);
     expect(shown).toContain(`The Project ${t.project}, a fictional`);
     expect(shown).toContain(`The Part ${t.role.part}: ${t.role.about}`);
+    // Who the part is written for, as a breakdown says it, before its playing ages (from 2026-10-21).
+    expect(shown).toContain(`${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to`);
+    expect(open.map((o) => PROJECTS.find((x) => x.id === o.projectId)!.role.for)).not.toContain('actor');
     // What the part asks: its two techniques named once, then the actor's own levels, read from the record.
     const [a, b] = Object.keys(t.role.techniques) as Skill[];
     const level = (k: Skill) => Math.round(sim.player.craft?.[k] ?? 0);
@@ -108,6 +111,9 @@ describe('the Opportunities tab', () => {
     expect(button(html, 'Ask The School').length).toBeGreaterThan(0);
     // The agent-only offices, said with why a player can't reach them alone.
     expect(shown).toContain('Some casting offices release their roles to agents only, so without an agent you can’t be seen for them: Pennick Casting for A House On Calder Street');
+    // Each office once, though Calder Street and Gull Season have a part for each (from 2026-10-21).
+    expect(shown.match(/Pennick Casting for A House On Calder Street/g)).toHaveLength(1);
+    expect(shown.match(/Quillon Casting for Gull Season/g)).toHaveLength(1);
     expect(shown).toContain('Sources And Estimates');
   });
 
@@ -156,6 +162,18 @@ describe('the Opportunities tab', () => {
     const above = offered(rep, 'route-nine', at(2026, 9, 14));
     above.offer!.amount = Math.round(above.offer!.amount! * 1.1);
     expect(drawn(rep).shown).toContain('Pay It pays $282.70 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00.');
+  });
+
+  it('PLAYER JOURNEY: a student film accepted, Booked Work says why its deferred pay is never paid, in the offer’s own words (the app’s second walk, 2026-10-21)', () => {
+    const sim = student('opps-deferred');
+    tended(sim, at(2026, 12, 14, 12));
+    const o = offered(sim, 'paper-moons-ivy', at(2026, 12, 14));
+    expect(drawn(sim).shown).toContain(`Pay The pay is deferred: ${DEFERRED_WHY}, so nothing is paid for its three days of work.`);
+    sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
+    const { shown } = drawn(sim);
+    expect(shown).toMatch(/Booked Work .*Ivy, Paper Moons /);
+    expect(shown).toContain(`The pay is deferred: ${DEFERRED_WHY}, so nothing is paid for it.`);
+    expect(shown).not.toMatch(/never paid|\$0\.00 promised/);
   });
 
   it('PLAYER JOURNEY: accepted, the work shows under Booked Work with its days, the part’s preparation and the pay promised, not yet paid', () => {

@@ -11614,7 +11614,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11689,7 +11689,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11741,7 +11741,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11817,7 +11817,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -14200,7 +14200,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14619,7 +14619,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14920,7 +14920,7 @@
     "commit": "728b4972",
     "watch": "app"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14947,7 +14947,7 @@
     "commit": "728b4972",
     "watch": "app"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14974,7 +14974,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15001,7 +15001,7 @@
     "commit": "a6b82e07",
     "watch": "app"
    },
-   "missing": "It was measured on a6b82e07, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on a6b82e07, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15284,7 +15284,7 @@
     "commit": "728b4972",
     "watch": "app"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15311,7 +15311,7 @@
     "commit": "728b4972",
     "watch": "app"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15338,7 +15338,7 @@
     "commit": "728b4972",
     "watch": "app"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15365,7 +15365,7 @@
     "commit": "728b4972",
     "watch": "app"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15392,7 +15392,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15419,7 +15419,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15446,7 +15446,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15473,7 +15473,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15500,7 +15500,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15527,7 +15527,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15554,7 +15554,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15581,7 +15581,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15608,7 +15608,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15635,7 +15635,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15662,7 +15662,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15689,7 +15689,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15716,7 +15716,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15743,7 +15743,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15770,7 +15770,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15797,7 +15797,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15824,7 +15824,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15851,7 +15851,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15878,7 +15878,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15905,7 +15905,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15932,7 +15932,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15959,7 +15959,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15986,7 +15986,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16013,7 +16013,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16062,7 +16062,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16089,7 +16089,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16116,7 +16116,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16143,7 +16143,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16170,7 +16170,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16197,7 +16197,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16224,7 +16224,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16251,7 +16251,7 @@
     "commit": "728b4972",
     "watch": "engine"
    },
-   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 728b4972, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
   }
  ]
 }

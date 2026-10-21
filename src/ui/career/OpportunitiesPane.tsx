@@ -21,9 +21,9 @@ import { BAND_LABEL } from '@/engine/systems/coursework';
 import { BRIEF, type BriefStep } from '@/engine/systems/briefs';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, chanceWords, conditionsFor, counted, datesOf, decidesAt,
+  DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, chanceWords, conditionsFor, counted, datesOf, decidesAt,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
-  prepareRefusal, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes,
+  prepareRefusal, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes, writtenFor, writtenForWords,
 } from '@/engine/systems/projobs';
 
 const NY = 'America/New_York';
@@ -48,7 +48,7 @@ function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'project
     <dl className="col gap-2 small" style={{ margin: 0 }}>
       <div><dt className="strong">The Project</dt><dd style={{ margin: 0 }}>{`${t.project}, a fictional ${KIND_WORDS[t.kind]} by ${t.company}, cast by ${t.casting}. ${t.contract}.`}</dd></div>
       <div><dt className="strong">The Part</dt><dd style={{ margin: 0 }}>{`${t.role.part}: ${t.role.about}`}</dd></div>
-      <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${t.genres.map((g) => GENRE_BY_ID[g]?.label ?? g).join(', ')}. Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
+      <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${t.genres.map((g) => GENRE_BY_ID[g]?.label ?? g).join(', ')}. ${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
       <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(t.schedule.kind === 'run' ? `${counted(t.schedule.rehearsalWeeks, 'week')} of rehearsal and ${counted(t.schedule.performanceWeeks, 'week')} of performances` : counted(days.length, 'shoot day'))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. Getting there takes about ${counted(Math.round(trip / 60), 'hour')} each way from where you live.`}</dd></div>
       <div><dt className="strong">Pay</dt><dd style={{ margin: 0 }}>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
       <div><dt className="strong">The Audition</dt><dd style={{ margin: 0 }}>{`${t.stages.audition === 'in-person' ? 'In person' : 'A self-tape'}${t.stages.callback ? ', then a callback for those casting wants to see again' : ''}.`}</dd></div>
@@ -214,7 +214,7 @@ function BookedCard({ e }: { e: Engagement }) {
       <p className="small" style={{ margin: 0 }}>{ahead.length ? `${cap(counted(ahead.length, 'day'))} to come, the next ${formatWeekdayDate(ahead[0]!.from, NY)} at ${formatTime(ahead[0]!.from, NY)}, in ${t.place.city}. Each stops the clock: press Go to be there.` : 'Every day is behind you.'}</p>
       <Prepare target={{ engagementId: e.id }} prep={e.prep} what="the part" />
       {(worked.length > 0 || missed.length > 0) && <p className="small" style={{ margin: 0 }}>{`${cap(counted(worked.length, 'day'))} worked${worked.some((l) => l.band) ? `, the best ${BAND_LABEL[(['exceptional', 'strong', 'working', 'unready'] as const).find((b) => worked.some((l) => l.band === b))!]}` : ''}${missed.length ? `, and ${counted(missed.length, 'day')} missed` : ''}.`}</p>}
-      <p className="small" style={{ margin: 0 }}>{e.pay.some((p) => p.deferred) ? 'The pay is deferred: nothing is paid for it.' : `Promised: ${formatMoney(promised, 'USD')} ${e.pay.length === 1 ? 'for one week, due the Thursday after it' : `over ${counted(e.pay.length, 'week')}, each due the Thursday after it`}. It’s promised, not yet paid.`}</p>
+      <p className="small" style={{ margin: 0 }}>{e.pay.some((p) => p.deferred) ? `The pay is deferred: ${DEFERRED_WHY}, so nothing is paid for it.` : `Promised: ${formatMoney(promised, 'USD')} ${e.pay.length === 1 ? 'for one week, due the Thursday after it' : `over ${counted(e.pay.length, 'week')}, each due the Thursday after it`}. It’s promised, not yet paid.`}</p>
     </article>
   );
 }
@@ -257,7 +257,8 @@ export function OpportunitiesPane() {
   const settled = opps.filter((o) => ['booked', 'passed', 'declined', 'lapsed', 'withdrawn', 'refused'].includes(o.status) && (o.rounds?.length || o.status !== 'lapsed')).slice(-8).reverse();
   const agreement = activeAgreement(person, sim.now);
   const agent = agreement ? agentById(agreement.agentId) : undefined;
-  const agentOnly = PROJECTS.filter((t) => !t.access.open);
+  // The roles written for the player, so a project with a part for each is named once (from 2026-10-21).
+  const agentOnly = PROJECTS.filter((t) => !t.access.open && writtenFor(t, person));
   return (
     <div className="col gap-5">
       <p className="small" style={{ margin: 0 }}>Every project, company and casting office here is invented for the game: no real production is casting. New roles go up each Monday morning.</p>

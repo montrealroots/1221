@@ -1968,9 +1968,9 @@
  },
  "src/engine/decided.ts#top [pro.posting]": {
   "status": "Retained",
-  "hash": "9f5280e59f15",
+  "hash": "b4e89d347068",
   "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them.",
   "first": "Reviewed And Retained"
  },
  "src/engine/decided.ts#top [pro.roster]": {
@@ -3480,10 +3480,10 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {
   "status": "Rewritten",
-  "hash": "f39d6673b827",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g02-life.test.ts, 'PLAYER JOURNEY: a Call at 7:40 refuses a shower at 7:30 in its words; Call It Off on the Calendar takes it off the month, and the shower is taken'",
-  "first": "Pending"
+  "hash": "f3f6f44f997b",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the entry says the trip the meeting's notice promises (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/calendar-entry-trip.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS": {
   "status": "Retained",

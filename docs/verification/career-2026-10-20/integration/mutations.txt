@@ -32,3 +32,19 @@ I24 the employment check back to a work day's own hours, as it was until this fi
 I25 (R10) a referral not refused while an approach is held or under way | src/engine/systems/proagent.ts (referralRefusal) | tests/journey-agent.test.ts 'a year on, a referral alone is something new for his office' (asked during the pass's year, and after the second send) | KILLED (it survived)
 I26 Equity's 90 days not extended by the days employed (as until this fix) | src/engine/systems/proagent.ts (endRefusal) | tests/journey-agent.test.ts 'Equity’s 90 days are extended by the days employed on covered work through him' | KILLED
 I27 the extension counting work days only, not the employment's span | src/engine/systems/proagent.ts (employedDays) | the same test (31 days, where its two work days are 2) | KILLED
+
+Mutations at the parts written for an actor, an actress or either (2026-10-21, the owner's word: "There should be gender neutral and different parts for each genders. We need versatility always.") and the four defects the app's second walk found, run by `mut-parts.py` (its output in `mut-parts.txt`), each against the test named, each reverted after.
+I28 the postings not reading who a part is written for (as until this change) | src/engine/systems/projobs.ts (postingsAt) | tests/pro-work.test.ts 'posts an actor the parts written for an actor or for either…' | KILLED
+I29 a part posted to the title it isn't written for | src/engine/systems/projobs.ts (writtenFor) | the same test | KILLED
+I30 the offer's card not saying who the part is written for | src/ui/career/OpportunitiesPane.tsx (What It Asks) | tests/pro-opportunities-screen.test.ts 'a first-year’s tab lists the open roles posted…' | KILLED
+I31 the agent-only offices listed for every part, so a project with a part for each named twice | src/ui/career/OpportunitiesPane.tsx (agentOnly) | the same test | KILLED
+I32 Booked Work's deferred pay back to "nothing is paid for it" alone | src/ui/career/OpportunitiesPane.tsx (Booked) | tests/pro-opportunities-screen.test.ts 'a student film accepted, Booked Work says why its deferred pay is never paid…' | KILLED
+I33 the Work tab's deferred pay back to "shown here and never paid" | src/ui/career/WorkPane.tsx (PaymentLine) | tests/propay-screen.test.ts 'a student film’s week reads deferred, with why…' | KILLED
+I34 the Calendar's entry without its trip (as until this fix) | src/ui/workspaces/CalendarWorkspace.tsx (EntryDetail) | tests/calendar-entry-trip.test.ts | KILLED
+I35 the Ending It term without "through him" (as until this fix) | src/engine/content/careerwork.ts (AGREEMENT_TERMS) | tests/pro-core.test.ts 'says Equity’s 90 days one way…' | KILLED
+I36 the ending's record without "through him" | src/engine/systems/proagent.ts (ENDED_WORDS) | tests/journey-agent.test.ts 'by the player under Equity’s 90 days with no offer…' | KILLED
+I37 a counterpart part written for either | src/engine/content/careerwork.ts (Owen when first run; Callum, run again once renamed, as no classmate can be called) | tests/pro-core.test.ts 'writes each part for an actor, an actress or either…' | KILLED
+I38 the deferred pay's why back to "only if it earns money later" alone | src/engine/systems/projobs.ts (DEFERRED_WHY) | tests/pro-work.test.ts 'an unsigned graduate, from a posted student film…' | KILLED
+I39 the posting decider's agreement with the real agent's old id (as until this fix, which the swap left naming nobody) | src/engine/decided.ts (represent) | tests/deciders.test.ts 'pro.posting … is actually changed by represented' | KILLED (it failed the suite at the swap's commit)
+I40 the decider's sweep not setting the title | src/engine/decided.ts (pro.posting) | tests/deciders.test.ts 'pro.posting … is actually changed by title' | KILLED
+I41 the postings not reading who a part is written for, against the decider's sweep | src/engine/systems/projobs.ts (postingsAt) | the same test | KILLED
