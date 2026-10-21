@@ -214,7 +214,7 @@ function BookedCard({ e }: { e: Engagement }) {
       <p className="small" style={{ margin: 0 }}>{ahead.length ? `${cap(counted(ahead.length, 'day'))} to come, the next ${formatWeekdayDate(ahead[0]!.from, NY)} at ${formatTime(ahead[0]!.from, NY)}, in ${t.place.city}. Each stops the clock: press Go to be there.` : 'Every day is behind you.'}</p>
       <Prepare target={{ engagementId: e.id }} prep={e.prep} what="the part" />
       {(worked.length > 0 || missed.length > 0) && <p className="small" style={{ margin: 0 }}>{`${cap(counted(worked.length, 'day'))} worked${worked.some((l) => l.band) ? `, the best ${BAND_LABEL[(['exceptional', 'strong', 'working', 'unready'] as const).find((b) => worked.some((l) => l.band === b))!]}` : ''}${missed.length ? `, and ${counted(missed.length, 'day')} missed` : ''}.`}</p>}
-      <p className="small" style={{ margin: 0 }}>{e.pay.some((p) => p.deferred) ? 'The pay is deferred: nothing is paid for it.' : `Promised: ${formatMoney(promised, 'USD')} over ${counted(e.pay.length, 'week')}, each week due the Thursday after it. It’s promised, not yet paid.`}</p>
+      <p className="small" style={{ margin: 0 }}>{e.pay.some((p) => p.deferred) ? 'The pay is deferred: nothing is paid for it.' : `Promised: ${formatMoney(promised, 'USD')} ${e.pay.length === 1 ? 'for one week, due the Thursday after it' : `over ${counted(e.pay.length, 'week')}, each due the Thursday after it`}. It’s promised, not yet paid.`}</p>
     </article>
   );
 }
@@ -227,7 +227,9 @@ function Settled({ o }: { o: Opportunity }) {
   const fit = fitOf(person, t);
   return (
     <li className="col gap-1">
-      <span>{`${t.role.part}, ${t.project}: ${o.outcome ?? o.status}`}</span>
+      {/* The outcome alone where it names the project already: until 2026-10-21 "Jess, Static On Route 9: You accepted
+          Jess in Static On Route 9: four work days…" said the role twice and took two colons (brief 19's app walk). */}
+      <span>{o.outcome?.includes(t.project) ? o.outcome : `${t.role.part}, ${t.project}: ${o.outcome ?? o.status}`}</span>
       {decided.length > 0 && (
         <details className="small">
           <summary>Why It Went This Way</summary>

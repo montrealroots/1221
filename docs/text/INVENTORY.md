@@ -15,14 +15,14 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 291 | 1897 | 17580 | 0 | 266 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1903 | 17615 | 0 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 195 | 758 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4544 | 38765 | 593750 | 316 | 1390 | 3154 | 0 | 0 |
+| **All** | 4545 | 38771 | 593785 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -32,7 +32,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-agent | 56 | 2695 | 56 | 0 | 0 | 0 |
 | career-pay | 30 | 1238 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
-| career-work | 64 | 1937 | 64 | 0 | 0 | 0 |
+| career-work | 65 | 1972 | 65 | 0 | 0 | 0 |
 | frame | 505 | 33477 | 99 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
@@ -55,14 +55,14 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 126 | 352 | 188 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 119 | 376 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 150 | 225 | 100 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 291 | 266 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 29 | 37 | 17 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 12 | 27 | 6 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4544 | 965 | 2417 | 1162 | 0 |
+| **All** | 4545 | 966 | 2417 | 1162 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -3222,11 +3222,12 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/projobs.ts#post [opportunity]` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#submit` | 8 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#agentTries` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/projobs.ts#setRound` | 13 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/projobs.ts#setRound` | 16 | 0 | Rewritten | career-work | Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#finishRound` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#missRound` | 6 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#pass` | 3 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/projobs.ts#makeOffer` | 7 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/projobs.ts#makeOffer` | 7 | 0 | Rewritten | career-work | Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts | Rewritten And Verified |
+| `src/engine/systems/projobs.ts#makeOffer [offer]` | 1 | 0 | Rewritten | career-work | Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#finish` | 6 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#finish [worked]` | 3 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#finish [success]` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3289,7 +3290,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/career/OpportunitiesPane.tsx#Prepare` | 3 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/career/OpportunitiesPane.tsx#History` | 1 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/career/OpportunitiesPane.tsx#OfferCard` | 9 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/ui/career/OpportunitiesPane.tsx#BookedCard` | 8 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/ui/career/OpportunitiesPane.tsx#BookedCard` | 10 | 0 | Rewritten | career-work | Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts | Rewritten And Verified |
 | `src/ui/career/OpportunitiesPane.tsx#Settled` | 8 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane` | 15 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/career/RepresentationPane.tsx#AgentPanel` | 10 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |

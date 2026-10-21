@@ -870,7 +870,12 @@ function setRound(sim: Simulation, person: Person, o: Opportunity, which: 'audit
   const words = form === 'in-person'
     ? `${castingAs(t)} ${agrees(t, 'wants', 'want')} to see you${which === 'callback' ? ' again' : ''} for ${t.role.part} in ${t.project}: ${t.place.venue} in ${t.place.city}, ${when}. Getting there takes about ${hoursWords(trip)} each way.`
     : `${castingAs(t)} ${agrees(t, 'asks', 'ask')} for a self-tape${which === 'callback' ? ' for the callback' : ''} for ${t.role.part} in ${t.project}, due ${when}.`;
-  note(sim, person, o, { kind: which, key: `${which}:set`, words });
+  // The history keeps it in the past, as the rest of a history is: until 2026-10-21 it kept the notice's present tense
+  // ("asks for a self-tape"), among lines that said "submitted" and "was Working" (brief 19's app walk).
+  const noted = form === 'in-person'
+    ? `${castingAs(t)} asked to see you${which === 'callback' ? ' again' : ''} for ${t.role.part} in ${t.project}: ${t.place.venue} in ${t.place.city}, ${when}.`
+    : `${castingAs(t)} asked for a self-tape${which === 'callback' ? ' for the callback' : ''} for ${t.role.part} in ${t.project}, due ${when}.`;
+  note(sim, person, o, { kind: which, key: `${which}:set`, words: noted });
   const next = form === 'in-person' ? 'Prepare the sides on the Career screen’s Opportunities tab before you go.' : 'Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.';
   const clashWords = clash.length ? ` It clashes with ${spokenList(clash)}. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.` : '';
   const agent = agentFor(o);
@@ -954,8 +959,10 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   // `systems/propay.ts`; wired at the merge, 2026-10-21).
   if (o.offer.amount !== undefined) o.offer.amount = negotiatedAmount(o.offer.amount, t.union, o.agreementId !== undefined);
   const days = datesOf(o);
-  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work is ${days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`}, in ${t.place.city}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.`;
-  note(sim, person, o, { kind: 'offer', key: 'offer', words });
+  const span = `${days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`}, in ${t.place.city}`;
+  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.`;
+  // In the history, past (from 2026-10-21, as the rounds' lines): the offer stood until its day, whatever came of it.
+  note(sim, person, o, { kind: 'offer', key: 'offer', words: `${castingAs(t)} offered you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work was ${span}, and the offer stood until ${formatDate(until, NY)} at ${formatTime(until, NY)}.` });
   sim.schedule({ at: until, kind: OFFER_KIND, label: `The Offer For ${t.role.part} Lapses`, category: 'career', priority: 40, refType: 'pro.offer', refId: o.id, payload: { personId: person.id, opportunityId: o.id } });
   if (person.id !== sim.universe.playerId) return;
   const agent = agentFor(o);

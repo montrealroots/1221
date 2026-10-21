@@ -155,9 +155,16 @@
  },
  "src/engine/systems/projobs.ts#makeOffer": {
   "status": "Rewritten",
-  "hash": "b5c1b7845517",
+  "hash": "cc63b4aca539",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#makeOffer [offer]": {
+  "status": "Rewritten",
+  "hash": "91bd0effa816",
+  "on": "2026-10-21",
+  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/projobs.ts#materialProblems": {
@@ -337,9 +344,9 @@
  },
  "src/engine/systems/projobs.ts#setRound": {
   "status": "Rewritten",
-  "hash": "f548c371a75e",
+  "hash": "3e8fb45d8d3d",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/projobs.ts#submit": {
@@ -365,9 +372,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#BookedCard": {
   "status": "Rewritten",
-  "hash": "59e8fa66a96e",
+  "hash": "8fb88efa9f00",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/ui/career/OpportunitiesPane.tsx#History": {
