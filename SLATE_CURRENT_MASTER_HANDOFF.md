@@ -5,13 +5,20 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 540 of 658 rows in scope Implemented And Verified (82.0%); 114 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 545 of 658 rows in scope Implemented And Verified (82.8%); 109 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The audit's second reading, 2026-10-21, against `a483247d`, once V1's journeys had landed: until it this said 540 of
+  658. Five of the nine partial rows are verified on the played journeys: `pro.send_materials`, `pro.ask_to_move`,
+  `pro.accept_agreement`, `pro.decline_agreement` and `pro.prepare`. Four stay partial, each saying what's still
+  missing: `pro.ask_referral` and `pro.join_sag` for a reader no test reads (a referral counted as something new, the
+  résumé's SAG-AFTRA line), `pro.supply_material` for its refusals of a résumé and of headshots, and `pro.end_agreement`
+  for continuing commission after the command. `audit/REPORT.md`, The Second Reading.)
 
   (The independent audit of brief 19's 22 commands, 2026-10-21, against `7bbab80f`: until it this said 527 of 658.
-  Each is an audit row now, in the School's area: 13 verified, so Implemented And Verified; 9 partial, Implemented,
-  Verification Incomplete, each with its gap. The seven agent rows past the check rest on introductions written or
-  scheduled by hand, `pro.join_sag` on an engagement written by hand, and `pro.prepare` on a part's preparation no test
-  reads. `audit/REPORT.md` has each row's reason, the mutations and what closes the gaps.)
+  Each was an audit row from then, in the School's area: 13 verified, so Implemented And Verified; 9 partial,
+  Implemented, Verification Incomplete, each with its gap. The seven agent rows past the check rested on introductions
+  written or scheduled by hand, `pro.join_sag` on an engagement written by hand, and `pro.prepare` on a part's
+  preparation no test read. `audit/REPORT.md` has each row's reason, the mutations and what closed the gaps.)
 
   (The work loop, merged 2026-10-21 after the pay: until it this said 527 of 651. Its seven commands are rows of their
   own, Implemented, Verification Incomplete until an audit row reads them.)
@@ -45,8 +52,9 @@ none of it is in `main`, and nothing is deployed.
   its five items done here.
 - **Audited:** the 22 commands and their five capabilities, read against the standard by a reader who wrote none of
   them (`docs/verification/career-2026-10-20/audit/REPORT.md`, 2026-10-21); this said that was still to do until then.
-- **Still to do:** the playthroughs V1 to V18 on the joined game (V1, played from the showcase's follow-up or a finished
-  open role through his office to work through him, is what the nine partial rows wait on), its built app at both
+  Read again the same day against `a483247d`, once V1's journeys had landed: 18 of the 22 verified, 4 partial.
+- **Still to do:** the playthroughs V1 to V18 on the joined game (V1's journeys, which the audit's nine partial rows waited
+  on, landed on 2026-10-21: five of those rows moved on them, and the four left partial each say what's still missing), its built app at both
   widths, the final runs, and the gate.
 - **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
   marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the

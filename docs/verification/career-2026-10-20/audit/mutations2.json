@@ -1,0 +1,344 @@
+[
+ {
+  "id": "Q1",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career-older.test.ts"
+  ],
+  "filter": "Ask For A Referral, from the director",
+  "expect": "killed on the played referral",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 71,
+  "summary": "Tests  8 skipped (8)",
+  "failed": [
+   "tests/journey-career-older.test.ts > V16: an existing graduate’s save from before brief 19 (J01 at 8283f80c, 4 August 2029), opened and played on into the career"
+  ]
+ },
+ {
+  "id": "Q2",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career-older.test.ts"
+  ],
+  "filter": "Ask For A Referral, from the director",
+  "expect": "killed on the played referral: the band the answer reads",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 88,
+  "summary": "Tests  1 failed | 7 skipped (8)",
+  "failed": [
+   "V16: an existing graduate’s save from before brief 19 (J01 at 8283f80c, 4 August 2029), opened and played on into the career > PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong: his office’s notice read, her materials checked, the referral asked for and her materials sent through it, and his office’s answer, a request for a reel 53ms",
+   "tests/journey-career-older.test.ts > V16: an existing graduate’s save from before brief 19 (J01 at 8283f80c, 4 August 2029), opened and played on into the career > PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong: his office’s notice read, her materials checked, the referral asked for and her materials sent through it, and his office’s answer, a request for a reel"
+  ]
+ },
+ {
+  "id": "Q3",
+  "row": "pro.send_materials",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the School’s follow-up passes on",
+  "expect": "killed on the played send: no answer comes",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 75,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts [ tests/journey-career.test.ts ]"
+  ]
+ },
+ {
+  "id": "Q4",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "no request to meet from the follow-up",
+  "expect": "killed on the played request for a résumé",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 284,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts > a second graduate (life B, seed v1-5), who cuts her reel only once the School’s follow-up has come"
+  ]
+ },
+ {
+  "id": "Q5",
+  "row": "pro.ask_to_move",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the School’s follow-up passes on",
+  "expect": "killed on the played meeting",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 198,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts [ tests/journey-career.test.ts ]"
+  ]
+ },
+ {
+  "id": "Q6",
+  "row": "pro.accept_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "through him: his breakdowns",
+  "expect": "killed on the played agreement: nothing through him",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 224,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts [ tests/journey-career.test.ts ]"
+  ]
+ },
+ {
+  "id": "Q7",
+  "row": "pro.decline_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "no request to meet from the follow-up",
+  "expect": "killed on the played offer, declined",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 298,
+  "summary": "Tests  1 failed | 10 skipped (11)",
+  "failed": [
+   "a second graduate (life B, seed v1-5), who cuts her reel only once the School’s follow-up has come > PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials; his office asks for an up-to-date résumé, made and sent with Send What His Office Asked For; a meeting kept; his offer declined with Decline The Agreement, held six months 295ms",
+   "tests/journey-career.test.ts > a second graduate (life B, seed v1-5), who cuts her reel only once the School’s follow-up has come > PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials; his office asks for an up-to-date résumé, made and sent with Send What His Office Asked For; a meeting kept; his offer declined with Decline The Agreement, held six months"
+  ]
+ },
+ {
+  "id": "Q8",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "End It By Agreement ends the agreement",
+  "expect": "killed on the played ending: the agreement holds to its year",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 209,
+  "summary": "Tests  1 failed | 10 skipped (11)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement ends the agreement that day, says what it leaves owed, and his breakdowns stop coming 49ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement ends the agreement that day, says what it leaves owed, and his breakdowns stop coming"
+  ]
+ },
+ {
+  "id": "Q9",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed on the played eligibility",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 199,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts [ tests/journey-career.test.ts ]"
+  ]
+ },
+ {
+  "id": "Q10",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the same SAG-AFTRA self-tape",
+  "expect": "killed by the twin",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 243,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts [ tests/journey-career.test.ts ]"
+  ]
+ },
+ {
+  "id": "Q10b",
+  "of": "P1",
+  "filter": "the same SAG-AFTRA self-tape",
+  "killed": true,
+  "status": 1,
+  "seconds": 144,
+  "summary": "Tests  1 failed | 10 skipped (11)",
+  "failed": [
+   "preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, against taped cold, comes out higher, and a band higher 425ms",
+   "tests/journey-career.test.ts > preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, against taped cold, comes out higher, and a band higher"
+  ],
+  "error": "AssertionError: expected 22.5 to be greater than 32.5"
+ },
+ {
+  "id": "Q11",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the same booked network part",
+  "expect": "killed by the twin",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 345,
+  "summary": "Tests  1 failed | 10 skipped (11)",
+  "failed": [
+   "preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same booked network part: its preparation done to ready against not at all, judged on its two shoot days, comes out higher each day, and a band higher 70943ms",
+   "tests/journey-career.test.ts > preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same booked network part: its preparation done to ready against not at all, judged on its two shoot days, comes out higher each day, and a band higher"
+  ]
+ },
+ {
+  "id": "Q11b",
+  "of": "P2",
+  "filter": "the same booked network part",
+  "killed": true,
+  "status": 1,
+  "seconds": 174,
+  "summary": "Tests  1 failed | 10 skipped (11)",
+  "failed": [
+   "preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same booked network part: its preparation done to ready against not at all, judged on its two shoot days, comes out higher each day, and a band higher 28194ms",
+   "tests/journey-career.test.ts > preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same booked network part: its preparation done to ready against not at all, judged on its two shoot days, comes out higher each day, and a band higher"
+  ],
+  "error": "AssertionError: expected 23.2 to be greater than 28.3"
+ },
+ {
+  "id": "Q12",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed by the played working dues",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 171,
+  "summary": "Tests  1 failed | 10 skipped (11)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s 58ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s"
+  ]
+ },
+ {
+  "id": "Q13",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed by the played base dues",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 255,
+  "summary": "Tests  11 skipped (11)",
+  "failed": [
+   "tests/journey-career.test.ts [ tests/journey-career.test.ts ]"
+  ]
+ },
+ {
+  "id": "Q14",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/pro.ts",
+  "tests": [
+   "tests/journey-career.test.ts",
+   "tests/pro-core.test.ts",
+   "tests/pro-screen.test.ts",
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts"
+  ],
+  "expect": "survives if no test reads SAG-AFTRA on the résumé",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 236,
+  "summary": "Tests  65 passed (65)",
+  "failed": []
+ },
+ {
+  "id": "Q15",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts"
+  ],
+  "expect": "survives if no test reads a referral as something new",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 122,
+  "summary": "Tests  34 passed (34)",
+  "failed": []
+ },
+ {
+  "id": "Q16",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads the refusal for a résumé still behind",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 345,
+  "summary": "Tests  45 passed (45)",
+  "failed": []
+ },
+ {
+  "id": "Q17",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads the refusal for headshots older than the request",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 301,
+  "summary": "Tests  45 passed (45)",
+  "failed": []
+ }
+]
