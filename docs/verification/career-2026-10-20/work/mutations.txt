@@ -1,0 +1,81 @@
+# The work loop's mutations, 2026-10-21: each applied alone to the file named, the test named run with one worker
+# (vitest run <test> --maxWorkers=1 --minWorkers=1 -t <filter>), the file restored after. Runner: run.mjs, scratch.
+# name | file mutated | test -t filter | result
+
+M1 agent-only roles posted openly to anyone | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J1" | SURVIVED
+M2 a project posted again inside ten weeks | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "posts open roles" | KILLED | Tests 1 failed | 26 skipped (27)
+M3 a submission sent without headshots | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "F4 and J4" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M4 an Equity open call taken from a non-member | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "F4 and J4" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M5 an agent-only role submitted by the actor | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "F4 and J4" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M6 casting blind to the band | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J5" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M7 a callback certain at the top | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J5" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M8 casting blind to the fit | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J5" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M9 the fit blind to genre knowledge | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "reads the role" | KILLED | Tests 1 failed | 26 skipped (27)
+M10 availability not checked at casting | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "availability" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M11 an offer accepted without permission to work | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V13" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M12 two bookings on the same days | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V12" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M13 summer work taken over a School call | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "summer" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M14 unapproved work in term never reported | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "A3" | KILLED | Tests 1 failed | 3 passed | 23 skipped (27)
+M15 approved work’s classes unexcused | src/engine/systems/school.ts | tests/pro-work.test.ts -t "V2" | KILLED | Tests 1 failed | 26 skipped (27)
+M16 the School blind to work away | src/engine/systems/school.ts | tests/pro-work.test.ts -t "V12" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M17 a student film counted professional | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "refuses" | KILLED | Tests 1 failed | 3 passed | 23 skipped (27)
+M18 a shoot day missed forgiven | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "shoot day slept" | KILLED | Tests 1 failed | 26 skipped (27)
+M19 pay kept for days never worked | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "shoot day slept" | KILLED | Tests 1 failed | 26 skipped (27)
+M20 no stage credit at the first night | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V11" | KILLED | Tests 1 failed | 26 skipped (27)
+M21 a screen credit never released | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V10" | KILLED | Tests 1 failed | 26 skipped (27)
+M22 rehearsal days move nothing | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V11" | KILLED | Tests 1 failed | 26 skipped (27)
+M23 no scale plus ten through the agent | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J3" | KILLED | Tests 1 failed | 26 skipped (27)
+M24 the agent says the same hold again | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J3" | KILLED | Tests 1 failed | 26 skipped (27)
+M25 an offer never lapses | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "lapses" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M26 an audition moved twice | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V12" | KILLED | Tests 1 failed | 2 passed | 24 skipped (27)
+M27 a self-tape started with no hour left | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "self-tape with less" | KILLED | Tests 1 failed | 26 skipped (27)
+M28 pay due on the day after, not the Thursday | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V10|V11" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M29 the agent never tries a submission | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J3" | KILLED | Tests 1 failed | 26 skipped (27)
+M30 playing ages not read | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "F4 and J4" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M31 preparation moves nothing | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V10" | KILLED | Tests 1 failed | 26 skipped (27)
+M32 the dean approves whatever it is | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "refuses" | KILLED | Tests 1 failed | 3 passed | 23 skipped (27)
+M33 nothing is ever in term | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "A3" | KILLED | Tests 4 failed | 23 skipped (27)
+M34 an F-1 student asks the School | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V13" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M35 the tutorial guard blind to a job | tests/tutorial.test.ts | tests/tutorial.test.ts -t "GUARD" | SURVIVED
+M36 the work’s pay posted promised to nobody | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V10|V11" | KILLED | Tests 2 failed | 25 skipped (27)
+M37 Submit Yourself shown open with no headshots | src/ui/career/OpportunitiesPane.tsx | tests/pro-opportunities-screen.test.ts -t "first-year" | KILLED | Tests 1 failed | 4 skipped (5)
+M38 an F-1 student’s Accept The Offer open | src/ui/career/OpportunitiesPane.tsx | tests/pro-opportunities-screen.test.ts -t "offer shows" | KILLED | Tests 1 failed | 4 skipped (5)
+
+# M1 and M35 survived the first run. M1: the week's chances hold no open chance for an agent-only kind, so the postings
+# alone couldn't show reachOf's rule; the J1 test now asserts the rule itself. M35: a sentence promising "a job" was
+# also caught by the second clause unless it named work the game has; the guard's fixture now holds "Land a job in a
+# student film.", which the dropped clause alone fails. Re-run after:
+M1 agent-only roles posted openly to anyone | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J1" | KILLED | Tests 1 failed | 1 passed | 25 skipped (27)
+M35 the tutorial guard blind to a job | tests/tutorial.test.ts | tests/tutorial.test.ts -t "GUARD" | KILLED | Tests 1 failed | 1 passed | 16 skipped (18)
+
+# Added after the built app's walk (2026-10-21) found the part's techniques read as four things and two counts opening a
+# sentence in lowercase; each fix mutated back:
+M39 each technique’s level in a clause again | src/engine/systems/projobs.ts | tests/pro-opportunities-screen.test.ts -t "first-year" | KILLED | Tests 1 failed | 4 skipped (5)
+M40 the booked days’ count lowercase at a sentence’s start | src/ui/career/OpportunitiesPane.tsx | tests/pro-opportunities-screen.test.ts -t "accepted" | KILLED | Tests 1 failed | 4 skipped (5)
+M41 the days worked lowercase at a sentence’s start | src/ui/career/OpportunitiesPane.tsx | tests/pro-opportunities-screen.test.ts -t "accepted" | KILLED | Tests 1 failed | 4 skipped (5)
+
+# After the coordinator's notes (2026-10-21): the pay's weeks keyed from 1, a replacement reading the week from the key, the
+# band on every credit and the offer's moment, each mutated back. M23 above was withdrawn with the code it mutated: the
+# offer stays at the rate's scale, and the agreement's scale plus ten is the pay's negotiatedAmount, applied at the merge.
+# M19 re-run on the changed replacement:
+M19 pay kept for days never worked | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "shoot day slept" | KILLED | Tests 1 failed | 26 skipped (27)
+M42 the pay’s weeks counted from 0 again | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V10|V11|J3" | KILLED | Tests 3 failed | 24 skipped (27)
+M43 a replacement reads the wrong week from the key | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "shoot day slept" | KILLED | Tests 1 failed | 26 skipped (27)
+M44 the stage credit without its band | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V11" | KILLED | Tests 1 failed | 26 skipped (27)
+M45 the screen credit without its band | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "V10" | KILLED | Tests 1 failed | 26 skipped (27)
+M46 the offer’s moment not the moment it was made | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J3" | KILLED | Tests 1 failed | 26 skipped (27)
+
+# The offer's words, from the offer's own amount (so the pay's negotiatedAmount, applied at the merge, is said truly):
+M47 an amount above the scale said as the scale | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J3" | KILLED | Tests 1 failed | 26 skipped (27)
+M48 the offer’s words read the scale, not the offer | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "J3" | SURVIVED
+M49 the offer card shows the scale, not the offer | src/ui/career/OpportunitiesPane.tsx | tests/pro-opportunities-screen.test.ts -t "offer shows" | KILLED | Tests 1 failed | 4 skipped (5)
+# M48 is equivalent on this branch: until negotiatedAmount is wired, an offer's amount is always the scale, so the words
+# read the same either way. At the merge, J3's offer words become "It pays $282.70 a day for four days, above the
+# SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00." and that assertion kills it.
+
+# After the coordinator's note on the showcase's School calls (2026-10-21): the School's calls read by category too, and the
+# in-term warning naming any of them. M52 survived: the day's classes name no person, so the personId filter already
+# kept them out, and the kind guard was deleted as redundant.
+M50 the School’s calls read by kind alone | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "showcase" | KILLED | Tests 1 failed | 27 skipped (28)
+M51 the warning names a production’s call alone | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "showcase" | KILLED | Tests 1 failed | 27 skipped (28)
+M52 the classes counted as a call too | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "showcase|A3|V2" | SURVIVED

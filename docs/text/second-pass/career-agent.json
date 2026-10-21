@@ -1,0 +1,394 @@
+{
+ "src/engine/systems/proagent.ts#agentIn": {
+  "status": "Rewritten",
+  "hash": "8b9fce36ed05",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#answer": {
+  "status": "Rewritten",
+  "hash": "88f29169ed5d",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#answerRefusal": {
+  "status": "Rewritten",
+  "hash": "c40b3fc66b53",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#BILLING_WORDS": {
+  "status": "Rewritten",
+  "hash": "08caf6d785ea",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#checkRefusal": {
+  "status": "Rewritten",
+  "hash": "fd873caa0560",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#COOLDOWN_WORDS": {
+  "status": "Rewritten",
+  "hash": "d113af35cd15",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#endAgreement": {
+  "status": "Rewritten",
+  "hash": "9ccb44e14917",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#ENDED_WORDS": {
+  "status": "Rewritten",
+  "hash": "c48da79af02b",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 to say 'through him' as the refusal and the guide say it (the app's second walk), to docs/STYLE.md; read in tests/pro-core.test.ts ('says Equity’s 90 days one way…') and tests/journey-agent.test.ts (the ending's notice)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#endRefusal": {
+  "status": "Rewritten",
+  "hash": "93388ab143d1",
+  "on": "2026-10-21",
+  "evidence": "Read again on 2026-10-21 when Equity's 90 days came to be extended by the days employed (the audit's fourth reading): the refusal says the days that don't count and the date they move it to; read where the player meets it in tests/journey-agent.test.ts ('Equity’s 90 days are extended by the days employed…' and the 90-day journey), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#FACTOR_LABEL": {
+  "status": "Rewritten",
+  "hash": "82342350faed",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#followUp": {
+  "status": "Rewritten",
+  "hash": "10b7898f0d2b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#FOUND": {
+  "status": "Rewritten",
+  "hash": "5c19b0494be4",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#interestOf": {
+  "status": "Rewritten",
+  "hash": "5fb505710428",
+  "on": "2026-10-21",
+  "evidence": "Read again on 2026-10-21 after brief 19's playthroughs, when reliability came to name a missed audition he set up (\"You missed one audition he set up.\") and to count a missed work day once; read where the player meets it in tests/pro-agent.test.ts (its GUARD and twin) and tests/journey-agent.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#KIND_WORDS": {
+  "status": "Rewritten",
+  "hash": "8f9b878e66ff",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#LEVEL_LABEL": {
+  "status": "Rewritten",
+  "hash": "509fb2c85236",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#moveRefusal": {
+  "status": "Rewritten",
+  "hash": "5305bbe6c049",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#mustRead": {
+  "status": "Rewritten",
+  "hash": "655dccec1e3c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#nextStep": {
+  "status": "Rewritten",
+  "hash": "561c73be9226",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#nothingNew": {
+  "status": "Rewritten",
+  "hash": "a29466d80147",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#noticeRefusal": {
+  "status": "Rewritten",
+  "hash": "1888a90b102c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#offerAgreement": {
+  "status": "Rewritten",
+  "hash": "def93de3e1e7",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#officeOf": {
+  "status": "Rewritten",
+  "hash": "c4dcedcef599",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#officeZone": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#openingWords": {
+  "status": "Rewritten",
+  "hash": "16f9cf1c6730",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#referralRefusal": {
+  "status": "Rewritten",
+  "hash": "d5334e94c83e",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#referrersOf": {
+  "status": "Rewritten",
+  "hash": "d01fde02b695",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent": {
+  "status": "Rewritten",
+  "hash": "a20e6524fe7f",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so a round or a meeting missed for another career commitment says where the actor was (the app's third walk), to docs/STYLE.md; read in tests/pro-work.test.ts ('two auditions in person whose trips meet…' and 'a meeting at the agent’s office and an audition…')",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>": {
+  "status": "Rewritten",
+  "hash": "c61a1d348e81",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.agent_check>": {
+  "status": "Rewritten",
+  "hash": "906fb10d3f0a",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.agent_notice>": {
+  "status": "Rewritten",
+  "hash": "bf8eeaef43a9",
+  "on": "2026-10-21",
+  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.ask_referral>": {
+  "status": "Rewritten",
+  "hash": "969fcd188796",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.ask_to_move>": {
+  "status": "Rewritten",
+  "hash": "e96ad663b78b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.decline_agreement>": {
+  "status": "Rewritten",
+  "hash": "1a010bde9c22",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.send_materials>": {
+  "status": "Rewritten",
+  "hash": "fd210ad07003",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.supply_material>": {
+  "status": "Rewritten",
+  "hash": "b3a06bd1cd5f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#scheduleMeeting": {
+  "status": "Rewritten",
+  "hash": "02f586d3c30b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#scheduleShowcaseFollowUp": {
+  "status": "Rewritten",
+  "hash": "0f75393c9ed7",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#sendRefusal": {
+  "status": "Rewritten",
+  "hash": "43997a1b31ce",
+  "on": "2026-10-21",
+  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#STAGE_LABEL": {
+  "status": "Rewritten",
+  "hash": "207bc48583c1",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#stillOwed": {
+  "status": "Rewritten",
+  "hash": "88d57c47aacc",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#supplyRefusal": {
+  "status": "Rewritten",
+  "hash": "f6f4d5ececb8",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#tooSoon": {
+  "status": "Rewritten",
+  "hash": "dfbd3d4c6c32",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#top": {
+  "status": "Rewritten",
+  "hash": "1d50140f3532",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#tripWords": {
+  "status": "Rewritten",
+  "hash": "bbce7c890355",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#underWay": {
+  "status": "Rewritten",
+  "hash": "3f0859017cb9",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#weeksWords": {
+  "status": "Rewritten",
+  "hash": "60b480e48cb6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#whose": {
+  "status": "Rewritten",
+  "hash": "75e5e5817e30",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#workSeen": {
+  "status": "Rewritten",
+  "hash": "51b016933708",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#AgentPanel": {
+  "status": "Rewritten",
+  "hash": "71c49a7b2d67",
+  "on": "2026-10-21",
+  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#AgreementPanel": {
+  "status": "Rewritten",
+  "hash": "c5e08257298e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#HistoryPanel": {
+  "status": "Rewritten",
+  "hash": "1077c7b3ded4",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#MaterialsPanel": {
+  "status": "Rewritten",
+  "hash": "ca265261502d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#MeetingPanel": {
+  "status": "Rewritten",
+  "hash": "eb901a72f363",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#ofSeven": {
+  "status": "Rewritten",
+  "hash": "7511c16f9807",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#ReachPanel": {
+  "status": "Rewritten",
+  "hash": "fb8485141fc9",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#WhyPanel": {
+  "status": "Rewritten",
+  "hash": "34305c9a5be6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), each factor a block that reads at 390, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ }
+}

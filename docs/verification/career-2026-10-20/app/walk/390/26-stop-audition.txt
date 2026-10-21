@@ -1,0 +1,29 @@
+stop-audition (audition.json, 390 wide)
+
+ON THE WAY
+On The Way
+✕
+
+Moving the clock to This Evening (June 11, 2029 at 6:00 PM) passes two commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.
+
+Audition: Nell, A House On Calder Street — June 11, 2029 at 11:00 AM
+Audition: Theo, Paper Moons — June 11, 2029 at 11:00 AM
+Cancel
+Advance
+
+THE STOP
+Audition: Nell, A House On Calder Street
+✕
+
+It’s 11:00 AM on June 11, 2029, and this needs you now. Going takes 30 minutes, and the clock moves on to June 11, 2029 at 6:00 PM. Getting there and back, about 2 hours each way, doesn’t move the clock.
+
+Press Go, or Stand Here to wait with the clock paused. Audition: Nell, A House On Calder Street starts the next time the clock moves, and you’re there if you’re awake and not in hospital or laid up with an injury. Only a plan of your own can be skipped, so there’s no Skip It button here.
+
+How This Works
+Stand Here
+Go
+
+MEASURED: buttons ["How This Works: The Calendar","Stand Here","Go"]; as built, 1 row, the buttons reach -25px past the dialog's nearer edge (negative is inside); without the footer's wrapping, 1 row, -25px past it
+
+----- 4 controls; Tab reached 4 of the 4 it can; 0 grayed
+Nothing found.

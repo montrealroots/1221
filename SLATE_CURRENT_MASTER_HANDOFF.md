@@ -1,6 +1,167 @@
-# Read First: Brief 17, The Final Comprehensive Writing And Continuity Pass, 2026-10-20
+# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, Done But For The Owner, 2026-10-21
 
-**This section is the current status, and where a new session starts.** It was written at the end of the owner's
+**This section is the current status, and where a new session starts.** The owner gave brief 19
+(`docs/verification/briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept
+verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
+none of it is in `main`, and nothing is deployed. There is no stash and one worktree.
+
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 19's gate on the final game, 2026-10-21, in a clean clone of `4aac9a94`, exit 0 read from its file: 423 of 423
+  test files, 5,092 of 5,092 tests, none skipped, and all 21 checks (`final-runs/runs/gate.txt`). Its figure folded in,
+  this said 633 of 658 until then. The 20 left are earlier briefs' rows, as before: twelve commands no current life can
+  reach and eight banking decisions for the owner.)
+
+  (Brief 19's final runs made again on the final game, 2026-10-21: the lanes that read the engine on `63fe7391`, the built
+  app's on `ef2ab8b9`, which changed only `src/ui/shell/TimeControls.tsx` after it; 197 steps, every one exit 0, and every
+  output the first run's but each run's own record and one dialog count (`final-runs/runs/README.md`, Made Again). Until
+  them this said 588 of 658, and 633 of 658 after them, the gate's row then reading `a6b82e07`'s figure.)
+
+  (The owner's parts, 2026-10-21: "There should be gender neutral and different parts for each genders. We need
+  versatility always." Each part is written for an actor, an actress or either, and only one written for the player or
+  for either is posted to them (`9c3b7ee8`); with the four defects the app's walks found after it, each fixed with its
+  test, it changed `src` again and the matrix still said 588 of 658 until the runs above.)
+
+  (The fictional agent, 2026-10-21, at the owner's word, "Let's go ahead and swap in a fictional agent.": Thomas
+  Ashgrove of Halberd Talent in the real agent's place. It changed `src/engine`, so the 46 rows brief 19's final runs had
+  measured on the engine's or the app's whole source read as measured before what they read last changed, until the runs
+  are made again on it; until then this said 634 of 658. The judge's rows stand: nothing the judge reads changed.)
+
+  (Brief 19's gate, 2026-10-21, in a clean clone of `a6b82e07`, exit 0 read from its file: 421 of 421 test files, 5,080 of
+  5,080 tests, none skipped, and all 21 checks (`docs/verification/career-2026-10-20/final-runs/runs/gate.txt`). Its
+  figure folded in, this said 633 of 658 until then. Brief 19's final runs before it, on `728b4972`, moved every row
+  measured on brief 17's commit: the judge's on figures brief 17's in every number, the long runs', the advice's, the
+  journeys' (25 of 25 played to the end, all ten checks passed, each ending as brief 17's) and the interface's; until
+  them this said 549 of 658. The 20 left are earlier briefs' rows: twelve commands no current life can reach and eight
+  banking decisions for the owner.)
+
+  (The audit's fourth reading, 2026-10-21, against `9c3e6fa5`: until it this said 548 of 658. `pro.cut_reel` is verified
+  on the test written for its gap, so all 22 of brief 19's rows are verified. The two refusals the third reading recorded
+  are read now, and Equity's employment check holds for the whole of a job, as S27 says, where it had read only a work
+  day's own hours. It recorded that S29's extension of the 90 days while employed wasn't counted; the working branch
+  counted it next, with its test. `audit/REPORT.md`, The Fourth Reading.)
+
+  (The audit's third reading, 2026-10-21, against `c01e06f4`, once tests had been written for what the second reading
+  found missing: until it this said 545 of 658. The four rows it had kept partial were verified then: `pro.ask_referral`,
+  `pro.supply_material`, `pro.end_agreement` and `pro.join_sag`. Going through the thirteen the first reading verified
+  reader by reader, it found `pro.cut_reel`'s count of a better reel as something new read by no test, so that row was
+  partial then. Two refusals no test read were recorded in their rows: a referral while an approach is under way or held,
+  and Equity's ending while covered work goes on. `audit/REPORT.md`, The Third Reading.)
+
+  (The audit's second reading, 2026-10-21, against `a483247d`, once V1's journeys had landed: until it this said 540 of
+  658. Five of the nine partial rows were verified on the played journeys: `pro.send_materials`, `pro.ask_to_move`,
+  `pro.accept_agreement`, `pro.decline_agreement` and `pro.prepare`. Four stayed partial then, each saying what was still
+  missing: `pro.ask_referral` and `pro.join_sag` for a reader no test read (a referral counted as something new, the
+  résumé's SAG-AFTRA line), `pro.supply_material` for its refusals of a résumé and of headshots, and `pro.end_agreement`
+  for continuing commission after the command. `audit/REPORT.md`, The Second Reading.)
+
+  (The independent audit of brief 19's 22 commands, 2026-10-21, against `7bbab80f`: until it this said 527 of 658.
+  Each was an audit row from then, in the School's area: 13 verified, so Implemented And Verified; 9 partial,
+  Implemented, Verification Incomplete, each with its gap. The seven agent rows past the check rested on introductions
+  written or scheduled by hand, `pro.join_sag` on an engagement written by hand, and `pro.prepare` on a part's
+  preparation no test read. `audit/REPORT.md` has each row's reason, the mutations and what closed the gaps.)
+
+  (The work loop, merged 2026-10-21 after the pay: until it this said 527 of 651. Its seven commands are rows of their
+  own, Implemented, Verification Incomplete until an audit row reads them.)
+
+  (The pay, merged 2026-10-21 after the agent: until it this said 527 of 650. Its command is a row of its own,
+  Implemented, Verification Incomplete until an audit row reads it.)
+
+  (The agent, merged 2026-10-21 after the showcase: until it this said 527 of 641. Its nine commands are rows of their
+  own, Implemented, Verification Incomplete until an audit row reads them.)
+
+  (The showcase, merged 2026-10-21: until it this said 566 of 640. Its one command is a row of its own, Implemented,
+  Verification Incomplete until an audit row reads it, and the rows measured on the engine's or the app's whole source
+  read as measured before what they read last changed, until brief 19's final runs measure them again.)
+
+  (Brief 19's core, merged 2026-10-21: until it this said 566 of 636. Its four commands are rows of their own,
+  Implemented, Verification Incomplete until an audit row reads them, and 46 measured rows read the engine's whole
+  source, so the understudy's, the clock's and the core's changes leave them measured before what they read last
+  changed, until brief 19's final runs measure them again. The pay's branch, `b19-pay`, adds `pro.join_sag`, a row of
+  its own the same way: 566 of 641 there, until then 566 of 640.)
+
+- **Read first:** `docs/verification/career-2026-10-20/criteria.md` (the items, each Open until the game does it and a
+  test fails without it), `design.md` (binding: the agent's limits, the pathways, the record, the agreement, the work
+  loop, who builds what) and the research in `docs/research/career-2026-10-20/`.
+- **Merged so far, each from a builder's branch with its report:** the understudy's part (D6, brief 18's U1,
+  `understudy/REPORT.md`); the clock (D1 to D5, brief 18's S1 to S5, `time/REPORT.md`); the core, the professional
+  record, the agent's data, the work's data and the portfolio (`core/REPORT.md`); the Actor Showcase and no early degree
+  (W1, W2, A5, `showcase/REPORT.md`); the agent's relationship, interest, agreement and the showcase's follow-up (G1 to
+  G8, W3, A2, `agent/REPORT.md`); the pay, commission, wages, work eligibility and OPT, the unions and the Work tab (D7,
+  D8, `pay/REPORT.md`); the work loop, from a posting to a credit, the agent's submissions, work while enrolled and a
+  leaver's routes, joined to the pay at its acceptance (J1 to J5, A3, A4, D9, `work/REPORT.md`). Brief 18's criteria mark
+  its five items done here.
+- **Audited:** the 22 commands and their five capabilities, read against the standard by a reader who wrote none of
+  them (`docs/verification/career-2026-10-20/audit/REPORT.md`, 2026-10-21); this said that was still to do until then.
+  Read again the same day against `a483247d`, once V1's journeys had landed (18 of the 22 verified, 4 partial then),
+  a third time against `c01e06f4` (21 verified, `pro.cut_reel` partial then), and a fourth against `9c3e6fa5`: all 22
+  verified.
+- **Played and walked (2026-10-21):** the joined career played whole as a player plays it, two lives and an older
+  graduate's save (V1, A1, L1, V16, J6, `playthroughs/REPORT.md`, its transcripts played again on `a483247d`); the
+  career's 52 surfaces walked on the built app at 1440 and 390 from the keyboard (V17's automated half, T1,
+  `app/REPORT.md`); the owner's route by hand (`PLAYTEST.md`, its setup checked on a build). Defects the playthroughs
+  and the audit's readings found were fixed on the working branch, each with its test and mutations
+  (`integration/mutations.txt`, I9 to I27): reliability counting a missed day twice, a role posted again after it was
+  booked, Low Budget pay held at 2026–27's figure, "went on 1 time", Equity's ending while employed (S27) and its 90
+  days extended by employment (S29).
+- **Done (2026-10-21):** brief 19's final runs on `728b4972` (`docs/verification/career-2026-10-20/final-runs/`), and
+  again on the final game once the fictional agent, the parts and the walks' fixes had changed `src` (`63fe7391` for the
+  engine's lanes, `ef2ab8b9` for the built app's); the matrix folded from them; the full gate in a clean clone of
+  `4aac9a94` (exit 0); and the receipt (`docs/verification/career-2026-10-20/README.md`). Until then this listed them as
+  still to do. Brief 19's criteria:
+  59 of 60 Fixed And Verified; V17's person's look at desktop and mobile is the owner's (`PLAYTEST.md` is the route).
+- **Nothing merged or deployed:** merging to `main` and any Base44 deployment wait on the owner.
+- **The agent is fictional** (2026-10-21, the owner's decision: "Let's go ahead and swap in a fictional agent."): Thomas
+  Ashgrove of Halberd Talent, New York legit, neither found as a real agent or agency when checked (`59da1351`). Until
+  then he was a real person, Jordan Parente of Stewart Talent, depicted only from what was published; the research on
+  him stays in `docs/research/career-2026-10-20/agent.md` as history. The agent's draws are keyed by his id, so the career
+  journeys' fixed seeds were found again: life A v1-21, life B v1-7, the older graduate played on to Hester Vane's run,
+  whose casting office refers her (`playthroughs/REPORT.md`, The Fictional Agent, The Parts And The Trips That Meet). No
+  save carrying the old id was shipped, so none is migrated.
+- **The parts** (2026-10-21, the owner's word above): eleven in the seven projects, three for either and four each for
+  an actor and an actress, so each is posted every project and kind as often (`content/careerwork.ts`, `writtenFor`);
+  the card says who a part is written for. No part shares a classmate's given name (Owen became Callum and Theo Felix).
+- **What the app's walks found after the swap, each fixed with its test and mutation** (I28 to I51,
+  `integration/mutations.txt`): deferred pay said three ways; the Ending It term without "through him"; the Calendar's
+  entry without the trip; the posting decider signing with the real agent's old id; two auditions at one hour, or an
+  audition and a meeting, both gone to (`attendedAcross`); the stop and On The Way silent on what a clash gives up, then
+  On The Way counting a stop it doesn't make (`careerClashes`, `clashesAhead`); and the built app blank on 40eab86a, a
+  constant read at load across the import ring proagent → school → projobs → proagent, which the suite's module runner
+  hides: `tests/module-load-order.test.ts` bundles `src/main.tsx` as the build does (`tools/load-order.mjs`). Loading
+  `projobs.ts` first in a bundle of its own still stops at coursework's `PARTNER_KIND`: an older hazard in the same ring
+  that no entry the app has reaches, recorded and not changed. The app was walked again on the final build `ef2ab8b9`:
+  52 surfaces at 1440 and 390, nothing found (`app/REPORT.md`).
+- **Found outside the career, for the owner, not changed:** every played life's credit card limit rose 20% every six
+  months with no ceiling (life A's to $194,736, `credit.ts`'s six-month review), which belongs to banking and paused
+  brief 18 (`playthroughs/REPORT.md`, Played Again On The Settled Branch).
+
+# Earlier: Brief 18, Close The Remaining Writing And Gameplay Gaps, Paused, 2026-10-20
+
+**This section was the current status until brief 19 began** (2026-10-20; brief 18 stays paused, and the completion
+line is stated in brief 19's section above). The owner gave brief 18
+(`docs/verification/briefs-2026-10-16/18-close-the-remaining-writing-and-gameplay-gaps.txt`, kept verbatim) and paused
+it before any fix: "Actually save and put a pause on all of this. I want to move on to something else." (2026-10-20,
+22:28 UTC). Nothing in the game changed. The rest of the state is brief 17's, in its section below.
+
+- **The repository:** `main` is at `469f8448` (#47). The working branch, `claude/peaceful-hamilton-59zdbb`, was
+  fast-forwarded to it and carries brief 18's records on top: the brief, its criteria and its plan. None of them changes
+  the game, and none is in `main`. Nothing is deployed. There is no stash, one worktree, and no other branch in progress.
+- **What's done:** `docs/verification/gaps-2026-10-20/criteria.md` turns the brief into 31 items, each with what closes
+  it, every one Open: the feedback's thin voices (W1 to W3), the Profile (P1 to P4), the acting terms and place names (T1
+  to T3), time and sleep with banking's step 8 (S1 to S5), health (H1 to H3), banking (B1 to B9), the papers (X1 to X5)
+  and the understudy's part (U1). The deferred scope stays deferred, each with whose word it was.
+- **What was started and stopped:** nine area workers, each in a clone of `32962d82`, were stopped while still reading;
+  none had changed anything, so nothing of theirs needed keeping. `docs/verification/gaps-2026-10-20/plan/` keeps their
+  instructions, the areas and what each owns, and the final-run scripts drafted from brief 17's.
+- **To take it up again:** read the criteria and `plan/README.md`, start each area from the current `main`, and run
+  the final lanes on the integrated commit. Brief 17's final runs are the baseline, since `main` plays brief 17's tested
+  game.
+
+# Earlier: Brief 17, The Final Comprehensive Writing And Continuity Pass, 2026-10-20
+
+**This section was the current status until brief 18** (**Superseded 2026-10-20:** the current status is the first
+section above, brief 18's, which is paused; the completion line is unchanged and stated there too). It was written at
+the end of the owner's
 "Final Comprehensive Writing And Continuity Pass"
 (`docs/verification/briefs-2026-10-16/17-final-comprehensive-writing-and-continuity-pass.txt`, kept verbatim).
 - **Where the work was done:** `claude/peaceful-hamilton-59zdbb`, from `dffc6ea0`, which is `main` at `bbb82253`

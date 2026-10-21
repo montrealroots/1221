@@ -1,0 +1,123 @@
+{
+ "label": "An existing graduate’s save, opened once",
+ "note": "Built once on opening (pro.begun): Equity dated at the degree; school credits read from school.credits.",
+ "at": "2026-09-03T17:00:00.000Z",
+ "opened": [
+  "followTheCover",
+  "findTermInterest",
+  "cutIntoUnits",
+  "cardYears",
+  "timeTheCalls",
+  "briefsMastered",
+  "writtenUnplayed",
+  "pro.begun"
+ ],
+ "pro": {
+  "since": 1788454800000,
+  "credits": [],
+  "materials": [],
+  "relations": {},
+  "agreements": [],
+  "opportunities": [],
+  "engagements": [],
+  "equity": {
+   "since": 1788444000000,
+   "how": "degree"
+  }
+ },
+ "profile": {
+  "name": "Ada Cole",
+  "nameSet": false,
+  "training": {
+   "status": "completed",
+   "words": "You completed the MFA in Acting at the David Geffen School of Drama at Yale University in 2026.",
+   "short": "MFA in Acting, David Geffen School of Drama at Yale University, 2026"
+  },
+  "schoolCredits": [
+   {
+    "key": "school:Shakespeare Repertory Project I|Viola|2029",
+    "production": "Shakespeare Repertory Project I",
+    "role": "Viola",
+    "venue": "David Geffen School of Drama at Yale University",
+    "year": 2029,
+    "understudy": false,
+    "wentOn": 4
+   }
+  ],
+  "proCredits": [],
+  "skills": [
+   {
+    "skill": "accents",
+    "label": "Accents And Dialects",
+    "level": 91,
+    "mastered": true
+   },
+   {
+    "skill": "combat",
+    "label": "Stage Combat",
+    "level": 82,
+    "mastered": false
+   }
+  ],
+  "availability": {
+   "inSchool": false,
+   "words": "Free for work, with nothing booked.",
+   "booked": []
+  },
+  "location": {
+   "cityId": "us-ct-newhaven",
+   "city": "New Haven"
+  },
+  "eligibility": {
+   "authorized": true,
+   "words": "You’re a US citizen, so you can work for any employer in the US."
+  },
+  "unions": {
+   "equity": 1788444000000,
+   "words": "You joined Actors’ Equity Association with the degree on September 3, 2026."
+  }
+ },
+ "pathway": {
+  "id": "graduate",
+  "heading": "A Graduate",
+  "words": "You’ve completed the MFA. Your training, the parts you played at the School and the portfolio you make go on with you."
+ },
+ "missing": {
+  "stage": [
+   {
+    "kind": "headshot",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab."
+   },
+   {
+    "kind": "resume",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record."
+   }
+  ],
+  "screen": [
+   {
+    "kind": "headshot",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab."
+   },
+   {
+    "kind": "resume",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record."
+   },
+   {
+    "kind": "reel",
+    "problem": "missing",
+    "blocking": false,
+    "words": "You have no reel, and nothing recorded to cut one from yet. Tape a practice brief on the Player Profile first."
+   }
+  ]
+ },
+ "reelSources": [],
+ "breaches": []
+}

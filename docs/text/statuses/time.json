@@ -1,0 +1,38 @@
+{
+ "src/engine/systems/life.ts#hoursSaid": {
+  "status": "Rewritten And Verified",
+  "hash": "adf2dbf53e7b",
+  "on": "2026-10-20",
+  "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
+ },
+ "src/engine/systems/life.ts#napNow": {
+  "status": "Rewritten And Verified",
+  "hash": "6678f53b5886",
+  "on": "2026-10-20",
+  "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
+ },
+ "src/engine/world/clock.ts#defineStop": {
+  "status": "Reviewed And Retained",
+  "hash": "2ff2f915a89e",
+  "on": "2026-10-20",
+  "reason": "A developer's error at startup when one kind's stop is declared twice; no player reaches it."
+ },
+ "src/engine/world/clock.ts#refusalOf": {
+  "status": "Rewritten And Verified",
+  "hash": "30a12bfb9806",
+  "on": "2026-10-20",
+  "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
+ },
+ "src/engine/world/clock.ts#top": {
+  "status": "Rewritten And Verified",
+  "hash": "8755674025df",
+  "on": "2026-10-20",
+  "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
+ },
+ "src/ui/shell/TimeControls.tsx#choicesAhead": {
+  "status": "Rewritten And Verified",
+  "hash": "85d932042752",
+  "on": "2026-10-20",
+  "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
+ }
+}

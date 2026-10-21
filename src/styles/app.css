@@ -961,7 +961,10 @@ kbd {
 }
 .modal-head { padding: var(--s5); border-bottom: 1px solid var(--line); }
 .modal-body { padding: var(--s5); overflow-y: auto; flex: 1; }
-.modal-foot { padding: var(--s4) var(--s5); border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: var(--s2); }
+/* The footer wraps its buttons to a second line where they don't fit, as `.btn` asks of the slot it sits in. It didn't
+   wrap until 2026-10-21: at 390 the clock's stop at a meeting, with Ask To Move beside How This Works, Stand Here and
+   Go, ran past the dialog's right edge (brief 19's agent walk found it; the app walk measured it). */
+.modal-foot { padding: var(--s4) var(--s5); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--s2); }
 
 /* ---------- Creation ---------- */
 

@@ -607,7 +607,7 @@
   ],
   "outcome": "Revised",
   "why": "Read in every run’s second and third terms: one sentence joined the School’s casting and the Rep’s, so a part cast by size read as a role (“cast you as A Leading Part In A New Play”), the lead given to a classmate came after a semicolon that the understudy then hung from (“; Nadia Brooks plays Masha, and to understudy in Yale Rep’s October Production”), and an understudy of a play the season names wasn’t told whom they cover. A comment above it said the notice named nobody, which it never did.",
-  "changes": "Each casting its own sentence: “The chair of Acting has cast you in a leading part in a new play at the Carlotta Festival Of New Plays, from its first rehearsal call. You’ll also understudy Nina in Yale Rep’s The Seagull, …: be in New Haven and reachable at every performance.” The lead is “The lead, Masha, went to Nadia Brooks.” The false comment is corrected, and `redateCredits`, which dates an old save’s credits by these notices, finds a part said either way.",
+  "changes": "Each casting its own sentence: “The chair of Acting has cast you in a leading part in a new play at the Carlotta Festival Of New Plays, from its first rehearsal call. You’ll also understudy Nina in Yale Rep’s The Seagull, …: be in New Haven and reachable at every performance.” The lead is “The lead, Masha, went to Nadia Brooks.” The false comment is corrected, and `redateCredits`, which dates an old save’s credits by these notices, finds a part said either way. From 2026-10-20 (brief 19’s D6) an understudy of a Rep play with no lead written for them is told whom they cover, and why it isn’t a lead: “You’ll also understudy Petra Stockmann in Yale Rep’s An Enemy Of The People: be in New Haven and reachable at every performance. Its leads are written for actors, so the part you cover is a supporting one.” Until then it read “You’ll also understudy in Yale Rep’s An Enemy Of The People”, naming nobody.",
   "evidence": [
    {
     "kind": "run",
@@ -632,6 +632,14 @@
    {
     "kind": "run",
     "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/attentive-v16-0.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/understudy-part.test.ts: 'is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her'"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/understudy/sequence-after.txt"
    }
   ]
  },
@@ -653,7 +661,7 @@
   ],
   "outcome": "Revised",
   "why": "Read in order in the attentive, distant, pressure and skilled runs: “you go on in Yale Rep’s Yale Rep’s October Production tonight at 2:00 PM.”, a Sunday matinee called tonight, an understudy of the company told “You’re On Tonight As An Understudy In The Company” and “you played An Understudy In The Company”, and a run-through in the afternoon called “a solid night”.",
-  "changes": "The Rep’s production is named once (“Yale Rep’s October Production”, “Yale Rep’s An Enemy Of The People”); a matinee is “today”; a named role reads “Konstantin’s actor is out, so you go on …”, and the company’s understudy “You’re On Tonight At Yale Rep”, “An actor you cover is out”; the run-through reads “…, and it was solid.”",
+  "changes": "The Rep’s production is named once (“Yale Rep’s October Production”, “Yale Rep’s An Enemy Of The People”); a matinee is “today”; a named role reads “Konstantin’s actor is out, so you go on …”, and the company’s understudy “You’re On Tonight At Yale Rep”, “An actor you cover is out”; the run-through reads “…, and it was solid.” From 2026-10-20 (brief 19’s D6) every understudy covers a named part (“You’re On Tonight As Petra Stockmann”, “You played Petra Stockmann through for the director today”), and the company’s words are only a save from before’s, whose company understudy had been judged as one.",
   "evidence": [
    {
     "kind": "run",
@@ -678,6 +686,58 @@
    {
     "kind": "run",
     "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/attentive-v16-0.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/understudy-part.test.ts: 'is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her'"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/understudy/sequence-before.txt"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/understudy/sequence-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "An understudy’s part named: on the calendar, and on opening a save from before",
+  "where": "Calendar and Calls Ahead: “Yale Rep’s October Production: On Call For Petra Stockmann”; the casting notice’s reason for a supporting part; the notice Your Understudy Part: …, once, on a save from before",
+  "sources": [
+   "src/engine/systems/school.ts#onCallFor",
+   "src/engine/systems/school.ts#coverWhy",
+   "src/engine/systems/school.ts#nameTheCover"
+  ],
+  "states": [
+   "details",
+   "notification",
+   "returning",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Played on seed us-86 before the fix (brief 18’s U1, brief 19’s D6): an actress dealt An Enemy Of The People understudied “An Understudy In The Company”, her nights on call read “On Call” with no part, she went on “At Yale Rep” for “An actor you cover”, and her credit named no part. A save from before holds such a casting.",
+  "changes": "New text. A night on call names its part on the calendar (“On Call For Petra Stockmann”); a covered part smaller than a lead is said with why (“Its leads are written for actors, so the part you cover is a supporting one.”); a save from before whose company understudy had nothing of its run judged is told once on opening: “You understudy Petra Stockmann in Yale Rep’s An Enemy Of The People. Its leads are written for actors, so the part you cover is a supporting one. Your calls are on your calendar as before.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/understudy-part.test.ts: 'is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/understudy-part.test.ts: 'is given the part once on opening where none of the run was judged, told so once, and plays on as it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/understudy-part.test.ts: 'keeps the company’s cover where a night of the run was already judged, or the run has closed, as its nights were judged'"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/understudy/sequence-save-from-before-unjudged.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/career-2026-10-20/understudy/runs/after.json"
    }
   ]
  },
@@ -981,7 +1041,7 @@
    "details",
    "director"
   ],
-  "outcome": "Kept",
+  "outcome": "Revised",
   "why": "Read on the leave and direction saves: What Arms And The Man Asks gives each demand its level and the play’s own reason in a vivid line of the scene (“A fugitive at a window, a pistol, the search, the chocolate creams.”), and the chooser shows every way of playing with whether it suits the scene, the abilities it uses and its fully prepared figure before anything is chosen, saying that choosing isn’t rehearsing. The scenes’ notes are the material’s, kept as written.",
   "evidence": [
    {
@@ -991,8 +1051,13 @@
    {
     "kind": "walk",
     "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/direction.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-app.test.ts: 'PLAYER JOURNEY: the last term’s showcase scenes, chosen, draw two choosers on Coursework whose groups share no name, so Tab stops in each'"
    }
-  ]
+  ],
+  "changes": "From 2026-10-21 (brief 19's app walk, on the showcase's scene cards): Play It This Way, grayed until a way is picked, says why in its title and under it; each chooser's radio groups are its own, so Tab stops in each of two on one screen."
  },
  {
   "surface": "A practice brief, from the breakdown to the take",

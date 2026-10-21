@@ -1,0 +1,162 @@
+0 strings in 0 files would change
+0 labels with a lowercase word
+
+0 counts printed in front of a plural noun without agreeing with it.
+291 files. 37 places a person would have contracted.
+     18  x not
+      7  x are
+      7  x is
+      2  x will
+      2  X is
+      1  X not
+
+Stiff shapes, for a person to look at:
+     12  a sentence that opens with "Nothing"
+      4  ", which is" tacked on
+      4  "somebody"
+      3  "SLATE’s own"
+
+Heaviest files:
+     14  src/engine/content/banks-world-sheets.ts
+      3  src/engine/content/banks-thirteen.ts
+      2  src/engine/content/abilities.ts
+      2  src/engine/content/bankopening.ts
+      2  src/engine/content/pending.ts
+      2  src/engine/content/personality-traits.ts
+      2  src/engine/decided.ts
+      1  src/engine/content/banks-lending.ts
+      1  src/engine/content/banks-world-fees.ts
+      1  src/engine/content/briefs/briefs-c.ts
+      1  src/engine/content/guide/craft.ts
+      1  src/engine/content/guide/papers.ts
+      1  src/engine/content/scenes-classical.ts
+      1  src/engine/content/security.ts
+      1  src/ui/creation/CharacterCreation.tsx
+      1  src/ui/looks/money.tsx
+      1  src/ui/workspaces/CalendarWorkspace.tsx
+What the game says, and the habits in it.
+
+   6/12   A clause tacked on to explain what the sentence just meant
+        End the sentence. Say the next thing plainly, or don’t say it.
+        engine/content/licensepaths.ts:234  Driving School And Lessons The middle of ISK 335,000 to 375,000 an instructor’s price list puts the whole cour
+        engine/content/passports.ts:201  {\"fee\":75,\"oldCancelled\":true,\"note\":\"The loss is reported inside the replacement application, which is
+        engine/content/pending.ts:27  {\"us-chase\":{\"source\":\"Chase Deposit Account Agreement, effective June 14, 2026 (chase.com/content/dam/ch
+
+   0/6    An em dash, then a restatement of what came before it
+   0/4    "the whole point / the whole thing / the entire point"
+   8/8    Defining something by what it isn’t before saying what it is
+        Say what it is. The contrast is only worth it once or twice.
+        engine/content/guide/documents.ts:146  Your passport and your state ID card prove who you are. A bank you don’t bank with yet asks to see one of them
+        engine/content/statetax.ts:699  Distraint Warrant the county clerk’s lien record Oregon’s process for a warrant filed in error isn’t published
+        engine/content/statetax.ts:919  Philadelphia Tax Lien the court of common pleas Philadelphia’s process for a lien filed in error isn’t publish
+        engine/content/statetax.ts:950  Judgment Lien the court of common pleas, by the City Attorney’s suit Columbus’s process for a lien filed in er
+        engine/systems/workbook.ts:100  : The Turn Into   Isn’t Secure  :  }: it’s at   of the   it needs. It comes to  , against   for the whole piec
+        ui/looks/day.tsx:641  You need to be there, awake  : ''}, when the clock reaches it. If you aren’t, it’s missed .
+        ui/workspaces/PapersWorkspace.tsx:272  The plan’s longest term isn’t published, so it’s estimated.    doesn’t publish what happens after a missed pay
+        ui/workspaces/SchoolWorkspace.tsx:859  Source: the Yale Bulletin, for the 2026–2027 dates. Later years aren’t published yet, so they’re estimated fro
+
+   7/12   "rather than"
+        Often just "not". Sometimes the clause can go entirely.
+        engine/content/genre-register.ts:40  Playing a real person means documented fact: their voice, manners and movement reproduced, portrayed rather th
+        engine/content/guide/taxes.ts:419  Catch Up shows only while a plan is behind, and your bank has to cover the payment: “Your bank can’t cover …, 
+        engine/content/licenses.ts:797  Whether an exchange-list driver with under 2 years' experience gets a Class 7 (novice) rather than a Class 5 —
+        engine/content/passports.ts:74  travel.state.gov blocks automated fetches (HTTP 403); processing times (4-6 weeks routine, 2-3 weeks expedited
+        engine/content/passports.ts:202  Passport Online works from anywhere in the world at the same €75 adult fee, plus a €15 postal fee for applican
+        engine/systems/feedback.ts:76  Let the breath drop in before each new thought, rather than holding it to get to the end of the line.
+        ui/looks/place.tsx:244  The game has no income tax table for  , so Tax On A Wage says Not On File rather than zero.
+
+   0/0    A sentence that opens with "Nothing"
+   8/25   "somebody"
+        A person, a name, "you", "they" — anything but the same word again.
+        engine/content/personality-traits.ts:297  You’re better with somebody in the room. You always have been.
+        engine/decided.ts:208  Whether somebody else uses a card on a day, which card, how much, and whether the bank stops it: here, the fir
+        engine/decided.ts:366  Whether a US bank turns away somebody with a standing ChexSystems report.
+        engine/systems/security.ts:399  Your Bank Stopped A Payment Somebody tried to spend   on your   card ending  .   declined it and asked you abo
+        engine/systems/security.ts:431  A Debit On Your Old Number Declined Somebody tried to take   with your old account number. It’s closed to them
+        ui/bank/BankSecurity.tsx:24  Lost Stolen Damaged Used by somebody else Not arrived yet
+        ui/bank/BankSecurity.tsx:148  Your account number isn’t known to be exposed. A new number would mean a new debit card, and wouldn’t protect 
+        ui/looks/wellbeing.tsx:272  Yourself Somebody
+
+   0/3    Three negatives in a row: "no x, no y, no z"
+   0/8    "which is why" / "which is how"
+And how the long lists begin, where one word does too much of it.
+
+  None. Every long list opens more than one way.
+
+29 in all, across 9 habits.
+1029 files named across 25 docs.
+Every one of them is there.
+What SLATE declares, and what nothing reads.
+
+     1  Id namespaces  (of 9)
+        A noun with no nextId call site is a table the game never fills.
+        person
+     1  Save tables nothing fills  (of 7)
+        A collection only bootstrap writes is a shape in the save, not a system in the game.
+        people
+     0  Personality knobs nothing reads  (of 19)
+     0  Personality axes nothing consults  (of 7)
+
+2 declared words that nothing reads.
+221 engine files. 16 of them draw.
+
+  ok       src/engine/systems/appointments.ts  (lines 79, 134)  →  health.referral, health.appointment
+  ok       src/engine/systems/attributes.ts  (lines 98, 129)  →  attributes.presence
+  ok       src/engine/systems/banknumber.ts  (line 30)  →  bank.number
+  ok       src/engine/systems/body.ts  (line 86)  →  body.draw
+  ok       src/engine/systems/classmates.ts  (lines 189, 346)  →  school.classmates
+  ok       src/engine/systems/coursework.ts  (lines 332, 431, 1146, 1747, 1852)  →  school.coursework, school.partner
+  ok       src/engine/systems/documents.ts  (line 527)  →  documents.start
+  ok       src/engine/systems/health.ts  (lines 743, 831, 1237, 1239, 1756, 1903, 2214)  →  health.illness, health.chronic, health.onset
+  ok       src/engine/systems/injury.ts  (line 116)  →  health.injury
+  ok       src/engine/systems/lending.ts  (line 296)  →  bank.chex
+  ok       src/engine/systems/mortality.ts  (line 114)  →  life.end
+  ok       src/engine/systems/production.ts  (line 169)  →  production.direction
+  ok       src/engine/systems/school.ts  (lines 1054, 1079, 1130, 1137, 1413, 1421, 1427, 2231, 2252, 2338, 2642)  →  school.class, school.attendance, school.cabaret_mates, school.night, school.understudy
+  ok       src/engine/systems/security.ts  (lines 368, 421)  →  bank.fraud
+  ok       src/engine/systems/therapy.ts  (line 86)  →  health.therapy
+  ok       src/engine/systems/weather.ts  (lines 132, 271)  →  weather.day
+
+Every draw is owned by a decider, and every decider owns a real one.
+24 registered: weather.day, life.end, bank.number, bank.fraud, documents.start, attributes.presence, school.class, school.attendance, school.cabaret_mates, school.night, school.understudy, production.direction, bank.chex, health.illness, health.chronic, health.onset, body.draw, health.injury, health.referral, health.appointment, school.coursework, school.partner, health.therapy, school.classmates
+0 British spellings in 0 files.
+0 misspellings or doubled words.
+252 countries, 3865 regions and 170,911 cities, in 246 country files.
+246 countries carry at least one city and the 6 that do not are uninhabited or dissolved; America alone carries 17,342 across all 51 states and the District.
+The gazetteer is public reference data. Every cost figure derived from it is SLATE’s own.
+The world holds.
+Inventory matches the code: 158 commands, 96 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 5 routes.
+docs/DEVMAP.md matches the code: 158 commands.
+docs/TRACEABILITY.md matches the code: 158 commands, 96 scheduled kinds.
+64 capabilities: Missing 0, Partial 11, Implemented 31, Verified 3, Blocked 0, Retired 19. 158 player commands, every one in a live row, and docs/GAMEPLAY-COVERAGE.md agreed with on the 158 both name.
+docs/GAMEPLAY-COVERAGE.md matches the audit: 339 items.
+docs/capabilities.json agrees on the 158 commands both name.
+docs/verification/STUDENT-MATRIX.md matches: 57 of 57 verified.
+start            323 sources   1322 strings   15721 words     7 engine-speak; second pass: Rewritten 55 Retained 268 Pending 0 Blocked 0; first: RV 15 RR 253 P 55 B 0
+tutorial          47 sources    462 strings   12809 words     0 engine-speak; second pass: Rewritten 27 Retained 20 Pending 0 Blocked 0; first: RV 12 RR 8 P 27 B 0
+home              19 sources    187 strings     896 words     0 engine-speak; second pass: Rewritten 7 Retained 12 Pending 0 Blocked 0; first: RV 5 RR 9 P 5 B 0
+profile          621 sources   3756 strings   55956 words   176 engine-speak; second pass: Rewritten 179 Retained 442 Pending 0 Blocked 0; first: RV 144 RR 238 P 239 B 0
+school           663 sources   6711 strings   70296 words     7 engine-speak; second pass: Rewritten 185 Retained 478 Pending 0 Blocked 0; first: RV 119 RR 353 P 191 B 0
+money            764 sources   6634 strings  151915 words    13 engine-speak; second pass: Rewritten 265 Retained 499 Pending 0 Blocked 0; first: RV 118 RR 377 P 269 B 0
+papers           473 sources   4587 strings   56842 words     3 engine-speak; second pass: Rewritten 101 Retained 372 Pending 0 Blocked 0; first: RV 145 RR 225 P 103 B 0
+health           106 sources    805 strings    8275 words     0 engine-speak; second pass: Rewritten 34 Retained 72 Pending 0 Blocked 0; first: RV 30 RR 40 P 36 B 0
+calendar          83 sources   2549 strings   14798 words     0 engine-speak; second pass: Rewritten 16 Retained 67 Pending 0 Blocked 0; first: RV 29 RR 37 P 17 B 0
+notifications     31 sources    196 strings    1107 words     0 engine-speak; second pass: Rewritten 3 Retained 28 Pending 0 Blocked 0; first: RV 18 RR 12 P 1 B 0
+controls          41 sources    187 strings     736 words     0 engine-speak; second pass: Rewritten 8 Retained 33 Pending 0 Blocked 0; first: RV 7 RR 28 P 6 B 0
+material         993 sources   9168 strings  153700 words   109 engine-speak; second pass: Rewritten 216 Retained 777 Pending 0 Blocked 0; first: RV 30 RR 747 P 216 B 0
+world             72 sources    189 strings   30497 words     1 engine-speak; second pass: Rewritten 4 Retained 68 Pending 0 Blocked 0; first: RV 0 RR 66 P 6 B 0
+area frame         497 sources   33258 words; Rewritten 89 Retained 408 Pending 0 Blocked 0
+area health        178 sources   38772 words; Rewritten 38 Retained 140 Pending 0 Blocked 0
+area material-a    507 sources   80107 words; Rewritten 95 Retained 412 Pending 0 Blocked 0
+area material-b    492 sources   74135 words; Rewritten 121 Retained 371 Pending 0 Blocked 0
+area money         264 sources   54945 words; Rewritten 107 Retained 157 Pending 0 Blocked 0
+area money-data    522 sources   99446 words; Rewritten 162 Retained 360 Pending 0 Blocked 0
+area papers        473 sources   56842 words; Rewritten 101 Retained 372 Pending 0 Blocked 0
+area profile       621 sources   55956 words; Rewritten 179 Retained 442 Pending 0 Blocked 0
+area school        635 sources   67278 words; Rewritten 181 Retained 454 Pending 0 Blocked 0
+area tutorial       47 sources   12809 words; Rewritten 27 Retained 20 Pending 0 Blocked 0
+all: 4236 sources, 36753 strings, 573548 words, 316 engine-speak hits; second pass: Rewritten 1100, Retained 3136, Pending 0, Blocked 0; first pass: Rewritten And Verified 672, Reviewed And Retained 2393, Pending 1171, Blocked 0
+The text inventory holds.
+578 quoted sentences in the guide; 578 the game says (4 of them held by the test that plays the example), 0 it no longer says.
+271 surfaces; 4236 of 4236 sources claimed; 0 problems.
+The completion matrix holds: 676 rows. Completion, by the matrix: 566 of 636 rows in scope Implemented And Verified (88.9%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.

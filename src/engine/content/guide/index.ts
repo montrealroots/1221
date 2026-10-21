@@ -18,11 +18,13 @@ import { MONEY } from './money';
 import { PAPERS } from './papers';
 import { TAXES } from './taxes';
 import { DOCUMENTS } from './documents';
+import { CAREER_GUIDE } from './career';
+import { SHOWCASE_GUIDE } from './showcase';
 
 export type { Connection, ConnectionKind, Fact, Goal, GoalId, GuideEntry } from './types';
 
 /**
- * The contents, by what the player is trying to do, in the order a life meets them. Each lead names what its entries
+ * The contents, by what the player is trying to do, in the order a life meets them (Your Career last, from 2026-10-20). Each lead names what its entries
  * cover, in their order (from 2026-10-17: until then Staying At School's offered "shows of your own", which are
  * Productions And Casting's, and Your Day And The Clock's left moving time on out). From 2026-10-19 (brief 15) the
  * leads of Coursework And Partners, Productions And Casting, Money And The Bank and Papers name the entries they had
@@ -34,11 +36,13 @@ export const GOALS: readonly Goal[] = [
   { id: 'day', title: 'Your Day And The Clock', lead: 'What’s coming, the clock, moving time on, what needs you, your own plans and the weather.' },
   { id: 'body', title: 'Looking After Yourself', lead: 'How you are, sleep, and eating, washing, working out and unwinding.' },
   { id: 'school', title: 'Staying At School', lead: 'Your standing and classes, calling in sick, orientation, leave, repeating a year, what you owe the school and work-study.' },
-  { id: 'coursework', title: 'Coursework And Partners', lead: 'Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates and working a problem through.' },
+  { id: 'coursework', title: 'Coursework And Partners', lead: 'Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates, working a problem through and the Actor Showcase.' },
   { id: 'productions', title: 'Productions And Casting', lead: 'Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read.' },
   { id: 'craft', title: 'Your Craft', lead: 'Your Player Profile, practice, genres, practice briefs from preparing to taping, how a piece was judged, and your work so far.' },
   { id: 'money', title: 'Money And The Bank', lead: 'What you’re worth, your accounts, moving money, savings, paying, cards, borrowing, another bank and an account at home.' },
   { id: 'papers', title: 'Papers', lead: 'Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, permission to work and living abroad.' },
+  // From 2026-10-20 (brief 19), the professional record's screen and portfolio (`content/guide/career.ts`).
+  { id: 'career', title: 'Your Career', lead: 'The Career screen, your professional profile and name, headshots, your résumé and your reel.' },
 ];
 
 /**
@@ -47,7 +51,8 @@ export const GOALS: readonly Goal[] = [
  */
 export const SEARCH_EXAMPLES: readonly string[] = ['clock stopped', 'how do I pay my card'];
 
-export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS];
+// The Actor Showcase's entry after the coursework's, from 2026-10-21 (brief 19): its scenes are the course's pieces.
+export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...SHOWCASE_GUIDE, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS, ...CAREER_GUIDE];
 
 export const GUIDE_BY_ID: Readonly<Record<string, GuideEntry>> = Object.fromEntries(GUIDE.map((e) => [e.id, e]));
 

@@ -43,6 +43,10 @@ import { mayRefer, waitDays } from './systems/appointments';
 import { reliabilityOf, setWork } from './systems/coursework';
 import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
+import { AGENTS } from './content/agents';
+import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
+import { castingDraw, postingsAt } from './systems/projobs';
+import { PROJECTS } from './content/careerwork';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -549,4 +553,101 @@ defineDecider<{ sim: Simulation; who: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), who: seed % 15 }),
   decide: ({ sim, who }) => priorityOf(sim, sim.player, who),
+});
+
+// ---------------------------------------------------------------------------
+// The agent (from 2026-10-21, the owner's brief 19, G4 and G6)
+// ---------------------------------------------------------------------------
+
+const BANDS_IN_ORDER = ['unready', 'working', 'strong', 'exceptional'] as const;
+
+defineDecider<{ sim: Simulation; band: number; room: number; atBar: number; approach: number }, string>({
+  id: 'pro.agent',
+  decides: 'An agent’s office’s answer to an approach, a meeting or a request, a pass or no answer, and after a meeting an offer or a pass: from the factors at the bar and a draw against the year’s other actors whose chance rises with the work’s band and the room on the list.',
+  drawnIn: 'src/engine/systems/proagent.ts',
+  reads: {
+    // The best band of the work his office has to go on.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    // The room on his list this year, short of the bar to beyond it.
+    room: (o, t) => ({ ...o, room: Math.round(t * 3) }),
+    // How many of the seven factors are at the bar or beyond.
+    atBar: (o, t) => ({ ...o, atBar: Math.round(t * 7) }),
+    // Which approach: each draws its own.
+    approach: (o, t) => ({ ...o, approach: 1 + Math.round(t * 40) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: 1 + (seed % 3), room: 1 + (seed % 3), atBar: 4 + (seed % 4), approach: 1 + seed }),
+  decide: ({ sim, band, room, atBar, approach }) => {
+    const b = BANDS_IN_ORDER[band]!;
+    const interest = { factors: [], atOrBeyond: atBar, needed: GATE, gate: atBar >= GATE, band: b, ...chancesFor(b, LEVELS[room]!) };
+    const agent = AGENTS[0]!;
+    return Array.from({ length: 30 }, (_, n) => `${replyOutcome(interest, drawOf(sim, sim.player, agent, approach + n, 'interest'), { requestable: [] })[0]}${offerOutcome(interest, drawOf(sim, sim.player, agent, approach + n, 'offer'))[0]}`).join(' ');
+  },
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'pro.roster',
+  decides: 'How many new actors an agent’s list has room for in a year, one to three, and of which billing and playing ages: the game’s assumption, drawn for each year.',
+  drawnIn: 'src/engine/systems/proagent.ts',
+  reads: {
+    year: (o, t) => ({ ...o, year: 2026 + Math.round(t * 12) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
+  decide: ({ sim, year }) => JSON.stringify(rosterFor(sim, AGENTS[0]!, year)),
+});
+
+// ---------------------------------------------------------------------------
+// Professional work (from 2026-10-21, brief 19's J1 and J5, `systems/projobs.ts`)
+// ---------------------------------------------------------------------------
+
+/**
+ * TEST SETUP for the sweep: an agreement signed a day before and running a year, or none (`activeAgreement` reads it).
+ * With the agent in the data: until 2026-10-21 it named 'jordan-parente', which the fictional agent's swap that day left
+ * naming nobody, so no project was in its department's scope and `represented` was swept to no effect (the suite found it).
+ */
+function represent(sim: Simulation, on: boolean): void {
+  const pro = sim.player.pro!;
+  pro.agreements = on ? [{ id: 'sweep-agreement', agentId: AGENTS[0]!.id, offeredAt: sim.now - 2 * MS_DAY, standsUntil: sim.now, status: 'accepted', terms: [], signedAt: sim.now - MS_DAY, endsAt: sim.now + 400 * MS_DAY }] : [];
+}
+
+defineDecider<{ sim: Simulation; week: number; represented: number; title: number }, string>({
+  id: 'pro.posting',
+  decides: 'Which fictional projects post a role to the actor in a week, openly or through an agent, each at its chance (POSTING), and only parts written for the actor or for either.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // Which weeks: each Monday draws its own.
+    week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
+    // Represented or not: an agent's breakdowns bring roles open postings never do.
+    represented: (o, t) => ({ ...o, represented: Math.round(t) }),
+    // An actor or an actress (from 2026-10-21, the owner's word): only a part written for them or for either is posted.
+    title: (o, t) => ({ ...o, title: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed * 3, represented: seed % 2, title: (seed >> 1) % 2 }),
+  decide: ({ sim, week, represented, title }) => {
+    represent(sim, represented === 1);
+    sim.player.performerTitle = title === 1 ? 'actress' : 'actor';
+    return Array.from({ length: 12 }, (_, n) => postingsAt(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((x) => `${x.project.id}:${x.via}`).join('+') || '-').join(' ');
+  },
+});
+
+defineDecider<{ sim: Simulation; band: number; fit: number; kind: number }, string>({
+  id: 'pro.casting',
+  decides: 'Casting’s call on a round, a callback or the role: the chance from the band, the fit and the field (CASTING), and the draw for the field.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // The audition's band: a stronger one raises the chance, never to certainty.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    // The role's fit, 0 to 1.
+    fit: (o, t) => ({ ...o, fit: t }),
+    // The kind of work, and the field it draws.
+    kind: (o, t) => ({ ...o, kind: Math.round(t * (PROJECTS.length - 1)) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: seed % 4, fit: (seed % 5) / 4, kind: seed % PROJECTS.length }),
+  decide: ({ sim, band, fit, kind }) => {
+    const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
+    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { id: `o${n}`, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
+  },
 });

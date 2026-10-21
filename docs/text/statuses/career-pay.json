@@ -1,0 +1,182 @@
+{
+ "src/engine/systems/propay.ts#commissionOn": {
+  "status": "Rewritten And Verified",
+  "hash": "47ffb40d5da5",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts"
+ },
+ "src/engine/systems/propay.ts#duesBill": {
+  "status": "Rewritten And Verified",
+  "hash": "e5f27ded39a6",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#eligibilityRead": {
+  "status": "Rewritten And Verified",
+  "hash": "a03b1246bde6",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#equityJoined": {
+  "status": "Rewritten And Verified",
+  "hash": "c45ff5336093",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#equityOnOpening": {
+  "status": "Rewritten And Verified",
+  "hash": "261b28635cba",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#equityParts": {
+  "status": "Rewritten And Verified",
+  "hash": "9a6ae71919ea",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts"
+ },
+ "src/engine/systems/propay.ts#joinSagRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "88afa29295fb",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#payDue": {
+  "status": "Rewritten And Verified",
+  "hash": "2b3b15b45547",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#payDue [paid]": {
+  "status": "Rewritten And Verified",
+  "hash": "0bc24a0ee835",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#payDue [problem]": {
+  "status": "Rewritten And Verified",
+  "hash": "43e06d8956e4",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#registerProPay": {
+  "status": "Rewritten And Verified",
+  "hash": "b55f1339aca3",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#registerProPay [success]": {
+  "status": "Rewritten And Verified",
+  "hash": "28aa1d5d6bcf",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#registerProPay <pro.join_sag>": {
+  "status": "Rewritten And Verified",
+  "hash": "da8242d0ce4a",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#release": {
+  "status": "Rewritten And Verified",
+  "hash": "a3139a8fc9b5",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#release [paid]": {
+  "status": "Rewritten And Verified",
+  "hash": "ad4b5294f86a",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#sagWorkRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "69fb7fcc7d13",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#schedulePay": {
+  "status": "Rewritten And Verified",
+  "hash": "b1ca90943cea",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#settle": {
+  "status": "Rewritten And Verified",
+  "hash": "002d80b366c4",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#STUDENT_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "4a3b4e536997",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#trustAccount [escrow]": {
+  "status": "Rewritten And Verified",
+  "hash": "d11db0d24098",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#weekWords": {
+  "status": "Rewritten And Verified",
+  "hash": "2c09fd1f3dda",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#WORK_ZONE": {
+  "status": "Rewritten And Verified",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/engine/systems/propay.ts#workEligibilityRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "e40b50e8fee8",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/ui/career/WorkPane.tsx#billWords": {
+  "status": "Rewritten And Verified",
+  "hash": "e7c3ff279924",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/ui/career/WorkPane.tsx#datesWords": {
+  "status": "Rewritten And Verified",
+  "hash": "e9c7997bc072",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/ui/career/WorkPane.tsx#EngagementView": {
+  "status": "Rewritten And Verified",
+  "hash": "173244330c26",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/ui/career/WorkPane.tsx#PaymentLine": {
+  "status": "Rewritten And Verified",
+  "hash": "3ea0a5382aa8",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing"
+ },
+ "src/ui/career/WorkPane.tsx#STATUS": {
+  "status": "Rewritten And Verified",
+  "hash": "c2995665268e",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ },
+ "src/ui/career/WorkPane.tsx#UnionsPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "e98575d22f95",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts"
+ },
+ "src/ui/career/WorkPane.tsx#WorkPane": {
+  "status": "Rewritten And Verified",
+  "hash": "fa67c7cb5424",
+  "on": "2026-10-21",
+  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
+ }
+}

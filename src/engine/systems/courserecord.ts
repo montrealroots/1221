@@ -96,11 +96,13 @@ export function noteMeeting(school: SchoolRecord, term: number, code: string, na
  * a course's work due in the term that was shown, or nothing where none was due. An Incomplete is told here; a Fail
  * after the standing (`tellFails`).
  */
-export function settleCourses(sim: Simulation, person: Person, term: number, shownShare: (code: string) => { due: number; notShown: number }, perWeek: (code: string) => number = () => 1): CourseRecord[] {
+export function settleCourses(sim: Simulation, person: Person, term: number, shownShare: (code: string) => { due: number; notShown: number }, perWeek: (code: string) => number = () => 1, held: (code: string) => boolean = () => false): CourseRecord[] {
   const school = person.school!;
   const settled: CourseRecord[] = [];
   for (const r of Object.values(coursesOf(school))) {
-    if (r.term !== term || r.result !== undefined || r.meetings === 0) continue;
+    // A course held past its term's review (`held`): the final term's Actor Showcase, settled after its last day
+    // (`systems/proshowcase.ts`, from 2026-10-21).
+    if (r.term !== term || r.result !== undefined || r.meetings === 0 || held(r.code)) continue;
     const counted = r.meetings - r.excused;
     const work = shownShare(r.code);
     if (counted > 0 && r.attended / counted < COURSE_RULES.passFloor) {

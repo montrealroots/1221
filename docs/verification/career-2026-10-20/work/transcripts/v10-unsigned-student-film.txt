@@ -1,0 +1,32 @@
+V10 (seed work-loop-0): an unsigned graduate, from a posted student film to a booked, worked and credited part
+
+DECISION  An Offer For Theo
+    The film’s director offers you Theo in Paper Moons, a fictional student film. The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its three days of work. The work is from November 16, 2026 to November 18, 2026, in New York. The offer stands until October 28, 2026 at 5:00 PM.
+    [Accept The Offer] [Decline The Offer]
+
+PAY PROMISED AT ACCEPTANCE
+    pro_00000b:1: 0 cents USD, due November 19, 2026 at 12:00 PM, deferred, received: no
+
+THE OPPORTUNITY’S HISTORY
+    October 12, 2026 at 9:00 AM  [opportunity] The film’s director posted Theo in Paper Moons.
+    October 16, 2026 at 3:15 PM  [submitted] You submitted yourself for Theo in Paper Moons, sending your headshots from September 4, 2026 and your résumé from September 4, 2026.
+    October 18, 2026 at 10:00 AM  [audition] The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Thursday, October 22, 2026 at 11:00 AM. Getting there takes about two hours each way.
+    October 22, 2026 at 11:00 AM  [audition] Your audition for Theo was Exceptional.
+    October 25, 2026 at 5:00 PM  [offer] The film’s director offers you Theo in Paper Moons, a fictional student film. The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its three days of work. The work is from November 16, 2026 to November 18, 2026, in New York. The offer stands until October 28, 2026 at 5:00 PM.
+    October 26, 2026 at 5:15 AM  [booked] You accepted Theo in Paper Moons: three work days, from November 16, 2026.
+
+THE WORK DAYS
+    day 1: worked, exceptional 94.4
+    day 2: worked, exceptional 95
+    day 3: worked, exceptional 95.2
+
+THE CREDIT
+    {"id":"pro_00000i","kind":"student-film","project":"Paper Moons","role":"Theo","company":"a graduate film program’s thesis production","year":2026,"medium":"film","status":"released","union":"sag-aftra","engagementId":"pro_00000b","at":1794830400000,"band":"exceptional","releasedAt":1810569600000}
+
+NOTICES, IN THE ORDER THE PLAYER READ THEM
+October 18, 2026 at 10:00 AM  An Audition For Theo
+    The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Thursday, October 22, 2026 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+November 18, 2026 at 7:00 AM  You Wrapped Paper Moons
+    Paper Moons wrapped, and Theo is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about six months on, estimated. Update your résumé on the Portfolio tab to add it.
+May 17, 2027 at 12:00 PM  Paper Moons Is Released
+    Paper Moons is out, so Theo shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.

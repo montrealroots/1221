@@ -1,0 +1,184 @@
+{
+ "label": "The graduate after a self-tape, a headshot session, a résumé and a reel",
+ "note": "Each material with its provenance; the books in balance.",
+ "at": "2026-09-07T00:00:00.000Z",
+ "opened": [
+  "followTheCover",
+  "findTermInterest",
+  "cutIntoUnits",
+  "cardYears",
+  "timeTheCalls",
+  "briefsMastered",
+  "writtenUnplayed",
+  "pro.begun"
+ ],
+ "pro": {
+  "since": 1788454800000,
+  "credits": [],
+  "materials": [
+   {
+    "id": "pro_000001",
+    "version": 1,
+    "kind": "headshot",
+    "made": 1788710400000,
+    "cost": 70000,
+    "source": "A session with a photographer, $700.00 and four hours, both estimated.",
+    "contains": [
+     "Retouched photographs of you as you looked on September 6, 2026, for submissions and your résumé."
+    ]
+   },
+   {
+    "id": "pro_000002",
+    "version": 1,
+    "kind": "resume",
+    "made": 1788724800000,
+    "name": "Ada Cole",
+    "source": "Made from your record on September 6, 2026, in an hour at your own desk.",
+    "contains": [
+     "Ada Cole",
+     "Actors’ Equity Association",
+     "Training: MFA in Acting, David Geffen School of Drama at Yale University, 2026",
+     "Viola, Shakespeare Repertory Project I, David Geffen School of Drama at Yale University, 2029",
+     "Special skill: Accents And Dialects, mastered",
+     "Special skill: Stage Combat"
+    ],
+    "keys": [
+     "name:Ada Cole",
+     "union:equity",
+     "training:completed:MFA in Acting, David Geffen School of Drama at Yale University, 2026",
+     "school:Shakespeare Repertory Project I|Viola|2029",
+     "skill:accents:mastered",
+     "skill:combat"
+    ]
+   },
+   {
+    "id": "pro_000003",
+    "version": 1,
+    "kind": "reel",
+    "made": 1788732000000,
+    "cost": 25000,
+    "pieces": [
+     {
+      "ref": "tape:brief-action:1788710400000",
+      "from": "tape",
+      "title": "The Loading Bay, A Self-Tape",
+      "at": 1788710400000,
+      "band": "unready",
+      "genre": "action"
+     }
+    ],
+    "source": "Cut by an editor from your recorded work on September 6, 2026, $250.00 and two hours, both estimated.",
+    "contains": [
+     "The Loading Bay, A Self-Tape, Unready, September 6, 2026"
+    ]
+   }
+  ],
+  "relations": {},
+  "agreements": [],
+  "opportunities": [],
+  "engagements": [],
+  "equity": {
+   "since": 1788444000000,
+   "how": "degree"
+  },
+  "made": {
+   "headshot": 1,
+   "resume": 1,
+   "reel": 1
+  },
+  "trimmed": {
+   "opportunities": 0,
+   "engagements": 0
+  }
+ },
+ "profile": {
+  "name": "Ada Cole",
+  "nameSet": false,
+  "training": {
+   "status": "completed",
+   "words": "You completed the MFA in Acting at the David Geffen School of Drama at Yale University in 2026.",
+   "short": "MFA in Acting, David Geffen School of Drama at Yale University, 2026"
+  },
+  "schoolCredits": [
+   {
+    "key": "school:Shakespeare Repertory Project I|Viola|2029",
+    "production": "Shakespeare Repertory Project I",
+    "role": "Viola",
+    "venue": "David Geffen School of Drama at Yale University",
+    "year": 2029,
+    "understudy": false,
+    "wentOn": 4
+   }
+  ],
+  "proCredits": [],
+  "skills": [
+   {
+    "skill": "accents",
+    "label": "Accents And Dialects",
+    "level": 91,
+    "mastered": true
+   },
+   {
+    "skill": "combat",
+    "label": "Stage Combat",
+    "level": 82,
+    "mastered": false
+   }
+  ],
+  "availability": {
+   "inSchool": false,
+   "words": "Free for work, with nothing booked.",
+   "booked": []
+  },
+  "location": {
+   "cityId": "us-ct-newhaven",
+   "city": "New Haven"
+  },
+  "eligibility": {
+   "authorized": true,
+   "words": "You’re a US citizen, so you can work for any employer in the US."
+  },
+  "unions": {
+   "equity": 1788444000000,
+   "words": "You joined Actors’ Equity Association with the degree on September 3, 2026."
+  }
+ },
+ "pathway": {
+  "id": "graduate",
+  "heading": "A Graduate",
+  "words": "You’ve completed the MFA. Your training, the parts you played at the School and the portfolio you make go on with you."
+ },
+ "missing": {
+  "stage": [],
+  "screen": [
+   {
+    "kind": "reel",
+    "problem": "tapes-only",
+    "blocking": false,
+    "words": "Your reel holds only self-tapes. Work filmed at the School or on a set shows more of what you can do."
+   }
+  ]
+ },
+ "reelSources": [
+  {
+   "ref": "tape:brief-animated:1788732000000",
+   "from": "tape",
+   "title": "High Wind, A Self-Tape",
+   "at": 1788732000000,
+   "band": "unready",
+   "genre": "animated",
+   "usable": false,
+   "why": "It’s a voice recording with no picture, so it can’t go on a reel."
+  },
+  {
+   "ref": "tape:brief-action:1788710400000",
+   "from": "tape",
+   "title": "The Loading Bay, A Self-Tape",
+   "at": 1788710400000,
+   "band": "unready",
+   "genre": "action",
+   "usable": true
+  }
+ ],
+ "breaches": []
+}

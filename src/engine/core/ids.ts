@@ -22,12 +22,14 @@ export type Id = string;
  * issues is a table the game never fills, so the list holds only the nouns
  * something in this build actually creates: the player, money, the clock, the logs (two since the history went,
  * 2026-10-02), documents, and from 2026-10-07 a course's assignments and the rehearsals agreed for them
- * (`systems/coursework.ts`). Journeys, vehicles, land, possessions and their orders, clothes and outfits, routines,
- * the people a life knew, pawn pledges, pets and packing lists had theirs until those went in the scope reset of
- * 2026-10-09; a save's counters for them are kept and read by nothing.
+ * (`systems/coursework.ts`), and from 2026-10-20 (brief 19) the professional record's credits, materials, history
+ * events, agreements, opportunities, engagements and payments, all under `pro` (`systems/pro.ts`). Journeys, vehicles,
+ * land, possessions and their orders, clothes and outfits, routines, the people a life knew, pawn pledges, pets and
+ * packing lists had theirs until those went in the scope reset of 2026-10-09; a save's counters for them are kept and
+ * read by nothing.
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'assignment', 'rehearsal',
+  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'assignment', 'rehearsal', 'pro',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

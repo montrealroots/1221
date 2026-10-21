@@ -3,18 +3,21 @@ import { BankWorkspace } from './BankWorkspace';
 import { SchoolWorkspace } from './SchoolWorkspace';
 import { PapersWorkspace } from './PapersWorkspace';
 import { ProfileWorkspace } from './ProfileWorkspace';
+import { CareerWorkspace } from './CareerWorkspace';
 import { useGame, useWorld } from '@/app/game-context';
 import { ALL_DESTINATIONS } from '@/ui/shell/destinations';
 import { chapterFor, isOpen } from '@/engine/world/tutorial';
 import { useGuide } from '@/ui/guide/Guide';
 
-// The career's, the homes', travel's, the cars' and the land's screens went in the scope reset of 2026-10-09.
+// The career's, the homes', travel's, the cars' and the land's screens went in the scope reset of 2026-10-09. The Career
+// came back on 2026-10-20 (brief 19), built on the professional record (`systems/pro.ts`).
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
   '/workspace/bank': BankWorkspace,
   '/workspace/school': SchoolWorkspace,
   '/workspace/papers': PapersWorkspace,
   '/workspace/profile': ProfileWorkspace,
+  '/workspace/career': CareerWorkspace,
 };
 
 /**

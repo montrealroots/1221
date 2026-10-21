@@ -57,7 +57,14 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/school', label: 'School', detail: 'Your standing, classes, coursework, casting, shifts and terms', feature: 'ui.school' },
     ],
   },
-  // Your Work, the career’s, went in the scope reset of 2026-10-09.
+  // Your Work, the career’s, went in the scope reset of 2026-10-09, and came back with the owner’s brief 19 on
+  // 2026-10-20: the professional record and its portfolio (`systems/pro.ts`), not the old career.
+  {
+    label: 'Your Work',
+    items: [
+      { route: '/workspace/career', label: 'Career', detail: 'Where you stand as a professional, and your profile, headshots, résumé and reel', feature: 'ui.career' },
+    ],
+  },
   {
     label: 'Your Affairs',
     items: [

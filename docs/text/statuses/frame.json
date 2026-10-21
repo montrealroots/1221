@@ -19,9 +19,9 @@
  },
  "src/app/game-context.tsx#ROUTE_LABELS": {
   "status": "Rewritten And Verified",
-  "hash": "9a87b6b0c5d6",
-  "on": "2026-10-17",
-  "evidence": "tests/language-frame.test.ts 'name a screen reached without a label, by a notice’s Go There or an address, as the rail names it'; docs/verification/language-2026-10-17/frame/frame-walk-1440.json (Calendar: the breadcrumb Home › Calendar)"
+  "hash": "bfdc10dcafcc",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
  },
  "src/app/game-context.tsx#useGame": {
   "status": "Reviewed And Retained",
@@ -211,9 +211,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten And Verified",
-  "hash": "a92fceb5d653",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
+  "hash": "17e6d0d467be",
+  "on": "2026-10-21",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/calendar-text.ts (its .txt beside it) at the playthroughs' merge, 2026-10-21, against docs/STYLE.md: the built-app walk's and the playthroughs' words for the career on the calendar, joined, one Career row kept"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten And Verified",
@@ -1661,6 +1661,30 @@
   "on": "2026-10-17",
   "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
  },
+ "src/engine/decided.ts#top [pro.agent]": {
+  "status": "Rewritten And Verified",
+  "hash": "3dd50ab6d1fd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing"
+ },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Reviewed And Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Reviewed And Retained",
+  "hash": "b4e89d347068",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them."
+ },
+ "src/engine/decided.ts#top [pro.roster]": {
+  "status": "Rewritten And Verified",
+  "hash": "d02a5a6b6572",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing"
+ },
  "src/engine/decided.ts#top [production.direction]": {
   "status": "Reviewed And Retained",
   "hash": "9ce9ed69790f",
@@ -1987,9 +2011,9 @@
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
   "status": "Rewritten And Verified",
-  "hash": "cfc941a4f6e4",
-  "on": "2026-10-17",
-  "evidence": "Printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt: School’s row says “each term’s review”, as the school’s Term Review entries are titled; the Calendar screen in the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar)"
+  "hash": "48f0fa35225c",
+  "on": "2026-10-21",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/calendar-text.ts (its .txt beside it) at the playthroughs' merge, 2026-10-21, against docs/STYLE.md: the built-app walk's and the playthroughs' words for the career on the calendar, joined, one Career row kept"
  },
  "src/engine/world/calendar.ts#skipTargets": {
   "status": "Reviewed And Retained",
@@ -2413,9 +2437,9 @@
  },
  "src/ui/looks/day.tsx#missCost": {
   "status": "Rewritten And Verified",
-  "hash": "55b525d12256",
-  "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/frame/looks-after.txt (render-looks.mjs: every look of this kind in six played lives, under the real provider; the before is looks-before.txt); tests/looks.test.ts; tests/evidence-g32-ui.test.ts 'h-head' (Summer opens Season)"
+  "hash": "ac490e9c295a",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs"
  },
  "src/ui/looks/day.tsx#quarterSentence": {
   "status": "Rewritten And Verified",
@@ -2443,9 +2467,9 @@
  },
  "src/ui/looks/day.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "48b44a0462b2",
-  "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/frame/looks-after.txt (render-looks.mjs: every look of this kind in six played lives, under the real provider; the before is looks-before.txt); tests/looks.test.ts; tests/evidence-g32-ui.test.ts 'h-head' (Summer opens Season)"
+  "hash": "2f6edcb8f6a1",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs"
  },
  "src/ui/looks/day.tsx#top [observed]": {
   "status": "Rewritten And Verified",
@@ -2671,9 +2695,9 @@
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
   "status": "Rewritten And Verified",
-  "hash": "69497279cf89",
-  "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/frame/after-1440 (each rail destination's description, its title: Your standing, classes, coursework, casting, shifts and terms, and the rest)"
+  "hash": "2f0b36414251",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
  },
  "src/ui/shell/GameShell.tsx#GameShell": {
   "status": "Rewritten And Verified",
@@ -2741,6 +2765,18 @@
   "on": "2026-10-17",
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
  },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten And Verified",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [overview]": {
+  "status": "Rewritten And Verified",
+  "hash": "0efc2e6be4c2",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
+ },
  "src/ui/shell/sections.ts#SECTIONS [passport]": {
   "status": "Reviewed And Retained",
   "hash": "83e5e372ec2f",
@@ -2752,6 +2788,18 @@
   "hash": "0be4502f405a",
   "on": "2026-10-17",
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [portfolio]": {
+  "status": "Rewritten And Verified",
+  "hash": "036b18f02ab5",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [representation]": {
+  "status": "Rewritten And Verified",
+  "hash": "360bc539904b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: the Career screen’s Representation tab label, in Title Case, read on the screen in tests/pro-representation-screen.test.ts, with tools/title-case.mjs and tools/label-sweep.mjs passing"
  },
  "src/ui/shell/sections.ts#SECTIONS [returns]": {
   "status": "Reviewed And Retained",
@@ -2778,10 +2826,10 @@
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
  },
  "src/ui/shell/sections.ts#SECTIONS [work]": {
-  "status": "Reviewed And Retained",
-  "hash": "f29c41d765fd",
-  "on": "2026-10-17",
-  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+  "status": "Rewritten And Verified",
+  "hash": "973abd660059",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws the Career screen's Work tab, and the built app's docs/verification/career-2026-10-20/pay/screens/walk-1440.txt lists the three tabs"
  },
  "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
   "status": "Rewritten And Verified",
@@ -2797,9 +2845,9 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten And Verified",
-  "hash": "426db766618e",
-  "on": "2026-10-17",
-  "evidence": "tests/language-frame-ui.test.ts 'the stop says it needs you now…' (a plan of your own, and a visit to the passport office) and 'PLAYER JOURNEY: the stop says the partner is expecting you…' (Call It Off pressed, its toast, the partner's trust lower)"
+  "hash": "3c0024579911",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
   "status": "Rewritten And Verified",
@@ -2827,9 +2875,9 @@
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {
   "status": "Rewritten And Verified",
-  "hash": "d32ac9607779",
-  "on": "2026-10-17",
-  "evidence": "tests/language-frame-ui.test.ts 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two' (drawn under the real provider, the Advance menu pressed); tests/whynot-time.test.ts (Sleep's reason on the bar)"
+  "hash": "1a2c6d2d7a0e",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Reviewed And Retained",
@@ -2875,9 +2923,9 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {
   "status": "Rewritten And Verified",
-  "hash": "db701eded3e7",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g02-life.test.ts (a plan opened: You need to be there. The clock stops when it comes round, so you can go.)"
+  "hash": "f3f6f44f997b",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the entry says the trip the meeting's notice promises (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/calendar-entry-trip.test.ts"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS": {
   "status": "Reviewed And Retained",

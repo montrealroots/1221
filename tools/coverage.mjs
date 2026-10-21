@@ -91,6 +91,11 @@
  * is of the day it was added, its place at fca00d8f "not a row", and the page lists it under Added Since The Review.
  * Until then a command that came in later could be in no row, as health.apply and health.request_hardship were.
  *
+ * From 2026-10-21 (brief 19's audit) a capability's reading after the review says who made it (`by`). Until then every
+ * one was its builder's, the career's five of 2026-10-20 and 2026-10-21, and the page said "by its builder" of each;
+ * the audit read those five again that day, in their builders' place (each builder's reading kept as `builder`), and
+ * the page says who read each since. A reading that names no reader is its builder's, as those were.
+ *
  *   node tools/coverage.mjs           writes docs/GAMEPLAY-COVERAGE.md
  *   node tools/coverage.mjs --check   fails when the page is behind the JSON
  * Both fail on a citation that doesn't land, a verified row the script can see isn't, a row whose evidence class its
@@ -481,7 +486,7 @@ function reviewSection() {
     '',
     '### The Capabilities, Reviewed',
     '',
-    `The ${caps.length} live capabilities of \`docs/capabilities.json\`, read the same day against the same standard (\`${CAP_REVIEW}\`). The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, ${all} of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. ${bothName} commands are named by both; a command only a capability names is traced in \`docs/verification/connected-journey/TRACE.md\`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.`,
+    `The ${caps.length} live capabilities of \`docs/capabilities.json\`, read the same day against the same standard (\`${CAP_REVIEW}\`), but ${caps.filter((c) => c.on !== '2026-10-13').map((c) => `${c.id}, read on ${c.on} by ${c.by ?? 'its builder'}`).join(', ') || 'none later'}. The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, ${all} of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. ${bothName} commands are named by both; a command only a capability names is traced in \`docs/verification/connected-journey/TRACE.md\`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.`,
     '',
     '| Capability | Status In The Registry | The Review Found | Disposition | Gaps |',
     '|---|---|---|---|---|',

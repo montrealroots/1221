@@ -45,7 +45,8 @@
  *   a load; the 2028 return counts it (its twin, the same save not claiming, owes less federal tax on $2,418 less
  *   income); a week certified in hospital or laid up pays nothing, and a week with three hours worked, $69, $47; a British student
  *   out of status is refused in FUTA's words, with a base period that would pay. A week with work stays a fixture's:
- *   there's no work after school to earn it since the career went.
+ *   until 2026-10-21 there was no work after school to earn it, and the professional work brief 19 brought back then
+ *   (`systems/propay.ts`) isn't booked in this life.
  * Each row's screen is drawn as the player has it.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole at Yale in New Haven, born in New York
@@ -431,7 +432,7 @@ describe('documents.apply_opt', () => {
     tended(back, START + 90 * MS_DAY + MS_HOUR);
     const opt = held(back, 'permit')[0]!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: START + 90 * MS_DAY, expiresAt: Date.UTC(2027, 10, 22, 11, 30) });
-    expect(titled(back, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 22, 2026 to November 22, 2027, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
+    expect(titled(back, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 22, 2026 to November 22, 2027. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
     expect(back.player.usOutOfStatus).toBeUndefined();
     expect(memos(back, /OPT/).map((t) => taken(back, t))).toEqual([470_00]);
     // No work after the degree: thirteen weeks idle is 91 days, past OPT's 90, and the status ends with it, no grace.
@@ -971,7 +972,7 @@ describe('benefits.claim', () => {
     tended(sim, SUNDAY[3]! + MS_HOUR);
     expect(benefitPaid(sim)).toEqual([[SUNDAY[0], 93_00], [SUNDAY[3], 93_00]]);
     // TEST SETUP: three hours worked on Wednesday evening of the fifth week, $23 an hour, kept on the calendar as the
-    // School keeps a shift worked; there’s no work after school to earn it since the career went. Connecticut takes
+    // School keeps a shift worked; this life books none of the professional work paid after school from 2026-10-21. Connecticut takes
     // two-thirds of the week’s earnings off the benefit (CGS 31-229, as CONNECTICUT_UI keeps it): $93 − $46 = $47. Until
     // 2026-10-13 this posted $60 of pay to the ledger, which the week read as its earnings, and it paid $53; a week
     // reads the work done in it now (`workDoneIn`), and a payment is no work.

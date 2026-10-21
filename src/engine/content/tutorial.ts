@@ -48,8 +48,16 @@ import { ROUND_UPS } from './roundups';
 import { PRACTICE } from './practice';
 import { EVALUATION } from './tasks';
 import { ENROLLMENT, PUBLIC_COVER, RETURN } from './safetynet';
-import { EXTENDED_STUDY, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
+import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
+import { EARLY_DEGREE } from '../systems/proshowcase';
+import { AGENTS, agencyOf } from './agents';
+import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND, TEN as PRO_TEN } from '../systems/proagent';
+import { BAND_LABEL } from '../systems/coursework';
+import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
+import { PAY as PRO_PAY, sagJoinUsd } from '../systems/propay';
+import { AGREEMENT as PRO_AGREEMENT, AUDITION_TOWNS as PRO_AUDITION_TOWNS, UNIONS as PRO_UNIONS } from './careerwork';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
+import { OUTSIDE_WORK as PRO_OUTSIDE, WORK as PRO_WORK } from '../systems/projobs';
 import { BRIEF } from '../systems/briefs';
 import { ESTIMATE } from '../systems/school';
 import { ADVICE } from '../systems/advice';
@@ -78,8 +86,14 @@ const pct = (x: number): string => `${+(x * 100).toFixed(2)}%`;
 const andList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
 /** A month and day, month first, the way the game writes a date: [4, 30] is April 30. */
 const monthDay = ([month, day]: readonly [number, number]): string => `${MONTH_NAMES[month - 1]} ${day}`;
+/** The agent the Representation chapter names, and his agency: `AGENTS`' one entry (brief 19). */
+const PRO_AGENT = AGENTS[0]!;
+const PRO_AGENCY = agencyOf(PRO_AGENT);
+const PRO_BAR = BAND_LABEL[REFERRAL_BAND];
 /** The banks whose card plan costs nothing for its life when made while the introductory rate runs. */
 const PLAN_FREE_AT = [...PLAN_FREE_IN_INTRO].map((id) => bankById(id)?.name ?? id);
+/** A brief's three steps, as their buttons name them: what prepares an audition's sides and a booked part. */
+const PRO_STEPS = `${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}`;
 
 export interface Chapter {
   id: string;
@@ -140,7 +154,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Press an entry’s name or its time to see when it starts, how long it lasts, where it is and what missing it would cost.',
       'Anything you need to be at is a commitment: a class, a rehearsal call, a work-study shift, an appointment, a plan of your own. When the clock reaches one, it stops, and a dialog with the commitment’s name asks what you want to do.',
       'Press Go to be there. Going takes as long as the commitment lasts, and the clock runs on through it. Stand Here closes the dialog and keeps the clock paused at the commitment.',
-      'You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. If you press Stand Here, the commitment starts the next time the clock moves, whether you press Play, Advance or Sleep.',
+      'You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. Skip It marks your plan missed and carries the clock on, as Go does. If you press Stand Here, the commitment starts the next time the clock moves, whether you press Play, Advance or Sleep.',
       'You miss a commitment if you’re asleep or in hospital when it starts. An injury that lays you up also keeps you from classes, calls, performances, work-study shifts and an office appointment for your papers, though not from your doctor, your therapist, orientation or a plan of your own.',
       'The clock hasn’t moved yet, so nothing has come due. Read “The Clock” next: it opens Play, which starts the clock.',
     ],
@@ -154,7 +168,7 @@ export const CHAPTERS: readonly Chapter[] = [
     body: [
       'Press Play, in the top bar, to start the clock, and Pause to stop it. The button always shows what pressing it will do. A new life starts with the clock paused.',
       'The clock runs in real time: a minute in the game is a minute for you. While it runs, life goes on around you. Hours pass, you get tired and hungry, and anything that’s due happens.',
-      'The clock stops by itself at every commitment and waits for your answer, as “What’s Coming” explained. Sleep is the exception: it runs straight through everything in those hours, so the Sleep dialog lists what you’d sleep through before you start.',
+      'The clock stops by itself at every commitment and waits for your answer, as “What’s Coming” explained. Sleep is the exception: it runs straight through everything in those hours, so the Sleep dialog lists what you’d sleep through before you start. The clock also waits while the Sleep, On The Way or Skip To Event dialog is open, so nothing moves while you decide.',
       'If you don’t want to wait, read “Moving Time On” next to jump ahead.',
     ],
     names: ['Play and Pause'],
@@ -162,14 +176,18 @@ export const CHAPTERS: readonly Chapter[] = [
   },
   // Until 2026-10-20 (brief 17, the frame editor's finding) the chapter said the clock stops at each commitment on the
   // way and not what the stop's answers do to the jump: Go carries it on, and Stand Here ends it there with the clock
-  // paused (`onGo` and `clearStandingAt` in `ui/shell/TimeControls.tsx`, `halt` in `app/game-context.tsx`).
+  // paused (`onGo` and `clearStandingAt` in `ui/shell/TimeControls.tsx`, `halt` in `app/game-context.tsx`). From later
+  // that day (the owner's brief 19, D1, D2 and D5) it says Skip It and Call It Off carry the jump on too (`carryOnTo`,
+  // `world/clock.ts`), that each line gives the day it lands (Tomorrow Morning after midnight is that date's seven,
+  // `nextAtHour`), and that On The Way lists what isn't on the calendar yet (`onTheWay`, `foresight.ts`).
   {
     id: 'advance',
     title: 'Moving Time On',
     lead: 'Jumping ahead, and what happens on the way.',
     body: [
-      'To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Choose An Event opens Skip To Event: pick one of the next fourteen things on your calendar and press Skip To with its name.',
+      'To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Each line shows the day and the time it lands. Choose An Event opens Skip To Event: pick one of the next fourteen things on your calendar and press Skip To with its name.',
       'Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many: press Advance there to go on, or Cancel to stay where you are. The clock still stops at each commitment to ask what you want to do: Go takes you to it and carries the jump on afterwards, and Stand Here ends the jump there, with the clock paused.',
+      'Skip It, on a plan of your own, and Call It Off, on a rehearsal with a partner, carry the jump on too. On The Way also lists what isn’t on your calendar yet but will be by then, such as next week’s classes.',
       'Time only moves forward, so you can’t undo a jump.',
       'Read “What Needs You” next: it’s where you find out what happened.',
     ],
@@ -228,10 +246,10 @@ export const CHAPTERS: readonly Chapter[] = [
     lead: 'Going to sleep, and getting your energy back.',
     body: [
       // The dialog's own limits (from 2026-10-12: until then this said "between one and fourteen", and the slider began at one).
-      `Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks how many hours, from ${hoursOf(SHORTEST_SLEEP)} to ${hoursOf(LONGEST_NIGHT)}. It suggests a number, from when you next need to be somewhere and how much sleep you owe, and shows when you’d wake.`,
-      'Press the button with the hours on it, such as Sleep 8 Hours, and the clock runs on to when you wake. Not Yet closes the dialog.',
+      `Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks how many hours, from ${hoursOf(SHORTEST_SLEEP)} to ${hoursOf(LONGEST_NIGHT)}. It suggests a number, from how much sleep you owe, whether you’ve already slept since midnight and when you next need to be somewhere, and shows when you’d wake.`,
+      'Press the button with the hours on it, such as Sleep 8 Hours, and the clock runs on to when you wake. Not Yet closes the dialog. The clock waits while it’s open, so Not Yet leaves it where it was.',
       'A night’s sleep gives you energy back, though less the more sleep you owe. More than about five hours of real rest also mends your condition, as far as your fitness and age allow, and less than that wears it down. A night under six hours adds to the sleep you owe.',
-      'Life goes on while you sleep. Anything on your calendar in those hours happens without you, and the dialog lists it before you press.',
+      'Life goes on while you sleep, and you miss any commitment in those hours. The dialog lists them before you press.',
       'While you’re at a commitment, Sleep is grayed out, and the top bar says when you’ll be free.',
       'Read “Looking After Yourself” next, about eating, washing, working out and unwinding.',
     ],
@@ -348,6 +366,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Work It Through, on a scene or a part, lists the problems its forecast shows, worst first. Press one, then a way of working on it: it takes the minutes on its button and shows the figure before and after. Then press Keep It or Put It Back.',
       'The Yale Cabaret is the students’ own theater: Join A Cabaret Show, on Casting, puts you in one of its shows, one a term, and says the week it plays. In the spring of your first and second years, Join The Summer Company, on Casting too, puts you in the Yale Summer Cabaret for the summer, with a weekly stipend. When you can’t join, the panel says why where the button would be.',
       'Plays To Read, on Coursework, lists plays first staged since 2000. Press Read It to read the Haas Arts Library’s copy, and once you’ve read it, Research It.',
+      `Your last term ends with the Actor Showcase: two scenes you choose, played in New York and Los Angeles after classes end. On Coursework, under The Actor Showcase, tick two of the faculty’s options and press Choose These Scenes by the end of the term’s fourth week. Prepare each on its card, as you prepare any piece, and go to the rehearsal calls and each showcase day. To take part, make up every Incomplete by then: one still open keeps you out.`,
       'Read “You As An Actor” next. It opens your Player Profile: your abilities, your practice and the genres you work in.',
     ],
     more: [
@@ -362,9 +381,11 @@ export const CHAPTERS: readonly Chapter[] = [
       'The problems Work It Through can name are a part of the scene that isn’t secure, a turn you haven’t worked, stamina running out late, or an ability holding it back. You keep or put back each change to how a part of the scene is played, and what you keep carries into every later rehearsal and performance. Between a production’s calls, the director names one of these too, somewhere in the play (what you want, listening, pacing, the physical life, a change, a relationship), with ways to work on it: press Work On The Note with one of them, and the next call says whether you answered it.',
       'On the School screen, the school’s name, each course and each technique are links. The school opens onto this year’s courses and the town, a course onto the techniques it trains and the next day it meets, and a technique onto where you stand in it compared with the class.',
       'The tuition scholarship pays every student’s tuition. Yale’s help with living costs depends on need, and your family’s means rule it out, so the Yale Health plan, billed each term, and your living costs come out of your bank account.',
+      `Each showcase scene is shown at its first showcase day with the faculty’s note, played again the next, and shown again with the note taken in Los Angeles. A showcase day missed counts as a missed call and an absence from Actor Showcase. The course is settled after Los Angeles, not at the term review, and a scene played at no showcase day counts as a piece not shown.`,
+      EARLY_DEGREE.words,
     ],
-    names: ['School', 'Your school, from its line on Home', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Coursework: preparing, the table, how you’ll play it, asking your partner, and Run It With A Reader', 'Work It Through: name a problem, try a way, keep it or put it back', 'Learn The Part, Catch Up The Blocking and Work On The Note', 'Plays To Read: Read It and Research It'],
-    opens: ['ui.school', 'school.call_in_sick', 'school.withdraw', 'school.request_leave', 'school.cancel_leave', 'school.return_notice', 'school.buy_affiliate', 'school.reregister', 'school.request_repeat', 'school.cancel_repeat', 'school.appeal_leave', 'school.request_extra_term', 'school.request_aid_review', 'school.pay_balance', 'school.request_conversion', 'school.make_up', 'school.extend_incomplete', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.choose_playing', 'school.choose_part_playing', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'work.identify', 'work.try', 'work.settle', 'plays.read', 'plays.research', 'look.school', 'look.course', 'look.skill', 'look.assignment', 'look.classmate'],
+    names: ['School', 'Your school, from its line on Home', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Coursework: preparing, the table, how you’ll play it, asking your partner, and Run It With A Reader', 'Work It Through: name a problem, try a way, keep it or put it back', 'Learn The Part, Catch Up The Blocking and Work On The Note', 'Plays To Read: Read It and Research It', 'The Actor Showcase: Choose These Scenes'],
+    opens: ['ui.school', 'school.call_in_sick', 'school.withdraw', 'school.request_leave', 'school.cancel_leave', 'school.return_notice', 'school.buy_affiliate', 'school.reregister', 'school.request_repeat', 'school.cancel_repeat', 'school.appeal_leave', 'school.request_extra_term', 'school.request_aid_review', 'school.pay_balance', 'school.request_conversion', 'school.make_up', 'school.extend_incomplete', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.choose_playing', 'school.choose_part_playing', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'work.identify', 'work.try', 'work.settle', 'plays.read', 'plays.research', 'school.choose_showcase', 'look.school', 'look.course', 'look.skill', 'look.assignment', 'look.classmate'],
   },
   // From 2026-10-16 it says the same day's halving and discipline's lift reach every growth (`grown`), the hour's gain is
   // said before it, the abilities that speed a step, and that a technique past mastery moves no result.
@@ -400,13 +421,14 @@ export const CHAPTERS: readonly Chapter[] = [
       'On the brief, prepare it with Break It Down, Learn The Lines and Rehearse It On Your Feet, each with its minutes on the button. Under Your Reading, choose what you take the scene to be about and press Read It This Way.',
       'Then choose how to play it under How You’ll Play It and press Play It This Way. Once you have, Work It Through works on it as it does on a class scene.',
       'Under Read With, choose who reads the other part, a recording or a classmate who learns it as you rehearse together, and press Read With Them. When you’re ready, press Tape It: it takes an hour, and a message gives the tape’s result.',
-      `A self-tape also asks you to know its genre. Your genre knowledge is the better of your Familiarity and your Work In It (your nights on stage and self-tapes in that genre), and it counts as complete at ${Math.round(BRIEF.complete.genre * 100)}. A genre you’ve never met costs you at most ${Math.round((1 - EVALUATION.partFloor.genre!) * 100)}% of a tape’s interpretation.`,
+      `A self-tape also asks you to know its genre. Your genre knowledge is the better of your Familiarity and your Work In It (your nights on stage, shoot days and self-tapes in that genre), and it counts as complete at ${Math.round(BRIEF.complete.genre * 100)}. A genre you’ve never met costs you at most ${Math.round((1 - EVALUATION.partFloor.genre!) * 100)}% of a tape’s interpretation.`,
       `What To Work On Next, on the Player Profile, names what’s most worth training now, and a brief has its own What To Work On. Each estimates what ${word(ADVICE.sessions)} hours of practice, an hour a day, would add to your recent work. It’s an estimate, not a result.`,
       'Press Why This Recommendation, under it, to see what the estimate assumes and what else is worth your time. What finishing a piece’s own preparation would bring is said there apart from training, so you can tell how ready a piece is now from how ready it could be.',
       'A way of playing a scene can suit it or work against it, depending on the scene: its genre, its reader, its tones, its turns and the reading you’ve chosen. One that suits the scene is easier to make work and quicker to rehearse, and one that works against it is harder. Either can make the better tape if it plays to your strengths, and the tape tells you which did.',
       'Your tape with your reader is what a casting office would see. A Strong tape earns a callback: a harder version of the scene with a note on how to play it, which only a tape played that way answers.',
       'Loving a genre makes a rehearsal or a night in a play of that kind a better day for you, but it never makes the performance better.',
-      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+      // Until 2026-10-20 this sent the player to Papers' chapter; “Your Career” comes between them from brief 19.
+      'Read “Your Career” next. It opens the Career screen: your profile, headshots, résumé and reel.',
     ],
     more: [
       'Discipline grows with each day you practice and each call you keep, and it makes everything classes, nights, preparation steps and practice build count a little more, or a little less. Practice doesn’t train Stamina: Stamina is your fitness, built by Work Out, under Look After Yourself, and by a class that works the body as hard, Movement Invention or stage combat. Some abilities make a session get more done: memory when you learn lines, imagination at the table and in a brief’s breakdown, focus when you get to know a scene, listening when you rehearse with a partner or a reader or rehearse a brief with its reader, and adaptability when you revise after a note or work on a director’s note about the blocking.',
@@ -417,6 +439,95 @@ export const CHAPTERS: readonly Chapter[] = [
     ],
     names: ['Player Profile', 'Practice', 'Study It', 'Open Its Brief', 'Break It Down, Learn The Lines, Rehearse It On Your Feet', 'Read It This Way', 'Read With', 'Tape It', 'Your Work So Far', 'An ability, a genre and a piece of work, when you press them'],
     opens: ['ui.profile', 'practice.exercise', 'genre.study', 'brief.prepare', 'brief.choose', 'brief.reader', 'practice.self_tape', 'look.ability', 'look.genre', 'look.work'],
+  },
+  // From 2026-10-20 (the owner's brief 19): the professional record's portfolio (`systems/pro.ts`), after the Player
+  // Profile it builds on, since a reel is cut from the self-tapes taped there.
+  {
+    id: 'career',
+    title: 'Your Career',
+    lead: 'Your professional profile, the headshots, résumé and reel a submission sends, and your work’s pay and unions.',
+    body: [
+      'Career, in the menu under Your Work, shows where you stand as a professional actor. Its Overview says what training you have, when you’re free for work, whether you can work in the US, and what your portfolio is missing.',
+      'The Portfolio tab holds what a submission sends: your profile, headshots, a résumé and a reel. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.',
+      'Your Profile shows the name you work under. To change it, type a name under Professional Name and press Use This Name. Leave it blank and press it to go back to your own name. Your résumé uses the name you choose.',
+      `Book A Headshot Session takes ${counted(PRO_HEADSHOTS.minutes / 60, 'hour')} and costs about ${formatMoney(PRO_HEADSHOTS.cost, 'USD')}, both estimated. Photographers work by day, so a session starts ${PRO_SESSION_HOURS}. Headshots more than two years old read as out of date.`,
+      'Make Your Résumé takes an hour. It lists your name, training, unions, credits and special skills from your record, with School credits and professional credits apart. Practice, practice briefs and self-tapes are never credits.',
+      'Once something new is on your record, such as a part played or a skill grown, your résumé reads as behind. Press Update Your Résumé to bring it up to date.',
+      `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
+      'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
+      // From 2026-10-21 (brief 19's pay): the Work tab, its pay, commission, permission to work and the unions
+      // (`systems/propay.ts`), opening Join SAG-AFTRA.
+      `The Work tab lists work you’ve booked: its dates, its calls on your calendar and its pay. Pay is promised when you accept the work, and paid the Thursday after each week of it with tax withheld. If you’re represented, it goes through your agency, which takes its commission and passes the rest on within ${word(PRO_PAY.trustBusinessDays)} business days. Each payment says what was taken and what reached you, and Money shows it land.`,
+      'Your permission to work is read for each date of the work when you book it, and signing with an agency changes none of it. On an F-1 while you’re a student, outside acting work isn’t open to you. On OPT after your degree, each day of work counts as a day worked.',
+      `Your degree makes you a member of Actors’ Equity, and ${formatMoney(PRO_UNIONS.equity.down, 'USD')} of its initiation fee is taken then. A SAG-AFTRA role on a TV show or a theatrical or Low Budget film lets you join SAG-AFTRA. From the ${PRO_UNIONS.sagAftra.joinWithinDays}th day after that work began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA on the Work tab first.`,
+      'If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.',
+      // Until 2026-10-21 this sent the player to Papers' chapter; “Representation” comes between them from then (brief 19).
+      'Read “Representation” next. It opens the agent’s panel on the Career screen: how to reach him, and the agreement.',
+    ],
+    more: [
+      `A technique goes on your résumé as a special skill once it reaches ${PRO_SKILL_AT}: ${andList(PRO_SKILLS.map((s) => SKILL_WORDS[s]))}. Once it’s mastered, the résumé says so.`,
+      'When you graduate, the degree makes you a member of Actors’ Equity, as the School’s Bulletin says, and your profile and résumé show it from that day.',
+      `Your record keeps the last ${word(PRO_MATERIALS_KEPT)} of each kind of material you make, and every credit for good.`,
+      `Commission is taken only on work you contracted while represented: ${pct(PRO_AGREEMENT.commission)} at most, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, and on SAG-AFTRA work only what’s paid over scale. A contract made while an agreement ran still carries it after the agreement ends.`,
+      `Equity’s initiation fee is ${formatMoney(PRO_UNIONS.equity.initiation, 'USD')}, paid within three years, and its basic dues ${formatMoney(PRO_UNIONS.equity.yearlyDues / 2, 'USD')} each May and November. Joining SAG-AFTRA costs about ${formatMoney(sagJoinUsd(), 'USD')}, read from a search engine’s copy of its pages. Each union takes working dues from union pay.`,
+    ],
+    names: ['Career', 'Overview', 'Portfolio', 'Work', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel', 'Join SAG-AFTRA'],
+    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel', 'pro.join_sag'],
+  },
+  // From 2026-10-21 (the owner's brief 19): the agent's relationship, his office's interest and the agreement
+  // (`systems/proagent.ts`), after the portfolio an approach sends. The agent is named from `AGENTS`.
+  {
+    id: 'representation',
+    title: 'Representation',
+    lead: 'The agent, how to reach him, why his office decides as it does, and the agreement.',
+    body: [
+      `Career’s Representation tab holds the game’s one agent, ${PRO_AGENT.name}, at ${PRO_AGENCY.name} in ${PRO_AGENCY.office.city}. He and the agency are invented for the game. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.`,
+      `His office takes no submissions it hasn’t asked for. It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+      'Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.',
+      `For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged ${PRO_BAR} or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.`,
+      `Then press Send Your Materials. His office answers in about ${counted(PRO_TIMES.replyDays / 7, 'week')}: it asks for more, asks to meet, passes, or doesn’t answer at all, which after ${counted(PRO_TIMES.silenceDays / 7, 'week')} counts as no. Each answer comes as a notice, and History With His Office keeps every step.`,
+      `When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it ${PRO_TIMES.moveDays === 7 ? 'a week' : plural(PRO_TIMES.moveDays, 'day')}, once. A meeting missed closes the approach.`,
+      `Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
+      `After a pass, his office looks again only after ${PRO_HOLDS.pass}, and after no answer or a declined offer ${PRO_HOLDS.silence}, and then only at something new: a new credit, a better reel or a referral.`,
+      'If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.',
+      `While it runs, End It By Agreement ends it at once. End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.`,
+      // Until 2026-10-21's merge of the work loop this sent the player to Papers' chapter; “Finding Work” comes between.
+      'Read “Finding Work” next. It opens the Opportunities tab: the roles you can be seen for, auditions and offers.',
+    ],
+    more: [
+      `Every time here is the game’s estimate: the ${counted(PRO_TIMES.replyDays / 7, 'week')} to an answer, the ${counted(PRO_TIMES.silenceDays / 7, 'week')} with none, the ${counted(PRO_TIMES.requestDays / 7, 'week')} for what his office asks, the meeting ${counted(PRO_TIMES.meetingAfterDays, 'day')} or more on at ${word(PRO_TIMES.meetingHour)} in the morning, the ${counted(PRO_TIMES.decisionDays, 'day')} to a decision after it, and the bar for a referral.`,
+      `The agreement runs ${PRO_AGREEMENT.termDays === 365 ? 'a year' : plural(PRO_AGREEMENT.termDays, 'day')}, and its commission is ${pct(PRO_AGREEMENT.commission)} of gross pay for covered work, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, as the unions’ and New York’s rules allow.`,
+    ],
+    names: ['Representation', 'I’ve Read This', 'Check Your Materials', 'Ask For A Referral', 'Send Your Materials', 'Send What His Office Asked For', 'Ask To Move', 'Show The Reasons', 'Accept The Agreement and Decline The Agreement', `End It By Agreement, End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work`],
+    opens: ['pro.agent_notice', 'pro.agent_check', 'pro.ask_referral', 'pro.send_materials', 'pro.supply_material', 'pro.ask_to_move', 'ui.career-reasons', 'pro.accept_agreement', 'pro.decline_agreement', 'pro.end_agreement'],
+  },
+  // From 2026-10-21 (brief 19's J1 to J5 and A3): the work loop, after the portfolio a submission sends. Its figures are
+  // the work loop's own (`systems/projobs.ts`), each the game's estimate, and the School's rule the Bulletin's.
+  {
+    id: 'finding-work',
+    title: 'Finding Work',
+    lead: 'Roles to be seen for, submissions, auditions, offers and the work itself, with or without an agent.',
+    body: [
+      `The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
+      'Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.',
+      'To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.',
+      `${counted(PRO_WORK.replyDays, 'day').replace(/^./, (c) => c.toUpperCase())} later the casting office answers with an audition: in person in ${PRO_AUDITION_TOWNS} at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.`,
+      `Before it, prepare the sides with ${PRO_STEPS}, the way you prepare a practice brief. For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.`,
+      'If an audition clashes with something on your calendar, the notice says so. Press Ask For Another Time at least a day ahead, and casting moves it once, to a time it has that’s clear of your calendar.',
+      'Casting decides from how your audition went, how well the role suits you and how many other actors it saw. Some roles call you back first. A strong audition raises your chance without making it certain, and a role that suits you can go your way before you’re at your best.',
+      `An offer says the pay, the dates and how long it stands, ${counted(PRO_WORK.offerDays, 'day')}. Press Accept The Offer or Decline The Offer, on the tab or under What Needs You on Home. Accepting books the work days on your calendar and promises the pay for each week of it, due the Thursday after.`,
+      'Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Miss a shoot day, or a second day of a run, and the production replaces you.',
+      `While you’re at the School, work in term needs its approval. Press Ask The School at least ${counted(PRO_OUTSIDE.aheadDays / 7, 'week')} before the first day, and the dean decides a week later. Short, professional work that takes no School call and ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most is approved. Work taken in term without approval brings an academic warning, and a second time dismissal.`,
+      'On an F-1 you can’t accept work outside the School while you’re a student, and the School can’t authorize it. Summer and the winter break are yours, unless the School holds you for one of its calls.',
+      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+    ],
+    more: [
+      'The timings of a casting office, the trip from New Haven, the chance casting gives each audition and the field each kind of work draws are estimated. The pay is each union’s published minimum. Off-Broadway’s and a non-union short’s aren’t published, so the game estimates them.',
+      `The School’s rule is its Bulletin’s. Asking ${PRO_OUTSIDE.aheadDays} days ahead, ${PRO_OUTSIDE.mostDays} working days at most, ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.`,
+      'An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer.',
+    ],
+    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School'],
+    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

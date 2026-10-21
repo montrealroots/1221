@@ -1,0 +1,69 @@
+Mutations at the wave's merges (2026-10-21), each run against the test that holds it; the build and test of each is the merged working branch.
+I1 the showcase's end puts no follow-up on the calendar | src/engine/systems/proshowcase.ts (endShowcase) | tests/pro-showcase.test.ts 'from the last term’s first day to the morning after Commencement' | KILLED
+I2 a showcase with nothing played puts a follow-up on the calendar | src/engine/systems/proshowcase.ts (endShowcase's guard) | tests/pro-showcase.test.ts 'a showcase day missed is a missed call' | KILLED
+I3 a stop's command no screen or stop reaches | src/engine/world/clock.ts (calendar.skip renamed in its defineStop) | tests/interface.test.ts 'leaves no engine command that a person cannot reach' | KILLED
+I4 the accepted offer's pay never scheduled | src/engine/systems/projobs.ts (pro.accept_offer) | tests/pro-work.test.ts 'J3' (played on to the pay passed on through the trust account) | KILLED
+I5 an offer through him priced at scale | src/engine/systems/projobs.ts (makeOffer) | tests/pro-work.test.ts 'J3' ($282.70 a day, $102.80 commission) | KILLED
+I6 the pay's eligibility read not asked at acceptance | src/engine/systems/projobs.ts (acceptRefusal) | tests/pro-work.test.ts, tests/propay.test.ts | SURVIVED: it refuses only where a date fails usWorkAuthorized, the check before it; taken out the same day
+I7 SAG-AFTRA's 30 days not asked at acceptance | src/engine/systems/projobs.ts (acceptRefusal) | tests/pro-work.test.ts 'from the 30th day after a first SAG-AFTRA job began' | KILLED
+I8 a payment written without the days it pays for | src/engine/systems/projobs.ts (promisedPay) | tests/pro-work.test.ts 'an Equity open call with a callback' (a run week's 48 hours on its wages) | KILLED
+
+Mutations at the playthroughs' defect fixes (2026-10-21), each run against the test that holds it, on the working branch with the fixes in.
+I9 reliability counting every problem on the relationship as material not sent | src/engine/systems/proagent.ts (reliability's `late`) | tests/pro-agent.test.ts 'GUARD: a missed work day under him counts once against reliability' | KILLED
+I10 a role booked before posted again | src/engine/systems/projobs.ts (postingsAt, the engagement) | tests/pro-work.test.ts 'GUARD: a role the actor has been booked for, or holds the credit for, isn’t posted to them again' | KILLED
+I11 the credit not read where the engagement was trimmed | src/engine/systems/projobs.ts (postingsAt, the credit) | tests/pro-work.test.ts, the same GUARD | KILLED
+I12 a missed audition he set up not counted against reliability | src/engine/systems/proagent.ts (reliability's `against`) | tests/pro-agent.test.ts, the same GUARD | SURVIVED at first: the test's audition sat beside a job problem that already set the level; a twin with the audition alone was added, and it KILLED
+I13 Low Budget's day rate left at its 2026–27 figure | src/engine/content/careerwork.ts (SHARE_OF_SAG_DAY) | tests/pro-core.test.ts 'prices each SAG-AFTRA day rate by its contract year' | KILLED
+I14 an understudy's School credit back to "went on 1 time" | src/engine/systems/pro.ts (schoolCreditWords) | tests/pro-core.test.ts 'says how often an understudy went on in words' | KILLED
+I15 a share rounded down rather than to the dollar | src/engine/content/careerwork.ts (minimumOn) | tests/pro-core.test.ts 'prices each SAG-AFTRA day rate by its contract year' ($834, the sheet's figure) | KILLED
+
+Mutations at the tests written for the four rows the audit's second reading kept partial (2026-10-21), its own mutations run again against them, and two more on the ending's commission.
+I16 (the audit's Q15) a referral not counted as something new | src/engine/systems/proagent.ts (caseKeys) | tests/journey-agent.test.ts 'a year on, a referral alone is something new for his office' | KILLED (it survived the audit's reading)
+I17 (Q16) the request's refusal for a résumé still behind taken out | src/engine/systems/proagent.ts (supplyRefusal) | tests/journey-agent.test.ts 'a request for headshots more than two years old and an up-to-date résumé' | KILLED (it survived)
+I18 (Q17) the request's refusal for headshots older than the request taken out | src/engine/systems/proagent.ts (supplyRefusal) | the same test | KILLED (it survived)
+I19 (Q14) a member's résumé without SAG-AFTRA | src/engine/systems/pro.ts (resumeNow) | tests/journey-career.test.ts 'Join SAG-AFTRA after her first SAG-AFTRA principal job began' (the résumé made after she joined) | KILLED (it survived)
+I20 commission owed only while an agreement is in force, not on a contract made under one | src/engine/systems/propay.ts (owedAgreement) | tests/journey-career.test.ts 'End It By Agreement before a job’s pay comes leaves his commission owed on it' | KILLED
+I21 the ending's notice saying nothing is owed with pay still to come | src/engine/systems/proagent.ts (stillOwed) | the same test | KILLED
+
+Mutations at the tests for what the audit's third reading found unread (2026-10-21), its own run again, and the employment check as it was.
+I22 (the audit's R8) a better reel not counted as something new | src/engine/systems/proagent.ts (caseKeys) | tests/journey-agent.test.ts 'a year on, a better reel alone is something new for his office' | KILLED (it survived the audit's reading)
+I23 (R9) Equity's refusal while employed taken out | src/engine/systems/proagent.ts (endRefusal) | tests/journey-career.test.ts 'Equity’s ending with no offer is refused while she’s employed on covered work through him' | KILLED (it survived)
+I24 the employment check back to a work day's own hours, as it was until this fix | src/engine/systems/proagent.ts (workingNow) | the same test (life A between her two shoot days) | KILLED
+I25 (R10) a referral not refused while an approach is held or under way | src/engine/systems/proagent.ts (referralRefusal) | tests/journey-agent.test.ts 'a year on, a referral alone is something new for his office' (asked during the pass's year, and after the second send) | KILLED (it survived)
+I26 Equity's 90 days not extended by the days employed (as until this fix) | src/engine/systems/proagent.ts (endRefusal) | tests/journey-agent.test.ts 'Equity’s 90 days are extended by the days employed on covered work through him' | KILLED
+I27 the extension counting work days only, not the employment's span | src/engine/systems/proagent.ts (employedDays) | the same test (31 days, where its two work days are 2) | KILLED
+
+Mutations at the parts written for an actor, an actress or either (2026-10-21, the owner's word: "There should be gender neutral and different parts for each genders. We need versatility always.") and the four defects the app's second walk found, run by `mut-parts.py` (its output in `mut-parts.txt`), each against the test named, each reverted after.
+I28 the postings not reading who a part is written for (as until this change) | src/engine/systems/projobs.ts (postingsAt) | tests/pro-work.test.ts 'posts an actor the parts written for an actor or for either…' | KILLED
+I29 a part posted to the title it isn't written for | src/engine/systems/projobs.ts (writtenFor) | the same test | KILLED
+I30 the offer's card not saying who the part is written for | src/ui/career/OpportunitiesPane.tsx (What It Asks) | tests/pro-opportunities-screen.test.ts 'a first-year’s tab lists the open roles posted…' | KILLED
+I31 the agent-only offices listed for every part, so a project with a part for each named twice | src/ui/career/OpportunitiesPane.tsx (agentOnly) | the same test | KILLED
+I32 Booked Work's deferred pay back to "nothing is paid for it" alone | src/ui/career/OpportunitiesPane.tsx (Booked) | tests/pro-opportunities-screen.test.ts 'a student film accepted, Booked Work says why its deferred pay is never paid…' | KILLED
+I33 the Work tab's deferred pay back to "shown here and never paid" | src/ui/career/WorkPane.tsx (PaymentLine) | tests/propay-screen.test.ts 'a student film’s week reads deferred, with why…' | KILLED
+I34 the Calendar's entry without its trip (as until this fix) | src/ui/workspaces/CalendarWorkspace.tsx (EntryDetail) | tests/calendar-entry-trip.test.ts | KILLED
+I35 the Ending It term without "through him" (as until this fix) | src/engine/content/careerwork.ts (AGREEMENT_TERMS) | tests/pro-core.test.ts 'says Equity’s 90 days one way…' | KILLED
+I36 the ending's record without "through him" | src/engine/systems/proagent.ts (ENDED_WORDS) | tests/journey-agent.test.ts 'by the player under Equity’s 90 days with no offer…' | KILLED
+I37 a counterpart part written for either | src/engine/content/careerwork.ts (Owen when first run; Callum, run again once renamed, as no classmate can be called) | tests/pro-core.test.ts 'writes each part for an actor, an actress or either…' | KILLED
+I38 the deferred pay's why back to "only if it earns money later" alone | src/engine/systems/projobs.ts (DEFERRED_WHY) | tests/pro-work.test.ts 'an unsigned graduate, from a posted student film…' | KILLED
+I39 the posting decider's agreement with the real agent's old id (as until this fix, which the swap left naming nobody) | src/engine/decided.ts (represent) | tests/deciders.test.ts 'pro.posting … is actually changed by represented' | KILLED (it failed the suite at the swap's commit)
+I40 the decider's sweep not setting the title | src/engine/decided.ts (pro.posting) | tests/deciders.test.ts 'pro.posting … is actually changed by title' | KILLED
+I41 the postings not reading who a part is written for, against the decider's sweep | src/engine/systems/projobs.ts (postingsAt) | the same test | KILLED
+
+Mutations at the fixes for what the app's third walk found (2026-10-21, on 9c3b7ee8): two auditions in person at 11 AM the same day in Hudson and Brooklyn, both judged, and a part named as the School names classmates (Theo, with Theo Patel a classmate in many lives). Run by `mut-parts.py` with ONLY=I42,I43,I44,I45.
+I42 the audition's handler not reading where she was (as until this fix) | src/engine/systems/projobs.ts (AUDITION_KIND) | tests/pro-work.test.ts 'two auditions in person whose trips meet can’t both be gone to…' | KILLED
+I43 the meeting's handler not reading where she was | src/engine/systems/proagent.ts (MEETING_KIND) | tests/pro-work.test.ts 'a meeting at the agent’s office and an audition in person at its hour can’t both be gone to…' | KILLED
+I44 the rounds' windows without their trips | src/engine/systems/projobs.ts (attendedAcross) | the two auditions' test (the one three hours on) | KILLED
+I45 the film's part named Theo again | src/engine/content/careerwork.ts | tests/pro-core.test.ts 'names no part as the School names a classmate…' | KILLED
+
+Mutations at the fix for what the app's fourth walk found (2026-10-21, on a43b4f8f): the stop at the first of two auditions at one hour said nothing of the second, which was missed with no stop, and On The Way said the clock stops at each. Run by `mut-parts.py` with ONLY=I46,I47,I48,I49.
+I46 no career commitment found to clash | src/engine/systems/projobs.ts (careerClashes) | tests/language-frame-ui.test.ts 'two auditions in person at one hour, their trips meeting…' | KILLED
+I47 the stop's clash paragraph taken out (as until this fix) | src/ui/shell/TimeControls.tsx (DueNow) | the same test | KILLED
+I48 On The Way's pairs read both ways, so each said twice and the later named as stopped at | src/ui/shell/TimeControls.tsx (On The Way) | the same test | KILLED
+I49 the windows without their trips | src/engine/systems/projobs.ts (windowOf) | the same test (the audition three hours on) | KILLED
+
+The mutation at what the app's fifth walk found (2026-10-21, on 40eab86a): the built app blank on every page, `projobs.ts` making a Set of `proagent.ts`'s `MEETING_KIND` as it loaded, across the import ring `proagent.ts` → `school.ts` → `projobs.ts` → `proagent.ts`. The suite passed it, its module runner handing the binding back as undefined; I46 was run again on `careerStop`, the Set's place since.
+I50 the career commitments' kinds a Set made at load again (as on 40eab86a) | src/engine/systems/projobs.ts (careerStop) | tests/module-load-order.test.ts, which bundles src/main.tsx as the build does (`tools/load-order.mjs`) | KILLED
+
+Mutations at the fix for what the app's sixth walk found (2026-10-21, on 63fe7391): On The Way said "The clock stops at each one" above the line saying it stops only at the first of a clashing pair. `clashesAhead` counts the commitments it passes, and On The Way counts only the stops it makes. Each commitment read against the ones after it alone, as I48 first read it, went: the set of those passed made it a guard nothing reached, the test passing with it taken out. I48 is the set taken out now. Run with ONLY=I47,I48,I51.
+I48 (again) the set of commitments passed taken out, so one missed misses the ones after it too | src/ui/shell/TimeControls.tsx (clashesAhead) | tests/language-frame-ui.test.ts 'two auditions in person at one hour…' | KILLED
+I51 On The Way counting every commitment as a stop again (as until this fix) | src/ui/shell/TimeControls.tsx (TimeControls) | the same test | KILLED

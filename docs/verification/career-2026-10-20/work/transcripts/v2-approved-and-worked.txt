@@ -1,0 +1,33 @@
+V2 (seed work-approved-1): a first-year asks the School for a two-day shoot in term, at posting
+
+WHAT THE DEAN LOOKS AT, BEFORE ASKING
+    holds: You’re in good standing, as a request needs.
+    holds: Asked 34 days before the first day, in good time: the game takes 14 days or more as asking in good time.
+    holds: Two working days, short enough: the game takes 10 or fewer as short-term.
+    holds: It’s professional work under a paid contract.
+    holds: It takes no call of a School or Yale Rep production.
+    holds: It takes two class days, within the two the game allows.
+
+AT THE OFFER: The dean approved this work in term, so its class days are excused.
+
+CLASSES EXCUSED WHILE AWAY: 2
+STANDING: good
+CREDIT: {"id":"pro_00000j","kind":"screen","project":"Last Bus To Eastview","role":"Sam","company":"Ferrous Pictures","year":2026,"medium":"film","status":"shot","engagementId":"pro_00000c","at":1790593200000,"band":"strong"}
+
+THE OPPORTUNITY’S HISTORY
+    August 24, 2026 at 9:00 AM  [opportunity] The producers posted Sam in Last Bus To Eastview.
+    August 24, 2026 at 6:15 PM  [requested] You asked the School to approve Sam in Last Bus To Eastview in term: two working days, two class days.
+    August 24, 2026 at 6:15 PM  [submitted] You submitted yourself for Sam in Last Bus To Eastview, sending your headshots from August 24, 2026 and your résumé from August 24, 2026.
+    August 26, 2026 at 10:00 AM  [audition] The producers ask for a self-tape for Sam in Last Bus To Eastview, due Sunday, August 30, 2026 at 6:00 PM.
+    August 29, 2026 at 6:45 AM  [audition] Your self-tape for Sam was Exceptional.
+    August 31, 2026 at 10:00 AM  [success] The dean approved your request to work as Sam in term.
+    September 2, 2026 at 5:00 PM  [offer] The producers offer you Sam in Last Bus To Eastview, a fictional non-union short film. It pays $125.00 a day for two days, an estimate. The work is from September 28, 2026 to September 29, 2026, in New York. The offer stands until September 5, 2026 at 5:00 PM.
+    September 3, 2026 at 6:45 AM  [booked] You accepted Sam in Last Bus To Eastview: two work days, from September 28, 2026.
+
+NOTICES, IN THE ORDER THE PLAYER READ THEM
+August 26, 2026 at 10:00 AM  A Self-Tape For Sam
+    The producers ask for a self-tape for Sam in Last Bus To Eastview, due Sunday, August 30, 2026 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 31, 2026 at 10:00 AM  The Dean Approves Your Outside Work
+    The chair of Acting recommended your request, and the dean approved it in writing: Sam in Last Bus To Eastview, two working days. You’re in good standing, as a request needs. Asked 34 days before the first day, in good time: the game takes 14 days or more as asking in good time. Two working days, short enough: the game takes 10 or fewer as short-term. It’s professional work under a paid contract. It takes no call of a School or Yale Rep production. It takes two class days, within the two the game allows. The class days it takes are excused.
+September 29, 2026 at 7:00 AM  You Wrapped Last Bus To Eastview
+    Last Bus To Eastview wrapped, and Sam is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about five months on, estimated. Update your résumé on the Portfolio tab to add it.

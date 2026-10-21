@@ -1,0 +1,322 @@
+Brief 19’s audit: mutations of the career’s commands and their readers, 2026-10-21, against 7bbab80f.
+
+Each replaces one exact string in a copy of the tree (never the working tree), runs the named tests with one worker
+(npx vitest run <files> --maxWorkers=1 --minWorkers=1, and -t <filter> where one is given), records whether any failed
+and which, and puts the file back: node mutate.cjs <copy> mutations-list.json mutations.json. M1 to M21 mutate what a
+row says reads its command’s change, or the change itself, and were expected to be killed; P1 to P4 mutate a reader the
+audit believed no test checks, to show the gap rather than assert it. Killed means a test failed.
+
+Before them the ten career test files passed at 7bbab80f: 125 tests in 63 seconds (pro-core, pro-screen, pro-agent,
+journey-agent, pro-representation-screen, pro-work, pro-opportunities-screen, propay, propay-screen, pro-showcase).
+
+M1  pro.set_name  KILLED  (Tests  1 failed | 20 skipped (21), 6 s)
+    src/engine/systems/pro.ts: "const keys: string[] = [`name:${p.name}`];" -> "const keys: string[] = [`name:${person.displayName}`];"
+    ran: tests/pro-core.test.ts -t "résumé made from the record"
+    failed: the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date
+
+M2  pro.headshots  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/pro.ts: "const headshot = currentOf(pro, 'headshot');" -> "const headshot = undefined as ReturnType<typeof currentOf>;"
+    ran: tests/pro-work.test.ts -t "refuses a submission while the headshots"
+    failed: F4 and J4: what a submission reads, and who can submit for what > PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made
+
+M3  pro.update_resume  KILLED  (Tests  1 failed | 20 skipped (21), 5 s)
+    src/engine/systems/pro.ts: "return now.keys.filter((k) => !had.has(k)).map((k) => now.labels[k]!);" -> "return [];"
+    ran: tests/pro-core.test.ts -t "résumé made from the record"
+    failed: the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date
+
+M4  pro.cut_reel  KILLED  (Tests  1 failed | 20 skipped (21), 5 s)
+    src/engine/systems/pro.ts: "if (pieces.length && pieces.every((p) => p.from === 'tape'))" -> "if (false)"
+    ran: tests/pro-core.test.ts -t "reel is cut only from recorded work"
+    failed: the portfolio’s commands > PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it
+
+M5  pro.agent_notice  KILLED  (Tests  1 failed | 11 skipped (12), 5 s)
+    src/engine/systems/proagent.ts: "rel.noticeShownAt = s.now;" -> ""
+    ran: tests/journey-agent.test.ts -t "the check refuses an incomplete submission"
+    failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way
+
+M6  pro.agent_check  KILLED  (Tests  1 failed | 7 skipped (8), 6 s)
+    src/engine/systems/proagent.ts: "if (!countOf(rel, 'checked')) return 'Check your materials first: Check Your Materials says whether an approach has what it needs.';" -> ""
+    ran: tests/pro-agent.test.ts -t "put on once, it comes through the School"
+    failed: W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting
+
+M7  pro.submit  KILLED  (Tests  1 failed | 4 skipped (5), 8 s)
+    src/engine/systems/projobs.ts: "kind: REPLY_KIND, label: `Casting Answers: ${t.role.part}`" -> "kind: RELEASE_KIND, label: `Casting Answers: ${t.role.part}`"
+    ran: tests/pro-opportunities-screen.test.ts -t "a submission moves to In Progress"
+    failed: the Opportunities tab > PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time, the sides’ three steps with their minutes, and the control its form asks for
+
+M8  pro.tape_audition  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "finishRound(s, person, o!, r, idx, e); return { band: r.band!, overall: r.overall! };" -> "r.status = 'done'; r.overall = e.overall; r.band = bandOfQuality(e.overall); return { band: r.band!, overall: r.overall! };"
+    ran: tests/pro-work.test.ts -t "a permitted request, approved by the dean"
+    failed: A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept
+
+M9  pro.move_audition  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "if (item) s.timeline.reschedule(item.id, to);" -> ""
+    ran: tests/pro-work.test.ts -t "against a plan of your own"
+    failed: V12: a scheduling conflict, said and handled > PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept
+
+M10  pro.accept_offer  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "schedulePay(s, person, e); bookDays(s, person, e, t);" -> "bookDays(s, person, e, t);"
+    ran: tests/pro-work.test.ts -t "an Equity open call with a callback"
+    failed: a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay
+
+M11  pro.decline_offer  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "s.timeline.cancelFor('pro.offer', o.id, s.now); const words = `You declined" -> "const words = `You declined"
+    ran: tests/pro-work.test.ts -t "an offer not answered lapses"
+    failed: what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked
+
+M12  pro.request_outside_work  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "...(inSessionAny(person, days) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {})," -> "...(inSessionAny(person, days) ? { school: 'unapproved' as const } : {}),"
+    ran: tests/pro-work.test.ts -t "a permitted request, approved by the dean"
+    failed: A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept
+
+M13  school.choose_showcase  KILLED  (Tests  1 failed | 14 skipped (15), 11 s)
+    src/engine/systems/proshowcase.ts: "const made = setScenes(s, person, sc, picks.map(" -> "const made = setScenes(s, person, sc, facultyChoice(sc) ?? picks.map("
+    ran: tests/pro-showcase.test.ts -t "refuses a choice before the last term"
+    failed: choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice
+
+M14  pro.ask_referral  KILLED  (Tests  1 failed | 11 skipped (12), 6 s)
+    src/engine/systems/proagent.ts: "rel.via = { route: 'referral', at: s.now, by: job.by };" -> ""
+    ran: tests/journey-agent.test.ts -t "the check refuses an incomplete submission"
+    failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way
+
+M15  pro.send_materials  KILLED  (Tests  1 failed | 11 skipped (12), 8 s)
+    src/engine/systems/proagent.ts: "if (why) rel.cooldown = { until: addDays(sim.now, COOLDOWN_DAYS[why], officeZone(agentById(rel.agentId)!)), why, needsNew: true };" -> ""
+    ran: tests/journey-agent.test.ts -t "passed; a year"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through
+
+M16  pro.supply_material  KILLED  (Tests  1 failed | 11 skipped (12), 10 s)
+    src/engine/systems/proagent.ts: "delete rel.request; setStage(s, rel, 'sent'); const zone = officeZone(agent); const n = approachesOf(rel);" -> "delete rel.request; const zone = officeZone(agent); const n = approachesOf(rel);"
+    ran: tests/journey-agent.test.ts -t "a request for more"
+    failed: G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had
+
+M17  pro.ask_to_move  KILLED  (Tests  1 failed | 11 skipped (12), 10 s)
+    src/engine/systems/proagent.ts: "s.timeline.reschedule(item!.id, meeting.at);" -> ""
+    ran: tests/journey-agent.test.ts -t "slept through"
+    failed: V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept
+
+M18  pro.accept_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 8 s)
+    src/engine/systems/proagent.ts: "a.signedAt = s.now;" -> ""
+    ran: tests/journey-agent.test.ts -t "offered with every term"
+    failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses
+
+M19  pro.decline_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 9 s)
+    src/engine/systems/proagent.ts: "s.timeline.cancelFor('pro-agreement', a.id, s.now); closeApproach(s, person, rel, 'declined', 'declined'); note(s, rel, 'declined'" -> "s.timeline.cancelFor('pro-agreement', a.id, s.now); note(s, rel, 'declined'"
+    ran: tests/journey-agent.test.ts -t "offered with every term"
+    failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses
+
+M20  pro.end_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 9 s)
+    src/engine/systems/proagent.ts: "if (sim.now < from) return `Equity’s rule lets you end it once" -> "if (false) return `Equity’s rule lets you end it once"
+    ran: tests/journey-agent.test.ts -t "90 days with no offer"
+    failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked
+
+M21  pro.join_sag  KILLED  (Tests  1 failed | 18 skipped (19), 8 s)
+    src/engine/systems/propay.ts: "pro.sag = { ...pro.sag, memberSince: s.now };" -> ""
+    ran: tests/propay.test.ts -t "first SAG-AFTRA principal job"
+    failed: the unions’ money > PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it
+
+P1  pro.prepare  KILLED  (Tests  7 failed | 27 passed (34), 79 s)
+    src/engine/systems/projobs.ts: "const p = o.prep ?? ZERO;" -> "const p = ZERO;"
+    ran: tests/pro-work.test.ts tests/pro-opportunities-screen.test.ts
+    failed: J5: casting decided apart from quality > PLAYER JOURNEY: over seeds, a skilled actor loses a role and a developing actor books one, each through the whole loop | the whole loop, played > PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice | a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay | J3: the agent’s part, while an agreement is in force > PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at the rate’s scale, and the booking carries his id and the agreement’s | V3 and A4: a player who left before the degree > PLAYER JOURNEY: withdraws through the School, keeps the record and says the training truly, and books, works and is credited for an open role, with no School rule on it | what missing a step costs > PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played | what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked
+
+P2  pro.prepare  SURVIVED  (Tests  34 passed (34), 26 s)
+    src/engine/systems/projobs.ts: "const p = e.prep ?? ZERO;" -> "const p = ZERO;"
+    ran: tests/pro-work.test.ts tests/pro-opportunities-screen.test.ts
+
+P3  pro.join_sag  SURVIVED  (Tests  54 passed (54), 28 s)
+    src/engine/systems/propay.ts: "if (project.union === 'sag-aftra' && pro?.sag?.memberSince !== undefined && pro.sag.memberSince <= at)" -> "if (false)"
+    ran: tests/propay.test.ts tests/propay-screen.test.ts tests/pro-work.test.ts
+
+P4  pro.join_sag  SURVIVED  (Tests  25 passed (25), 12 s)
+    src/engine/systems/propay.ts: "addBill(s, person, duesBill(s, 'sag-aftra', nextBilling(s.now)));" -> ""
+    ran: tests/propay.test.ts tests/propay-screen.test.ts
+
+Totals: 21 of 21 M mutations killed; P1 killed (through seed-chosen outcomes, see pro.prepare’s row), P2, P3 and P4 survived.
+
+Round Two, 2026-10-21, against a483247d, once V1’s journeys had landed (tests/journey-career.test.ts and
+tests/journey-career-older.test.ts). The first round’s mutations of the nine rows it left partial, run again on the
+played journeys (Q1, Q4 to Q7, Q9 to Q13 name the one they repeat), with one more for the send, the referral’s band
+and the ending; and four of readers the second reading found no test reading (Q14 to Q17). Each in a copy of the tree,
+with one worker, by the same runner (mutate.cjs, mutations2-list.json, mutations2.json), several copies at a time.
+Where a journey’s file failed before any test ran, its beforeAll failed: life A’s or life B’s own play, which each
+step of expects to reach by a date. Q10b and Q11b repeat P1 and P2 scoped to their twins (mutate-scoped.cjs), since
+Q10 failed life A’s own play before its twin could run.
+
+Before them the journeys’ files and the tests the rows cite passed at a483247d (REPORT.md, Checks Run).
+
+Q1   pro.ask_referral  KILLED  (Tests  8 skipped (8), 71 s)
+    src/engine/systems/proagent.ts: "rel.via = { route: 'referral', at: s.now, by: job.by };" -> "" (M14 again)
+    ran: tests/journey-career-older.test.ts -t "Ask For A Referral, from the director"
+    failed: the V16 block’s beforeAll, the older graduate’s own play, before any test ran
+
+Q2   pro.ask_referral  KILLED  (Tests  1 failed | 7 skipped (8), 88 s)
+    src/engine/systems/proagent.ts: "(rel.referrals ??= []).push({ engagementId, by: job.by, job: job.job, at: s.now, ...(job.band ? { band: job.band } : {}) });" -> "(rel.referrals ??= []).push({ engagementId, by: job.by, job: job.job, at: s.now });"
+    ran: tests/journey-career-older.test.ts -t "Ask For A Referral, from the director"
+    failed: V16: an existing graduate’s save from before brief 19 (J01 at 8283f80c, 4 August 2029), opened and played on into the career > PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong: his office’s notice read, her materials checked, the referral asked for and her materials sent through it, and his office’s answer, a request for a reel
+
+Q3   pro.send_materials  KILLED  (Tests  11 skipped (11), 75 s)
+    src/engine/systems/proagent.ts: "s.schedule({ at, kind: REPLY_KIND, label: 'An Answer', category: 'system', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, approach: n, step: 'first', asked," -> "if (false) s.schedule({ at, kind: REPLY_KIND, label: 'An Answer', category: 'system', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, approach: n, step: 'first', asked,"
+    ran: tests/journey-career.test.ts -t "the School’s follow-up passes on"
+    failed: the file’s beforeAll, life A’s own play, before any test ran
+
+Q4   pro.supply_material  KILLED  (Tests  11 skipped (11), 284 s)
+    src/engine/systems/proagent.ts: "delete rel.request; setStage(s, rel, 'sent'); const zone = officeZone(agent); const n = approachesOf(rel);" -> "delete rel.request; const zone = officeZone(agent); const n = approachesOf(rel);" (M16 again)
+    ran: tests/journey-career.test.ts -t "no request to meet from the follow-up"
+    failed: life B’s beforeAll, its own play, before its test ran
+
+Q5   pro.ask_to_move  KILLED  (Tests  11 skipped (11), 198 s)
+    src/engine/systems/proagent.ts: "s.timeline.reschedule(item!.id, meeting.at);" -> "" (M17 again)
+    ran: tests/journey-career.test.ts -t "the School’s follow-up passes on"
+    failed: the file’s beforeAll, life A’s own play, before any test ran
+
+Q6   pro.accept_agreement  KILLED  (Tests  11 skipped (11), 224 s)
+    src/engine/systems/proagent.ts: "a.signedAt = s.now;" -> "" (M18 again)
+    ran: tests/journey-career.test.ts -t "through him: his breakdowns"
+    failed: the file’s beforeAll, life A’s own play, before any test ran
+
+Q7   pro.decline_agreement  KILLED  (Tests  1 failed | 10 skipped (11), 298 s)
+    src/engine/systems/proagent.ts: "s.timeline.cancelFor('pro-agreement', a.id, s.now); closeApproach(s, person, rel, 'declined', 'declined'); note(s, rel, 'declined'" -> "s.timeline.cancelFor('pro-agreement', a.id, s.now); note(s, rel, 'declined'" (M19 again)
+    ran: tests/journey-career.test.ts -t "no request to meet from the follow-up"
+    failed: a second graduate (life B, seed v1-5), who cuts her reel only once the School’s follow-up has come > PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials; his office asks for an up-to-date résumé, made and sent with Send What His Office Asked For; a meeting kept; his offer declined with Decline The Agreement, held six months
+
+Q8   pro.end_agreement  KILLED  (Tests  1 failed | 10 skipped (11), 209 s)
+    src/engine/systems/proagent.ts: "a.endedAt = how === 'term' ? a.endsAt! : sim.now;" -> "a.endedAt = how === 'term' ? a.endsAt! : a.endsAt!;"
+    ran: tests/journey-career.test.ts -t "End It By Agreement ends the agreement"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement ends the agreement that day, says what it leaves owed, and his breakdowns stop coming
+
+Q9   pro.join_sag  KILLED  (Tests  11 skipped (11), 199 s)
+    src/engine/systems/propay.ts: "pro.sag = { ...pro.sag, memberSince: s.now };" -> "" (M21 again)
+    ran: tests/journey-career.test.ts -t "Join SAG-AFTRA after her first"
+    failed: the file’s beforeAll, life A’s own play, before any test ran
+
+Q10  pro.prepare  KILLED  (Tests  11 skipped (11), 243 s)
+    src/engine/systems/projobs.ts: "const p = o.prep ?? ZERO;" -> "const p = ZERO;" (P1 again)
+    ran: tests/journey-career.test.ts -t "the same SAG-AFTRA self-tape"
+    failed: the file’s beforeAll, life A’s own play, before any test ran
+
+Q10b pro.prepare  KILLED  (Tests  1 failed | 10 skipped (11), 144 s)
+    P1 again, scoped to its twin by mutate-scoped.cjs: the reader reads no preparation only while a flag the twin sets in the copy’s test is up
+    ran: tests/journey-career.test.ts -t "the same SAG-AFTRA self-tape"
+    failed: preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, against taped cold, comes out higher, and a band higher (AssertionError: expected 22.5 to be greater than 32.5)
+
+Q11  pro.prepare  KILLED  (Tests  1 failed | 10 skipped (11), 345 s)
+    src/engine/systems/projobs.ts: "const p = e.prep ?? ZERO;" -> "const p = ZERO;" (P2 again)
+    ran: tests/journey-career.test.ts -t "the same booked network part"
+    failed: preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same booked network part: its preparation done to ready against not at all, judged on its two shoot days, comes out higher each day, and a band higher
+
+Q11b pro.prepare  KILLED  (Tests  1 failed | 10 skipped (11), 174 s)
+    P2 again, scoped to its twin by mutate-scoped.cjs: the reader reads no preparation only while a flag the twin sets in the copy’s test is up
+    ran: tests/journey-career.test.ts -t "the same booked network part"
+    failed: preparation, played as twins from the same moment of life A (the falsifiability test: change the preparation, and the band moves) > the same booked network part: its preparation done to ready against not at all, judged on its two shoot days, comes out higher each day, and a band higher (AssertionError: expected 23.2 to be greater than 28.3)
+
+Q12  pro.join_sag  KILLED  (Tests  1 failed | 10 skipped (11), 171 s)
+    src/engine/systems/propay.ts: "if (project.union === 'sag-aftra' && pro?.sag?.memberSince !== undefined && pro.sag.memberSince <= at)" -> "if (false)" (P3 again)
+    ran: tests/journey-career.test.ts -t "Join SAG-AFTRA after her first"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s
+
+Q13  pro.join_sag  KILLED  (Tests  11 skipped (11), 255 s)
+    src/engine/systems/propay.ts: "addBill(s, person, duesBill(s, 'sag-aftra', nextBilling(s.now)));" -> "" (P4 again)
+    ran: tests/journey-career.test.ts -t "Join SAG-AFTRA after her first"
+    failed: the file’s beforeAll, life A’s own play, before any test ran
+
+Q14  pro.join_sag  SURVIVED  (Tests  65 passed (65), 236 s)
+    src/engine/systems/pro.ts: "if (p.unions.sagMember !== undefined) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');" -> "if (false) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');"
+    ran: tests/journey-career.test.ts tests/pro-core.test.ts tests/pro-screen.test.ts tests/propay.test.ts tests/propay-screen.test.ts
+
+Q15  pro.ask_referral  SURVIVED  (Tests  34 passed (34), 122 s)
+    src/engine/systems/proagent.ts: "for (const r of rel?.referrals ?? []) keys.push(`referral:${r.engagementId}`);" -> ""
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts
+
+Q16  pro.supply_material  SURVIVED  (Tests  45 passed (45), 345 s)
+    src/engine/systems/proagent.ts: "if (kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(" -> "if (false && kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push("
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
+
+Q17  pro.supply_material  SURVIVED  (Tests  45 passed (45), 301 s)
+    src/engine/systems/proagent.ts: "if (kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(" -> "if (false && kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push("
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
+
+Totals: 15 of 19 killed; Q14, Q15, Q16, Q17 survived.
+
+Round Three, 2026-10-21, against c01e06f4, once tests had been written for what the second reading found missing
+(tests/journey-agent.test.ts and tests/journey-career.test.ts). The second round’s survivors run again on those tests
+(R1 to R4 name the one they repeat), two on the commission owed after the player ends the agreement (R5, R6), and four
+of readers and refusals this reading found by going through the rows again: the reel’s two readers in his office’s
+decisions (R7, R8), Equity’s refusal while covered work goes on (R9) and the referral’s refusals while an approach is
+under way or held (R10). Each in a copy of the tree, with one worker, by the same runner (mutate.cjs,
+mutations3-list.json, mutations3.json).
+
+R1   pro.join_sag  KILLED  (Tests  1 failed | 11 skipped (12), 262 s)
+    src/engine/systems/pro.ts: "if (p.unions.sagMember !== undefined) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');" -> "if (false) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');" (Q14 again)
+    ran: tests/journey-career.test.ts -t "Join SAG-AFTRA after her first"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s
+
+R2   pro.ask_referral  KILLED  (Tests  1 failed | 13 skipped (14), 16 s)
+    src/engine/systems/proagent.ts: "for (const r of rel?.referrals ?? []) keys.push(`referral:${r.engagementId}`);" -> "" (Q15 again)
+    ran: tests/journey-agent.test.ts -t "a year on, a referral alone"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through
+
+R3   pro.supply_material  KILLED  (Tests  1 failed | 13 skipped (14), 16 s)
+    src/engine/systems/proagent.ts: "if (kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(" -> "if (false && kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(" (Q16 again)
+    ran: tests/journey-agent.test.ts -t "a request for headshots more than two years old"
+    failed: G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new
+
+R4   pro.supply_material  KILLED  (Tests  1 failed | 13 skipped (14), 16 s)
+    src/engine/systems/proagent.ts: "if (kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(" -> "if (false && kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(" (Q17 again)
+    ran: tests/journey-agent.test.ts -t "a request for headshots more than two years old"
+    failed: G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new
+
+R5   pro.end_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 273 s)
+    src/engine/systems/propay.ts: "if (own) return { agreement: own, how: 'term' };" -> "if (own) return own.endedAt !== undefined ? undefined : { agreement: own, how: 'term' };"
+    ran: tests/journey-career.test.ts -t "End It By Agreement before"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes
+
+R6   pro.end_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 276 s)
+    src/engine/systems/proagent.ts: "const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => !p.received && !p.deferred));" -> "const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => false && !p.received && !p.deferred));"
+    ran: tests/journey-career.test.ts -t "End It By Agreement before"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes
+
+R7   pro.cut_reel  KILLED  (Tests  3 failed | 44 passed | 1 skipped (48), 428 s)
+    src/engine/systems/proagent.ts: "if (reel?.pieces?.length) out.push({ what: 'your reel', band: bestBand(reel.pieces.map((p) => p.band)), medium: 'screen' });" -> "if (false && reel?.pieces?.length) out.push({ what: 'your reel', band: bestBand(reel.pieces.map((p) => p.band)), medium: 'screen' });"
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials; the meeting set, its calendar entry saying the trip goes with it and what missing it costs, moved a week with Ask To Move at its stop, and kept; the agreement offered with every term, and accepted with Accept The Agreement | the Representation tab > PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline | the Representation tab > PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why
+
+R8   pro.cut_reel  SURVIVED  (Tests  48 passed (48), 446 s)
+    src/engine/systems/proagent.ts: "if (reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);" -> "if (false && reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);"
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
+
+R9   pro.end_agreement  SURVIVED  (Tests  40 passed (40), 243 s)
+    src/engine/systems/proagent.ts: "if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';" -> "if (false && workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';"
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career.test.ts
+
+R10  pro.ask_referral  SURVIVED  (Tests  36 passed (36), 124 s)
+    src/engine/systems/proagent.ts: "if (busy) return busy; const soon = tooSoon(sim, rel); if (soon) return soon; const job = referrersOf(" -> "const job = referrersOf("
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts
+
+Totals: 7 of 10 killed; R8, R9, R10 survived.
+
+Round Four, 2026-10-21, against 9c3e6fa5, once tests had been written for what the third reading found unread, and
+Equity’s employment check changed to hold from a job’s first work day until it’s finished. The third round’s survivors
+run again on those tests (S1 to S3 name the one they repeat), and the check put back as it was (S4). Each in a copy of
+the tree, with one worker, by the same runner (mutate.cjs, mutations4-list.json, mutations4.json).
+
+S1   pro.cut_reel  KILLED  (Tests  1 failed | 14 skipped (15), 17 s)
+    src/engine/systems/proagent.ts: "if (reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);" -> "if (false && reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);" (R8 again)
+    ran: tests/journey-agent.test.ts -t "a better reel alone"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepared tape lets the next approach through
+
+S2   pro.end_agreement  KILLED  (Tests  1 failed | 12 skipped (13), 148 s)
+    src/engine/systems/proagent.ts: "if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';" -> "if (false && workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';" (R9 again)
+    ran: tests/journey-career.test.ts -t "Equity’s ending with no offer is refused"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished
+
+S3   pro.ask_referral  KILLED  (Tests  1 failed | 14 skipped (15), 15 s)
+    src/engine/systems/proagent.ts: "if (busy) return busy; const soon = tooSoon(sim, rel); if (soon) return soon; const job = referrersOf(" -> "const job = referrersOf(" (R10 again)
+    ran: tests/journey-agent.test.ts -t "a referral alone is something new"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through
+
+S4   pro.end_agreement  KILLED  (Tests  1 failed | 12 skipped (13), 147 s)
+    src/engine/systems/proagent.ts: "(person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && (e.days[0]?.from ?? Infinity) <= at);" -> "(person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && e.days.some((d) => d.from <= at && at <= d.to));"
+    ran: tests/journey-career.test.ts -t "Equity’s ending with no offer is refused"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished
+
+Totals: 4 of 4 killed.

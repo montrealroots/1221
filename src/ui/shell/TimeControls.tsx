@@ -5,26 +5,27 @@
  * world processes everything that comes due either way.
  */
 
-import { titleCaseLabel } from '@/engine/core/text';
-import { useEffect, useRef, useState } from 'react';
+import { countWords, spokenList, titleCaseLabel } from '@/engine/core/text';
+import type { ScheduledItem } from '@/engine/core/scheduler';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal, WhyNot, dialogOpen } from '@/ui/components/primitives';
 import {
   suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, lookAfterOptions, labelFor, type LookAfter,
   LONGEST_NIGHT, SHORTEST_SLEEP,
 } from '@/engine/systems/life';
-import { missedBy, skipTargets } from '@/engine/world/calendar';
-import type { CalendarEntry } from '@/engine/world/calendar';
+import { skipTargets, type SkipTarget } from '@/engine/world/calendar';
+import { ADVANCE_HOURS, carryOnTo, nextAtHour, nextMondayAt, refusalOf, stopChoices, type Stop, type StopChoice } from '@/engine/world/clock';
+import { onTheWay, type OnTheWay } from '@/engine/foresight';
+import { careerClashes } from '@/engine/systems/projobs';
 import {
-  addDays, formatDate, formatDateTime, formatDuration, formatDurationWords, formatTime, instantFromZoned, zonedParts, MS_HOUR,
+  addDays, formatDate, formatDateTime, formatDuration, formatDurationWords, formatTime, formatWeekdayDate, MS_DAY, MS_HOUR, MS_MINUTE,
   type Instant,
 } from '@/engine/core/time';
-import { PLAN_KIND } from '@/engine/world/plans';
 import { PARTNER_KIND } from '@/engine/systems/coursework';
 import { APPOINTMENT_KIND } from '@/engine/systems/appointments';
 import { THERAPY_SESSION_KIND } from '@/engine/systems/therapy';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { said, toStart } from '@/ui/looks/words';
@@ -45,15 +46,73 @@ const DIAL_LABEL: Partial<Record<string, string>> = {
  */
 const dialFigure = (dial: string, x: number): string => (dial === 'fitness' ? x.toFixed(1) : String(Math.round(x)));
 
+/**
+ * The live clock held while a dialog that moves it is open (from 2026-10-20, the owner's brief 19, D4: brief 18's S4), as
+ * the guide and the reference hold it (`hold`, `app/game-context.tsx`): Sleep, On The Way and Skip To Event each say where
+ * the clock would go from now, and a clock running behind them made what they said untrue. Closed without moving it, the
+ * clock goes on from where it was, the time the dialog was open not counted; a sleep or a jump moves it as it always did.
+ * Until then only the guide and the reference held it, and with Play on the Sleep dialog's Now and its suggestion moved
+ * under the player (11:00 PM became 11:01 PM in a minute open on the built app, brief 19's walk).
+ */
+function useHeld(key: string, on = true): void {
+  const { hold } = useGame();
+  useEffect(() => {
+    hold(key, on);
+    return () => hold(key, false);
+  }, [hold, key, on]);
+}
+
+/** How far ahead Skip To Event foresees the stops not on the calendar yet: a month. */
+const FORESEEN_DAYS = 31;
+
+/** "a, or b, or c": the stop's choices as On The Way offers them. */
+const orList = (items: readonly string[]): string => items.join(', or ');
+
+/** What On The Way says of the choices the commitments it lists offer beyond Go and Stand Here, and what each does to the jump. */
+function choicesAhead(missed: readonly OnTheWay[]): string {
+  const seen = new Map<string, StopChoice>();
+  for (const { item } of missed) for (const c of stopChoices(item.kind)) seen.set(c.command, c);
+  const carry = [...seen.values()].filter((c) => c.then === 'carry-on').map((c) => c.ahead);
+  const stay = [...seen.values()].filter((c) => c.then === 'stay').map((c) => c.ahead);
+  const after = (n: number) => (n === 1 ? 'the clock then carries on' : n === 2 ? 'the clock carries on after either' : 'the clock carries on after any of them');
+  return [
+    carry.length ? ` You can also ${orList(carry)}, and ${after(carry.length)}.` : '',
+    stay.length ? ` You can also ${orList(stay)}, and the clock then stays paused there.` : '',
+  ].join('');
+}
+
+/**
+ * The career commitments on the way the clock passes without stopping, each with the one before it gone to that its
+ * trips meet (`careerClashes`): one missed is gone to by nothing, so it misses nothing later. From 2026-10-21 (the app's
+ * sixth walk): until then On The Way said the clock stops at each commitment and, under it, that it stops only at the
+ * first of a clashing pair.
+ */
+function clashesAhead(sim: Parameters<typeof careerClashes>[0], missed: readonly OnTheWay[]): { first: ScheduledItem; later: ScheduledItem }[] {
+  const out: { first: ScheduledItem; later: ScheduledItem }[] = [];
+  const passed = new Set<string>();
+  // Each pair once: a later commitment, once passed, is no one's first. Until the sixth walk's fix each was read against
+  // the ones after it in the list alone; the set made that a guard nothing reached (the test passed with it taken out),
+  // and it went.
+  const ahead = missed.map((w) => w.item);
+  missed.forEach(({ item }) => {
+    if (passed.has(item.id)) return;
+    for (const later of careerClashes(sim, item, ahead)) {
+      if (!passed.has(later.id)) { passed.add(later.id); out.push({ first: item, later }); }
+    }
+  });
+  return out;
+}
+
 export function TimeControls() {
   // Why sleep can't start now, as the command has it: in the middle of a commitment.
   const sleepBusy = useWorld((s) => { const busy = occupiedAt(s, s.now); return busy ? `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.` : undefined; });
   const sleepGate = useFeature('ui.sleep');
-  const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
+  const { sim, advanceTo, run, refresh, standingAt, clearStandingAt } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
-  const [confirm, setConfirm] = useState<{ at: Instant; label: string; missed: CalendarEntry[] } | null>(null);
+  const [confirm, setConfirm] = useState<{ at: Instant; label: string; missed: OnTheWay[] } | null>(null);
   const speed = sim.universe.preferences.timeSpeed;
+  useHeld('on-the-way', confirm !== null);
 
   /**
    * Moving the clock, and standing still when something wants you.
@@ -74,6 +133,10 @@ export function TimeControls() {
     refresh();
   };
 
+  // What On The Way says of the career commitments the clock passes without stopping (`clashesAhead`).
+  const clashing = confirm ? clashesAhead(sim, confirm.missed) : [];
+  const stopsAhead = confirm ? confirm.missed.length - clashing.length : 0;
+
   return (
     <>
       <div className="row gap-1 topbar-time" role="group" aria-label="Time Controls">
@@ -93,7 +156,10 @@ export function TimeControls() {
         <LookAfterMenu />
         <AdvanceMenu
           onAdvance={(at, label) => {
-            const missed = missedBy(sim, at);
+            // What the jump would stop at, those not on the calendar yet among them (`onTheWay`, from 2026-10-20, brief
+            // 19's D5): until then the calendar's own alone (`missedBy`), and One Week from a Friday evening asked nothing
+            // and stopped at Monday's classes, which the School puts on the calendar the Sunday before.
+            const missed = onTheWay(sim, at);
             if (missed.length > 0) setConfirm({ at, label, missed });
             else advanceTo(at);
           }}
@@ -113,28 +179,12 @@ export function TimeControls() {
 
       {due && (
         <DueNow
-          item={due.item}
-          wanted={due.wanted}
-          // Carrying on is the same jump the stop broke off, not a new one.
-          // Going takes the thing's own hours: the clock goes through them, on
-          // to where it was headed if that is later. It went only to where it
-          // was headed, and a stop at a bar shift with the evening asked for
-          // left the clock at six, halfway through the shift.
+          stop={due}
+          // Carrying on is the same jump the stop broke off, not a new one, through the commitment's own hours
+          // (`carryOnTo`, `world/clock.ts`).
           onGo={() => {
             clearStandingAt();
-            advanceTo(Math.max(due.wanted, due.item.at + (due.item.durationMinutes ?? 0) * 60_000), due.sentFrom);
-          }}
-          onStay={() => {
-            // Not silent: if the world refuses to let you walk away from
-            // something, the reason is the answer and it belongs on screen.
-            const answer = run<{ ok: boolean; error?: string }>('calendar.skip', { entryId: due.item.id });
-            clearStandingAt();
-            if (!answer.value?.ok) {
-              if (answer.value?.error) toast(answer.value.error, 'negative');
-              refresh();
-              return;
-            }
-            advanceTo(due.wanted, due.sentFrom);
+            advanceTo(carryOnTo(due, 'go')!, due.sentFrom);
           }}
           onClose={clearStandingAt}
         />
@@ -155,22 +205,35 @@ export function TimeControls() {
             </>
           }
         >
-          {/* What each stop offers is DueNow's: Go and Stand Here always, Skip It on a plan of your own, Call It Off on a
-              rehearsal with a partner, which at short notice costs their trust (`school.cancel_rehearsal`). What each
-              does to this move is said (from 2026-10-20, brief 17): Go carries the move on to where it was headed and
-              Stand Here ends it, the clock paused at the stop (`onGo`, `onClose`). Until then it said "press Go, or
-              Stand Here to wait", which didn't say the move stops there. */}
+          {/* What each stop offers is DueNow's: Go and Stand Here always, and what a kind of commitment declares
+              (`stopChoices`, `world/clock.ts`). What each does to this move is said (from 2026-10-20, brief 17): Go carries
+              the move on to where it was headed and Stand Here ends it, the clock paused at the stop (`onGo`, `onClose`).
+              Until then it said "press Go, or Stand Here to wait", which didn't say the move stops there. From later that
+              day (brief 19, D1) it names only the choices of the commitments it lists, and that the move carries on after
+              them: until then it named Skip It and Call It Off whatever was on the way, and nothing said where the clock
+              went after either. */}
           <p className="small muted">
             Moving the clock to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
-            {said(confirm.missed.length, 'commitment')}. The clock stops at {confirm.missed.length === 1 ? 'it' : 'each one'} so
-            you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a
-            plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.
+            {said(confirm.missed.length, 'commitment')}. The clock stops at {stopsAhead === confirm.missed.length ? (confirm.missed.length === 1 ? 'it' : 'each one') : stopsAhead === 1 ? 'one of them' : `${countWords(stopsAhead)} of them`} so
+            you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.{choicesAhead(confirm.missed)}
           </p>
+          {/* Two career commitments whose trips meet (`careerClashes`, from 2026-10-21, the app's fourth walk): the clock
+              stops only at the first, and the other is missed, which "stops at each one" alone didn't say. */}
+          {clashing.map(({ first, later }) => (
+            <p key={`${first.id}-${later.id}`} className="small">
+              {`${titleCaseLabel(first.label)} and ${titleCaseLabel(later.label)} clash: each trip is from home and back, so you can be at only one. The clock stops only at ${titleCaseLabel(first.label)}, and ${titleCaseLabel(later.label)} is missed.`}
+            </p>
+          ))}
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
-            {confirm.missed.slice(0, 8).map((entry) => (
-              <li key={entry.id}>{titleCaseLabel(entry.title)} — {formatDateTime(entry.at, sim.zone)}</li>
+            {confirm.missed.slice(0, 8).map(({ item, foreseen }) => (
+              <li key={`${item.id}${foreseen ? ' ahead' : ''}`}>{titleCaseLabel(item.label)} — {formatDateTime(item.at, sim.zone)}{foreseen ? ', not on your calendar yet' : ''}</li>
             ))}
           </ul>
+          {confirm.missed.some((w) => w.foreseen) && (
+            <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+              What isn’t on your calendar yet goes on it as the clock moves, before it comes.
+            </p>
+          )}
         </Modal>
       )}
     </>
@@ -179,6 +242,9 @@ export function TimeControls() {
 
 function SleepDialog({ onClose }: { onClose: () => void }) {
   const { sim, run } = useGame();
+  // The clock waits while the hours are chosen (from 2026-10-20, brief 19's D4): Not Yet leaves it where it was, and
+  // Sleep moves it as the night does.
+  useHeld('sleep');
   const suggestion = useWorld((s) => suggestedSleep(s));
   const untilNext = useWorld((s) => hoursUntilNextCommitment(s));
   const [hours, setHours] = useState(suggestion.hours);
@@ -278,44 +344,67 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
  * The one place in the game where turning up is a decision rather than a
  * consequence. Going costs the hours it takes, which is why not going is a
  * real option.
+ *
+ * Its buttons beyond Go and Stand Here are the commitment's kind's own (`stopChoices`, `world/clock.ts`, from 2026-10-20,
+ * the owner's brief 19, D1): Skip It on a plan of your own and Call It Off on a rehearsal with a partner, as they were,
+ * and what a career appointment declares. Each says what it does to the jump before it's pressed, and does it: its
+ * command run, then the jump carried on to where it was headed (`carryOnTo`), or, refused, the stop left open with the
+ * refusal said. Until then Skip It carried the jump on and Call It Off ended it, neither said, and a refused Skip It
+ * closed the stop and left the jump there.
  */
-function DueNow({ item, wanted, onGo, onStay, onClose }: {
-  item: ScheduledItem;
-  wanted: Instant;
+function DueNow({ stop, onGo, onClose }: {
+  stop: Stop;
   onGo: () => void;
-  onStay: () => void;
   onClose: () => void;
 }) {
-  const { sim } = useGame();
+  const { sim, run, toast, advanceTo, clearStandingAt } = useGame();
   const zone = sim.zone;
-  const { run, toast } = useGame();
-  const mine = item.kind === PLAN_KIND;
+  const { item, wanted } = stop;
+  const choices = stopChoices(item.kind);
   const partner = item.kind === PARTNER_KIND;
   // Your own care asks only that you're awake and out of hospital (`presentForCare`); anything else, that you're in its
   // town and not laid up by an injury too (`present`).
   const care = item.kind === APPOINTMENT_KIND || item.kind === THERAPY_SESSION_KIND;
+  // The career's commitments, an audition, a meeting at an agent's office and a day of booked work, take the trip as made:
+  // their handlers ask only that you're awake and not in hospital or laid up (`there` in `systems/projobs.ts`, `present`
+  // in `systems/proagent.ts`), and the trip each way (`travelMinutes`) doesn't move the clock. Until 2026-10-21 the stop
+  // said "in its town" of them too, and nothing of the trip (brief 19's app walk).
+  const career = item.category === 'career';
+  const clashes = careerClashes(sim, item);
+  const trip = item.travelMinutes ?? 0;
   const runs = item.durationMinutes ?? 0;
+  const name = titleCaseLabel(item.label);
+  // Where the clock goes after a choice, in words: a stop the live clock made is a second from where it was headed.
+  const onward = (choice: StopChoice) => {
+    const to = carryOnTo(stop, choice);
+    return to !== undefined && to - item.at >= MS_MINUTE
+      ? `the clock carries on to ${formatDateTime(to, zone)}, stopping at the next commitment on the way`
+      : 'the clock stays paused here';
+  };
   // A rehearsal with a partner can be called off even now, late (from 2026-10-12): until then this said it wasn’t
   // the player’s to walk away from, while Call It Off on the Coursework tab worked at this very moment.
-  const callOff = () => {
-    const r = run('school.cancel_rehearsal', { assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId });
-    if (r.ok) { toast('Rehearsal called off. At this short notice, it costs your partner’s trust.', 'neutral'); onClose(); }
+  const choose = (choice: StopChoice) => {
+    // Not silent about a refusal: if the world won't let you walk away from something, the reason is the answer, and
+    // the stop stays where it is.
+    const refused = refusalOf(run(choice.command, choice.payload(item), { silent: true }));
+    if (refused) { toast(refused, 'negative'); return; }
+    clearStandingAt();
+    if (choice.done) toast(choice.done, 'neutral');
+    const to = carryOnTo(stop, choice);
+    if (to !== undefined) advanceTo(to, stop.sentFrom);
   };
 
   return (
     <Modal
-      title={titleCaseLabel(item.label)}
+      title={name}
       onClose={onClose}
       footer={(
         <>
           <HowItWorks help="day.calendar" />
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
-          {mine && (
-            <Gated feature="calendar.skip" className="btn" onClick={onStay}>Skip It</Gated>
-          )}
-          {partner && (
-            <Gated feature="school.cancel_rehearsal" className="btn" onClick={callOff}>Call It Off</Gated>
-          )}
+          {choices.map((choice) => (
+            <Gated key={choice.command} feature={choice.command} className="btn" onClick={() => choose(choice)}>{choice.label}</Gated>
+          ))}
           <Gated feature="ui.go" className="btn btn-primary" onClick={onGo}>Go</Gated>
         </>
       )}
@@ -324,8 +413,16 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this needs you now.
         {' '}Going takes {formatDurationWords(runs * 60_000)}
         {`, and the clock moves on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
+        {trip > 0 ? ` Getting there and back, about ${formatDurationWords(trip * 60_000)} each way, doesn’t move the clock.` : ''}
       </p>
-      {!mine && !partner && (
+      {/* What going here gives up (`careerClashes`, from 2026-10-21, the app's fourth walk): until then the stop at the
+          first of two auditions at one hour said nothing of the second, which was missed with no stop of its own. */}
+      {clashes.length > 0 && (
+        <p className="small">
+          {`It clashes with ${spokenList(clashes.map((c) => `${titleCaseLabel(c.label)} at ${formatTime(c.at, zone)}`))}. Each trip is from home and back, so you can be at only one, and it’s this one, the first the clock reaches: ${clashes.length === 1 ? 'that one is' : 'those are'} missed, and the clock won’t stop at ${clashes.length === 1 ? 'it' : 'them'}.`}
+        </p>
+      )}
+      {choices.length === 0 && (
         <p className="small muted">
           {/* What starts and who's there, said (from 2026-10-20, brief 16, section 8): until then "It happens the next time
               the clock moves, and you’re there if you’re awake and in the right city", which left out the hospital and an
@@ -333,7 +430,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
               the same day): until then the paragraph opened on the button that isn't there, and "Stand Here to wait"
               didn't say the clock waits paused, as the stop pauses it (`halt` in `game-context.tsx`). */}
           Press Go, or Stand Here to wait with the clock paused.
-          {` ${titleCaseLabel(item.label)} starts the next time the clock moves, and you’re there if you’re awake${care ? ' and out of hospital' : ', in its town, and not in hospital or laid up with an injury'}.`}
+          {` ${name} starts the next time the clock moves, and you’re there if you’re awake${care ? ' and out of hospital' : career ? ' and not in hospital or laid up with an injury' : ', in its town, and not in hospital or laid up with an injury'}.`}
           {' '}Only a plan of your own can be skipped, so there’s no Skip It button here.
         </p>
       )}
@@ -344,6 +441,12 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
           <HowItWorks help="coursework.partners" />
         </p>
       )}
+      {choices.length > 0 && (
+        <p className="small muted">
+          {choices.map((choice) => `${choice.label} ${choice.does}, and ${onward(choice)}. `).join('')}
+          {`Stand Here keeps the clock paused here, and ${name} starts the next time it moves.`}
+        </p>
+      )}
     </Modal>
   );
 }
@@ -351,9 +454,27 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
 /** Exported for `tests/whynot-time.test.ts`, which renders it: the bar opens it from Advance's Choose An Event. */
 export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: number) => void }) {
   const { sim } = useGame();
+  // Held while it's open, as Sleep and On The Way are (from 2026-10-20, brief 19's D4).
+  useHeld('skip');
   const targets = useWorld((s) => skipTargets(s, 14));
   const [selected, setSelected] = useState<string | null>(targets[0]?.item.id ?? null);
   const target = targets.find((t) => t.item.id === selected);
+  // The stops on the way that aren't on the calendar yet, foreseen once for the list as it opens (`onTheWay`, from
+  // 2026-10-20, brief 19's D5), as far as its last event or a month ahead, whichever is sooner: a month's jump played
+  // ahead takes a tenth of a second or so, a year's could take seconds. Until then each event's count and list were the
+  // calendar's alone, and the week's classes the School hadn't put on it yet weren't counted.
+  const ids = targets.map((t) => t.item.id).join(' ');
+  const ahead = useMemo(() => {
+    const last = targets.at(-1)?.item.at;
+    return last === undefined ? [] : onTheWay(sim, Math.min(last, sim.now + FORESEEN_DAYS * MS_DAY)).filter((w) => w.foreseen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sim, ids]);
+  // Not one the clock is standing at, which the jump runs at once, with no stop (as On The Way, `onTheWay`).
+  const stopsBefore = (t: SkipTarget) => [
+    ...t.missed.filter((e) => e.at > sim.now).map((e) => ({ id: e.id, title: e.title, at: e.at, foreseen: false })),
+    ...ahead.filter((w) => w.item.at < t.item.at).map((w) => ({ id: `${w.item.id} ahead`, title: titleCaseLabel(w.item.label), at: w.item.at, foreseen: true })),
+  ].sort((a, b) => a.at - b.at);
+  const missed = target ? stopsBefore(target) : [];
 
   return (
     <Modal
@@ -392,8 +513,8 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
                     {entry.daysAway > 0 && ` · in ${entry.daysAway} day${entry.daysAway === 1 ? '' : 's'}`}
                   </div>
                 </div>
-                {entry.missed.length > 0 && (
-                  <span className="chip chip-warning">{entry.missed.length} on the way</span>
+                {stopsBefore(entry).length > 0 && (
+                  <span className="chip chip-warning">{stopsBefore(entry).length} on the way</span>
                 )}
                 {/* Until 2026-10-12 it was a Travel chip, for travel that went with the scope reset of 2026-10-09. */}
                 {entry.elsewhere && <span className="chip chip-negative">Elsewhere</span>}
@@ -420,12 +541,12 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
                 </div>
               )}
 
-              {target.missed.length > 0 ? (
+              {missed.length > 0 ? (
                 <div className="callout callout-warning" style={{ marginBottom: 'var(--s3)' }}>
-                  <strong>The clock will stop at {said(target.missed.length, 'commitment')} on the way and ask what you want to do:</strong>
+                  <strong>The clock will stop at {said(missed.length, 'commitment')} on the way and ask what you want to do:</strong>
                   <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
-                    {target.missed.slice(0, 6).map((entry) => (
-                      <li key={entry.id}>{entry.title} — {formatDate(entry.at, sim.zone)}</li>
+                    {missed.slice(0, 6).map((entry) => (
+                      <li key={entry.id}>{entry.title} — {formatDate(entry.at, sim.zone)}{entry.foreseen ? ', not on your calendar yet' : ''}</li>
                     ))}
                   </ul>
                 </div>
@@ -469,26 +590,24 @@ function AdvanceMenu({
 
   const zone = sim.zone;
   const now = sim.now;
-  const today = zonedParts(now, zone);
-  const todayAt = (hour: number) => instantFromZoned(
-    { year: today.year, month: today.month, day: today.day, hour, minute: 0, second: 0 }, zone,
-  );
-  const nextAt = (hour: number) => (todayAt(hour) > now ? todayAt(hour) : addDays(todayAt(hour), 1, zone));
-  const weekday = new Date(Date.UTC(today.year, today.month - 1, today.day)).getUTCDay();
-  const untilMonday = ((1 - weekday) + 7) % 7 || 7;
+  // Each line says the day and the time it lands (from 2026-10-20, brief 19's D2): until then One Hour said the time
+  // alone and the rest a date with no day, and at 2 AM Tomorrow Morning said the next date's seven, where it then went.
+  // It goes to the next seven now (`nextAtHour`, `world/clock.ts`), the same date's after midnight.
+  const lands = (at: Instant) => `${formatTime(at, zone)} · ${formatWeekdayDate(at, zone)}`;
+  const line = (label: string, at: Instant) => ({ label, detail: lands(at), at });
 
   const items: { label: string; detail: string; at?: Instant; choose?: boolean }[] = [
-    { label: 'One Hour', detail: formatTime(now + MS_HOUR, zone), at: now + MS_HOUR },
-    { label: 'This Evening', detail: `6:00 PM · ${formatDate(nextAt(18), zone)}`, at: nextAt(18) },
-    { label: 'Tonight', detail: `10:00 PM · ${formatDate(nextAt(22), zone)}`, at: nextAt(22) },
-    { label: 'Tomorrow Morning', detail: `7:00 AM · ${formatDate(addDays(todayAt(7), 1, zone), zone)}`, at: addDays(todayAt(7), 1, zone) },
+    line('One Hour', now + MS_HOUR),
+    line('This Evening', nextAtHour(now, zone, ADVANCE_HOURS.evening)),
+    line('Tonight', nextAtHour(now, zone, ADVANCE_HOURS.tonight)),
+    line('Tomorrow Morning', nextAtHour(now, zone, ADVANCE_HOURS.morning)),
     {
       label: 'Next Event',
       detail: nextEvent ? `${nextEvent.entry.title} · ${formatDateTime(nextEvent.item.at, zone)}` : 'No plans or commitments ahead',
       at: nextEvent?.item.at,
     },
-    { label: 'Next Monday', detail: `9:00 AM · ${formatDate(addDays(todayAt(9), untilMonday, zone), zone)}`, at: addDays(todayAt(9), untilMonday, zone) },
-    { label: 'One Week', detail: formatDateTime(addDays(now, 7, zone), zone), at: addDays(now, 7, zone) },
+    line('Next Monday', nextMondayAt(now, zone)),
+    line('One Week', addDays(now, 7, zone)),
     { label: 'Choose An Event…', detail: 'Pick from everything on the calendar', choose: true },
   ];
 

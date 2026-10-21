@@ -121,14 +121,16 @@ export function routeRefusal(sim: Simulation, person: Person, iso: string): stri
     if (documentsOf(person).some((d) => d.route === 'us-green-card' && d.status === 'pending')) return 'Your petition is being decided.';
     if (CITIES.get(homeOf(person))?.countryId !== 'us') return 'A green card is applied for from inside the United States, while you’re in status.';
     // Extraordinary ability was read on the O-1's record, the career's credits, until the career went in the scope reset of 2026-10-09.
-    return 'A green card for extraordinary ability needs a record of professional work, and the game has none to show.';
+    // Until 2026-10-21 this said the game had no record of professional work to show; from brief 19 it keeps one
+    // (`systems/pro.ts`), but nothing weighs it as extraordinary ability, so the route stays shut.
+    return 'A green card for extraordinary ability needs a record of professional work showing distinction, which the game doesn’t weigh, so it can’t be applied for here.';
   }
   if (iso === 'GB') {
     if (own === 'IE') return 'An Irish citizen lives in Britain under the Common Travel Area.';
     if (residenceIn(person, 'GB', sim.now)) return 'You hold permission to live there.';
     if (documentsOf(person).some((d) => d.destination === 'GB' && d.route === 'global-talent' && d.status === 'pending')) return 'Your application is waiting on your biometrics appointment.';
     // Endorsed on the O-1's record, the career's credits, until the career went in the scope reset of 2026-10-09.
-    return 'Arts Council England endorses talent shown in a record of professional work, and the game has none to show.';
+    return 'Arts Council England endorses exceptional talent shown in a record of professional work, which the game doesn’t weigh, so it can’t be applied for here.';
   }
   if (iso === 'MX') {
     if (residenceIn(person, 'MX', sim.now)) return 'You hold residence there.';

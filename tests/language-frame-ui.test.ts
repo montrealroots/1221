@@ -16,6 +16,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, quickSave, refreshMeta } from '@/engine';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { APPOINTMENT_KIND } from '@/engine/systems/appointments';
+import { AUDITION_KIND } from '@/engine/systems/projobs';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { courseworkOf, trustOf } from '@/engine/systems/coursework';
 import type { Simulation } from '@/engine/core/simulation';
@@ -158,7 +159,10 @@ describe('the top bar’s dialogs', () => {
     press(button(/^One Week/));
     let said = dialog(drawn(sim, TimeControls).html, 'On The Way');
     const week = sim.now + 7 * MS_DAY;
-    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.`);
+    // Only the choices the commitments on the way offer, and what the jump does after them (from 2026-10-20, brief 19's
+    // D1): until then it named Call It Off too, with no rehearsal on the way, and nothing said the clock carries on.
+    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, and the clock then carries on.`);
+    expect(said).not.toContain('call off a rehearsal');
     expect(said).toMatch(/Dinner — /);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 40 * MS_HOUR, durationMinutes: 60 } });
     h.given = new Map();
@@ -243,6 +247,60 @@ describe('the top bar’s dialogs', () => {
     for (const one of h.sets) h.given.set(one.at, one.value);
     said = dialog(drawn(care, TimeControls).html, 'A Visit To Your Doctor');
     expect(said).toContain('Press Go, or Stand Here to wait with the clock paused. A Visit To Your Doctor starts the next time the clock moves, and you’re there if you’re awake and out of hospital.');
+    // The career's commitments take the trip as made (`there` in `systems/projobs.ts`): awake and not laid up is all an
+    // audition asks, and the trip each way doesn't move the clock (from 2026-10-21, brief 19's app walk: until then the
+    // stop said "in its town" of them, and nothing of the trip). TEST SETUP: the audition's kind, as the work loop puts it
+    // on the calendar, with no opportunity behind it, which its handler passes by.
+    const career = quickSave({}, 'frame-due-now-career');
+    for (const i of career.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) career.timeline.cancel(i.id, career.now);
+    const call = career.now + 2 * MS_HOUR;
+    career.schedule({ at: call, kind: AUDITION_KIND, label: 'Audition: Felix, Paper Moons', category: 'career', priority: 40, requiresPlayer: true, durationMinutes: 30, travelMinutes: 120, locationId: 'us-ny-newyork', payload: {} });
+    h.given = new Map();
+    ({ game } = drawn(career, TimeControls));
+    h.sets = [];
+    game.advanceTo(call + MS_HOUR);
+    for (const one of h.sets) h.given.set(one.at, one.value);
+    said = dialog(drawn(career, TimeControls).html, 'Audition: Felix, Paper Moons');
+    expect(said).toContain('Going takes 30 minutes, and the clock moves on to');
+    expect(said).toContain('Getting there and back, about 2 hours each way, doesn’t move the clock.');
+    expect(said).toContain('Audition: Felix, Paper Moons starts the next time the clock moves, and you’re there if you’re awake and not in hospital or laid up with an injury.');
+    expect(said).not.toContain('in its town');
+  });
+
+  it('PLAYER JOURNEY: two auditions in person at one hour, their trips meeting: On The Way says the clock stops only at the first and the other is missed, and counts only the stops it makes, and the stop at the first says so; one a day later clashes with nothing (the app’s fourth and sixth walks, 2026-10-21)', () => {
+    // TEST SETUP: the audition's kind, as the work loop puts it on the calendar, with no opportunity behind it, which its
+    // handler passes by: Hudson's and Brooklyn's at eleven, each with its trip from New Haven, and one the next day.
+    const sim = quickSave({}, 'frame-two-towns');
+    for (const i of sim.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) sim.timeline.cancel(i.id, sim.now);
+    const eleven = sim.now + 3 * MS_HOUR;
+    const call = (label: string, at: number, cityId: string, trip: number) => sim.schedule({ at, kind: AUDITION_KIND, label, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: 30, travelMinutes: trip, locationId: cityId, payload: {} });
+    call('Audition: Hester Vane, The Winter Ledger', eleven, 'us-ny-hudson', 120);
+    call('Audition: Ivy, Paper Moons', eleven, 'us-ny-newyork', 120);
+    // Three hours on: its own half hour clear of eleven's, but its trip from New Haven meets Hudson's way home.
+    call('Audition: Sam, Last Bus To Eastview', eleven + 3 * MS_HOUR, 'us-ny-newyork', 120);
+    call('Audition: Jess, Static On Route 9', eleven + MS_DAY, 'us-ny-newyork', 120);
+    h.given = new Map();
+    drawn(sim, TimeControls);
+    press(button('Advance ▾'));
+    drawn(sim, TimeControls);
+    press(button(/^One Week/));
+    const ahead = dialog(drawn(sim, TimeControls).html, 'On The Way');
+    // It stops at two of the four, not each one: the two the first's trips meet are passed (from the app's sixth walk,
+    // the same day: until then it said "The clock stops at each one" above the line saying it stops only at the first).
+    expect(ahead).toContain('passes four commitments. The clock stops at two of them so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.');
+    expect(ahead).toContain('Audition: Hester Vane, The Winter Ledger and Audition: Ivy, Paper Moons clash: each trip is from home and back, so you can be at only one. The clock stops only at Audition: Hester Vane, The Winter Ledger, and Audition: Ivy, Paper Moons is missed.');
+    expect(ahead).toContain('Audition: Hester Vane, The Winter Ledger and Audition: Sam, Last Bus To Eastview clash:');
+    // Each pair said once, the first the clock reaches named as the one it stops at.
+    expect(ahead).not.toContain('The clock stops only at Audition: Ivy, Paper Moons, and Audition: Hester Vane');
+    expect(ahead).not.toMatch(/Jess, Static On Route 9 clash|and Audition: Jess, Static On Route 9 clash/);
+    h.given = new Map();
+    const { game } = drawn(sim, TimeControls);
+    h.sets = [];
+    game.advanceTo(eleven + MS_HOUR);
+    for (const one of h.sets) h.given.set(one.at, one.value);
+    const stop = dialog(drawn(sim, TimeControls).html, 'Audition: Hester Vane, The Winter Ledger');
+    expect(stop).toContain(`It clashes with Audition: Ivy, Paper Moons at ${formatTime(eleven, sim.zone)} and Audition: Sam, Last Bus To Eastview at ${formatTime(eleven + 3 * MS_HOUR, sim.zone)}. Each trip is from home and back, so you can be at only one, and it’s this one, the first the clock reaches: those are missed, and the clock won’t stop at them.`);
+    expect(stop).not.toContain('Jess');
   });
 
   it('Skip To Event says what the clock stops at on the way and what else happens, for none, one and several', () => {

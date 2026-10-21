@@ -1,0 +1,137 @@
+[
+ {
+  "surface": "School, Coursework, The Actor Showcase: its days and rehearsal calls, taking part, the faculty’s options with their notes and Choose These Scenes, then your scenes and how each day went",
+  "where": "School, the Coursework tab, at its top, from the first day of the last term",
+  "sources": [
+   "src/ui/career/SchoolShowcase.tsx#ShowcasePanel",
+   "src/ui/career/SchoolShowcase.tsx#YourScenes",
+   "src/ui/career/SchoolShowcase.tsx#Options",
+   "src/engine/systems/proshowcase.ts#SHOWCASE",
+   "src/engine/systems/proshowcase.ts#SHOWCASE_COURSE",
+   "src/engine/systems/proshowcase.ts#showcaseCalendar",
+   "src/engine/systems/proshowcase.ts#showcaseOptions",
+   "src/engine/systems/proshowcase.ts#choiceRefusal",
+   "src/engine/systems/proshowcase.ts#callWords"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "recommendation",
+   "history",
+   "details",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: the Actor Showcase came back as DRAM 793b's own, and nothing on the School screen said anything of it before.",
+  "changes": "Written new to docs/STYLE.md: each day said with its date, its hours and its showings (“Monday, April 30, 2029, from 1 PM to 11 PM, for the showings at 5 PM and 7:30 PM”); taking part said with the date and the course still incomplete, or that there's none; each option's note in sentences from the record (“Office Hours is a drama, a genre you know a little. Fully prepared, it would come to about 61 of 100 for you, Working.”, “You played Lorraine in it for Acting I on April 5, 2027, and it came out Unready.”); the command's refusal under its button; the Bulletin's guests named only as the Bulletin names them.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'shows the faculty’s options on the Coursework tab'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'refuses a choice before the last term, of the wrong count'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out'"
+   }
+  ]
+ },
+ {
+  "surface": "The Actor Showcase’s notices: The Actor Showcase, You’re In or Not In The Actor Showcase, each showcase day’s, a day or a rehearsal call missed, and a day excused",
+  "where": "Home’s notices, each going to the School screen",
+  "sources": [
+   "src/engine/systems/proshowcase.ts#beginShowcase",
+   "src/engine/systems/proshowcase.ts#decide",
+   "src/engine/systems/proshowcase.ts#registerShowcase",
+   "src/engine/systems/proshowcase.ts#settleShowcaseCourse"
+  ],
+  "states": [
+   "first use",
+   "notification",
+   "success",
+   "setback",
+   "failure",
+   "warning",
+   "unavailable",
+   "confirmation",
+   "returning",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: each step of the showcase tells the player what happened, what it counts for and what's next.",
+  "changes": "Written new to docs/STYLE.md: what happened first, then what it means, then what to do (“You weren’t at the School’s call for the showcase in New York, so your scenes weren’t seen there. It counts as a missed call, and as an unexcused absence from Actor Showcase. Your scenes are next due in New York on May 1.”); each scene said as its part in its play with its band and score; the notes said once, where they're new; the course's result said with the last day, and what a Fail does to the degree. From 2026-10-21 (brief 19's app walk): New York's second day says the scenes were played again, where it opened word for word as the first under the same title.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: from the last term’s first day to the morning after Commencement'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: a showcase day missed is a missed call of the course'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: the last term begins its showcase'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past the term review, judged in New York and Los Angeles, passed, conferred, every record carried'"
+   }
+  ]
+ },
+ {
+  "surface": "Finishing Early, on the School’s Terms And Award, and the same words in the Career’s The Way You’re On",
+  "where": "School, the Terms And Award tab, while the student is enrolled; Career, Overview, The Way You’re On, for a candidate",
+  "sources": [
+   "src/ui/career/SchoolShowcase.tsx#EarlyDegree",
+   "src/engine/systems/proshowcase.ts#EARLY_RULE",
+   "src/engine/systems/proshowcase.ts#EARLY_DEGREE"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "explanation",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19's A5: the Bulletin lets the faculty shorten the residency only on rare occasions and publishes no way to ask, and the game said so only in the guide.",
+  "changes": "Written new: that graduating early isn't a route the game offers, the Bulletin's sentence quoted whole, and that the MFA comes after the sixth term, with its source line. The Career's line says the rule without its last sentence, since the line says when the degree comes already: the built app's walk read it twice in one paragraph.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'says the Bulletin’s sentence, and that the game offers no early degree'"
+   }
+  ]
+ },
+ {
+  "surface": "How This Works: The Actor Showcase",
+  "where": "Help, Coursework And Partners, and the panel’s How This Works on the Coursework tab",
+  "sources": [
+   "src/engine/content/guide/showcase.ts#*"
+  ],
+  "states": [
+   "explanation",
+   "details",
+   "unavailable",
+   "recommendation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: the showcase's command needed its one entry, saying what to do, why it matters and what it affects.",
+  "changes": "Written new to docs/STYLE.md's order for help: what it's for, where, the steps in the panel's labels, what it needs, what it costs (estimated), what happens at once and later, how to read the bands, the refusals, the mistakes and the next step; its figures imported from the rule.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/guide.test.ts"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: from the last term’s first day to the morning after Commencement'"
+   }
+  ]
+ }
+]

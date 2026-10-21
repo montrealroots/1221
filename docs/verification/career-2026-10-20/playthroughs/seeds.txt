@@ -1,0 +1,153 @@
+# The seeds played for life A and life B again on a43b4f8f (2026-10-21), after one set of changes that day: the
+# fictional agent in the real one's place (59da1351); the parts written for an actor, an actress or either (9c3b7ee8);
+# and two career commitments whose trips meet no longer both gone to, and the actor's film part named Felix where it
+# had been Theo, a classmate's name (a43b4f8f). His draws are keyed by his id, and an actress is posted only the parts
+# written for her or for either, so the old seeds' lives went otherwise. Played by play.ts's seeds-a and seeds-b modes,
+# unchanged, each from the TEST SETUP's last-term morning; the fields are as in the record below. Each search ran until
+# its first qualifying seed was in, since a later seed can't change the pick: life A v1-0 to v1-21 (in two processes,
+# v1-0 to v1-10 and v1-11 to v1-21), life B v1-0 to v1-8. The same searches made on 9c3b7ee8 read the same, line for
+# line; one made on 59da1351 alone, the agent swapped and the parts not yet written, was stopped when 9c3b7ee8 came and
+# isn't kept, since the parts changed what every represented life was posted.
+#
+# Life A, each life settled as the record below says (not-asked, relation-passed, sag-paid or end-2029). The first
+# sag-paid seed is v1-21, the test's: Desk Clerk in The Calloway Files through him, the third time his breakdowns
+# brought it, shot on December 17 and 18 and paid on December 26, 2029. The search reads a life a week at a time, so
+# its moment is that week's end, January 1, 2030. v1-7 and v1-14 were represented and booked no SAG-AFTRA principal
+# role through him that year (v1-7 Nell in A House On Calder Street, an Equity part).
+
+A v1-0   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-1   skipped: standing dismissed on the last term's first morning
+A v1-2   not-asked        May 14, 2029 at 11:40 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-3   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-4   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-5   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.4 n=6 [work:at relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-6   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-7   end-2029         January 1, 2030 at 7:45 AM     decision:0.75 n=7 [work:at relevance:at training:at fit:at availability:beyond roster:beyond reliability:beyond] bands=working,working,working,working,working,working bookings=calder-street@August 14, 2029 at 10:00 AM
+A v1-8   relation-passed  June 11, 2029 at 11:00 PM      decision:0.6 n=7 [work:at relevance:at training:at fit:at availability:beyond roster:at reliability:beyond] bands=strong,working,strong,strong,working,strong bookings=none
+A v1-9   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-10  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-11  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.1875 n=5 [work:near relevance:at training:near fit:at availability:at roster:beyond reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-12  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-13  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-14  end-2029         January 1, 2030 at 9:00 AM     decision:0.36 n=6 [work:at relevance:at training:at fit:at availability:beyond roster:near reliability:beyond] bands=working,working,working,working,working,working bookings=none
+A v1-15  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-16  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.4 n=6 [work:at relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-17  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.4 n=6 [work:at relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,strong,working,working,working bookings=none
+A v1-18  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.12 n=5 [work:at relevance:at training:near fit:at availability:at roster:short reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-19  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.045 n=4 [work:near relevance:at training:near fit:at availability:at roster:short reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-20  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-21  sag-paid         January 1, 2030 at 6:30 PM     decision:0.4375 n=6 [work:near relevance:at training:at fit:at availability:beyond roster:beyond reliability:beyond] bands=working,working,working,working,working,working bookings=calloway-files@December 17, 2029 at 7:00 AM
+
+# Life B, each life settled as the record below says (asked, passed, unanswered or declined). The first declined seed
+# is v1-7, the test's.
+
+B v1-0   passed       May 27, 2029 at 11:00 PM       reply:0.24 n=6 history=discovered,introduced,checked,sent,passed
+B v1-1   skipped: standing dismissed on the last term's first morning
+B v1-2   passed       May 28, 2029 at 7:00 AM        reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-3   unanswered   June 23, 2029 at 11:20 PM      reply:0.09 n=5 history=discovered,introduced,checked,sent,silence
+B v1-4   passed       May 27, 2029 at 11:00 PM       reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-5   passed       May 28, 2029 at 7:00 AM        reply:0.4 n=7 history=discovered,introduced,checked,sent,passed
+B v1-6   passed       May 27, 2029 at 11:00 PM       reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-7   declined     June 14, 2029 at 11:00 PM      decision:0.75 n=7 history=discovered,introduced,checked,sent,requested,supplied,meeting-set,meeting-kept,offer,declined
+B v1-8   asked        May 12, 2029 at 11:00 PM       follow-up:0.4 n=5 history=discovered,introduced,checked,sent
+
+# ---------------------------------------------------------------------------------------------------------------------
+# The record below was the real agent's (Jordan Parente of Stewart Talent, `jordan-parente`), searched on 2026-10-21
+# before 59da1351, with every part posted to anyone: v1-12 and v1-5 were the tests' seeds until then.
+#
+# The seeds played for life A and life B (brief 19's V1, 2026-10-21), each from the TEST SETUP's last-term morning on
+# this branch's code, by the logic play.ts's seeds-a and seeds-b modes carry (the searches ran as probe scripts in the
+# builder's clone; play.ts is the same loop). A seed's life is played until it settles. "chance" and "n" are the agent's
+# reading at the last step his office took (`rel.why`: the step, its chance, how many of the seven factors stood at the
+# bar or beyond; four are needed); "bands" are the showcase's six scenes as played; "bookings" what was booked.
+#
+# Life A: the graduating student who cuts her reel once the School posts the filmed monologues, asks to move the
+# meeting once, accepts, and joins SAG-AFTRA. Settled at: not-asked (the School's follow-up brought no request from his
+# office), relation-passed (his office passed after the meeting), sag-paid (SAG-AFTRA work through him paid on), or
+# end-2029. The first sag-paid seed is v1-12, the test's.
+
+A v1-0   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-1   skipped: standing dismissed on the last term's first morning
+A v1-2   not-asked        May 14, 2029 at 11:40 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-3   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-4   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.045 n=4 [work:near relevance:at training:near fit:at availability:at roster:short reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-5   end-2029         January 1, 2030 at 10:30 AM    decision:0.36 n=6 [work:at relevance:at training:at fit:at availability:beyond roster:near reliability:beyond] bands=working,working,working,working,working,working bookings=none
+A v1-6   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.045 n=4 [work:near relevance:at training:near fit:at availability:at roster:short reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-7   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-8   relation-passed  June 11, 2029 at 11:00 PM      decision:0.18 n=6 [work:at relevance:at training:at fit:at availability:beyond roster:short reliability:beyond] bands=strong,working,strong,strong,working,strong bookings=none
+A v1-9   not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-10  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-11  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-12  sag-paid         August 14, 2029 at 7:00 AM     decision:0.4375 n=6 [work:near relevance:at training:at fit:at availability:beyond roster:beyond reliability:beyond] bands=working,working,working,working,working,working bookings=calloway-files@July 30, 2029 at 7:00 AM
+A v1-13  relation-passed  June 11, 2029 at 11:00 PM      decision:0.35 n=6 [work:near relevance:at training:at fit:at availability:beyond roster:at reliability:beyond] bands=working,working,working,working,working,working bookings=none
+A v1-14  not-asked        May 14, 2029 at 11:40 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-15  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.1875 n=5 [work:near relevance:at training:near fit:at availability:at roster:beyond reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-16  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-17  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,strong,working,working,working bookings=none
+A v1-18  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.5 n=6 [work:at relevance:at training:near fit:at availability:at roster:beyond reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-19  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-20  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-21  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.045 n=4 [work:near relevance:at training:near fit:at availability:at roster:short reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-22  skipped: standing concern on the last term's first morning
+A v1-23  relation-passed  June 11, 2029 at 11:00 PM      decision:0.35 n=6 [work:near relevance:at training:at fit:at availability:beyond roster:at reliability:beyond] bands=working,working,working,working,working,working bookings=none
+A v1-24  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.4 n=6 [work:at relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-25  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-26  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-27  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-28  skipped: standing warning on the last term's first morning
+A v1-29  relation-passed  June 11, 2029 at 11:00 PM      decision:0.6 n=7 [work:at relevance:at training:at fit:at availability:beyond roster:at reliability:beyond] bands=working,working,working,working,working,working bookings=none
+A v1-30  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.045 n=4 [work:near relevance:at training:near fit:at availability:at roster:short reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-31  sag-paid         November 20, 2029 at 6:30 PM   decision:0.36 n=6 [work:at relevance:at training:at fit:at availability:beyond roster:near reliability:beyond] bands=working,working,working,working,working,working bookings=calloway-files@November 12, 2029 at 7:00 AM
+A v1-32  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.24 n=5 [work:at relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-33  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-34  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-35  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-36  relation-passed  June 11, 2029 at 11:00 PM      decision:0.18 n=6 [work:at relevance:at training:at fit:at availability:beyond roster:short reliability:beyond] bands=working,working,working,working,working,working bookings=none
+A v1-37  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.15 n=5 [work:near relevance:at training:near fit:at availability:at roster:at reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-38  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+A v1-39  not-asked        May 14, 2029 at 11:00 PM       follow-up:0.09 n=4 [work:near relevance:at training:near fit:at availability:at roster:near reliability:at] bands=working,working,working,working,working,working bookings=none
+
+# Life B: the graduating student who cuts her reel only once the School's follow-up has come, makes the résumé when his
+# office asks for it, and declines the agreement. Settled at: asked (the follow-up asked; not life B), passed or
+# unanswered (the approach closed), declined (the life the test plays). The first declined seed is v1-5, the test's.
+
+B v1-0   unanswered   June 23, 2029 at 11:00 PM      reply:0.24 n=6 history=discovered,introduced,checked,sent,silence
+B v1-1   skipped: standing dismissed on the last term's first morning
+B v1-2   passed       May 28, 2029 at 7:00 AM        reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-3   passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-4   passed       May 27, 2029 at 11:00 PM       reply:0.045 n=5 history=discovered,introduced,checked,sent,passed
+B v1-5   declined     June 15, 2029 at 7:00 AM       decision:0.36 n=6 history=discovered,introduced,checked,sent,requested,supplied,meeting-set,meeting-kept,offer,declined
+B v1-6   passed       May 27, 2029 at 11:00 PM       reply:0.045 n=5 history=discovered,introduced,checked,sent,passed
+B v1-7   passed       May 27, 2029 at 11:00 PM       reply:0.24 n=6 history=discovered,introduced,checked,sent,passed
+B v1-8   asked        May 12, 2029 at 11:00 PM       follow-up:0.12 n=4 history=discovered,introduced,checked,sent
+B v1-9   passed       May 27, 2029 at 11:00 PM       reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-10  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-11  unanswered   June 23, 2029 at 11:00 PM      reply:0.15 n=6 history=discovered,introduced,checked,sent,silence
+B v1-12  asked        May 12, 2029 at 11:00 PM       follow-up:0.1875 n=4 history=discovered,introduced,checked,sent
+B v1-13  asked        May 12, 2029 at 11:00 PM       follow-up:0.15 n=4 history=discovered,introduced,checked,sent
+B v1-14  passed       May 28, 2029 at 9:00 AM        reply:0.24 n=6 history=discovered,introduced,checked,sent,passed
+B v1-15  passed       May 27, 2029 at 11:00 PM       reply:0.1875 n=6 history=discovered,introduced,checked,sent,passed
+B v1-16  passed       May 27, 2029 at 11:00 PM       reply:0.24 n=6 history=discovered,introduced,checked,sent,passed
+B v1-17  passed       May 27, 2029 at 11:00 PM       reply:0.24 n=6 history=discovered,introduced,checked,sent,passed
+B v1-18  passed       May 27, 2029 at 11:00 PM       reply:0.5 n=7 history=discovered,introduced,checked,sent,passed
+B v1-19  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-20  unanswered   June 24, 2029 at 7:00 AM       reply:0.09 n=5 history=discovered,introduced,checked,sent,silence
+B v1-21  unanswered   June 23, 2029 at 11:00 PM      reply:0.045 n=5 history=discovered,introduced,checked,sent,silence
+B v1-22  skipped: standing concern on the last term's first morning
+B v1-23  asked        May 13, 2029 at 7:00 AM        follow-up:0.15 n=4 history=discovered,introduced,checked,sent
+B v1-24  passed       May 27, 2029 at 11:00 PM       reply:0.4 n=7 history=discovered,introduced,checked,sent,passed
+B v1-25  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-26  unanswered   June 23, 2029 at 11:00 PM      reply:0.09 n=5 history=discovered,introduced,checked,sent,silence
+B v1-27  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-28  skipped: standing warning on the last term's first morning
+B v1-29  asked        May 12, 2029 at 11:00 PM       follow-up:0.15 n=4 history=discovered,introduced,checked,sent
+B v1-30  passed       May 28, 2029 at 7:00 AM        reply:0.045 n=5 history=discovered,introduced,checked,sent,passed
+B v1-31  declined     June 15, 2029 at 8:20 AM       decision:0.36 n=6 history=discovered,introduced,checked,sent,requested,supplied,meeting-set,meeting-kept,offer,declined
+B v1-32  passed       May 27, 2029 at 11:00 PM       reply:0.24 n=6 history=discovered,introduced,checked,sent,passed
+B v1-33  unanswered   June 23, 2029 at 11:00 PM      reply:0.09 n=5 history=discovered,introduced,checked,sent,silence
+B v1-34  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-35  passed       May 27, 2029 at 11:00 PM       reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-36  passed       June 14, 2029 at 11:00 PM      decision:0.18 n=6 history=discovered,introduced,checked,sent,requested,supplied,meeting-set,meeting-kept,passed
+B v1-37  passed       May 27, 2029 at 11:00 PM       reply:0.15 n=6 history=discovered,introduced,checked,sent,passed
+B v1-38  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed
+B v1-39  passed       May 27, 2029 at 11:00 PM       reply:0.09 n=5 history=discovered,introduced,checked,sent,passed

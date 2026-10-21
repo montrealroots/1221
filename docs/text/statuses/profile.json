@@ -2131,9 +2131,9 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten And Verified",
-  "hash": "caa8aebeb183",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check (It Asks For's quote names the table's words); its takes are a brief's self-tapes, the glossary's word"
+  "hash": "5f2816d034b8",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten And Verified",
@@ -2689,9 +2689,9 @@
  },
  "src/ui/looks/actor.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "1f14124b1180",
-  "on": "2026-10-17",
-  "evidence": "tests/language-genre-look.test.ts (the ten low genres say low confidence, never single examples; the small print in three paragraphs, Why it’s applied in the game’s words; two mutations killed); json area D1 to D3"
+  "hash": "e0b0b3c7da9e",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel": {
   "status": "Rewritten And Verified",

@@ -161,11 +161,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#SHOWCASE_SCENE": {
-  "status": "Retained",
-  "hash": "f8e0dfaf6e56",
-  "on": "2026-10-19",
-  "reason": "The showcase scene's parts and its notes in the teacher's voice, each naming what agents would see fall short in three minutes.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "3098fbef83aa",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts plays the showcase's scenes on their cards: the deliverable and the notes say the showcase as the Bulletin does, no longer in front of agents",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/coursework.ts#TEMPLATES [alexander-practice]": {
   "status": "Retained",
@@ -736,17 +736,17 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]": {
   "status": "Rewritten",
-  "hash": "bf7d2c18f879",
-  "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the fit defined in Reads only; 20% from C.delivery kept; tests/guide-examples-productions passes",
-  "first": "Pending"
+  "hash": "9082202b72c5",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; the Yale Rep row read against coveredPart and tests/understudy-part.test.ts (An Enemy Of The People has no lead for an actress, who covers Petra Stockmann)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]": {
   "status": "Rewritten",
-  "hash": "439adc52a71f",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-productions.test.ts",
-  "first": "Pending"
+  "hash": "ba4a735dc562",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; How Hard’s understudy sentence read against partSizeOf and tests/understudy-part.test.ts (a covered supporting part judged at the Rep’s supporting difficulty, a lead at a lead’s)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten",
@@ -3459,10 +3459,10 @@
  },
  "src/engine/systems/school.ts#cast": {
   "status": "Rewritten",
-  "hash": "0d309a2998c2",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-school.test.ts “a part cast by size is said in lower case”, and tools/voices.ts attentive v16-0 and pressure v17-1 played on the tree (both terms’ Cast: notices)",
-  "first": "Pending"
+  "hash": "3c348371dcdd",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (the casting notice: “You’ll also understudy Petra Stockmann in Yale Rep’s An Enemy Of The People: … Its leads are written for actors, so the part you cover is a supporting one.”), and tools/scenarios.ts --scenario understudy --seed us-86 played before and after (docs/verification/career-2026-10-20/understudy/sequence-after.txt)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/systems/school.ts#CEILING": {
   "status": "Retained",
@@ -3511,6 +3511,13 @@
   "hash": "42f99f3e624e",
   "on": "2026-10-19",
   "reason": "Each refusal for converting work-study hours says which hours count and when, January's processing or May's, so a player knows whether to ask again later.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#coverWhy": {
+  "status": "Rewritten",
+  "hash": "c8ebeb849db8",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (the casting notice and the opening’s notice each say “Its leads are written for actors, so the part you cover is a supporting one.”), and tools/scenarios.ts --scenario understudy played (docs/verification/career-2026-10-20/understudy/sequence-after.txt)",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/school.ts#DEGREE_DATES": {
@@ -3604,12 +3611,26 @@
   "reason": "The notice says how many calls were missed, who took you out of the casting pool, what you still play, and exactly what puts you back in.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/school.ts#nameTheCover": {
+  "status": "Rewritten",
+  "hash": "3dd736588f6c",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (a save from before opened: “Your Understudy Part: Petra Stockmann”, told once, and its calls renamed), and a save the game before the fix wrote, opened and played on it (docs/verification/career-2026-10-20/understudy/sequence-save-from-before-unjudged.txt)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/school.ts#NIGHT_WORD_TITLE": {
   "status": "Retained",
   "hash": "9f650622ac10",
   "on": "2026-10-19",
   "reason": "The four ways a night on stage can go, as a notice's title names them, An Off Night, Solid, Strong, Remarkable, plain words a director would use.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#onCallFor": {
+  "status": "Rewritten",
+  "hash": "e1b874e74edb",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (every night on call on the calendar reads “Yale Rep’s October Production: On Call For Petra Stockmann”), and tools/scenarios.ts --scenario understudy played (the calendar line of docs/verification/career-2026-10-20/understudy/sequence-after.txt)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/systems/school.ts#partLabel": {
   "status": "Retained",
@@ -4159,10 +4180,10 @@
  },
  "src/ui/components/PlayingChooser.tsx#PlayingChooser": {
   "status": "Rewritten",
-  "hash": "c99580d0d31e",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): playing it this way would come to 54.9, the same as with nothing chosen (the casting tab's How You’ll Play It)",
-  "first": "Pending"
+  "hash": "dee61843babd",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's School Coursework tab after New York's showcase days, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the coursework surface): Play It This Way, grayed until a way is picked, said nothing in its title or under it; it gives its reason in both now. Held by tests/pro-app.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/ui/components/RehearsalProcess.tsx#DRESS_WORD": {
   "status": "Retained",

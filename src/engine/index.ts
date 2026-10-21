@@ -9,7 +9,9 @@
  * as it stood on 2026-09-29 (wellbeing, sleep, food, weather, the world),
  * with the banking, the school and the papers as they stood on 2026-10-09.
  * The home and its rent, the journeys, the cars, the land and the career went
- * that day, and `migrate` takes what they kept off a save (schema 90).
+ * that day, and `migrate` takes what they kept off a save (schema 90). From
+ * 2026-10-20 (the owner's brief 19) a new professional beginning is registered
+ * too, under `pro` (`systems/pro.ts`), not the old career restored.
  */
 
 import { registerStateTax } from './systems/statetax';
@@ -59,7 +61,7 @@ import { registerCash } from './systems/cash';
 import { findTermInterest, registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
-import { enroll, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
+import { enroll, nameTheCover, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
 import { holdsOverNothing, registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
@@ -92,6 +94,11 @@ import { registerUnemployment } from './systems/unemployment';
 import { armCollection, armTaxes, registerTaxReturn } from './systems/taxreturn';
 import { registerDocuments, startingDocuments } from './systems/documents';
 import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/permission';
+import { beginPro, buildOnOpening, registerPro } from './systems/pro';
+import { beginOnOpening, registerShowcase } from './systems/proshowcase';
+import { registerProAgent } from './systems/proagent';
+import { equityOnOpening, registerProPay } from './systems/propay';
+import { registerProJobs } from './systems/projobs';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -159,6 +166,12 @@ export function registerAllSystems(sim: Simulation): void {
   registerCitizenship(sim);
   registerPermission(sim);
   registerPaperVisits(sim);
+  registerPro(sim);
+  registerShowcase(sim);
+  // The agent's relationship, interest and agreement, on the professional record (brief 19, from 2026-10-21).
+  registerProAgent(sim);
+  registerProPay(sim);
+  registerProJobs(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -255,6 +268,9 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   armHomeAccounts(sim);
   // A life that begins at drama school, where it's in the school's town.
   if (config.school === YALE_DRAMA.id && config.startLocationId === YALE_DRAMA.cityId) enroll(sim, player);
+  // The professional record, begun with the life (`systems/pro.ts`, from 2026-10-20, brief 19): for a School life, at
+  // its enrollment, the same moment.
+  beginPro(sim, player);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -279,7 +295,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -445,6 +461,32 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('writtenUnplayed')) {
     writtenUnplayed(sim);
     opened.push('writtenUnplayed');
+  }
+  // A Rep understudy from before 2026-10-20 covering no named part, given the part a casting gives now where none of its
+  // run was judged, and every understudy's calls still to come named for its part (`nameTheCover`, brief 19's D6), once.
+  if (!opened.includes('nameTheCover')) {
+    nameTheCover(sim);
+    opened.push('nameTheCover');
+  }
+  // The professional record of a save from before 2026-10-20 (brief 19), built once from what it holds (`buildOnOpening`,
+  // `systems/pro.ts`): its school credits read where they are, a graduate's Equity membership dated at the degree, and
+  // nothing reset. A second opening leaves it as the first built it.
+  if (!opened.includes('pro.begun')) {
+    buildOnOpening(sim);
+    opened.push('pro.begun');
+  }
+  // A save from before 2026-10-21 in its final term with the Actor Showcase still ahead, its showcase begun from now as
+  // the term would have begun it (`beginOnOpening`, `systems/proshowcase.ts`, brief 19's W1), once.
+  if (!opened.includes('showcase.begun')) {
+    beginOnOpening(sim);
+    opened.push('showcase.begun');
+  }
+  // A graduate's Equity membership from a save before the union's fees were charged (2026-10-21, brief 19's pay): told
+  // what's owed, each part already past billed at the next billing day, never charged for a past date
+  // (`equityOnOpening`, `systems/propay.ts`). Once; a save made since bills it at the degree.
+  if (!opened.includes('pro.unions')) {
+    equityOnOpening(sim);
+    opened.push('pro.unions');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

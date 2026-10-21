@@ -11,14 +11,18 @@
  * refused where the actor had no permission to do it (`workRefusal`), an
  * agency petitioned for an O-1 on the evidence the credits built, and a
  * Canadian work permit was tied to one production. The career went, and
- * with it every job a permission was for.
+ * with it every job a permission was for. From 2026-10-21 (the owner's brief
+ * 19, D8) professional work came back: each engagement's dates are read
+ * against `usWorkAuthorized` when it's booked (`eligibilityRead`,
+ * `systems/propay.ts`), and OPT counts each engagement's days as days worked
+ * (`daysWorkedIn`). The O-1 and the Canadian permit didn't come back.
  */
 
 import type { Simulation } from '../core/simulation';
 import { leftWithout, schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, MS_HOUR, dateKey, formatDate, zonedParts, type Instant, type TimeZone } from '../core/time';
+import { MS_DAY, MS_HOUR, addDays, dateKey, formatDate, instantFromZoned, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { usBankHoliday, yaleHoliday } from '../content/usholidays';
@@ -27,6 +31,7 @@ import { payFromBank } from './spending';
 import { citizenOf } from './documents';
 import { STARTING, addYears, documentsOf, inForce, isoOfCity, numberFor, type PersonDocument } from './documents';
 import { waitsOnVisit } from './papervisits';
+import type { Engagement } from './pro';
 
 export const PERMISSION_KIND = 'documents.permission';
 export const OPT_WEEK_KIND = 'documents.opt_week';
@@ -100,9 +105,12 @@ export function programEnd(person: Person): Instant | undefined {
 }
 
 /**
- * Whether they may work in the US for any employer at a moment (from 2026-10-10): a citizen, or a holder of a US
- * permit in force, OPT. An F-1 student's own on-campus work isn't this: it's permission for the school's jobs alone,
- * ending with the program (8 CFR 214.2(f)(9)(i)). Unemployment reads it (FUTA 3304(a)(14)).
+ * Whether they may work in the US for any employer at a moment (from 2026-10-10): a citizen, or a holder of a US permit
+ * in force, OPT or a green card (a permit of its own, `systems/residence.ts`). An F-1 student's own on-campus work isn't
+ * this: it's permission for the school's jobs alone, ending with the program (8 CFR 214.2(f)(9)(i)). Unemployment reads
+ * it (FUTA 3304(a)(14)), and from 2026-10-21 every engagement's dates (`eligibilityRead`, `systems/propay.ts`). Signing
+ * with an agent changes none of it: nothing here reads the professional record's agreements. A line of its own for the
+ * green card was added on 2026-10-21 and taken out the same day, when its mutation survived: the permits already count it.
  */
 export function usWorkAuthorized(person: Person, at: Instant): boolean {
   if (citizenOf(person, 'US')) return true;
@@ -216,8 +224,44 @@ export function scheduleUsStatus(sim: Simulation, person: Person): void {
   if (at !== undefined) sim.schedule({ at, kind: US_STATUS_KIND, label: 'US Status', category: 'system', priority: 5, payload: { personId: person.id } });
 }
 
-// The days on a job counted against OPT's days without work (`onAJob`) until the career went on 2026-10-09:
-// every day is one without work now.
+// The days on a job counted against OPT's days without work (`onAJob`) until the career went on 2026-10-09, after which
+// every day was one without work. From 2026-10-21 (brief 19's D8) the days of each engagement count as days worked
+// again, read from the engagements themselves.
+
+/**
+ * The days in a stretch on which they had professional work: each calendar day, in `zone`, that any engagement not
+ * called off has work on (`Engagement.days`), counted once however many it has. SEVP's guidance lets a performing artist
+ * on OPT work for "multiple short term employers (gigs)", keeping "a list of all gigs, the dates and duration"
+ * (docs/research/career-2026-10-20/work.md S5); a day of an engagement counts as a day worked, an ASSUMPTION about its
+ * hours (OPT asks 20 a week, S3, S6, which a gig's day isn't measured against).
+ */
+export function daysWorkedIn(person: Person, from: Instant, to: Instant, zone: TimeZone = 'America/New_York'): number {
+  const engagements: readonly Engagement[] = (person.pro?.engagements ?? []).filter((e) => e.status !== 'canceled');
+  let n = 0;
+  for (let d = from; d < to; d = addDays(d, 1, zone)) {
+    const p = zonedParts(d, zone);
+    const start = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 0, minute: 0 }, zone);
+    const end = addDays(start, 1, zone);
+    if (engagements.some((e) => e.days.some((x) => x.from < end && x.to > start))) n += 1;
+  }
+  return n;
+}
+
+/**
+ * When an OPT in force runs out of its days without work, by the weeks still to be counted and the work booked in them
+ * (`daysWorkedIn`), or nothing where its twelve months end first: what Papers says the status ends on.
+ */
+export function optRunsOut(sim: Simulation, person: Person): Instant | undefined {
+  const doc = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'valid' && d.name.includes('OPT'));
+  if (!doc || doc.issuedAt === undefined) return undefined;
+  const next = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === OPT_WEEK_KIND && i.payload.documentId === doc.id).sort((a, b) => a.at - b.at)[0];
+  let idle = doc.idleDays ?? 0;
+  for (let t = next?.at ?? doc.issuedAt + 7 * MS_DAY; t <= (doc.expiresAt ?? t); t += 7 * MS_DAY) {
+    idle += 7 - daysWorkedIn(person, t - 7 * MS_DAY, t, sim.zone);
+    if (idle > WORK_RULES.opt.unemploymentDays) return t;
+  }
+  return undefined;
+}
 
 export function registerPermission(sim: Simulation): void {
   const payOrRefuse = (s: Simulation, person: Person, amount: Money, memo: string) => {
@@ -268,7 +312,9 @@ export function registerPermission(sim: Simulation): void {
       doc.idleDays = 0;
       s.schedule({ at: start + 7 * MS_DAY, kind: OPT_WEEK_KIND, label: 'OPT: A Week', category: 'system', priority: 5, payload: { personId: person.id, documentId: doc.id } });
       scheduleUsStatus(s, person);
-      tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}, with no more than ${WORK_RULES.opt.unemploymentDays} days without work in total. The game has no work after the degree, so in practice it ends after those ${WORK_RULES.opt.unemploymentDays} days.`);
+      // From 2026-10-21 (brief 19's D8) the days of professional work count (`daysWorkedIn`): until then this said the
+      // game had no work after the degree, so in practice OPT ended after its 90 days.
+      tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than ${WORK_RULES.opt.unemploymentDays} days without work in total.`);
       return;
     }
     // An O-1's petition and a production's Canadian permit were decided here until the career went on 2026-10-09.
@@ -310,7 +356,11 @@ export function registerPermission(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
     if (!person || !doc || !inForce(doc, item.at - MS_HOUR)) return;
-    doc.idleDays = (doc.idleDays ?? 0) + 7;
+    // The week's days without work: its seven less the days an engagement had work on (`daysWorkedIn`, from 2026-10-21,
+    // brief 19's D8). Until then all seven counted, every week, since the game had no work after the degree.
+    const worked = daysWorkedIn(person, item.at - 7 * MS_DAY, item.at, s.zone);
+    doc.idleDays = (doc.idleDays ?? 0) + 7 - worked;
+    if (worked) doc.workedDays = (doc.workedDays ?? 0) + worked;
     if (doc.idleDays > WORK_RULES.opt.unemploymentDays) {
       doc.status = 'cancelled';
       // A violation: the status ends with it, no grace after.

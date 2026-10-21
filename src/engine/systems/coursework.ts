@@ -421,6 +421,10 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
   const term = termOf(day);
   const t = templateFor(course, termWord(term));
   if (!t) return undefined;
+  // The final term's Actor Showcase sets the two scenes the student chooses, not a scene drawn in class
+  // (`systems/proshowcase.ts`, from 2026-10-21), unless an Incomplete kept them out of it, when the course's classes set
+  // their work as they always had.
+  if (t.id === 'showcase-scene' && person.pro?.showcase?.term === term && person.pro.showcase.eligible !== false) return undefined;
   if (cw.assignments.some((a) => a.course === course && (a.status === 'open' || a.status === 'revising'))) return undefined;
   const meetings = meetingsFrom(course, day, person.school).filter((k) => k > keyOf(day));
   const dueOn = meetings[t.dueAfter - 1];
@@ -1590,8 +1594,12 @@ function reshownWords(person: Person, a: Assignment, onDay: string, applied: boo
     : `${shown}, but you haven’t taken ${about} yet.${moved}${band} The note stays open under Your Notes until you take it.`;
 }
 
-/** The revised work's band: judged as a showing is, without a new note (the note given stands until the next work). */
-function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant = sim.now): Band {
+/**
+ * The revised work's band: judged as a showing is, without a new note (the note given stands until the next work). The
+ * Actor Showcase shows its scenes again with the note taken in Los Angeles through it (`systems/proshowcase.ts`, from
+ * 2026-10-21).
+ */
+export function reshow(sim: Simulation, person: Person, a: Assignment, onDay: string, when: Instant = sim.now): Band {
   const judged = judgeWork(sim, person, a, onDay, when, `reshow:${person.id}:${a.id}:${onDay}`);
   const band = bandFor(a, judged.overall);
   recordWork(sim, person, judged, { at: when, what: `${templateById(a.template)!.title}, revised`, band });
@@ -1616,8 +1624,11 @@ export function endCoursework(sim: Simulation, person: Person): void {
 }
 
 export function lapseTerm(sim: Simulation, person: Person, term: number): void {
+  const end = keyOf(classPeriod(term).to);
   for (const a of courseworkOf(sim, person)?.assignments ?? []) {
-    if (a.term !== term) continue;
+    // A piece due after the term's classes has its showing still ahead: the final term's showcase scenes, due in New York
+    // after the last class (`systems/proshowcase.ts`, from 2026-10-21). No other piece is due past the classes.
+    if (a.term !== term || (a.status === 'open' && a.dueOn > end)) continue;
     if (a.status === 'open') a.status = 'lapsed';
     else if (a.status === 'revising') a.status = 'done';
   }

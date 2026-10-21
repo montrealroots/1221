@@ -1,0 +1,15 @@
+at 63fe7391, 0 tracked files uncommitted, 2026-10-21T18:45:25Z
+life-p3-lives-0 exit=0 secs=11 cmd: npx vite-node tools/lives.ts -- --why --profile reykjavik, autopilot --seed lives-0 --years 3.2
+life-p3-lives-1 exit=0 secs=11 cmd: npx vite-node tools/lives.ts -- --why --profile reykjavik, autopilot --seed lives-1 --years 3.2
+life-p3-lives-2 exit=0 secs=10 cmd: npx vite-node tools/lives.ts -- --why --profile reykjavik, autopilot --seed lives-2 --years 3.2
+life-p3-lives-3 exit=0 secs=10 cmd: npx vite-node tools/lives.ts -- --why --profile reykjavik, autopilot --seed lives-3 --years 3.2
+life-p4-lives-0 exit=0 secs=493 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, practicing --seed lives-0 --years 3.2
+life-p4-lives-1 exit=0 secs=526 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, practicing --seed lives-1 --years 3.2
+life-p4-lives-2 exit=0 secs=461 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, practicing --seed lives-2 --years 3.2
+life-p4-lives-3 exit=0 secs=474 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, practicing --seed lives-3 --years 3.2
+life-p5-lives-0 exit=0 secs=180 cmd: npx vite-node tools/lives.ts -- --why --profile pressure: scraping, the flu and an injury, attentive --seed lives-0 --years 3.2
+life-p5-lives-1 exit=0 secs=171 cmd: npx vite-node tools/lives.ts -- --why --profile pressure: scraping, the flu and an injury, attentive --seed lives-1 --years 3.2
+life-p5-lives-2 exit=0 secs=168 cmd: npx vite-node tools/lives.ts -- --why --profile pressure: scraping, the flu and an injury, attentive --seed lives-2 --years 3.2
+life-p5-lives-3 exit=0 secs=163 cmd: npx vite-node tools/lives.ts -- --why --profile pressure: scraping, the flu and an injury, attentive --seed lives-3 --years 3.2
+freshness exit=0 secs=980 cmd: npx vite-node tools/freshness.ts -- --months 4 --seeds fr-0,fr-1
+DONE 2026-10-21T19:46:23Z

@@ -131,6 +131,9 @@ const REAL_NAMES = [
   'G Licence', 'P1 Licence', 'P2 Licence', 'M1 Licence', 'M2 Licence', 'M Licence', 'Class 6 Licence',
   // The managers' body the UK Theatre/Equity agreements are named for.
   'UK Theatre',
+  // Stewart Talent's legit department's fields as its published bio lists them, quoted in its spelling
+  // (src/engine/content/agents.ts, docs/research/career-2026-10-20/agent.md).
+  'Regional Theatre',
   // Where the real plays were first staged, as each theater spells its own name (`content/contemporary.ts`).
   'Manhattan Theatre Club', 'Biltmore Theatre', 'Steppenwolf Theatre Company', 'Royal Court Theatre', 'Theatre Upstairs', 'Jerwood Theatre Downstairs', 'Studio Theatre', 'Williamstown Theatre Festival', 'Vineyard Theatre', 'Laura Pels Theatre', 'Chichester Festival Theatre', 'Denver Center Theatre Company', 'National Theatre of Scotland', 'Soho Theatre', 'Almeida Theatre', 'Ricketson Theatre', 'Theatre Communications Group',
   // The theaters whose productions' running times a night reads (`content/workload.ts`, from 2026-10-16, brief 10), as each

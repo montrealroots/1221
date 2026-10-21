@@ -1,0 +1,194 @@
+{
+ "profile": "generalist",
+ "seed": "bj-1",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 75.5,
+  "training": 84,
+  "study": 42
+ },
+ "takes": 20,
+ "briefs": 14,
+ "readings": 20,
+ "genres": 14,
+ "purposes": {
+  "first": 14,
+  "another-reading": 6
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 61.6,
+   "min": 61.3,
+   "max": 61.9
+  },
+  "m2": {
+   "n": 2,
+   "mean": 61.9,
+   "min": 61.2,
+   "max": 62.5
+  },
+  "m3": {
+   "n": 16,
+   "mean": 62.8,
+   "min": 58.6,
+   "max": 64.9
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 14,
+  "mean": 0.3,
+  "max": 1.6,
+  "over1": 1
+ },
+ "notes": {
+  "takes": 20,
+  "distinct": 6,
+  "longestSame": 2,
+  "sameAgainInAnotherGenre": 2,
+  "withConcern": 10,
+  "concerns": [
+   "stylized",
+   "rhythm",
+   "invention",
+   "heightened",
+   "extremity"
+  ],
+  "asShown": {
+   "distinct": 11,
+   "longestSame": 1,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 61.3: Your imagination held back your interpretation: absurdist’s stylized",
+   "d13 silent_film first 61.9: Your imagination held back your interpretation: silent_film’s stylized",
+   "d61 absurdist another-reading 61.2: Your focus held back your execution: absurdist’s rhythm",
+   "d62 historical_drama first 62.5: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d96 fairy_tale first 62: Your imagination held back your interpretation: fairy_tale’s invention",
+   "d96 silent_film another-reading 62.5: Your physical expression held back your execution: silent_film’s stylized",
+   "d97 cyberpunk first 61.5: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d103 animated first 62.7: Your vocal expression held back your execution: animated’s heightened",
+   "d104 historical_drama another-reading 64.4: Your emotional depth held back your believability",
+   "d107 horror first 62.5: Your emotional depth held back your believability: horror’s extremity",
+   "d109 kaiju first 64.5: Your imagination held back your interpretation: kaiju’s invention",
+   "d110 fairy_tale another-reading 64.1: Your emotional depth held back your believability",
+   "d111 steampunk first 62.9: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d113 social_realism first 61.2: Your emotional depth held back your believability",
+   "d113 cyberpunk another-reading 63.3: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d115 isekai first 58.6: Your vocal expression held back your execution: isekai’s heightened",
+   "d117 alternate_history first 64.2: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d117 animated another-reading 61.3: Your vocal expression held back your execution: animated’s heightened",
+   "d118 time_travel first 64.9: Your emotional depth held back your believability",
+   "d119 tokusatsu first 63.9: Knowing the genre wasn’t complete, and that cost your interpretation"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 3,
+  "longestSameTarget": 4,
+  "longestSameMessage": 1,
+  "longestSameState": 1,
+  "longRuns": [],
+  "sequence": [
+   "7:imagination@64",
+   "14:imagination@65",
+   "21:imagination@65",
+   "28:imagination@65",
+   "35:vocal@64",
+   "42:focus@64",
+   "49:vocal@65",
+   "56:focus@65",
+   "63:imagination@66",
+   "70:focus@65",
+   "77:imagination@66",
+   "84:vocal@65",
+   "91:focus@65",
+   "98:imagination@67",
+   "105:imagination@68",
+   "112:imagination@70",
+   "119:imagination@71"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 65,
+  "presence": 64,
+  "listening": 67,
+  "imagination": 71,
+  "focus": 66,
+  "memory": 65,
+  "adaptability": 64,
+  "composure": 64,
+  "vocal": 65,
+  "physical": 66,
+  "discipline": 68,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-cyberpunk",
+   "genre": "cyberpunk",
+   "reading": "person",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 63.3,
+   "chief": "Knowing the genre wasn’t complete, and that cost your interpretation 16 points out of 100"
+  },
+  {
+   "day": 115,
+   "brief": "brief-isekai",
+   "genre": "isekai",
+   "reading": "audit",
+   "sides": "",
+   "purpose": "first",
+   "overall": 58.6,
+   "chief": "Your vocal expression held back your execution by 14 points out of 100",
+   "concern": "heightened"
+  },
+  {
+   "day": 117,
+   "brief": "brief-alternate_history",
+   "genre": "alternate_history",
+   "reading": "memory",
+   "sides": "",
+   "purpose": "first",
+   "overall": 64.2,
+   "chief": "Knowing the genre wasn’t complete, and that cost your interpretation 15 points out of 100"
+  },
+  {
+   "day": 117,
+   "brief": "brief-animated",
+   "genre": "animated",
+   "reading": "brave",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 61.3,
+   "chief": "Your vocal expression held back your execution by 16 points out of 100",
+   "concern": "heightened"
+  },
+  {
+   "day": 118,
+   "brief": "brief-time_travel",
+   "genre": "time_travel",
+   "reading": "weary",
+   "sides": "",
+   "purpose": "first",
+   "overall": 64.9,
+   "chief": "Your emotional depth held back your believability by 16 points out of 100"
+  },
+  {
+   "day": 119,
+   "brief": "brief-tokusatsu",
+   "genre": "tokusatsu",
+   "reading": "scale",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.9,
+   "chief": "Knowing the genre wasn’t complete, and that cost your interpretation 16 points out of 100"
+  }
+ ]
+}

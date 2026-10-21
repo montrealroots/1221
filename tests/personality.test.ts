@@ -27,7 +27,7 @@ import {
   A_NORMAL_DAYS_DEBT, ENERGY_DRAIN_PER_HOUR, applyElapsedWellbeing, applySleep, freshWellbeing, sleepQuality,
   suggestedSleep, unattendedNight,
 } from '@/engine/systems/life';
-import { MS_DAY, addDays, formatDateTime, instantFromZoned, zonedParts, type Instant } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, addDays, formatDateTime, instantFromZoned, zonedParts, type Instant } from '@/engine/core/time';
 import { ceilingAt } from '@/engine/content/lifespan';
 import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine';
@@ -355,9 +355,12 @@ describe('what it does', () => {
   });
 
   it('makes a light sleeper need longer in bed than somebody who sleeps anywhere', () => {
-    const light = booked(quickSave({ personalityTraits: ['light_sleeper'] }, 'p-light'));
-    const anywhere = quickSave({ personalityTraits: ['sleeps_anywhere'] }, 'p-anywhere');
-    const plain = quickSave({}, 'p-plain');
+    // At bedtime (from 2026-10-20, brief 19's D3): until then each was asked on its save's first morning, up from the
+    // night, where the suggestion is a nap's now, the same half hour for all three, since the day's night is behind them.
+    const tonight = (sim: Simulation) => { sim.advanceTo(sim.now + 15 * MS_HOUR); return sim; };
+    const light = booked(tonight(quickSave({ personalityTraits: ['light_sleeper'] }, 'p-light')));
+    const anywhere = tonight(quickSave({ personalityTraits: ['sleeps_anywhere'] }, 'p-anywhere'));
+    const plain = tonight(quickSave({}, 'p-plain'));
     expect(suggestedSleep(light).hours).toBeGreaterThan(suggestedSleep(plain).hours);
     expect(suggestedSleep(plain).hours).toBeGreaterThan(suggestedSleep(anywhere).hours);
     expect(suggestedSleep(light).reason).toMatch(/don’t sleep deeply/);

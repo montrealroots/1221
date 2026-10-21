@@ -1,0 +1,317 @@
+{
+ "playthrough": "specialist",
+ "width": 1440,
+ "base": "http://localhost:4217",
+ "commit": "ef2ab8b9",
+ "uncommitted": 0,
+ "startedAt": "2026-10-21T19:38:38.128Z",
+ "startingPoint": {
+  "kind": "save",
+  "file": "specialist.json",
+  "bytes": 105759,
+  "sha256": "463a0d908dcab084242c8318c4e38c5664cebd6e091a530ceb7616bdad64d698",
+  "seed": "sc-0",
+  "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+  "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
+ },
+ "steps": [
+  {
+   "n": 1,
+   "name": "[save: specialist scenario] continued: the first term’s showings on Home, one read",
+   "exercises": [
+    "notification"
+   ],
+   "pressed": [
+    "Continue",
+    "Home"
+   ],
+   "said": [
+    "notice “Shown: A Voice Sequence, Working”: Simulated note from Voice I: Mainly, it hadn’t been practiced day by day: a voice opens over days, not in one session. (Daily Practice: 90% prepared.) What will help: Practice The Sequence.",
+    "Shown: A Voice Sequence, Working"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 2,
+   "name": "the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close",
+   "exercises": [
+    "navigation",
+    "drill-down"
+   ],
+   "pressed": [
+    "Player Profile",
+    "Composure",
+    "Scene Study, revised",
+    "Close Composure"
+   ],
+   "said": [
+    "abilities: Emotional Depth 90, Composure 90, Imagination 90, Presence 90, Memory 49.5, Focus 49.6, Listening And Responsiveness 49.5, Vocal Expression 49.6, Physical Expression 49.8, Adaptability 49.1, Discipline 49",
+    "look “Composure” (AN ACTING ABILITY): You’re at 90.0 of 100.0: keeping your nerves steady under the pressure of an audience, an audition or a camera.",
+    "inside “Composure”: “Scene Study, revised”: Judged 63.0 of 100, Working, on September 9, 2026. Your adaptability held back your responsiveness by 19 points out of 100.; trail “Composure”"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 3,
+   "name": "Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen",
+   "exercises": [
+    "unavailable"
+   ],
+   "pressed": [
+    "Player Profile",
+    "Find A Genre: Nordic Noir",
+    "Open Its Brief (Nordic Noir)",
+    "Tape It (60 Min) (grayed, forced)"
+   ],
+   "said": [
+    "refused: Choose a reading first."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 4,
+   "name": "prepared: broken down, the lines learned, a reading chosen; the side The Scene says suits it chosen, its mark said; rehearsed on the feet",
+   "exercises": [],
+   "pressed": [
+    "Break It Down (30 Min)",
+    "Learn The Lines (50 Min)",
+    "reading: Closed And Exact. She stays controlled throughout, and the scene works because her precision finally earns his trust. It rests on: She’s from the city, and she asks exact questions about times and tickets. Fully prepared, it would come to 66.3 for you now.",
+    "Read It This Way",
+    "Restrained (the side that suits)",
+    "Play It This Way",
+    "Rehearse It On Your Feet (45 Min)"
+   ],
+   "said": [
+    "Break It Down: 30 minutes, 65% further.",
+    "Learn The Lines: 50 minutes, 57% further.",
+    "Reading it as Closed And Exact.",
+    "The Scene: Restrained suits, Expansive against",
+    "This choice is complete once it’s rehearsed to 84%: it suits the scene, so it asks less",
+    "Chosen. Rehearse it on your feet to make it work.",
+    "Rehearse It On Your Feet: 45 minutes, 46% further.",
+    "4:05 PM → 6:10 PM; played Restrained"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "6:10 PM"
+  },
+  {
+   "n": 5,
+   "name": "taped: the figure, what the way gave apart from what the abilities cost, what held it back; one take in the table",
+   "exercises": [],
+   "pressed": [
+    "Tape It (60 Min)"
+   ],
+   "said": [
+    "Played that way, it suited the scene (Restrained, Suits The Scene) and added 0.8 points. Your abilities and techniques cost it 18.8 points.",
+    "Taped: 51.9, Working."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "7:10 PM"
+  },
+  {
+   "n": 6,
+   "name": "the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths",
+   "exercises": [],
+   "pressed": [
+    "Why This Recommendation"
+   ],
+   "said": [
+    "Focus. Of what you can train, it would add most to your recent work: your last 6 pieces all call on it. Vocal expression would be about as useful. / Of your last 6 pieces, 3 were fully prepared, and 3 were underprepared and are counted as they were. / Both preparation and training are worth your time now, preparation more: coming to your recent work fully prepared would have added about 5.76 points a piece as you are now (5.38 from each piece’s own preparation, 0.38 from knowing its genre in full), and 20 hours of focus would add about 0.70 points a piece. / its exercise: Circles Of Attention",
+    "names Focus, trained by Circles Of Attention"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "7:10 PM"
+  },
+  {
+   "n": 7,
+   "name": "trained: the exercise the advice names, an hour at a time until the day’s practice is spent; then refused, its reason under it",
+   "exercises": [
+    "unavailable"
+   ],
+   "pressed": [
+    "Player Profile",
+    "Player Profile",
+    "Find A Genre: Nordic Noir",
+    "Open Its Brief (Nordic Noir)",
+    "Circles Of Attention…",
+    "Practice An Hour",
+    "Practice An Hour",
+    "Practice An Hour",
+    "Practice An Hour",
+    "Practice An Hour (grayed, forced)"
+   ],
+   "said": [
+    "Focus before the hours: 49.6",
+    "4 hours (Circles Of Attention: +0.18, Circles Of Attention: +0.08, Circles Of Attention: +0.04, Circles Of Attention: +0.02); then refused: You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "11:10 PM"
+  },
+  {
+   "n": 8,
+   "name": "One Week, asked: On The Way lists Monday’s labs, Cancel leaves the clock",
+   "exercises": [
+    "confirmation"
+   ],
+   "pressed": [
+    "Advance",
+    "One Week",
+    "Cancel"
+   ],
+   "said": [
+    "On The Way: ✕ Moving the clock to One Week (September 19, 2026 at 11:10 PM) passes 11 commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. Classes — September 14, 2026 at 9:00 AM, not on your calendar yet Drama 50: The Theatrical Event — September 14, 2026 at 3:00 PM Classes — September 15, 2026 at 9:00 AM, not on your calendar y"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "11:10 PM"
+  },
+  {
+   "n": 9,
+   "name": "Sunday: Tomorrow Morning, the exercise practiced again, and what it trains higher than at the first take",
+   "exercises": [],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "Player Profile",
+    "Find A Genre: Nordic Noir",
+    "Open Its Brief (Nordic Noir)",
+    "Practice An Hour",
+    "Practice An Hour",
+    "Practice An Hour",
+    "Practice An Hour",
+    "Player Profile"
+   ],
+   "said": [
+    "Circles Of Attention: +0.22.",
+    "Circles Of Attention: +0.11.",
+    "Circles Of Attention: +0.05.",
+    "Circles Of Attention: +0.02.",
+    "Focus now 50.3, from 49.6 before Saturday’s hours",
+    "4 hours more; Focus 50.3"
+   ],
+   "ok": true,
+   "date": "September 13, 2026",
+   "clock": "11:00 AM"
+  },
+  {
+   "n": 10,
+   "name": "taped again: prepared further, the second take above the first, two rows, the newest better prepared or better able; the advice read again",
+   "exercises": [],
+   "pressed": [
+    "Player Profile",
+    "Find A Genre: Nordic Noir",
+    "Open Its Brief (Nordic Noir)",
+    "Break It Down (30 Min)",
+    "Learn The Lines (50 Min)",
+    "Rehearse It On Your Feet (45 Min)",
+    "Tape It (60 Min)"
+   ],
+   "said": [
+    "Break It Down: 30 minutes, 21% further.",
+    "Learn The Lines: 50 minutes, 23% further.",
+    "Rehearse It On Your Feet: 45 minutes, 23% further.",
+    "What To Work On now: WHAT TO WORK ON Focus. Of what you can train, it would add most to your recent work: your last 7 pieces all call on it. Listening and responsiveness, and vocal expression would be about as useful. Circles Of Attention at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energ",
+    "51.9 → 62.4: September 13, 2026 Closed And Exact restrained Better prepared or better able than last time: it should show. 62.4 Rehearsing the way you chose to play it wasn’"
+   ],
+   "ok": true,
+   "date": "September 13, 2026",
+   "clock": "2:05 PM"
+  },
+  {
+   "n": 11,
+   "name": "Save & Exit; Delete asked and kept; Continue: the same moment, the brief’s two takes, its reading and its last take as they were",
+   "exercises": [
+    "confirmation",
+    "save-continue"
+   ],
+   "pressed": [
+    "Save & Exit",
+    "Delete",
+    "Keep It",
+    "Continue",
+    "Player Profile",
+    "Find A Genre: Nordic Noir",
+    "Open Its Brief (Nordic Noir)"
+   ],
+   "said": [
+    "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 13, 2026 LOCATION New Haven NET WORTH $503K PLAYED 50s Version 1.1.0 · Save Format 94 · 32 KB Backup from September 13, 2026 Continue Restore Ba",
+    "September 13, 2026 2:05 PM"
+   ],
+   "ok": true,
+   "date": "September 13, 2026",
+   "clock": "2:05 PM"
+  }
+ ],
+ "milestones": [
+  {
+   "file": "01-profile-abilities.jpg",
+   "step": 2,
+   "at": "September 12, 2026 4:05 PM"
+  },
+  {
+   "file": "02-brief-before-the-take.jpg",
+   "step": 3,
+   "at": "September 12, 2026 4:05 PM"
+  },
+  {
+   "file": "03-take-and-advice.jpg",
+   "step": 6,
+   "at": "September 12, 2026 7:10 PM"
+  },
+  {
+   "file": "04-second-take.jpg",
+   "step": 10,
+   "at": "September 13, 2026 2:05 PM"
+  },
+  {
+   "file": "05-confirm-deletion.jpg",
+   "step": 11,
+   "at": ""
+  }
+ ],
+ "dialogs": [],
+ "errors": [],
+ "overflows": [],
+ "exercised": {
+  "navigation": [
+   2
+  ],
+  "drill-down": [
+   2
+  ],
+  "unavailable": [
+   3,
+   7
+  ],
+  "confirmation": [
+   8,
+   11
+  ],
+  "notification": [
+   1
+  ],
+  "save-continue": [
+   11
+  ]
+ },
+ "summary": {
+  "steps": 11,
+  "passed": 11,
+  "failed": 0,
+  "sixMissing": [],
+  "errors": 0,
+  "overflows": 0
+ },
+ "finishedAt": "2026-10-21T19:39:43.196Z"
+}

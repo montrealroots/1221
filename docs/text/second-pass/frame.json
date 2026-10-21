@@ -35,11 +35,11 @@
   "first": "Rewritten And Verified"
  },
  "src/app/game-context.tsx#ROUTE_LABELS": {
-  "status": "Retained",
-  "hash": "9a87b6b0c5d6",
-  "on": "2026-10-19",
-  "reason": "The rail’s destination names, the same words the rail, the breadcrumbs and the keyboard shortcuts use, so each screen keeps one name everywhere.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "bfdc10dcafcc",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
  },
  "src/app/game-context.tsx#useGame": {
   "status": "Retained",
@@ -253,23 +253,23 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.advance]": {
   "status": "Rewritten",
-  "hash": "9cc3f15c9e6f",
+  "hash": "14d190b44247",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area, the frame editor's finding: the last step says what Go and Stand Here do to a jump, read against onGo and clearStandingAt (ui/shell/TimeControls.tsx) and halt (app/game-context.tsx); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on') presses each on the real provider; read word for word on the built app (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt)",
+  "evidence": "Each line gives its day, Tomorrow Morning after midnight is that morning's, On The Way lists what isn't on the calendar yet; held by tests/time-controls.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "b59c185628a6",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app by tools/screen-text.mjs, How This Works opened from the Calendar panel (brief 16): the summary of 4 sentences became 1 and 2 in two paragraphs, naming Skip It and Call It Off; Stand Here now says the commitment starts when the clock next moves (tools/voices.ts --guide, vague 4 to 2).",
-  "first": "Pending"
+  "hash": "17e6d0d467be",
+  "on": "2026-10-21",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/calendar-text.ts (its .txt beside it) at the playthroughs' merge, 2026-10-21, against docs/STYLE.md: the built-app walk's and the playthroughs' words for the career on the calendar, joined, one Career row kept",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten",
-  "hash": "1db03f32ae6f",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Clock: Play And Pause",
+  "hash": "22fcdfe5d205",
+  "on": "2026-10-20",
+  "evidence": "The three dialogs that move the clock hold it, held beside the behavior by tests/time-controls.test.ts on the real provider",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
@@ -1952,6 +1952,34 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.agent]": {
+  "status": "Rewritten",
+  "hash": "3dd50ab6d1fd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Retained",
+  "hash": "b4e89d347068",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.roster]": {
+  "status": "Rewritten",
+  "hash": "d02a5a6b6572",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/decided.ts#top [production.direction]": {
   "status": "Retained",
   "hash": "9ce9ed69790f",
@@ -2190,6 +2218,13 @@
   "reason": "Names the commitment and its time and says there isn’t the time before it; several guides quote it word for word.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/life.ts#hoursSaid": {
+  "status": "Rewritten",
+  "hash": "adf2dbf53e7b",
+  "on": "2026-10-20",
+  "evidence": "Hours at the start of a sentence, Half an hour to Fourteen hours, in the nap's reasons; tests/time-stops.test.ts holds one and a half and seven and a half",
+  "first": "Pending"
+ },
  "src/engine/systems/life.ts#lookAfterRefusal": {
   "status": "Rewritten",
   "hash": "d80e2a8e5c36",
@@ -2203,6 +2238,13 @@
   "on": "2026-10-19",
   "reason": "The Look After Yourself menu’s five actions, each a plain verb for what the hour is: Eat A Meal, Order In, Shower, Work Out, Unwind.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#napNow": {
+  "status": "Rewritten",
+  "hash": "6678f53b5886",
+  "on": "2026-10-20",
+  "evidence": "The nap's two reasons, rested and low, read at 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-390.txt) and held word for word by tests/time-stops.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#registerLife [life.day_rollover]": {
   "status": "Retained",
@@ -2240,11 +2282,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/life.ts#suggestedSleep": {
-  "status": "Retained",
-  "hash": "05516ff8b442",
-  "on": "2026-10-19",
-  "reason": "Says why the Sleep dialog suggests its hours: a clear calendar, a commitment you are standing at, or one too soon for a full night.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ce738338892d",
+  "on": "2026-10-20",
+  "evidence": "The Sleep dialog's reasons with a commitment and its trip, read at 11 PM and 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-1440.txt) and held by tests/time-stops.test.ts, a trip inside the call's hours among them",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#wellbeingSummary": {
   "status": "Rewritten",
@@ -2331,10 +2373,10 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
-  "status": "Retained",
-  "hash": "cfc941a4f6e4",
-  "on": "2026-10-19",
-  "reason": "Each kind on the legend with what it holds on hover, the School row naming each term’s review, the glossary’s word.",
+  "status": "Rewritten",
+  "hash": "48f0fa35225c",
+  "on": "2026-10-21",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/calendar-text.ts (its .txt beside it) at the playthroughs' merge, 2026-10-21, against docs/STYLE.md: the built-app walk's and the playthroughs' words for the career on the calendar, joined, one Career row kept",
   "first": "Rewritten And Verified"
  },
  "src/engine/world/calendar.ts#skipTargets": {
@@ -2343,6 +2385,27 @@
   "on": "2026-10-19",
   "reason": "Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/world/clock.ts#defineStop": {
+  "status": "Retained",
+  "hash": "2ff2f915a89e",
+  "on": "2026-10-20",
+  "reason": "A developer's error, thrown when a system declares one kind's stop twice, at startup; no player ever reaches it, and it names the kind to fix.",
+  "first": "Pending"
+ },
+ "src/engine/world/clock.ts#refusalOf": {
+  "status": "Rewritten",
+  "hash": "30a12bfb9806",
+  "on": "2026-10-20",
+  "evidence": "The fallback refusal a stop's choice says when its command gives no reason, the same words run() says; tests/time-stops.test.ts reads refusals",
+  "first": "Pending"
+ },
+ "src/engine/world/clock.ts#top": {
+  "status": "Rewritten",
+  "hash": "8755674025df",
+  "on": "2026-10-20",
+  "evidence": "Skip It's and Call It Off's words at the stop and on On The Way, and Call It Off's toast; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts",
+  "first": "Pending"
  },
  "src/engine/world/place.ts#placeKindLabel": {
   "status": "Retained",
@@ -2843,10 +2906,10 @@
  },
  "src/ui/looks/day.tsx#missCost": {
   "status": "Rewritten",
-  "hash": "0b6afe5010e8",
-  "on": "2026-10-20",
-  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (Classes' entry); held by tests/language-frame.test.ts, 'says a missed class is excused by a sick day called in, a hospital bed or an injury, as its handler excuses it'",
-  "first": "Pending"
+  "hash": "ac490e9c295a",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs",
+  "first": "Rewritten And Verified"
  },
  "src/ui/looks/day.tsx#quarterSentence": {
   "status": "Retained",
@@ -2878,10 +2941,10 @@
  },
  "src/ui/looks/day.tsx#top": {
   "status": "Rewritten",
-  "hash": "3884a8d9afb9",
-  "on": "2026-10-20",
-  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (tomorrow's day: 'You need to be at all of them.'); held by tests/language-frame.test.ts, 'says a day’s commitments as it, both or all of them…'",
-  "first": "Pending"
+  "hash": "2f6edcb8f6a1",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs",
+  "first": "Rewritten And Verified"
  },
  "src/ui/looks/day.tsx#top [observed]": {
   "status": "Retained",
@@ -3143,11 +3206,11 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
-  "status": "Retained",
-  "hash": "69497279cf89",
-  "on": "2026-10-19",
-  "reason": "The rail’s names and one line under each listing what that screen holds, in the tabs’ own words.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "2f0b36414251",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
  },
  "src/ui/shell/GameShell.tsx#GameShell": {
   "status": "Retained",
@@ -3226,6 +3289,20 @@
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [overview]": {
+  "status": "Rewritten",
+  "hash": "0efc2e6be4c2",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
+ },
  "src/ui/shell/sections.ts#SECTIONS [passport]": {
   "status": "Retained",
   "hash": "83e5e372ec2f",
@@ -3239,6 +3316,20 @@
   "on": "2026-10-19",
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [portfolio]": {
+  "status": "Rewritten",
+  "hash": "036b18f02ab5",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [representation]": {
+  "status": "Rewritten",
+  "hash": "360bc539904b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: the Career screen’s Representation tab label, in Title Case, read on the screen in tests/pro-representation-screen.test.ts, with tools/title-case.mjs and tools/label-sweep.mjs passing",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/sections.ts#SECTIONS [returns]": {
   "status": "Retained",
@@ -3269,11 +3360,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/shell/sections.ts#SECTIONS [work]": {
-  "status": "Retained",
-  "hash": "f29c41d765fd",
-  "on": "2026-10-19",
-  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "973abd660059",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws the Career screen's Work tab, and the built app's docs/verification/career-2026-10-20/pay/screens/walk-1440.txt lists the three tabs",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
   "status": "Retained",
@@ -3281,6 +3372,13 @@
   "on": "2026-10-19",
   "reason": "Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing.",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#choicesAhead": {
+  "status": "Rewritten",
+  "hash": "85d932042752",
+  "on": "2026-10-20",
+  "evidence": "On The Way's sentence of the choices on the way and what the clock does after them; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts",
+  "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#DIAL_LABEL": {
   "status": "Retained",
@@ -3291,10 +3389,10 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten",
-  "hash": "0430d7e9f47e",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Next Event: the stop); held by tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer'",
-  "first": "Pending"
+  "hash": "3c0024579911",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
   "status": "Rewritten",
@@ -3311,11 +3409,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/shell/TimeControls.tsx#SkipDialog": {
-  "status": "Retained",
-  "hash": "60a6ec4e51e0",
-  "on": "2026-10-19",
-  "reason": "Lists what the clock will stop at on the way and what else happens in order, and says why Skip is gray, with the event named on its button.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "e6ceef215740",
+  "on": "2026-10-20",
+  "evidence": "Skip To Event lists a foreseen stop as not on your calendar yet; held by tests/time-controls.test.ts on the real provider",
+  "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#SleepDialog": {
   "status": "Rewritten",
@@ -3326,10 +3424,10 @@
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {
   "status": "Rewritten",
-  "hash": "b7a1bc0b5e35",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (On The Way); held by tests/language-frame-ui.test.ts, 'On The Way says how many commitments…', and what Go and Stand Here do by 'PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on…'",
-  "first": "Pending"
+  "hash": "1a2c6d2d7a0e",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
+  "first": "Rewritten And Verified"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Retained",
@@ -3382,10 +3480,10 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {
   "status": "Rewritten",
-  "hash": "f39d6673b827",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g02-life.test.ts, 'PLAYER JOURNEY: a Call at 7:40 refuses a shower at 7:30 in its words; Call It Off on the Calendar takes it off the month, and the shower is taken'",
-  "first": "Pending"
+  "hash": "f3f6f44f997b",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the entry says the trip the meeting's notice promises (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/calendar-entry-trip.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS": {
   "status": "Retained",

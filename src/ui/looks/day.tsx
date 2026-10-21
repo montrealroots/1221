@@ -39,6 +39,9 @@ import {
 import { forecastFor } from '@/engine/systems/weather';
 import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import { PLAN_KIND } from '@/engine/world/plans';
+import { MEETING_KIND, tripWords } from '@/engine/systems/proagent';
+import { AUDITION_KIND, MISSES, WORK_DAY_KIND } from '@/engine/systems/projobs';
+import { SHOWCASE_KIND } from '@/engine/systems/proshowcase';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
@@ -169,7 +172,12 @@ const lengthOf = (entry: CalendarEntry): string | undefined =>
  * agency got you, a job’s day and a showcase. Those kinds went with the career
  * on 2026-10-09 and their cases stayed here, so a save from before it, which
  * keeps what it had settled, was still told an agency would let it go; the
- * cases went from 2026-10-12.
+ * cases went from 2026-10-12. Brief 19’s career brought its own back on
+ * 2026-10-21 (its playthroughs, J6): a meeting with an agent’s office
+ * (`systems/proagent.ts`), an audition or a callback and a booked work day
+ * (`systems/projobs.ts`), and the showcase’s days and rehearsals
+ * (`systems/proshowcase.ts`), each as its handler has it. Until then they said
+ * only that they’d be missed.
  */
 function missCost(sim: Simulation, id: string): string {
   const item = sim.universe.scheduled.find((one) => one.id === id);
@@ -187,6 +195,14 @@ function missCost(sim: Simulation, id: string): string {
     case 'school.shift': return ': the hours aren’t paid, and an assigned shift counts against your attendance';
     case 'school.summer': return call === 'performance' ? ', and the company lets you go' : ', and the rehearsal goes on without you';
     case 'school.cabaret': return ', and the show goes on without you';
+    case SHOWCASE_KIND: return call === 'rehearsal'
+      ? ': a missed call and a missed class of Actor Showcase, unless you called in sick, or you’re in hospital or laid up with an injury'
+      : ': a missed call and an unexcused absence from Actor Showcase, and your scenes aren’t seen there, unless you called in sick, or you’re in hospital or laid up with an injury';
+    case MEETING_KIND: return ': his office closes your approach, and looks again only after a year, at something new';
+    case AUDITION_KIND: return ': casting moves on without you, and the role is gone';
+    case WORK_DAY_KIND: return item?.payload.kind === 'shoot'
+      ? ': the production replaces you, and the days you don’t work aren’t paid'
+      : `: the company manager’s written warning${item?.payload.kind === 'performance' ? ', and your understudy goes on' : ''}; miss ${MISSES.stage === 1 ? 'a second day' : 'more days'} and the company replaces you`;
     default: return '';
   }
 }
@@ -567,6 +583,10 @@ defineLook<TheEntry>('entry', {
   look: (found, { sim }) => {
     const { entry, clashes, next, elsewhere } = found;
     const zone = sim.homeZone;
+    // A trip of its own, carried inside the commitment: a career meeting, audition or work day. The showcase’s calls
+    // leave from the School (`travelMinutes: 0`) and a video meeting goes nowhere, so neither carries one.
+    const own = sim.timeline.get(entry.id)?.travelMinutes;
+    const trip = own !== undefined && own > 0 ? own : undefined;
     const legend = LEGEND_BY_CATEGORY[entry.category];
     const city = cityOf(entry);
     const clock = clockOf(entry, zone);
@@ -638,7 +658,7 @@ defineLook<TheEntry>('entry', {
             {entry.status === 'observance'
               ? 'An observance. It’s on the calendar so you know, and there’s nothing for you to do about it.'
               : entry.requiresPlayer
-                ? `You need to be there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it. If you aren’t, it’s missed${missCost(sim, entry.id)}.`
+                ? `You need to be there, awake${city && trip === undefined ? ` and in ${city.name}` : ''}, when the clock reaches it. If you aren’t, it’s missed${missCost(sim, entry.id)}.`
                 : 'It happens on its own when the clock reaches it, without you needing to be there.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>
@@ -646,9 +666,15 @@ defineLook<TheEntry>('entry', {
               else needs you to be there by then". There’s been no job since 2026-10-09, and nothing writes where the
               player is after a life begins (`world/bootstrap.ts`), so one that wants them and hasn’t come round says
               it’ll be missed, as its handler has it (from 2026-10-12). */}
+          {/* A commitment that carries its own trip (`travelMinutes`, the career’s meetings, auditions and work days) takes
+              you there and back inside its time, and its handler never asks the town (from 2026-10-21, brief 19's
+              playthroughs, J6): until then it said you had to be in its town and, from New Haven, that it’d be missed. A
+              trip of none, the showcase’s calls from the School, still asks the town, as its handler does. */}
           <p className="small muted">
             {city
-              ? elsewhere
+              ? elsewhere && trip !== undefined
+                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, {tripWords(trip)} each way from {elsewhere.name}, and the trip is part of it.</>
+              : elsewhere
                 ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}{entry.requiresPlayer && entry.status === 'pending' ? ', and nothing takes you there, so it’ll be missed' : ''}.</>
                 : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, where you already are.</>
               : 'It isn’t tied to a city, so wherever you are is fine.'}

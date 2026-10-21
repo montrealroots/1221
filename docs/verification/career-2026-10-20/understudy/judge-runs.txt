@@ -1,0 +1,13 @@
+# The judge's runs that play a life (docs/verification/decisions-2026-10-16/measure.sh), before and after D6, 2026-10-21
+# before: fb4a3a53's tree (the game as it was, exported with git archive); after: 908ca333's.
+# journeys-a's first run: npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120 --write journey-beginner-bj-0.json --trace l3-trace-beginner-bj-0.json
+# indirect: npx vite-node tools/h4-indirect.ts -- --out h4-indirect.json
+
+before exits:
+journey exit=0
+h4 exit=0
+after exits: journey exit=0, h4 exit=0
+
+journey-beginner-bj-0.json: before 8f0d83e91614f14c, after 8f0d83e91614f14c, identical
+l3-trace-beginner-bj-0.json: before 941d8fd836d2949a, after 941d8fd836d2949a, identical
+h4-indirect.json: before d57777813ef9e9cf, after d57777813ef9e9cf, identical

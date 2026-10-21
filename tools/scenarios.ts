@@ -24,6 +24,9 @@
  *   2026-10-17, brief 13's interface playthroughs, `tools/playthroughs-ui.mjs`).
  * - `health`: `brief`'s student with TEST SETUP a fall that sprains an ankle on Saturday 12 September 2026, stopped right
  *   after it (from 2026-10-17, brief 14's journeys, `tools/playthroughs-ui.mjs`).
+ * - `understudy`: on seed us-86, an actress understudying the second-year fall's Rep play, An Enemy Of The People, sent on
+ *   once, followed from the casting to its credit, each thing the player reads logged in order (from 2026-10-20, brief 19's
+ *   D6; docs/verification/career-2026-10-20/understudy/).
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  *   npx vite-node tools/scenarios.ts -- --scenario direction --from part.json --years 0.2 --save part2.json   # goes on
@@ -98,6 +101,44 @@ const tryOnce = (sim: Simulation, log: string[], kind: string, payload: Record<s
   // The first refusal of each command, so a path that never goes through says why.
   else if (!log.some((l) => l.startsWith(`refused ${kind}`))) log.push(`refused ${kind}: ${r.error}`);
   return r.ok;
+};
+
+/**
+ * An understudy's run at the Rep, as the player meets it (from 2026-10-20, brief 19's D6, brief 18's U1): the casting and
+ * the part it names, the Rep's calls on the calendar, the preparation's forecast once the rehearsals are under way, each
+ * notice in order, each night judged with the size and difficulty it was judged at, the run's milestone and the credit at
+ * the next casting. Nothing is set by hand: it's read, each thing once, the notices by their ids, which a reload keeps.
+ */
+const seenNotices = new Set<string>();
+const seenNights = new Set<string>();
+const followUnderstudy = (sim: Simulation, log: string[]) => {
+  const s = sim.player.school;
+  if (!s) return;
+  // The day in New Haven, where every call is.
+  const day = (t: number) => { const p = zonedParts(t, NY); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
+  const r = s.rep?.kind === 'understudy' ? s.rep : undefined;
+  if (r && !log.some((l) => l.includes(`casting: ${r.production}, term ${r.term}`))) {
+    log.push(`${day(sim.now)} casting: ${r.production}, term ${r.term}: role ${r.role}, play ${r.play ?? '(none)'}, size ${r.size ?? '(none)'}`);
+    const labels = [...new Set(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === CALL_KIND && i.payload.which === 'rep' && i.payload.personId === sim.player.id).map((i) => i.label))];
+    log.push(`${day(sim.now)} calendar: ${labels.join(' | ')}`);
+  }
+  const proc = r && hasProcess(r) ? r.process : undefined;
+  if (r && proc && proc.calls >= 3 && !log.some((l) => l.includes(`forecast: ${r.production}, term ${r.term}`))) {
+    const f = workPiece(sim, sim.player, 'part:rep')?.forecast();
+    if (f) log.push(`${day(sim.now)} forecast: ${r.production}, term ${r.term}: A Night Now ${f.overall}, size ${f.inputs.piece?.night?.size}, difficulty ${f.inputs.difficulty}, lines ${Math.round(proc.lines * 100)}%, blocking ${Math.round(proc.blocking * 100)}%`);
+  }
+  for (const n of sim.universe.notifications) {
+    if (seenNotices.has(n.id)) continue;
+    seenNotices.add(n.id);
+    if (/^(Cast: |Your Understudy|You’re On |You Went On |The Director’s Note: (?!Carlotta|Directors|Langston|Shakespeare))/.test(n.title)) log.push(`${day(n.at)} notice: ${n.title} | ${n.body}`);
+  }
+  if (r) for (const w of sim.player.work ?? []) {
+    if (w.task !== 'performance' || !w.inputs.key.includes(`:${r.production}-`) || seenNights.has(w.inputs.key)) continue;
+    seenNights.add(w.inputs.key);
+    log.push(`${day(w.at)} night judged: ${w.what}, ${w.overall} (${w.band}), size ${w.inputs.piece?.night?.size}, difficulty ${w.inputs.difficulty}, on stage ${Math.round((w.inputs.piece?.night?.share ?? 0) * 100)}% of the playing`);
+  }
+  for (const m of sim.player.journey?.milestones ?? []) if (m.kind === 'run' && /Rep|Enemy|Warren|Seagull|Vanya|Tartuffe|Playboy|Doll/.test(m.what) && !log.some((l) => l.includes(`milestone: ${m.what}`))) log.push(`${day(m.at)} milestone: ${m.what}, ${m.overall} (${m.detail ?? ''})`);
+  for (const c of s.credits ?? []) if (c.kind === 'understudy' && !log.some((l) => l.includes(`credit: ${c.production}, ${c.year}`))) log.push(`${day(sim.now)} credit: ${c.production}, ${c.year}: role ${c.role}, went on ${c.wentOn}${c.size ? `, size ${c.size}` : ''}`);
 };
 
 /** The way back from a leave: notice once it's allowed, then registration once it's asked. */
@@ -313,6 +354,14 @@ const SCENARIOS: Record<string, Hook> = {
       }
       if (sim.player.taxPlan?.status === 'default') tryOnce(sim, log, 'tax.catch_up_plan', {});
     },
+  },
+  // A Rep understudy whose play has no lead written for them (from 2026-10-20, brief 19's D6, brief 18's U1): on seed us-86
+  // an actress is dealt An Enemy Of The People for the second-year fall, and on Saturday 2 October 2027 the night's check
+  // sends her on. Followed to the credit the next casting files, in January 2028 (`followUnderstudy`).
+  understudy: {
+    years: 1.45, config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her' },
+    daily: followUnderstudy,
+    stopWhen: (sim) => (sim.player.school?.credits ?? []).some((c) => c.kind === 'understudy' && c.production.startsWith('Yale Rep’s October')),
   },
 };
 

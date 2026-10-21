@@ -1,0 +1,178 @@
+{
+ "id": "career",
+ "title": "Your Career",
+ "lead": "Your professional profile, the headshots, résumé and reel a submission sends, and your work’s pay and unions.",
+ "body": [
+  "Career, in the menu under Your Work, shows where you stand as a professional actor. Its Overview says what training you have, when you’re free for work, whether you can work in the US, and what your portfolio is missing.",
+  "The Portfolio tab holds what a submission sends: your profile, headshots, a résumé and a reel. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.",
+  "Your Profile shows the name you work under. To change it, type a name under Professional Name and press Use This Name. Leave it blank and press it to go back to your own name. Your résumé uses the name you choose.",
+  "Book A Headshot Session takes four hours and costs about $700.00, both estimated. Photographers work by day, so a session starts between 9 AM and 4 PM. Headshots more than two years old read as out of date.",
+  "Make Your Résumé takes an hour. It lists your name, training, unions, credits and special skills from your record, with School credits and professional credits apart. Practice, practice briefs and self-tapes are never credits.",
+  "Once something new is on your record, such as a part played or a skill grown, your résumé reads as behind. Press Update Your Résumé to bring it up to date.",
+  "A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to four pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about $250.00, both estimated.",
+  "A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.",
+  "The Work tab lists work you’ve booked: its dates, its calls on your calendar and its pay. Pay is promised when you accept the work, and paid the Thursday after each week of it with tax withheld. If you’re represented, it goes through your agency, which takes its commission and passes the rest on within three business days. Each payment says what was taken and what reached you, and Money shows it land.",
+  "Your permission to work is read for each date of the work when you book it, and signing with an agency changes none of it. On an F-1 while you’re a student, outside acting work isn’t open to you. On OPT after your degree, each day of work counts as a day worked.",
+  "Your degree makes you a member of Actors’ Equity, and $600.00 of its initiation fee is taken then. A SAG-AFTRA role on a TV show or a theatrical or Low Budget film lets you join SAG-AFTRA. From the 30th day after that work began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA on the Work tab first.",
+  "If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.",
+  "Read “Representation” next. It opens the agent’s panel on the Career screen: how to reach him, and the agreement."
+ ],
+ "more": [
+  "A technique goes on your résumé as a special skill once it reaches 60: accents and dialects, stage combat, singing, dance, improvisation, clowning, voice-over work, classical text work, comic timing, intimacy work and on-camera work. Once it’s mastered, the résumé says so.",
+  "When you graduate, the degree makes you a member of Actors’ Equity, as the School’s Bulletin says, and your profile and résumé show it from that day.",
+  "Your record keeps the last six of each kind of material you make, and every credit for good.",
+  "Commission is taken only on work you contracted while represented: 10% at most, 5% on an Equity contract paying $525.00 a week or less, and on SAG-AFTRA work only what’s paid over scale. A contract made while an agreement ran still carries it after the agreement ends.",
+  "Equity’s initiation fee is $1,800.00, paid within three years, and its basic dues $88.00 each May and November. Joining SAG-AFTRA costs about $3,244.07, read from a search engine’s copy of its pages. Each union takes working dues from union pay."
+ ],
+ "names": [
+  "Career",
+  "Overview",
+  "Portfolio",
+  "Work",
+  "Use This Name",
+  "Book A Headshot Session",
+  "Make Your Résumé and Update Your Résumé",
+  "Cut A Reel",
+  "Join SAG-AFTRA"
+ ],
+ "opens": [
+  "ui.career",
+  "pro.set_name",
+  "pro.headshots",
+  "pro.update_resume",
+  "pro.cut_reel",
+  "pro.join_sag"
+ ]
+}
+{
+ "id": "representation",
+ "title": "Representation",
+ "lead": "The agent, how to reach him, why his office decides as it does, and the agreement.",
+ "body": [
+  "Career’s Representation tab holds the game’s one agent, Jordan Parente, at Stewart Talent in New York. He’s a real person, and everything he says and decides in the game is invented. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.",
+  "His agency doesn’t take unsolicited submissions, and the game keeps to that. His office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.",
+  "Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.",
+  "For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged Strong or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.",
+  "Then press Send Your Materials. His office answers in about two weeks: it asks for more, asks to meet, passes, or doesn’t answer at all, which after six weeks counts as no. Each answer comes as a notice, and History With His Office keeps every step.",
+  "When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it a week, once. A meeting missed closes the approach.",
+  "Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs four at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.",
+  "After a pass, his office looks again only after a year, and after no answer or a declined offer six months, and then only at something new: a new credit, a better reel or a referral.",
+  "If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.",
+  "While it runs, End It By Agreement ends it at once. End It: No Offer In 90 Days and End It: Under Ten Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.",
+  "Read “Finding Work” next. It opens the Opportunities tab: the roles you can be seen for, auditions and offers."
+ ],
+ "more": [
+  "Every time here is the game’s estimate: the two weeks to an answer, the six weeks with none, the three weeks for what his office asks, the meeting seven days or more on at eleven in the morning, the five days to a decision after it, and the bar for a referral.",
+  "The agreement runs a year, and its commission is 10% of gross pay for covered work, 5% on an Equity contract paying $525.00 a week or less, as the unions’ and New York’s rules allow."
+ ],
+ "names": [
+  "Representation",
+  "I’ve Read This",
+  "Check Your Materials",
+  "Ask For A Referral",
+  "Send Your Materials",
+  "Send What His Office Asked For",
+  "Ask To Move",
+  "Show The Reasons",
+  "Accept The Agreement and Decline The Agreement",
+  "End It By Agreement, End It: No Offer In 90 Days and End It: Under Ten Days’ Work"
+ ],
+ "opens": [
+  "pro.agent_notice",
+  "pro.agent_check",
+  "pro.ask_referral",
+  "pro.send_materials",
+  "pro.supply_material",
+  "pro.ask_to_move",
+  "ui.career-reasons",
+  "pro.accept_agreement",
+  "pro.decline_agreement",
+  "pro.end_agreement"
+ ]
+}
+{
+ "id": "finding-work",
+ "title": "Finding Work",
+ "lead": "Roles to be seen for, submissions, auditions, offers and the work itself, with or without an agent.",
+ "body": [
+  "The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for seven days.",
+  "Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.",
+  "To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.",
+  "Two days later the casting office answers with an audition: in person in New York or Providence at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.",
+  "Before it, prepare the sides with Break It Down, Learn The Lines and Rehearse It On Your Feet, the way you prepare a practice brief. For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.",
+  "If an audition clashes with something on your calendar, the notice says so. Press Ask For Another Time at least a day ahead, and casting moves it once, to a time it has that’s clear of your calendar.",
+  "Casting decides from how your audition went, how well the role suits you and how many other actors it saw. Some roles call you back first. A strong audition raises your chance without making it certain, and a role that suits you can go your way before you’re at your best.",
+  "An offer says the pay, the dates and how long it stands, three days. Press Accept The Offer or Decline The Offer, on the tab or under What Needs You on Home. Accepting books the work days on your calendar and promises the pay for each week of it, due the Thursday after.",
+  "Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Miss a shoot day, or a second day of a run, and the production replaces you.",
+  "While you’re at the School, work in term needs its approval. Press Ask The School at least two weeks before the first day, and the dean decides a week later. Short, professional work that takes no School call and two class days at most is approved. Work taken in term without approval brings an academic warning, and a second time dismissal.",
+  "On an F-1 you can’t accept work outside the School while you’re a student, and the School can’t authorize it. Summer and the winter break are yours, unless the School holds you for one of its calls.",
+  "Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns."
+ ],
+ "more": [
+  "The timings of a casting office, the trip from New Haven, the chance casting gives each audition and the field each kind of work draws are estimated. The pay is each union’s published minimum. Off-Broadway’s and a non-union short’s aren’t published, so the game estimates them.",
+  "The School’s rule is its Bulletin’s. Asking 14 days ahead, 10 working days at most, two class days at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.",
+  "An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer."
+ ],
+ "names": [
+  "Opportunities",
+  "Submit Yourself",
+  "Break It Down, Learn The Lines and Rehearse It On Your Feet",
+  "Tape It",
+  "Ask For Another Time",
+  "Accept The Offer and Decline The Offer",
+  "Ask The School"
+ ],
+ "opens": [
+  "pro.submit",
+  "pro.prepare",
+  "pro.tape_audition",
+  "pro.move_audition",
+  "pro.accept_offer",
+  "pro.decline_offer",
+  "pro.request_outside_work"
+ ]
+}
+
+== prerequisite
+career.overview -> documents.work: Permission To Work on the Overview is the same permission Papers shows under Permission To Work.
+career.reel -> craft.brief-tape: A self-tape of a practice brief is the first recorded work a reel can be cut from.
+career.agent -> career.headshots: A check refuses an approach with no headshots, since every submission starts with one.
+career.agent -> career.resume: A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.
+career.pay -> documents.work: Each engagement’s dates are read against your permission to work when you book it.
+career.opportunities -> career.headshots: A submission starts with your headshots: without them it can’t be sent.
+career.offers -> documents.work: An offer can be accepted only where your permission to work covers every one of its days.
+career.outside-work -> career.offers: An offer in term is accepted on the School’s approval, or against it with the warning said first.
+
+== immediate
+career.profile -> career.resume: Your résumé uses your professional name, and one made under another name reads as behind.
+career.headshots -> career.overview: Once you have headshots, What’s Missing stops asking for them, until they’re more than two years old.
+career.headshots -> bank.accounts: The session’s price comes out of your bank as a work cost.
+career.resume -> career.overview: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.
+career.reel -> career.overview: Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it.
+career.commission -> career.pay: Commission comes off your pay as it passes through your agency’s trust account.
+career.outside-work -> school.standing: Work in term without approval moves your standing to academic warning, and a second time to dismissal.
+
+== history
+career.profile -> craft.profile: Your special skills are your techniques on the Player Profile, at the level it shows.
+career.resume -> productions.nights: A School production’s part goes on your résumé once its run has closed.
+career.reasons -> career.agent: Each answer his office gives keeps its reasons here.
+career.agreement -> career.agent: Accepting, declining and the agreement’s end each go in History With His Office.
+career.unions -> career.resume: Your résumé lists your unions once you’re a member.
+career.offers -> career.resume: The part goes on your professional credits, and your résumé reads as behind until it has it.
+
+== scheduled
+career.agent -> career.agent-answers: Sending your materials puts his office’s answer on the way, about two weeks on.
+career.agent-answers -> day.clock: A meeting stops the clock like any commitment, and offers Ask To Move at the stop.
+career.pay -> bank.accounts: Each payment lands in your account on its payday, or from your agency’s trust account a few business days later.
+career.unions -> bank.accounts: Each union bill comes out of your bank on its day.
+career.opportunities -> career.auditions: A submission puts the casting office’s answer on the clock, and the answer sets an audition.
+career.auditions -> day.calendar: An audition in person goes on your calendar with its trip, and stops the clock when it comes.
+career.offers -> day.calendar: Accepting puts each work day on your calendar, and each stops the clock for you.
+
+== evaluation
+career.agent-answers -> career.reasons: A meeting kept or missed, and material sent when asked, are read under Reliability.
+career.reasons -> career.reel: Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.
+career.pay -> taxes.return: Your tax return reads each payment’s wages, withholding, commission, dues and the town the work was done in.
+career.commission -> taxes.return: The year’s commission counts toward the performing artist’s deduction the return works out.
+career.unions -> taxes.return: Dues count toward the cost of your work on the year’s return.
+career.auditions -> career.offers: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.

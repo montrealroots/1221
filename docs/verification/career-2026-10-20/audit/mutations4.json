@@ -1,0 +1,78 @@
+[
+ {
+  "id": "S1",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a better reel alone",
+  "expect": "killed by a better reel as something new",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 17,
+  "summary": "Tests  1 failed | 14 skipped (15)",
+  "failed": [
+   "V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepared tape lets the next approach through 1879ms",
+   "tests/journey-agent.test.ts > V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepared tape lets the next approach through"
+  ]
+ },
+ {
+  "id": "S2",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Equity’s ending with no offer is refused",
+  "expect": "killed by the refusal while employed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 148,
+  "summary": "Tests  1 failed | 12 skipped (13)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished 47ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished"
+  ]
+ },
+ {
+  "id": "S3",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a referral alone is something new",
+  "expect": "killed by the referral refused while held and under way",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 15,
+  "summary": "Tests  1 failed | 14 skipped (15)",
+  "failed": [
+   "V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through 447ms",
+   "tests/journey-agent.test.ts > V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through"
+  ]
+ },
+ {
+  "id": "S4",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Equity’s ending with no offer is refused",
+  "expect": "killed: the check as it was until 9c3e6fa5, a work day’s own hours",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 147,
+  "summary": "Tests  1 failed | 12 skipped (13)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished 68ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished"
+  ]
+ }
+]

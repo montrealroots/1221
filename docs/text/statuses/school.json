@@ -138,10 +138,10 @@
   "reason": "The templates’ titles, notes, steps and reasons: short, specific and true to the step they gate; the judge reads this file, so words only, and these needed none."
  },
  "src/engine/content/coursework.ts#SHOWCASE_SCENE": {
-  "status": "Reviewed And Retained",
-  "hash": "f8e0dfaf6e56",
-  "on": "2026-10-17",
-  "reason": "The templates’ titles, notes, steps and reasons: short, specific and true to the step they gate; the judge reads this file, so words only, and these needed none."
+  "status": "Rewritten And Verified",
+  "hash": "3098fbef83aa",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts plays the showcase's scenes on their cards: the deliverable and the notes say the showcase as the Bulletin does, no longer in front of agents"
  },
  "src/engine/content/coursework.ts#TEMPLATES [alexander-practice]": {
   "status": "Reviewed And Retained",
@@ -625,15 +625,15 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]": {
   "status": "Rewritten And Verified",
-  "hash": "2f2a8828c645",
-  "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "9082202b72c5",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; the Yale Rep row read against coveredPart and tests/understudy-part.test.ts (An Enemy Of The People has no lead for an actress, who covers Petra Stockmann)"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]": {
   "status": "Rewritten And Verified",
-  "hash": "64a38ee1640c",
-  "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "ba4a735dc562",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; How Hard’s understudy sentence read against partSizeOf and tests/understudy-part.test.ts (a covered supporting part judged at the Rep’s supporting difficulty, a lead at a lead’s)"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten And Verified",
@@ -2887,9 +2887,9 @@
  },
  "src/engine/systems/school.ts#cast": {
   "status": "Rewritten And Verified",
-  "hash": "a480de465839",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
+  "hash": "3c348371dcdd",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (the casting notice: “You’ll also understudy Petra Stockmann in Yale Rep’s An Enemy Of The People: … Its leads are written for actors, so the part you cover is a supporting one.”), and tools/scenarios.ts --scenario understudy --seed us-86 played before and after (docs/verification/career-2026-10-20/understudy/sequence-after.txt)"
  },
  "src/engine/systems/school.ts#CEILING": {
   "status": "Reviewed And Retained",
@@ -2926,6 +2926,12 @@
   "hash": "42f99f3e624e",
   "on": "2026-10-17",
   "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
+ },
+ "src/engine/systems/school.ts#coverWhy": {
+  "status": "Rewritten And Verified",
+  "hash": "c8ebeb849db8",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (the casting notice and the opening’s notice each say “Its leads are written for actors, so the part you cover is a supporting one.”), and tools/scenarios.ts --scenario understudy played (docs/verification/career-2026-10-20/understudy/sequence-after.txt)"
  },
  "src/engine/systems/school.ts#drawCohort": {
   "status": "Reviewed And Retained",
@@ -2987,11 +2993,23 @@
   "on": "2026-10-17",
   "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
  },
+ "src/engine/systems/school.ts#nameTheCover": {
+  "status": "Rewritten And Verified",
+  "hash": "3dd736588f6c",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (a save from before opened: “Your Understudy Part: Petra Stockmann”, told once, and its calls renamed), and a save the game before the fix wrote, opened and played on it (docs/verification/career-2026-10-20/understudy/sequence-save-from-before-unjudged.txt)"
+ },
  "src/engine/systems/school.ts#NIGHT_WORD_TITLE": {
   "status": "Reviewed And Retained",
   "hash": "9f650622ac10",
   "on": "2026-10-17",
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+ },
+ "src/engine/systems/school.ts#onCallFor": {
+  "status": "Rewritten And Verified",
+  "hash": "e1b874e74edb",
+  "on": "2026-10-21",
+  "evidence": "tests/understudy-part.test.ts (every night on call on the calendar reads “Yale Rep’s October Production: On Call For Petra Stockmann”), and tools/scenarios.ts --scenario understudy played (the calendar line of docs/verification/career-2026-10-20/understudy/sequence-after.txt)"
  },
  "src/engine/systems/school.ts#partLabel": {
   "status": "Reviewed And Retained",
@@ -3421,9 +3439,9 @@
  },
  "src/ui/components/PlayingChooser.tsx#PlayingChooser": {
   "status": "Rewritten And Verified",
-  "hash": "0364aa45c533",
-  "on": "2026-10-17",
-  "evidence": "tests/defects-g8-12.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "dee61843babd",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's School Coursework tab after New York's showcase days, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the coursework surface): Play It This Way, grayed until a way is picked, said nothing in its title or under it; it gives its reason in both now. Held by tests/pro-app.test.ts"
  },
  "src/ui/components/RehearsalProcess.tsx#DRESS_WORD": {
   "status": "Reviewed And Retained",

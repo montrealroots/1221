@@ -1,0 +1,129 @@
+{
+ "criterion": "H4-R (d): each benefit outside the judged piece an ability’s description claims, by twin lives through the commands, on its own line",
+ "levels": {
+  "low": 20,
+  "high": 80
+ },
+ "lines": [
+  {
+   "ability": "listening",
+   "claim": "an evening rehearsing with a reader goes further",
+   "command": "school.prepare (Scene Study, the reader’s evening)",
+   "low": 0.3003,
+   "high": 0.3597,
+   "read": "the partner part moved",
+   "shows": true
+  },
+  {
+   "ability": "listening",
+   "claim": "a brief rehearsed on its feet against its reader goes further",
+   "command": "brief.prepare rehearse (brief-drama)",
+   "low": 0.5,
+   "high": 0.599,
+   "read": "the rehearsal moved",
+   "shows": true
+  },
+  {
+   "ability": "imagination",
+   "claim": "a step of table work goes further",
+   "command": "school.prepare (Classical Scene, scan)",
+   "low": 0.3504,
+   "high": 0.4197,
+   "read": "the interpretation moved",
+   "shows": true
+  },
+  {
+   "ability": "imagination",
+   "claim": "a brief’s breakdown goes further",
+   "command": "brief.prepare read (brief-drama)",
+   "low": 0.601,
+   "high": 0.719,
+   "read": "the breakdown moved",
+   "shows": true
+  },
+  {
+   "ability": "focus",
+   "claim": "a step getting to know coursework’s material goes further",
+   "command": "school.prepare (Scene Study, read)",
+   "low": 0.5506,
+   "high": 0.6595,
+   "read": "the familiarity moved",
+   "shows": true
+  },
+  {
+   "ability": "memory",
+   "claim": "a step learning a scene’s lines goes further",
+   "command": "school.prepare (Scene Study, learn)",
+   "low": 0.3203,
+   "high": 0.3837,
+   "read": "the lines moved",
+   "shows": true
+  },
+  {
+   "ability": "memory",
+   "claim": "a step learning a brief’s lines goes further",
+   "command": "brief.prepare lines (brief-drama)",
+   "low": 0.601,
+   "high": 0.719,
+   "read": "the lines moved",
+   "shows": true
+  },
+  {
+   "ability": "adaptability",
+   "claim": "a step of revision after a note goes further",
+   "command": "school.prepare (Scene Study, revise)",
+   "low": 0.4505,
+   "high": 0.5396,
+   "read": "the revision moved",
+   "shows": true
+  },
+  {
+   "ability": "composure",
+   "claim": "the stress nerves add before a performance is less",
+   "command": "a performance call, played through the clock",
+   "low": 4.394,
+   "high": 0.794,
+   "read": "stress after the curtain",
+   "shows": true
+  },
+  {
+   "ability": "discipline",
+   "claim": "an hour of practice grows more",
+   "command": "practice.exercise (sense-memory)",
+   "low": 0.2606,
+   "high": 0.2938,
+   "read": "emotional depth gained",
+   "shows": true
+  },
+  {
+   "ability": "stamina",
+   "claim": "a night on stage leaves more energy after it",
+   "command": "a performance call, played through the clock",
+   "low": 94.275,
+   "high": 96.15,
+   "read": "energy after the curtain",
+   "shows": true
+  },
+  {
+   "ability": "memory",
+   "claim": "a step learning a part’s lines goes further",
+   "command": "school.learn_part (the festival)",
+   "low": 0.3003,
+   "high": 0.3597,
+   "read": "the part’s lines moved",
+   "shows": true
+  },
+  {
+   "ability": "adaptability",
+   "claim": "a director’s note on the blocking worked into a part goes further",
+   "command": "school.work_note (the festival)",
+   "low": 0.2276,
+   "high": 0.2725,
+   "read": "the blocking moved",
+   "shows": true
+  }
+ ],
+ "shown": 13,
+ "of": 13,
+ "notShown": []
+}

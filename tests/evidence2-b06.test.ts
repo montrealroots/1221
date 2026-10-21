@@ -445,7 +445,7 @@ describe('documents.permission', () => {
     later.advanceTo(Date.UTC(2029, 5, 3, 16));
     const opt = documentsOf(later.player).find((d) => d.kind === 'permit')!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 5, 3, 15), expiresAt: Date.UTC(2030, 5, 3, 15), idleDays: 0 });
-    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
+    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
     // The pending application held her status at the program's end: no "Your US Status Is Ending".
     expect(Object.values(later.universe.decisions).filter((d) => d.title === 'Your US Status Is Ending')).toEqual([]);
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);

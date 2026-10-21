@@ -1,0 +1,22 @@
+# The pay's vitest runs, each with --maxWorkers=1 --minWorkers=1 (brief 19, 2026-10-21)
+
+## Batch 1: 43 files that graduate a student, pin the OPT notice or the openings list, and the pay's own (on 75b2ce05 and its edits)
+ Test Files  4 failed | 39 passed (43)
+      Tests  5 failed | 770 passed (775)
+5 failed in 4 files: the opening step was renamed from pro.unionsBilled to pro.unions while the batch ran (decisions-arion, genre-mastered, scope-health, propay); all 4 passed in batch 2.
+
+## Batch 2: those 4 and the files reading the residence routes, the calendar's legend, the tutorial, the guide, the core (on e95bdab5's tree)
+ Test Files  14 passed (14)
+      Tests  197 passed (197)
+
+## Batch 3: every other test file importing a module the pay changed, or the engine (334 files, two runs, on 33cfa2ca)
+rest00.out: Test Files  1 failed | 168 passed (169)
+rest00.out:      Tests  1 failed | 1815 passed (1816)
+rest01.out: Test Files  1 failed | 164 passed (165)
+rest01.out:      Tests  1 failed | 1508 passed (1509)
+Failures, both fixed in 50bd7bee and passing since (42 of 42): tests/cohesion.test.ts read a three-part scheduled kind as unscheduled; tests/looks.test.ts found two straight apostrophes in ui/looks/money.tsx's comments.
+tests/liens-and-arrangements.test.ts passes and logs 'f.states is not iterable' from its own fixture's partial figures; nothing of the pay's reaches it.
+
+## The pay's own, last run on 50bd7bee's tree
+ Test Files  4 passed (4)
+      Tests  67 passed (67)

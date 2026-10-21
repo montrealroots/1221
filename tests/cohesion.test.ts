@@ -68,12 +68,14 @@ describe('everything is wired to something', () => {
     // 'life.commitment'`. Reading only for literals called that dead, which
     // is exactly backwards: a kind shared with the interface is the least
     // dead thing in the file.
+    // A kind may have more than two parts (`pro.pay.payday`, from 2026-10-21, brief 19's pay): until then the names were
+    // read with one dot only, and every dot after the first was left unescaped, so a three-part kind read as dead.
     const named = new Map<string, string>();
-    for (const m of source.matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+\.[a-z0-9_]+)'/g)) {
+    for (const m of source.matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+(?:\.[a-z0-9_]+)+)'/g)) {
       named.set(m[2]!, m[1]!);
     }
     const dead = sim.scheduleKinds().filter((kind) => {
-      const escaped = kind.replace('.', '\\.');
+      const escaped = kind.replace(/\./g, '\\.');
       const asLiteral = new RegExp(`kind: '${escaped}'`);
       const constant = named.get(kind);
       const asConstant = constant ? new RegExp(`kind: ${constant}\\b`) : undefined;

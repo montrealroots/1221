@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -27,7 +27,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Life, Health And Time | 70 | 69 |  |  |  |  |  | 1 |
 | Money | 68 | 60 | 8 |  |  |  |  |  |
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
-| School | 79 | 79 |  |  |  |  |  |  |
+| School | 101 | 101 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
@@ -55,7 +55,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 | 4 |  |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 33 |  |  |  |  |  |  |
-| **All** | **676** | **612** | **20** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **698** | **634** | **20** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -344,6 +344,28 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `school.pay_balance` | Pay what’s owed on the Yale account, ask the aid office to review support past six terms, and convert work-study hours to grant aid / Pay F… | Implemented And Verified | verified | tests/evidence-g26-school.test.ts ‘PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel befor… |
 | `school.request_aid_review` | Pay what’s owed on the Yale account, ask the aid office to review support past six terms, and convert work-study hours to grant aid / Ask F… | Implemented And Verified | verified | tests/school-paths.test.ts ‘a medical leave behind it earns the aid office’s exception to tuition’, ‘retakes a first-year fall course...’; tests/defects-g8-2.t… |
 | `school.request_conversion` | Pay what’s owed on the Yale account, ask the aid office to review support past six terms, and convert work-study hours to grant aid / Schoo… | Implemented And Verified | verified | tests/need-paths.test.ts ‘PLAYER JOURNEY: the Saturday called in sick, asked for on the drawn button, is paid at January’s processing, $138.00 into the bank, w… |
+| `school.choose_showcase` | Take part in the School's Actor Showcase in the last term: choose two scenes from the faculty's options, prepare them as the course's cours… | Implemented And Verified | verified | tests/pro-showcase.test.ts ‘refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice...’ (each refu… |
+| `pro.set_name` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/pro-core.test.ts ‘sets the professional name, refuses one that isn’t a name, and goes back to the display name’ (each refusal in its words, the name trim… |
+| `pro.headshots` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/pro-core.test.ts ‘PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance’ (the… |
+| `pro.update_resume` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/pro-core.test.ts ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused wh… |
+| `pro.cut_reel` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepa… |
+| `pro.agent_notice` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/pro-agent.test.ts ‘PLAYER JOURNEY: his panel holds the notice until it’s read, notes it once, and keeps it to read again’ (the check and the send refused… |
+| `pro.agent_check` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (refused with no headshots … |
+| `pro.ask_referral` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it th… |
+| `pro.send_materials` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: after th… |
+| `pro.supply_material` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused f… |
+| `pro.ask_to_move` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: the meet… |
+| `pro.accept_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: the agre… |
+| `pro.decline_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’ (life … |
+| `pro.end_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and … |
+| `pro.submit` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once th… |
+| `pro.prepare` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, again… |
+| `pro.tape_audition` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’ (a non-union s… |
+| `pro.move_audition` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time cle… |
+| `pro.accept_offer` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’ (accepted through the command: the decision resolved, the pay promised defe… |
+| `pro.decline_offer` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked’ (declined through the command on a … |
+| `pro.request_outside_work` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’ (asked through… |
+| `pro.join_sag` | Be paid for professional work: each payment promised when the work is accepted and paid once on its day, through the agency’s client trust … | Implemented And Verified | verified | tests/journey-career.test.ts ‘Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once...’ (life A… |
 
 ## Creation, Profile, Home And The Looks
 

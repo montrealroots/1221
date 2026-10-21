@@ -1,0 +1,3 @@
+served page is this clone's dist/index.html
+assets/index-C42mdylw.js
+8bac3141 Play It This Way, grayed until a way is picked, says why

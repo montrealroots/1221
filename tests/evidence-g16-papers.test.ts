@@ -568,7 +568,7 @@ describe('documents.permission', () => {
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 5, 3, 15), idleDays: 0 });
     // Twelve months from the later of the program's end and the approval: the approval, 3 June 2029, to 3 June 2030.
     expect(opt.expiresAt).toBe(Date.UTC(2030, 5, 3, 15));
-    expect(titled(later, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
+    expect(titled(later, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
     expect(pendingOf(later, 'documents.opt_week').map((i) => i.at)).toEqual([Date.UTC(2029, 5, 10, 15)]);
     // The status’s look moves to the OPT’s expiry. Papers gives the end its days without work make: thirteen weeks
     // counted, 91 days, on 2 September 2029, with no grace after. Until 2026-10-13 it gave the expiry’s sixty days on,
@@ -598,7 +598,7 @@ describe('documents.permission', () => {
     sim.advanceTo(Date.UTC(2029, 3, 16, 16));
     const opt = documentsOf(sim.player).find((d) => d.kind === 'permit')!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 4, 31, 12), expiresAt: Date.UTC(2030, 4, 31, 12) });
-    expect(titled(sim, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from May 31, 2029 to May 31, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
+    expect(titled(sim, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from May 31, 2029 to May 31, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
   }, 60_000);
 
   it('is refused in its words to a citizen, to a student who withdrew, to a life never on an F-1, and once its window has closed', () => {
@@ -911,7 +911,7 @@ describe('benefits.week', () => {
     expect(pendingOf(sim, BENEFIT_WEEK_KIND).map((i) => i.at)).toEqual([Date.UTC(2028, 0, 24, 1)]);
 
     // TEST SETUP: four hours worked on Wednesday evening at front of house, $23 an hour, kept on the calendar as the
-    // School keeps a shift worked (a graduate has no work, so no play puts one here). Connecticut pays the benefit less
+    // School keeps a shift worked (this graduate books no professional work, so no play puts one here). Connecticut pays the benefit less
     // two-thirds of the week’s earnings, to the dollar: $93 − $62 (two-thirds of $92, up) = $31. Until 2026-10-13 this
     // posted $75 of pay to the ledger, which the week read as its earnings, and it paid $43; a week reads the work done
     // in it now (`workDoneIn`), and a payment is no work.

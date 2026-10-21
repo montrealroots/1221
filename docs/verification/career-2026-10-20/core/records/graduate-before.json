@@ -1,0 +1,27 @@
+{
+ "note": "The graduate’s save as a build before 2026-10-20 wrote it: no professional record, and pro.begun not among its openings.",
+ "pro": null,
+ "opened": [
+  "followTheCover",
+  "findTermInterest",
+  "cutIntoUnits",
+  "cardYears",
+  "timeTheCalls",
+  "briefsMastered",
+  "writtenUnplayed"
+ ],
+ "school": {
+  "standing": "graduated",
+  "endedAt": 1788444000000,
+  "credits": [
+   {
+    "production": "Shakespeare Repertory Project I",
+    "role": "Viola",
+    "kind": "shakespeare",
+    "year": 2029,
+    "wentOn": 4,
+    "size": "lead"
+   }
+  ]
+ }
+}

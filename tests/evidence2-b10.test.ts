@@ -886,7 +886,8 @@ describe('c-tutorial', () => {
     // The rail: every destination it offers, open.
     const rail = shell.elements.filter((e) => e.type === 'button' && e.props.className === 'rail-item').map((e) => e.first);
     expect(rail).toEqual(['Home', ...RAIL_DESTINATIONS.flatMap((g) => g.items.map((i) => i.label))]);
-    expect(rail).toEqual(['Home', 'Player Profile', 'School', 'Money', 'Papers']);
+    // Career under Your Work from 2026-10-20 (brief 19), between School and Money; the rail had four destinations until then.
+    expect(rail).toEqual(['Home', 'Player Profile', 'School', 'Career', 'Money', 'Papers']);
     // Time Controls: Play, the clock paused. Its words say what a press does, with no pressed state: until 2026-10-13
     // this held `aria-pressed` true on it, and a screen reader said “Play, pressed” with the clock stopped (WAI-ARIA
     // Authoring Practices, Button pattern: a toggle’s label doesn’t change with its state, and one that changes needs no
@@ -903,7 +904,8 @@ describe('c-tutorial', () => {
     expect(pause.props['aria-pressed']).toBeUndefined();
     // Every screen a destination opens, the calendar too, is open.
     const routes = DESTINATIONS.flatMap((g) => g.items.map((i) => i.route));
-    expect(routes).toHaveLength(5);
+    // Six with the Career's from 2026-10-20 (brief 19); five until then.
+    expect(routes).toHaveLength(6);
     for (const route of routes) expect(locks(screenAt(sim, route)), route).toEqual({ controls: 0, panels: 0, screens: 0 });
   });
 

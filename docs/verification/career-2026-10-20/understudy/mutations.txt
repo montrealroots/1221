@@ -1,0 +1,122 @@
+# Brief 19, D6: the understudy's part, mutation-checked
+
+Each mutation takes one claim out of the code at 908ca333 (one find and replace, in docs/verification/career-2026-10-20/understudy/mutate.py),
+runs tests/understudy-part.test.ts with --maxWorkers=1, records whether it failed and which tests did, and restores the file from git.
+Run on 2026-10-21. A mutation the tests fail is killed; every one was.
+
+## covered-lead-only: KILLED
+claim: an understudy covers the biggest part written for them, not a lead or nothing
+file: src/engine/systems/school.ts
+find:    for (const size of ['lead', 'supporting', 'featured'] as const) {
+replace: for (const size of ['lead'] as const) {
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her; a night on call booked before 2026-09-28, at the curtain itself > costs the evening of the part it covers when sent on; a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it; the part an understudy covers > is the biggest part a Rep play writes for them: a lead where it has one, else a supporting part; every Rep play has one for an actor and an actress
+
+## size-not-read: KILLED
+claim: an understudy's size is the covered part's in its play
+file: src/engine/systems/school.ts
+find:    const part = c.kind === 'understudy' && c.play ? REP_PLAYS.find((p) => p.title === c.play)?.parts.find((p) => p.name === c.role) : undefined;
+replace: const part = undefined as { size: PartSize } | undefined;
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her; a night on call booked before 2026-09-28, at the curtain itself > costs the evening of the part it covers when sent on; a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it; the part an understudy covers > is judged at its size in the play: a covered supporting part as one, a lead and The Seagull’s Nina as leads, and a size kept on the casting first
+
+## night-as-lead: KILLED
+claim: a night is judged at the covered part's size
+file: src/engine/systems/school.ts
+find:    casting, item.at, partSizeOf(casting), rep ? 'rep' : 'school');
+replace: casting, item.at, casting.size ?? 'lead', rep ? 'rep' : 'school');
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her; a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+## forecast-as-lead: KILLED
+claim: A Night Now is forecast at the covered part's size
+file: src/engine/systems/workpieces.ts
+find:    holder, sim.now, partSizeOf(holder), w === 'rep'
+replace: holder, sim.now, holder.size ?? 'lead', w === 'rep'
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her
+
+## spec-as-lead: KILLED
+claim: the part's piece is the covered part's evening
+file: src/engine/systems/workpieces.ts
+find:    spec: () => playPiece(holder, partSizeOf(holder)),
+replace: spec: () => playPiece(holder, holder.size ?? 'lead'),
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her
+
+## hours-as-lead: KILLED
+claim: a night gone on keeps the covered part's hours on stage
+file: src/engine/systems/school.ts
+find:    stageHours(casting, partSizeOf(casting))
+replace: stageHours(casting, casting.size ?? 'lead')
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her
+
+## old-oncall-as-lead: KILLED
+claim: a night on call booked before 2026-09-28 costs the covered part's evening
+file: src/engine/systems/school.ts
+find:    casting, item.at, partSizeOf(casting), 'rep', true)
+replace: casting, item.at, 'lead', 'rep', true)
+failed: a night on call booked before 2026-09-28, at the curtain itself > costs the evening of the part it covers when sent on
+
+## oncall-unnamed: KILLED
+claim: a night on call names the part on the calendar
+file: src/engine/systems/school.ts
+find:    const onCallFor = (role: string): string => (bySize(role) ? 'On Call' : `On Call For ${role}`);
+replace: const onCallFor = (role: string): string => (bySize(role) ? 'On Call' : 'On Call');
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her; a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+## no-why: KILLED
+claim: the casting notice says why the part is a supporting one
+file: src/engine/systems/school.ts
+find:    return size === 'lead' ? '' : ` Its leads
+replace: return size === size ? '' : ` Its leads
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her; a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+## tab-no-size: KILLED
+claim: the Casting tab says an understudy's part's size
+file: src/ui/workspaces/SchoolWorkspace.tsx
+find:    note={(casting.size || casting.kind === 'understudy') && !casting.role.startsWith('A ')
+replace: note={casting.size && !casting.role.startsWith('A ')
+failed: PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed us-86 > is cast as Petra Stockmann’s understudy, prepares the part, is called and goes on as her, and is credited with her
+
+## no-mark: KILLED
+claim: a save from before is marked on opening
+file: src/engine/index.ts
+find:        nameTheCover(sim);
+    opened.push('nameTheCover');
+replace:     opened.push('nameTheCover');
+failed: a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+## mark-ignores-judged: KILLED
+claim: a save whose run was judged keeps the company cover
+file: src/engine/systems/school.ts
+find:    const judged = r.performed > 0 || Object.keys(r.nights ?? {}).length > 0 || (r as Casting & { closed?: Instant }).closed !== undefined;
+replace: const judged = (r as Casting & { closed?: Instant }).closed !== undefined;
+failed: a save from before, with a Rep understudy covering no named part > keeps the company’s cover where a night of the run was already judged, or the run has closed, as its nights were judged
+
+## mark-ignores-closed: KILLED
+claim: a save whose run has closed keeps the company cover
+file: src/engine/systems/school.ts
+find:    const judged = r.performed > 0 || Object.keys(r.nights ?? {}).length > 0 || (r as Casting & { closed?: Instant }).closed !== undefined;
+replace: const judged = r.performed > 0 || Object.keys(r.nights ?? {}).length > 0;
+failed: a save from before, with a Rep understudy covering no named part > keeps the company’s cover where a night of the run was already judged, or the run has closed, as its nights were judged
+
+## mark-no-relabel: KILLED
+claim: a save's calls still to come are named for the part
+file: src/engine/systems/school.ts
+find:    if (item.payload.call === 'oncall') item.label = `${r.production}: ${onCallFor(r.role)}`;
+replace: if (item.payload.call === 'oncall') item.label = String(item.label);
+failed: a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+## mark-untold: KILLED
+claim: the player is told once what the mark assigned
+file: src/engine/systems/school.ts
+find:    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Your Understudy Part: ${part.name}`
+replace: if (person.id === 'nobody') sim.notify({ category: 'school', title: `Your Understudy Part: ${part.name}`
+failed: a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+## mark-uncounted: KILLED
+claim: the mark returns how many it gave a part, and a second opening gives none
+file: src/engine/systems/school.ts
+find:          r.role = part.name;
+      named += 1;
+replace:       r.role = part.name;
+      named += 2;
+failed: a save from before, with a Rep understudy covering no named part > is given the part once on opening where none of the run was judged, told so once, and plays on as it
+
+16 of 16 killed.
