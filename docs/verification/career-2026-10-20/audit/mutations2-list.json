@@ -1,0 +1,227 @@
+[
+ {
+  "id": "Q1",
+  "of": "M14",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    rel.via = { route: 'referral', at: s.now, by: job.by };\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-career-older.test.ts"
+  ],
+  "filter": "Ask For A Referral, from the director",
+  "expect": "killed on the played referral"
+ },
+ {
+  "id": "Q2",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    (rel.referrals ??= []).push({ engagementId, by: job.by, job: job.job, at: s.now, ...(job.band ? { band: job.band } : {}) });\n",
+  "replace": "    (rel.referrals ??= []).push({ engagementId, by: job.by, job: job.job, at: s.now });\n",
+  "tests": [
+   "tests/journey-career-older.test.ts"
+  ],
+  "filter": "Ask For A Referral, from the director",
+  "expect": "killed on the played referral: the band the answer reads"
+ },
+ {
+  "id": "Q3",
+  "row": "pro.send_materials",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    s.schedule({ at, kind: REPLY_KIND, label: 'An Answer', category: 'system', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, approach: n, step: 'first', asked,",
+  "replace": "    if (false) s.schedule({ at, kind: REPLY_KIND, label: 'An Answer', category: 'system', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, approach: n, step: 'first', asked,",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the School’s follow-up passes on",
+  "expect": "killed on the played send: no answer comes"
+ },
+ {
+  "id": "Q4",
+  "of": "M16",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    delete rel.request;\n    setStage(s, rel, 'sent');\n    const zone = officeZone(agent);\n    const n = approachesOf(rel);",
+  "replace": "    delete rel.request;\n    const zone = officeZone(agent);\n    const n = approachesOf(rel);",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "no request to meet from the follow-up",
+  "expect": "killed on the played request for a résumé"
+ },
+ {
+  "id": "Q5",
+  "of": "M17",
+  "row": "pro.ask_to_move",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    s.timeline.reschedule(item!.id, meeting.at);\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the School’s follow-up passes on",
+  "expect": "killed on the played meeting"
+ },
+ {
+  "id": "Q6",
+  "of": "M18",
+  "row": "pro.accept_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    a.signedAt = s.now;\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "through him: his breakdowns",
+  "expect": "killed on the played agreement: nothing through him"
+ },
+ {
+  "id": "Q7",
+  "of": "M19",
+  "row": "pro.decline_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    s.timeline.cancelFor('pro-agreement', a.id, s.now);\n    closeApproach(s, person, rel, 'declined', 'declined');\n    note(s, rel, 'declined'",
+  "replace": "    s.timeline.cancelFor('pro-agreement', a.id, s.now);\n    note(s, rel, 'declined'",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "no request to meet from the follow-up",
+  "expect": "killed on the played offer, declined"
+ },
+ {
+  "id": "Q8",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  a.endedAt = how === 'term' ? a.endsAt! : sim.now;\n",
+  "replace": "  a.endedAt = how === 'term' ? a.endsAt! : a.endsAt!;\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "End It By Agreement ends the agreement",
+  "expect": "killed on the played ending: the agreement holds to its year"
+ },
+ {
+  "id": "Q9",
+  "of": "M21",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "find": "    pro.sag = { ...pro.sag, memberSince: s.now };\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed on the played eligibility"
+ },
+ {
+  "id": "Q10",
+  "of": "P1",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const p = o.prep ?? ZERO;\n",
+  "replace": "  const p = ZERO;\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the same SAG-AFTRA self-tape",
+  "expect": "killed by the twin"
+ },
+ {
+  "id": "Q11",
+  "of": "P2",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const p = e.prep ?? ZERO;\n",
+  "replace": "  const p = ZERO;\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "the same booked network part",
+  "expect": "killed by the twin"
+ },
+ {
+  "id": "Q12",
+  "of": "P3",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "find": "  if (project.union === 'sag-aftra' && pro?.sag?.memberSince !== undefined && pro.sag.memberSince <= at)",
+  "replace": "  if (false)",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed by the played working dues"
+ },
+ {
+  "id": "Q13",
+  "of": "P4",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "find": "    addBill(s, person, duesBill(s, 'sag-aftra', nextBilling(s.now)));\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed by the played base dues"
+ },
+ {
+  "id": "Q14",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/pro.ts",
+  "find": "  if (p.unions.sagMember !== undefined) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');\n",
+  "replace": "  if (false) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');\n",
+  "tests": [
+   "tests/journey-career.test.ts",
+   "tests/pro-core.test.ts",
+   "tests/pro-screen.test.ts",
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts"
+  ],
+  "expect": "survives if no test reads SAG-AFTRA on the résumé"
+ },
+ {
+  "id": "Q15",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  for (const r of rel?.referrals ?? []) keys.push(`referral:${r.engagementId}`);\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts"
+  ],
+  "expect": "survives if no test reads a referral as something new"
+ },
+ {
+  "id": "Q16",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(",
+  "replace": "    if (false && kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads the refusal for a résumé still behind"
+ },
+ {
+  "id": "Q17",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(",
+  "replace": "    if (false && kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads the refusal for headshots older than the request"
+ }
+]

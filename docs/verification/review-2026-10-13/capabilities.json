@@ -3990,7 +3990,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "7bbab80f",
+  "against": "a483247d",
   "by": "a reader who wrote none of it",
   "id": "career-portfolio",
   "claim": "Brief 19’s portfolio: pro.set_name sets the professional name the profile shows and a résumé is made under; pro.headshots, pro.update_resume and pro.cut_reel each take their time and, for headshots and a reel, their money through spend (estimates said), and add a material with where it came from, when and what’s in it. Read by materialsCheck (the Career screen’s What’s Missing, the agent’s check, a submission and the agent’s breakdowns), resumeBehind, reelSources and profileOf.",
@@ -4001,6 +4001,24 @@
    "have": "tests/pro-screen.test.ts renders Overview and Portfolio over saves the commands made: each control grayed with its refusal, each material’s provenance, the résumé line by line, a migrated graduate’s credit and Equity, and the screen Locked until its chapter. No Portfolio button is pressed on the rendered screen, and no test renders a reel cut."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘A1, the School’s side played: the faculty’s two scenes chosen on the first morning...’",
+    "asserts": "Headshots, a résumé and a reel made through the commands once the School posts the filmed monologues, the reel holding them; each material’s date and cost read.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’",
+    "asserts": "His office’s request for an up-to-date résumé, made with Update Your Résumé and sent.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
    {
     "kind": "command",
     "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance’",
@@ -4047,11 +4065,11 @@
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "The filmed monologues and a released credit’s footage are reel sources only by calling reelSources on state set by hand; no test cuts a reel from either.",
-   "An office’s request for new headshots or an up-to-date résumé is never played.",
+   "A released credit’s footage is a reel source only by calling reelSources on state set by hand; no test cuts a reel from it.",
+   "An office’s request for new headshots is never played.",
    "No Portfolio button is pressed on the rendered screen."
   ],
-  "todo": "A journey that cuts a reel from a released credit’s footage, and an office’s request for headshots or a résumé played through.",
+  "todo": "A journey that cuts a reel from a released credit’s footage, and an office’s request for headshots played through.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
@@ -4114,7 +4132,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "7bbab80f",
+  "against": "a483247d",
   "by": "a reader who wrote none of it",
   "id": "school-showcase",
   "claim": "Brief 19’s showcase: DRAM 793b begun with the last term, its calls on the calendar at each year’s dates; school.choose_showcase takes two of the faculty’s options (or the faculty choose); an Incomplete at the fourth week keeps the student out; each day judges each scene into the work record, the journey and the professional record; the course settled after Los Angeles, which the degree reads; the School’s follow-up put on the calendar.",
@@ -4125,6 +4143,24 @@
    "have": "tests/pro-showcase.test.ts renders the Coursework tab (the days, the calls, each option’s notes, Choose These Scenes grayed with its reason, a student kept out) and Terms And Award and the Career’s The Way You’re On with the Bulletin’s sentence; the button isn’t pressed on the rendered screen."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘A1, the School’s side played: the faculty’s two scenes chosen on the first morning...’",
+    "asserts": "The faculty’s two scenes chosen through the command on the last term’s first morning, played in New York and Los Angeles, the degree and Equity at Commencement.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’",
+    "asserts": "The School’s follow-up after the showcase, by the clock, answered by his office.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
    {
     "kind": "command",
     "where": "tests/pro-showcase.test.ts ‘PLAYER JOURNEY: from the last term’s first day to the morning after Commencement...’",
@@ -4219,7 +4255,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "7bbab80f",
+  "against": "a483247d",
   "by": "a reader who wrote none of it",
   "id": "career-representation",
   "claim": "Brief 19’s agent: pro.agent_notice before anything else; pro.agent_check refusing an incomplete approach in materialsCheck’s words; pro.ask_referral from a finished job judged Strong or better; pro.send_materials refused unsolicited in the agency’s published words, too soon or with nothing new, else his office’s answer on the clock; pro.supply_material; pro.ask_to_move, once, also at the meeting’s stop; pro.accept_agreement, pro.decline_agreement, and pro.end_agreement by agreement, Equity’s 90 days or SAG-AFTRA’s 151 and 91. Read by interestOf’s seven factors and the pro.agent and pro.roster draws, by activeAgreement for the work and the pay, and by the Representation tab.",
@@ -4230,6 +4266,51 @@
    "have": "tests/pro-representation-screen.test.ts renders the tab at each stage over saves the commands made: the notice, each control grayed with its refusal, Why It Went This Way, every term with its basis, the meeting and Ask To Move, the endings with their dates, and the controls Locked until the chapter; no button is pressed on the rendered screen, and every stage past the check rests on a finished job written by hand."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’",
+    "asserts": "From the School’s follow-up: checked and sent, the meeting set, moved at its stop and kept, the agreement offered with every term and accepted.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘through him: his breakdowns and his submissions with her portfolio...’",
+    "asserts": "What accepting changes: his breakdowns, his submission, his offer at scale plus ten, the pay through the trust account less commission.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’",
+    "asserts": "A follow-up with no request; sent; a request for a résumé supplied; a meeting kept; the offer declined and held six months.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘End It By Agreement ends the agreement that day, says what it leaves owed, and his breakdowns stop coming’",
+    "asserts": "Ended by agreement through the command; his breakdowns stop.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong...’",
+    "asserts": "A referral asked of a student film the work loop finished; his office’s answer on the clock.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "An older build’s save, played then and opened on this one; from its opening nothing is set by hand."
+   },
    {
     "kind": "command",
     "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’",
@@ -4270,11 +4351,13 @@
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "Every approach in a gate test starts from an introduction written or scheduled by hand; no test goes on to him from the showcase’s own follow-up or a job the work loop finished.",
-   "What accepting changes in later opportunities and pay is checked only on agreements written by hand.",
-   "The offers and covered days the endings read are written by hand; continuing commission is checked on an agreement ended by hand."
+   "pro.ask_referral: caseKeys’ count of a referral as something new after a decision is read by no test (mutation Q15 survived).",
+   "pro.supply_material: the refusals for a résumé still behind and for headshots older than the request are read by no test; a request for headshots is never played.",
+   "pro.end_agreement: continuing commission after an ending is checked only on an agreement ended by hand; the Equity and SAG-AFTRA endings read an offer and covered days written by hand.",
+   "A pass, no answer, a meeting missed, an offer let lapse and the term’s end are played only after an introduction written by hand.",
+   "No button is pressed on the rendered screen."
   ],
-  "todo": "One journey from the showcase’s follow-up or a finished open role, through his office to an agreement accepted by the command, then a role posted through him and its pay taken with commission (brief 19’s V1).",
+  "todo": "A played approach that ends in a pass and comes again on a referral; a request for headshots; a contract made under the agreement and paid after the agreement is ended through the command.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
@@ -4355,7 +4438,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "7bbab80f",
+  "against": "a483247d",
   "by": "a reader who wrote none of it",
   "id": "career-pay",
   "claim": "Brief 19’s pay: each promised payment put on the clock at acceptance (schedulePay) and paid once on its day, into the agency’s client trust account and on three business days later less commission where owed, or straight to the player; commission only when owed (Equity’s tiers, SAG-AFTRA over scale, New York’s 10%, continuing, Equity’s tail); wages through sim.post and recordWages with the withholding and the work’s town; permission to work read per date; OPT’s days worked; Equity billed at the degree; SAG-AFTRA eligibility, membership from the 30th day, and pro.join_sag.",
@@ -4366,6 +4449,24 @@
    "have": "tests/propay-screen.test.ts renders the Work tab (promised, in trust, received with the commission on its own line, still owed after an agreement ended, the unions with Join SAG-AFTRA grayed and why) and Papers’ permission over an OPT holder; each on engagements written by hand. No test renders the Work tab after joining SAG-AFTRA."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘through him: his breakdowns and his submissions with her portfolio...’",
+    "asserts": "A network part booked through an agreement accepted through the command, paid into the trust account and on three business days later less $280.40, only what’s over scale, with SAG-AFTRA’s working dues.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once...’",
+    "asserts": "Eligible on that part’s first day; joined through the command, the fee once; working dues from that job’s pay; base dues taken at the November billing.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
    {
     "kind": "command",
     "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’",
@@ -4405,11 +4506,11 @@
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "pro.join_sag’s eligibility comes only from an engagement written by hand: SAG-AFTRA’s qualifying work is agent-only, and no test plays representation into it.",
-   "A member’s SAG-AFTRA working dues and base dues are read by no test (mutations P3 and P4 survived).",
-   "Most of the pay’s rules are checked on engagements written by hand with schedulePay called by the test; the work loop’s journeys play the unsigned and the represented pay through acceptance, the represented one on an agreement written by hand."
+   "pro.join_sag: the résumé’s SAG-AFTRA line for a member is read by no test (mutation Q14 survived); the 30th day’s refusal is lifted only by calling sagWorkRefusal after the command.",
+   "Most of the pay’s rules are checked on engagements written by hand with schedulePay called by the test; a played life covers the unsigned pay, the represented pay over scale and the working dues.",
+   "No test renders the Work tab after joining SAG-AFTRA."
   ],
-  "todo": "A represented actor’s SAG-AFTRA booking reached through his office, played to eligibility, joining and a payday with working dues.",
+  "todo": "The résumé read after joining; a contract made under an agreement and paid after it ends.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
@@ -4464,7 +4565,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "7bbab80f",
+  "against": "a483247d",
   "by": "a reader who wrote none of it",
   "id": "career-work",
   "claim": "Brief 19’s work loop: roles posted each Monday; pro.submit sending the portfolio; pro.prepare on the sides or the part; pro.tape_audition and auditions in person judged; pro.move_audition once; casting reading the band, the fit and the field; pro.accept_offer booking the work days and the promised pay, refused for permission to work per date; pro.decline_offer; pro.request_outside_work decided by the dean; unapproved work in term bringing the warning and dismissal.",
@@ -4475,6 +4576,33 @@
    "have": "tests/pro-opportunities-screen.test.ts renders the tab over saves the clock and commands made: each control grayed with its refusal, the School’s conditions, an F-1 student’s refusal at acceptance, booked work with its pay promised, and the controls Locked until Finding Work; no button is pressed on the rendered screen."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, against taped cold...’",
+    "asserts": "The same self-tape, its sides prepared through the command against taped cold: higher and a band higher.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand. The twins open the same save."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘the same booked network part: its preparation done to ready against not at all...’",
+    "asserts": "The same booked part, prepared against not at all: higher and a band higher on each shoot day.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand. The twins open the same save."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘through him: his breakdowns and his submissions with her portfolio...’",
+    "asserts": "His breakdowns, his submission with her portfolio and his offer at scale plus ten, on an agreement accepted through the command.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The life to its last term’s first morning is TEST SETUP (the body kept and the coursework prepared each midnight); from then on nothing is set by hand."
+   },
    {
     "kind": "command",
     "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’",
@@ -4509,13 +4637,13 @@
     "independent": true
    }
   ],
-  "verdict": "partial",
-  "partialClass": "missing-evidence",
+  "verdict": "verified",
+  "partialClass": "none",
   "gaps": [
-   "pro.prepare: no test compares a prepared audition or work day with an unprepared one; a work day ignoring the part’s preparation survived every test (P2).",
-   "The agent’s part of the loop is played only on an agreement written by hand."
+   "His holding a submission for missing materials is played only on an agreement written by hand.",
+   "No button is pressed on the rendered screen.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
   ],
-  "todo": "A twin journey preparing a booked part fully against not at all, read in its work days’ bands.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
