@@ -18,7 +18,8 @@ import { CHAPTER_FOR } from '../tutorial';
 import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
 import { HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
-import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND } from '../../systems/proagent';
+import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, tripWords } from '../../systems/proagent';
+import { YALE_DRAMA } from '../school';
 import { AGENTS, agencyOf } from '../agents';
 import { AGREEMENT } from '../careerwork';
 import { BAND_LABEL } from '../../systems/coursework';
@@ -41,6 +42,9 @@ const AGENCY = agencyOf(AGENT);
 const REP_CHAPTER = CHAPTER_FOR['pro.agent_notice']!.title;
 const weeks = (days: number): string => `${word(days / 7)} ${days === 7 ? 'week' : 'weeks'}`;
 const BAR = BAND_LABEL[REFERRAL_BAND];
+/** The agreement's two ending buttons, as the Representation tab names them. */
+const NO_OFFER = `End It: No Offer In ${AGREEMENT.noOfferDays} Days`;
+const TOO_LITTLE = `End It: Under ${TEN.charAt(0).toUpperCase()}${TEN.slice(1)} Days’ Work`;
 
 export const CAREER_GUIDE: readonly GuideEntry[] = [
   {
@@ -288,11 +292,11 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     reads: [
       { label: 'Your Materials For Him', value: 'Your headshots, résumé and reel, checked as a submission would be' },
       { label: 'A Referral', value: `A finished job’s work, judged ${BAR} or better`, estimate: true },
-      { label: 'An Answer', value: `Usually within ${weeks(AGENT_TIMES.replyDays)}; no answer in ${word(AGENT_TIMES.silenceDays / 7)} weeks counts as no`, estimate: true },
+      { label: 'An Answer', value: `Usually within ${TIME_WORDS.reply}; no answer in ${TIME_WORDS.silence} counts as no`, estimate: true },
     ],
     now: ['Sending moves Where You Stand With Him to Materials Sent, and his office’s answer is on the way.'],
     later: [
-      `His office answers in about ${weeks(AGENT_TIMES.replyDays)}: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after ${word(AGENT_TIMES.silenceDays / 7)} weeks that counts as no.`,
+      `His office answers in about ${TIME_WORDS.reply}: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after ${TIME_WORDS.silence} that counts as no.`,
       `After a pass, his office looks again only after ${COOLDOWN_WORDS.pass}; after no answer or a declined offer, ${COOLDOWN_WORDS.silence}. Then it looks only at something new: a new credit, a better reel or a referral.`,
     ],
     interpret: [
@@ -311,12 +315,12 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     connections: [
       { to: 'career.headshots', kind: 'prerequisite', why: 'A check refuses an approach with no headshots, since every submission starts with one.' },
       { to: 'career.resume', kind: 'prerequisite', why: 'A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.' },
-      { to: 'career.agent-answers', kind: 'scheduled', why: 'Sending your materials puts his office’s answer on the way, about two weeks on.' },
+      { to: 'career.agent-answers', kind: 'scheduled', why: `Sending your materials puts his office’s answer on the way, about ${TIME_WORDS.reply} on.` },
     ],
     example: {
       setup: `A graduate with headshots and a résumé, and a finished job judged ${BAR}.`,
       steps: ['Press I’ve Read This, then Check Your Materials.', 'Press Ask For A Referral beside the job.', 'Press Send Your Materials.'],
-      result: `The job’s casting office refers you, your materials go to his office, and its answer comes about ${weeks(AGENT_TIMES.replyDays)} later.`,
+      result: `The job’s casting office refers you, your materials go to his office, and its answer comes about ${TIME_WORDS.reply} later.`,
     },
   },
   {
@@ -328,19 +332,19 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['What happens after I send my materials?', 'Can I move the meeting?', 'What if I miss the meeting?'],
     where: on('representation', 'Career, Representation, The Meeting'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `His office answers an approach in one of four ways: it asks for more, asks to meet, passes, or doesn’t answer. Each answer comes as a notice, and History With His Office keeps every step.\n\nA meeting is on your calendar at eleven, at the agency’s ${AGENCY.office.city} office or by video, and the clock stops at it like any commitment. You can move it once, a week on.`,
+    short: `His office answers an approach in one of four ways: it asks for more, asks to meet, passes, or doesn’t answer. Each answer comes as a notice, and History With His Office keeps every step.\n\nA meeting is on your calendar at ${clockWords(AGENT_TIMES.meetingHour)}, at the agency’s ${AGENCY.office.city} office or by video, and the clock stops at it like any commitment. You can move it once, ${TIME_WORDS.move} on.`,
     steps: [
       'When his office asks for more, make what it asked for on the Portfolio tab, then press Send What His Office Asked For.',
       'When it asks to meet, be there: press Go when the clock stops at it.',
       'If you can’t make it, press Ask To Move on the Representation tab, or at the stop.',
     ],
     needs: ['For a request, what it asked for made by its date.', 'For a move, a meeting not moved before, and not yet started.'],
-    costs: [{ label: 'Time', value: `The meeting’s hour, and the trip: two hours from New Haven`, estimate: true }, { label: 'Money', value: 'None' }],
+    costs: [{ label: 'Time', value: `The meeting’s hour, and the trip: ${tripWords(TRAVEL_MINUTES[YALE_DRAMA.cityId]!)} from New Haven`, estimate: true }, { label: 'Money', value: 'None' }],
     reads: [
-      { label: 'A Request', value: `What’s missing: a reel, newer headshots or a résumé brought up to date, due in ${weeks(AGENT_TIMES.requestDays)}`, estimate: true },
-      { label: 'A Move', value: `Once, ${weeks(AGENT_TIMES.moveDays)} on`, estimate: true },
+      { label: 'A Request', value: `What’s missing: a reel, newer headshots or a résumé brought up to date, due in ${TIME_WORDS.request}`, estimate: true },
+      { label: 'A Move', value: `Once, ${TIME_WORDS.move} on`, estimate: true },
     ],
-    now: ['What you send goes to his office, and its answer comes about a week later.', 'A moved meeting is on your calendar at its new time.'],
+    now: [`What you send goes to his office, and its answer comes about ${TIME_WORDS.afterSupply} later.`, 'A moved meeting is on your calendar at its new time.'],
     later: [`After a meeting you keep, his office tells you its decision ${word(AGENT_TIMES.decisionDays)} days later: an offer or a pass.`, 'A meeting you miss closes the approach, since a meeting comes before an offer in the game.'],
     interpret: ['Material sent when asked, and meetings kept, count for you under Reliability; a missed one counts against you.'],
     unavailable: ['His office hasn’t asked you for anything.', 'You haven’t cut a reel yet.', 'In the game his office moves a meeting once.'],
@@ -354,7 +358,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     example: {
       setup: 'His office asked for a reel, and you have a self-tape to cut one from.',
       steps: ['Cut a reel on the Portfolio tab.', 'Press Send What His Office Asked For.'],
-      result: 'The reel goes to his office, and its answer comes about a week later, as a notice.',
+      result: `The reel goes to his office, and its answer comes about ${TIME_WORDS.afterSupply} later, as a notice.`,
     },
   },
   {
@@ -405,22 +409,22 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     steps: [
       'Read every term under The Agreement.',
       'Press Accept The Agreement, or Decline The Agreement.',
-      'While it runs, press End It By Agreement, End It: No Offer In 90 Days or End It: Under Ten Days’ Work. A grayed one says when it can.',
+      `While it runs, press End It By Agreement, ${NO_OFFER} or ${TOO_LITTLE}. A grayed one says when it can.`,
     ],
     needs: [
       'For Accept or Decline, an offer still standing.',
-      `For No Offer In 90 Days, ${AGREEMENT.noOfferDays} days with no real offer of covered work through him, and not while you’re working.`,
-      `For Under Ten Days’ Work, ${AGREEMENT.sag.waitDays} days from signing, and fewer than ${AGREEMENT.sag.fewerThanDays} days of covered work in the last ${AGREEMENT.sag.windowDays}.`,
+      `For ${NO_OFFER}, ${AGREEMENT.noOfferDays} days with no real offer of covered work through him, and not while you’re working.`,
+      `For ${TOO_LITTLE}, ${AGREEMENT.sag.waitDays} days from signing, and fewer than ${TEN} days of covered work in the last ${AGREEMENT.sag.windowDays}.`,
     ],
-    costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: `Commission on covered work: ${Math.round(AGREEMENT.commission * 100)}% of gross pay, or 5% on an Equity contract paying $525 a week or less` }],
+    costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: `Commission on covered work: ${Math.round(AGREEMENT.commission * 100)}% of gross pay, or ${Math.round(AGREEMENT.equityLowTier.rate * 100)}% on an Equity contract paying ${usd(AGREEMENT.equityLowTier.weeklyAtOrBelow)} a week or less` }],
     reads: [
       { label: 'How Long', value: 'One year from signing', estimate: true },
-      { label: 'Ending It', value: 'Equity’s 90 days and SAG-AFTRA’s 151 and 91 days, from their published rules' },
+      { label: 'Ending It', value: `Equity’s ${AGREEMENT.noOfferDays} days and SAG-AFTRA’s ${AGREEMENT.sag.waitDays} and ${AGREEMENT.sag.windowDays} days, from their published rules` },
     ],
     now: ['Accepting makes him your agent from today. Declining closes the approach.'],
-    later: ['An offer you don’t answer lapses after its fourteen days.', 'When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.'],
+    later: [`An offer you don’t answer lapses after its ${weeks(AGREEMENT.offerStandsDays)}.`, 'When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.'],
     interpret: ['A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: his own agreement isn’t published.'],
-    unavailable: ['He hasn’t offered you an agreement.', 'You’re not represented by him.', 'Equity’s rule lets you end it once 90 days go by with no real offer of covered work through him.'],
+    unavailable: ['He hasn’t offered you an agreement.', 'You’re not represented by him.', `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him.`],
     mistakes: ['Ending it while a contract made in the term is still to be paid, and expecting no commission. It stays owed.'],
     next: ['Keep your availability and your materials current: covered work comes through him.'],
     related: ['career.agent', 'career.reasons', 'documents.work'],

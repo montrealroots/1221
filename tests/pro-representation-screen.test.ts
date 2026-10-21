@@ -125,7 +125,7 @@ describe('the Representation tab', () => {
     expect(after.html).not.toContain('role="note"');
     expect(after.html).toMatch(/<details class="small"><summary>Read The Notice Again<\/summary><p[^>]*>Jordan Parente is a real agent/);
     expect(after.shown).toContain('Fictional: his words and decisions here are invented.');
-    expect(after.shown).toContain('Where You Stand With Him Read About');
+    expect(after.shown).toContain('Where You Stand With Him Notice Read');
     // No contact detail of his or the agency's anywhere on the tab.
     expect(after.html).not.toMatch(/@|https?:\/\/|www\.|\(\d{3}\)|\d{3}-\d{4}/);
   });

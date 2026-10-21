@@ -1,0 +1,289 @@
+[
+ {
+  "surface": "Career, Representation: his panel, the notice where he first appears, the fictional line and where you stand",
+  "where": "Career, under Your Work, the Representation tab, at the top",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#AgentPanel",
+   "src/engine/systems/proagent.ts#STAGE_LABEL",
+   "src/engine/systems/proagent.ts#nextStep",
+   "src/engine/systems/proagent.ts#noticeRefusal",
+   "src/engine/systems/proagent.ts#mustRead",
+   "src/engine/systems/proagent.ts#officeOf"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "returning",
+   "locked",
+   "explanation",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new to docs/STYLE.md: the agent’s published facts in plain lines, the agency’s policy quoted from its data and named as its page’s words, the fictional line at the head always, the notice standing above everything until I’ve Read This and then behind Read The Notice Again, and What’s Next in the screen’s labels for every stage.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: G1: where he first appears, the notice stands above all else with the fictional line, and once read it stays one press away'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-agent.test.ts: 'PLAYER JOURNEY: his panel holds the notice until it’s read, notes it once, and keeps it to read again'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: How To Reach Him, the people you’ve worked with and Ask For A Referral",
+  "where": "Career, the Representation tab, How To Reach Him",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#ReachPanel",
+   "src/engine/systems/proagent.ts#referrersOf",
+   "src/engine/systems/proagent.ts#referralRefusal",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.ask_referral>"
+  ],
+  "states": [
+   "ordinary",
+   "empty",
+   "unavailable",
+   "success",
+   "confirmation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: the two routes the agency’s policy allows, each finished job with its referrer and judged band, a grayed Ask For A Referral with its reason under it, the referral’s notice from the person who made it, and the bar said as the game’s.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-agent.test.ts: 'offers a referral only from a finished job judged well enough, saying why for each one it can’t'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them, then the agency’s own words for an unsolicited send'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: Your Materials For Him, Check Your Materials, Send Your Materials and Send What His Office Asked For",
+  "where": "Career, the Representation tab, Your Materials For Him",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#MaterialsPanel",
+   "src/engine/systems/proagent.ts#checkRefusal",
+   "src/engine/systems/proagent.ts#sendRefusal",
+   "src/engine/systems/proagent.ts#supplyRefusal",
+   "src/engine/systems/proagent.ts#underWay",
+   "src/engine/systems/proagent.ts#tooSoon",
+   "src/engine/systems/proagent.ts#nothingNew",
+   "src/engine/systems/proagent.ts#KIND_WORDS",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.agent_check>",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.send_materials>",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.supply_material>"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "setback",
+   "partial",
+   "repeated",
+   "success",
+   "confirmation",
+   "overdue"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: the materials check in its practical words with each next step, the unsolicited send refused in the agency’s own words, the cooling-off time with its date, nothing new said with what would be new, what his office asked for and by when, and the assumed times in Sources And Estimates.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: The Meeting and Ask To Move, at the panel and at the clock’s stop",
+  "where": "Career, the Representation tab, The Meeting; the stop when the clock reaches the meeting",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#MeetingPanel",
+   "src/engine/systems/proagent.ts#moveRefusal",
+   "src/engine/systems/proagent.ts#scheduleMeeting",
+   "src/engine/systems/proagent.ts#tripWords",
+   "src/engine/systems/proagent.ts#top",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.ask_to_move>"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "warning",
+   "notification"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: when and where the meeting is, the trip said as the game’s estimate, Ask To Move once with its reason when used, the stop’s words for what Ask To Move does to the jump, and the calendar’s label.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: Why It Went This Way, the seven factors against the game’s bar",
+  "where": "Career, the Representation tab, Why It Went This Way, Show The Reasons",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#WhyPanel",
+   "src/engine/systems/proagent.ts#interestOf",
+   "src/engine/systems/proagent.ts#LEVEL_LABEL",
+   "src/engine/systems/proagent.ts#FACTOR_LABEL",
+   "src/engine/systems/proagent.ts#workSeen",
+   "src/engine/systems/proagent.ts#BILLING_WORDS",
+   "src/engine/systems/proagent.ts#openingWords"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "history",
+   "assembled",
+   "forecast"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: each factor with its level and a sentence from the record, the bar and the chances said as the game’s and never his, the roster as the game’s assumption, the last decision kept as it was beside where things stand now, and counts under ten in words.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-agent.test.ts: 'works out each factor apart, with its level and its words, and keeps the last decision’s reasons for the drill-down'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: The Agreement, every term with its basis, Accept, Decline and the three ways to end it",
+  "where": "Career, the Representation tab, The Agreement",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#AgreementPanel",
+   "src/engine/systems/proagent.ts#answerRefusal",
+   "src/engine/systems/proagent.ts#endRefusal",
+   "src/engine/systems/proagent.ts#stillOwed",
+   "src/engine/systems/proagent.ts#ENDED_WORDS",
+   "src/engine/systems/proagent.ts#offerAgreement",
+   "src/engine/systems/proagent.ts#endAgreement",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.decline_agreement>",
+   "src/engine/systems/proagent.ts#registerProAgent"
+  ],
+  "states": [
+   "details",
+   "confirmation",
+   "unavailable",
+   "success",
+   "notification",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: History With His Office",
+  "where": "Career, the Representation tab, History With His Office",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#HistoryPanel",
+   "src/engine/systems/proagent.ts#registerProAgent <pro.agent_notice>"
+  ],
+  "states": [
+   "history",
+   "returning",
+   "ordinary"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: each step a dated sentence, newest first, in the same words the notices use, and kept once through a reload or a jump.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'GUARD: replaying the same days across a reload at each step and a long jump notes each event once, with the same ids'"
+   }
+  ]
+ },
+ {
+  "surface": "Notices: his office’s answers, the School’s follow-up after the showcase, and the agreement’s end",
+  "where": "Home’s notices, each sending the player to the Career screen’s Representation tab",
+  "sources": [
+   "src/engine/systems/proagent.ts#answer",
+   "src/engine/systems/proagent.ts#followUp",
+   "src/engine/systems/proagent.ts#scheduleShowcaseFollowUp",
+   "src/engine/systems/proagent.ts#COOLDOWN_WORDS",
+   "src/engine/systems/proagent.ts#weeksWords",
+   "src/engine/systems/proagent.ts#agentIn",
+   "src/engine/systems/proagent.ts#officeZone"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "failure",
+   "warning",
+   "overdue"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: nothing on this surface said anything before.",
+  "changes": "Written new: what happened first, then the date and what it means, then the next step in the screen’s labels; each of his ends on the fictional line; the follow-up comes from the School and says the game doesn’t say he was there; the assumed times said as the game’s.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: no answer: waiting once the usual two weeks go by, and a no once six weeks have, said then and held six months'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-agent.test.ts: 'PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting'"
+   }
+  ]
+ },
+ {
+  "surface": "The guide: “Representation”",
+  "where": "The guide, the chapter after Your Career, read in order on a new life or opened from Guide at any time",
+  "sources": [
+   "src/engine/content/tutorial.ts#CHAPTERS [representation]"
+  ],
+  "states": [
+   "first use",
+   "explanation",
+   "locked",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19’s agent: the chapter that opens the Representation tab’s controls.",
+  "changes": "Written new in the guide’s order: where the tab is, the notice first, the routes the policy allows, the check, the send and his office’s answers, Why It Went This Way, the cooling-off times, the agreement and its ends, and the next chapter; The Details for the estimated times and the commission, each figure from its rule.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/tutorial.test.ts: 'is the table the coverage matrix prints, row for row'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: in a guided life, the agent’s controls stay Locked until “Representation” is read, and open with it'"
+   }
+  ]
+ }
+]

@@ -561,7 +561,7 @@ const BANDS_IN_ORDER = ['unready', 'working', 'strong', 'exceptional'] as const;
 
 defineDecider<{ sim: Simulation; band: number; room: number; atBar: number; approach: number }, string>({
   id: 'pro.agent',
-  decides: 'Whether an agent’s office takes an approach further and, after a meeting, offers an agreement: a meeting or a request, a pass or no answer, then an offer or a pass, from the factors at the bar and a draw against the year’s other actors whose chance rises with the work’s band and the room on the list.',
+  decides: 'An agent’s office’s answer to an approach, a meeting or a request, a pass or no answer, and after a meeting an offer or a pass: from the factors at the bar and a draw against the year’s other actors whose chance rises with the work’s band and the room on the list.',
   drawnIn: 'src/engine/systems/proagent.ts',
   reads: {
     // The best band of the work his office has to go on.

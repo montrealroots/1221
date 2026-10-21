@@ -50,7 +50,7 @@ import { EVALUATION } from './tasks';
 import { ENROLLMENT, PUBLIC_COVER, RETURN } from './safetynet';
 import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
 import { AGENTS, agencyOf } from './agents';
-import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND } from '../systems/proagent';
+import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND, TEN as PRO_TEN } from '../systems/proagent';
 import { AGREEMENT as PRO_AGREEMENT } from './careerwork';
 import { BAND_LABEL } from '../systems/coursework';
 import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
@@ -475,14 +475,14 @@ export const CHAPTERS: readonly Chapter[] = [
       `Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
       `After a pass, his office looks again only after ${PRO_HOLDS.pass}, and after no answer or a declined offer ${PRO_HOLDS.silence}, and then only at something new: a new credit, a better reel or a referral.`,
       'If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.',
-      'While it runs, End It By Agreement ends it at once. End It: No Offer In 90 Days and End It: Under Ten Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.',
+      `While it runs, End It By Agreement ends it at once. End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.`,
       'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
     ],
     more: [
       `Every time here is the game’s estimate: the ${counted(PRO_TIMES.replyDays / 7, 'week')} to an answer, the ${counted(PRO_TIMES.silenceDays / 7, 'week')} with none, the ${counted(PRO_TIMES.requestDays / 7, 'week')} for what his office asks, the meeting ${counted(PRO_TIMES.meetingAfterDays, 'day')} or more on at ${word(PRO_TIMES.meetingHour)} in the morning, the ${counted(PRO_TIMES.decisionDays, 'day')} to a decision after it, and the bar for a referral.`,
       `The agreement runs ${PRO_AGREEMENT.termDays === 365 ? 'a year' : plural(PRO_AGREEMENT.termDays, 'day')}, and its commission is ${pct(PRO_AGREEMENT.commission)} of gross pay for covered work, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, as the unions’ and New York’s rules allow.`,
     ],
-    names: ['Representation', 'I’ve Read This', 'Check Your Materials', 'Ask For A Referral', 'Send Your Materials', 'Send What His Office Asked For', 'Ask To Move', 'Show The Reasons', 'Accept The Agreement and Decline The Agreement', 'End It By Agreement, End It: No Offer In 90 Days and End It: Under Ten Days’ Work'],
+    names: ['Representation', 'I’ve Read This', 'Check Your Materials', 'Ask For A Referral', 'Send Your Materials', 'Send What His Office Asked For', 'Ask To Move', 'Show The Reasons', 'Accept The Agreement and Decline The Agreement', `End It By Agreement, End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work`],
     opens: ['pro.agent_notice', 'pro.agent_check', 'pro.ask_referral', 'pro.send_materials', 'pro.supply_material', 'pro.ask_to_move', 'ui.career-reasons', 'pro.accept_agreement', 'pro.decline_agreement', 'pro.end_agreement'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,

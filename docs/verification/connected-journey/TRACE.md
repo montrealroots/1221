@@ -1,13 +1,13 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 32 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 36 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
 were written, and the career's by the tests that drive each of its commands.
 
 **Unconsumed** (a row nothing reads): none.
-**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`.
+**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`.
 **Untested** (a command no test drives): none.
 
 ## Getting Started
@@ -307,7 +307,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - In class, on a day with nothing booked between you, they may ask (on 40% of such days) for 7 p.m. on one of the next three evenings they’re free. If you don’t answer, it lapses, and their trust falls 2.
   - When the piece is shown, a scene together at Strong or better brings you 1 closer, and a slip of theirs you covered earns 2 of their trust.
   - If you’re not there for the showing and have no excuse, their trust and the bond fall as for a missed rehearsal.
-- **Tested by:** `school.ask_partner`: `tests/attributes-phase-2b.test.ts`, `tests/commands-kept.test.ts`, `tests/coursework-defects.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/partners.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`; `school.answer_partner`: `tests/evidence-g24-school.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/language-frame-ui.test.ts`, `tests/partners.test.ts`, `tests/school-journey-gaps.test.ts`; `school.cancel_rehearsal`: `tests/commands-kept.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/guide-examples-coursework.test.ts`
+- **Tested by:** `school.ask_partner`: `tests/attributes-phase-2b.test.ts`, `tests/commands-kept.test.ts`, `tests/coursework-defects.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/partners.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`; `school.answer_partner`: `tests/evidence-g24-school.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/language-frame-ui.test.ts`, `tests/partners.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/time-stops.test.ts`; `school.cancel_rehearsal`: `tests/commands-kept.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/time-stops.test.ts`
 
 ### Your Class (`coursework.class`)
 
@@ -808,7 +808,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - The next take uses the reading, and the way as far as you’ve rehearsed it by then.
   - Work It Through can play one beat its own way, on an axis the whole leaves open.
-- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/pro-core.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### Who Reads With You (`craft.brief-reader`)
 
@@ -878,7 +878,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - A callback stays until a take plays it the way its note asks; that take ends the round, and only a take that isn’t a callback earns the next.
   - What held the take back is counted by Your Work So Far; What To Work On Next forecasts every ability and technique the take called on, so what held it back most and what pays most to train can be two things, and the pane says which. The next suggestions in Where It Would Show Next follow from what it names.
-- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/pro-core.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### A Piece Of Work, Explained (`craft.work`)
 
@@ -1020,7 +1020,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts`
+- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1042,7 +1042,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1059,6 +1059,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The clock moves on two hours, the edit comes out of your bank, and the reel shows what’s on it, a line a piece.
 - **Consumer (what reads it):**
   - The Career Screen, immediate: Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it.
+  - Why It Went This Way reads it, evaluation: Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.
 - **Feedback (how to read what comes back):**
   - A reel of self-tapes only says so: filmed School work or screen work shows more.
   - A night on stage and a class piece aren’t recorded, so they never appear here.
@@ -1066,4 +1067,103 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - New recorded work after it shows under What’s Missing as worth adding.
-- **Tested by:** `pro.cut_reel`: `tests/pro-core.test.ts`
+- **Tested by:** `pro.cut_reel`: `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
+
+### The Agent And How To Reach Him (`career.agent`)
+
+- **Action:** `pro.agent_notice`, `pro.agent_check`, `pro.ask_referral`, `pro.send_materials`, at Career, Representation (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
+- **Preconditions:**
+  - The notice read.
+  - Headshots and a résumé: a check refuses without them.
+  - For a referral, a finished professional job whose work was judged Strong or better, once for each job.
+  - For a send, an introduction: the School’s follow-up or a referral.
+  - Headshots first: A check refuses an approach with no headshots, since every submission starts with one.
+  - Your Résumé first: A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.
+- **Costs:**
+  - Time: None
+  - Money: None
+- **State (what changes at once):**
+  - Sending moves Where You Stand With Him to Materials Sent, and his office’s answer is on the way.
+- **Consumer (what reads it):**
+  - His Office’s Answers And The Meeting, scheduled: Sending your materials puts his office’s answer on the way, about two weeks on.
+  - Why It Went This Way reads it, history: Each answer his office gives keeps its reasons here.
+  - The Agreement reads it, history: Accepting, declining and the agreement’s end each go in History With His Office.
+- **Feedback (how to read what comes back):**
+  - Where You Stand With Him names the step you’re at, and What’s Next says what to do about it.
+  - A referral comes from the casting office of a job you’ve finished, never from him, and he never writes to you first.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - His office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
+  - After a pass, his office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
+- **Tested by:** `pro.agent_notice`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+
+### His Office’s Answers And The Meeting (`career.agent-answers`)
+
+- **Action:** `pro.supply_material`, `pro.ask_to_move`, at Career, Representation, The Meeting (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
+- **Preconditions:**
+  - For a request, what it asked for made by its date.
+  - For a move, a meeting not moved before, and not yet started.
+- **Costs:**
+  - Time: The meeting’s hour, and the trip: two hours from New Haven (an estimate)
+  - Money: None
+- **State (what changes at once):**
+  - What you send goes to his office, and its answer comes about a week later.
+  - A moved meeting is on your calendar at its new time.
+- **Consumer (what reads it):**
+  - Why It Went This Way, evaluation: A meeting kept or missed, and material sent when asked, are read under Reliability.
+  - The Clock: Play And Pause, scheduled: A meeting stops the clock like any commitment, and offers Ask To Move at the stop.
+- **Feedback (how to read what comes back):**
+  - Material sent when asked, and meetings kept, count for you under Reliability; a missed one counts against you.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - After a meeting you keep, his office tells you its decision five days later: an offer or a pass.
+  - A meeting you miss closes the approach, since a meeting comes before an offer in the game.
+- **Tested by:** `pro.supply_material`: `tests/journey-agent.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+
+### Why It Went This Way (`career.reasons`)
+
+- **Action:** `ui.career-reasons`, at Career, Representation, Why It Went This Way (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
+- **Preconditions:**
+  - The notice read.
+- **Costs:**
+  - Time: None: reading it moves no clock
+  - Money: None
+- **State (what changes at once):**
+  - The table opens, and closes with Hide The Reasons.
+- **Consumer (what reads it):**
+  - Your Reel, evaluation: Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.
+  - The Agent And How To Reach Him, history: Each answer his office gives keeps its reasons here.
+  - His Office’s Answers And The Meeting reads it, evaluation: A meeting kept or missed, and material sent when asked, are read under Reliability.
+- **Feedback (how to read what comes back):**
+  - None of it is his. The bar and the chances are the game’s own, and Room On His List is assumed.
+  - At The Last Decision is kept as it was, so it reads the same after your record moves on.
+- **History (kept in the record):**
+  - The Agent And How To Reach Him: Each answer his office gives keeps its reasons here.
+- **Later consequence:**
+  - As Things Stand Now changes with your record: a new credit, a better reel, the degree, a meeting kept.
+- **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
+
+### The Agreement (`career.agreement`)
+
+- **Action:** `pro.accept_agreement`, `pro.decline_agreement`, `pro.end_agreement`, at Career, Representation, The Agreement (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
+- **Preconditions:**
+  - For Accept or Decline, an offer still standing.
+  - For No Offer In 90 Days, 90 days with no real offer of covered work through him, and not while you’re working.
+  - For Under Ten Days’ Work, 151 days from signing, and fewer than 10 days of covered work in the last 91.
+- **Costs:**
+  - Time: None
+  - Money: Commission on covered work: 10% of gross pay, or 5% on an Equity contract paying $525 a week or less
+- **State (what changes at once):**
+  - Accepting makes him your agent from today. Declining closes the approach.
+- **Consumer (what reads it):**
+  - The Agent And How To Reach Him, history: Accepting, declining and the agreement’s end each go in History With His Office.
+- **Feedback (how to read what comes back):**
+  - A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: his own agreement isn’t published.
+- **History (kept in the record):**
+  - The Agent And How To Reach Him: Accepting, declining and the agreement’s end each go in History With His Office.
+- **Later consequence:**
+  - An offer you don’t answer lapses after its fourteen days.
+  - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
+- **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`

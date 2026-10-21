@@ -2983,6 +2983,59 @@
         "verified": "Implemented"
       },
       "limits": "Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck"
+    },
+    {
+      "id": "career-representation",
+      "goal": "Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or end the agreement he offers, with every step kept in a history that a reload or a jump never notes twice",
+      "entry": "Career, under Your Work, the Representation tab: I’ve Read This; How To Reach Him and Ask For A Referral; Your Materials For Him, Check Your Materials, Send Your Materials and Send What His Office Asked For; The Meeting and Ask To Move (also at the meeting's stop); Why It Went This Way and Show The Reasons; The Agreement, Accept The Agreement, Decline The Agreement, End It By Agreement, End It: No Offer In 90 Days, End It: Under Ten Days’ Work; History With His Office",
+      "entities": [
+        "AgentRelation",
+        "Agreement",
+        "ProEvent",
+        "ShowcaseRecord"
+      ],
+      "state": "src/engine/systems/proagent.ts",
+      "preconditions": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal)",
+      "commands": [
+        "pro.agent_notice",
+        "pro.agent_check",
+        "pro.ask_referral",
+        "pro.send_materials",
+        "pro.supply_material",
+        "pro.ask_to_move",
+        "pro.accept_agreement",
+        "pro.decline_agreement",
+        "pro.end_agreement"
+      ],
+      "effects": "Each moves the relation's stage and notes one event under a stable key. A send puts his office's answer on the clock (pro.agent.reply, fourteen days): a request for more (pro.agent.request_due), a meeting (pro.agent.meeting, a commitment that stops the clock, with Ask To Move), a pass, or no answer (pro.agent.silence, six weeks). A meeting kept brings a decision (pro.agent.decision, five days): an offer (pro.agent.offer_lapse, fourteen days) or a pass. Accepting sets the agreement accepted with signedAt and endsAt and the relation represented (pro.agent.term_end, a year). Ending sets endedAt and endedHow and says what stays owed. The School's follow-up after the showcase (scheduleShowcaseFollowUp, pro.agent.school_follow_up) introduces the player and may pass on a request to meet. No money moves",
+      "persists": "Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+      "readers": [
+        "interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way",
+        "replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider",
+        "rosterFor: the year's room on his list, through the pro.roster decider",
+        "activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date",
+        "the clock's stop: Ask To Move, declared with defineStop for pro.agent.meeting"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/journey-agent.test.ts",
+      "provenance": "docs/research/career-2026-10-20/agent.md for the agent, the agency, the office, the department, its fields and its published policy; representation.md S2, S27 and S29 for the endings and the agreement's terms (content/careerwork.ts). Every time, the bar, the cooling-off times and the chances are the game's assumptions, said so on the screen and in the help; his words and decisions are fictional, said so on every notice and on his panel",
+      "tests": [
+        "tests/journey-agent.test.ts",
+        "tests/pro-agent.test.ts",
+        "tests/pro-representation-screen.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Implemented"
+      },
+      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. The finished engagements a referral comes from, the offers the 90 days read and the covered days the 151 and 91 days count are the work loop's, built apart: their tests put that data in by hand as TEST SETUP, and so are the showcase's performances the School's follow-up reads. Each journey's seed is chosen by reading the game's own draw for its first approach"
     }
   ]
 }

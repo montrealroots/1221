@@ -14,14 +14,15 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { useKept } from '@/ui/kept';
-import { formatDate, formatDateTime } from '@/engine/core/time';
+import { formatDate, formatDateKey, formatDateTime } from '@/engine/core/time';
+import { AGREEMENT } from '@/engine/content/careerwork';
 import { AGENTS, FIELD_LABEL, agencyOf, type Agent } from '@/engine/content/agents';
 import { spokenList } from '@/engine/core/text';
 import { materialsCheck } from '@/engine/systems/pro';
 import { BAND_LABEL } from '@/engine/systems/coursework';
 import { countWords } from '@/engine/systems/school';
 import {
-  LEVEL_LABEL, STAGE_LABEL, agreementInForce, answerRefusal, checkRefusal, endRefusal, historyOf, interestOf, meetingOf, moveRefusal,
+  COOLDOWN_WORDS, GATE, LEVEL_LABEL, REFERRAL_BAND, STAGE_LABEL, TEN, TIME_WORDS, agreementInForce, answerRefusal, checkRefusal, endRefusal, historyOf, interestOf, meetingOf, moveRefusal,
   nextStep, noticeRefusal, offeredAgreement, referralRefusal, referrersOf, relationOf, sendRefusal, stillOwed, supplyRefusal,
   type EndHow, type Level,
 } from '@/engine/systems/proagent';
@@ -85,7 +86,7 @@ function AgentPanel({ agent }: { agent: Agent }) {
           <div><dt className="strong">Where You Stand With Him</dt><dd style={{ margin: 0 }}>{STAGE_LABEL[rel?.stage ?? 'none']}</dd></div>
           <div><dt className="strong">What’s Next</dt><dd style={{ margin: 0 }}>{nextStep(sim, person, agent)}</dd></div>
         </dl>
-        <Fine>His name, the agency, its New York office, his department and the fields it covers are from the agency’s own pages and the trade press, read on October 20, 2026, and so is the agency’s policy on submissions. Everything he says and decides here is invented, and the game holds no contact details for him or the agency.</Fine>
+        <Fine>{`His name, the agency, its ${agency.office.city} office, his department and the fields it covers are from the agency’s own pages and the trade press, read on ${formatDateKey(agent.sources[0]?.read ?? '2026-10-20')}, and so is the agency’s policy on submissions. Everything he says and decides here is invented, and the game holds no contact details for him or the agency.`}</Fine>
       </div>
     </Panel>
   );
@@ -119,9 +120,9 @@ function ReachPanel({ agent }: { agent: Agent }) {
                 );
               })}
             </ul>
-          ) : <p className="small" style={{ margin: 0 }}>None yet. A professional job you finish, its work judged Strong or better, can bring a referral from the people who cast it.</p>}
+          ) : <p className="small" style={{ margin: 0 }}>{`None yet. A professional job you finish, its work judged ${BAND_LABEL[REFERRAL_BAND]} or better, can bring a referral from the people who cast it.`}</p>}
         </div>
-        <Fine>The bar for a referral, work judged Strong or better, is assumed in the game.</Fine>
+        <Fine>{`The bar for a referral, work judged ${BAND_LABEL[REFERRAL_BAND]} or better, is assumed in the game.`}</Fine>
       </div>
     </Panel>
   );
@@ -156,7 +157,7 @@ function MaterialsPanel({ agent }: { agent: Agent }) {
             <WhyNot reasons={[['Send What His Office Asked For', supplyNo]]} />
           </div>
         )}
-        <Fine>How long his office takes to answer (usually two weeks), and that no answer in six weeks counts as no, are assumed in the game. So is a year’s wait after a pass, and six months after no answer or a declined offer, before it looks again, and then only at something new.</Fine>
+        <Fine>{`How long his office takes to answer (usually ${TIME_WORDS.reply}), and that no answer in ${TIME_WORDS.silence} counts as no, are assumed in the game. So is the wait before it looks again, ${COOLDOWN_WORDS.pass} after a pass and ${COOLDOWN_WORDS.silence} after no answer or a declined offer, and that it then looks only at something new.`}</Fine>
       </div>
     </Panel>
   );
@@ -176,11 +177,11 @@ function MeetingPanel({ agent }: { agent: Agent }) {
         <dl className="col gap-2 small" style={{ margin: 0 }}>
           <div><dt className="strong">When</dt><dd style={{ margin: 0 }}>{formatDateTime(m.at, sim.zone)}</dd></div>
           <div><dt className="strong">Where</dt><dd style={{ margin: 0 }}>{m.where === 'office' ? `At ${agencyOf(agent).name}’s ${agencyOf(agent).office.city} office` : 'By video'}</dd></div>
-          <div><dt className="strong">Moved</dt><dd style={{ margin: 0 }}>{m.moved ? 'Once, as far as it can be' : 'Not yet: it can be moved once'}</dd></div>
+          <div><dt className="strong">Moved</dt><dd style={{ margin: 0 }}>{m.moved ? 'Once already, so it can’t be moved again' : 'Not yet: it can be moved once'}</dd></div>
         </dl>
         <div><Gated feature="pro.ask_to_move" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ at: number }>('pro.ask_to_move', { meetingId: m.id }); if (r.ok) toast(`His office moved the meeting to ${formatDateTime(r.value!.at, sim.zone)}.`, 'positive'); }}>Ask To Move</Gated></div>
         <WhyNot reasons={[['Ask To Move', no]]} />
-        <Fine>Missing it closes your approach, since a meeting comes before an offer in the game. That a meeting can be moved once, a week on, is assumed, and so is the trip’s time.</Fine>
+        <Fine>{`Missing it closes your approach, since a meeting comes before an offer in the game. That a meeting can be moved once, ${TIME_WORDS.move} on, is assumed, and so is the trip’s time.`}</Fine>
       </div>
     </Panel>
   );
@@ -230,7 +231,7 @@ function WhyPanel({ agent }: { agent: Agent }) {
             </div>
           </div>
         )}
-        <Fine>The bar, the four factors an approach needs and the chances are all the game’s own, none of them his. Better work raises the chance, and the game never makes it certain. Room On His List is drawn for each year and assumed.</Fine>
+        <Fine>{`The bar, the ${countWords(GATE)} factors an approach needs and the chances are all the game’s own, none of them his. Better work raises the chance, and the game never makes it certain. Room On His List is drawn for each year and assumed.`}</Fine>
       </div>
     </Panel>
   );
@@ -245,7 +246,7 @@ function AgreementPanel({ agent }: { agent: Agent }) {
   const ended = [...(person.pro?.agreements ?? [])].filter((a) => a.agentId === agent.id && a.status === 'ended').sort((a, b) => (b.endedAt ?? 0) - (a.endedAt ?? 0))[0];
   const shown = offered ?? inForce;
   const answerNo = answerRefusal(sim, person, agent);
-  const ends: readonly [EndHow, string][] = [['agreement', 'End It By Agreement'], ['no-offer', 'End It: No Offer In 90 Days'], ['too-little-work', 'End It: Under Ten Days’ Work']];
+  const ends: readonly [EndHow, string][] = [['agreement', 'End It By Agreement'], ['no-offer', `End It: No Offer In ${AGREEMENT.noOfferDays} Days`], ['too-little-work', `End It: Under ${capital(TEN)} Days’ Work`]];
   if (!shown && !ended) return null;
   return (
     <Panel title="The Agreement" help="career.agreement">

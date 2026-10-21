@@ -5,7 +5,10 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 566 of 649 rows in scope Implemented And Verified (87.2%); 79 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The agent's branch, `b19-agent`, 2026-10-21: until it this said 566 of 640. Its nine commands are rows of their own,
+  Implemented, Verification Incomplete until an audit row reads them.)
 
   (Brief 19's core, merged 2026-10-21: until it this said 566 of 636. Its four commands are rows of their own,
   Implemented, Verification Incomplete until an audit row reads them, and 46 measured rows read the engine's whole

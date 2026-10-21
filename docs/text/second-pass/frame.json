@@ -1952,6 +1952,20 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.agent]": {
+  "status": "Rewritten",
+  "hash": "3dd50ab6d1fd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/decided.ts#top [pro.roster]": {
+  "status": "Rewritten",
+  "hash": "d02a5a6b6572",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/decided.ts#top [production.direction]": {
   "status": "Retained",
   "hash": "9ce9ed69790f",
@@ -3288,6 +3302,13 @@
   "on": "2026-10-21",
   "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
   "first": "Pending"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [representation]": {
+  "status": "Rewritten",
+  "hash": "360bc539904b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19: the Career screen’s Representation tab label, in Title Case, read on the screen in tests/pro-representation-screen.test.ts, with tools/title-case.mjs and tools/label-sweep.mjs passing",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/sections.ts#SECTIONS [returns]": {
   "status": "Retained",
