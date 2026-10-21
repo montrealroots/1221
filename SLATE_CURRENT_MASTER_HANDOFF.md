@@ -1,9 +1,10 @@
-# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, Done But For The Owner, 2026-10-21
+# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, Merged, 2026-10-21
 
 **This section is the current status, and where a new session starts.** The owner gave brief 19
 (`docs/verification/briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept
 verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
-none of it is in `main`, and nothing is deployed. There is no stash and one worktree.
+it went to `main` at the owner's word, "Merge it." (2026-10-21), in #48, merged as `3b56d056`, and this record of
+the merge followed it there. Nothing is deployed. There is no stash and one worktree.
 
 **Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
@@ -110,7 +111,10 @@ none of it is in `main`, and nothing is deployed. There is no stash and one work
   `4aac9a94` (exit 0); and the receipt (`docs/verification/career-2026-10-20/README.md`). Until then this listed them as
   still to do. Brief 19's criteria:
   59 of 60 Fixed And Verified; V17's person's look at desktop and mobile is the owner's (`PLAYTEST.md` is the route).
-- **Nothing merged or deployed:** merging to `main` and any Base44 deployment wait on the owner.
+- **Merged, not deployed:** #48 took the branch to `main` at the owner's word on 2026-10-21, after the gate in a clean
+  clone of `ae7935ae` (exit 0, 423 of 423 test files, 5,092 of 5,092 tests); until then this said merging waited on the
+  owner. Any Base44 deployment still waits on the owner, after the gate (§10: a deployment from the old line refuses this
+  line's saves).
 - **The agent is fictional** (2026-10-21, the owner's decision: "Let's go ahead and swap in a fictional agent."): Thomas
   Ashgrove of Halberd Talent, New York legit, neither found as a real agent or agency when checked (`59da1351`). Until
   then he was a real person, Jordan Parente of Stewart Talent, depicted only from what was published; the research on
