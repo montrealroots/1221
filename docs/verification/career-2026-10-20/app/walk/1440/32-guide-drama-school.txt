@@ -1,0 +1,111 @@
+guide-drama-school (last-term.json, 1440 wide)
+
+CHAPTER 11 OF 20
+Drama School
+
+Classes, coursework, casting and your degree at Yale.
+
+You start as a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, in New Haven: one of the sixteen actors admitted this year, among the strongest of them but not ahead of everyone. You arrive on the first day of the fall term for registration and orientation, and classes start a week later.
+
+The school is where you train, get cast and earn your degree. To open it, press the Yale button on the School line in Your Affairs on Home, or choose School in the menu.
+
+The School line shows your year, your standing, your place in the class and what’s next. The School screen’s tabs are Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, and Terms And Award.
+
+Classes run from nine to three on class days. Go to them, awake and in New Haven, and your craft grows, more if you arrive rested. Your fifteen classmates improve too, each at their own pace, and you’re cast alongside them and against them.
+
+If you’re unwell, press Call In Sick, on Classes, before the day’s first commitment starts (on a class day, at the latest when the clock stops at nine for your classes). You count as unwell with the flu, an injury that limits your work, or condition under 55. If you’re well, the button is grayed out and says why.
+
+Calling in sick excuses the day’s classes, labs, rehearsal calls and work-study shift, and a partner rehearsal you miss while you’re ill isn’t held against you. A day in hospital is excused without asking. Staying away when you’re well counts as an absence.
+
+Your craft, on Standing And Craft, is the 17 techniques the school trains and four of your abilities: Emotional Depth, Memory, Physical Expression and Vocal Expression. A technique is a skill a class trains. An ability is something about you, and your Player Profile shows all twelve.
+
+Composure, shown beside your craft, eases the nerves that add stress before every performance, and every performance builds it.
+
+Each course sets pieces in class: a scene, a song, a movement score. On Coursework, prepare each piece with its steps, such as Read The Scene, Learn Lines and Rehearse Alone. Each step takes time on the clock, and a message says how long it took and what it added.
+
+Once you’ve read the text, choose an answer to each question under Table Work; until then, they’re grayed out. Where the text supports more than one answer to a question, any of them is right.
+
+On a piece you perform, choose how to play it under How You’ll Play It (its pace, its scale, its structure), and press Play It This Way. Choosing how to play a scene isn’t the same as rehearsing it: the choice only pays off once you’ve rehearsed it on your feet.
+
+A scene pairs you with a classmate. To rehearse together, choose a Day and a Time under Rehearsing With, at least two hours ahead, and press Ask with their name, such as Ask Zoe. They answer at once, and if they say yes, the rehearsal goes on your calendar.
+
+A rehearsal that goes ahead builds your scene together and their trust in you. Your partner may ask you too: answer with Say Yes or Say No by the time they give, since leaving them without an answer costs a little of their trust.
+
+If they say no or don’t turn up, press Run It With A Reader to work your side of the scene with someone reading their lines. It’s slower, and your partner’s side stays where it was.
+
+Shown Today, on each piece, tells you where it stands now: what it would come to if you showed it today, which parts are still short, and the steps that would fix them. It’s a forecast, not a result.
+
+On its due date, the piece is shown at that day’s class if you’re there. If you’re excused, it moves to the course’s next class, or with none left isn’t held against you. Miss the class without an excuse and it can’t be shown later, so it counts as Unready.
+
+When a piece is shown, your own work is judged, and so is the scene as a whole, with what your partner brought, which also changes the bond between you. Your teacher’s note says what held it back most. The note is the game’s, written as your course’s teachers would say it.
+
+The note comes as a notice, and stays under Work Shown on Coursework. A piece the course wants to see again keeps it under Feedback on its card: work on the note before its next class, with Work On The Note or the steps for that part, so that showing it again takes the note.
+
+Otherwise, a note stays open until a later piece, in any course, is shown with the part it named at 75% or more, or, for a note on an answer at the table, answers that question the way the text supports. Your Notes, on Coursework, shows where each note stands.
+
+If too many of a term’s pieces are coming out Unready, you’ll get a notice during the term, A Word On Your Coursework, with the date the faculty review it. That’s a warning, not the review itself: the review comes at the end of the term’s classes.
+
+At the term review, the faculty look at your attendance at classes, calls and assigned shifts, how you’ve grown compared with the class, your work on stage and your coursework. Coursework This Term, on Standing And Craft, counts the term the way the review will.
+
+Fall short on any of them and you drop a step: from good standing to academic concern, from concern to academic warning, and from warning to dismissal. Meet them all and you’re back in good standing.
+
+Every student works: six hours on the Saturdays of class weeks, and at least 50 more hours of evening shifts front of house at Yale Rep during the term. Each press of Take An Elective Shift, on Shifts And Pay, books the next free evening, seven to eleven, and says which. You’re paid for your hours on Fridays.
+
+From your first spring, the chair casts you in one of the School’s productions each term, and once a year, if you’re in good standing, you’re at Yale Rep too, usually as an understudy, ready to go on if an actor can’t. Casting shows your part and Why This Cast. Between rehearsal calls, Learn The Part, Catch Up The Blocking and Work On The Note prepare your part. Blocking is where you move on stage, set at the early calls.
+
+Missing two calls in a term, labs and rehearsals together, takes you out of the casting pool until a term review finds you in good standing. Missing a performance, or not being in New Haven when you’re called to go on, is a serious breach: it puts you on academic warning straight away, and if you’re already on warning, you’re dismissed.
+
+Work It Through, on a scene or a part, lists the problems its forecast shows, worst first. Press one, then a way of working on it: it takes the minutes on its button and shows the figure before and after. Then press Keep It or Put It Back.
+
+The Yale Cabaret is the students’ own theater: Join A Cabaret Show, on Casting, puts you in one of its shows, one a term, and says the week it plays. In the spring of your first and second years, Join The Summer Company, on Casting too, puts you in the Yale Summer Cabaret for the summer, with a weekly stipend. When you can’t join, the panel says why where the button would be.
+
+Plays To Read, on Coursework, lists plays first staged since 2000. Press Read It to read the Haas Arts Library’s copy, and once you’ve read it, Research It.
+
+Your last term ends with the Actor Showcase: two scenes you choose, played in New York and Los Angeles after classes end. On Coursework, under The Actor Showcase, tick two of the faculty’s options and press Choose These Scenes by the end of the term’s fourth week. Prepare each on its card, as you prepare any piece, and go to the rehearsal calls and each showcase day. To take part, make up every Incomplete by then: one still open keeps you out.
+
+Read “You As An Actor” next. It opens your Player Profile: your abilities, your practice and the genres you work in.
+
+The Details
+
+Your craft, in the order the School screen lists it: Accents And Dialects, Audition Technique, Character Work, Classical Text, Clown And Mask, Cold Reading, Comedy, Dance, Emotional Depth, Improvisation, Intimacy, Memory, On Camera, Physical Expression, Scene Study, Script Analysis, Singing, Speech, Stage Combat, Vocal Expression and Voice-Over. Acting, the row below them, counts scene study twice, with character work and emotional depth, and it’s what a Yale Rep part asks for most. A part is cast on the techniques its play asks for, which differ from play to play: Shakespeare asks most for classical text, with voice and speech, and Macbeth and Julius Caesar for stage combat too. Whatever work you do builds the techniques it trains.
+
+The first fall has Drama 50, three weeks of afternoon labs, and the first spring the New Play Lab, three weeks workshopping the first-year playwrights’ new plays. The last spring opens with your own solo piece, You Are The Creator. Each is a call, like a rehearsal. Work-study comes to 150 hours a year.
+
+The productions are the Carlotta Festival as a first-year; a directors’ thesis or the Langston Hughes Festival in a later fall, and a thesis or the Carlotta Festival in your second spring; and a Shakespeare Repertory Project in your last spring. When you’re on call at Yale Rep, the Rep calls three hours before each curtain, at five for an evening show and at eleven for a Sunday matinee. Be in New Haven then. The evening is yours unless you’re needed; if you are, you’re told, and the performance goes on your calendar. Every understudy plays one run-through for the director.
+
+For each play, the chair weighs every student the same way: how well you fit it, meaning what a night of it would come to from your abilities and the techniques it asks for, including what its kind of play demands. A fifth of that rides on how much of yourself you gave in your last run. A lead last time counts a little against another lead, and a small part a little for one. The best fit gets the biggest part written for them. Why This Cast, on Casting, shows where each student stood.
+
+Each night is judged on the techniques and abilities the part asks for, the lines, blocking and notes your calls and your own work have given you, and how rested you are. A performance takes the play’s running time and tires you according to its workload: how long it runs, how much of it you’re on stage, and what it asks of your body and voice, a little less with an interval. Your stamina carries you through the late scenes and saves up to half the energy it costs, and The Evening’s Workload, under A Night Now, shows it before the curtain. A night comes out as an off night, Solid, Strong or Remarkable, the last three starting at LAMDA’s pass, merit and distinction, and the director gives you a note at the end of the run.
+
+Join A Cabaret Show puts you in a show at least three weeks away, in a week clear of your days off, casting calls, nights on call, labs and work-study shifts. You can’t join one while you’re on academic warning or on leave, or while you’re cast in two productions at once. Join The Summer Company needs good standing, no leave, and your name in by April 30; the summer has three shows. A day you called in sick, spent in hospital or were kept off by an injury excuses a Cabaret or Summer Cabaret call. Miss a Summer Cabaret performance for any other reason and the company goes on without you.
+
+At the review, a piece you missed without an excuse counts as due and Unready, and a course where half the pieces due weren’t shown isn’t passed. The standings come from the Yale Bulletin, which has the faculty evaluate students regularly. One review a term, the marks it asks for and its one-step drops are estimated.
+
+After the program’s six terms, you’re awarded the MFA if you’re in good standing or on academic concern and have passed every course. If the last term ends on academic warning, the faculty don’t recommend the degree. A course not passed leaves you 30 days to ask to repeat the year or for an additional term, where either is open to you; after that, the faculty don’t recommend the degree. An Incomplete still open holds the degree up until you make it up.
+
+The problems Work It Through can name are a part of the scene that isn’t secure, a turn you haven’t worked, stamina running out late, or an ability holding it back. You keep or put back each change to how a part of the scene is played, and what you keep carries into every later rehearsal and performance. Between a production’s calls, the director names one of these too, somewhere in the play (what you want, listening, pacing, the physical life, a change, a relationship), with ways to work on it: press Work On The Note with one of them, and the next call says whether you answered it.
+
+On the School screen, the school’s name, each course and each technique are links. The school opens onto this year’s courses and the town, a course onto the techniques it trains and the next day it meets, and a technique onto where you stand in it compared with the class.
+
+The tuition scholarship pays every student’s tuition. Yale’s help with living costs depends on need, and your family’s means rule it out, so the Yale Health plan, billed each term, and your living costs come out of your bank account.
+
+Each showcase scene is shown at its first showcase day with the faculty’s note, played again the next, and shown again with the note taken in Los Angeles. A showcase day missed counts as a missed call and an absence from Actor Showcase. The course is settled after Los Angeles, not at the term review, and a scene played at no showcase day counts as a piece not shown.
+
+Graduating early isn’t a route the game offers. The Bulletin says that “on rare occasions the faculty of David Geffen School of Drama may reduce the residency requirement, but in no case below a minimum of two years,” and publishes no criteria for it and no way to ask. So the MFA comes at Commencement after your sixth term.
+
+WHAT IT OPENED
+School
+Your school, from its line on Home
+Call In Sick
+Take An Elective Shift
+Join A Cabaret Show
+Join The Summer Company
+Coursework: preparing, the table, how you’ll play it, asking your partner, and Run It With A Reader
+Work It Through: name a problem, try a way, keep it or put it back
+Learn The Part, Catch Up The Blocking and Work On The Note
+Plays To Read: Read It and Research It
+The Actor Showcase: Choose These Scenes
+Close
+
+----- 23 controls; Tab reached 23 of the 23 it can; 0 grayed
+Nothing found.

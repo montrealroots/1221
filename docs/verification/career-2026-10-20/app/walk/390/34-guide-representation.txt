@@ -1,0 +1,50 @@
+guide-representation (last-term.json, 390 wide)
+
+CHAPTER 14 OF 20
+Representation
+
+The agent, how to reach him, why his office decides as it does, and the agreement.
+
+Career’s Representation tab holds the game’s one agent, Jordan Parente, at Stewart Talent in New York. He’s a real person, and everything he says and decides in the game is invented. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.
+
+His agency doesn’t take unsolicited submissions, and the game keeps to that. His office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.
+
+Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.
+
+For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged Strong or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.
+
+Then press Send Your Materials. His office answers in about two weeks: it asks for more, asks to meet, passes, or doesn’t answer at all, which after six weeks counts as no. Each answer comes as a notice, and History With His Office keeps every step.
+
+When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it a week, once. A meeting missed closes the approach.
+
+Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs four at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.
+
+After a pass, his office looks again only after a year, and after no answer or a declined offer six months, and then only at something new: a new credit, a better reel or a referral.
+
+If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.
+
+While it runs, End It By Agreement ends it at once. End It: No Offer In 90 Days and End It: Under Ten Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.
+
+Read “Finding Work” next. It opens the Opportunities tab: the roles you can be seen for, auditions and offers.
+
+The Details
+
+Every time here is the game’s estimate: the two weeks to an answer, the six weeks with none, the three weeks for what his office asks, the meeting seven days or more on at eleven in the morning, the five days to a decision after it, and the bar for a referral.
+
+The agreement runs a year, and its commission is 10% of gross pay for covered work, 5% on an Equity contract paying $525.00 a week or less, as the unions’ and New York’s rules allow.
+
+WHAT IT OPENED
+Representation
+I’ve Read This
+Check Your Materials
+Ask For A Referral
+Send Your Materials
+Send What His Office Asked For
+Ask To Move
+Show The Reasons
+Accept The Agreement and Decline The Agreement
+End It By Agreement, End It: No Offer In 90 Days and End It: Under Ten Days’ Work
+Close
+
+----- 23 controls; Tab reached 23 of the 23 it can; 0 grayed
+Nothing found.

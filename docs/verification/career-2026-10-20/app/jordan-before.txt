@@ -1,0 +1,69 @@
+=========== showcase-final: the class's Jordan none
+The School's follow-up: May 11, 2029 at 10:00 AM. The morning after: pro.headshots done; pro.update_resume done; pro.agent_check done; pro.send_materials done.
+The agent's first notice: May 11, 2029 at 10:00 AM, "The School’s Follow-Up After The Showcase"
+
+Every notice naming Jordan, in the order it came, days from the agent's first notice:
+  May 11, 2029 at 10:00 AM [AGENT, importance 55, 0.0 days] The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with. Jordan Parente’s office at Stewart Talent sent no request to meet, but the follow-up is an introduction: you can send it your materials from the Care
+  June 23, 2029 at 10:00 AM [AGENT, importance 60, 43.0 days] No Answer From His Office: Six weeks have gone by since you sent your materials to Jordan Parente’s office at Stewart Talent, with no answer. In the game no answer by then means no. A new approach can come from December 22, 2029, with something ne
+
+What Needs You's unread notices, as ordered, with the agent's first notice and every Jordan among the first twelve:
+  1. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
+  2. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
+  3. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
+  4. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
+  5. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
+  6. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
+  7. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
+  8. [70] February 6, 2029 at 8:00 PM The Director’s Note: Measure For Measure
+  9. [70] February 2, 2029 at 5:00 PM You’re In The Actor Showcase
+  10. [70] January 8, 2029 at 9:00 AM The Actor Showcase
+  11. [70] November 20, 2028 at 8:00 PM The Director’s Note: Blood Wedding
+  12. [70] October 28, 2028 at 5:00 PM The Director’s Note: Mrs Warren’s Profession
+
+=========== app-jordan-0: the class's Jordan Jordan Kowalski
+The School's follow-up: May 11, 2029 at 10:00 AM. The morning after: pro.headshots done; pro.update_resume done; pro.agent_check done; pro.send_materials done.
+The agent's first notice: May 11, 2029 at 10:00 AM, "The School’s Follow-Up After The Showcase"
+
+Every notice naming Jordan, in the order it came, days from the agent's first notice:
+  March 27, 2029 at 9:00 AM [CLASSMATE, importance 55, -45.0 days] Jordan: A Request For Help: Jordan is behind on their lines, with an audition outside school, and asks if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  May 11, 2029 at 10:00 AM [AGENT, importance 55, 0.0 days] The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with. Jordan Parente’s office at Stewart Talent sent no request to meet, but the follow-up is an introduction: you can send it your materials from the Care
+  June 23, 2029 at 10:00 AM [AGENT, importance 60, 43.0 days] No Answer From His Office: Six weeks have gone by since you sent your materials to Jordan Parente’s office at Stewart Talent, with no answer. In the game no answer by then means no. A new approach can come from December 22, 2029, with something ne
+
+What Needs You's unread notices, as ordered, with the agent's first notice and every Jordan among the first twelve:
+  1. [95] October 21, 2028 at 5:00 PM You’re On Tonight As Petra Stockmann
+  2. [95] October 19, 2027 at 5:00 PM You’re On Tonight As Pegeen Mike
+  3. [90] October 21, 2028 at 8:00 PM You Went On As Petra Stockmann
+  4. [90] October 19, 2027 at 8:00 PM You Went On As Pegeen Mike
+  5. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
+  6. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
+  7. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
+  8. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
+  9. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
+  10. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
+  11. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
+  12. [70] February 6, 2029 at 8:00 PM The Director’s Note: Much Ado About Nothing
+
+=========== app-jordan-2: the class's Jordan Jordan Nguyen
+The School's follow-up: May 11, 2029 at 10:00 AM. The morning after: pro.headshots done; pro.update_resume done; pro.agent_check done; pro.send_materials done.
+The agent's first notice: May 11, 2029 at 10:00 AM, "The School’s Follow-Up After The Showcase"
+
+Every notice naming Jordan, in the order it came, days from the agent's first notice:
+  February 16, 2029 at 9:00 AM [CLASSMATE, importance 55, -84.0 days] Professional Preparation And Audition Workshop: Two Contrasting Monologues: Your scene is from The Rising of the Moon, a one-act play, on the quay once the other police have gone. You play The Sergeant. You’ve worked on this scene before. It was set on August 30, 2026, and you played The Ragged 
+  April 11, 2029 at 9:00 AM [CLASSMATE, importance 55, -30.0 days] Jordan: Run Lines Together?: Jordan asks if you’d run lines together for an hour on April 14, 2029 at 7:00 PM, to keep the work moving. They’ve asked before.
+  May 11, 2029 at 10:00 AM [AGENT, importance 55, 0.0 days] The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with. Jordan Parente’s office at Stewart Talent sent no request to meet, but the follow-up is an introduction: you can send it your materials from the Care
+  May 26, 2029 at 10:00 AM [AGENT, importance 60, 15.0 days] His Office Passed: Jordan Parente’s office at Stewart Talent has passed on representing you, on May 26, 2029. In the game it looks again only after a year, from May 26, 2030, and then only at something new: a new credit, a better reel or a
+
+What Needs You's unread notices, as ordered, with the agent's first notice and every Jordan among the first twelve:
+  1. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
+  2. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
+  3. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
+  4. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
+  5. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
+  6. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
+  7. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
+  8. [70] February 6, 2029 at 8:00 PM The Director’s Note: The Winter’s Tale
+  9. [70] February 2, 2029 at 5:00 PM You’re In The Actor Showcase
+  10. [70] January 8, 2029 at 9:00 AM The Actor Showcase
+  11. [70] November 20, 2028 at 8:00 PM The Director’s Note: Major Barbara
+  12. [70] October 28, 2028 at 5:00 PM The Director’s Note: Uncle Vanya
+
