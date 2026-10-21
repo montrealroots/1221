@@ -15,14 +15,14 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 289 | 1892 | 17556 | 0 | 264 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 289 | 1894 | 17561 | 0 | 264 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2563 | 15088 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1152 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 195 | 758 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4542 | 38774 | 594014 | 316 | 1388 | 3154 | 0 | 0 |
+| **All** | 4542 | 38776 | 594019 | 316 | 1388 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -32,7 +32,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-agent | 54 | 2671 | 54 | 0 | 0 | 0 |
 | career-pay | 30 | 1238 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
-| career-work | 64 | 1937 | 64 | 0 | 0 | 0 |
+| career-work | 64 | 1942 | 64 | 0 | 0 | 0 |
 | frame | 505 | 33748 | 99 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
@@ -3199,7 +3199,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/projobs.ts#fitWords` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#demandsWords` | 2 | 0 | Rewritten | career-work | Rewritten on 2026-10-21 after the built app's walk read each technique with its level in a clause, four things for two; read where the player meets it in tests/pro-opportunities-screen.test.ts (What It Asks), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#chanceWords` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/projobs.ts#awayAt` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/projobs.ts#awayAt` | 4 | 0 | Rewritten | career-work | tests/pro-work.test.ts, V12's GUARD: a student at a meeting with an agent's office in term is away, labelled as the meeting's calendar entry is (Meeting At Stewart Talent), from nine to two, and the School counts the day's classes missed; read on 2026-10-21 by brief 19's playthroughs | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#conditionsFor [standing]` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#conditionsFor [timely]` | 3 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#conditionsFor [short]` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
