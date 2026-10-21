@@ -38,7 +38,10 @@ their parts were done, and `collect19.sh` gathered them here.
 `tools/journeys.ts`'s check 2 reading each piece's own record where two of one title are shown at one moment. The first
 play failed that check in 22 of 25 journeys, each on the Actor Showcase's two scenes: both are Your Showcase Scene and
 shown together, so each read both records (`9afb8548`). That tool isn't the game, and their exits count it uncommitted:
-one file. The first play's exits, summary and compare are in `../journeys-first-play/`.
+one file. The replay passed 24 of 25: F1's two scenes scored the same, 61.8, so the score couldn't tell their records
+apart either. The check was made to pair such pieces one to one, a record more than its pieces still failing (`a9654e24`),
+and F1 alone was played again with it, from 13:46 UTC, then the compare and summary (`journeys-f1-again19.sh`, its exits
+in `exits-F1-again.txt`). The first play's exits, summary and compare are in `../journeys-first-play/`.
 
 `figures.py` reads each figure from these outputs into `figures.json`. `../../../integration-2026-10-16/criteria.py`
 reads that for the matrix, `../verify.py` reads the journeys' and the interface's results into
