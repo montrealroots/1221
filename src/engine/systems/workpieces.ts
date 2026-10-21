@@ -21,7 +21,7 @@ import { BRIEF, briefMaterial, briefPiece, forecast, recordOf, takeTogether, typ
 import { assignmentById, forecastWork, partnerPrepOf, scenePiece, togetherOf, withPartLabels } from './coursework';
 import { templateById } from '../content/coursework';
 import { holderFor, processOf, runPending, type Which } from './production';
-import { companyRead, nightEvaluation, nightTogether, playPiece, type NightHolder } from './school';
+import { companyRead, nightEvaluation, nightTogether, partSizeOf, playPiece, type NightHolder } from './school';
 import type { PartSize } from '../content/plays';
 import { materialOf } from './material';
 import { inHospital } from './health';
@@ -100,7 +100,7 @@ function sceneWork(sim: Simulation, person: Person, id: string): WorkPiece | und
 
 function partWork(sim: Simulation, person: Person, which: string): WorkPiece | undefined {
   const w = which as Which;
-  const holder = holderFor(sim, person, w) as (NightHolder & { size?: PartSize; cast?: { name: string }[] }) | undefined;
+  const holder = holderFor(sim, person, w) as (NightHolder & { size?: PartSize; role?: string; cast?: { name: string }[] }) | undefined;
   const material = materialOf(holder?.play);
   if (!holder || !runPending(sim, person, w)) return undefined;
   const proc = processOf(holder);
@@ -113,11 +113,13 @@ function partWork(sim: Simulation, person: Person, which: string): WorkPiece | u
     ...(proc.playing ? { playing: proc.playing } : {}),
     // The part's own workload, its size's share of the evening, as its forecast and its night read it (from 2026-10-16,
     // brief 10: until then the spec read no size, and a night's load was the same for every part).
-    spec: () => playPiece(holder, holder.size ?? 'lead'),
-    // An understudy plays the lead they cover, as the night itself is judged (`reckonNight`): the only holder with no
-    // size. Until 2026-10-12 this forecast it as a supporting part, so a Rep understudy's A Night Now and the problems
-    // worked on were read at the Rep's supporting difficulty, and the run-through and a night gone on at its lead's.
-    forecast: () => nightEvaluation(sim, person, `forecast:${which}`, holder, sim.now, holder.size ?? 'lead', w === 'rep' ? 'rep' : 'school', true),
+    spec: () => playPiece(holder, partSizeOf(holder)),
+    // An understudy plays the part they cover, as the night itself is judged (`reckonNight`): the only holder with no
+    // size of its own, so it's the covered part's in its play (`partSizeOf`). Until 2026-10-12 this forecast it as a
+    // supporting part, so a Rep understudy's A Night Now and the problems worked on were read at the Rep's supporting
+    // difficulty, and the run-through and a night gone on at its lead's; until 2026-10-20 (brief 19's D6) as a lead
+    // whatever was covered, and an actress understudying An Enemy Of The People covered no part at all.
+    forecast: () => nightEvaluation(sim, person, `forecast:${which}`, holder, sim.now, partSizeOf(holder), w === 'rep' ? 'rep' : 'school', true),
     ...(companyRead(sim, person, holder) ? { together: (e) => nightTogether(sim, person, holder, e)?.overall } : {}),
     work: () => [...(proc.work ?? [])],
     setWork: (x) => { proc.work = x; },

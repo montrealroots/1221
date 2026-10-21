@@ -1190,12 +1190,30 @@ export function classesWords(term: number): string {
 /** A curtain as a notice says it: a matinee is today, an evening tonight (from 2026-10-20: until then a Sunday's at two was “tonight at 2:00 PM”). */
 export const tonight = (curtain: Instant): 'today' | 'tonight' => (zonedParts(curtain, zone()).hour < 17 ? 'today' : 'tonight');
 
-/** Going on, as an understudy's notices say it: as the role they cover, or at the Rep for a company's understudy, who covers no named part. */
+/**
+ * Going on, as an understudy's notices say it: as the role they cover, or at the Rep for a company's understudy, who
+ * covers no named part. From 2026-10-20 (brief 19's D6) every understudy is cast to a named part (`coveredPart`), and the
+ * company's words are only for a save whose company understudy had already been judged as one (`nameTheCover`).
+ */
 const goOnAs = (c: { role: string }): string => (bySize(c.role) ? 'at Yale Rep' : `as ${c.role}`);
+
+/** A night on call as the calendar names it: “On Call For Petra Stockmann”, or “On Call” for the company's unnamed cover. */
+const onCallFor = (role: string): string => (bySize(role) ? 'On Call' : `On Call For ${role}`);
+
+/**
+ * Why an understudy covers a part smaller than a lead, as the casting notice says it after whom they cover (from
+ * 2026-10-20, brief 19's D6): the play's leads are written for the other title, so the biggest part written for them is
+ * a supporting or a featured one (`coveredPart`). Nothing for a lead, or the company's unnamed cover.
+ */
+const coverWhy = (person: Person, r: { role: string; kind?: string; play?: string; size?: PartSize }): string => {
+  const size = bySize(r.role) ? 'lead' : partSizeOf(r);
+  return size === 'lead' ? '' : ` Its leads are written for ${person.performerTitle === 'actress' ? 'actors' : 'actresses'}, so the part you cover is ${size === 'supporting' ? 'a supporting' : 'a featured'} one.`;
+};
 
 /**
  * An understudy's night on, told (from 2026-10-20, brief 17): until then “The role’s actor was out, and you played An
- * Understudy In The Company in Yale Rep’s Yale Rep’s October Production tonight.”, of a matinee too.
+ * Understudy In The Company in Yale Rep’s Yale Rep’s October Production tonight.”, of a matinee too. The company's words,
+ * “An actor you cover was out”, are a save from before's (`goOnAs`).
  */
 const wentOn = (c: { role: string; production: string; play?: string }, curtain: Instant) => ({
   category: 'school' as const,
@@ -1692,6 +1710,40 @@ export function timeTheCalls(sim: Simulation): number {
     timed += 1;
   }
   return timed;
+}
+
+/**
+ * A save from before 2026-10-20 (brief 19's D6) whose Rep understudy covers no named part (“An Understudy In The
+ * Company”, as an actress dealt An Enemy Of The People or an actor dealt Mrs Warren's Profession was cast until then), on
+ * its first opening (`ONCE_ON_OPENING`). Where none of the run has been judged (no night gone on, no run-through played)
+ * and it hasn't closed, the casting is given the part a casting gives now (`coveredPart`), so its nights, their forecast,
+ * its notices, its director's note and its credit are that part's, and the player is told once. A run already judged, or
+ * closed, keeps the company's unnamed cover to its end: its nights were judged as the play's lead, and a part named now
+ * would be credited with nights it never had. Every understudy's calls still to come are then named for the part it
+ * covers, as a casting names them now (`onCallFor`); a credit filed before stays as it was filed. Returns how many
+ * castings were given a part.
+ */
+export function nameTheCover(sim: Simulation): number {
+  let named = 0;
+  for (const person of Object.values(sim.universe.people)) {
+    const r = person.school?.rep;
+    if (!r || r.kind !== 'understudy') continue;
+    const judged = r.performed > 0 || Object.keys(r.nights ?? {}).length > 0 || (r as Casting & { closed?: Instant }).closed !== undefined;
+    const play = r.play ? REP_PLAYS.find((p) => p.title === r.play) : undefined;
+    const part = bySize(r.role) && !judged && play ? coveredPart(play, person.performerTitle === 'actress' ? 'actress' : 'actor') : undefined;
+    if (part) {
+      r.role = part.name;
+      named += 1;
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Your Understudy Part: ${part.name}`, body: `You understudy ${part.name} in ${repNamed(r)}.${coverWhy(person, r)} Your calls are on your calendar as before.`, importance: 70, route: '/workspace/school' });
+    }
+    if (bySize(r.role)) continue;
+    for (const item of sim.universe.scheduled) {
+      if (item.status !== 'pending' || item.kind !== CALL_KIND || item.payload.personId !== person.id || item.payload.which !== 'rep') continue;
+      if (item.payload.call === 'oncall') item.label = `${r.production}: ${onCallFor(r.role)}`;
+      else if (item.payload.wentOn === true) item.label = `${r.production}: You’re On As ${r.role}`;
+    }
+  }
+  return named;
 }
 
 function heldSpan(i: { at: Instant; durationMinutes?: number; payload: Record<string, unknown> }): readonly [Instant, Instant] {
@@ -2253,6 +2305,37 @@ export function repPlayOf(sim: Simulation, person: Person, term: number): (typeo
   const order = [...REP_PLAYS];
   for (let i = order.length - 1; i > 0; i -= 1) { const j = Math.floor(rng.next() * (i + 1)); [order[i], order[j]] = [order[j]!, order[i]!]; }
   return order[Math.max(0, Math.floor(term / 2) - 1) % order.length]!;
+}
+
+/**
+ * The part an understudy at the Rep covers in a play the season doesn't name (from 2026-10-20, brief 19's D6, brief 18's
+ * U1): the biggest part it writes for them or for either, a lead where it has one, then a supporting part, then a featured
+ * one, SLATE's estimate (the Rep doesn't publish its understudies' assignments). Until then it was a lead written for
+ * them or none: an actress dealt An Enemy Of The People, whose leads are both men, or an actor dealt Mrs Warren's
+ * Profession, whose leads are both women, understudied “An Understudy In The Company”. Their notices named no part, each
+ * night was judged as the play's lead, and the credit carried no part into the résumé. Every play the Rep is dealt has a
+ * part for an actor and one for an actress (tests/understudy-part.test.ts), so none is left covering nothing.
+ */
+export function coveredPart(play: { parts: readonly Part[] }, title: 'actor' | 'actress'): Part | undefined {
+  for (const size of ['lead', 'supporting', 'featured'] as const) {
+    const part = play.parts.find((x) => x.size === size && (x.for === title || x.for === 'either'));
+    if (part) return part;
+  }
+  return undefined;
+}
+
+/**
+ * The size of the part a casting plays, which its nights, their forecast and the hours they keep it on stage are judged
+ * at (from 2026-10-20, brief 19's D6): its own where it keeps one (every School casting and a Rep company part); an
+ * understudy's, the covered part's size in its play (`coveredPart`), and a lead's where the play's parts don't name it,
+ * as The Seagull's Nina and Konstantin, both leads, aren't listed. Until then an understudy was judged as a lead whatever
+ * they covered. A company understudy kept from a save whose nights were judged before this (`nameTheCover`) names no part,
+ * and goes on being judged as the lead it was.
+ */
+export function partSizeOf(c: { size?: PartSize; kind?: string; play?: string; role?: string }): PartSize {
+  if (c.size) return c.size;
+  const part = c.kind === 'understudy' && c.play ? REP_PLAYS.find((p) => p.title === c.play)?.parts.find((p) => p.name === c.role) : undefined;
+  return part?.size ?? 'lead';
 }
 
 /** What a casting asks of the craft: its play's, a festival's new plays', or the Rep company's. */
@@ -2900,11 +2983,14 @@ function cast(sim: Simulation, person: Person, term: number): void {
   if (repTerm(academic) && school.standing === 'good') {
     const rep = repProduction(term);
     const inRole = playerAtRep;
-    // After 2026–27 the Rep's play is dealt (`repPlayOf`): an understudy covers a lead written for them, and a company member plays a featured part (SLATE's estimate).
+    // After 2026–27 the Rep's play is dealt (`repPlayOf`): an understudy covers the biggest part written for them
+    // (`coveredPart`, from 2026-10-20, brief 19's D6: until then a lead or none), and a company member plays a featured
+    // part (SLATE's estimate).
     const play = term === 1 ? undefined : repPlayOf(sim, person, term);
     const title = person.performerTitle === 'actress' ? 'actress' : 'actor';
     const pick = (size: PartSize) => play?.parts.find((x) => x.size === size && (x.for === title || x.for === 'either'))?.name;
-    const role = term === 1 ? (title === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : inRole ? (pick('featured') ?? 'A Featured Part In The Company') : (pick('lead') ?? 'An Understudy In The Company');
+    // The company's unnamed cover is only for a play with no part written for them, which no Rep play is.
+    const role = term === 1 ? (title === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : inRole ? (pick('featured') ?? 'A Featured Part In The Company') : ((play && coveredPart(play, title)?.name) ?? 'An Understudy In The Company');
     // The class's others asked into the company with you, as a School production's cast lists them (from 2026-10-12), so a
     // curtain counts the friends among them and the nights together read them. Until then the Rep's casting had no cast,
     // and every Rep curtain weighed on somebody who needs company as one played among strangers, classmates on the stage
@@ -2922,7 +3008,8 @@ function cast(sim: Simulation, person: Person, term: number): void {
     for (let d = parseKey(rep.run.from); keyOf(d) <= rep.run.to; d = addDays(d, 1)) {
       const wd = weekday(d);
       if (wd === 1) continue;
-      reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: repHold, label: `${rep.name}: ${inRole ? 'Performance' : 'On Call'}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
+      // A night on call names the part it covers on the calendar (from 2026-10-20, brief 19's D6): until then “On Call” alone.
+      reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: repHold, label: `${rep.name}: ${inRole ? 'Performance' : onCallFor(role)}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
     }
     repStaged = { name: rep.name, understudy: !inRole };
     // An understudy's run-through: the understudies play the show once for the
@@ -3003,12 +3090,15 @@ function cast(sim: Simulation, person: Person, term: number): void {
       said.push(`The chair of Acting has cast you ${bySize(c.role) ? `in ${partWords(c.role.replace(/ In The Festival$/, ''))} at ${where}` : `as ${c.role} in ${where}`}, from its first rehearsal call.${lead ? ` The lead, ${lead.part}, went to ${lead.name}${rival ? ', your rival' : ''}.` : ''}`);
     }
     if (r) {
-      // Whom they cover: the Rep's 2027 Seagull's part, a part of the play the season names, or the company.
+      // Whom they cover: the Rep's 2027 Seagull's part, or a part of the play the season names. The company's unnamed
+      // cover went from 2026-10-20 (brief 19's D6, `coveredPart`), and so did “You’ll also understudy in Yale Rep’s An
+      // Enemy Of The People”, which named nobody.
       const covers = term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : r.play && !bySize(r.role) ? `${r.role} in ${repNamed(r)}` : `in ${repNamed(r)}`;
       const company = repNamed(r);
+      const why = r.kind === 'understudy' ? coverWhy(person, r) : '';
       said.push(r.kind === 'role'
         ? `${c ? 'You’re also in' : 'The chair of Acting has cast you in'} the company of ${company}, at the director’s invitation with the dean’s approval.`
-        : `${c ? 'You’ll also understudy' : 'The chair of Acting has cast you to understudy'} ${covers}: be in New Haven and reachable at every performance.`);
+        : `${c ? 'You’ll also understudy' : 'The chair of Acting has cast you to understudy'} ${covers}: be in New Haven and reachable at every performance.${why}`);
     }
     const plays = Boolean(c) || r?.kind === 'role';
     if (said.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `${said.join(' ')} ${plays ? `You play ${c && r?.kind === 'role' ? 'both parts through their runs' : 'the part through the run'}. ` : ''}${c && r ? 'Both productions’ calls are' : 'Its calls are'} on your calendar. A missed call counts against you: ${countWords(ESTIMATE.missedCallsOut)} in a term take you out of the casting pool.`, importance: 75, route: '/workspace/school' });
@@ -3551,8 +3641,9 @@ export function registerSchool(sim: Simulation): void {
    */
   const reckonNight = (s: Simulation, person: Person, casting: Run, item: { at: Instant; payload: Record<string, unknown> }, rep: boolean): { night: Night; energy: number } => {
     const n = ESTIMATE.nights;
-    // An understudy plays the part they cover, which at the Rep is a lead.
-    const evaluation = nightEvaluation(s, person, `${casting.production}-${item.at}`, casting, item.at, casting.size ?? 'lead', rep ? 'rep' : 'school');
+    // An understudy plays the part they cover, at its size (`partSizeOf`, from 2026-10-20, brief 19's D6): until then a
+    // lead's, whatever they covered, so the company's understudy of An Enemy Of The People went on judged as a lead.
+    const evaluation = nightEvaluation(s, person, `${casting.production}-${item.at}`, casting, item.at, partSizeOf(casting), rep ? 'rep' : 'school');
     const night = nightBand(evaluation.overall);
     recordWork(s, person, evaluation, { at: item.at, what: casting.play ?? casting.production, band: night });
     // How much of themselves they brought (`LastWork.delivery`): each dimension's preparation and the day's condition
@@ -3623,6 +3714,7 @@ export function registerSchool(sim: Simulation): void {
     const sch = person.school as SchoolRecord | undefined;
     const which = casting === sch?.rep ? 'rep' : casting === sch?.casting ? 'school' : casting === sch?.cabaret ? 'cabaret' : 'summer';
     casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}), directorVoiceFor(which, casting))}${workOn}`
+      // The company's words are a save from before's, its unnamed cover judged before 2026-10-20 (`nameTheCover`).
       : !wentOn ? `${/^(A|An) /.test(casting.role) ? 'You were on call to cover the company through the run, and didn’t go on.' : `You covered ${casting.role} on call through the run and didn’t go on.`} The work you did in the room isn’t lost.`
         : `The run went on without you: the nights you missed are in the record, and the work you did in the room isn’t lost.`;
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
@@ -3721,8 +3813,9 @@ export function registerSchool(sim: Simulation): void {
         // Sent on: nerves (`attributes.ts`).
         nerves(s, person, 'performance');
         grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at), nightWeights(castingReads(casting), 0.75));
-        // Not judged, as it never was: its energy is the lead's evening it covers (from 2026-10-16, brief 10).
-        tire(person, energyOfNight(nightEvaluation(s, person, `oncall-${item.at}`, casting, item.at, 'lead', 'rep', true)));
+        // Not judged, as it never was: its energy is the evening of the part it covers (from 2026-10-16, brief 10; at that
+        // part's size from 2026-10-20, `partSizeOf`, where until then a lead's).
+        tire(person, energyOfNight(nightEvaluation(s, person, `oncall-${item.at}`, casting, item.at, partSizeOf(casting), 'rep', true)));
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (person.id === s.universe.playerId) s.notify(wentOn(casting, item.at));
         return;
@@ -3736,7 +3829,8 @@ export function registerSchool(sim: Simulation): void {
       // A call's risk to the body, a student's on a stage (`systems/injury.ts`); Yale Health, not a workers' compensation, pays the care.
       // A performance's hours are the part's own on stage (from 2026-10-16, brief 10, `stageHours`): until then three, a
       // featured part in a one-act as a lead's long evening.
-      const hours = call === 'performance' ? stageHours(casting, casting.size ?? 'lead') : 4;
+      // An understudy's, the covered part's (`partSizeOf`, from 2026-10-20).
+      const hours = call === 'performance' ? stageHours(casting, partSizeOf(casting)) : 4;
       mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, hours), item.at);
       exerts(person, BODY.met.acting, hours, true);
       if (call === 'performance') {

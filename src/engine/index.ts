@@ -59,7 +59,7 @@ import { registerCash } from './systems/cash';
 import { findTermInterest, registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
-import { enroll, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
+import { enroll, nameTheCover, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
 import { holdsOverNothing, registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
@@ -279,7 +279,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -445,6 +445,12 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('writtenUnplayed')) {
     writtenUnplayed(sim);
     opened.push('writtenUnplayed');
+  }
+  // A Rep understudy from before 2026-10-20 covering no named part, given the part a casting gives now where none of its
+  // run was judged, and every understudy's calls still to come named for its part (`nameTheCover`, brief 19's D6), once.
+  if (!opened.includes('nameTheCover')) {
+    nameTheCover(sim);
+    opened.push('nameTheCover');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;
