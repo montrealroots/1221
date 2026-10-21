@@ -18,11 +18,12 @@ import { MONEY } from './money';
 import { PAPERS } from './papers';
 import { TAXES } from './taxes';
 import { DOCUMENTS } from './documents';
+import { CAREER_GUIDE } from './career';
 
 export type { Connection, ConnectionKind, Fact, Goal, GoalId, GuideEntry } from './types';
 
 /**
- * The contents, by what the player is trying to do, in the order a life meets them. Each lead names what its entries
+ * The contents, by what the player is trying to do, in the order a life meets them (Your Career last, from 2026-10-20). Each lead names what its entries
  * cover, in their order (from 2026-10-17: until then Staying At School's offered "shows of your own", which are
  * Productions And Casting's, and Your Day And The Clock's left moving time on out). From 2026-10-19 (brief 15) the
  * leads of Coursework And Partners, Productions And Casting, Money And The Bank and Papers name the entries they had
@@ -39,6 +40,8 @@ export const GOALS: readonly Goal[] = [
   { id: 'craft', title: 'Your Craft', lead: 'Your Player Profile, practice, genres, practice briefs from preparing to taping, how a piece was judged, and your work so far.' },
   { id: 'money', title: 'Money And The Bank', lead: 'What you’re worth, your accounts, moving money, savings, paying, cards, borrowing, another bank and an account at home.' },
   { id: 'papers', title: 'Papers', lead: 'Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, permission to work and living abroad.' },
+  // From 2026-10-20 (brief 19), the professional record's screen and portfolio (`content/guide/career.ts`).
+  { id: 'career', title: 'Your Career', lead: 'The Career screen, your professional profile and name, headshots, your résumé and your reel.' },
 ];
 
 /**
@@ -47,7 +50,7 @@ export const GOALS: readonly Goal[] = [
  */
 export const SEARCH_EXAMPLES: readonly string[] = ['clock stopped', 'how do I pay my card'];
 
-export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS];
+export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS, ...CAREER_GUIDE];
 
 export const GUIDE_BY_ID: Readonly<Record<string, GuideEntry>> = Object.fromEntries(GUIDE.map((e) => [e.id, e]));
 

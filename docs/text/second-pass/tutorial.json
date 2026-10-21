@@ -6,6 +6,13 @@
   "reason": "Looking After Yourself names its three entries in order, How You Are, Sleep and the menu's four things, in the menu's own everyday words.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/guide/index.ts#GOALS [career]": {
+  "status": "Rewritten",
+  "hash": "c778cc4493d3",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts",
+  "first": "Pending"
+ },
  "src/engine/content/guide/index.ts#GOALS [coursework]": {
   "status": "Rewritten",
   "hash": "85c798692df4",
@@ -97,6 +104,13 @@
   "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [career]": {
+  "status": "Rewritten",
+  "hash": "36dd5bc77aaf",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts",
+  "first": "Pending"
+ },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten",
   "hash": "87b9eb435a84",
@@ -155,9 +169,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
   "status": "Rewritten",
-  "hash": "4b146c07fec2",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
+  "hash": "321f2c5d89d7",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {

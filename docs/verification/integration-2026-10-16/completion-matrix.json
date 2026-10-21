@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 566 of 636 rows in scope Implemented And Verified (88.9%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -7515,6 +7515,98 @@
    "status": "Implemented And Verified"
   },
   {
+   "id": "pro.cut_reel",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (Your Reel (`career.reel`))",
+   "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where it came from, when it was made and what’s in it | Your Reel (`career.reel`)",
+   "entry": "`pro.cut_reel`, at Career, Portfolio, Reel (`/workspace/career?tab=portfolio`). Opens: From the guide’s chapter “Your Career”. | guide: Your Career | CareerWorkspace.tsx",
+   "preconditions": "Something recorded: tape a practice brief on the Player Profile first.; Free for two hours.; Enough in your bank for the edit.; Taping A Brief first: A self-tape of a practice brief is the first recorded work a reel can be cut from. | The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: Your bank can’t cover …, so nothing was charged. (also reelRefusal)",
+   "reads": "src/engine/systems/pro.ts",
+   "decisions": "chooses: pieces, id, cost",
+   "validation": "refusals: Your bank can’t cover …, so nothing was charged. (also reelRefusal) | Time: two hours (an estimate); Money: $250.00 (an estimate) | moves money through the ledger | costs: A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
+   "changes": "The clock moves on two hours, the edit comes out of your bank, and the reel shows what’s on it, a line a piece.",
+   "later": "New recorded work after it shows under What’s Missing as worth adding. | reel",
+   "systems": "The Career Screen, immediate: Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it. | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
+   "sees": "A reel of self-tapes only says so: filmed School work or screen work shows more.; A night on stage and a class piece aren’t recorded, so they never appear here.",
+   "saveLoad": "(none) | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "failure": "refusals said in the player's words: Your bank can’t cover …, so nothing was charged. (also reelRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",
+   "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
+   "evidence": "`pro.cut_reel`: `tests/pro-core.test.ts` | 1 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
+   "id": "pro.headshots",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (Headshots (`career.headshots`))",
+   "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where it came from, when it was made and what’s in it | Headshots (`career.headshots`)",
+   "entry": "`pro.headshots`, at Career, Portfolio, Headshots (`/workspace/career?tab=portfolio`). Opens: From the guide’s chapter “Your Career”. | guide: Your Career | CareerWorkspace.tsx",
+   "preconditions": "Free for the session’s four hours, with nothing on your calendar in that time.; Daytime: a session starts between 9 AM and 4 PM.; Enough in your bank for the price. | The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: Your bank can’t cover …, so nothing was charged. (also headshotRefusal)",
+   "reads": "src/engine/systems/pro.ts",
+   "decisions": "Not recorded",
+   "validation": "refusals: Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | Time: four hours (an estimate); Money: $700.00 (an estimate) | moves money through the ledger | costs: A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
+   "changes": "The clock moves on by the session, the price comes out of your bank as a work cost, and your new headshots are on the panel, dated today.",
+   "later": "Two years on, they read as out of date, and What’s Missing says so. | headshot",
+   "systems": "The Career Screen, immediate: Once you have headshots, What’s Missing stops asking for them, until they’re more than two years old.; Your Accounts, immediate: The session’s price comes out of your bank as a work cost. | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
+   "sees": "Current means they were taken within two years. Out of date means they may not look like you now.",
+   "saveLoad": "(none) | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "failure": "refusals said in the player's words: Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",
+   "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
+   "evidence": "`pro.headshots`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts` | 2 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
+   "id": "pro.set_name",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (Your Professional Profile (`career.profile`))",
+   "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where it came from, when it was made and what’s in it | Your Professional Profile (`career.profile`)",
+   "entry": "`pro.set_name`, at Career, Portfolio, Your Profile (`/workspace/career?tab=portfolio`). Opens: From the guide’s chapter “Your Career”. | guide: Your Career | CareerWorkspace.tsx",
+   "preconditions": "A name of letters, with spaces, hyphens, apostrophes and periods between them, 40 characters at most. | The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: — (also nameRefusal)",
+   "reads": "src/engine/systems/pro.ts",
+   "decisions": "chooses: name, set",
+   "validation": "refusals: — (also nameRefusal) | Time: None; Money: None | costs: A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
+   "changes": "Your profile shows the new name at once.",
+   "later": "A résumé made under your old name reads as behind, and Update Your Résumé makes one under the new name.",
+   "systems": "Your Résumé, immediate: Your résumé uses your professional name, and one made under another name reads as behind.; The Player Profile, history: Your special skills are your techniques on the Player Profile, at the level it shows. | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
+   "sees": "Professional credits are paid work and student films, kept for good. Practice, practice briefs and self-tapes are never credits.; A special skill marked mastered is at its technique’s top, where no piece asks more of it.",
+   "saveLoad": "The Player Profile: Your special skills are your techniques on the Player Profile, at the level it shows. | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "failure": "refusals said in the player's words: — (also nameRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",
+   "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
+   "evidence": "`pro.set_name`: `tests/pro-core.test.ts` | 1 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
+   "id": "pro.update_resume",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (Your Résumé (`career.resume`))",
+   "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where it came from, when it was made and what’s in it | Your Résumé (`career.resume`)",
+   "entry": "`pro.update_resume`, at Career, Portfolio, Résumé (`/workspace/career?tab=portfolio`). Opens: From the guide’s chapter “Your Career”. | guide: Your Career | CareerWorkspace.tsx",
+   "preconditions": "Free for an hour.; Something on your record it doesn’t have yet, for an update. | The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: — (also resumeRefusal)",
+   "reads": "src/engine/systems/pro.ts",
+   "decisions": "Not recorded",
+   "validation": "refusals: — (also resumeRefusal) | Time: an hour (an estimate); Money: None | costs: A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
+   "changes": "The clock moves on an hour, and the new résumé is on the panel with what it says.",
+   "later": "A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new. | resume",
+   "systems": "The Career Screen, immediate: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.; The Nights, history: A School production’s part goes on your résumé once its run has closed. | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
+   "sees": "Up To Date means it has everything on your record. Behind names what it’s missing.",
+   "saveLoad": "The Nights: A School production’s part goes on your résumé once its run has closed. | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "failure": "refusals said in the player's words: — (also resumeRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",
+   "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
+   "evidence": "`pro.update_resume`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts` | 2 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
    "id": "banking.1",
    "group": "Remaining Area: banking",
    "kind": "area item",
@@ -11130,7 +11222,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11205,7 +11297,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11257,7 +11349,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11333,7 +11425,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -13716,7 +13808,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14135,7 +14227,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14436,7 +14528,7 @@
     "commit": "ecd961cc",
     "watch": "app"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14463,7 +14555,7 @@
     "commit": "ecd961cc",
     "watch": "app"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14490,7 +14582,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14517,7 +14609,7 @@
     "commit": "3fe960df",
     "watch": "app"
    },
-   "missing": "It was measured on 3fe960df, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on 3fe960df, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14800,7 +14892,7 @@
     "commit": "ecd961cc",
     "watch": "app"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14827,7 +14919,7 @@
     "commit": "ecd961cc",
     "watch": "app"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14854,7 +14946,7 @@
     "commit": "ecd961cc",
     "watch": "app"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14881,7 +14973,7 @@
     "commit": "ecd961cc",
     "watch": "app"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14908,7 +15000,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14935,7 +15027,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14962,7 +15054,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14989,7 +15081,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15016,7 +15108,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15043,7 +15135,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15070,7 +15162,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15097,7 +15189,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15124,7 +15216,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15151,7 +15243,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15178,7 +15270,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15205,7 +15297,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15232,7 +15324,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15259,7 +15351,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15286,7 +15378,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15313,7 +15405,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15340,7 +15432,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15367,7 +15459,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15394,7 +15486,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15421,7 +15513,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15448,7 +15540,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15475,7 +15567,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15502,7 +15594,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15529,7 +15621,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15578,7 +15670,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15605,7 +15697,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15632,7 +15724,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15659,7 +15751,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15686,7 +15778,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15713,7 +15805,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15740,7 +15832,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15767,7 +15859,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/guide/body.ts, src/engine/content/guide/day.ts, src/engine/content/guide/productions.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   }
  ]
 }

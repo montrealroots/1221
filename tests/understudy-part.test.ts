@@ -30,7 +30,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { CALL_KIND, NIGHT_DIFFICULTY, coveredPart, nameTheCover, nightEvaluation, partSizeOf, stageHours } from '@/engine/systems/school';
 import { workPiece } from '@/engine/systems/workpieces';
 import { energyOfNight } from '@/engine/systems/workload';
-import { REP_PLAYS } from '@/engine/content/plays';
+import { REP_PLAYS, type PartSize } from '@/engine/content/plays';
 import { BODY } from '@/engine/content/body';
 import { WORKLOAD } from '@/engine/content/workload';
 import { attentiveHour, life } from '../tools/policy';
@@ -89,8 +89,8 @@ describe('the part an understudy covers', () => {
       expect(part, `${play.title} for an ${title}`).toBeDefined();
       expect(['either', title]).toContain(part!.for);
       // None bigger is written for them.
-      const bigger = { lead: [], supporting: ['lead'], featured: ['lead', 'supporting'] }[part!.size];
-      expect(play.parts.filter((p) => bigger.includes(p.size) && (p.for === title || p.for === 'either'))).toEqual([]);
+      const bigger: Record<PartSize, PartSize[]> = { lead: [], supporting: ['lead'], featured: ['lead', 'supporting'] };
+      expect(play.parts.filter((p) => bigger[part!.size].includes(p.size) && (p.for === title || p.for === 'either'))).toEqual([]);
     }
     const enemy = REP_PLAYS.find((p) => p.title === ENEMY)!;
     const warren = REP_PLAYS.find((p) => p.title === 'Mrs Warren’s Profession')!;

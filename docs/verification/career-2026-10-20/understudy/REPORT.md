@@ -82,9 +82,11 @@ Played on seed us-86 before the fix (`sequence-before.txt`):
 
 Mutations: 16 of 16 killed (`mutations.txt`, `mutate.py`). Run with `--maxWorkers=1 --minWorkers=1`: 31 related files
 (507 tests) passed, and the 33 files importing workpieces, SchoolWorkspace or the guide and the 10 that read
-`universe.opened`. `tsc` and `eslint` exit 0; every gate check without the suite exits 0 but `completion-matrix --check`,
-whose 46 rows measured before `school.ts` and `index.ts` changed now read Verification Incomplete until they're measured
-again on the integrated branch.
+`universe.opened`. `eslint` exits 0. `tsc` exited 0 as its builder ran it, but the gate's own typecheck, `tsc -b
+--noEmit`, failed on test 1's lookup of the sizes bigger than a part (`lead: []` typed as holding nothing); that was
+found at the core's merge and the lookup typed there. Every gate check without the suite exits 0 but
+`completion-matrix --check`, whose 46 rows measured before `school.ts` and `index.ts` changed now read Verification
+Incomplete until they're measured again on the integrated branch.
 
 ## Evidence (this folder)
 - `sequence-before.txt`, `sequence-after.txt`

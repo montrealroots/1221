@@ -1,0 +1,95 @@
+{
+ "label": "A first-year’s save from before 2026-10-20, opened once",
+ "note": "Built once on opening; no union; the year said truly.",
+ "at": "2026-09-02T22:00:00.000Z",
+ "opened": [
+  "followTheCover",
+  "findTermInterest",
+  "cutIntoUnits",
+  "cardYears",
+  "timeTheCalls",
+  "briefsMastered",
+  "writtenUnplayed",
+  "pro.begun"
+ ],
+ "pro": {
+  "since": 1788386400000,
+  "credits": [],
+  "materials": [],
+  "relations": {},
+  "agreements": [],
+  "opportunities": [],
+  "engagements": []
+ },
+ "profile": {
+  "name": "Ada Cole",
+  "nameSet": false,
+  "training": {
+   "status": "candidate",
+   "words": "You’re an MFA candidate in Acting at the David Geffen School of Drama at Yale University, in year one of three.",
+   "short": "MFA in Acting (candidate, year 1 of 3), David Geffen School of Drama at Yale University"
+  },
+  "schoolCredits": [],
+  "proCredits": [],
+  "skills": [],
+  "availability": {
+   "inSchool": true,
+   "words": "You’re at the School until the degree, expected in May 2029.",
+   "booked": []
+  },
+  "location": {
+   "cityId": "us-ct-newhaven",
+   "city": "New Haven"
+  },
+  "eligibility": {
+   "authorized": true,
+   "words": "You’re a US citizen, so you can work for any employer in the US."
+  },
+  "unions": {
+   "words": "Neither actors’ union counts you as a member yet."
+  }
+ },
+ "pathway": {
+  "id": "degree",
+  "heading": "Completing The Degree",
+  "words": "Year one of the MFA: the degree comes at Commencement after your sixth term, and everything on your record goes on with you."
+ },
+ "missing": {
+  "stage": [
+   {
+    "kind": "headshot",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab."
+   },
+   {
+    "kind": "resume",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record."
+   }
+  ],
+  "screen": [
+   {
+    "kind": "headshot",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab."
+   },
+   {
+    "kind": "resume",
+    "problem": "missing",
+    "blocking": true,
+    "words": "You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record."
+   },
+   {
+    "kind": "reel",
+    "problem": "missing",
+    "blocking": false,
+    "words": "You have no reel, and nothing recorded to cut one from yet. Tape a practice brief on the Player Profile first."
+   }
+  ]
+ },
+ "reelSources": [],
+ "breaches": []
+}

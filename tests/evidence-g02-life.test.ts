@@ -725,8 +725,10 @@ describe('tutorial.read', () => {
       // FIXTURE: the help open at its contents.
       const contents = () => drawn(sim, () => createElement(HelpProvider, { children: null }), [[{ kind: 'contents' }], h.keep, h.keep]);
       const atBank = guide();
-      expect(atBank.html).toContain('aria-label="16. Your Bank, Open"');
-      expect(atBank.html).toContain('aria-label="17. A Whole Life, Open"');
+      // The last two chapters are the 17th and 18th of 18 from 2026-10-20, when brief 19 put Your Career after You As An
+      // Actor; they were the 16th and 17th of 17 until then.
+      expect(atBank.html).toContain('aria-label="17. Your Bank, Open"');
+      expect(atBank.html).toContain('aria-label="18. A Whole Life, Open"');
       expect(atBank.html).not.toMatch(/, Later"/);
       expect(atBank.text).toContain('What It Covers, Already Open');
       expect(atBank.text).not.toContain('What It Opens');
@@ -734,11 +736,11 @@ describe('tutorial.read', () => {
       // Change the input: not finished, the same save is a guide with two chapters to go, the next of them Your Bank.
       delete sim.universe.tutorial!.finished; // TEST SETUP
       const going = guide();
-      expect(going.html).toContain('aria-label="16. Your Bank, Next"');
-      expect(going.html).toContain('aria-label="17. A Whole Life, Later"');
+      expect(going.html).toContain('aria-label="17. Your Bank, Next"');
+      expect(going.html).toContain('aria-label="18. A Whole Life, Later"');
       expect(going.text).toContain('What It Opens');
       expect(going.has('I’ve Read It')).toBe(true);
-      expect(contents().text).toContain('The Guide. You’ve read 15 of its 17 chapters. Each one you read opens a part of the game.');
+      expect(contents().text).toContain('The Guide. You’ve read 16 of its 18 chapters. Each one you read opens a part of the game.');
     } finally {
       if (had === undefined) delete page.window; else page.window = had;
     }

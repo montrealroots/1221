@@ -19,9 +19,9 @@
  },
  "src/app/game-context.tsx#ROUTE_LABELS": {
   "status": "Rewritten And Verified",
-  "hash": "9a87b6b0c5d6",
-  "on": "2026-10-17",
-  "evidence": "tests/language-frame.test.ts 'name a screen reached without a label, by a notice’s Go There or an address, as the rail names it'; docs/verification/language-2026-10-17/frame/frame-walk-1440.json (Calendar: the breadcrumb Home › Calendar)"
+  "hash": "bfdc10dcafcc",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
  },
  "src/app/game-context.tsx#useGame": {
   "status": "Reviewed And Retained",
@@ -2671,9 +2671,9 @@
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
   "status": "Rewritten And Verified",
-  "hash": "69497279cf89",
-  "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/frame/after-1440 (each rail destination's description, its title: Your standing, classes, coursework, casting, shifts and terms, and the rest)"
+  "hash": "2f0b36414251",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
  },
  "src/ui/shell/GameShell.tsx#GameShell": {
   "status": "Rewritten And Verified",
@@ -2741,6 +2741,12 @@
   "on": "2026-10-17",
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
  },
+ "src/ui/shell/sections.ts#SECTIONS [overview]": {
+  "status": "Rewritten And Verified",
+  "hash": "0efc2e6be4c2",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
+ },
  "src/ui/shell/sections.ts#SECTIONS [passport]": {
   "status": "Reviewed And Retained",
   "hash": "83e5e372ec2f",
@@ -2752,6 +2758,12 @@
   "hash": "0be4502f405a",
   "on": "2026-10-17",
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [portfolio]": {
+  "status": "Rewritten And Verified",
+  "hash": "036b18f02ab5",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts"
  },
  "src/ui/shell/sections.ts#SECTIONS [returns]": {
   "status": "Reviewed And Retained",

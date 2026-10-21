@@ -15,7 +15,7 @@
  */
 
 /** A group on the contents page, by what the player is trying to do. */
-export type GoalId = 'start' | 'day' | 'body' | 'school' | 'coursework' | 'productions' | 'craft' | 'money' | 'papers';
+export type GoalId = 'start' | 'day' | 'body' | 'school' | 'coursework' | 'productions' | 'craft' | 'money' | 'papers' | 'career';
 
 /**
  * How two features connect, from the first's side:

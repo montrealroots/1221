@@ -48,7 +48,8 @@ import { ROUND_UPS } from './roundups';
 import { PRACTICE } from './practice';
 import { EVALUATION } from './tasks';
 import { ENROLLMENT, PUBLIC_COVER, RETURN } from './safetynet';
-import { EXTENDED_STUDY, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
+import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
+import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
 import { BRIEF } from '../systems/briefs';
 import { ESTIMATE } from '../systems/school';
@@ -410,7 +411,8 @@ export const CHAPTERS: readonly Chapter[] = [
       'A way of playing a scene can suit it or work against it, depending on the scene: its genre, its reader, its tones, its turns and the reading you’ve chosen. One that suits the scene is easier to make work and quicker to rehearse, and one that works against it is harder. Either can make the better tape if it plays to your strengths, and the tape tells you which did.',
       'Your tape with your reader is what a casting office would see. A Strong tape earns a callback: a harder version of the scene with a note on how to play it, which only a tape played that way answers.',
       'Loving a genre makes a rehearsal or a night in a play of that kind a better day for you, but it never makes the performance better.',
-      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+      // Until 2026-10-20 this sent the player to Papers' chapter; “Your Career” comes between them from brief 19.
+      'Read “Your Career” next. It opens the Career screen: your profile, headshots, résumé and reel.',
     ],
     more: [
       'Discipline grows with each day you practice and each call you keep, and it makes everything classes, nights, preparation steps and practice build count a little more, or a little less. Practice doesn’t train Stamina: Stamina is your fitness, built by Work Out, under Look After Yourself, and by a class that works the body as hard, Movement Invention or stage combat. Some abilities make a session get more done: memory when you learn lines, imagination at the table and in a brief’s breakdown, focus when you get to know a scene, listening when you rehearse with a partner or a reader or rehearse a brief with its reader, and adaptability when you revise after a note or work on a director’s note about the blocking.',
@@ -421,6 +423,32 @@ export const CHAPTERS: readonly Chapter[] = [
     ],
     names: ['Player Profile', 'Practice', 'Study It', 'Open Its Brief', 'Break It Down, Learn The Lines, Rehearse It On Your Feet', 'Read It This Way', 'Read With', 'Tape It', 'Your Work So Far', 'An ability, a genre and a piece of work, when you press them'],
     opens: ['ui.profile', 'practice.exercise', 'genre.study', 'brief.prepare', 'brief.choose', 'brief.reader', 'practice.self_tape', 'look.ability', 'look.genre', 'look.work'],
+  },
+  // From 2026-10-20 (the owner's brief 19): the professional record's portfolio (`systems/pro.ts`), after the Player
+  // Profile it builds on, since a reel is cut from the self-tapes taped there.
+  {
+    id: 'career',
+    title: 'Your Career',
+    lead: 'Your professional profile, and the headshots, résumé and reel a submission sends.',
+    body: [
+      'Career, in the menu under Your Work, shows where you stand as a professional actor. Its Overview says what training you have, when you’re free for work, whether you can work in the US, and what your portfolio is missing.',
+      'The Portfolio tab holds what a submission sends: your profile, headshots, a résumé and a reel. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.',
+      'Your Profile shows the name you work under. To change it, type a name under Professional Name and press Use This Name. Leave it blank and press it to go back to your own name. Your résumé uses the name you choose.',
+      `Book A Headshot Session takes ${counted(PRO_HEADSHOTS.minutes / 60, 'hour')} and costs about ${formatMoney(PRO_HEADSHOTS.cost, 'USD')}, both estimated. Photographers work by day, so a session starts ${PRO_SESSION_HOURS}. Headshots more than two years old read as out of date.`,
+      'Make Your Résumé takes an hour. It lists your name, training, unions, credits and special skills from your record, with School credits and professional credits apart. Practice, practice briefs and self-tapes are never credits.',
+      'Once something new is on your record, such as a part played or a skill grown, your résumé reads as behind. Press Update Your Résumé to bring it up to date.',
+      `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
+      'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
+      'If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.',
+      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+    ],
+    more: [
+      `A technique goes on your résumé as a special skill once it reaches ${PRO_SKILL_AT}: ${andList(PRO_SKILLS.map((s) => SKILL_WORDS[s]))}. Once it’s mastered, the résumé says so.`,
+      'When you graduate, the degree makes you a member of Actors’ Equity, as the School’s Bulletin says, and your profile and résumé show it from that day.',
+      `Your record keeps the last ${word(PRO_MATERIALS_KEPT)} of each kind of material you make, and every credit for good.`,
+    ],
+    names: ['Career', 'Overview', 'Portfolio', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel'],
+    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

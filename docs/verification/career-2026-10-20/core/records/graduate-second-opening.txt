@@ -1,0 +1,1 @@
+Second opening serialised identical to the first: true

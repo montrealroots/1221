@@ -1,11 +1,38 @@
-# Read First: Brief 18, Close The Remaining Writing And Gameplay Gaps, Paused, 2026-10-20
+# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, In Progress, 2026-10-21
 
-**This section is the current status, and where a new session starts.** The owner gave brief 18
+**This section is the current status, and where a new session starts.** The owner gave brief 19
+(`docs/verification/briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept
+verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
+none of it is in `main`, and nothing is deployed.
+
+**Completion, by the matrix:** 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 19's core, merged 2026-10-21: until it this said 566 of 636. Its four commands are rows of their own,
+  Implemented, Verification Incomplete until an audit row reads them, and 46 measured rows read the engine's whole
+  source, so the understudy's, the clock's and the core's changes leave them measured before what they read last
+  changed, until brief 19's final runs measure them again.)
+
+- **Read first:** `docs/verification/career-2026-10-20/criteria.md` (the items, each Open until the game does it and a
+  test fails without it), `design.md` (binding: the agent's limits, the pathways, the record, the agreement, the work
+  loop, who builds what) and the research in `docs/research/career-2026-10-20/`.
+- **Merged so far, each from a builder's branch with its report:** the understudy's part (D6, brief 18's U1,
+  `understudy/REPORT.md`); the clock (D1 to D5, brief 18's S1 to S5, `time/REPORT.md`); the core, the professional
+  record, the agent's data, the work's data and the portfolio (`core/REPORT.md`). Brief 18's criteria mark its five
+  items done here.
+- **Still to build:** the showcase (W1 to W3); the agent's relationship, interest and agreement (G2 to G8); the work
+  loop, its pay and commission, work eligibility and the tutorial's job guard (J1 to J6, D7 to D9, A3); then the
+  playthroughs V1 to V18, the built app at both widths, and the gate.
+- **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
+  marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
+  owner's call.
+
+# Earlier: Brief 18, Close The Remaining Writing And Gameplay Gaps, Paused, 2026-10-20
+
+**This section was the current status until brief 19 began** (2026-10-20; brief 18 stays paused, and the completion
+line is stated in brief 19's section above). The owner gave brief 18
 (`docs/verification/briefs-2026-10-16/18-close-the-remaining-writing-and-gameplay-gaps.txt`, kept verbatim) and paused
 it before any fix: "Actually save and put a pause on all of this. I want to move on to something else." (2026-10-20,
 22:28 UTC). Nothing in the game changed. The rest of the state is brief 17's, in its section below.
-
-**Completion, by the matrix:** 566 of 636 rows in scope Implemented And Verified (88.9%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 - **The repository:** `main` is at `469f8448` (#47). The working branch, `claude/peaceful-hamilton-59zdbb`, was
   fast-forwarded to it and carries brief 18's records on top: the brief, its criteria and its plan. None of them changes

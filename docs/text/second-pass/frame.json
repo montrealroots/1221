@@ -35,11 +35,11 @@
   "first": "Rewritten And Verified"
  },
  "src/app/game-context.tsx#ROUTE_LABELS": {
-  "status": "Retained",
-  "hash": "9a87b6b0c5d6",
-  "on": "2026-10-19",
-  "reason": "The rail’s destination names, the same words the rail, the breadcrumbs and the keyboard shortcuts use, so each screen keeps one name everywhere.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "bfdc10dcafcc",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
  },
  "src/app/game-context.tsx#useGame": {
   "status": "Retained",
@@ -3178,11 +3178,11 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
-  "status": "Retained",
-  "hash": "69497279cf89",
-  "on": "2026-10-19",
-  "reason": "The rail’s names and one line under each listing what that screen holds, in the tabs’ own words.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "2f0b36414251",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
  },
  "src/ui/shell/GameShell.tsx#GameShell": {
   "status": "Retained",
@@ -3261,6 +3261,13 @@
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/shell/sections.ts#SECTIONS [overview]": {
+  "status": "Rewritten",
+  "hash": "0efc2e6be4c2",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
+ },
  "src/ui/shell/sections.ts#SECTIONS [passport]": {
   "status": "Retained",
   "hash": "83e5e372ec2f",
@@ -3274,6 +3281,13 @@
   "on": "2026-10-19",
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [portfolio]": {
+  "status": "Rewritten",
+  "hash": "036b18f02ab5",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "first": "Pending"
  },
  "src/ui/shell/sections.ts#SECTIONS [returns]": {
   "status": "Retained",

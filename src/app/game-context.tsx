@@ -469,7 +469,7 @@ export function GameProvider({
 // ---------------------------------------------------------------------------
 
 // The career's, travel's, the cars', the land's and the homes' labels went with their screens; they were left here
-// until 2026-10-09.
+// until 2026-10-09. The Career's came back with its screen on 2026-10-20 (brief 19).
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
@@ -477,6 +477,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/bank': 'Money',
   '/workspace/papers': 'Papers',
   '/workspace/profile': 'Player Profile',
+  '/workspace/career': 'Career',
 };
 
 export function labelForRoute(route: string): string {

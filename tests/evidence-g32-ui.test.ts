@@ -757,7 +757,8 @@ describe('h-needs: What Needs You on Home', () => {
     expect(press(button('File It'))).toEqual({ ok: false, error: 'Read “Cover, Benefits And Returns” in the guide first. The chapters open in order, and “How You Are” is next: press Guide, at the top of the screen.' });
     expect(needs(sim)).toContain(`Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss`);
     expect(sim.universe.decisions[decision.id]!.resolvedAt).toBeUndefined();
-    for (const id of ['body', 'sleep', 'looking-after', 'plans', 'weather', 'school', 'profile', 'papers']) read(id);
+    // “Your Career” between You As An Actor and Papers' chapter from 2026-10-20 (brief 19), read in its place in the order.
+    for (const id of ['body', 'sleep', 'looking-after', 'plans', 'weather', 'school', 'profile', 'career', 'papers']) read(id);
     const owed = returnsOf(sim.player)['2026']!.figures.balance;
     expect(decision.detail).toContain(`You owe $${(owed / 100).toFixed(2)}`);
     const checking = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;

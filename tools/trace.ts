@@ -18,7 +18,9 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { GOALS, GUIDE, GUIDE_BY_ID, connectionsTo, type GuideEntry } from '../src/engine/content/guide';
 
-const GOALS_TRACED = ['start', 'coursework', 'productions', 'craft'] as const;
+// The career's entries too, from 2026-10-20 (brief 19): its commands are traced here, as `tools/coverage.mjs` asks of a
+// command a live capability names that no audit row holds.
+const GOALS_TRACED = ['start', 'coursework', 'productions', 'craft', 'career'] as const;
 const check = process.argv.includes('--check');
 
 const tests = readdirSync('tests').filter((f) => f.endsWith('.ts')).map((f) => ({ f: `tests/${f}`, text: readFileSync(`tests/${f}`, 'utf8') }));
@@ -74,9 +76,10 @@ for (const g of GOALS_TRACED) {
 const md = `# Every Touched Feature, Traced
 
 Written by \`tools/trace.ts\` from the guide's registry and the tests; don't edit it by hand. ${rows} entries in the four
-areas the connected-journey pass of 2026-10-12 rebuilt, each traced Action → Preconditions → Costs → State → Consumer →
-Feedback → History → Later consequence. The words are the guide's own, which carry the rules' figures; every entry's
-claims were checked against the engine by a second reader when it was written.
+areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
+Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
+carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
+were written, and the career's by the tests that drive each of its commands.
 
 **Unconsumed** (a row nothing reads): ${unconsumed.length ? unconsumed.map((x) => `\`${x}\``).join(', ') : 'none'}.
 **Read Only** (screens and looks, changing nothing): ${readOnly.length ? readOnly.map((x) => `\`${x}\``).join(', ') : 'none'}.
