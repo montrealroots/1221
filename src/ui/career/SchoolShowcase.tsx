@@ -16,7 +16,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { CITIES } from '@/engine/content/geography';
-import { sceneById } from '@/engine/content/coursework';
+import { sceneById, type Scene } from '@/engine/content/coursework';
 import { formatDate, formatWeekdayDate } from '@/engine/core/time';
 import { schoolEnded } from '@/engine/systems/school';
 import { BAND_LABEL } from '@/engine/systems/coursework';
@@ -26,6 +26,8 @@ import {
 } from '@/engine/systems/proshowcase';
 
 const cityName = (id: string) => CITIES.get(id)?.name ?? id;
+/** Who wrote a scene, inside a sentence: an original scene's credit in lower case, as the coursework's cards say it. */
+const byWords = (s: Scene) => (s.origin === 'original' ? `${s.by.charAt(0).toLowerCase()}${s.by.slice(1)}` : s.by);
 
 export function ShowcasePanel() {
   const { sim } = useGame();
@@ -117,7 +119,7 @@ function Options() {
       <p className="xs dim" style={{ margin: 0 }}>Choose two scenes, each in one of its parts. Each scene’s forecast is the scene fully prepared, on a good day: a forecast, not a result. If you haven’t chosen by the end of the term’s fourth week, the faculty choose their first two.</p>
       {[...byScene.values()].map((parts) => (
         <div key={parts[0]!.scene.id} className="col gap-1">
-          <p className="small" style={{ margin: 0 }}><strong>{parts[0]!.scene.play}</strong>{`, ${parts[0]!.scene.by} (${parts[0]!.scene.year}). ${parts[0]!.sceneNote}`}</p>
+          <p className="small" style={{ margin: 0 }}><strong>{parts[0]!.scene.play}</strong>{`, ${byWords(parts[0]!.scene)} (${parts[0]!.scene.year}). ${parts[0]!.sceneNote}`}</p>
           <ul className="small" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
             {parts.map((o) => (
               <li key={o.id} className="row gap-2" style={{ alignItems: 'baseline' }}>
