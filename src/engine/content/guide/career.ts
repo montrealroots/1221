@@ -7,20 +7,30 @@
  * goes on a résumé from; and the versions kept. Each of those is the game's estimate, and the entries say so. The
  * Bulletin's sentences (Equity at the degree, the filmed monologues posted at the end of the final term) are its own
  * (`docs/research/career-2026-10-20/yale.md`, B27 pp.24 and 33).
+ *
+ * From 2026-10-21 (brief 19's J1 to J5 and A3) four more: finding work and submitting, auditions and callbacks, offers
+ * and booked work, and work while at the School. Their figures are the work loop's own (`systems/projobs.ts`): a
+ * posting's week, the trip and the times, the School's fourteen days, ten working days, two class days and the dean's
+ * week, each the game's estimate, said so; the Bulletin's sentences are its own (yale.md §4, B27 p.148).
  */
 
 import { CHAPTER_FOR } from '../tutorial';
 import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
 import { HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
+import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
+import { BRIEF } from '../../systems/briefs';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
 /** A Career section's id: a parameter typed by its literals would read to `tools/title-case.mjs` as a label. */
-type Section = 'overview' | 'portfolio';
+type Section = 'overview' | 'portfolio' | 'opportunities';
 const on = (section: Section, label: string) => ({ route: CAREER, tab: section, label });
 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
+/** The work loop's chapter (from 2026-10-21, brief 19's J1 to J5 and A3). */
+const WORK_CHAPTER = CHAPTER_FOR['pro.submit']!.title;
+const STEPS = `${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}`;
 const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const word = (n: number): string => WORDS[n] ?? String(n);
 const hours = (minutes: number): string => (minutes === 60 ? 'an hour' : `${word(minutes / 60)} hours`);
@@ -245,6 +255,210 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'Three self-tapes of camera briefs taped, one of them Strong.',
       steps: ['Tick the Strong tape and one other.', 'Press Cut A Reel.'],
       result: `Two hours on, ${usd(REEL.cost)} comes out of your bank, and Reel lists the two pieces with their bands. What’s Missing says it holds only self-tapes.`,
+    },
+  },
+  {
+    id: 'career.opportunities',
+    title: 'Finding Work And Submitting',
+    goal: 'career',
+    covers: ['pro.submit'],
+    synonyms: ['casting notice', 'find work', 'acting work', 'open call', 'submit myself', 'breakdown'],
+    questions: ['How do I find acting work?', 'How do I submit for a role?', 'Why can’t I submit for this role?'],
+    where: on('opportunities', 'Career, Opportunities, Open Calls'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”.`,
+    short: `The Opportunities tab lists the roles you can be seen for, every project, company and casting office invented for the game. New roles go up each Monday morning and take submissions for ${word(WORK.submitDays)} days.\n\nPress Submit Yourself on an open role to send your headshots and résumé, and a reel where casting asks for one. Some casting offices take actors only through an agent, and their roles reach you only while one represents you.`,
+    steps: [
+      'Open Career, then the Opportunities tab.',
+      'Under Open Calls, read a role: the project, the part, what it asks, its dates and place, its pay and whether you can be seen for it.',
+      'Press Submit Yourself. If it’s grayed out, the line under it says why.',
+    ],
+    needs: [
+      'Headshots and a résumé, made on the Portfolio tab, and a reel where the casting office asks for one.',
+      'A role that takes your own submission, before its window closes.',
+      'The role’s playing ages, and Equity membership for an Equity open call.',
+    ],
+    costs: [{ label: 'Time', value: 'None: a submission is sent at once' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'Materials', value: 'Your current headshots, résumé and reel, as What’s Missing reads them' },
+      { label: 'Eligibility', value: 'The role’s playing ages, an open call’s union, and the days you’re already booked' },
+    ],
+    now: ['The role moves to In Progress, with what you sent and when each was made.'],
+    later: [`${word(WORK.replyDays).charAt(0).toUpperCase()}${word(WORK.replyDays).slice(1)} days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.`],
+    interpret: [
+      'Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.',
+      'Each role says it’s fictional: no real production is casting.',
+    ],
+    unavailable: [
+      'You have no headshots, and every submission starts with one.',
+      'The casting office takes submissions only from agents.',
+      'It’s an open call for Equity members, and you aren’t one yet.',
+      'Submissions closed.',
+    ],
+    mistakes: ['Waiting to make headshots until a role you want is posted. A role’s window is a week; make them first.'],
+    next: ['Prepare the sides once the casting office answers.'],
+    related: ['career.auditions', 'career.overview', 'career.headshots'],
+    connections: [
+      { to: 'career.headshots', kind: 'prerequisite', why: 'A submission starts with your headshots: without them it can’t be sent.' },
+      { to: 'career.auditions', kind: 'scheduled', why: 'A submission puts the casting office’s answer on the clock, and the answer sets an audition.' },
+    ],
+    example: {
+      setup: 'A graduate with headshots and a résumé, and a student film posted on Monday.',
+      steps: ['Open Career, then Opportunities.', 'Press Submit Yourself under the student film.'],
+      result: 'The role moves to In Progress with your headshots and résumé listed as sent, and two days on a notice says when the director wants to see you.',
+    },
+  },
+  {
+    id: 'career.auditions',
+    title: 'Auditions And Callbacks',
+    goal: 'career',
+    covers: ['pro.prepare', 'pro.tape_audition', 'pro.move_audition'],
+    synonyms: ['audition', 'self-tape audition', 'callback', 'sides', 'another time', 'casting decision'],
+    questions: ['How do I prepare for an audition?', 'Can I move my audition?', 'How does casting decide?'],
+    where: on('opportunities', 'Career, Opportunities, In Progress'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once a casting office has answered a submission.`,
+    short: `An audition is in person, in New York or Providence at a set time, or a self-tape due by an evening. Prepare the sides first with ${STEPS}, as you would a practice brief. Then press Tape It, or be there when the clock stops for the audition and press Go.\n\nCasting decides from how the audition went, how well the role suits you and how many other actors it saw. Some roles call you back for a second audition first.`,
+    steps: [
+      'Open Career, then Opportunities, and find the role under In Progress.',
+      `Press ${STEPS}, each as many times as it helps. Each says its time.`,
+      'For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.',
+      'If it clashes with something, press Ask For Another Time at least a day ahead.',
+    ],
+    needs: [
+      'Free for each step’s time, and awake. Rehearsing on your feet needs some of the lines learned and the energy for it.',
+      'For a self-tape, an hour free before it’s due.',
+      `For a new time, a day’s notice, asked once.`,
+    ],
+    costs: [
+      { label: 'Time', value: `${BRIEF.steps.read.minutes} minutes to ${BRIEF.steps.rehearse.minutes} minutes a step; an hour for a self-tape; an audition in person ${WORK.auditionMinutes} minutes, with the trip each way`, estimate: true },
+      { label: 'Money', value: 'None' },
+    ],
+    reads: [
+      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation and the day’s condition, judged as every piece of work is' },
+      { label: 'The Role’s Fit', value: 'How well you know its genre, and its techniques against yours' },
+      { label: 'The Field', value: 'How many other actors that kind of work draws, estimated' },
+    ],
+    now: ['A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.'],
+    later: ['A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.'],
+    interpret: [
+      'The band says how good the audition was. Casting’s chance reads the band, the fit and the field together, and even the best audition doesn’t make it certain.',
+      'Why It Went This Way, under a settled role, shows each part of it.',
+    ],
+    unavailable: [
+      'There are no sides yet: casting sends them with an audition.',
+      'You’ve done all this step can do.',
+      'There’s less than the hour a self-tape takes before it’s due.',
+      'You’ve already asked once, and casting is keeping the time it gave.',
+      'Casting has no other time clear of your calendar in the days it’s seeing actors.',
+    ],
+    mistakes: ['Missing an audition. Casting moves on without you, and the role lapses.'],
+    next: ['Wait for casting’s word, then answer an offer under Offers.'],
+    related: ['career.opportunities', 'career.offers', 'craft.brief-tape'],
+    connections: [
+      { to: 'career.offers', kind: 'evaluation', why: 'Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.' },
+      { to: 'day.calendar', kind: 'scheduled', why: 'An audition in person goes on your calendar with its trip, and stops the clock when it comes.' },
+    ],
+    example: {
+      setup: 'A self-tape asked for by Thursday at six, with the sides not yet prepared.',
+      steps: ['Press Break It Down, Learn The Lines and Rehearse It On Your Feet until they can do no more.', 'Press Tape It.'],
+      result: 'An hour on, the tape is judged and shown with its band, and the casting office decides on the Friday after it’s due.',
+    },
+  },
+  {
+    id: 'career.offers',
+    title: 'Offers And Booked Work',
+    goal: 'career',
+    covers: ['pro.accept_offer', 'pro.decline_offer'],
+    synonyms: ['offer', 'accept the offer', 'decline the offer', 'booked work', 'shoot day', 'work day'],
+    questions: ['How do I accept an offer?', 'What happens if I miss a work day?', 'When am I paid for a job I booked?'],
+    where: on('opportunities', 'Career, Opportunities, Offers'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once casting makes you an offer.`,
+    short: `An offer says the role, the pay, the dates and how long it stands, ${word(WORK.offerDays)} days. Press Accept The Offer to book it, or Decline The Offer. Accepting puts each work day on your calendar and promises the pay for each week of it.\n\nEach work day stops the clock: press Go to be there. Each is judged, and the part goes on your professional credits.`,
+    steps: [
+      'Open Career, then Opportunities, and read the offer under Offers, or under What Needs You on Home.',
+      'Press Accept The Offer or Decline The Offer before it lapses.',
+      'Under Booked Work, prepare the part with the same three steps as the sides.',
+      'On each work day, press Go when the clock stops for it.',
+    ],
+    needs: [
+      'Permission to work in the US for every day of it, as Papers shows it.',
+      'No other booking on the same days, and in the summer no School call on them.',
+    ],
+    costs: [{ label: 'Time', value: 'Each work day’s hours, with the trip each way' }, { label: 'Money', value: 'None: the work pays you' }],
+    reads: [
+      { label: 'Permission To Work', value: 'Every day of the work, against the papers you hold' },
+      { label: 'The Part', value: 'Its preparation, your abilities and techniques, and the day’s condition, judged as every piece of work is' },
+    ],
+    now: ['The work days go on your calendar, and the pay for each week is promised, due the Thursday after it. It isn’t paid yet.'],
+    later: [
+      'A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.',
+      'Miss a shoot day, or a second day of a run, and the production replaces you.',
+    ],
+    interpret: ['Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred, so nothing is paid.'],
+    unavailable: [
+      'Your F-1 lets you work only on campus while you’re a student.',
+      'You’re booked for another job on those days.',
+      'The School holds you for one of its calls on those days.',
+      'The offer lapsed.',
+    ],
+    mistakes: ['Sleeping through a work day. A missed day of a shoot ends the job.'],
+    next: ['Update your résumé once the part is on your credits.'],
+    related: ['career.auditions', 'career.outside-work', 'documents.work', 'career.resume'],
+    connections: [
+      { to: 'documents.work', kind: 'prerequisite', why: 'An offer can be accepted only where your permission to work covers every one of its days.' },
+      { to: 'career.resume', kind: 'history', why: 'The part goes on your professional credits, and your résumé reads as behind until it has it.' },
+      { to: 'day.calendar', kind: 'scheduled', why: 'Accepting puts each work day on your calendar, and each stops the clock for you.' },
+    ],
+    example: {
+      setup: 'An offer of a two-day shoot at $125.00 a day, estimated, standing three days.',
+      steps: ['Press Accept The Offer.', 'Prepare the part, then press Go on each shoot day.'],
+      result: 'Two shoot days go on your calendar and $250.00 is promised for that week. After the second day the part is on your credits as not yet released.',
+    },
+  },
+  {
+    id: 'career.outside-work',
+    title: 'Work While You’re At The School',
+    goal: 'career',
+    covers: ['pro.request_outside_work'],
+    synonyms: ['outside work', 'work in term', 'ask the school', 'dean approval', 'work without approval'],
+    questions: ['Can I take acting work while I’m at the School?', 'How do I get the School’s approval?', 'What happens if I work without approval?'],
+    where: on('opportunities', 'Career, Opportunities, Open Calls'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, while you’re a student and a role’s days fall in term.`,
+    short: `The School’s Bulletin discourages outside work in term and approves it “In rare situations” for short, professionally meaningful work asked for in good time. Press Ask The School on a role whose days fall in term: the dean decides ${word(OUTSIDE_WORK.decisionDays)} days later.\n\nWork taken in term without approval brings an academic warning the first time and dismissal the second. Summer and the winter break are yours, unless the School holds you for one of its calls.`,
+    steps: [
+      'Open Career, then Opportunities, and find a role whose days fall in term.',
+      'Read what the School looks at, under the role, and whether each condition holds.',
+      'Press Ask The School, at least two weeks before the first day.',
+    ],
+    needs: [
+      'Good standing at the School.',
+      'A role whose days fall in term, not settled yet.',
+      'Permission to work outside the School: on an F-1, there’s none while you’re a student.',
+    ],
+    costs: [{ label: 'Time', value: 'An hour to talk to the chair and write the proposal', estimate: true }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'In Good Time', value: `Asked ${OUTSIDE_WORK.aheadDays} days or more before the first day`, estimate: true },
+      { label: 'Short', value: `${OUTSIDE_WORK.mostDays} working days or fewer`, estimate: true },
+      { label: 'Class Time', value: `No School or Yale Rep call, and ${word(OUTSIDE_WORK.mostClassDays)} class days at most`, estimate: true },
+    ],
+    now: ['The request is with the chair and the dean, and the role says when the dean decides.'],
+    later: ['A week on, the dean approves or refuses it, and the notice says each condition. Approved, the class days it takes are excused.'],
+    interpret: ['The School’s rule is the Bulletin’s. The fourteen days, ten working days and two class days, and the dean’s week, are the game’s estimates of its words.'],
+    unavailable: [
+      'Only a student in good standing may ask for outside work.',
+      'None of its days fall in term, so the School’s approval isn’t needed.',
+      'Your F-1 doesn’t let you work for an employer outside the School while you’re a student.',
+    ],
+    mistakes: ['Accepting work in term before the dean decides. If the dean refuses, working it brings an academic warning.'],
+    next: ['Submit for the role, and accept the offer once the dean has approved it.'],
+    related: ['career.offers', 'school.standing'],
+    connections: [
+      { to: 'school.standing', kind: 'immediate', why: 'Work in term without approval moves your standing to academic warning, and a second time to dismissal.' },
+      { to: 'career.offers', kind: 'prerequisite', why: 'An offer in term is accepted on the School’s approval, or against it with the warning said first.' },
+    ],
+    example: {
+      setup: 'A first-year in good standing, and a two-day shoot in October posted five weeks ahead.',
+      steps: ['Press Ask The School on the role.', 'A week later, read the dean’s answer.'],
+      result: 'The chair recommends it and the dean approves it: two working days, asked well ahead, a paid professional role, no School call and at most two class days. Those class days are excused.',
     },
   },
 ];

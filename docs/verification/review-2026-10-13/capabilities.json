@@ -4044,5 +4044,71 @@
   ],
   "weakTests": [],
   "todo": "An independent reading at integration, against the integrated commit."
+ },
+ {
+  "on": "2026-10-21",
+  "against": "692edccd",
+  "id": "career-work",
+  "claim": "Brief 19's work loop: pro.submit sends the portfolio for an open role, read by materialsCheck; pro.prepare moves the sides or the part by a practice brief's steps; pro.tape_audition judges a self-tape by the taped brief's profile; pro.move_audition moves an audition in person once, a day ahead, to a time clear of the calendar; casting draws a callback or the role (pro.casting) from the band, the fit and the field; pro.accept_offer books the work days and writes the pay promised, refused where usWorkAuthorized fails a day; pro.decline_offer settles it; pro.request_outside_work puts the School's request to the dean, decided seven days on; unapproved work in term brings the School's academic warning, then dismissal.",
+  "implementation": "src/engine/systems/projobs.ts (registerProJobs: the pro.postings passage, the pro.reply, pro.audition, pro.tape_due, pro.casting_decision, pro.offer_lapse, pro.work_day, pro.release and pro.school_answer kinds, and the seven commands; their refusals; awayAt read by present() in src/engine/systems/school.ts); src/ui/career/OpportunitiesPane.tsx.",
+  "consumers": "The Career screen's Opportunities tab; What Needs You on Home (the offer's decision); the calendar (auditions and work days, each wanting the player); the School (present() and the class handler read awayAt; setStanding for unapproved work); the work record and the journey (recordWork); the professional credits (addCredit, releaseScreenCredit); the pay's system (the promised entries, wired at integration).",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/pro-opportunities-screen.test.ts renders the tab over real saves: each control with its command's refusal under it, an F-1 student's refusal at acceptance, booked work with its pay promised, and the controls Locked until Finding Work is read."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice'",
+    "asserts": "A posting to an offer, the decision's words, the promised pay keyed by week and never posted, the work days on the calendar with the trip, each day judged, the credit shot then released, and a reload at each stage holding the same record.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the casting draw is found over a list of seeds."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Providence, its rehearsals and nights judged, the credit and the promised weekly pay'",
+    "asserts": "Two rounds each read by casting at its chance, nine weeks promised at LORT C, rehearsal days moving the part, nights judged as performances, the stage credit at the first night.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the casting draw is found over a list of seeds."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept'",
+    "asserts": "Each condition held, the dean's approval, the class days excused through present() and the class handler, good standing kept.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY: work taken in term without approval brings the academic warning at its first day, its classes missed unexcused; and a second time, dismissal'",
+    "asserts": "The warning through setStanding, the classes missed, and dismissal the second time.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the second time starts from a count set by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words, and can’t ask the School either; nothing changes'",
+    "asserts": "usWorkAuthorized read for the offer's days; the refusal's words; the save the same to the byte.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+  ],
+  "weakTests": [],
+  "todo": "An independent reading at integration, against the integrated commit."
  }
 ]

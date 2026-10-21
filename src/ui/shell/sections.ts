@@ -8,8 +8,9 @@
  * The career's, the industry's and the homes' went with them in the scope
  * reset of 2026-10-09, and so did Papers' Driving with the cars; Papers'
  * Passport And Travel is Passport And ID, the journeys gone. The Career came
- * back on 2026-10-20 (brief 19) with two tabs, Overview and Portfolio; its
- * others come with the systems they show, never before.
+ * back on 2026-10-20 (brief 19) with two tabs, Overview and Portfolio, and
+ * Opportunities came with the work loop on 2026-10-21; its others come with
+ * the systems they show, never before.
  */
 
 export interface Section { id: string; label: string }
@@ -24,7 +25,7 @@ export const SECTIONS: Readonly<Record<string, readonly Section[]>> = {
     { id: 'borrowing', label: 'Borrowing' }, { id: 'statements', label: 'Statements' },
   ],
   '/workspace/career': [
-    { id: 'overview', label: 'Overview' }, { id: 'portfolio', label: 'Portfolio' },
+    { id: 'overview', label: 'Overview' }, { id: 'portfolio', label: 'Portfolio' }, { id: 'opportunities', label: 'Opportunities' },
   ],
   '/workspace/papers': [
     { id: 'returns', label: 'Tax Returns' }, { id: 'health', label: 'Health Cover' }, { id: 'benefits', label: 'Unemployment' },

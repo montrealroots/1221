@@ -1952,6 +1952,20 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/decided.ts#top [production.direction]": {
   "status": "Retained",
   "hash": "9ce9ed69790f",
@@ -3260,6 +3274,13 @@
   "on": "2026-10-19",
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/sections.ts#SECTIONS [overview]": {
   "status": "Rewritten",

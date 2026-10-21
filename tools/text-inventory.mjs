@@ -92,6 +92,9 @@ const AREAS2 = [
   ['material-b', [/^src\/engine\/content\/briefs\/second-[a-z]\.ts$/]],
   ['money-data', [/^src\/engine\/content\/(banks?-[\w-]+|bankopening|homeaccounts|security|accountlife|pending|cash|rents|roundups)\.ts$/, /^src\/engine\/content\/home-accounts\.json$/]],
   ['frame', [/^index\.html$/, /^public\//]],
+  // From 2026-10-21 (brief 19's work loop): the work loop's own sources, read by the area that built them, apart from the
+  // career core's, so the builders working at once each keep their own status files.
+  ['career-work', [/^src\/engine\/systems\/projobs\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
 ];
 const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', career: 'career', health: 'health', world: 'health', material: 'material-a' };
 const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';

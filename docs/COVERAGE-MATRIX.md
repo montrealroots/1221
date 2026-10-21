@@ -217,13 +217,17 @@ Reading a chapter of the guide is
 `tutorial.read`, and until a chapter is read the guide refuses every other
 command it opens (`world/tutorial.ts`), whatever screen sends it.
 
-Time also does two things on its own as it passes, rather than at an instant.
+Time also does three things on its own as it passes, rather than at an instant.
 `life.night_alone` puts somebody to bed when the clock is sent more than an
 hour on through the rest of a night the player kept them up in, or stopped in
 the middle of, for a plan or the morning a skip was sent to; it also pays a
 night that a stop in its first hour left unpaid. `life.waking` charges each
 person for the hours they are awake, wherever the clock stops, so Home's dials
-move during a day of play and midnight no longer charges the day ahead.
+move during a day of play and midnight no longer charges the day ahead. From
+2026-10-21 (brief 19) `pro.postings` posts each Monday's fictional roles at
+nine as the clock passes it, closes a role whose week of submissions is over,
+and has the agent submit for a role his breakdown brought once it suits and
+the materials pass (`systems/projobs.ts`).
 
 The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school`, `/workspace/papers`, from 2026-10-09 `/workspace/profile`, and from 2026-10-20 (brief 19) `/workspace/career`, the professional record's, each kept in the address's hash so the browser's Back and Forward move between them; Home is served by the shell itself. The career's, the homes', travel's, the cars', the land's and the line of 2026-10-09's other screens went on 2026-10-09, and `/workspace/work` with the job engine.
 
@@ -248,14 +252,15 @@ chapter or to two, or if a chapter opens nothing.
 | 11 | Drama School | `ui.school` `school.call_in_sick` `school.withdraw` `school.request_leave` `school.cancel_leave` `school.return_notice` `school.buy_affiliate` `school.reregister` `school.request_repeat` `school.cancel_repeat` `school.appeal_leave` `school.request_extra_term` `school.request_aid_review` `school.pay_balance` `school.request_conversion` `school.make_up` `school.extend_incomplete` `school.take_shift` `school.cabaret` `school.summer_cabaret` `school.orientation` `school.prepare` `school.choose` `school.read_feedback` `school.ask_partner` `school.answer_partner` `school.respond` `school.make_amends` `school.buy_ppe` `school.approach` `school.choose_playing` `school.choose_part_playing` `school.cancel_rehearsal` `school.learn_part` `school.review_blocking` `school.work_note` `work.identify` `work.try` `work.settle` `plays.read` `plays.research` `look.school` `look.course` `look.skill` `look.assignment` `look.classmate` |
 | 12 | You As An Actor | `ui.profile` `practice.exercise` `genre.study` `brief.prepare` `brief.choose` `brief.reader` `practice.self_tape` `look.ability` `look.genre` `look.work` |
 | 13 | Your Career | `ui.career` `pro.set_name` `pro.headshots` `pro.update_resume` `pro.cut_reel` |
-| 14 | Cover, Benefits And Returns | `ui.papers` `health.therapy` `documents.police_report` `health.appeal` `health.extra_supply` `health.enroll` `health.drop` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `health.choose_clinic` `health.book` `health.cancel_appointment` `health.prepay` `health.apply` `health.request_hardship` `benefits.claim` `benefits.ei_register` `benefits.assistance` `pension.social_security` `pension.state` `pension.ie_state` `pension.imss` `pension.bienestar` `tax.file` `tax.pay` `tax.amend` `tax.apply_plan` `tax.catch_up_plan` `tax.revise_plan` `tax.pay_state` `tax.apply_state_plan` `tax.catch_up_state_plan` `tax.lien_release` `tax.lien_dispute` `tax.federal_lien_withdraw` `tax.request_waiver` `health.choose_pharmacy` |
-| 15 | Passports And ID | `documents.apply_passport` `documents.replace_idcard` `documents.report_lost` `documents.apply_idcard` `documents.replace_license` `documents.apply_opt` `documents.apply_ssn` `documents.residence` `documents.settle` `documents.renew_residence` `documents.naturalize` `look.document` |
-| 16 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
-| 17 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` `bank.open_current` `bank.set_primary` `bank.redirect_deposits` `bank.set_order_source` `card.set_autopay_from` `bank.close_current` `bank.cancel_switch` `bank.stop_balance_transfer` `bank.set_loan_repayment` `look.bank` `look.transaction` |
-| 18 | A Whole Life | `look.person` |
+| 14 | Finding Work | `pro.submit` `pro.prepare` `pro.tape_audition` `pro.move_audition` `pro.accept_offer` `pro.decline_offer` `pro.request_outside_work` |
+| 15 | Cover, Benefits And Returns | `ui.papers` `health.therapy` `documents.police_report` `health.appeal` `health.extra_supply` `health.enroll` `health.drop` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `health.choose_clinic` `health.book` `health.cancel_appointment` `health.prepay` `health.apply` `health.request_hardship` `benefits.claim` `benefits.ei_register` `benefits.assistance` `pension.social_security` `pension.state` `pension.ie_state` `pension.imss` `pension.bienestar` `tax.file` `tax.pay` `tax.amend` `tax.apply_plan` `tax.catch_up_plan` `tax.revise_plan` `tax.pay_state` `tax.apply_state_plan` `tax.catch_up_state_plan` `tax.lien_release` `tax.lien_dispute` `tax.federal_lien_withdraw` `tax.request_waiver` `health.choose_pharmacy` |
+| 16 | Passports And ID | `documents.apply_passport` `documents.replace_idcard` `documents.report_lost` `documents.apply_idcard` `documents.replace_license` `documents.apply_opt` `documents.apply_ssn` `documents.residence` `documents.settle` `documents.renew_residence` `documents.naturalize` `look.document` |
+| 17 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
+| 18 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` `bank.open_current` `bank.set_primary` `bank.redirect_deposits` `bank.set_order_source` `card.set_autopay_from` `bank.close_current` `bank.cancel_switch` `bank.stop_balance_transfer` `bank.set_loan_repayment` `look.bank` `look.transaction` |
+| 19 | A Whole Life | `look.person` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 162 commands, 96 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 6 routes.
+Generated by `node tools/inventory.mjs --markdown`. 169 commands, 104 scheduled kinds, 3 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 6 routes.
 
 ### Commands
 
@@ -275,7 +280,7 @@ Generated by `node tools/inventory.mjs --markdown`. 162 commands, 96 scheduled k
 | pension | `pension.bienestar` `pension.ie_state` `pension.imss` `pension.social_security` `pension.state` | `src/engine/systems/homepensions.ts`, `src/engine/systems/imss.ts`, `src/engine/systems/socialsecurity.ts`, `src/engine/systems/statepension.ts` |
 | plays | `plays.read` `plays.research` | `src/engine/systems/playreading.ts` |
 | practice | `practice.exercise` `practice.self_tape` | `src/engine/systems/briefs.ts`, `src/engine/systems/practice.ts` |
-| pro | `pro.cut_reel` `pro.headshots` `pro.set_name` `pro.update_resume` | `src/engine/systems/pro.ts` |
+| pro | `pro.accept_offer` `pro.cut_reel` `pro.decline_offer` `pro.headshots` `pro.move_audition` `pro.prepare` `pro.request_outside_work` `pro.set_name` `pro.submit` `pro.tape_audition` `pro.update_resume` | `src/engine/systems/pro.ts`, `src/engine/systems/projobs.ts` |
 | school | `school.answer_partner` `school.appeal_leave` `school.approach` `school.ask_partner` `school.buy_affiliate` `school.buy_ppe` `school.cabaret` `school.call_in_sick` `school.cancel_leave` `school.cancel_rehearsal` `school.cancel_repeat` `school.choose_part_playing` `school.choose_playing` `school.choose` `school.extend_incomplete` `school.learn_part` `school.make_amends` `school.make_up` `school.orientation` `school.pay_balance` `school.prepare` `school.read_feedback` `school.request_aid_review` `school.request_conversion` `school.request_extra_term` `school.request_leave` `school.request_repeat` `school.reregister` `school.respond` `school.return_notice` `school.review_blocking` `school.summer_cabaret` `school.take_shift` `school.withdraw` `school.work_note` | `src/engine/systems/classmates.ts`, `src/engine/systems/courserecord.ts`, `src/engine/systems/coursework.ts`, `src/engine/systems/leave.ts`, `src/engine/systems/production.ts`, `src/engine/systems/school.ts` |
 | tax | `tax.amend` `tax.apply_plan` `tax.apply_state_plan` `tax.catch_up_plan` `tax.catch_up_state_plan` `tax.federal_lien_withdraw` `tax.file` `tax.lien_dispute` `tax.lien_release` `tax.pay_state` `tax.pay` `tax.request_waiver` `tax.revise_plan` | `src/engine/systems/statetax.ts`, `src/engine/systems/taxreturn.ts` |
 | tutorial | `tutorial.read` | `src/engine/world/tutorial.ts` |
@@ -295,6 +300,7 @@ Generated by `node tools/inventory.mjs --markdown`. 162 commands, 96 scheduled k
 | injury | `injury.comp` | `src/engine/systems/injury.ts` |
 | life | `life.birthday` `life.commitment` `life.day_rollover` `life.end` | `src/engine/systems/birthdays.ts`, `src/engine/systems/life.ts`, `src/engine/systems/mortality.ts`, `src/engine/world/plans.ts` |
 | pension | `pension.bienestar_payment` `pension.ie_week` `pension.imss_month` `pension.ss_month` `pension.state_payment` | `src/engine/systems/homepensions.ts`, `src/engine/systems/imss.ts`, `src/engine/systems/socialsecurity.ts`, `src/engine/systems/statepension.ts` |
+| pro | `pro.audition` `pro.casting_decision` `pro.offer_lapse` `pro.release` `pro.reply` `pro.school_answer` `pro.tape_due` `pro.work_day` | `src/engine/systems/projobs.ts` |
 | school | `school.account_due` `school.aid_decide` `school.cabaret` `school.call` `school.classes` `school.commencement` `school.company` `school.conferral` `school.convert` `school.evaluation` `school.extra_decide` `school.former_class` `school.incomplete_due` `school.lab` `school.leave_appeal` `school.leave_decide` `school.leave_notice` `school.moment` `school.orientation` `school.partner_ask` `school.partner_rehearsal` `school.payday` `school.recess` `school.repeat_decide` `school.repeat_due` `school.shift` `school.stipend` `school.study_session` `school.summer` `school.term` `school.week` `school.welfare_decide` `school.welfare` | `src/engine/systems/classmates.ts`, `src/engine/systems/courserecord.ts`, `src/engine/systems/coursework.ts`, `src/engine/systems/health.ts`, `src/engine/systems/leave.ts`, `src/engine/systems/school.ts` |
 | tax | `tax.amended` `tax.due` `tax.federal_lien` `tax.notice` `tax.plan_decide` `tax.plan_default` `tax.plan_payment` `tax.refund` `tax.season` `tax.state_lien` `tax.state_nonfiler` `tax.state_notice` `tax.state_plan_end` `tax.state_plan_payment` `tax.substitute` `tax.three_year` | `src/engine/systems/statetax.ts`, `src/engine/systems/taxreturn.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
@@ -304,6 +310,7 @@ Generated by `node tools/inventory.mjs --markdown`. 162 commands, 96 scheduled k
 | System | Kinds | Owner |
 | --- | --- | --- |
 | life | `life.night_alone` `life.waking` | `src/engine/systems/life.ts` |
+| pro | `pro.postings` | `src/engine/systems/projobs.ts` |
 
 ### Events emitted
 

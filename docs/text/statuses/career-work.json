@@ -1,0 +1,386 @@
+{
+ "src/engine/systems/projobs.ts#acceptRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "52ec8763c4eb",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#acceptWarning": {
+  "status": "Rewritten And Verified",
+  "hash": "c785220a6e4c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#agentTries": {
+  "status": "Rewritten And Verified",
+  "hash": "30d2d975c81f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#awayAt": {
+  "status": "Rewritten And Verified",
+  "hash": "20ab6ac24787",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#chanceWords": {
+  "status": "Rewritten And Verified",
+  "hash": "a1bd2683eec5",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#clashesAt": {
+  "status": "Rewritten And Verified",
+  "hash": "3243f08d9c8e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#conditionsFor [calls]": {
+  "status": "Rewritten And Verified",
+  "hash": "f3cd8a251a50",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#conditionsFor [classes]": {
+  "status": "Rewritten And Verified",
+  "hash": "4a8597bc328a",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#conditionsFor [meaningful]": {
+  "status": "Rewritten And Verified",
+  "hash": "2459c13a77b2",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#conditionsFor [short]": {
+  "status": "Rewritten And Verified",
+  "hash": "811366a3c8ef",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#conditionsFor [standing]": {
+  "status": "Rewritten And Verified",
+  "hash": "26ac1744e032",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#conditionsFor [timely]": {
+  "status": "Rewritten And Verified",
+  "hash": "0461fe35bc1c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#datesOf [shoot]": {
+  "status": "Rewritten And Verified",
+  "hash": "f9de4e12b3c0",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#demandsWords": {
+  "status": "Rewritten And Verified",
+  "hash": "9939d1eb136d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#eligibilityProblems": {
+  "status": "Rewritten And Verified",
+  "hash": "8e57de4a0dbe",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#FIELD_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "9bf1427ad4c7",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#finish": {
+  "status": "Rewritten And Verified",
+  "hash": "0ca30aa3858c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#finish [success]": {
+  "status": "Rewritten And Verified",
+  "hash": "c2e51a99ccc1",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#finish [worked]": {
+  "status": "Rewritten And Verified",
+  "hash": "61a634dbd12b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#finishRound": {
+  "status": "Rewritten And Verified",
+  "hash": "7dc063954d48",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#fitWords": {
+  "status": "Rewritten And Verified",
+  "hash": "718bf6247c9b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#KIND_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "66419602c475",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#makeOffer": {
+  "status": "Rewritten And Verified",
+  "hash": "b5c1b7845517",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#materialProblems": {
+  "status": "Rewritten And Verified",
+  "hash": "f16233b23e46",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#missDay": {
+  "status": "Rewritten And Verified",
+  "hash": "72d5f12afc70",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#missDay [problem]": {
+  "status": "Rewritten And Verified",
+  "hash": "d0b33ff81de4",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#missRound": {
+  "status": "Rewritten And Verified",
+  "hash": "4a35d45f5fb6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#moveRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c80c7a48837b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#NY": {
+  "status": "Rewritten And Verified",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#pass": {
+  "status": "Rewritten And Verified",
+  "hash": "2bee5e24779e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#payWords": {
+  "status": "Rewritten And Verified",
+  "hash": "f17876f630d9",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#post [opportunity]": {
+  "status": "Rewritten And Verified",
+  "hash": "f4ee76932215",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#prepareRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "5053f2988973",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs": {
+  "status": "Rewritten And Verified",
+  "hash": "eef664082053",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs [requested]": {
+  "status": "Rewritten And Verified",
+  "hash": "7ded5a0cc16e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs [school]": {
+  "status": "Rewritten And Verified",
+  "hash": "ee318e420d09",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs [worked]": {
+  "status": "Rewritten And Verified",
+  "hash": "94d49d67b53e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.accept_offer>": {
+  "status": "Rewritten And Verified",
+  "hash": "674a680457ae",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.decline_offer>": {
+  "status": "Rewritten And Verified",
+  "hash": "662f38626568",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.move_audition>": {
+  "status": "Rewritten And Verified",
+  "hash": "9d73d694b53e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.postings>": {
+  "status": "Rewritten And Verified",
+  "hash": "c3bec40418c6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.request_outside_work>": {
+  "status": "Rewritten And Verified",
+  "hash": "6c5ea96d4a75",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#replace": {
+  "status": "Rewritten And Verified",
+  "hash": "ae14a1c3ffab",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#replace [problem]": {
+  "status": "Rewritten And Verified",
+  "hash": "268d5eed6617",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#reportUnapproved": {
+  "status": "Rewritten And Verified",
+  "hash": "34420b0091bf",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#reportUnapproved [problem]": {
+  "status": "Rewritten And Verified",
+  "hash": "9fa7d43685dd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#requestRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "389661dbab36",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#roleWords": {
+  "status": "Rewritten And Verified",
+  "hash": "57bab5c99428",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#setRound": {
+  "status": "Rewritten And Verified",
+  "hash": "f548c371a75e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#submit": {
+  "status": "Rewritten And Verified",
+  "hash": "ea3ff84e065d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#submitRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "7d46fef31fd7",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#tapeRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "b3a945c176cd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#BookedCard": {
+  "status": "Rewritten And Verified",
+  "hash": "59e8fa66a96e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#History": {
+  "status": "Rewritten And Verified",
+  "hash": "78d153d4d49b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#InProgress": {
+  "status": "Rewritten And Verified",
+  "hash": "e9ed0c39a01b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#NY": {
+  "status": "Rewritten And Verified",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#OfferCard": {
+  "status": "Rewritten And Verified",
+  "hash": "10e44a2da68a",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#OpenRole": {
+  "status": "Rewritten And Verified",
+  "hash": "f99171d731ca",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane": {
+  "status": "Rewritten And Verified",
+  "hash": "e66caadf5474",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#Prepare": {
+  "status": "Rewritten And Verified",
+  "hash": "61a7366346ce",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
+  "status": "Rewritten And Verified",
+  "hash": "7cea043996ba",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {
+  "status": "Rewritten And Verified",
+  "hash": "70547ed96f47",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#Settled": {
+  "status": "Rewritten And Verified",
+  "hash": "94d348620d7e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#spanWords": {
+  "status": "Rewritten And Verified",
+  "hash": "720da5a83d6e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ }
+}

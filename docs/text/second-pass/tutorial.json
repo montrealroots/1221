@@ -106,10 +106,10 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "36dd5bc77aaf",
+  "hash": "7d9f9dd619ba",
   "on": "2026-10-21",
-  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts",
-  "first": "Pending"
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten",
@@ -124,6 +124,13 @@
   "on": "2026-10-20",
   "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
   "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
+  "status": "Rewritten",
+  "hash": "58d5031298da",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {
   "status": "Rewritten",

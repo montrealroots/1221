@@ -95,6 +95,7 @@ import { armCollection, armTaxes, registerTaxReturn } from './systems/taxreturn'
 import { registerDocuments, startingDocuments } from './systems/documents';
 import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/permission';
 import { beginPro, buildOnOpening, registerPro } from './systems/pro';
+import { registerProJobs } from './systems/projobs';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -163,6 +164,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPermission(sim);
   registerPaperVisits(sim);
   registerPro(sim);
+  registerProJobs(sim);
 }
 
 /** Recurring world processes every save needs running. */

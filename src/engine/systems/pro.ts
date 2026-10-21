@@ -224,6 +224,37 @@ export interface Opportunity extends HasHistory {
   resolvedAt?: Instant;
   outcome?: string;
   engagementId?: ProId;
+  /**
+   * The work loop's own (from 2026-10-21, brief 19's J1 to J5, `systems/projobs.ts`). The agreement an agent found it
+   * under, set with `agentId`, so the pay reads which agreement the work came through (J3).
+   */
+  agreementId?: ProId;
+  /** What the submission sent, as each material stood then: its id and when it was made (F4). */
+  sent?: { kind: MaterialKind; id: ProId; made: Instant }[];
+  /** The sides' preparation for the audition, in a practice brief's three parts. */
+  prep?: PartPrep;
+  /** The audition and, where the project has one, the callback: each as it was set, how it went, and what casting made of it. */
+  rounds?: AuditionRound[];
+}
+
+/** How far the sides or the part stand, in a practice brief's three parts (`systems/briefs.ts`), each 0 to 1. */
+export interface PartPrep { interpretation: number; memorization: number; rehearsal: number }
+
+/** One audition round (`systems/projobs.ts`): in person at a time, or a self-tape due by one. */
+export interface AuditionRound {
+  round: 'audition' | 'callback';
+  form: 'in-person' | 'self-tape';
+  /** In person, when it is; on tape, when it's due. */
+  at: Instant;
+  /** How many times it was moved at the player's asking. */
+  moved?: number;
+  status: 'set' | 'done' | 'missed';
+  band?: Band;
+  overall?: number;
+  /** What held it back most, in the player's words, where something did. */
+  held?: string;
+  /** What casting decided from it: the chance it gave, the role's fit, and whether it went on. */
+  casting?: { at: Instant; chance: number; fit: number; yes: boolean };
 }
 
 /** A payment owed for work: promised when the contract's accepted, received only when it's posted. */
@@ -253,6 +284,12 @@ export interface Engagement extends HasHistory {
   pay: ProPayment[];
   creditId?: ProId;
   finishedAt?: Instant;
+  /** The part's preparation (from 2026-10-21, `systems/projobs.ts`), in a practice brief's three parts. */
+  prep?: PartPrep;
+  /** Each work day as it went: worked or missed, and how it was judged where it was. */
+  log?: { day: number; at: Instant; status: 'worked' | 'missed'; band?: Band; overall?: number }[];
+  /** Work in term at the School: approved by the dean, taken without approval, or taken without it and found by the School. */
+  school?: 'approved' | 'unapproved' | 'reported';
 }
 
 /** The School's Actor Showcase (DRAM 793b) in the final term: its scenes, the performances, and the follow-up. */

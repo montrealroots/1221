@@ -43,6 +43,8 @@ import { mayRefer, waitDays } from './systems/appointments';
 import { reliabilityOf, setWork } from './systems/coursework';
 import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
+import { castingDraw, postingsAt } from './systems/projobs';
+import { PROJECTS } from './content/careerwork';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -549,4 +551,52 @@ defineDecider<{ sim: Simulation; who: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), who: seed % 15 }),
   decide: ({ sim, who }) => priorityOf(sim, sim.player, who),
+});
+
+// ---------------------------------------------------------------------------
+// Professional work (from 2026-10-21, brief 19's J1 and J5, `systems/projobs.ts`)
+// ---------------------------------------------------------------------------
+
+/** TEST SETUP for the sweep: an agreement signed a day before and running a year, or none (`activeAgreement` reads it). */
+function represent(sim: Simulation, on: boolean): void {
+  const pro = sim.player.pro!;
+  pro.agreements = on ? [{ id: 'sweep-agreement', agentId: 'jordan-parente', offeredAt: sim.now - 2 * MS_DAY, standsUntil: sim.now, status: 'accepted', terms: [], signedAt: sim.now - MS_DAY, endsAt: sim.now + 400 * MS_DAY }] : [];
+}
+
+defineDecider<{ sim: Simulation; week: number; represented: number }, string>({
+  id: 'pro.posting',
+  decides: 'Which fictional projects post a role to the actor in a week, openly or through an agent, each at its chance (POSTING).',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // Which weeks: each Monday draws its own.
+    week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
+    // Represented or not: an agent's breakdowns bring roles open postings never do.
+    represented: (o, t) => ({ ...o, represented: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed * 3, represented: seed % 2 }),
+  decide: ({ sim, week, represented }) => {
+    represent(sim, represented === 1);
+    return Array.from({ length: 12 }, (_, n) => postingsAt(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((x) => `${x.project.id}:${x.via}`).join('+') || '-').join(' ');
+  },
+});
+
+defineDecider<{ sim: Simulation; band: number; fit: number; kind: number }, string>({
+  id: 'pro.casting',
+  decides: 'Casting’s call on a round, a callback or the role: the chance from the band, the fit and the field (CASTING), and the draw for the field.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // The audition's band: a stronger one raises the chance, never to certainty.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    // The role's fit, 0 to 1.
+    fit: (o, t) => ({ ...o, fit: t }),
+    // The kind of work, and the field it draws.
+    kind: (o, t) => ({ ...o, kind: Math.round(t * (PROJECTS.length - 1)) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: seed % 4, fit: (seed % 5) / 4, kind: seed % PROJECTS.length }),
+  decide: ({ sim, band, fit, kind }) => {
+    const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
+    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { id: `o${n}`, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
+  },
 });

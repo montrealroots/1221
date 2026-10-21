@@ -1,0 +1,306 @@
+[
+ {
+  "surface": "Career, Opportunities: Open Calls, each fictional role posted and Submit Yourself",
+  "where": "Career, under Your Work in the menu, the Opportunities tab, Open Calls",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane",
+   "src/ui/career/OpportunitiesPane.tsx#RoleFacts",
+   "src/ui/career/OpportunitiesPane.tsx#OpenRole",
+   "src/ui/career/OpportunitiesPane.tsx#spanWords",
+   "src/ui/career/OpportunitiesPane.tsx#NY",
+   "src/engine/systems/projobs.ts#NY",
+   "src/engine/systems/projobs.ts#KIND_WORDS",
+   "src/engine/systems/projobs.ts#payWords",
+   "src/engine/systems/projobs.ts#demandsWords",
+   "src/engine/systems/projobs.ts#eligibilityProblems",
+   "src/engine/systems/projobs.ts#materialProblems",
+   "src/engine/systems/projobs.ts#submitRefusal",
+   "src/engine/systems/projobs.ts#roleWords",
+   "src/engine/systems/projobs.ts#post [opportunity]",
+   "src/engine/systems/projobs.ts#datesOf [shoot]",
+   "src/engine/systems/projobs.ts#submit",
+   "src/ui/shell/sections.ts#SECTIONS [opportunities]"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "empty",
+   "unavailable",
+   "details",
+   "history",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19's work loop: the roles posted each Monday, each a fictional project's, said fictional at the tab's head and in its own facts.",
+  "changes": "Written new to docs/STYLE.md: each role's project, part, what it asks, when and where with the trip, its pay (“It pays $125.00 a day for two days, an estimate.”) and its audition, each refusal under Submit Yourself in its practical words (“You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.”), and the agent-only offices named with why a player can’t reach them alone.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities: In Term At The School, the dean’s conditions, Ask The School and the dean’s answer",
+  "where": "Career, the Opportunities tab, under a role whose days fall in term; the dean’s answer in the notices",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#SchoolRule",
+   "src/engine/systems/projobs.ts#conditionsFor [standing]",
+   "src/engine/systems/projobs.ts#conditionsFor [timely]",
+   "src/engine/systems/projobs.ts#conditionsFor [short]",
+   "src/engine/systems/projobs.ts#conditionsFor [meaningful]",
+   "src/engine/systems/projobs.ts#conditionsFor [calls]",
+   "src/engine/systems/projobs.ts#conditionsFor [classes]",
+   "src/engine/systems/projobs.ts#requestRefusal",
+   "src/engine/systems/projobs.ts#acceptWarning",
+   "src/engine/systems/projobs.ts#registerProJobs [school]",
+   "src/engine/systems/projobs.ts#registerProJobs [requested]",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.request_outside_work>",
+   "src/engine/systems/projobs.ts#reportUnapproved",
+   "src/engine/systems/projobs.ts#reportUnapproved [problem]"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "warning",
+   "notification",
+   "explanation",
+   "confirmation",
+   "setback"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: the Bulletin’s rule on outside work in term, each condition the dean weighs said before asking, and its estimated figures said as the game’s.",
+  "changes": "Written new: each condition in a sentence that says whether it holds (“Asked 35 days before the first day, in good time: the game takes 14 days or more as asking in good time.”), the F-1 refusal with why the School can’t authorize it, the warning before accepting unapproved work, the dean’s answer with the chair’s recommendation, and the School’s own standing notice for unapproved work.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: a request the dean refuses, said with the condition that failed: a student film isn’t professional work, and four class days are more than two'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: work taken in term without approval brings the academic warning at its first day, its classes missed unexcused; and a second time, dismissal'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities: In Progress, an audition or a self-tape, the sides’ preparation, Tape It and Ask For Another Time, and the notices that set them",
+  "where": "Career, the Opportunities tab, In Progress; the audition’s notices",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#InProgress",
+   "src/ui/career/OpportunitiesPane.tsx#Prepare",
+   "src/ui/career/OpportunitiesPane.tsx#History",
+   "src/engine/systems/projobs.ts#prepareRefusal",
+   "src/engine/systems/projobs.ts#tapeRefusal",
+   "src/engine/systems/projobs.ts#moveRefusal",
+   "src/engine/systems/projobs.ts#clashesAt",
+   "src/engine/systems/projobs.ts#setRound",
+   "src/engine/systems/projobs.ts#finishRound",
+   "src/engine/systems/projobs.ts#missRound",
+   "src/engine/systems/projobs.ts#awayAt",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.move_audition>"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "warning",
+   "setback",
+   "history",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: the casting office’s answer, its time and place with the trip, a clash with the calendar and how to move it, the preparation steps a practice brief has, and a missed round said.",
+  "changes": "Written new: “The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Thursday, October 22, 2026 at 11:00 AM. Getting there takes about two hours each way.”, the clash with the way to move it once, each step with its minutes, each refusal in words, and a missed audition or tape said with what it cost.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time, the sides’ three steps with their minutes, and the control its form asks for'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: an audition slept through lapses the role, said; a self-tape not in by its time does too'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities: Offers, casting’s word, and Settled with Why It Went This Way",
+  "where": "Career, the Opportunities tab, Offers and Settled; What Needs You on Home for the offer",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#OfferCard",
+   "src/ui/career/OpportunitiesPane.tsx#Settled",
+   "src/engine/systems/projobs.ts#makeOffer",
+   "src/engine/systems/projobs.ts#pass",
+   "src/engine/systems/projobs.ts#acceptRefusal",
+   "src/engine/systems/projobs.ts#chanceWords",
+   "src/engine/systems/projobs.ts#fitWords",
+   "src/engine/systems/projobs.ts#FIELD_WORDS",
+   "src/engine/systems/projobs.ts#registerProJobs",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.accept_offer>",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.decline_offer>"
+  ],
+  "states": [
+   "success",
+   "setback",
+   "unavailable",
+   "warning",
+   "confirmation",
+   "explanation",
+   "notification",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: an offer’s terms and how long it stands, a refusal at acceptance for permission to work said in the papers’ words, and casting’s decision explained part by part without inventing its reasons.",
+  "changes": "Written new: the offer (“The film’s director offers you Theo in Paper Moons, a fictional student film. The pay is deferred…”), Accept The Offer and Decline The Offer, the F-1 refusal (“Your F-1 lets you work only on campus while you’re a student… That rules out work on October 19, 2026.”), a pass that says casting gives no reasons and where to see what went in, and Why It Went This Way: the band, the fit, the field and the chance, estimated.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: an offer shows its terms; Accept The Offer is grayed for an F-1 student in term with the reason, and open to a citizen with what the School’s rule brings'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities: Booked Work, the work days, a missed day’s consequence, the wrap and the release",
+  "where": "Career, the Opportunities tab, Booked Work; the work days’ notices",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#BookedCard",
+   "src/engine/systems/projobs.ts#finish",
+   "src/engine/systems/projobs.ts#finish [worked]",
+   "src/engine/systems/projobs.ts#finish [success]",
+   "src/engine/systems/projobs.ts#missDay",
+   "src/engine/systems/projobs.ts#missDay [problem]",
+   "src/engine/systems/projobs.ts#replace",
+   "src/engine/systems/projobs.ts#replace [problem]",
+   "src/engine/systems/projobs.ts#registerProJobs [worked]"
+  ],
+  "states": [
+   "ordinary",
+   "success",
+   "setback",
+   "failure",
+   "notification",
+   "history",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: booked work with its days and the pay promised, not yet paid, and each consequence of a missed day said as the project states it.",
+  "changes": "Written new: the days to come (“Each stops the clock: press Go to be there.”), the pay promised (“It’s promised, not yet paid.”), the written warning and the understudy, the replacement with what’s still paid, the wrap and the release with the reel.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: accepted, the work shows under Booked Work with its days, the part’s preparation and the pay promised, not yet paid'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: a shoot day slept through replaces the actor, the days never worked come off the promised pay, and there’s no credit'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played'"
+   }
+  ]
+ },
+ {
+  "surface": "The agent’s part in the work: Through An Agent, and his notices on what he submitted, held or passed on",
+  "where": "Career, the Opportunities tab, Through An Agent; the notices while an agreement is in force",
+  "sources": [
+   "src/engine/systems/projobs.ts#agentTries",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.postings>"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "warning",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: the agent’s lines in the work loop, procedural and neutral, each from a real event, each carrying the line that marks his words invented.",
+  "changes": "Written new: “Jordan Parente didn’t submit you for Jess in Static On Route 9. You have no headshots…”, said once while what stands in the way is the same, “Jordan Parente submitted you for Jess…”, “Jordan Parente passed this on:…”, and a window closed before he could submit.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at scale plus ten, and the booking carries his id and the agreement’s'"
+   }
+  ]
+ },
+ {
+  "surface": "The guide: Finding Work, and the How This Works entries for finding work, auditions, offers and work in term",
+  "where": "Guide, chapter Finding Work; How This Works on the Opportunities tab",
+  "sources": [
+   "src/engine/content/tutorial.ts#CHAPTERS [finding-work]",
+   "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]",
+   "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]",
+   "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]",
+   "src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]",
+   "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]",
+   "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "explanation",
+   "locked",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 19: what to do, why it matters and what it affects for each new command, in the screen’s labels, the figures the work loop’s own.",
+  "changes": "Written new: the chapter in the brief 14 order (what it’s for, where, what to press, what’s needed, what happens, what it affects, what next) and four entries, each estimate said so.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/tutorial.test.ts: 'covers every command the engine registers'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/guide.test.ts: 'covers every feature id exactly once'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: in a guided life, the tab’s controls stay Locked until “Finding Work” is read'"
+   }
+  ]
+ },
+ {
+  "surface": "The deciders’ own descriptions of the work loop’s draws",
+  "where": "Not shown to a player: read by tests/deciders.test.ts and tools/deciders.mjs",
+  "sources": [
+   "src/engine/decided.ts#top [pro.posting]",
+   "src/engine/decided.ts#top [pro.casting]"
+  ],
+  "states": [
+   "details"
+  ],
+  "outcome": "Kept",
+  "why": "A decider says what its draw decides and what moves it, for the sweep that holds it to that; no player reads it, so it keeps the developer’s plain terms.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/engine/decided.ts"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/deciders.test.ts"
+   }
+  ]
+ }
+]

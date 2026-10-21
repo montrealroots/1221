@@ -19,6 +19,7 @@ import { lookKinds } from '@/ui/looks/registry';
 import { CHAPTERS } from '@/engine/content/tutorial';
 import { READ_KIND, guideFinished, isOpen, nextChapter } from '@/engine/world/tutorial';
 import { stopCommands } from '@/engine/world/clock';
+import { PROJECTS } from '@/engine/content/careerwork';
 
 const UI = fileURLToPath(new URL('../src/ui/', import.meta.url));
 
@@ -99,13 +100,61 @@ describe('the coverage matrix', () => {
   });
 });
 
+/**
+ * The work the game has, as a chapter would name it (from 2026-10-21, the owner's brief 19, D9): the School's own paid
+ * work, and the professional work `content/careerwork.ts` holds, each kind by the words a chapter would use for it.
+ * Every kind of work a chapter offers must be one of these; anything else is a job the game doesn't have.
+ */
+const WORK_THE_GAME_HAS: readonly RegExp[] = [
+  /\bwork-study\b/i, /\bshifts?\b/i, /\b(?:Summer )?Cabaret\b/i,
+  ...PROJECTS.flatMap((t) => ({
+    'off-broadway': [/\bOff-Broadway\b/i], lort: [/\bregional theat(?:er|re)\b/i, /\bEquity open call\b/i, /\bruns?\b/i], 'network-drama': [/\bnetwork (?:television )?drama\b/i, /\bco-star\b/i],
+    'low-budget': [/\blow-budget\b/i, /\bfeature film\b/i], 'ultra-low-budget': [/\bultra-low-budget\b/i], 'student-film': [/\bstudent films?\b/i], 'non-union-short': [/\bshort films?\b/i, /\bnon-union short\b/i],
+  } as Record<string, RegExp[]>)[t.kind] ?? []),
+  /\broles?\b/i, /\bparts?\b/i, /\bshoot(?: days?)?\b/i, /\bwork days?\b/i, /\bperformances?\b/i, /\bauditions?\b/i, /\bself-tapes?\b/i,
+];
+/** Words a chapter would use to promise work the game doesn't have: a job of no kind, and the kinds of work it has none of. */
+const WORK_IT_HASNT = /\bbetween jobs\b|\b(?:take|find|get|start|land|book) a job\b|\bday jobs?\b|\bcommercials?\b|\bvoice-?over jobs?\b|\bBroadway show\b|\bnational tours?\b|\bseries regular\b|\bbackground work\b|\bwaiting tables\b|\bbartending\b|\btemp work\b/i;
+/** A sentence that offers the player work: an action of taking or seeking it. */
+const OFFERS_WORK = /\b(?:take|find|get|start|land|book|submit (?:yourself )?for|audition for|accept|be seen for|work on|work as)\b/i;
+
+/** The chapters' sentences that offer work the game doesn't have, with the chapter that says each. */
+function jobsOffered(chapters: readonly { id: string; body: readonly string[]; more?: readonly string[] }[]): string[] {
+  return chapters.flatMap((c) => [...c.body, ...(c.more ?? [])].flatMap((p) => p.split(/(?<=[.!?])\s+/))
+    .filter((sentence) => WORK_IT_HASNT.test(sentence) || (OFFERS_WORK.test(sentence) && /\bjobs?\b/i.test(sentence) && !WORK_THE_GAME_HAS.some((w) => w.test(sentence))))
+    .map((sentence) => `${c.id}: ${sentence.slice(0, 80)}`));
+}
+
 describe('what the chapters offer', () => {
   // GUARD: jobs went in the scope reset of 2026-10-09; a chapter that opened “Between jobs” offered a player something
-  // the game no longer has, until brief 12 (2026-10-17). Paid work is the School's: work-study and the Summer Cabaret.
-  it('GUARD: offers no job: no chapter speaks of being between jobs or taking one', () => {
+  // the game no longer had, until brief 12 (2026-10-17). Until 2026-10-21 this guarded a game with no work: any chapter
+  // speaking of being between jobs or taking one failed it. From then (the owner's brief 19, D9) the game has work, the
+  // School's and the fictional professional work of `content/careerwork.ts`, so it guards what's true now: a chapter
+  // may offer only work the game has. "Between jobs" and "take, find, get or start a job" still fail it, as before, and so
+  // do the kinds of work the game has none of (a day job, commercials, voice-over jobs, a Broadway show, a national tour,
+  // a series regular, background work), and a sentence offering a job that names none of the work the game has. A
+  // technique's name (voice-over work, among the special skills) isn't a job offered.
+  it('GUARD: offers only work the game has: no chapter promises a job of a kind the game doesn’t offer', () => {
     // Its details too, behind The Details from 2026-10-17 (brief 14).
-    const offered = CHAPTERS.flatMap((c) => [...c.body, ...(c.more ?? [])].filter((p) => /\bbetween jobs\b|\b(?:take|find|get|start) a job\b/i.test(p)).map((p) => `${c.id}: ${p.slice(0, 60)}`));
-    expect(offered).toEqual([]);
+    expect(jobsOffered(CHAPTERS)).toEqual([]);
+  });
+
+  it('GUARD: still fails on a chapter that promises a job the game doesn’t offer, as the old guard did and more', () => {
+    const promise = (line: string) => jobsOffered([{ id: 'fixture', body: [line] }]);
+    // What the old guard caught, still caught.
+    expect(promise('Between jobs, you can rest.')).toHaveLength(1);
+    expect(promise('Find a job to pay the rent.')).toHaveLength(1);
+    expect(promise('Take a job at the café.')).toHaveLength(1);
+    // Kinds of work the game has none of.
+    expect(promise('Book a commercial on the Opportunities tab.')).toHaveLength(1);
+    expect(promise('An agent can get you a series regular role.')).toHaveLength(1);
+    expect(promise('Audition for a national tour.')).toHaveLength(1);
+    expect(promise('A day job keeps you going between roles.')).toHaveLength(1);
+    expect(promise('Accept any job you’re offered.')).toHaveLength(1);
+    // The work the game has, offered in its own words, passes.
+    expect(promise('Press Submit Yourself to be seen for a student film.')).toEqual([]);
+    expect(promise('Accepting books the work days on your calendar.')).toEqual([]);
+    expect(promise('Take a shift on the School’s Shifts And Pay tab.')).toEqual([]);
   });
 });
 

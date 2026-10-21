@@ -119,8 +119,10 @@ describe('the registry', () => {
   });
 
   it('names no feature or label the game no longer has', () => {
-    // Each was in the game once and isn't now: a guide that still says it sends the player looking for nothing.
-    const gone = [/wheelchair/i, /Pay What’s Owed/, /\baudition(s|’s)? (booking|roll)/i, /\bshowcase\b/i, /\bagent\b/i, /\bmanager\b/i, /\bthe industry\b/i, /\bPress \/ anywhere to find one/];
+    // Each was in the game once and isn't now: a guide that still says it sends the player looking for nothing. "Agent"
+    // came off the list on 2026-10-21 (brief 19's J3 and J4): an agent's submissions, and the roles only an agent reaches,
+    // are the work loop's again, and the guide says which roles need one.
+    const gone = [/wheelchair/i, /Pay What’s Owed/, /\baudition(s|’s)? (booking|roll)/i, /\bshowcase\b/i, /\bmanager\b/i, /\bthe industry\b/i, /\bPress \/ anywhere to find one/];
     const hits: string[] = [];
     for (const e of GUIDE) {
       const text = JSON.stringify(e);

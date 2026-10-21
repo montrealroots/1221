@@ -1661,6 +1661,18 @@
   "on": "2026-10-17",
   "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
  },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Reviewed And Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Reviewed And Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
  "src/engine/decided.ts#top [production.direction]": {
   "status": "Reviewed And Retained",
   "hash": "9ce9ed69790f",
@@ -2740,6 +2752,12 @@
   "hash": "5fdbe30e8fb0",
   "on": "2026-10-17",
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten And Verified",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing"
  },
  "src/ui/shell/sections.ts#SECTIONS [overview]": {
   "status": "Rewritten And Verified",

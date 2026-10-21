@@ -51,6 +51,7 @@ import { ENROLLMENT, PUBLIC_COVER, RETURN } from './safetynet';
 import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
 import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
+import { OUTSIDE_WORK as PRO_OUTSIDE, WORK as PRO_WORK } from '../systems/projobs';
 import { BRIEF } from '../systems/briefs';
 import { ESTIMATE } from '../systems/school';
 import { ADVICE } from '../systems/advice';
@@ -81,6 +82,8 @@ const andList = (items: readonly string[]): string => (items.length < 2 ? items.
 const monthDay = ([month, day]: readonly [number, number]): string => `${MONTH_NAMES[month - 1]} ${day}`;
 /** The banks whose card plan costs nothing for its life when made while the introductory rate runs. */
 const PLAN_FREE_AT = [...PLAN_FREE_IN_INTRO].map((id) => bankById(id)?.name ?? id);
+/** A brief's three steps, as their buttons name them: what prepares an audition's sides and a booked part. */
+const PRO_STEPS = `${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}`;
 
 export interface Chapter {
   id: string;
@@ -440,7 +443,7 @@ export const CHAPTERS: readonly Chapter[] = [
       `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
       'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
       'If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.',
-      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+      'Read “Finding Work” next. It opens the Opportunities tab: the roles you can be seen for, auditions and offers.',
     ],
     more: [
       `A technique goes on your résumé as a special skill once it reaches ${PRO_SKILL_AT}: ${andList(PRO_SKILLS.map((s) => SKILL_WORDS[s]))}. Once it’s mastered, the résumé says so.`,
@@ -449,6 +452,34 @@ export const CHAPTERS: readonly Chapter[] = [
     ],
     names: ['Career', 'Overview', 'Portfolio', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel'],
     opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel'],
+  },
+  // From 2026-10-21 (brief 19's J1 to J5 and A3): the work loop, after the portfolio a submission sends. Its figures are
+  // the work loop's own (`systems/projobs.ts`), each the game's estimate, and the School's rule the Bulletin's.
+  {
+    id: 'finding-work',
+    title: 'Finding Work',
+    lead: 'Roles to be seen for, submissions, auditions, offers and the work itself, with or without an agent.',
+    body: [
+      `The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
+      'Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.',
+      'To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.',
+      `${counted(PRO_WORK.replyDays, 'day').replace(/^./, (c) => c.toUpperCase())} later the casting office answers with an audition: in person in New York or Providence at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.`,
+      `Before it, prepare the sides with ${PRO_STEPS}, as you would a practice brief. For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.`,
+      'If an audition clashes with something on your calendar, the notice says so. Press Ask For Another Time at least a day ahead, and casting moves it once, to a time it has that’s clear of your calendar.',
+      'Casting decides from how your audition went, how well the role suits you and how many other actors it saw. Some roles call you back first. A strong audition raises your chance without making it certain, and a role that suits you can go your way before you’re at your best.',
+      `An offer says the pay, the dates and how long it stands, ${counted(PRO_WORK.offerDays, 'day')}. Press Accept The Offer or Decline The Offer, on the tab or under What Needs You on Home. Accepting books the work days on your calendar and promises the pay for each week of it, due the Thursday after.`,
+      'Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Miss a shoot day, or a second day of a run, and the production replaces you.',
+      `While you’re at the School, work in term needs its approval. Press Ask The School at least ${counted(PRO_OUTSIDE.aheadDays / 7, 'week')} before the first day, and the dean decides a week later. Short, professional work that takes no School call and ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most is approved. Work taken in term without approval brings an academic warning, and a second time dismissal.`,
+      'On an F-1 you can’t accept work outside the School while you’re a student, and the School can’t authorize it. Summer and the winter break are yours, unless the School holds you for one of its calls.',
+      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+    ],
+    more: [
+      'The timings of a casting office, the trip from New Haven, the chance casting gives each audition and the field each kind of work draws are estimated. The pay is each union’s published minimum. Off-Broadway’s and a non-union short’s aren’t published, so the game estimates them.',
+      `The School’s rule is its Bulletin’s. Asking ${PRO_OUTSIDE.aheadDays} days ahead, ${PRO_OUTSIDE.mostDays} working days at most, ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.`,
+      'An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer.',
+    ],
+    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School'],
+    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de
