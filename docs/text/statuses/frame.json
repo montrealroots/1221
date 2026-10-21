@@ -1667,6 +1667,18 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing"
  },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Reviewed And Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Reviewed And Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
  "src/engine/decided.ts#top [pro.roster]": {
   "status": "Rewritten And Verified",
   "hash": "d02a5a6b6572",
@@ -1999,9 +2011,9 @@
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
   "status": "Rewritten And Verified",
-  "hash": "219b4e15ae29",
+  "hash": "48f0fa35225c",
   "on": "2026-10-21",
-  "evidence": "The Calendar's legend as tests/calendar.test.ts draws it; paydays and union bills shown under Money in tests/propay.test.ts's played weeks"
+  "evidence": "The Calendar's legend on the built app with the career's items on it, the meeting at Stewart Talent and a shoot day drawn in Career's color and opened as Kind Career, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the calendar surfaces); held by tests/pro-app.test.ts's legend tests"
  },
  "src/engine/world/calendar.ts#skipTargets": {
   "status": "Reviewed And Retained",
@@ -2753,6 +2765,12 @@
   "on": "2026-10-17",
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
  },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten And Verified",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing"
+ },
  "src/ui/shell/sections.ts#SECTIONS [overview]": {
   "status": "Rewritten And Verified",
   "hash": "0efc2e6be4c2",
@@ -2950,23 +2968,5 @@
   "hash": "3a463e4b5a94",
   "on": "2026-10-17",
   "reason": "No Such Screen, 'That address isn’t a screen in this game.' and Go Home: plain, and it says the one way on. Reached only by an old bookmark's address."
- },
- "src/engine/decided.ts#top [pro.casting]": {
-  "status": "Reviewed And Retained",
-  "hash": "463e16217581",
-  "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
- },
- "src/engine/decided.ts#top [pro.posting]": {
-  "status": "Reviewed And Retained",
-  "hash": "9f5280e59f15",
-  "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
- },
- "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
-  "status": "Rewritten And Verified",
-  "hash": "51b7a8a4c68a",
-  "on": "2026-10-21",
-  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing"
  }
 }

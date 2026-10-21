@@ -8,7 +8,7 @@
  * keeps half of what was rehearsed in, said on the button.
  */
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
@@ -69,6 +69,11 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
   onChoose: (c: Choice) => void;
 }) {
   const [draft, setDraft] = useState<Choice>({ ...(current?.pace ? { pace: current.pace } : {}), ...(current?.scale ? { scale: current.scale } : {}), ...(current?.structure ? { structure: current.structure } : {}) });
+  // Each chooser's radio groups named for it alone (from 2026-10-21): until then every chooser named its groups
+  // `axis-pace`, `axis-scale` and `axis-structure`, so two on one screen (the showcase's two scenes on Coursework) were
+  // one group each to the browser, Tab stopped only in the first, and the second's choices were reached only by the
+  // arrow keys running on from the first (brief 19's app walk).
+  const group = useId();
   const same = (a: Choice, b: Choice) => a.pace === b.pace && a.scale === b.scale && a.structure === b.structure;
   const whole = preview({});
   const open = whole.overall;
@@ -107,7 +112,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
                   <td className="nowrap">{i === 0 ? AXES[axis].label : ''}</td>
                   <td>
                     <label className="row gap-1" style={{ alignItems: 'flex-start' }}>
-                      <input type="radio" name={`axis-${axis}`} checked={chosen} onChange={() => setDraft({ ...draft, [axis]: side })} />
+                      <input type="radio" name={`${group}axis-${axis}`} checked={chosen} onChange={() => setDraft({ ...draft, [axis]: side })} />
                       <span><strong>{e.label}</strong> <span className="xs">{e.words}</span>{why && <span className="xs" style={{ display: 'block', color: 'var(--warning, inherit)' }}>Doesn’t fit: {why}</span>}</span>
                     </label>
                   </td>
