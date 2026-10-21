@@ -31,7 +31,6 @@ import { payFromBank } from './spending';
 import { citizenOf } from './documents';
 import { STARTING, addYears, documentsOf, inForce, isoOfCity, numberFor, type PersonDocument } from './documents';
 import { waitsOnVisit } from './papervisits';
-import { residenceIn } from './residence';
 import type { Engagement } from './pro';
 
 export const PERMISSION_KIND = 'documents.permission';
@@ -106,17 +105,15 @@ export function programEnd(person: Person): Instant | undefined {
 }
 
 /**
- * Whether they may work in the US for any employer at a moment (from 2026-10-10): a citizen, a permanent resident, or a
- * holder of a US permit in force, OPT. An F-1 student's own on-campus work isn't this: it's permission for the school's
- * jobs alone, ending with the program (8 CFR 214.2(f)(9)(i)). Unemployment reads it (FUTA 3304(a)(14)), and from
- * 2026-10-21 every engagement's dates (`eligibilityRead`, `systems/propay.ts`). A green card counts from that day too
- * (brief 19's D8: "a US citizen or permanent resident, authorized"): until then only the citizen did, and a save holding
- * a green card read as not authorized; `usPerson` (`systems/bankmoves.ts`) already counted it. Signing with an agent
- * changes none of it: nothing here reads the professional record's agreements.
+ * Whether they may work in the US for any employer at a moment (from 2026-10-10): a citizen, or a holder of a US permit
+ * in force, OPT or a green card (a permit of its own, `systems/residence.ts`). An F-1 student's own on-campus work isn't
+ * this: it's permission for the school's jobs alone, ending with the program (8 CFR 214.2(f)(9)(i)). Unemployment reads
+ * it (FUTA 3304(a)(14)), and from 2026-10-21 every engagement's dates (`eligibilityRead`, `systems/propay.ts`). Signing
+ * with an agent changes none of it: nothing here reads the professional record's agreements. A line of its own for the
+ * green card was added on 2026-10-21 and taken out the same day, when its mutation survived: the permits already count it.
  */
 export function usWorkAuthorized(person: Person, at: Instant): boolean {
   if (citizenOf(person, 'US')) return true;
-  if (residenceIn(person, 'US', at)?.route === 'us-green-card') return true;
   // Out of status needs no line of its own: status outlives every permit in force (`usStatusEnds`: an OPT's end and sixty
   // days; one canceled for its idle days, no longer valid, the moment it's canceled), and none is granted after it, one
   // pending holding the status open. A line refusing it went on 2026-10-13: the permits settled every case it did (found

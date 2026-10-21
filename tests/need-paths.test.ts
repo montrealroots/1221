@@ -553,8 +553,8 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
  * line (2026's $15,960, the last SLATE keeps, so 2027 reads it too: $1,835.40 a month). Until 2026-10-15 a renewal was
  * reached only on wages posted by hand. Here a life with need reaches it by the clock alone, withdrawn, enrolled on
  * Papers, and played thirteen months across a reload. She passes the income test on the bank's interest and fails the
- * work test: withdrawn, she has no work, since SLATE pays wages only for work-study and the Summer Cabaret, both a
- * student's. Covered Connecticut kept at a renewal, which needs last month's income over $1,835.40 and no more than 175%
+ * work test: withdrawn, she has no work. Until 2026-10-21 SLATE paid wages only for work-study and the Summer Cabaret,
+ * both a student's; she books none of the professional work it has paid since. Covered Connecticut kept at a renewal, which needs last month's income over $1,835.40 and no more than 175%
  * of the year before's line ($2,327.50 a month in 2027 and 2028), wasn't played, and isn't reached by any played life
  * with need: income over $1,835.40 is a student's work-study or Cabaret pay, at most $414 a week, and Enroll is shut
  * while Yale Health covers her. The one way onto Covered Connecticut is a personal leave without Affiliate cover begun
@@ -652,8 +652,8 @@ describe('health.enroll: a program’s renewal, reached by the clock', () => {
  * - renewed in 2027, from 1 November, a Connecticut program renews in six months: 1 May 2028.
  *
  * Covered Connecticut into HUSKY D meets HUSKY D's work test, 80 hours or $580 in October 2027 (the $580 alone from 2026-10-17; Pub. L. 119-21 §71119
- * asks it of an applicant too). Withdrawn, she has no work: SLATE pays wages only for work-study and the Summer Cabaret,
- * both a student's, and a student holds no program, since Enroll is shut while Yale Health covers her. So the move that
+ * asks it of an applicant too). Withdrawn, she has no work: she books none of the professional work SLATE pays from
+ * 2026-10-21, and its work-study and Summer Cabaret are a student's, and a student holds no program, since Enroll is shut while Yale Health covers her. So the move that
  * passes it is played with October's work posted by hand (TEST SETUP, 80 hours and $600, as tests/evidence-g05-life.test.ts
  * posts it), and the move that fails it was played as it is until 2026-10-16, when income of any kind came to count
  * toward the $580 (42 CFR 435.552(f)(2)) and her $930.00 of interest met it; since then the move that fails it is played

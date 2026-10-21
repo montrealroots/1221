@@ -6,102 +6,38 @@
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole at Yale in New Haven, played by the clock.
  * TEST SETUP, said where it's done, since the work loop that books engagements is built apart (the coordinator wires its
- * acceptance to `schedulePay`): an engagement, its opportunity and its promised payments written as the work system
- * writes them on accepting an offer (`booked`), and an agreement written as the agent's system writes one signed
- * (`signed`); a graduate made through the School's own Commencement handler with the last term put on the clock, as
- * tests/pro-core.test.ts makes one; the body kept fed and rested as the clock moves (`tended`); an F-1's end moved
- * earlier so its OPT can be played in months rather than years.
+ * acceptance to `schedulePay`): the stand-ins in tests/fakes/career-work.ts, an engagement written as the work system
+ * writes one on accepting an offer, an agreement as the agent's system writes one signed, a graduate made through the
+ * School's own Commencement handler, the body kept fed and rested; and an F-1's end moved earlier so its OPT can be
+ * played in months rather than years.
  */
 import { describe, expect, it } from 'vitest';
-import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY, MS_HOUR, addDays, instantFromZoned } from '@/engine/core/time';
-import { newLifeConfig } from '@/engine/world/bootstrap';
+import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
+import { loadSave } from '@/engine';
 import { breaches } from '@/engine/core/invariants';
-import { COMMENCEMENT_KIND, EVALUATION_KIND } from '@/engine/systems/school';
-import { AGREEMENT, AGREEMENT_TERMS, RATES, UNIONS, projectById } from '@/engine/content/careerwork';
-import { ensurePro, type Agreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
+import { PROJECTS, RATES, UNIONS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import {
-  DUES_KIND, PAY_KIND, RELEASE_KIND, commissionOn, coveredWork, eligibilityRead, negotiatedAmount, paydayAfter, sagWorkRefusal, schedulePay,
+  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, commissionOn, coveredWork, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
   workEligibilityRefusal, withholdingOn,
 } from '@/engine/systems/propay';
 import { yearOf } from '@/engine/systems/earnings';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import { documentsOf } from '@/engine/systems/documents';
 import { f1Of, usWorkAuthorized } from '@/engine/systems/permission';
+import { formatMoney } from '@/engine/core/money';
+import { at, booked, graduate, reload, runDays, signed, student, tended } from './fakes/career-work';
+import '@/ui/looks/all';
+import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { at as subject } from '@/ui/looks/subject';
 
-const zone = 'America/New_York';
-const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
-const student = (seed: string, more: Partial<ReturnType<typeof newLifeConfig>> = {}) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...more });
-/** TEST SETUP: rested, fed, steady and awake each time the clock moves, six hours at a time. */
-const tended = (sim: Simulation, until: number) => {
-  while (sim.now < until) {
-    Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 });
-    sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
-    sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR));
-  }
-};
-const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 const checking = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 const txn = (sim: Simulation, id: string) => sim.universe.transactions.find((t) => t.id === id)!;
 const nominal = (sim: Simulation, name: string) => Object.values(sim.universe.accounts).find((a) => a.nominal && a.name === name);
 const posted = (sim: Simulation, id: string, accountId: string) => txn(sim, id).postings.filter((p) => p.accountId === accountId).reduce((n, p) => n + p.amount, 0);
 const trust = (sim: Simulation) => Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'escrow' && a.category === 'trust');
-
-/**
- * TEST SETUP: a graduate of the class of 2029, made by the School's own handlers: the last term's state and its
- * evaluation put on the clock, Commencement brought forward to 3 September 2026, and the clock run through it.
- */
-function graduate(seed: string) {
-  const sim = student(seed);
-  tended(sim, at(2026, 9, 1, 18));
-  const school = sim.player.school!;
-  Object.assign(school, { termsBegun: 6, enrolled: [0, 1, 2, 3, 4, 5], standing: 'good' });
-  school.courses = { '5:DRAM 393b': { term: 5, code: 'DRAM 393b', name: 'Acting VI', meetings: 20, attended: 20, excused: 0 } } as never;
-  sim.schedule({ at: sim.now + 60_000, kind: EVALUATION_KIND, label: 'Spring Term 2029 Evaluation', category: 'school', priority: 32, requiresPlayer: false, payload: { personId: sim.player.id, term: 5 } });
-  sim.advanceTo(sim.now + 2 * 60_000);
-  const booked = sim.universe.scheduled.filter((i) => i.kind === COMMENCEMENT_KIND && i.status === 'pending');
-  sim.timeline.cancel(booked[0]!.id, sim.now);
-  sim.schedule({ at: at(2026, 9, 3, 10), kind: COMMENCEMENT_KIND, label: 'Commencement', category: 'school', priority: 32, durationMinutes: 180, payload: booked[0]!.payload });
-  tended(sim, at(2026, 9, 3, 13));
-  expect(sim.player.school!.standing).toBe('graduated');
-  return sim;
-}
-
-/** TEST SETUP: an agreement as the agent's system writes one when it's signed, for a year. */
-function signed(sim: Simulation, signedAt: number): Agreement {
-  const a: Agreement = { id: sim.nextId('pro'), agentId: 'jordan-parente', offeredAt: signedAt - 3 * MS_DAY, standsUntil: signedAt + 11 * MS_DAY, status: 'accepted', terms: [...AGREEMENT_TERMS], signedAt, endsAt: signedAt + AGREEMENT.termDays * MS_DAY };
-  ensurePro(sim, sim.player).agreements.push(a);
-  return a;
-}
-
-/**
- * TEST SETUP: an engagement as the work system writes one on accepting an offer: its opportunity booked, its days of
- * work (ten to six), and its pay promised now, a payment for each week's work due the Thursday after it (`paydayAfter`).
- * A run's pay is a weekly salary, a shoot's a day rate for each day.
- */
-function booked(sim: Simulation, o: { project: string; days: number[]; amount: number; per: 'day' | 'week'; via?: 'agent' | 'open'; agreementId?: string; offerAt?: number }): Engagement {
-  const pro = ensurePro(sim, sim.player);
-  const template = projectById(o.project)!;
-  const oppId = sim.nextId('pro');
-  const eId = sim.nextId('pro');
-  const days = o.days.map((d) => ({ from: d + MS_HOUR, to: d + 9 * MS_HOUR, label: template.schedule.kind === 'run' ? 'Rehearsal' : 'Shoot' }));
-  const weeks = new Map<number, number[]>();
-  for (const d of days) { const due = paydayAfter(d.from); weeks.set(due, [...(weeks.get(due) ?? []), d.from]); }
-  const deferred = RATES[template.pay].deferred === true;
-  const pay = [...weeks.entries()].map(([due, list], n) => ({
-    id: sim.nextId('pro'), key: `${eId}:${n + 1}`, promised: deferred ? 0 : o.per === 'week' ? o.amount : o.amount * list.length, currency: 'USD', promisedAt: sim.now, due, ...(deferred ? { deferred: true as const } : {}),
-  }));
-  const opp: Opportunity = { id: oppId, projectId: o.project, via: o.via ?? 'open', ...(o.via === 'agent' ? { agentId: 'jordan-parente' } : {}), status: 'booked', postedAt: sim.now - 10 * MS_DAY, submitBy: sim.now - 5 * MS_DAY, offer: { at: o.offerAt ?? sim.now - MS_DAY, until: sim.now + 6 * MS_DAY, rate: template.pay, amount: o.amount, per: o.per, units: o.per === 'week' ? pay.length : days.length }, resolvedAt: sim.now, engagementId: eId, history: [], counts: {} };
-  const e: Engagement = { id: eId, opportunityId: oppId, projectId: o.project, role: template.role.part, status: 'booked', days, ...(o.agreementId ? { agreementId: o.agreementId } : {}), pay, history: [], counts: {} };
-  pro.opportunities.push(opp);
-  pro.engagements.push(e);
-  return e;
-}
-/** Six days a week, Monday to Saturday, for so many weeks from a Monday. */
-const runDays = (monday: number, weeks: number) => Array.from({ length: weeks * 6 }, (_, i) => addDays(monday, Math.floor(i / 6) * 7 + (i % 6), zone));
 
 describe('a payment promised and received once', () => {
   it('PLAYER JOURNEY: an unsigned graduate’s three weeks Off-Broadway are promised on booking, nothing posted, then each week paid on its Thursday, once, straight to checking, as wages with where the work was done', () => {
@@ -193,8 +129,18 @@ describe('commission, only when owed, checked to the cent against the postings',
     const held = trust(sim)!;
     expect(held.balance).toBe(2_822_60 - p.inTrust!.withheld);
     expect(titled(sim, 'Pay Held For You At Stewart Talent')[0]!.body).toContain('Stewart Talent passes it on to you by October 6, 2026, less $256.60 commission.');
+    // What you're worth says where it is while it's held, in whole dollars beside a worth of six figures.
+    expect((resolveLook(sim, subject('networth', sim.player.id)) as Looked).summary).toContain(`${formatMoney(held.balance, 'USD', { cents: false })} held for you in your agency’s client trust account`);
     // Three business days from Thursday 1 October: Tuesday 6 October.
     expect(p.inTrust!.releaseAt).toBe(at(2026, 10, 6, 12));
+    // TEST SETUP: a second pass-on item for the same payment, as one scheduled twice would leave; then saved and opened
+    // while the pay is held.
+    sim.schedule({ at: p.inTrust!.releaseAt + 60_000, kind: RELEASE_KIND, label: 'Pay From Stewart Talent', category: 'home', payload: { personId: sim.player.id, engagementId: e.id, key: p.key } });
+    const kept = reload(sim);
+    tended(kept, at(2026, 10, 7));
+    const passedOn = kept.universe.transactions.filter((t) => t.memo.includes('paid on from Stewart Talent’s client trust account'));
+    expect(passedOn).toHaveLength(1);
+    expect(trust(kept)!.balance).toBe(0);
     tended(sim, at(2026, 10, 6, 13));
     const r = p.received!;
     // Scale is $2,566.00 for the two days; the commission is what's over it, $256.60, which is 9.09% of the gross, not
@@ -254,6 +200,10 @@ describe('commission, only when owed, checked to the cent against the postings',
     expect(txn(sim, r.txnId!).postings.some((p) => p.accountId === nominal(sim, 'Agent’s Commission')?.id)).toBe(false);
     expect(trust(sim)).toBeUndefined();
     expect(commissionOn(sim, sim.player, e, e.pay[0]!, 250_00).words).toBe('No commission: you weren’t represented when you made this contract.');
+    // The same work contracted after the signing, the player's own submission and no agreement named on it, carries it:
+    // the agreement in force on the day the contract was made.
+    const after = booked(sim, { project: 'eastview', days: [at(2026, 10, 5)], amount: 125_00, per: 'day' });
+    expect(commissionOn(sim, sim.player, after, after.pay[0]!, 125_00)).toMatchObject({ how: 'term', rule: 'ny', amount: 12_50 });
   }, 90_000);
 
   it('PLAYER JOURNEY: continuing commission: a contract made while the agreement ran is still commissioned after it ends by agreement, through the trust account, and the Work tab’s words say why', () => {
@@ -282,6 +232,15 @@ describe('commission, only when owed, checked to the cent against the postings',
     expect(commissionOn(sim, sim.player, late, late.pay[0]!, 1_051_00)).toMatchObject({ how: 'unrepresented', amount: 0 });
     expect(coveredWork({ medium: 'stage', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater' } })).toBe(false);
     expect(coveredWork(projectById('calder-street')!)).toBe(true);
+    // TEST SETUP: a project in London, which no project in the game is, outside the agreement's United States.
+    const abroad = { ...projectById('calder-street')!, id: 'test-abroad', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater in the West End' } };
+    (PROJECTS as ProjectTemplate[]).push(abroad);
+    try {
+      const away = booked(sim, { project: 'test-abroad', days: runDays(at(2026, 9, 21), 1), amount: 1_051_00, per: 'week', via: 'agent', agreementId: a.id });
+      expect(commissionOn(sim, sim.player, away, away.pay[0]!, 1_051_00)).toMatchObject({ how: 'uncovered', amount: 0, words: 'No commission: your agreement with Stewart Talent covers stage, film and television work in the US, and this isn’t that.' });
+    } finally {
+      (PROJECTS as ProjectTemplate[]).pop();
+    }
   }, 90_000);
 });
 
@@ -310,6 +269,22 @@ describe('wages, as the tax return counts them', () => {
     // A nonresident of the city owes none of New York City's tax.
     expect(f.local).toBe(0);
   }, 90_000);
+
+  it('withholds New York City’s tax from a resident of the city on top of the state’s, and only the state’s from a New Haven resident on the same wages', () => {
+    const sim = graduate('pay-nyc');
+    const y = yearOf(sim.player, 2026);
+    const before = { acting: y.acting, elsewhere: { ...y.elsewhere } };
+    // TEST SETUP: a year's New York wages so far past the standard deductions, as weeks of work there would leave them.
+    y.acting = 30_000_00;
+    y.elsewhere['us-ct>us-ny-newyork'] = 30_000_00;
+    const visiting = withholdingOn(sim, sim.player, 4_456_00, sim.now, 'us-ny-newyork');
+    // TEST SETUP: the same graduate living in New York City, which no life moves to in play.
+    sim.player.currentLocationId = 'us-ny-newyork';
+    const resident = withholdingOn(sim, sim.player, 4_456_00, sim.now, 'us-ny-newyork');
+    expect(visiting.byState['us-ny']).toBeGreaterThan(0);
+    expect(resident.byState['us-ny']).toBeGreaterThan(visiting.byState['us-ny']!);
+    Object.assign(y, { acting: before.acting, elsewhere: before.elsewhere });
+  }, 90_000);
 });
 
 describe('permission to work, for each engagement’s dates', () => {
@@ -329,7 +304,7 @@ describe('permission to work, for each engagement’s dates', () => {
     expect(eligibilityRead(citizen.player, days, citizen.now)).toMatchObject({ authorized: true, basis: 'citizen' });
   });
 
-  it('counts a green card as permission to work, as a permanent resident’s', () => {
+  it('counts a green card, a permit of its own, as permission to work, and says it’s the green card', () => {
     const sim = student('elig-green', { homeRegionId: 'uk-eng-london' });
     // TEST SETUP: a green card in force, as a save from before 2026-10-09 could hold one.
     documentsOf(sim.player).push({ id: sim.nextId('document'), kind: 'permit', issuer: 'US', name: 'Permanent Resident Card', number: 'X', status: 'valid', issuedAt: sim.now - MS_DAY, destination: 'US', route: 'us-green-card' });
@@ -396,12 +371,12 @@ describe('the unions’ money', () => {
     delete u.people[u.playerId]!.pro!.unionBills;
     u.transactions = u.transactions.filter((t) => !t.memo.startsWith('Actors’ Equity'));
     u.scheduled = u.scheduled.filter((i) => i.kind !== DUES_KIND);
-    u.opened = u.opened!.filter((x) => x !== 'pro.unionsBilled');
+    u.opened = u.opened!.filter((x) => x !== 'pro.unions');
     for (const a of Object.values(u.accounts)) a.balance = 0;
     for (const t of u.transactions) for (const p of t.postings) u.accounts[p.accountId]!.balance += p.amount;
     const opened = loadSave(u);
     const n = opened.universe.transactions.length;
-    expect(opened.universe.opened).toContain('pro.unionsBilled');
+    expect(opened.universe.opened).toContain('pro.unions');
     expect(titled(opened, 'What You Owe Actors’ Equity')[0]!.body).toBe('You joined Actors’ Equity Association with your degree on September 3, 2026. Your save is from before the game charged the union’s fees, so nothing was charged for that day. Its initiation fee is $1,800.00, paid within three years: $600.00 is taken on November 1, 2026, then $600.00 on September 3, 2027 and $600.00 on September 3, 2028. Basic dues are $88.00 each May and November, from November 1, 2026.');
     expect(opened.universe.transactions.length).toBe(n);
     // A second opening tells it again no more.
@@ -435,6 +410,17 @@ describe('the unions’ money', () => {
     expect(reload(sim).player.pro!.sag!.memberSince).toBe(sim.player.pro!.sag!.memberSince);
   }, 90_000);
 
+  it('keeps every unsettled bill and the last twelve settled, so years of dues don’t grow the save', () => {
+    const sim = student('union-bounded');
+    // TEST SETUP: twenty half-years of dues settled and one still to come.
+    const pro = sim.player.pro!;
+    pro.unionBills = Array.from({ length: 21 }, (_, i) => ({ key: `equity:dues:${2030 + Math.floor(i / 2)}-${i % 2 ? '11' : '05'}`, union: 'equity' as const, what: 'Basic dues, half a year', amount: 88_00, due: at(2030, 5, 1) + i * 180 * MS_DAY, ...(i < 20 ? { settled: { at: at(2030, 5, 1) + i * 180 * MS_DAY, how: 'paid' as const } } : {}) }));
+    keepBills(sim.player);
+    expect(pro.unionBills.filter((b) => b.settled)).toHaveLength(BILLS_KEPT);
+    expect(pro.unionBills.filter((b) => !b.settled)).toHaveLength(1);
+    expect(pro.unionBills[0]!.key).toBe('equity:dues:2034-05');
+  });
+
   it('refuses Join SAG-AFTRA where the bank can’t cover it, and nothing is charged', () => {
     const sim = graduate('union-sag-poor');
     const e = booked(sim, { project: 'calloway-files', days: [at(2026, 9, 21)], amount: 1_283_00, per: 'day' });
@@ -443,6 +429,8 @@ describe('the unions’ money', () => {
     // TEST SETUP: the money taken out of every account the bank would pay from.
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'Taken out', category: 'transfer', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Other').id, amount: a.balance }] });
     const n = sim.universe.transactions.length;
+    // Said beside the button before it's pressed, with the amount; once pressed, what didn't happen.
+    expect(joinSagRefusal(sim, sim.player)).toBe('Your bank can’t cover the $3,244.07 to join.');
     expect(sim.execute({ kind: 'pro.join_sag', payload: {} })).toMatchObject({ ok: false, error: 'Your bank can’t cover $3,244.07, so nothing was charged.' });
     expect(sim.universe.transactions.length).toBe(n);
     expect(sim.player.pro!.sag!.memberSince).toBeUndefined();

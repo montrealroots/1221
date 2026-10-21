@@ -9,56 +9,57 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 323 | 1323 | 15722 | 7 | 56 | 267 | 0 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 49 | 486 | 13283 | 0 | 29 | 20 | 0 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 49 | 493 | 13563 | 0 | 28 | 20 | 1 | 0 |
 | Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70374 | 7 | 188 | 478 | 0 | 0 |
-| Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6634 | 151915 | 13 | 265 | 499 | 0 | 0 |
-| Papers, Documents, Applications, Taxes And Status Notices | 473 | 4587 | 56842 | 3 | 101 | 372 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 104 | 507 | 4382 | 0 | 79 | 25 | 0 | 0 |
+| Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 265 | 498 | 1 | 0 |
+| Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56939 | 3 | 99 | 371 | 5 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 139 | 780 | 7379 | 0 | 76 | 25 | 38 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 196 | 1107 | 0 | 3 | 28 | 0 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 43 | 192 | 755 | 0 | 11 | 32 | 0 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 43 | 193 | 756 | 0 | 11 | 31 | 1 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4347 | 37297 | 578502 | 316 | 1188 | 3159 | 0 | 0 |
+| **All** | 4384 | 37585 | 581886 | 316 | 1182 | 3156 | 46 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 104 | 4382 | 79 | 25 | 0 | 0 |
-| frame | 499 | 33278 | 93 | 406 | 0 | 0 |
+| career | 109 | 6145 | 76 | 25 | 8 | 0 |
+| career-pay | 30 | 1234 | 0 | 0 | 30 | 0 |
+| frame | 499 | 33279 | 93 | 405 | 1 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
-| money | 264 | 54945 | 107 | 157 | 0 | 0 |
+| money | 264 | 54954 | 107 | 156 | 1 | 0 |
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
-| papers | 473 | 56842 | 101 | 372 | 0 | 0 |
+| papers | 475 | 56939 | 99 | 371 | 5 | 0 |
 | profile | 621 | 55956 | 179 | 442 | 0 | 0 |
 | school | 638 | 67356 | 184 | 454 | 0 | 0 |
-| tutorial | 49 | 13283 | 29 | 20 | 0 | 0 |
+| tutorial | 49 | 13563 | 28 | 20 | 1 | 0 |
 
 ## The First Pass, By Subsystem
 
 | Subsystem | Sources | Rewritten And Verified | Reviewed And Retained | Pending | Blocked |
 |---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 323 | 15 | 253 | 55 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 49 | 15 | 8 | 26 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 49 | 14 | 8 | 27 | 0 |
 | Home And Its Retained Actions | 19 | 5 | 9 | 5 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 144 | 238 | 239 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 125 | 353 | 188 | 0 |
-| Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 118 | 377 | 269 | 0 |
-| Papers, Documents, Applications, Taxes And Status Notices | 473 | 145 | 225 | 103 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 104 | 79 | 25 | 0 | 0 |
+| Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 118 | 376 | 270 | 0 |
+| Papers, Documents, Applications, Taxes And Status Notices | 475 | 144 | 225 | 106 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 139 | 76 | 25 | 38 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 29 | 37 | 17 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 43 | 9 | 28 | 6 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 43 | 9 | 27 | 7 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4347 | 762 | 2418 | 1167 | 0 |
+| **All** | 4384 | 757 | 2416 | 1211 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -416,7 +417,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/tutorial.ts#CHAPTERS [weather]` | 9 | 0 | Rewritten | tutorial | tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter weather, and follow-1440/chapter-10-weather.txt; today’s weather opened | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [school]` | 52 | 0 | Rewritten | tutorial | Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [profile]` | 36 | 0 | Rewritten | tutorial | Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts | Rewritten And Verified |
-| `src/engine/content/tutorial.ts#CHAPTERS [career]` | 22 | 0 | Rewritten | tutorial | Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts | Rewritten And Verified |
+| `src/engine/content/tutorial.ts#CHAPTERS [career]` | 29 | 0 | Pending | tutorial | changed since the second pass marked it Rewritten (2026-10-21) | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [papers]` | 39 | 0 | Rewritten | tutorial | Your Doctor, Call It Off, Book An Appointment beside a visit owed, The Marketplace's Enroll and File It traced to src/ui/workspaces/PapersWorkspace.tsx; tests/guide-chapter-facts.test.ts holds the Book An Appointment sentence and passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [documents]` | 23 | 0 | Rewritten | tutorial | Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [money]` | 11 | 0 | Rewritten | tutorial | split where one paragraph held what the score decides and how it moves; tests/defects-g12-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
@@ -2442,7 +2443,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/looks/money.tsx#tailFor` | 6 | 0 | Rewritten | money | tests/language-money.test.ts reads the savings account's look, saying it pays what the checking account can't | Pending |
 | `src/ui/looks/money.tsx#accountBody` | 18 | 0 | Retained | money | The look's stat labels and the rate sentence, overdraft interest taken on the 1st, already plain and specific | Rewritten And Verified |
 | `src/ui/looks/money.tsx#top [went]` | 1 | 0 | Retained | money | The facet label Where It Went, over the last thirty days of spending by category | Reviewed And Retained |
-| `src/ui/looks/money.tsx#HELD_AS` | 2 | 0 | Retained | money | What money held apart is, on its way between your banks or SNAP on an EBT card, inside the worth sentence | Reviewed And Retained |
+| `src/ui/looks/money.tsx#HELD_AS` | 3 | 0 | Pending | money | changed since the second pass marked it Retained (2026-10-19) | Pending |
 | `src/ui/looks/money.tsx#worthSentence` | 7 | 0 | Retained | money | What you're worth and its parts, the bank, cash, held money, a pension and what's owed, in one spoken list | Rewritten And Verified |
 | `src/ui/looks/money.tsx#worthBody` | 11 | 0 | Retained | money | The accounts open in your name, the primary one named, and three stat labels with their notes | Rewritten And Verified |
 | `src/ui/looks/money.tsx#spendBody` | 3 | 0 | Retained | money | What went out in thirty days and the categories most of it went to, a list with each figure | Reviewed And Retained |
@@ -2543,7 +2544,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]` | 6 | 0 | Rewritten | papers | rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects (seven weeks) | Rewritten And Verified |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [prerequisite]` | 4 | 0 | Rewritten | papers | rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects | Pending |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [immediate]` | 2 | 0 | Retained | papers | Two short lines that say a fee leaves your accounts the moment you apply, replace, settle or naturalize, which is when the bank changes. | Reviewed And Retained |
-| `src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]` | 68 | 0 | Rewritten | papers | brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check | Pending |
+| `src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]` | 68 | 0 | Pending | papers | changed since the second pass marked it Rewritten (2026-10-20) | Pending |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [scheduled]` | 1 | 0 | Rewritten | papers | rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), Permission To Work's How It Connects | Pending |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]` | 45 | 0 | Retained | papers | Residence Abroad's entry says first that the game grants none of these papers and why, then Mexico's rule for reference, with an example that changes nothing. | Rewritten And Verified |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [optional]` | 2 | 0 | Retained | papers | Two connections that keep residence apart from US permission to work and say your birth passport stays yours, which players otherwise ask about. | Rewritten And Verified |
@@ -2864,7 +2865,8 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/permission.ts#businessDaysOn` | 1 | 0 | Retained | papers | A time zone name the code passes to the calendar, America/New_York, which no screen shows as words. | Reviewed And Retained |
 | `src/engine/systems/permission.ts#optRefusal` | 6 | 0 | Retained | papers | Each refusal says the exact obstacle and date (from 90 days before your program ends, closed 60 days after), and that OPT follows a completed degree. | Rewritten And Verified |
 | `src/engine/systems/permission.ts#scheduleUsStatus` | 1 | 0 | Retained | papers | US Status, the calendar's two-word line for the day status ends, the same words as Your US Status on the tab. | Reviewed And Retained |
-| `src/engine/systems/permission.ts#registerPermission` | 16 | 0 | Retained | papers | The OPT and status notices: what happened, then what it means in the game (can't work, visa canceled, Visa Waiver closed) said as the game's rule, and the next step where there is one. | Rewritten And Verified |
+| `src/engine/systems/permission.ts#daysWorkedIn` | 1 | 0 | Pending | papers | not yet read in the second pass | Pending |
+| `src/engine/systems/permission.ts#registerPermission` | 16 | 0 | Pending | papers | changed since the second pass marked it Retained (2026-10-19) | Pending |
 | `src/engine/systems/permission.ts#registerPermission <documents.apply_opt>` | 2 | 0 | Retained | papers | The ledger memo's premium processing and the calendar's OPT Decided, which name the application and its day and nothing more. | Reviewed And Retained |
 | `src/engine/systems/permission.ts#registerPermission [permit]` | 1 | 0 | Retained | papers | Employment Authorization, OPT: the permit's own name, which the code reads back by OPT and the guide quotes in Being Decided. | Reviewed And Retained |
 | `src/engine/systems/residence.ts#MEXICO_UNREAD` | 1 | 0 | Retained | papers | One plain sentence that says why Mexico's papers can't be had here (moving abroad isn't part of the game), after each of Mexico's rules. | Rewritten And Verified |
@@ -2977,8 +2979,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/papers/Documents.tsx#PassportPane` | 39 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
 | `src/ui/papers/Documents.tsx#idCardWords` | 11 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
 | `src/ui/papers/Documents.tsx#IdPanel` | 11 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
-| `src/ui/papers/Documents.tsx#WorkPane` | 30 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
+| `src/ui/papers/Documents.tsx#WorkPane` | 30 | 0 | Pending | papers | changed since the second pass marked it Rewritten (2026-10-20) | Pending |
 | `src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>` | 2 | 0 | Retained | papers | The two openings of the OPT toast, Applied for OPT and Applied for OPT with premium processing, each naming exactly which application was made before its fee and decision date. | Rewritten And Verified |
+| `src/ui/papers/Documents.tsx#WorkReadPanel` | 5 | 0 | Pending | papers | not yet read in the second pass | Pending |
 | `src/ui/papers/Documents.tsx#TaxIdPanel` | 10 | 0 | Rewritten | papers | tests/language-dynamic.test.ts 'a document’s missing number …' and tests/evidence-g17-papers.test.ts 'PLAYER JOURNEY: Papers’ Social Security Number panel …' render the panel (None yet, the refund held up seven weeks) | Pending |
 | `src/ui/papers/Documents.tsx#ResidencePanel` | 11 | 0 | Rewritten | papers | tests/editorial-papers.test.ts 'Naturalize, on a green card held five years as an older save holds one, says what was applied for and what it cost' presses it | Pending |
 | `src/ui/papers/Documents.tsx#ResidencePanel <documents.residence>` | 1 | 0 | Retained | papers | One word, Applied, that opens the toast Applied and paid its fee, the same shape as the passport's Applied and paid. | Reviewed And Retained |
@@ -3079,13 +3082,18 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#hours` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.overview]` | 38 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [optional]` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]` | 3 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-21) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]` | 39 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]` | 5 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [history]` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]` | 6 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-21) | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [history]` | 3 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-21) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.headshots]` | 32 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.resume]` | 35 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.reel]` | 37 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]` | 47 | 0 | Pending | career | not yet read in the second pass | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]` | 2 | 0 | Pending | career | not yet read in the second pass | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]` | 3 | 0 | Pending | career | not yet read in the second pass | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]` | 38 | 0 | Pending | career | not yet read in the second pass | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]` | 44 | 0 | Pending | career | not yet read in the second pass | Pending |
 | `src/engine/systems/pro.ts#SESSION_HOURS` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#MONOLOGUES_COURSE` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#placeOf` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3112,6 +3120,36 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/pro.ts#registerPro [resume]` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#registerPro <pro.cut_reel>` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#registerPro [reel]` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/propay.ts#WORK_ZONE` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#STUDENT_WORDS` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#eligibilityRead` | 8 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#workEligibilityRefusal` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#commissionOn` | 11 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#trustAccount [escrow]` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#weekWords` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#payDue [problem]` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#payDue` | 15 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#payDue [paid]` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#release` | 4 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#release [paid]` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#schedulePay` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#duesBill` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#settle` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#equityParts` | 3 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#equityJoined` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#equityOnOpening` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#sagWorkRefusal` | 1 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#joinSagRefusal` | 4 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#registerProPay [success]` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#registerProPay` | 3 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/engine/systems/propay.ts#registerProPay <pro.join_sag>` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#STATUS` | 5 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#datesWords` | 2 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#PaymentLine` | 17 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#EngagementView` | 18 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#billWords` | 3 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#UnionsPanel` | 11 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
+| `src/ui/career/WorkPane.tsx#WorkPane` | 8 | 0 | Pending | career-pay | not yet read in the second pass | Pending |
 | `src/ui/workspaces/CareerWorkspace.tsx#CareerWorkspace` | 6 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/workspaces/CareerWorkspace.tsx#OverviewPane` | 18 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel` | 20 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3385,7 +3423,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/shell/sections.ts#SECTIONS [classes]` | 1 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |
 | `src/ui/shell/sections.ts#SECTIONS [coursework]` | 1 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |
 | `src/ui/shell/sections.ts#SECTIONS [casting]` | 1 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |
-| `src/ui/shell/sections.ts#SECTIONS [work]` | 2 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |
+| `src/ui/shell/sections.ts#SECTIONS [work]` | 3 | 0 | Pending | frame | changed since the second pass marked it Retained (2026-10-19) | Pending |
 | `src/ui/shell/sections.ts#SECTIONS [terms]` | 1 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |
 | `src/ui/shell/sections.ts#SECTIONS [accounts]` | 1 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |
 | `src/ui/shell/sections.ts#SECTIONS [cards]` | 1 | 0 | Retained | frame | Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them. | Reviewed And Retained |

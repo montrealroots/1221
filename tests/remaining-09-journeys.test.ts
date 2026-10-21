@@ -890,7 +890,7 @@ describe('journeys.d-medicaid-start: HUSKY D from the first of the month of appl
   }, 300_000);
 
   it('GUARD: an application made in January 2028 reaches one month back, where one made in 2026 reached three (FIXTURE: an income of $600 a month from October 2027, the work rules met by it and under HUSKY D’s line, and a doctor’s visit through the game’s own care on the 15th of October, November and December 2027, all uninsured); enrolled on 5 January 2028, HUSKY D covers her from 1 December 2027 and prices again December’s visit alone', () => {
-    // No played life reaches it: a student out of the School by 2027 has no work, so January's application would need
+    // No played life reaches it: a student out of the School by 2027 who books no professional work has none, so January's application would need
     // December's work rules met, and a month's income of $580 or more under the line SLATE's lives don't earn.
     const sim = life('jr-guard', 'modest', {}, false);
     tend(sim, at(2026, 8, 25, 12));

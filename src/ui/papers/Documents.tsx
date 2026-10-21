@@ -42,7 +42,8 @@ import { VISAS } from '@/engine/content/visas';
 import { NONCITIZEN_ID, idCardFee, idCardHere, idCardOnItsWay, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
-import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
+import { f1Of, optRefusal, optRunsOut, programEnd, usStatusEnds } from '@/engine/systems/permission';
+import { projectOf } from '@/engine/systems/propay';
 import { leftWithout } from '@/engine/systems/school';
 import { SSN, hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -255,12 +256,14 @@ export function WorkPane() {
   const usd = (n: number) => money(inSaveMoney(sim, Math.round(n * 100), 'USD'));
   const end = programEnd(person);
   const opt = WORK_RULES.opt;
-  // An OPT in force ends on its 91st day without work, the thirteenth week `OPT_WEEK_KIND` counts past its 90, and the
-  // status with it: there’s no work after the degree, so no played OPT reaches its twelve months and the sixty days
-  // after them, which `usStatusEnds` gives it. Until 2026-10-13 Your US Status showed that date, fourteen months on,
-  // while the OPT panel below said the status ended with the 90 days (found by that day’s third round).
+  // An OPT in force ends the week its days without work pass its 90, and the status with it (`optRunsOut`). From
+  // 2026-10-21 (brief 19's D8) the weeks still to be counted read the work booked in them, so an OPT with enough work
+  // reaches its twelve months and the sixty days after them, which `usStatusEnds` gives it. Until then every week counted
+  // seven days without work, the game having no work after the degree, and this was always the thirteenth week from its
+  // start. Until 2026-10-13 Your US Status showed the twelve months' date, fourteen months on, while the OPT panel below
+  // said the status ended with the 90 days (found by that day’s third round).
   const optHeld = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'valid' && d.name.includes('OPT'));
-  const idleEnds = optHeld?.issuedAt !== undefined ? optHeld.issuedAt + (Math.floor(opt.unemploymentDays / 7) + 1) * 7 * MS_DAY : undefined;
+  const idleEnds = optRunsOut(sim, person);
   const statusEnds = usStatusEnds(person);
   const status = statusEnds !== undefined && idleEnds !== undefined ? Math.min(statusEnds, idleEnds) : statusEnds;
   const optNo = optRefusal(sim, person);
@@ -287,15 +290,20 @@ export function WorkPane() {
         </div>
       </Panel>
 
+      <WorkReadPanel />
+
       <TaxIdPanel />
 
       <Panel title="OPT" subtitle={`${opt.form}, after your degree`} help="documents.apply_opt">
         <div className="col gap-3">
           {/* When this student can apply, then what OPT does for them here, then what it costs and what loses the fee; its
-              twelve months, which no played OPT reaches, under Sources And Estimates (from 2026-10-20, brief 16, section
-              7). Until then one paragraph of five sentences opened on the twelve months, the window was only in Your
-              Program Ends' note, in days, and a degree not finished, which denies OPT and keeps its fee, went unsaid. */}
-          <p className="small" style={{ margin: 0 }}>{applyBy}OPT is permission to work in your field after your degree, and it keeps your US status going. The game has no work after the degree, so an approved OPT ends after {opt.unemploymentDays} days without work, about {opt.unemploymentDays} days from its start, and your US status ends with it.</p>
+              twelve months under Sources And Estimates (from 2026-10-20, brief 16, section 7). Until then one paragraph of
+              five sentences opened on the twelve months, the window was only in Your Program Ends' note, in days, and a
+              degree not finished, which denies OPT and keeps its fee, went unsaid. From 2026-10-21 (brief 19's D8) the
+              days of professional work count: until then this said the game had no work after the degree, so an approved
+              OPT ended about 90 days from its start, which no played OPT then outlived. */}
+          <p className="small" style={{ margin: 0 }}>{applyBy}OPT is permission to work in your field after your degree, and it keeps your US status going. Each day of professional work you’re booked for counts as a day worked. An approved OPT ends once you’ve had more than {opt.unemploymentDays} days without work in total, and your US status ends with it.</p>
+          {optHeld && <p className="small" style={{ margin: 0 }}>{`So far your OPT has counted ${plural(optHeld.idleDays ?? 0, 'day')} without work and ${plural(optHeld.workedDays ?? 0, 'day')} worked.`}</p>}
           <p className="small" style={{ margin: 0 }}>It costs {usd(opt.fee)}. Premium processing costs {usd(opt.premiumFee)} more and gets you a decision within {opt.premiumBusinessDays} business days. OPT follows a completed degree: if school ends without yours, it’s denied when it’s decided, and the fee isn’t refunded.</p>
           <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>
@@ -310,6 +318,34 @@ export function WorkPane() {
       <ResidencePanel />
 
     </div>
+  );
+}
+
+/**
+ * What permission to work said for each engagement's dates when it was booked (`Engagement.eligibility`,
+ * `systems/propay.ts`, from 2026-10-21, brief 19's D8): kept, so it says what was read then. On OPT it's the list of
+ * gigs and their dates SEVP's guidance asks the student to keep. Shown once there's work booked.
+ */
+function WorkReadPanel() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const work = [...(person.pro?.engagements ?? [])].filter((e) => e.eligibility).sort((a, b) => (b.days[0]?.from ?? 0) - (a.days[0]?.from ?? 0));
+  if (!work.length) return null;
+  const onOpt = documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.name.includes('OPT') && d.status === 'valid');
+  return (
+    <Panel title="Your Work And Your Permission" subtitle="What your permission to work said for each engagement’s dates" help="career.pay">
+      <div className="col gap-2">
+        <ul className="small col gap-2" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+          {work.map((e) => {
+            const first = e.days[0]?.from;
+            const last = e.days[e.days.length - 1]?.to;
+            const when = first !== undefined && last !== undefined ? `${formatDate(first, sim.zone)} to ${formatDate(last, sim.zone)}` : 'no dates';
+            return <li key={e.id}>{`${e.role}, ${projectOf(e)?.project ?? 'your work'}, ${when}. Read ${formatDate(e.eligibility!.at, sim.zone)}: ${e.eligibility!.words}`}</li>;
+          })}
+        </ul>
+        {onOpt && <p className="xs dim" style={{ margin: 0 }}>On OPT, this is the list of your work and its dates that SEVP’s guidance asks you to keep.</p>}
+      </div>
+    </Panel>
   );
 }
 
@@ -387,7 +423,7 @@ function ResidencePanel() {
           </tbody>
         </table>
       </LookRegion>
-      <Fine>Britain’s Global Talent visa and a US green card for extraordinary ability both need a record of professional work, and the game has none to show. Mexico’s temporary residence would let you live there, but not work. Naturalizing keeps the citizenship you were born with, and that passport stays the one in force in your name.</Fine>
+      <Fine>Britain’s Global Talent visa and a US green card for extraordinary ability both need a record of professional distinction, which the game doesn’t weigh, so neither can be applied for here. Mexico’s temporary residence would let you live there, but not work. Naturalizing keeps the citizenship you were born with, and that passport stays the one in force in your name.</Fine>
     </Panel>
   );
 }

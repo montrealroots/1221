@@ -288,7 +288,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'pro.unionsBilled'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'pro.unions'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -471,9 +471,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // A graduate's Equity membership from a save before the union's fees were charged (2026-10-21, brief 19's pay): told
   // what's owed, each part already past billed at the next billing day, never charged for a past date
   // (`equityOnOpening`, `systems/propay.ts`). Once; a save made since bills it at the degree.
-  if (!opened.includes('pro.unionsBilled')) {
+  if (!opened.includes('pro.unions')) {
     equityOnOpening(sim);
-    opened.push('pro.unionsBilled');
+    opened.push('pro.unions');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

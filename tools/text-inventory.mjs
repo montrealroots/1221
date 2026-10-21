@@ -92,6 +92,9 @@ const AREAS2 = [
   ['material-b', [/^src\/engine\/content\/briefs\/second-[a-z]\.ts$/]],
   ['money-data', [/^src\/engine\/content\/(banks?-[\w-]+|bankopening|homeaccounts|security|accountlife|pending|cash|rents|roundups)\.ts$/, /^src\/engine\/content\/home-accounts\.json$/]],
   ['frame', [/^index\.html$/, /^public\//]],
+  // From 2026-10-21 (brief 19's pay): its files, the pay system and the Career screen's Work tab, are its own builder's to
+  // mark, apart from the core's career files, so the wave's builders working apart write their own second-pass files.
+  ['career-pay', [/^src\/engine\/systems\/propay\.ts$/, /^src\/ui\/career\/WorkPane\.tsx$/]],
 ];
 const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', career: 'career', health: 'health', world: 'health', material: 'material-a' };
 const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';

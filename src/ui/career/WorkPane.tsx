@@ -196,7 +196,7 @@ export function WorkPane() {
           {live.length
             ? live.map((e) => <EngagementView key={e.id} person={person} e={e} />)
             : <p className="small" style={{ margin: 0 }}>No work booked. Work you accept appears here with its dates, its calls, its pay and any commission.</p>}
-          <Fine>Pay comes the Thursday after each week’s work, as SAG-AFTRA’s rules give it, and the game pays all professional work that way, which is estimated. Represented, it goes to your agency’s client trust account and on to you within three business days, less commission, as SAG-AFTRA’s rules give it for TV and film; the game applies that to stage work too. Each payment’s tax is withheld as a paycheck’s, and the work’s town goes on your tax return.</Fine>
+          <Fine>Pay comes on the Thursday after each week’s work. That’s SAG-AFTRA’s rule, which the game uses for all professional work, so for other work it’s estimated. Represented, your pay goes to your agency’s client trust account and on to you within three business days, less commission: SAG-AFTRA’s rule for TV and film, which the game uses for stage work too. Tax is withheld from each payment as from a paycheck, and your tax return reads the town the work was done in.</Fine>
         </div>
       </Panel>
       {owed.length > 0 && (

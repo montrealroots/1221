@@ -7,17 +7,24 @@
  * goes on a résumé from; and the versions kept. Each of those is the game's estimate, and the entries say so. The
  * Bulletin's sentences (Equity at the degree, the filmed monologues posted at the end of the final term) are its own
  * (`docs/research/career-2026-10-20/yale.md`, B27 pp.24 and 33).
+ *
+ * From 2026-10-21 (brief 19's pay) three more, for the Work tab (`systems/propay.ts`): the pay, the commission and the
+ * unions. Their figures are the rules' own too: the trust account's business days and the commission's rates
+ * (`AGREEMENT`), the unions' fees (`UNIONS`), the thirty days (`UNIONS.sagAftra.joinWithinDays`), each said as a
+ * published rule or an estimate as the code says it.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
 import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
 import { HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
+import { PAY, sagJoinUsd } from '../../systems/propay';
+import { AGREEMENT, UNIONS } from '../careerwork';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
 /** A Career section's id: a parameter typed by its literals would read to `tools/title-case.mjs` as a label. */
-type Section = 'overview' | 'portfolio';
+type Section = 'overview' | 'portfolio' | 'work';
 const on = (section: Section, label: string) => ({ route: CAREER, tab: section, label });
 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
@@ -27,6 +34,13 @@ const hours = (minutes: number): string => (minutes === 60 ? 'an hour' : `${word
 const usd = (cents: number): string => formatMoney(cents, 'USD');
 const andList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
 const SKILLS = andList(SPECIAL_SKILLS.map((s) => SKILL_WORDS[s]));
+const pct = (r: number) => `${Math.round(r * 1000) / 10}%`;
+const TEN = pct(AGREEMENT.commission);
+const FIVE = pct(AGREEMENT.equityLowTier.rate);
+const LOW = usd(AGREEMENT.equityLowTier.weeklyAtOrBelow);
+const TRUST_DAYS = word(PAY.trustBusinessDays);
+const JOIN = usd(sagJoinUsd());
+const SAG_DAYS = UNIONS.sagAftra.joinWithinDays;
 
 export const CAREER_GUIDE: readonly GuideEntry[] = [
   {
@@ -245,6 +259,163 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'Three self-tapes of camera briefs taped, one of them Strong.',
       steps: ['Tick the Strong tape and one other.', 'Press Cut A Reel.'],
       result: `Two hours on, ${usd(REEL.cost)} comes out of your bank, and Reel lists the two pieces with their bands. What’s Missing says it holds only self-tapes.`,
+    },
+  },
+  {
+    id: 'career.pay',
+    title: 'Your Work And Its Pay',
+    goal: 'career',
+    covers: [],
+    synonyms: ['pay', 'paycheck', 'wages', 'payday', 'engagement', 'when do I get paid', 'promised pay', 'trust account', 'deferred pay', 'permission to work for a job'],
+    questions: ['When do I get paid for work?', 'Why isn’t my pay in my account yet?', 'Where does my pay go when I’m represented?', 'What was taken out of my pay?', 'Can I work on an F-1?'],
+    where: on('work', 'Career, Work, Your Engagements'),
+    available: `From the guide’s chapter “${CHAPTER}”. The Work tab lists work once you’ve booked some.`,
+    short: `The Work tab lists each engagement you’ve booked: who it’s for, where, its dates, its calls on your calendar, what your permission to work said for its dates, and its pay, a payment for each week’s work.\n\nPay is promised when you accept the work, and reaches your accounts only when it’s paid, on the Thursday after each week’s work. Represented, it goes to your agency’s client trust account first and comes on to you within ${TRUST_DAYS} business days, less commission. Unrepresented, it comes straight to you.`,
+    steps: [
+      'Open Career, then the Work tab.',
+      'Under Your Engagements, read each payment: what’s promised, by whom, and when it’s due.',
+      'After its payday, the payment says what was withheld for tax, any union dues, the commission and what reached you.',
+      'Open Money to see it land, with its line on your account’s statement.',
+    ],
+    needs: ['Work you’ve booked. A student film’s pay is deferred, so it’s listed and never paid.'],
+    costs: [
+      { label: 'Tax', value: 'Withheld from each payment as a paycheck’s is: federal income tax, Social Security and Medicare, and the tax of the state the work is in' },
+      { label: 'When It’s Paid', value: 'The Thursday after each week’s work, as SAG-AFTRA’s rules give it, for all professional work', estimate: true },
+      { label: 'Through Your Agency', value: `Within ${TRUST_DAYS} business days of the payday, as SAG-AFTRA’s rules give it for TV and film, for stage work too`, estimate: true },
+    ],
+    reads: [
+      { label: 'Representation', value: 'Whether you had an agreement in force on the day you made the contract, not on the payday' },
+      { label: 'Where The Work Is', value: 'The town it’s done in, which your tax return reads: a New Haven resident’s New York work is taxed by New York, with Connecticut’s credit for it' },
+      { label: 'Permission To Work', value: 'Read for each of its dates when you book it, and kept: the same permission Papers shows under Permission To Work' },
+    ],
+    now: ['Accepting work puts each payment on the Work tab as promised. Your accounts don’t change yet.'],
+    later: [
+      'On its payday, unrepresented, the pay less tax and dues goes into your account, and a notice says so.',
+      `Represented, it goes into your agency’s client trust account, shown in what you’re worth as held for you, and ${TRUST_DAYS} business days later comes on to your account less commission.`,
+      'Each payment counts on your tax return as wages, with what was withheld, the commission and the dues.',
+    ],
+    interpret: [
+      'Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.',
+      'Deferred pay is shown and never paid.',
+      'On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.',
+    ],
+    unavailable: ['“No work booked. Work you accept appears here with its dates, its calls, its pay and any commission.”'],
+    mistakes: [
+      'Counting promised pay as money you have. It isn’t in your accounts until its payday, or until your agency passes it on.',
+      'Thinking signing with an agent lets you work. Permission to work is your papers’, and an agreement changes nothing of it.',
+    ],
+    next: ['Read Commission, to see what your agency takes and when.'],
+    related: ['career.commission', 'career.unions', 'documents.work', 'taxes.return'],
+    connections: [
+      { to: 'bank.accounts', kind: 'scheduled', why: 'Each payment lands in your account on its payday, or from your agency’s trust account a few business days later.' },
+      { to: 'taxes.return', kind: 'evaluation', why: 'Your tax return reads each payment’s wages, withholding, commission, dues and the town the work was done in.' },
+      { to: 'documents.work', kind: 'prerequisite', why: 'Each engagement’s dates are read against your permission to work when you book it.' },
+    ],
+    example: {
+      setup: 'An unrepresented graduate living in New Haven, booked for three weeks Off-Broadway at $1,051 a week from Monday, September 14, 2026.',
+      steps: ['Open Career, then Work.', 'Read the three payments, each promised and due a Thursday.', 'Move the clock past Thursday, September 24.'],
+      result: 'The first week is paid that Thursday at noon: tax and Equity’s working dues withheld, the rest into checking, and the year’s wages count it as New York work.',
+    },
+  },
+  {
+    id: 'career.commission',
+    title: 'Commission',
+    goal: 'career',
+    covers: [],
+    synonyms: ['commission', 'agent’s cut', 'scale plus ten', 'continuing commission', 'what my agency takes', '10 percent'],
+    questions: ['How much commission does my agency take?', 'Why was no commission taken?', 'Do I owe commission after my agreement ends?', 'What is scale plus ten?'],
+    where: on('work', 'Career, Work, each payment’s Commission'),
+    available: `From the guide’s chapter “${CHAPTER}”. Commission is owed only on work you contracted while represented.`,
+    short: `Your agency takes commission only on covered work, stage, film and television in the US, that you contracted while your agreement was in force. It’s taken when your pay passes through its client trust account, and shown on its own line on the Work tab and in the deposit’s line in Money.\n\nThe rate is the unions’ and the law’s: ${TEN} at most, ${FIVE} on an Equity contract paying ${LOW} a week or less, and on SAG-AFTRA work only what you’re paid over scale.`,
+    steps: [
+      'Open Career, then the Work tab.',
+      'Under each payment, read Commission: for one to come, what’s expected and why; for one received, what was taken.',
+      'If your agreement has ended, read Still Owed After An Agreement Ended for the payments that still carry it.',
+    ],
+    needs: ['An agreement in force when you made the contract, or an offer your agency passed on in its term that you accepted within 60 days after it ended.'],
+    costs: [
+      { label: 'Covered Work', value: `${TEN} of the gross, the most New York lets an agency take for an engagement` },
+      { label: 'Equity', value: `${FIVE} on a weekly salary of ${LOW} or less, ${TEN} above it` },
+      { label: 'SAG-AFTRA', value: `Only what’s over scale, up to ${TEN}: at scale plus ten percent you keep scale and your agency takes the ten` },
+    ],
+    reads: [
+      { label: 'The Contract’s Date', value: 'The day you accepted the work, against your agreement’s dates' },
+      { label: 'The Union', value: 'Equity’s tiers by the weekly salary, SAG-AFTRA’s scale by the rate' },
+    ],
+    now: ['Accepting work shows the commission it will carry, as expected, under each payment.'],
+    later: [
+      `When the pay passes through the trust account, the commission comes off it and your account gets the rest, ${TRUST_DAYS} business days after the payday.`,
+      'After your agreement ends, a contract you made while it ran still carries commission, whoever represents you then.',
+    ],
+    interpret: [
+      'No commission: you weren’t represented when you made the contract, or the work isn’t covered, or it pays SAG-AFTRA scale and nothing over it.',
+      'Commission is part of what your tax return counts as the cost of your work.',
+    ],
+    unavailable: ['“No commission: you weren’t represented when you made this contract.”'],
+    mistakes: ['Expecting an agreement signed after you accepted some work to take commission on it. Only contracts made while it’s in force carry it.'],
+    next: ['Read Your Unions, for the dues taken from union pay.'],
+    related: ['career.pay', 'career.unions'],
+    connections: [
+      { to: 'career.pay', kind: 'immediate', why: 'Commission comes off your pay as it passes through your agency’s trust account.' },
+      { to: 'taxes.return', kind: 'evaluation', why: 'The year’s commission counts toward the performing artist’s deduction the return works out.' },
+    ],
+    example: {
+      setup: 'Represented, you book two days on a network drama at scale plus ten, $1,411.30 a day.',
+      steps: ['Read the payment’s Commission on the Work tab.', 'Move the clock past its payday and three business days.'],
+      result: 'Commission is $256.60, what the $2,822.60 is over scale, so you keep the $2,566.00 scale before tax.',
+    },
+  },
+  {
+    id: 'career.unions',
+    title: 'Your Unions',
+    goal: 'career',
+    covers: ['pro.join_sag'],
+    synonyms: ['union', 'Equity', 'Actors’ Equity', 'SAG-AFTRA', 'SAG', 'dues', 'initiation fee', 'Taft-Hartley', 'join the union'],
+    questions: ['When do I join Equity?', 'What does Equity cost?', 'When can I join SAG-AFTRA?', 'Do I have to join SAG-AFTRA?', 'Why was money taken for dues?'],
+    where: on('work', 'Career, Work, Your Unions'),
+    available: `From the guide’s chapter “${CHAPTER}”. Join SAG-AFTRA opens once you’ve worked a SAG-AFTRA principal role.`,
+    short: `Your degree makes you a member of Actors’ Equity, as the School’s Bulletin says. Its initiation fee is ${usd(UNIONS.equity.initiation)}, paid within three years with ${usd(UNIONS.equity.down)} down, and basic dues are ${usd(UNIONS.equity.yearlyDues)} a year, billed each May and November.\n\nA SAG-AFTRA principal role on a TV show or a theatrical or Low Budget film makes you eligible to join SAG-AFTRA. From the ${SAG_DAYS}th day after that job began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA, about ${JOIN}.`,
+    steps: [
+      'Open Career, then the Work tab.',
+      'Under Your Unions, read Equity’s bills: each paid, owed or due, with its date.',
+      'Once SAG-AFTRA says you can join, press Join SAG-AFTRA before you take SAG-AFTRA work past its 30 days.',
+    ],
+    needs: ['For Equity: the degree.', 'For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank.'],
+    costs: [
+      { label: 'Equity’s Initiation Fee', value: `${usd(UNIONS.equity.initiation)} within three years: ${usd(UNIONS.equity.down)} at the degree, then two parts a year apart. The two parts’ dates are estimated` },
+      { label: 'Equity’s Dues', value: `${usd(UNIONS.equity.yearlyDues / 2)} each May and November, and 2.5% of Equity pay, taken from it. Taking it from the pay is estimated` },
+      { label: 'Joining SAG-AFTRA', value: `About ${JOIN}: the initiation fee and half a year’s base dues, then half a year’s dues each May and November, and 1.575% of SAG-AFTRA pay. Read from a search engine’s copy of its pages`, estimate: true },
+    ],
+    reads: [
+      { label: 'The Degree', value: 'Equity’s membership date, which its first bill reads' },
+      { label: 'Your First SAG-AFTRA Role', value: `Its first day, from which you can join and after ${SAG_DAYS} days must, by federal law’s limit for a union contract` },
+    ],
+    now: ['Join SAG-AFTRA takes its fee from your bank and makes you a member today. Your next SAG-AFTRA work takes its working dues.'],
+    later: [
+      'Each union bill is taken from your bank on its day. If the bank can’t cover it, it’s owed under Bills Owed and paid off the first day there’s money.',
+      'Union pay has its working dues taken before it reaches you.',
+    ],
+    interpret: [
+      'A bill marked owed is a debt: it’s paid off when money comes in.',
+      'Ultra Low Budget films and student films don’t count toward SAG-AFTRA eligibility in the game.',
+    ],
+    unavailable: [
+      '“You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role: a TV, theatrical or Low Budget film part. Ultra Low Budget and student films don’t count toward it.”',
+      '“You’re already a member of SAG-AFTRA, since …”',
+      'Your bank can’t cover the fee.',
+    ],
+    mistakes: [`Booking SAG-AFTRA work past the ${SAG_DAYS} days without joining first. The work is refused until you join.`],
+    next: ['Check Money for the bills on their days.'],
+    related: ['career.pay', 'career.commission', 'career.resume'],
+    connections: [
+      { to: 'bank.accounts', kind: 'scheduled', why: 'Each union bill comes out of your bank on its day.' },
+      { to: 'career.resume', kind: 'history', why: 'Your résumé lists your unions once you’re a member.' },
+      { to: 'taxes.return', kind: 'evaluation', why: 'Dues count toward the cost of your work on the year’s return.' },
+    ],
+    example: {
+      setup: 'A graduate whose degree was conferred on September 3, 2026.',
+      steps: ['Open Career, then Work.', 'Read Your Unions.'],
+      result: 'Equity’s $600.00 down was taken that day; $600.00 is due on September 3, 2027 and again on September 3, 2028; and $88.00 basic dues come on November 1, 2026.',
     },
   },
 ];

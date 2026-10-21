@@ -86,7 +86,7 @@ import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { MS_DAY, MS_HOUR, addDays, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { plural, spokenList } from '../core/text';
+import { spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, federalStandardDeduction, LOCAL_TAX } from '../content/tax';
 import { exchange } from '../content/currency';
@@ -222,14 +222,14 @@ export function eligibilityRead(person: Person, days: readonly { from: Instant; 
   const opt = documentsOf(person).filter((d) => d.kind === 'permit' && d.destination === 'US' && d.name.includes('OPT') && d.status === 'valid').sort((a, b) => (b.expiresAt ?? 0) - (a.expiresAt ?? 0))[0];
   const base = { at, authorized: refused === undefined, ...(refused !== undefined ? { refusedFrom: refused } : {}) };
   if (citizenOf(person, 'US')) return { ...base, basis: 'citizen', words: 'You’re a US citizen, so you can work for any employer in the US.' };
-  if (dates.some((d) => residenceIn(person, 'US', d)?.route === 'us-green-card')) return { ...base, basis: 'green-card', words: refused === undefined ? 'Your green card lets you work for any employer in the US.' : `Your green card doesn’t cover this work from ${formatDate(refused, zone)}.` };
+  if (dates.some((d) => residenceIn(person, 'US', d)?.route === 'us-green-card')) return { ...base, basis: 'green-card', words: refused === undefined ? 'With your green card you can work for any employer in the US.' : `From ${formatDate(refused, zone)}, this work isn’t covered by your green card.` };
   if (opt && (opt.issuedAt ?? Infinity) <= (dates[0] ?? at) + 12 * MS_HOUR) {
-    if (refused === undefined) return { ...base, basis: 'opt', words: `Your OPT lets you work in the US until ${formatDate(opt.expiresAt!, zone)}. Each day of this work counts as a day worked, toward OPT’s limit on days without work.` };
-    return { ...base, basis: 'opt', words: `Your OPT covers work only until ${formatDate(opt.expiresAt ?? refused, zone)}, and this work runs to ${formatDate(last ?? refused, zone)}.` };
+    if (refused === undefined) return { ...base, basis: 'opt', words: `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Each day of this work counts as a day worked, not one of OPT’s days without work.` };
+    return { ...base, basis: 'opt', words: `This work runs to ${formatDate(last ?? refused, zone)}, past the end of your OPT on ${formatDate(opt.expiresAt ?? refused, zone)}.` };
   }
   const studying = person.school !== undefined && !schoolEnded(person.school.standing);
   if (f1Of(person) && studying) return { ...base, basis: 'student', words: STUDENT_WORDS };
-  if (opt && refused !== undefined) return { ...base, basis: 'opt', words: `Your OPT starts on ${formatDate(opt.issuedAt!, zone)}, after this work’s first day, ${formatDate(refused, zone)}.` };
+  if (opt && refused !== undefined) return { ...base, basis: 'opt', words: `This work starts on ${formatDate(refused, zone)}, before your OPT does, on ${formatDate(opt.issuedAt!, zone)}.` };
   return { ...base, basis: 'none', words: refused === undefined ? 'You can work for any employer in the US.' : 'There’s no permission to work in the US among your papers for these dates. Papers, under Permission To Work, shows what you hold.' };
 }
 
@@ -347,7 +347,7 @@ export function commissionOn(sim: Simulation, person: Person, e: Engagement, p: 
     const amount = Math.min(full, over);
     const cur = saveCurrency(sim.universe);
     const words = amount === full
-      ? `${pct(ten)} of ${formatMoney(gross, cur)} gross, SAG-AFTRA’s most, taken from what you’re paid over scale.${still}`
+      ? `${pct(ten)} of ${formatMoney(gross, cur)} gross, the most SAG-AFTRA allows, taken from what you’re paid over scale.${still}`
       : amount === 0
         ? `No commission: this pays SAG-AFTRA scale, and an agent takes commission only on what’s above it.${still}`
         : `${formatMoney(amount, cur)}, what’s paid over scale (${formatMoney(scale, cur)}), so you keep scale.${still}`;
@@ -483,7 +483,7 @@ function payDue(s: Simulation, person: Person, e: Engagement, p: ProPayment, pro
     report();
     const releaseAt = businessDaysOn(s.now, PAY.trustBusinessDays, true, zone);
     p.inTrust = { at: s.now, agency: c.agency, txnId: txn.id, releaseAt, gross, withheld: w.total, dues: dues.amount, commission: c.amount, held: kept };
-    s.schedule({ at: releaseAt, kind: RELEASE_KIND, label: `Pay From ${c.agency}`, category: 'career', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
+    s.schedule({ at: releaseAt, kind: RELEASE_KIND, label: `Pay From ${c.agency}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
     noteEvent(s, e, { kind: 'paid', key: `trust:${p.key}`, words: `${project.company} paid ${money(gross)} for ${weekWords(p, workZone)} into ${c.agency}’s client trust account.`, ref: e.id });
     if (mine) s.notify({ category: 'career', title: `Pay Held For You At ${c.agency}`, body: `${project.company} paid ${money(gross)} for ${project.project}, ${weekWords(p, workZone)}, into ${c.agency}’s client trust account${taken.length ? `, less ${spokenList(taken)}` : ''}. ${c.agency} passes it on to you by ${formatDate(releaseAt, zone)}${c.amount ? `, less ${money(c.amount)} commission` : ', with no commission taken'}.`, importance: 55, route: '/workspace/career?tab=work', refType: 'engagement', refId: e.id });
     return;
@@ -538,13 +538,13 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
   for (const p of e.pay) {
     if (p.deferred) { deferred += 1; continue; }
     if (p.received || p.inTrust || scheduledFor(sim, PAY_KIND, p.key)) continue;
-    sim.schedule({ at: Math.max(p.due, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'career', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
+    sim.schedule({ at: Math.max(p.due, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
     scheduled += 1;
   }
   const pro = ensurePro(sim, person);
   const first = e.days[0]?.from;
   if (project && SAG_QUALIFIES.includes(project.kind) && first !== undefined && pro.sag?.eligibleSince === undefined && pro.sag?.memberSince === undefined && !scheduledFor(sim, SAG_ELIGIBLE_KIND, e.id)) {
-    sim.schedule({ at: Math.max(first, sim.now + 60_000), kind: SAG_ELIGIBLE_KIND, label: 'SAG-AFTRA Eligibility', category: 'career', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: e.id } });
+    sim.schedule({ at: Math.max(first, sim.now + 60_000), kind: SAG_ELIGIBLE_KIND, label: 'SAG-AFTRA Eligibility', category: 'system', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: e.id } });
   }
   return { scheduled, deferred };
 }
@@ -558,12 +558,13 @@ export const stillPromised = (e: Engagement): ProPayment[] => e.pay.filter((p) =
 
 const UNION_NAME = { equity: UNIONS.equity.name, 'sag-aftra': UNIONS.sagAftra.name } as const;
 
-/** The unions' bills, kept to the unsettled and the last `BILLS.kept` settled. */
+/** The unions' bills on the record, begun empty. */
 function billsOf(sim: Simulation, person: Person): UnionBill[] {
   return (ensurePro(sim, person).unionBills ??= []);
 }
 
-function keepBills(person: Person): void {
+/** The unions' bills kept to every unsettled one and the last `BILLS_KEPT` settled, by when each was due. */
+export function keepBills(person: Person): void {
   const all = person.pro?.unionBills;
   if (!all) return;
   const settled = all.filter((b) => b.settled).sort((a, b) => a.due - b.due);
@@ -577,7 +578,7 @@ function addBill(sim: Simulation, person: Person, bill: UnionBill): UnionBill {
   const had = bills.find((b) => b.key === bill.key);
   if (had) return had;
   bills.push(bill);
-  if (!scheduledFor(sim, DUES_KIND, bill.key)) sim.schedule({ at: Math.max(bill.due, sim.now + 60_000), kind: DUES_KIND, label: `${UNION_NAME[bill.union]} Bill`, category: 'career', priority: 30, payload: { personId: person.id, key: bill.key } });
+  if (!scheduledFor(sim, DUES_KIND, bill.key)) sim.schedule({ at: Math.max(bill.due, sim.now + 60_000), kind: DUES_KIND, label: `${UNION_NAME[bill.union]} Bill`, category: 'home', priority: 30, payload: { personId: person.id, key: bill.key } });
   return bill;
 }
 
@@ -631,7 +632,7 @@ export function equityJoined(sim: Simulation, person: Person): void {
 /**
  * An older graduate's Equity membership, dated at a degree before the game charged its fees: told what's owed, nothing
  * charged for a past date. Each part already past is billed at the next billing day instead, the rest on their own, the
- * dues from the next billing. Once (`ONCE_ON_OPENING`'s `pro.unionsBilled`); returns whether it billed anything.
+ * dues from the next billing. Once (`ONCE_ON_OPENING`'s `pro.unions`); returns whether it billed anything.
  */
 export function equityOnOpening(sim: Simulation): boolean {
   const person = sim.universe.people[sim.universe.playerId];
@@ -708,7 +709,7 @@ export function registerProPay(sim: Simulation): void {
     const project = projectOf(e);
     const from = sagMembershipFrom(person)!;
     const cur = saveCurrency(s.universe);
-    noteEvent(s, e, { kind: 'success', key: `sag-eligible:${e.id}`, words: `Your first SAG-AFTRA principal job began, so you can join SAG-AFTRA from ${formatDate(item.at, s.zone)}.`, ref: e.id });
+    noteEvent(s, e, { kind: 'success', key: `sag-eligible:${e.id}`, words: `With your first SAG-AFTRA principal job begun, you can join SAG-AFTRA from ${formatDate(item.at, s.zone)}.`, ref: e.id });
     if (person.id === s.universe.playerId) s.notify({ category: 'career', title: 'You Can Join SAG-AFTRA', body: `Your part in ${project?.project ?? 'this work'} is a SAG-AFTRA principal role, so you can join SAG-AFTRA from today. A union contract can require you to be a member from the 30th day after your first job under it began, so SAG-AFTRA work from ${formatDate(from, s.zone)} needs you to join first. Joining costs about ${formatMoney(usdIn(s, sagJoinUsd()), cur)}: press Join SAG-AFTRA on the Career screen’s Work tab.`, importance: 65, route: '/workspace/career?tab=work' });
   });
 
@@ -733,17 +734,6 @@ export function registerProPay(sim: Simulation): void {
 /** Whether a payment's place is one the return can read: a town the gazetteer holds. */
 export const placeKnown = (e: Engagement): boolean => { const project = projectOf(e); return project ? known(project.place.cityId) : true; };
 
-/** A payment's status as a phrase, for the Work tab: promised, deferred, in trust or received. */
-export function paymentStatus(p: ProPayment, zone: string, cur: string): string {
-  if (p.deferred) return 'Deferred: the game never pays it';
-  if (p.received) return `Received ${formatDate(p.received.at, zone)}: ${formatMoney(p.received.net, cur)} to you${p.received.via === 'trust' ? ', from the trust account' : ''}`;
-  if (p.inTrust) return `In trust since ${formatDate(p.inTrust.at, zone)}, passed on by ${formatDate(p.inTrust.releaseAt, zone)}`;
-  return `Promised, due ${formatDate(p.due, zone)}`;
-}
-
-/** How many days of an engagement are on or after a moment: the work still to come. */
-export const daysAhead = (e: Engagement, at: Instant): number => e.days.filter((d) => d.to > at).length;
-
 /** The payments still to come on contracts whose agreement has ended: what's owed after it, with the commission each carries. */
 export function owedAfterEnding(sim: Simulation, person: Person): { e: Engagement; p: ProPayment; commission: Commission }[] {
   const out: { e: Engagement; p: ProPayment; commission: Commission }[] = [];
@@ -754,6 +744,3 @@ export function owedAfterEnding(sim: Simulation, person: Person): { e: Engagemen
   }
   return out;
 }
-
-/** Plural helper for the tab: "2 days". */
-export const daysWords = (n: number): string => plural(n, 'day');
