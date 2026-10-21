@@ -35,7 +35,7 @@ import { AGENTS, agencyOf } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, projectById } from '@/engine/content/careerwork';
 import type { Band } from '@/engine/systems/coursework';
 import { activeAgreement, addCredit, eligibilityOf, type Engagement, type Opportunity } from '@/engine/systems/pro';
-import { MEETING_KIND, nextStep, referrersOf, relationOf, sendRefusal, stillOwed } from '@/engine/systems/proagent';
+import { MEETING_KIND, interestOf, nextStep, referrersOf, relationOf, sendRefusal, stillOwed } from '@/engine/systems/proagent';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -344,6 +344,10 @@ describe('V8 and G7: the agreement, shown in full, accepted in one life and decl
     expect(a.terms.map((t) => t.id)).toEqual(['scope', 'territory', 'excluded', 'exclusivity', 'commission', 'scale-plus-ten', 'duration', 'responsibilities', 'actor', 'payment', 'termination', 'continuing', 'offer']);
     expect(notices(sim).at(-1)).toBe('He Offered You Representation: Jordan Parente has offered to represent you at Stewart Talent: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until October 14, 2026. Fictional: his words and decisions here are invented.');
     expect(activeAgreement(sim.player, sim.now)).toBeUndefined();
+    // Why It Went This Way keeps the chance the offer was drawn against, an offer's, not a meeting's.
+    expect(rel(sim).why).toMatchObject({ step: 'decision', outcome: 'offer' });
+    expect(rel(sim).why!.chance).toBe(interestOf(sim, sim.player, AGENT, rel(sim).why!.at).offerChance);
+    expect(rel(sim).why!.chance).not.toBe(interestOf(sim, sim.player, AGENT, rel(sim).why!.at).chance);
     let back = reload(sim);
     back.must({ kind: 'pro.accept_agreement', payload: {} });
     back = cross(back);

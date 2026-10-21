@@ -176,6 +176,11 @@ describe('the Representation tab', () => {
     expect(open.shown).toContain('The Agreement How This Works He offered it on September 28, 2026, and the offer stands until October 12, 2026. Read every term before you answer.');
     for (const t of AGREEMENT_TERMS) expect(open.shown).toContain(`${t.heading} (${t.basis === 'verified' ? 'A Published Rule' : 'The Game’s Own Term'}) ${t.words}`);
     expect(button(open.html, 'Accept The Agreement')).toEqual([{ disabled: false, title: undefined, locked: false }]);
+    // History With His Office, newest first, the steps of one moment too: the send after the referral, the check, the notice.
+    const history = open.shown.slice(open.shown.indexOf('History With His Office'));
+    const order = ['He offered you representation', 'You kept the meeting', 'His office asked to meet you', 'You sent your headshots', 'Pennick Casting referred you', 'You checked your materials', 'You read the notice about him'].map((x) => history.indexOf(x));
+    expect(order.every((n) => n >= 0)).toBe(true);
+    expect(order).toEqual([...order].sort((x, y) => x - y));
     expect(button(open.html, 'Decline The Agreement')).toEqual([{ disabled: false, title: undefined, locked: false }]);
     // Accepted: the three ways to end it, each grayed with when it can.
     sim.must({ kind: 'pro.accept_agreement', payload: {} });
