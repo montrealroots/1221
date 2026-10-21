@@ -1,0 +1,479 @@
+[
+ {
+  "id": "M1",
+  "row": "pro.set_name",
+  "file": "src/engine/systems/pro.ts",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ],
+  "filter": "résumé made from the record",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 20 skipped (21)",
+  "failed": [
+   "the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date 134ms",
+   "tests/pro-core.test.ts > the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date"
+  ]
+ },
+ {
+  "id": "M2",
+  "row": "pro.headshots",
+  "file": "src/engine/systems/pro.ts",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "refuses a submission while the headshots",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 28 skipped (29)",
+  "failed": [
+   "F4 and J4: what a submission reads, and who can submit for what > PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made 165ms",
+   "tests/pro-work.test.ts > F4 and J4: what a submission reads, and who can submit for what > PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made"
+  ]
+ },
+ {
+  "id": "M3",
+  "row": "pro.update_resume",
+  "file": "src/engine/systems/pro.ts",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ],
+  "filter": "résumé made from the record",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 5,
+  "summary": "Tests  1 failed | 20 skipped (21)",
+  "failed": [
+   "the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date 117ms",
+   "tests/pro-core.test.ts > the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date"
+  ]
+ },
+ {
+  "id": "M4",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/pro.ts",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ],
+  "filter": "reel is cut only from recorded work",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 5,
+  "summary": "Tests  1 failed | 20 skipped (21)",
+  "failed": [
+   "the portfolio’s commands > PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it 176ms",
+   "tests/pro-core.test.ts > the portfolio’s commands > PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it"
+  ]
+ },
+ {
+  "id": "M5",
+  "row": "pro.agent_notice",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "the check refuses an incomplete submission",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 5,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way 150ms",
+   "tests/journey-agent.test.ts > G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way"
+  ]
+ },
+ {
+  "id": "M6",
+  "row": "pro.agent_check",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/pro-agent.test.ts"
+  ],
+  "filter": "put on once, it comes through the School",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 7 skipped (8)",
+  "failed": [
+   "W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting 178ms",
+   "tests/pro-agent.test.ts > W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting"
+  ]
+ },
+ {
+  "id": "M7",
+  "row": "pro.submit",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "filter": "a submission moves to In Progress",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 8,
+  "summary": "Tests  1 failed | 4 skipped (5)",
+  "failed": [
+   "the Opportunities tab > PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time, the sides’ three steps with their minutes, and the control its form asks for 156ms",
+   "tests/pro-opportunities-screen.test.ts > the Opportunities tab > PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time, the sides’ three steps with their minutes, and the control its form asks for"
+  ]
+ },
+ {
+  "id": "M8",
+  "row": "pro.tape_audition",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "a permitted request, approved by the dean",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 28 skipped (29)",
+  "failed": [
+   "A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept 376ms",
+   "tests/pro-work.test.ts > A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept"
+  ]
+ },
+ {
+  "id": "M9",
+  "row": "pro.move_audition",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "against a plan of your own",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 28 skipped (29)",
+  "failed": [
+   "V12: a scheduling conflict, said and handled > PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept 191ms",
+   "tests/pro-work.test.ts > V12: a scheduling conflict, said and handled > PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept"
+  ]
+ },
+ {
+  "id": "M10",
+  "row": "pro.accept_offer",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "an Equity open call with a callback",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 28 skipped (29)",
+  "failed": [
+   "a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay 531ms",
+   "tests/pro-work.test.ts > a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay"
+  ]
+ },
+ {
+  "id": "M11",
+  "row": "pro.decline_offer",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "an offer not answered lapses",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 28 skipped (29)",
+  "failed": [
+   "what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked 391ms",
+   "tests/pro-work.test.ts > what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked"
+  ]
+ },
+ {
+  "id": "M12",
+  "row": "pro.request_outside_work",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "a permitted request, approved by the dean",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 28 skipped (29)",
+  "failed": [
+   "A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept 386ms",
+   "tests/pro-work.test.ts > A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept"
+  ]
+ },
+ {
+  "id": "M13",
+  "row": "school.choose_showcase",
+  "file": "src/engine/systems/proshowcase.ts",
+  "tests": [
+   "tests/pro-showcase.test.ts"
+  ],
+  "filter": "refuses a choice before the last term",
+  "expect": "killed",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 11,
+  "summary": "Tests  1 failed | 14 skipped (15)",
+  "failed": [
+   "choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice 332ms",
+   "tests/pro-showcase.test.ts > choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice"
+  ]
+ },
+ {
+  "id": "M14",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "the check refuses an incomplete submission",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 6,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way 181ms",
+   "tests/journey-agent.test.ts > G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way"
+  ]
+ },
+ {
+  "id": "M15",
+  "row": "pro.send_materials",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "passed; a year",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 8,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through 340ms",
+   "tests/journey-agent.test.ts > V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through"
+  ]
+ },
+ {
+  "id": "M16",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a request for more",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 10,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had 460ms",
+   "tests/journey-agent.test.ts > G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had"
+  ]
+ },
+ {
+  "id": "M17",
+  "row": "pro.ask_to_move",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "slept through",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 10,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept 483ms",
+   "tests/journey-agent.test.ts > V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept"
+  ]
+ },
+ {
+  "id": "M18",
+  "row": "pro.accept_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "offered with every term",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 8,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses 466ms",
+   "tests/journey-agent.test.ts > V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses"
+  ]
+ },
+ {
+  "id": "M19",
+  "row": "pro.decline_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "offered with every term",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 9,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses 579ms",
+   "tests/journey-agent.test.ts > V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses"
+  ]
+ },
+ {
+  "id": "M20",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "90 days with no offer",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 9,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked 402ms",
+   "tests/journey-agent.test.ts > V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked"
+  ]
+ },
+ {
+  "id": "M21",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/propay.test.ts"
+  ],
+  "filter": "first SAG-AFTRA principal job",
+  "expect": "killed on the stand-in path",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 8,
+  "summary": "Tests  1 failed | 18 skipped (19)",
+  "failed": [
+   "the unions’ money > PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it 217ms",
+   "tests/propay.test.ts > the unions’ money > PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it"
+  ]
+ },
+ {
+  "id": "P1",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "expect": "survives if no test reads the sides’ preparation into the audition",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 79,
+  "summary": "Tests  7 failed | 27 passed (34)",
+  "failed": [
+   "J5: casting decided apart from quality > PLAYER JOURNEY: over seeds, a skilled actor loses a role and a developing actor books one, each through the whole loop 9727ms",
+   "the whole loop, played > PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice 4076ms",
+   "a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay 7572ms",
+   "J3: the agent’s part, while an agreement is in force > PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at the rate’s scale, and the booking carries his id and the agreement’s 13753ms",
+   "V3 and A4: a player who left before the degree > PLAYER JOURNEY: withdraws through the School, keeps the record and says the training truly, and books, works and is credited for an open role, with no School rule on it 5745ms",
+   "what missing a step costs > PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played 6988ms",
+   "what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked 4644ms",
+   "tests/pro-work.test.ts > J5: casting decided apart from quality > PLAYER JOURNEY: over seeds, a skilled actor loses a role and a developing actor books one, each through the whole loop",
+   "tests/pro-work.test.ts > the whole loop, played > PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice",
+   "tests/pro-work.test.ts > a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay",
+   "tests/pro-work.test.ts > J3: the agent’s part, while an agreement is in force > PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at the rate’s scale, and the booking carries his id and the agreement’s",
+   "tests/pro-work.test.ts > V3 and A4: a player who left before the degree > PLAYER JOURNEY: withdraws through the School, keeps the record and says the training truly, and books, works and is credited for an open role, with no School rule on it"
+  ]
+ },
+ {
+  "id": "P2",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "expect": "survives if no test reads the part’s preparation into a work day",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 26,
+  "summary": "Tests  34 passed (34)",
+  "failed": []
+ },
+ {
+  "id": "P3",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts",
+   "tests/pro-work.test.ts"
+  ],
+  "expect": "survives if no test reads a member’s SAG-AFTRA working dues",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 28,
+  "summary": "Tests  54 passed (54)",
+  "failed": []
+ },
+ {
+  "id": "P4",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts"
+  ],
+  "expect": "survives if no test reads a member’s base dues",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 12,
+  "summary": "Tests  25 passed (25)",
+  "failed": []
+ }
+]

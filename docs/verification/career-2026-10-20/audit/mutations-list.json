@@ -1,0 +1,303 @@
+[
+ {
+  "id": "M1",
+  "row": "pro.set_name",
+  "file": "src/engine/systems/pro.ts",
+  "find": "const keys: string[] = [`name:${p.name}`];",
+  "replace": "const keys: string[] = [`name:${person.displayName}`];",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ],
+  "filter": "résumé made from the record",
+  "expect": "killed"
+ },
+ {
+  "id": "M2",
+  "row": "pro.headshots",
+  "file": "src/engine/systems/pro.ts",
+  "find": "const headshot = currentOf(pro, 'headshot');",
+  "replace": "const headshot = undefined as ReturnType<typeof currentOf>;",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "refuses a submission while the headshots",
+  "expect": "killed"
+ },
+ {
+  "id": "M3",
+  "row": "pro.update_resume",
+  "file": "src/engine/systems/pro.ts",
+  "find": "return now.keys.filter((k) => !had.has(k)).map((k) => now.labels[k]!);",
+  "replace": "return [];",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ],
+  "filter": "résumé made from the record",
+  "expect": "killed"
+ },
+ {
+  "id": "M4",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/pro.ts",
+  "find": "if (pieces.length && pieces.every((p) => p.from === 'tape'))",
+  "replace": "if (false)",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ],
+  "filter": "reel is cut only from recorded work",
+  "expect": "killed"
+ },
+ {
+  "id": "M5",
+  "row": "pro.agent_notice",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    rel.noticeShownAt = s.now;\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "the check refuses an incomplete submission",
+  "expect": "killed"
+ },
+ {
+  "id": "M6",
+  "row": "pro.agent_check",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (!countOf(rel, 'checked')) return 'Check your materials first: Check Your Materials says whether an approach has what it needs.';\n",
+  "replace": "",
+  "tests": [
+   "tests/pro-agent.test.ts"
+  ],
+  "filter": "put on once, it comes through the School",
+  "expect": "killed"
+ },
+ {
+  "id": "M7",
+  "row": "pro.submit",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "kind: REPLY_KIND, label: `Casting Answers: ${t.role.part}`",
+  "replace": "kind: RELEASE_KIND, label: `Casting Answers: ${t.role.part}`",
+  "tests": [
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "filter": "a submission moves to In Progress",
+  "expect": "killed"
+ },
+ {
+  "id": "M8",
+  "row": "pro.tape_audition",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    finishRound(s, person, o!, r, idx, e);\n    return { band: r.band!, overall: r.overall! };",
+  "replace": "    r.status = 'done'; r.overall = e.overall; r.band = bandOfQuality(e.overall);\n    return { band: r.band!, overall: r.overall! };",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "a permitted request, approved by the dean",
+  "expect": "killed"
+ },
+ {
+  "id": "M9",
+  "row": "pro.move_audition",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    if (item) s.timeline.reschedule(item.id, to);\n",
+  "replace": "",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "against a plan of your own",
+  "expect": "killed"
+ },
+ {
+  "id": "M10",
+  "row": "pro.accept_offer",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    schedulePay(s, person, e);\n    bookDays(s, person, e, t);",
+  "replace": "    bookDays(s, person, e, t);",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "an Equity open call with a callback",
+  "expect": "killed"
+ },
+ {
+  "id": "M11",
+  "row": "pro.decline_offer",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    s.timeline.cancelFor('pro.offer', o.id, s.now);\n    const words = `You declined",
+  "replace": "    const words = `You declined",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "an offer not answered lapses",
+  "expect": "killed"
+ },
+ {
+  "id": "M12",
+  "row": "pro.request_outside_work",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "...(inSessionAny(person, days) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {}),",
+  "replace": "...(inSessionAny(person, days) ? { school: 'unapproved' as const } : {}),",
+  "tests": [
+   "tests/pro-work.test.ts"
+  ],
+  "filter": "a permitted request, approved by the dean",
+  "expect": "killed"
+ },
+ {
+  "id": "M13",
+  "row": "school.choose_showcase",
+  "file": "src/engine/systems/proshowcase.ts",
+  "find": "const made = setScenes(s, person, sc, picks.map(",
+  "replace": "const made = setScenes(s, person, sc, facultyChoice(sc) ?? picks.map(",
+  "tests": [
+   "tests/pro-showcase.test.ts"
+  ],
+  "filter": "refuses a choice before the last term",
+  "expect": "killed"
+ },
+ {
+  "id": "M14",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    rel.via = { route: 'referral', at: s.now, by: job.by };\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "the check refuses an incomplete submission",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M15",
+  "row": "pro.send_materials",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (why) rel.cooldown = { until: addDays(sim.now, COOLDOWN_DAYS[why], officeZone(agentById(rel.agentId)!)), why, needsNew: true };\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "passed; a year",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M16",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    delete rel.request;\n    setStage(s, rel, 'sent');\n    const zone = officeZone(agent);\n    const n = approachesOf(rel);",
+  "replace": "    delete rel.request;\n    const zone = officeZone(agent);\n    const n = approachesOf(rel);",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a request for more",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M17",
+  "row": "pro.ask_to_move",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    s.timeline.reschedule(item!.id, meeting.at);\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "slept through",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M18",
+  "row": "pro.accept_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    a.signedAt = s.now;\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "offered with every term",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M19",
+  "row": "pro.decline_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    s.timeline.cancelFor('pro-agreement', a.id, s.now);\n    closeApproach(s, person, rel, 'declined', 'declined');\n    note(s, rel, 'declined'",
+  "replace": "    s.timeline.cancelFor('pro-agreement', a.id, s.now);\n    note(s, rel, 'declined'",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "offered with every term",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M20",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (sim.now < from) return `Equity’s rule lets you end it once",
+  "replace": "    if (false) return `Equity’s rule lets you end it once",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "90 days with no offer",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "M21",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "find": "    pro.sag = { ...pro.sag, memberSince: s.now };\n",
+  "replace": "",
+  "tests": [
+   "tests/propay.test.ts"
+  ],
+  "filter": "first SAG-AFTRA principal job",
+  "expect": "killed on the stand-in path"
+ },
+ {
+  "id": "P1",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const p = o.prep ?? ZERO;\n",
+  "replace": "  const p = ZERO;\n",
+  "tests": [
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "expect": "survives if no test reads the sides’ preparation into the audition"
+ },
+ {
+  "id": "P2",
+  "row": "pro.prepare",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const p = e.prep ?? ZERO;\n",
+  "replace": "  const p = ZERO;\n",
+  "tests": [
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "expect": "survives if no test reads the part’s preparation into a work day"
+ },
+ {
+  "id": "P3",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "find": "  if (project.union === 'sag-aftra' && pro?.sag?.memberSince !== undefined && pro.sag.memberSince <= at)",
+  "replace": "  if (false)",
+  "tests": [
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts",
+   "tests/pro-work.test.ts"
+  ],
+  "expect": "survives if no test reads a member’s SAG-AFTRA working dues"
+ },
+ {
+  "id": "P4",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/propay.ts",
+  "find": "    addBill(s, person, duesBill(s, 'sag-aftra', nextBilling(s.now)));\n",
+  "replace": "",
+  "tests": [
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts"
+  ],
+  "expect": "survives if no test reads a member’s base dues"
+ }
+]

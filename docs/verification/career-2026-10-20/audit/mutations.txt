@@ -1,0 +1,134 @@
+Brief 19’s audit: mutations of the career’s commands and their readers, 2026-10-21, against 7bbab80f.
+
+Each replaces one exact string in a copy of the tree (never the working tree), runs the named tests with one worker
+(npx vitest run <files> --maxWorkers=1 --minWorkers=1, and -t <filter> where one is given), records whether any failed
+and which, and puts the file back: node mutate.cjs <copy> mutations-list.json mutations.json. M1 to M21 mutate what a
+row says reads its command’s change, or the change itself, and were expected to be killed; P1 to P4 mutate a reader the
+audit believed no test checks, to show the gap rather than assert it. Killed means a test failed.
+
+Before them the ten career test files passed at 7bbab80f: 125 tests in 63 seconds (pro-core, pro-screen, pro-agent,
+journey-agent, pro-representation-screen, pro-work, pro-opportunities-screen, propay, propay-screen, pro-showcase).
+
+M1  pro.set_name  KILLED  (Tests  1 failed | 20 skipped (21), 6 s)
+    src/engine/systems/pro.ts: "const keys: string[] = [`name:${p.name}`];" -> "const keys: string[] = [`name:${person.displayName}`];"
+    ran: tests/pro-core.test.ts -t "résumé made from the record"
+    failed: the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date
+
+M2  pro.headshots  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/pro.ts: "const headshot = currentOf(pro, 'headshot');" -> "const headshot = undefined as ReturnType<typeof currentOf>;"
+    ran: tests/pro-work.test.ts -t "refuses a submission while the headshots"
+    failed: F4 and J4: what a submission reads, and who can submit for what > PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made
+
+M3  pro.update_resume  KILLED  (Tests  1 failed | 20 skipped (21), 5 s)
+    src/engine/systems/pro.ts: "return now.keys.filter((k) => !had.has(k)).map((k) => now.labels[k]!);" -> "return [];"
+    ran: tests/pro-core.test.ts -t "résumé made from the record"
+    failed: the portfolio’s commands > PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date
+
+M4  pro.cut_reel  KILLED  (Tests  1 failed | 20 skipped (21), 5 s)
+    src/engine/systems/pro.ts: "if (pieces.length && pieces.every((p) => p.from === 'tape'))" -> "if (false)"
+    ran: tests/pro-core.test.ts -t "reel is cut only from recorded work"
+    failed: the portfolio’s commands > PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it
+
+M5  pro.agent_notice  KILLED  (Tests  1 failed | 11 skipped (12), 5 s)
+    src/engine/systems/proagent.ts: "rel.noticeShownAt = s.now;" -> ""
+    ran: tests/journey-agent.test.ts -t "the check refuses an incomplete submission"
+    failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way
+
+M6  pro.agent_check  KILLED  (Tests  1 failed | 7 skipped (8), 6 s)
+    src/engine/systems/proagent.ts: "if (!countOf(rel, 'checked')) return 'Check your materials first: Check Your Materials says whether an approach has what it needs.';" -> ""
+    ran: tests/pro-agent.test.ts -t "put on once, it comes through the School"
+    failed: W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting
+
+M7  pro.submit  KILLED  (Tests  1 failed | 4 skipped (5), 8 s)
+    src/engine/systems/projobs.ts: "kind: REPLY_KIND, label: `Casting Answers: ${t.role.part}`" -> "kind: RELEASE_KIND, label: `Casting Answers: ${t.role.part}`"
+    ran: tests/pro-opportunities-screen.test.ts -t "a submission moves to In Progress"
+    failed: the Opportunities tab > PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time, the sides’ three steps with their minutes, and the control its form asks for
+
+M8  pro.tape_audition  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "finishRound(s, person, o!, r, idx, e); return { band: r.band!, overall: r.overall! };" -> "r.status = 'done'; r.overall = e.overall; r.band = bandOfQuality(e.overall); return { band: r.band!, overall: r.overall! };"
+    ran: tests/pro-work.test.ts -t "a permitted request, approved by the dean"
+    failed: A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept
+
+M9  pro.move_audition  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "if (item) s.timeline.reschedule(item.id, to);" -> ""
+    ran: tests/pro-work.test.ts -t "against a plan of your own"
+    failed: V12: a scheduling conflict, said and handled > PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept
+
+M10  pro.accept_offer  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "schedulePay(s, person, e); bookDays(s, person, e, t);" -> "bookDays(s, person, e, t);"
+    ran: tests/pro-work.test.ts -t "an Equity open call with a callback"
+    failed: a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay
+
+M11  pro.decline_offer  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "s.timeline.cancelFor('pro.offer', o.id, s.now); const words = `You declined" -> "const words = `You declined"
+    ran: tests/pro-work.test.ts -t "an offer not answered lapses"
+    failed: what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked
+
+M12  pro.request_outside_work  KILLED  (Tests  1 failed | 28 skipped (29), 6 s)
+    src/engine/systems/projobs.ts: "...(inSessionAny(person, days) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {})," -> "...(inSessionAny(person, days) ? { school: 'unapproved' as const } : {}),"
+    ran: tests/pro-work.test.ts -t "a permitted request, approved by the dean"
+    failed: A3: work while enrolled, by the Bulletin > PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept
+
+M13  school.choose_showcase  KILLED  (Tests  1 failed | 14 skipped (15), 11 s)
+    src/engine/systems/proshowcase.ts: "const made = setScenes(s, person, sc, picks.map(" -> "const made = setScenes(s, person, sc, facultyChoice(sc) ?? picks.map("
+    ran: tests/pro-showcase.test.ts -t "refuses a choice before the last term"
+    failed: choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice
+
+M14  pro.ask_referral  KILLED  (Tests  1 failed | 11 skipped (12), 6 s)
+    src/engine/systems/proagent.ts: "rel.via = { route: 'referral', at: s.now, by: job.by };" -> ""
+    ran: tests/journey-agent.test.ts -t "the check refuses an incomplete submission"
+    failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way
+
+M15  pro.send_materials  KILLED  (Tests  1 failed | 11 skipped (12), 8 s)
+    src/engine/systems/proagent.ts: "if (why) rel.cooldown = { until: addDays(sim.now, COOLDOWN_DAYS[why], officeZone(agentById(rel.agentId)!)), why, needsNew: true };" -> ""
+    ran: tests/journey-agent.test.ts -t "passed; a year"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through
+
+M16  pro.supply_material  KILLED  (Tests  1 failed | 11 skipped (12), 10 s)
+    src/engine/systems/proagent.ts: "delete rel.request; setStage(s, rel, 'sent'); const zone = officeZone(agent); const n = approachesOf(rel);" -> "delete rel.request; const zone = officeZone(agent); const n = approachesOf(rel);"
+    ran: tests/journey-agent.test.ts -t "a request for more"
+    failed: G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had
+
+M17  pro.ask_to_move  KILLED  (Tests  1 failed | 11 skipped (12), 10 s)
+    src/engine/systems/proagent.ts: "s.timeline.reschedule(item!.id, meeting.at);" -> ""
+    ran: tests/journey-agent.test.ts -t "slept through"
+    failed: V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept
+
+M18  pro.accept_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 8 s)
+    src/engine/systems/proagent.ts: "a.signedAt = s.now;" -> ""
+    ran: tests/journey-agent.test.ts -t "offered with every term"
+    failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses
+
+M19  pro.decline_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 9 s)
+    src/engine/systems/proagent.ts: "s.timeline.cancelFor('pro-agreement', a.id, s.now); closeApproach(s, person, rel, 'declined', 'declined'); note(s, rel, 'declined'" -> "s.timeline.cancelFor('pro-agreement', a.id, s.now); note(s, rel, 'declined'"
+    ran: tests/journey-agent.test.ts -t "offered with every term"
+    failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses
+
+M20  pro.end_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 9 s)
+    src/engine/systems/proagent.ts: "if (sim.now < from) return `Equity’s rule lets you end it once" -> "if (false) return `Equity’s rule lets you end it once"
+    ran: tests/journey-agent.test.ts -t "90 days with no offer"
+    failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked
+
+M21  pro.join_sag  KILLED  (Tests  1 failed | 18 skipped (19), 8 s)
+    src/engine/systems/propay.ts: "pro.sag = { ...pro.sag, memberSince: s.now };" -> ""
+    ran: tests/propay.test.ts -t "first SAG-AFTRA principal job"
+    failed: the unions’ money > PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it
+
+P1  pro.prepare  KILLED  (Tests  7 failed | 27 passed (34), 79 s)
+    src/engine/systems/projobs.ts: "const p = o.prep ?? ZERO;" -> "const p = ZERO;"
+    ran: tests/pro-work.test.ts tests/pro-opportunities-screen.test.ts
+    failed: J5: casting decided apart from quality > PLAYER JOURNEY: over seeds, a skilled actor loses a role and a developing actor books one, each through the whole loop | the whole loop, played > PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice | a callback, a run and its nights > PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay | J3: the agent’s part, while an agreement is in force > PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at the rate’s scale, and the booking carries his id and the agreement’s | V3 and A4: a player who left before the degree > PLAYER JOURNEY: withdraws through the School, keeps the record and says the training truly, and books, works and is credited for an open role, with no School rule on it | what missing a step costs > PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played | what missing a step costs > PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked
+
+P2  pro.prepare  SURVIVED  (Tests  34 passed (34), 26 s)
+    src/engine/systems/projobs.ts: "const p = e.prep ?? ZERO;" -> "const p = ZERO;"
+    ran: tests/pro-work.test.ts tests/pro-opportunities-screen.test.ts
+
+P3  pro.join_sag  SURVIVED  (Tests  54 passed (54), 28 s)
+    src/engine/systems/propay.ts: "if (project.union === 'sag-aftra' && pro?.sag?.memberSince !== undefined && pro.sag.memberSince <= at)" -> "if (false)"
+    ran: tests/propay.test.ts tests/propay-screen.test.ts tests/pro-work.test.ts
+
+P4  pro.join_sag  SURVIVED  (Tests  25 passed (25), 12 s)
+    src/engine/systems/propay.ts: "addBill(s, person, duesBill(s, 'sag-aftra', nextBilling(s.now)));" -> ""
+    ran: tests/propay.test.ts tests/propay-screen.test.ts
+
+Totals: 21 of 21 M mutations killed; P1 killed (through seed-chosen outcomes, see pro.prepare’s row), P2, P3 and P4 survived.
