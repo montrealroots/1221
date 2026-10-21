@@ -54,3 +54,15 @@
 
 The one failure, first lines (it was failing before this part: no UI file runs calendar.skip since the time area's commits):
 159:AssertionError: calendar.skip is registered and nothing in the interface runs it: expected '/**\n * SLATE — what a screen keeps w…' to contain '\'calendar.skip\''
+
+After the School-call change, the work's tests and those reading the School's calls and stops (one worker):
+ ✓ tests/pro-work.test.ts (28 tests) 15060ms
+ ✓ tests/school.test.ts (54 tests) 19921ms
+ ✓ tests/time-stops.test.ts (19 tests) 692ms
+ ✓ tests/school-paths.test.ts (11 tests) 133036ms
+ ✓ tests/tutorial.test.ts (18 tests) 183ms
+ ✓ tests/pro-opportunities-screen.test.ts (5 tests) 1068ms
+ ✓ tests/deciders.test.ts (86 tests) 17373ms
+ Test Files  7 passed (7)
+      Tests  221 passed (221)
+exit=0

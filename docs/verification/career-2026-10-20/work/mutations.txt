@@ -72,3 +72,10 @@ M49 the offer card shows the scale, not the offer | src/ui/career/OpportunitiesP
 # M48 is equivalent on this branch: until negotiatedAmount is wired, an offer's amount is always the scale, so the words
 # read the same either way. At the merge, J3's offer words become "It pays $282.70 a day for four days, above the
 # SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00." and that assertion kills it.
+
+# After the coordinator's note on the showcase's School calls (2026-10-21): the School's calls read by category too, and the
+# in-term warning naming any of them. M52 survived: the day's classes name no person, so the personId filter already
+# kept them out, and the kind guard was deleted as redundant.
+M50 the School’s calls read by kind alone | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "showcase" | KILLED | Tests 1 failed | 27 skipped (28)
+M51 the warning names a production’s call alone | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "showcase" | KILLED | Tests 1 failed | 27 skipped (28)
+M52 the classes counted as a call too | src/engine/systems/projobs.ts | tests/pro-work.test.ts -t "showcase|A3|V2" | SURVIVED

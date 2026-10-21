@@ -854,6 +854,20 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     expect(acceptRefusal(sim, sim.player, o)).toMatch(/^The School holds you for Summer Cabaret: Rehearsal on \w+ \d+, 2027, so you can’t take work then\.$/);
   });
 
+  it('says at the offer a School call the work in term would take, a showcase’s as much as a production’s, and the dean’s condition still reads the production calls', () => {
+    const sim = firstYear('work-showcase-call', {}, false);
+    const t = PROJECTS.find((x) => x.kind === 'non-union-short')!;
+    const o = offered(sim, t.id, at(2026, 10, 5));
+    const day = datesOf(o)[0]!;
+    expect(inSessionAt(sim.player, day.from)).toBe(true);
+    expect(acceptWarning(sim, sim.player, o)).not.toMatch(/Showcase/);
+    // TEST SETUP: a call in the shape the showcase's part gives its own, filed under the School, priority 32, no trip.
+    sim.onSchedule('showcase.test_call', () => undefined);
+    sim.schedule({ at: day.from + 6 * MS_HOUR, kind: 'showcase.test_call', label: 'Showcase: New York', category: 'school', priority: 32, requiresPlayer: true, travelMinutes: 0, durationMinutes: 600, payload: { personId: sim.player.id } });
+    expect(acceptWarning(sim, sim.player, o)).toMatch(/ You’d miss (?:\w+ class days? and )?Showcase: New York on \w+ \d+, 2026\./);
+    expect(conditionsFor(sim, sim.player, o, sim.now).find((c) => c.id === 'calls')!.holds).toBe(true);
+  });
+
   it('casts another actor where the actor has been booked on the same days since the audition, and says so', () => {
     const sim = graduate('work-availability');
     const t = PROJECTS.find((x) => x.kind === 'student-film')!;

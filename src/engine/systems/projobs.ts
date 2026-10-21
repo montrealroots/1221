@@ -440,10 +440,16 @@ export function inSessionAt(person: Person, when: Instant): boolean {
 /** Whether any of the work falls in term. */
 export const inSessionAny = (person: Person, days: readonly { from: Instant }[]): boolean => days.some((d) => inSessionAt(person, d.from));
 
-/** The School's own calls (a production's, the Cabaret's, a shift) pending on the work's days, with the trip each way. */
+/**
+ * The School's own calls (a production's, the Cabaret's, a shift, the showcase's) pending on the work's days, with the
+ * trip each way: a kind of the School's, or any the School files under its category. The day's classes name no person,
+ * so they're never among them (the class days count them; a guard that kept them out by kind was mutation-tested away on
+ * 2026-10-21 as settled by that). Until 2026-10-21 it read the School's kinds alone, which would have missed a showcase
+ * call kept outside them.
+ */
 export function schoolCallsOn(sim: Simulation, person: Person, days: readonly { from: Instant; to: Instant }[], cityId: string): ScheduledItem[] {
   const away = tripMinutes(person.currentLocationId, cityId) * MIN;
-  return sim.universe.scheduled.filter((i) => i.status === 'pending' && i.requiresPlayer && i.kind.startsWith('school.') && i.payload.personId === person.id
+  return sim.universe.scheduled.filter((i) => i.status === 'pending' && i.requiresPlayer && (i.kind.startsWith('school.') || i.category === 'school') && i.payload.personId === person.id
     && days.some((d) => i.at < d.to + away && i.at + (i.durationMinutes ?? 0) * MIN > d.from - away));
 }
 
@@ -699,7 +705,9 @@ export function acceptWarning(sim: Simulation, person: Person, o: Opportunity): 
   if (req?.status === 'approved') return 'The dean approved this work in term, so its class days are excused.';
   const t = projectOf(o);
   const classes = classDaysIn(person, days, t.place.cityId);
-  const call = schoolCallsOn(sim, person, days, t.place.cityId).find((i) => i.kind === CALL_KIND);
+  // Any call of the School's the work takes, a showcase's as much as a production's (the dean's condition reads the
+  // production calls alone, as the Bulletin ranks them).
+  const call = schoolCallsOn(sim, person, days, t.place.cityId)[0];
   const misses = [classes ? counted(classes, 'class day') : '', call ? `${call.label} on ${formatDate(call.at, NY)}` : ''].filter(Boolean);
   const asked = req?.status === 'pending' ? ` Your request is with the dean, who decides on ${formatDate(decidesAt(req), NY)}.` : req?.status === 'refused' ? ' The dean refused your request.' : '';
   return `This work falls in term, and the School hasn’t approved it.${asked}${misses.length ? ` You’d miss ${spokenList(misses)}.` : ''} Working in term without approval brings an academic warning the first time and dismissal the second, as the game reads the Bulletin’s “may lead to academic warning or dismissal”.`;
