@@ -4,8 +4,8 @@ overview at 1440: 1246 characters, horizontal overflow 0px
 portfolio at 1440: 1899 characters, horizontal overflow 0px
 first-year at 1440: page errors none
 graduate-portfolio at 1440: tabs ["Overview","Portfolio"]
-made-overview at 1440: 943 characters, horizontal overflow 0px
-made-portfolio at 1440: 2365 characters, horizontal overflow 0px
+made-overview at 1440: 928 characters, horizontal overflow 0px
+made-portfolio at 1440: 2350 characters, horizontal overflow 0px
 ArrowLeft from Portfolio selects: Overview
 ArrowRight from Overview selects: Portfolio
 What It Says opened by Enter: true
@@ -16,6 +16,6 @@ overview at 390: 1246 characters, horizontal overflow 0px
 portfolio at 390: 1899 characters, horizontal overflow 0px
 first-year at 390: page errors none
 graduate-portfolio at 390: tabs ["Overview","Portfolio"]
-made-overview at 390: 943 characters, horizontal overflow 0px
-made-portfolio at 390: 2365 characters, horizontal overflow 0px
+made-overview at 390: 928 characters, horizontal overflow 0px
+made-portfolio at 390: 2350 characters, horizontal overflow 0px
 graduate-portfolio at 390: page errors none

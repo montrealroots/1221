@@ -13,6 +13,7 @@
  * out to test a refusal.
  */
 import { describe, expect, it } from 'vitest';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
@@ -25,7 +26,7 @@ import { AGENTS, AGENCIES, agencyOf, agentById } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, PROJECTS, RATES } from '@/engine/content/careerwork';
 import {
   ENGAGEMENTS_KEPT, HEADSHOTS, HISTORY_KEPT, MATERIALS_KEPT, OPPORTUNITIES_KEPT, REEL, RESUME, addCredit, countOf, currentOf,
-  headshotRefusal, keepBounded, materialsCheck, noteEvent, profileOf, reelSources, releaseScreenCredit, resumeBehind,
+  headshotRefusal, keepBounded, materialsCheck, noteEvent, proCreditWords, profileOf, reelSources, releaseScreenCredit, resumeBehind,
   type AgentRelation, type Engagement, type Opportunity,
 } from '@/engine/systems/pro';
 
@@ -332,8 +333,14 @@ describe('the portfolio’s commands', () => {
     expect(reelSources(sim.player, at(2029, 5, 1)).some((s) => s.from === 'footage')).toBe(false);
     expect(releaseScreenCredit(sim, sim.player, credit.id)!.status).toBe('released');
     expect(reelSources(sim.player, at(2029, 5, 1)).find((s) => s.from === 'footage')).toMatchObject({ ref: `footage:${credit.id}`, title: 'Desk Clerk, The Calloway Files', usable: true });
-    // A professional credit is on the profile apart from the School's.
+    // A professional credit is on the profile apart from the School's, said with whether its work is out.
     expect(profileOf(sim.player, sim.now).proCredits.map((c) => c.id)).toEqual([credit.id]);
+    expect(proCreditWords(credit)).toBe('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029');
+    expect(proCreditWords({ ...credit, status: 'shot' })).toBe('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029 (not yet released)');
+    expect(proCreditWords({ ...credit, status: 'unreleased' })).toBe('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029 (unreleased)');
+    // A stage credit has no footage, released or not.
+    const stage = addCredit(sim, sim.player, { kind: 'stage', project: 'A House On Calder Street', role: 'Nell', company: 'Marrow Lane Theater Company', year: 2029, medium: 'stage', status: 'performed', at: sim.now });
+    expect(releaseScreenCredit(sim, sim.player, stage.id)).toBeUndefined();
   });
 });
 
@@ -402,6 +409,11 @@ describe('the agent and the work, as data', () => {
     const text = JSON.stringify([AGENTS, AGENCIES]);
     expect(text).not.toMatch(/@|\bphone\b|\(\d{3}\) ?\d{3}-\d{4}|\b\d{3}[-.]\d{3}[-.]\d{4}\b|\bStreet\b|\bAvenue\b|\bclients?\b/i);
     for (const s of agent.sources) expect(s.read).toBe('2026-10-20');
+  });
+
+  it('names no agent in the engine’s code: a second one, or a fictional one in his place, is another entry of data', () => {
+    const files = readdirSync('src/engine/systems').map((f) => `src/engine/systems/${f}`).concat(['src/engine/index.ts', 'src/ui/workspaces/CareerWorkspace.tsx']);
+    expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
   it('gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {

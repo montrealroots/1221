@@ -624,14 +624,15 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     // from later that day a third, the judge area's `cutIntoUnits`, and from brief 10 that day a fourth, the Arion
     // area's `cardYears`, and a fifth, the stamina area's `timeTheCalls` (until then this list ended at `cutIntoUnits`), and
     // from later still a sixth, `briefsMastered`, for the genre row's Mastered (until then it ended at `timeTheCalls`), and
-    // from 2026-10-17 a seventh, `writtenUnplayed`, brief 13's journeys' (until then it ended at `briefsMastered`).
-    expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed']);
+    // from 2026-10-17 a seventh, `writtenUnplayed`, brief 13's journeys' (until then it ended at `briefsMastered`), and
+    // from 2026-10-20 an eighth, `pro.begun`, brief 19's professional record (until then it ended at `writtenUnplayed`).
+    expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'pro.begun']);
     const current = loadSave(JSON.parse(JSON.stringify(older)) as never);
     expect(appointmentsOf(current.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), FAIR_HAVEN]]);
     delete older.opened;
     const opened = loadSave(older as never);
     // The step taken, and named, so the next opening doesn't take it again; the banking area's beside it from 2026-10-16.
-    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed']);
+    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'pro.begun']);
     quiet(opened);
     // Opened: had at Yale Health, its date kept, its entry renamed.
     expect(appointmentsOf(opened.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), YALE]]);
