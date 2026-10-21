@@ -17,12 +17,12 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1903 | 17601 | 0 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2550 | 14868 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 195 | 758 | 0 | 14 | 31 | 0 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 197 | 779 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38771 | 593771 | 316 | 1391 | 3154 | 0 | 0 |
+| **All** | 4545 | 38774 | 593862 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -33,7 +33,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-pay | 30 | 1221 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 65 | 1972 | 65 | 0 | 0 | 0 |
-| frame | 505 | 33477 | 99 | 406 | 0 | 0 |
+| frame | 505 | 33568 | 99 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
@@ -57,12 +57,12 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 150 | 225 | 100 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 292 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 29 | 37 | 17 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 30 | 37 | 16 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 12 | 27 | 6 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 13 | 27 | 5 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4545 | 966 | 2417 | 1162 | 0 |
+| **All** | 4545 | 968 | 2417 | 1160 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -3438,7 +3438,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM` | 2 | 0 | Retained | frame | Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#RUN_COLD` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule. | Reviewed And Retained |
 | `src/engine/content/guide/day.ts#RUN_HOT` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule. | Reviewed And Retained |
-| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 58 | 0 | Rewritten | frame | Skip It and Call It Off carry the jump on and a refusal changes nothing, held beside the behavior by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 59 | 0 | Rewritten | frame | Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [prerequisite]` | 1 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First | Pending |
 | `src/engine/content/guide/day.ts#DAY [immediate]` | 11 | 0 | Retained | frame | Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [optional]` | 10 | 0 | Retained | frame | Lines under Worth Doing With It, each one plain sentence on why the two features go together. | Rewritten And Verified |
@@ -3576,7 +3576,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/shell/TimeControls.tsx#choicesAhead` | 5 | 0 | Rewritten | frame | On The Way's sentence of the choices on the way and what the clock does after them; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#TimeControls` | 21 | 0 | Rewritten | frame | On The Way names only the choices of what it lists and marks what isn't on the calendar yet; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/ui/shell/TimeControls.tsx#SleepDialog` | 13 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Sleep dialog); the claim it makes, a commitment slept through is missed, held by tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through…' | Pending |
-| `src/ui/shell/TimeControls.tsx#DueNow` | 16 | 0 | Rewritten | frame | The stop says what Skip It, Call It Off and Stand Here each do to the jump before the press; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/ui/shell/TimeControls.tsx#DueNow` | 18 | 0 | Rewritten | frame | Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#SkipDialog` | 17 | 0 | Rewritten | frame | Skip To Event lists a foreseen stop as not on your calendar yet; held by tests/time-controls.test.ts on the real provider | Pending |
 | `src/ui/shell/TimeControls.tsx#AdvanceMenu` | 14 | 0 | Retained | frame | Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing. | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#LookAfterMenu` | 6 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu); Readiness held by tests/evidence-g30-ui.test.ts, 'PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower…' | Rewritten And Verified |

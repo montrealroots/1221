@@ -16,6 +16,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, quickSave, refreshMeta } from '@/engine';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { APPOINTMENT_KIND } from '@/engine/systems/appointments';
+import { AUDITION_KIND } from '@/engine/systems/projobs';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { courseworkOf, trustOf } from '@/engine/systems/coursework';
 import type { Simulation } from '@/engine/core/simulation';
@@ -246,6 +247,24 @@ describe('the top bar’s dialogs', () => {
     for (const one of h.sets) h.given.set(one.at, one.value);
     said = dialog(drawn(care, TimeControls).html, 'A Visit To Your Doctor');
     expect(said).toContain('Press Go, or Stand Here to wait with the clock paused. A Visit To Your Doctor starts the next time the clock moves, and you’re there if you’re awake and out of hospital.');
+    // The career's commitments take the trip as made (`there` in `systems/projobs.ts`): awake and not laid up is all an
+    // audition asks, and the trip each way doesn't move the clock (from 2026-10-21, brief 19's app walk: until then the
+    // stop said "in its town" of them, and nothing of the trip). TEST SETUP: the audition's kind, as the work loop puts it
+    // on the calendar, with no opportunity behind it, which its handler passes by.
+    const career = quickSave({}, 'frame-due-now-career');
+    for (const i of career.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) career.timeline.cancel(i.id, career.now);
+    const call = career.now + 2 * MS_HOUR;
+    career.schedule({ at: call, kind: AUDITION_KIND, label: 'Audition: Theo, Paper Moons', category: 'career', priority: 40, requiresPlayer: true, durationMinutes: 30, travelMinutes: 120, locationId: 'us-ny-newyork', payload: {} });
+    h.given = new Map();
+    ({ game } = drawn(career, TimeControls));
+    h.sets = [];
+    game.advanceTo(call + MS_HOUR);
+    for (const one of h.sets) h.given.set(one.at, one.value);
+    said = dialog(drawn(career, TimeControls).html, 'Audition: Theo, Paper Moons');
+    expect(said).toContain('Going takes 30 minutes, and the clock moves on to');
+    expect(said).toContain('Getting there and back, about 2 hours each way, doesn’t move the clock.');
+    expect(said).toContain('Audition: Theo, Paper Moons starts the next time the clock moves, and you’re there if you’re awake and not in hospital or laid up with an injury.');
+    expect(said).not.toContain('in its town');
   });
 
   it('Skip To Event says what the clock stops at on the way and what else happens, for none, one and several', () => {

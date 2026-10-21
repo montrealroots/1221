@@ -211,9 +211,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten And Verified",
-  "hash": "a92fceb5d653",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
+  "hash": "ac39fddd8fac",
+  "on": "2026-10-21",
+  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten And Verified",
@@ -2845,9 +2845,9 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten And Verified",
-  "hash": "426db766618e",
-  "on": "2026-10-17",
-  "evidence": "tests/language-frame-ui.test.ts 'the stop says it needs you now…' (a plan of your own, and a visit to the passport office) and 'PLAYER JOURNEY: the stop says the partner is expecting you…' (Call It Off pressed, its toast, the partner's trust lower)"
+  "hash": "37286faba60a",
+  "on": "2026-10-21",
+  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
   "status": "Rewritten And Verified",

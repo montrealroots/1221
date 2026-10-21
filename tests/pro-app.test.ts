@@ -31,6 +31,7 @@ import { stopChoices } from '@/engine/world/clock';
 import { MEETING_KIND } from '@/engine/systems/proagent';
 import { REPLY_KIND, projectOf } from '@/engine/systems/projobs';
 import { materialsCheck } from '@/engine/systems/pro';
+import { GUIDE_BY_ID } from '@/engine/content/guide';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { PREP_DIMS } from '@/engine/content/coursework';
 
@@ -156,5 +157,13 @@ describe('T1: the Career screen’s own words, read on the built app', () => {
     sim.player.craft!.singing = 61;
     const behind = materialsCheck(sim.player, 'stage', sim.now).find((p) => p.kind === 'resume')!;
     expect(behind.words).toMatch(/doesn’t have Singing as a special skill\. Press Update Your Résumé/);
+  });
+});
+
+describe('T1: the Calendar’s help says what the career’s commitments ask', () => {
+  it('says an audition, a meeting at an agent’s office and a day of work take the trip as made, as their handlers do (held in play by tests/pro-work.test.ts, an audition in Brooklyn gone to from New Haven)', () => {
+    const entry = GUIDE_BY_ID['day.calendar']!;
+    expect(entry.needs).toContain('An audition, a meeting at an agent’s office and a day of booked work are different: the trip there is taken as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.');
+    expect(entry.reads.find((r) => r.label === 'What Needs You There')!.value).toMatch(/the career’s auditions, meetings and work days$/);
   });
 });
