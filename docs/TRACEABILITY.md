@@ -240,7 +240,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.account_due` | `systems/leave.ts` | systems/leave.ts | — | — | — | 12 |
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 27 |
-| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 64 |
+| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 66 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 29 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | — | 11 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 8 |

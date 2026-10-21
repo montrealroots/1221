@@ -2316,9 +2316,9 @@ export function repPlayOf(sim: Simulation, person: Person, term: number): (typeo
  * night was judged as the play's lead, and the credit carried no part into the résumé. Every play the Rep is dealt has a
  * part for an actor and one for an actress (tests/understudy-part.test.ts), so none is left covering nothing.
  */
-export function coveredPart(play: { parts: readonly Part[] }, title: 'actor' | 'actress'): Part | undefined {
+export function coveredPart(play: { parts: readonly Part[] }, cast: 'actor' | 'actress'): Part | undefined {
   for (const size of ['lead', 'supporting', 'featured'] as const) {
-    const part = play.parts.find((x) => x.size === size && (x.for === title || x.for === 'either'));
+    const part = play.parts.find((x) => x.size === size && (x.for === cast || x.for === 'either'));
     if (part) return part;
   }
   return undefined;

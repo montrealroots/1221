@@ -12,7 +12,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 461 | 12701 | 0 | 27 | 20 | 0 | 0 |
 | Home And Its Retained Actions | 17 | 168 | 800 | 0 | 4 | 13 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 663 | 6711 | 70296 | 7 | 185 | 478 | 0 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70374 | 7 | 188 | 478 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6634 | 151915 | 13 | 265 | 499 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 4587 | 56842 | 3 | 101 | 372 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8177 | 0 | 34 | 72 | 0 | 0 |
@@ -21,7 +21,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 178 | 686 | 0 | 6 | 34 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4230 | 36710 | 572934 | 316 | 1093 | 3137 | 0 | 0 |
+| **All** | 4233 | 36717 | 573012 | 316 | 1096 | 3137 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -35,7 +35,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
 | papers | 473 | 56842 | 101 | 372 | 0 | 0 |
 | profile | 621 | 55956 | 179 | 442 | 0 | 0 |
-| school | 635 | 67278 | 181 | 454 | 0 | 0 |
+| school | 638 | 67356 | 184 | 454 | 0 | 0 |
 | tutorial | 47 | 12701 | 27 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
@@ -46,7 +46,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 12 | 8 | 27 | 0 |
 | Home And Its Retained Actions | 17 | 4 | 9 | 4 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 144 | 238 | 239 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 663 | 119 | 353 | 191 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 125 | 353 | 188 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 118 | 377 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 145 | 225 | 103 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
@@ -55,7 +55,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 7 | 28 | 5 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4230 | 669 | 2392 | 1169 | 0 |
+| **All** | 4233 | 675 | 2392 | 1166 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -1190,7 +1190,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/productions.ts#WOYZECK` | 1 | 0 | Retained | school | The play the guide's worked example uses, named by its title as the plays to read list names it. | Reviewed And Retained |
 | `src/engine/content/guide/productions.ts#W_TITLE` | 1 | 0 | Retained | school | The worked example's play title, Woyzeck, the same word the casting and the part screens show. | Reviewed And Retained |
 | `src/engine/content/guide/productions.ts#PLAY_CAST` | 1 | 0 | Retained | school | What the guide says when a play's cast size isn't on record, in the words the plays to read list uses. | Reviewed And Retained |
-| `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]` | 72 | 0 | Rewritten | school | Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the fit defined in Reads only; 20% from C.delivery kept; tests/guide-examples-productions passes | Pending |
+| `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]` | 72 | 0 | Rewritten | school | tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; the Yale Rep row read against coveredPart and tests/understudy-part.test.ts (An Enemy Of The People has no lead for an actress, who covers Petra Stockmann) | Rewritten And Verified |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [prerequisite]` | 8 | 0 | Retained | school | What each production entry needs first, the casting pool, a part with its run to come, a call kept, each a condition a player can meet. | Rewritten And Verified |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [immediate]` | 13 | 0 | Retained | school | What follows at once from a production's step, the calendar, bonds, morale, training, each with its figure where the game has one. | Rewritten And Verified |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [scheduled]` | 3 | 0 | Retained | school | What a production puts on the calendar and when it comes, each call and the summer's Friday stipend, with its time. | Rewritten And Verified |
@@ -1200,7 +1200,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]` | 74 | 0 | Rewritten | school | tests/guide-examples-productions.test.ts: the off-book note and the notes example quoted in the Carlotta's director's own voice, computed by noteText, and played | Pending |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [history]` | 7 | 0 | Retained | school | What a production leaves on your record and Profile, each kept where the player can find it again. | Rewritten And Verified |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.playing]` | 64 | 0 | Rewritten | school | Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts | Pending |
-| `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]` | 84 | 0 | Rewritten | school | Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-productions.test.ts | Pending |
+| `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]` | 84 | 0 | Rewritten | school | tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; How Hard’s understudy sentence read against partSizeOf and tests/understudy-part.test.ts (a covered supporting part judged at the Rep’s supporting difficulty, a lead at a lead’s) | Rewritten And Verified |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.cabaret]` | 69 | 0 | Retained | school | The Yale Cabaret and the Summer Cabaret, joining, their calls and pay, and who can't take part, each with the date or figure the game uses. | Rewritten And Verified |
 | `src/engine/content/guide/productions.ts#PRODUCTIONS [productions.plays]` | 60 | 0 | Rewritten | school | Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), what a read note holds moved to Now; tests/playreading and whynot-school pass | Pending |
 | `src/engine/content/guide/school.ts#OPENED` | 1 | 0 | Retained | school | The line naming the guide chapter an entry opens from, the chapter's title in quotes as the guide quotes titles. | Reviewed And Retained |
@@ -1623,6 +1623,8 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/school.ts#repNamed` | 3 | 0 | Rewritten | school | tests/editorial17-school.test.ts “an understudy of the company goes on “at Yale Rep””, and tools/voices.ts attentive v16-0 played on the tree | Pending |
 | `src/engine/systems/school.ts#classesWords` | 1 | 0 | Rewritten | school | tests/editorial17-school.test.ts “a term’s notice says its classes and its review before the money”, and tools/voices.ts pressure v17-1 played on the tree (each term’s … Begins) | Pending |
 | `src/engine/systems/school.ts#goOnAs` | 1 | 0 | Rewritten | school | tests/editorial17-school.test.ts “an understudy of the company goes on “at Yale Rep””, read with the breach it names in the source | Pending |
+| `src/engine/systems/school.ts#onCallFor` | 2 | 0 | Rewritten | school | tests/understudy-part.test.ts (every night on call on the calendar reads “Yale Rep’s October Production: On Call For Petra Stockmann”), and tools/scenarios.ts --scenario understudy played (the calendar line of docs/verification/career-2026-10-20/understudy/sequence-after.txt) | Rewritten And Verified |
+| `src/engine/systems/school.ts#coverWhy` | 3 | 0 | Rewritten | school | tests/understudy-part.test.ts (the casting notice and the opening’s notice each say “Its leads are written for actors, so the part you cover is a supporting one.”), and tools/scenarios.ts --scenario understudy played (docs/verification/career-2026-10-20/understudy/sequence-after.txt) | Rewritten And Verified |
 | `src/engine/systems/school.ts#wentOn` | 4 | 0 | Rewritten | school | tests/editorial17-school.test.ts “an understudy of the company goes on “at Yale Rep””, and tools/voices.ts attentive v16-0 played on the tree (You Went On At Yale Rep) | Pending |
 | `src/engine/systems/school.ts#formerCompanyRun` | 1 | 0 | Retained | school | A part in the Rep's company as the casting list names it, In The Company, the same words the Rep's own cast list uses for an actor without a named role. | Reviewed And Retained |
 | `src/engine/systems/school.ts#classCabaret` | 1 | 0 | Retained | school | The calendar entry when a Cabaret show closes, titled with the show's name and what happens, as the calendar titles other runs ending. | Reviewed And Retained |
@@ -1633,6 +1635,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/school.ts#summerRefusal` | 5 | 0 | Retained | school | Refusals for the Summer Cabaret, each naming the rule that stops it: good standing, not on leave, a year still to go, already in it, or the company already formed. | Rewritten And Verified |
 | `src/engine/systems/school.ts#shiftRefusal` | 2 | 0 | Retained | school | Two refusals for an elective shift: not at school, or on leave with no shifts until you're back, each saying when it changes. | Rewritten And Verified |
 | `src/engine/systems/school.ts#cabaretSeason` | 1 | 0 | Retained | school | The Cabaret's season as the theater numbers it, Yale Cabaret, Season 59, a real organization's own name for its year. | Reviewed And Retained |
+| `src/engine/systems/school.ts#nameTheCover` | 3 | 0 | Rewritten | school | tests/understudy-part.test.ts (a save from before opened: “Your Understudy Part: Petra Stockmann”, told once, and its calls renamed), and a save the game before the fix wrote, opened and played on it (docs/verification/career-2026-10-20/understudy/sequence-save-from-before-unjudged.txt) | Rewritten And Verified |
 | `src/engine/systems/school.ts#enroll` | 3 | 0 | Rewritten | school | tests/editorial17-school.test.ts “the welcome says orientation’s sessions are on the calendar”, and tools/voices.ts runs on the tree (Welcome To The Class Of 2029) | Pending |
 | `src/engine/systems/school.ts#planWeek` | 3 | 0 | Retained | school | Calendar entries for the week, Classes, Work-Study Shift and The School Week Ahead, each a plain Title Case name for what's on the calendar. | Reviewed And Retained |
 | `src/engine/systems/school.ts#conversionRefusal` | 7 | 0 | Retained | school | Each refusal for converting work-study hours says which hours count and when, January's processing or May's, so a player knows whether to ask again later. | Rewritten And Verified |
@@ -1652,7 +1655,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/school.ts#readRuns` | 1 | 0 | Retained | school | The heading for the runs on your record before a casting, plain words for what the list is. | Reviewed And Retained |
 | `src/engine/systems/school.ts#partsFor` | 1 | 0 | Retained | school | A part in the company as the casting list names it, the same words as the cast list's. | Reviewed And Retained |
 | `src/engine/systems/school.ts#partLabel` | 2 | 0 | Retained | school | The labels for a festival or a new play where no title is known, The Festival and A New Play, plain stand-ins the casting notice can name. | Reviewed And Retained |
-| `src/engine/systems/school.ts#cast` | 32 | 0 | Rewritten | school | tests/editorial17-school.test.ts “a part cast by size is said in lower case”, and tools/voices.ts attentive v16-0 and pressure v17-1 played on the tree (both terms’ Cast: notices) | Pending |
+| `src/engine/systems/school.ts#cast` | 31 | 0 | Rewritten | school | tests/understudy-part.test.ts (the casting notice: “You’ll also understudy Petra Stockmann in Yale Rep’s An Enemy Of The People: … Its leads are written for actors, so the part you cover is a supporting one.”), and tools/scenarios.ts --scenario understudy --seed us-86 played before and after (docs/verification/career-2026-10-20/understudy/sequence-after.txt) | Rewritten And Verified |
 | `src/engine/systems/school.ts#termGrowth` | 3 | 0 | Retained | school | How your growth compares with the class's, ahead of, in line with or behind, said plainly inside the term review's sentence. | Reviewed And Retained |
 | `src/engine/systems/school.ts#shortTermWords` | 5 | 0 | Retained | school | What the next review would do to your standing, said as the action it takes: give you a notice of concern, put you on warning, dismiss you, not recommend your degree. | Rewritten And Verified |
 | `src/engine/systems/school.ts#evaluate` | 20 | 0 | Rewritten | school | tests/feedback-voices.test.ts ('closes the run in the voice of its calls…'), tests/casting.test.ts (the teachers' notes) and tests/editorial17-school.test.ts (the review's part named) | Pending |

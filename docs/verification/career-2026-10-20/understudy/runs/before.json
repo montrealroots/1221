@@ -1,0 +1,68 @@
+{
+ "scenario": "understudy",
+ "seed": "us-86",
+ "ended": "2028-01-03",
+ "log": [
+  "2027-01-04 casting: The Seagull, term 1: role Nina, play (none), size (none)",
+  "2027-01-04 calendar: The Seagull: Understudy Rehearsal | The Seagull: On Call | The Seagull: Understudy Run-Through",
+  "2027-01-04 notice: Cast: Carlotta Festival Of New Plays | The chair of Acting has cast you in a supporting part in a new play at the Carlotta Festival Of New Plays, from its first rehearsal call. You’ll also understudy Nina in Yale Rep’s The Seagull, directed by Yura Kordonsky: be in New Haven and reachable at every performance. You play the part through the run. Both productions’ calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.",
+  "2027-01-28 forecast: The Seagull, term 1: A Night Now 39.6, size lead, difficulty 0.3, lines 98%, blocking 58%",
+  "2027-03-15 notice: Your Understudy Run-Through | You played Nina through for the director today, and it was an off day.",
+  "2027-03-15 night judged: The Seagull, 44.6 (off), size lead, difficulty 0.3, on stage 75% of the playing",
+  "2027-03-17 notice: You’re On Tonight As Nina | Nina’s actor is out, so you go on in Yale Rep’s The Seagull tonight at 8:00 PM.",
+  "2027-03-17 notice: You Went On As Nina | Nina’s actor was out, and you played the part in Yale Rep’s The Seagull tonight.",
+  "2027-03-17 night judged: The Seagull, 44.7 (off), size lead, difficulty 0.3, on stage 75% of the playing",
+  "2027-03-27 notice: The Director’s Note: The Seagull | Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does. Work on your presence: it held your nights back most.",
+  "2027-03-27 milestone: Nina, The Seagull, 44.7 (2 off)",
+  "2027-08-23 casting: Yale Rep’s October Production, term 2: role An Understudy In The Company, play An Enemy Of The People, size (none)",
+  "2027-08-23 calendar: Yale Rep’s October Production: Understudy Rehearsal | Yale Rep’s October Production: On Call | Yale Rep’s October Production: Understudy Run-Through",
+  "2027-08-23 notice: Cast: Directors’ Thesis Production I | The chair of Acting has cast you as Hedda Tesman in Hedda Gabler (Directors’ Thesis Production I), from its first rehearsal call. You’ll also understudy in Yale Rep’s An Enemy Of The People: be in New Haven and reachable at every performance. You play the part through the run. Both productions’ calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.",
+  "2027-08-23 credit: The Seagull, 2027: role Nina, went on 1",
+  "2027-09-02 forecast: Yale Rep’s October Production, term 2: A Night Now 37.9, size lead, difficulty 0.3, lines 98%, blocking 58%",
+  "2027-10-02 notice: You’re On Tonight At Yale Rep | An actor you cover is out, so you go on in Yale Rep’s An Enemy Of The People tonight at 8:00 PM.",
+  "2027-10-02 notice: You Went On At Yale Rep | An actor you cover was out, and you went on in Yale Rep’s An Enemy Of The People tonight.",
+  "2027-10-02 night judged: An Enemy Of The People, 42.5 (off), size lead, difficulty 0.3, on stage 75% of the playing",
+  "2027-10-11 notice: Your Understudy Run-Through | You played the understudies’ run-through for the director today, and it was an off day.",
+  "2027-10-11 night judged: An Enemy Of The People, 43.6 (off), size lead, difficulty 0.3, on stage 75% of the playing",
+  "2027-10-16 notice: The Director’s Note: Hedda Gabler | Solid, sound nights. The next step is to take more risks in them. Work on your emotional depth: it held your nights back most.",
+  "2027-10-23 notice: The Director’s Note: An Enemy Of The People | Too uneven: on some nights the part got away from you. Come in rested, and have it in your body before the house does. Work on your emotional depth: it held your nights back most.",
+  "2027-10-23 milestone: An Understudy In The Company, An Enemy Of The People, 43.1 (2 off)",
+  "2028-01-03 notice: Cast: Directors’ Thesis Production III | The chair of Acting has cast you as Frau Bergmann in Spring Awakening (Directors’ Thesis Production III), from its first rehearsal call. The lead, Wendla Bergmann, went to Imani Carter. You play the part through the run. Its calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.",
+  "2028-01-03 credit: Yale Rep’s October Production, 2027: role An Understudy In The Company, went on 1"
+ ],
+ "school": {
+  "standing": "good",
+  "classOf": 2029,
+  "offset": 0,
+  "leaves": [],
+  "welfares": [],
+  "formerClasses": [],
+  "classmates": 15,
+  "terms": [
+   "0:good",
+   "1:good",
+   "2:good"
+  ],
+  "conferred": [],
+  "credits": [
+   "2027 carlotta supporting",
+   "2027 understudy ",
+   "2027 thesis lead",
+   "2027 understudy "
+  ],
+  "joinedHistory": [],
+  "firstClassGraduated": [],
+  "duringLeave": []
+ },
+ "accounts": [
+  "Chase checking",
+  "Chase savings"
+ ],
+ "owedIrs": 0,
+ "irsSubstitute": [],
+ "states": {},
+ "statePlans": {},
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 16
+}

@@ -55,7 +55,7 @@ any other branch. The baseline for every measure is brief 17's final runs
 | X3 | 8 | A 1040-NR return lists an interest line | Which interest a nonresident reports, and where, researched; shown as the law says | Open |
 | X4 | 8 | The IRS short-term plan takes the installment agreement's penalty rate (brief 16) | Researched and made right | Open |
 | X5 | 8 | The missed state-plan notice's figures and two refusal periods are copied into prose (brief 16) | Read from the rule the simulation uses | Open |
-| U1 | 9 | An understudy "in the company" goes on in no named part | The part they cover is the cast part, named in the casting, the call, the calendar, the preparation, the judging, the record and the feedback | Open |
+| U1 | 9 | An understudy "in the company" goes on in no named part | The part they cover is the cast part, named in the casting, the call, the calendar, the preparation, the judging, the record and the feedback | Done in brief 19 (D6), see docs/verification/career-2026-10-20/understudy/REPORT.md |
 
 ## Deferred, And Kept So
 

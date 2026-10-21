@@ -136,9 +136,12 @@ describe('PLAYER JOURNEY: an actress understudying An Enemy Of The People, seed 
     const proc = (r as typeof r & { process: { calls: number; lines: number } }).process;
     expect(proc.calls).toBeGreaterThanOrEqual(3);
     expect(proc.lines).toBeGreaterThan(0.3);
-    const forecast = workPiece(sim, sim.player, 'part:rep')!.forecast();
+    const piece = workPiece(sim, sim.player, 'part:rep')!;
+    const forecast = piece.forecast();
     expect(forecast.inputs.difficulty).toBe(NIGHT_DIFFICULTY.rep.supporting);
     expect(forecast.inputs.piece?.night).toMatchObject({ size: 'supporting', share: WORKLOAD.share.supporting });
+    // And the piece the workbook tries ways on is the same part's evening.
+    expect(piece.spec().night).toMatchObject({ size: 'supporting', share: WORKLOAD.share.supporting });
 
     // Called: at five, the night's check sends her on, and the curtain goes on the calendar as Petra Stockmann.
     played(sim, CURTAIN - 3 * 60 * 60_000 + 60_000);
@@ -190,6 +193,11 @@ describe('a save from before, with a Rep understudy covering no named part', () 
     const told = titled(sim, 'Your Understudy Part: Petra Stockmann');
     expect(told.map((n) => n.body)).toEqual(['You understudy Petra Stockmann in Yale Rep’s An Enemy Of The People. Its leads are written for actors, so the part you cover is a supporting one. Your calls are on your calendar as before.']);
     expect([...new Set(repCalls(sim).filter((i) => i.payload.call === 'oncall').map((i) => i.label))]).toEqual([`${SLOT}: On Call For Petra Stockmann`]);
+    // The mark itself, as the opening calls it: one casting given a part, and none the second time.
+    const direct = atCasting();
+    Object.assign(direct.player.school!.rep!, { role: 'An Understudy In The Company' });
+    expect(nameTheCover(direct)).toBe(1);
+    expect(nameTheCover(direct)).toBe(0);
     // Opened again: nothing more.
     const again = reload(sim);
     expect(titled(again, 'Your Understudy Part: Petra Stockmann')).toHaveLength(1);
