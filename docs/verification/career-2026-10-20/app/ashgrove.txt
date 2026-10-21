@@ -1,0 +1,130 @@
+The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk-saves):
+  last-term.json: the same to the byte
+  after-new-york.json: the same to the byte
+  follow-up.json: the same to the byte
+  meeting.json: the same to the byte
+  offered.json: the same to the byte
+  audition.json: the same to the byte
+  offer.json: the same to the byte
+  work-day.json: the same to the byte
+  paid.json: the same to the byte
+
+The agent: Thomas Ashgrove of Halberd Talent. A name held to: \b(?:Thomas|Tomas|Tomás|Thom|Tom|Tommy|Thomson|Thompson)\b|\bAsh[a-z]*|Halberd
+
+The class (15): Caleb Brooks, Owen Walsh, Aaliyah Osei, Julian Kowalski, Hannah Rivera, Isaiah Donovan, Lucia Tanaka, Noah Abara, Elena Reyes, Jordan Park, Zoe Mendez, Sofia Castillo, Imani Nguyen, Theo Sullivan, Samuel Patel
+Former classes' classmates: none
+People in the save (1): Ada Cole (the player)
+
+Notices said from the first day to September 6, 2029 at 9:00 AM: 953; naming him or his agency: 28.
+His first: May 11, 2029 at 10:00 AM, "The School’s Follow-Up After The Showcase"
+
+Every notice naming anything NEAR matches that is not his, in the order it came, days from his first notice:
+  none
+
+His notices where a NEAR word isn't his name or his agency's (a bare "Thomas", "Ashgrove" or "Halberd" alone):
+  none
+
+How each of his notices names him in its title:
+  The School’s Follow-Up After The Showcase
+  A Meeting Is Set At Halberd Talent
+  You Met Thomas Ashgrove’s Office
+  Thomas Ashgrove Offered You Representation
+  2 x Submitted For Nell
+  2 x Submitted For Wren
+  2 x An Audition For Nell
+  2 x A Self-Tape For Wren
+  2 x Not Cast As Wren
+  A Callback For Nell
+  Not Cast As Nell
+  Submitted For Tobias Marsh
+  Submitted For Jess
+  An Audition For Tobias Marsh
+  A Self-Tape For Jess
+  A Callback For Tobias Marsh
+  Not Cast As Jess
+  Submitted For Desk Clerk
+  A Callback For Wren
+  A Self-Tape For Desk Clerk
+  Pay Held For You At Halberd Talent
+  Paid On From Halberd Talent
+  Not Cast As Desk Clerk
+
+Every notice from the last term's first day (January 8, 2029 at 12:00 PM) whose title names a classmate's first name, in the order it came, days from his first notice:
+  January 23, 2029 at 9:00 AM [school, not his, -108.0 days] Aaliyah: A Request For Help: Aaliyah has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  February 1, 2029 at 9:00 AM [school, not his, -99.0 days] Isaiah: Run Lines Together?: Isaiah wonders if you’d like to run lines together for an hour on February 3, 2029 at 7:00 PM. They’ve asked before.
+  February 7, 2029 at 9:00 AM [school, not his, -93.0 days] Julian Asks To Rehearse: Julian asks to rehearse Office Hours on February 10, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Julian on the Coursework tab. Saying no costs nothing.
+  February 10, 2029 at 5:00 PM [school, not his, -89.7 days] Julian Didn’t Hear Back: You didn’t answer Julian about rehearsing on February 10, 2029, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.
+  February 12, 2029 at 9:00 AM [school, not his, -88.0 days] Imani: A Request For Help: Imani has had a hard week away from school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  February 16, 2029 at 9:00 AM [school, not his, -84.0 days] Theo: A Word After Class: Theo stopped you after class to say they’ve had showings go the way your Two Contrasting Monologues did.
+  February 23, 2029 at 9:00 AM [school, not his, -77.0 days] Hannah: Run Lines Together?: Hannah wonders if you’d like to run lines together for an hour on February 25, 2029 at 7:00 PM. They’ve asked before.
+  February 26, 2029 at 9:00 AM [school, not his, -74.0 days] Theo: A Request For Help: Theo has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  February 28, 2029 at 9:00 AM [school, not his, -72.0 days] Jordan: Run Lines Together?: Jordan wonders if you’d like to run lines together for an hour on March 3, 2029 at 7:00 PM. They’ve asked before.
+  March 2, 2029 at 9:00 AM [school, not his, -70.0 days] Elena: A Word After Class: Elena found you after class: they know how a showing like your A Self-Tape feels, and wanted you to know you’re not the only one.
+  March 16, 2029 at 9:00 AM [school, not his, -56.0 days] Julian: A Request For Help: A hard week away from school has left Julian behind on their lines. They ask for three quarters of an hour of your time, now, to run them. It’s the sixth time they’ve asked.
+  March 22, 2029 at 9:00 AM [school, not his, -50.0 days] Samuel: Run Lines Together?: Samuel asks if you’d like to run lines together for an hour on March 24, 2029 at 7:00 PM. They’ve asked before.
+  March 26, 2029 at 9:00 AM [school, not his, -46.0 days] Lucia: A Word After Class: Lucia caught you after class about your Two Contrasting Monologues: an Unready piece tells you what to work on, they say, and that’s all it does.
+  March 28, 2029 at 9:00 AM [school, not his, -44.0 days] Julian Asks To Rehearse: Julian asks to rehearse Office Hours on March 31, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Julian on the Coursework tab. Saying no costs nothing.
+  March 31, 2029 at 5:00 PM [school, not his, -40.7 days] Julian Didn’t Hear Back: You didn’t answer Julian about rehearsing on March 31, 2029, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.
+  April 3, 2029 at 9:00 AM [school, not his, -38.0 days] Elena: A Request For Help: Elena has had a hard week away from school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  April 4, 2029 at 9:00 AM [school, not his, -37.0 days] Owen: Run Lines Together?: Owen asks if you’d run lines together for an hour on April 7, 2029 at 7:00 PM, to keep the work moving. They’ve asked before.
+  April 6, 2029 at 9:00 AM [school, not his, -35.0 days] Zoe: A Request For Help: Zoe has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  April 10, 2029 at 9:00 AM [school, not his, -31.0 days] Caleb: A Word After Class: Caleb stopped you after class again to say they’ve had showings go the way your Two Contrasting Monologues did.
+  April 11, 2029 at 9:00 AM [school, not his, -30.0 days] Julian Asks To Rehearse: Julian asks to rehearse Office Hours on April 14, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Julian on the Coursework tab. Saying no costs nothing.
+  April 11, 2029 at 9:00 AM [school, not his, -30.0 days] Lucia: Run Lines Together?: Lucia asks if you’d run lines together for an hour on April 14, 2029 at 7:00 PM, to keep the work moving. They’ve asked before.
+  April 12, 2029 at 9:00 AM [school, not his, -29.0 days] Noah: A Request For Help: Noah has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
+  April 13, 2029 at 9:00 AM [school, not his, -28.0 days] Sofia: Run Lines Together?: Sofia suggests an hour running lines together on April 14, 2029 at 7:00 PM, so the work keeps moving. They’ve asked before.
+  April 14, 2029 at 5:00 PM [school, not his, -26.7 days] Julian Didn’t Hear Back: You didn’t answer Julian about rehearsing on April 14, 2029, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.
+  April 16, 2029 at 9:00 AM [school, not his, -25.0 days] Caleb: A Request For Help: Caleb has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the seventh time they’ve asked.
+  April 18, 2029 at 9:00 AM [school, not his, -23.0 days] Julian Asks To Rehearse: Julian asks to rehearse Office Hours on April 21, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Julian on the Coursework tab. Saying no costs nothing.
+  April 21, 2029 at 5:00 PM [school, not his, -19.7 days] Julian Didn’t Hear Back: You didn’t answer Julian about rehearsing on April 21, 2029, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.
+  April 27, 2029 at 9:00 AM [school, not his, -14.0 days] Isaiah: Run Lines Together?: Isaiah wonders if you’d like to run lines together for an hour on April 28, 2029 at 7:00 PM. They’ve asked before.
+  June 1, 2029 at 10:00 AM [career, not his, 21.0 days] An Audition For Theo: The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Tuesday, June 5, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides o
+
+What Needs You's unread notices at follow-up.json (May 11, 2029 at 4:00 PM), 500 in all, as ordered: the first 15, then his and, for a first name a notice among them shares with a classmate (none), that classmate's own.
+  1. [80] February 24, 2029 at 10:00 AM A Bad Knock
+  2. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
+  3. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
+  4. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
+  5. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
+  6. [70] May 11, 2029 at 10:00 AM The School’s Follow-Up After The Showcase  <- HIS
+  7. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
+  8. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
+  9. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
+  10. [70] February 6, 2029 at 8:00 PM The Director’s Note: Measure For Measure
+  11. [70] February 2, 2029 at 5:00 PM You’re In The Actor Showcase
+  12. [70] January 8, 2029 at 9:00 AM The Actor Showcase
+  13. [70] November 20, 2028 at 8:00 PM The Director’s Note: Blood Wedding
+  14. [70] October 28, 2028 at 5:00 PM The Director’s Note: Mrs Warren’s Profession
+  15. [70] January 29, 2028 at 8:00 PM The Director’s Note: The Wild Duck
+
+What Needs You's unread notices at audition.json (June 5, 2029 at 7:00 AM), 500 in all, as ordered: the first 15, then his and, for a first name a notice among them shares with a classmate (Theo), that classmate's own.
+  1. [85] May 21, 2029 at 10:00 AM Your MFA Is Conferred
+  2. [80] June 1, 2029 at 10:00 AM An Audition For Theo  <- SHARES A CLASSMATE'S FIRST NAME
+  3. [80] February 24, 2029 at 10:00 AM A Bad Knock
+  4. [75] May 30, 2029 at 10:00 AM Thomas Ashgrove Offered You Representation  <- HIS
+  5. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
+  6. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
+  7. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
+  8. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
+  9. [70] May 18, 2029 at 10:00 AM A Meeting Is Set At Halberd Talent  <- HIS
+  10. [70] May 11, 2029 at 10:00 AM The School’s Follow-Up After The Showcase  <- HIS
+  11. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
+  12. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
+  13. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
+  14. [70] February 6, 2029 at 8:00 PM The Director’s Note: Measure For Measure
+  15. [70] February 2, 2029 at 5:00 PM You’re In The Actor Showcase
+  113. [60] April 6, 2028 at 9:00 AM Theo Asks To Rehearse  <- THE CLASSMATE OF THAT NAME
+  115. [60] March 31, 2028 at 9:00 AM Theo Asks To Rehearse  <- THE CLASSMATE OF THAT NAME
+  224. [55] February 26, 2029 at 9:00 AM Theo: A Request For Help  <- THE CLASSMATE OF THAT NAME
+  295. [55] September 18, 2028 at 9:00 AM Theo: A Request For Help  <- THE CLASSMATE OF THAT NAME
+  364. [55] January 13, 2028 at 9:00 AM Theo: A Request For Help  <- THE CLASSMATE OF THAT NAME
+  397. [50] May 25, 2029 at 11:00 AM You Met Thomas Ashgrove’s Office  <- HIS
+  449. [40] February 16, 2029 at 9:00 AM Theo: A Word After Class  <- THE CLASSMATE OF THAT NAME
+  460. [40] April 8, 2028 at 5:00 PM Theo Didn’t Hear Back  <- THE CLASSMATE OF THAT NAME
+  463. [40] April 1, 2028 at 5:00 PM Theo Didn’t Hear Back  <- THE CLASSMATE OF THAT NAME
+
+The walk's surfaces (docs/verification/career-2026-10-20/app/walk-fictional): every line naming Thomas Ashgrove, Halberd Talent or anything NEAR matches.
+At 1440: 53 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
+  none
+At 390: 53 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
+  none

@@ -1,0 +1,145 @@
+money-statements-paid (paid.json, 1440 wide)
+
+Home
+›
+Papers
+›
+Money
+YOUR BANK
+Chase
+
+$75,925 held here, in one account.
+
+Accounts
+Cards
+Payments And Cash
+Borrowing
+Statements
+Statements
+
+Every payment in and out of each account, with the balance after it.
+
+Account
+Chase Total Checking ···6387, Chase
+Chase Freedom Unlimited ···9931, Chase
+Chase Savings ···4672, Chase (Closed)
+Period
+September 2029, So Far
+August 2029
+July 2029
+June 2029
+May 2029
+April 2029
+March 2029
+February 2029
+January 2029
+December 2028
+November 2028
+October 2028
+September 2028
+August 2028
+July 2028
+June 2028
+May 2028
+April 2028
+March 2028
+February 2028
+January 2028
+December 2027
+November 2027
+October 2027
+September 2027
+August 2027
+July 2027
+June 2027
+May 2027
+April 2027
+March 2027
+February 2027
+January 2027
+December 2026
+November 2026
+October 2026
+September 2026
+August 2026
+OPENING BALANCE
+$75,779.51
+MONEY IN
+$205.87
+MONEY OUT
+$60.00
+INTEREST, AFTER TAX
+$0.00
+FEES
+$0.00
+AVAILABLE NOW
+$75,925.38
+POSTED BALANCE
+$75,945.38
+Posted payments only: what’s pending hasn’t posted yet
+Date
+What
+In / Out
+Balance
+September 6, 2029
+Groceries · Pending, posts September 10, 2029
+−$10.00
+$75,925.38
+September 5, 2029
+Last Bus To Eastview, the week of August 27, 2029: paid on from Halberd Talent’s client trust account, less $25.00 commission
++$205.87
+$75,935.38
+September 5, 2029
+Groceries · Pending, posts September 7, 2029
+−$10.00
+$75,729.51
+September 4, 2029
+Groceries
+−$10.00
+$75,739.51
+September 3, 2029
+Groceries
+−$10.00
+$75,749.51
+September 2, 2029
+Groceries
+−$10.00
+$75,759.51
+September 1, 2029
+Groceries
+−$10.00
+$75,769.51
+Sources And Estimates
+The Year
+
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+
+Year
+2029, So Far
+2028
+2027
+2026
+INTEREST EARNED
+$27.50
+Before tax
+TAX TAKEN OFF IT
+$0.00
+BANK FEES
+$0.00
+CARD FEES
+$0.00
+CARD INTEREST PAID
+$0.00
+Alerts
+
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+
+How This Works
+Any Checking Account Under (USD)
+A Payment Over (USD)
+Save Alerts
+Statement Ready: Off
+Short For A Payment: On
+
+----- 65 controls; Tab reached 60 of the 60 it can; 0 grayed
+Nothing found.

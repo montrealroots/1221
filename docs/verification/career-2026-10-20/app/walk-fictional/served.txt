@@ -1,0 +1,3 @@
+served page is this clone's dist/index.html (vite preview, port 4193)
+assets/index-BMcwjxYR.js
+59da1351 The fictional agent in the real one's place, at the owner's word: Thomas Ashgrove of Halberd Talent
