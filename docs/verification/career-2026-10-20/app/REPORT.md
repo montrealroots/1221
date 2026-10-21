@@ -40,7 +40,7 @@ materials that day; the meeting was set for May 25 at Stewart Talent's New York 
 Equity's $600.00 down taken. She kept the meeting, he offered on May 30, and she accepted. On her own submission she
 taped for Jess in Static On Route 9, a fictional SAG-AFTRA Ultra Low Budget film, offered through him at scale plus ten
 and accepted on June 8; his auditions for Nell, Desk Clerk and Wren booked nothing. The four shoot days ran July 2 to 5;
-$1,130.80 was paid into Stewart Talent's client trust account on July 12 and passed on on July 17, less $102.80
+$1,130.80 was paid into Stewart Talent's client trust account on July 12 and passed on to her July 17, less $102.80
 commission. `breaches` was empty at every save.
 
 One thing the TEST SETUP leaves short: it prepares a piece's steps but answers no Table Work, so her showcase scenes came
