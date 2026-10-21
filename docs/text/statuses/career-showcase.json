@@ -73,9 +73,9 @@
  },
  "src/engine/systems/proshowcase.ts#registerShowcase": {
   "status": "Rewritten And Verified",
-  "hash": "c8e043c644a4",
+  "hash": "3ec55b5c35e4",
   "on": "2026-10-21",
-  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md"
+  "evidence": "Read in the order a played last term brings them (docs/verification/career-2026-10-20/app/make-saves.log and the walk's after-new-york save, app/walk/): New York's second day opened word for word as its first, under the same title, and the two sit side by side in What Needs You; it says the scenes were played again now. Held by tests/pro-showcase.test.ts's journey from the last term's first day"
  },
  "src/engine/systems/proshowcase.ts#settleShowcaseCourse": {
   "status": "Rewritten And Verified",

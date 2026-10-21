@@ -629,6 +629,9 @@ export function registerShowcase(sim: Simulation): void {
     school.tally.answered += 1;
     note('attended');
     nerves(s, person, 'performance');
+    // A city's second day says it's the scenes again (from 2026-10-21): until then New York's second notice opened word for
+    // word as its first, under the same title, the two side by side in What Needs You (brief 19's app walk).
+    const before = sc.performed.some((x) => x.city === day.city && x.at < item.at);
     const played = pieces.map((a) => ({ a, ...perform(s, person, sc, a, day, item.at) }));
     grewFrom(s, person, `showcase:${day.key}`, focusAt(s, person, item.at), courseSkills());
     person.wellbeing.energy = Math.max(0, person.wellbeing.energy - ESTIMATE.energy.rehearsal * played.length);
@@ -638,7 +641,7 @@ export function registerShowcase(sim: Simulation): void {
     // The notes said where they're new: the first day a scene is shown. On a later day they stand as they were given.
     const fresh = played.filter((p) => p.noted && p.a.status === 'revising');
     const notes = fresh.length ? ` The faculty’s ${fresh.length === 1 ? 'note is' : 'notes are'} on ${fresh.length === 1 ? 'the scene’s card' : 'each scene’s card'} on the Coursework tab. Work on ${fresh.length === 1 ? 'it' : 'them'} before Los Angeles, where ${fresh.length === 1 ? 'the scene is' : 'they’re'} shown again with the note taken.` : '';
-    s.notify({ category: 'school', title: day.label, body: `You played ${played.length === 1 ? 'your scene' : `your ${countWords(played.length)} scenes`} at the showcase in ${city}. ${each}.${notes}${again}${after}`, importance: 70, route: '/workspace/school' });
+    s.notify({ category: 'school', title: day.label, body: `You played ${played.length === 1 ? 'your scene' : `your ${countWords(played.length)} scenes`}${before ? ' again' : ''} at the showcase in ${city}. ${each}.${notes}${again}${after}`, importance: 70, route: '/workspace/school' });
   });
 
   sim.onCommand<{ options: string[] }, { assignments: string[] }>('school.choose_showcase', (p, { sim: s }) => {
