@@ -687,12 +687,15 @@ export const MONEY: readonly GuideEntry[] = [
       'Making an account at another bank your primary account and expecting round-ups to follow. They’re set up at one bank and stop there.',
     ],
     next: [
-      'Check How You Pay puts the day on the debit card, since only debit card purchases round up.',
+      'Check How You Pay puts the day on the debit card, or at Citi, BBVA México and Santander México on their own credit card, since those are the purchases that round up.',
       'Keep enough in your checking account for each day’s round-ups to move.',
     ],
     related: ['bank.upkeep', 'bank.accounts', 'bank.payments'],
     connections: [
-      { to: 'bank.payments', kind: 'immediate', why: 'Only what the debit card pays rounds up: How You Pay sets whether the day goes on the debit card, the credit card or in cash.' },
+      // What Citi, BBVA México and Santander México's own credit cards pay rounds up too (`roundsUpCard`), as the entry's
+      // needs say: from 2026-10-21 (brief 20's money audit) the connection and the next step say so, where until then they
+      // said only the debit card's purchases round up, and a New Haven student at Citi was told to move the day off Citi's card.
+      { to: 'bank.payments', kind: 'immediate', why: 'What the debit card pays rounds up, and at Citi, BBVA México and Santander México what their own credit card pays too: How You Pay sets whether the day goes on the debit card, the credit card or in cash.' },
       { to: 'bank.accounts', kind: 'scheduled', why: 'Each transfer is a move from your checking account into savings at the same bank, on the bank’s day.' },
       { to: 'bank.upkeep', kind: 'optional', why: 'Round-ups are set under Your Accounts Over Time, with term deposits and unused accounts.' },
     ],
