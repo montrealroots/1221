@@ -137,4 +137,5 @@ and in each report.
   theirs to decide.
 - **The card limits** compounding with no ceiling: banking's, in paused brief 18.
 - **Brief 18** stays paused, its nine areas not begun; brief 19 did its D1 to D9.
-- **Nothing is merged or deployed.** Merging to `main` and any Base44 deployment wait on the owner, after the gate.
+- **Merged, not deployed.** The branch went to `main` at the owner's word, "Merge it.", in #48 (`3b56d056`), on
+  2026-10-21; until then merging waited on the owner. Any Base44 deployment still waits on the owner, after the gate.
