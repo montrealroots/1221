@@ -33,8 +33,11 @@
  * `draws.ts` listed the same five on `9c3b7ee8` (its draw reads only the seed and his id), and each was played by
  * itself: 71 was passed on May 25 again; 112, 156 and 311 reached all nine; 374's first offer came in May 2030 and no
  * work day before June. Run on from `app-walk-400`, it listed `473`, `564`, `611`, `621` and more; 473 was passed, 564
- * reached all nine, and 611's first work day came in May 2030 with no pay before June. The defaults are the four that
- * reach all nine, in that order (`make-saves.log`; the real agent's life is `make-saves-real-agent.log`).
+ * reached all nine, and 611's first work day came in May 2030 with no pay before June. The defaults were those four,
+ * 112, 156, 311 and 564, until later that day, when two commitments whose trips meet couldn't both be gone to any more
+ * and the film's part Theo became Felix (`a43b4f8f`), which changed the lives again. Played one at a time on
+ * `a43b4f8f`, 71 was passed on May 25 again, and 112, 156, 311 and 374 each reached all nine with breaches none. The
+ * defaults are those four, in that order (`make-saves.log`; the real agent's life is `make-saves-real-agent.log`).
  *
  * Writes, where the life reaches them:
  * - `last-term.json`: the last term's first day (January 8, 2029, noon): the showcase's scenes still to choose.
@@ -65,7 +68,7 @@ import { roundToCome } from '../../../../src/engine/systems/projobs';
 
 const [OUT = '.', ...SEEDS] = process.argv.slice(2).filter((a) => a !== '--');
 mkdirSync(OUT, { recursive: true });
-const seeds = SEEDS.length ? SEEDS : ['app-walk-112', 'app-walk-156', 'app-walk-311', 'app-walk-564'];
+const seeds = SEEDS.length ? SEEDS : ['app-walk-112', 'app-walk-156', 'app-walk-311', 'app-walk-374'];
 const zone = 'America/New_York';
 const at = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h, minute: 0 }, zone);
 const AGENT = AGENTS[0]!;

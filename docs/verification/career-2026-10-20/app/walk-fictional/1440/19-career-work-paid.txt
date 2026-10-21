@@ -35,26 +35,9 @@ Its calls are over.
 Permission To Work
 Read September 5, 2029: You’re a US citizen, so you can work for any employer in the US.
 Pay
-The week of October 1, 2029: $3,084.40 promised by Bright Harbor Television, due October 4, 2029. It isn’t paid until then, so it isn’t in your accounts yet.
-Commission expected: $280.40. What’s paid over scale ($2,804.00), so you keep scale.
-What Happened
-JESS, STATIC ON ROUTE 9
-Who
-Dead Air Films, SAG-AFTRA Ultra Low Budget. Fictional, as every project in the game is.
-Where
-A motel upstate, New York.
-Status
-Finished
-Dates
-September 17, 2029 to September 20, 2029, four days of work.
-On Your Calendar
-Its calls are over.
-Permission To Work
-Read August 22, 2029: You’re a US citizen, so you can work for any employer in the US.
-Pay
-The week of September 17, 2029: $1,232.00 promised by Dead Air Films. Received October 2, 2029, passed on from Halberd Talent’s client trust account.
-Gross $1,232.00, withheld for tax $94.24, to you $1,025.76.
-Commission: $112.00, taken before it reached you.
+The week of October 1, 2029: $3,084.40 promised by Bright Harbor Television. Received October 10, 2029, passed on from Halberd Talent’s client trust account.
+Gross $3,084.40, withheld for tax $235.95, to you $2,568.05.
+Commission: $280.40, taken before it reached you.
 What Happened
 Your Unions
 How This Works
@@ -73,5 +56,5 @@ You’ve been able to join SAG-AFTRA since October 1, 2029. SAG-AFTRA work from 
 Join SAG-AFTRA ($3,244.07)
 Sources And Estimates
 
------ 31 controls; Tab reached 26 of the 26 it can; 0 grayed
+----- 30 controls; Tab reached 25 of the 25 it can; 0 grayed
 Nothing found.

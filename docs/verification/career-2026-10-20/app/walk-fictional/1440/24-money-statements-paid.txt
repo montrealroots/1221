@@ -8,7 +8,7 @@ Money
 YOUR BANK
 Chase
 
-$76,389 held here, in one account.
+$77,808 held here, in one account.
 
 Accounts
 Cards
@@ -66,32 +66,68 @@ August 2026
 OPENING BALANCE
 $75,436.30
 MONEY IN
-$1,025.76
+$2,568.05
 MONEY OUT
-$73.21
+$196.42
 INTEREST, AFTER TAX
 $0.00
 FEES
 $0.00
 AVAILABLE NOW
-$76,388.85
+$77,807.93
 POSTED BALANCE
-$76,408.85
+$77,827.93
 Posted payments only: what’s pending hasn’t posted yet
 Date
 What
 In / Out
 Balance
-October 3, 2029
-Groceries · Pending, posts October 5, 2029
+October 11, 2029
+Groceries · Pending, posts October 15, 2029
 −$10.00
-$76,388.85
+$77,807.93
+October 10, 2029
+The Calloway Files, the week of October 1, 2029: paid on from Halberd Talent’s client trust account, less $280.40 commission
++$2,568.05
+$77,817.93
+October 10, 2029
+Groceries · Pending, posts October 12, 2029
+−$10.00
+$75,249.88
+October 9, 2029
+Groceries
+−$10.00
+$75,259.88
+October 8, 2029
+Medicine for high blood pressure
+−$43.21
+$75,269.88
+October 8, 2029
+Groceries
+−$10.00
+$75,313.09
+October 7, 2029
+Groceries
+−$10.00
+$75,323.09
+October 6, 2029
+Groceries
+−$10.00
+$75,333.09
+October 5, 2029
+Groceries
+−$10.00
+$75,343.09
+October 4, 2029
+Groceries
+−$10.00
+$75,353.09
+October 3, 2029
+Groceries
+−$10.00
+$75,363.09
 October 2, 2029
-Static On Route 9, the week of September 17, 2029: paid on from Halberd Talent’s client trust account, less $112.00 commission
-+$1,025.76
-$76,398.85
-October 2, 2029
-Groceries · Pending, posts October 4, 2029
+Groceries
 −$10.00
 $75,373.09
 October 1, 2029
@@ -134,5 +170,5 @@ Save Alerts
 Statement Ready: Off
 Short For A Payment: On
 
------ 59 controls; Tab reached 54 of the 54 it can; 0 grayed
+----- 86 controls; Tab reached 81 of the 81 it can; 0 grayed
 Nothing found.

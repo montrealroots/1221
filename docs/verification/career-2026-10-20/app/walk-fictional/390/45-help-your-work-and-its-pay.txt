@@ -25,7 +25,7 @@ Under Your Engagements, read each payment: what’s promised, by whom, and when 
 After its payday, the payment says what was withheld for tax, any union dues, the commission and what reached you.
 Open Money to see it land, with its line on your account’s statement.
 What You Need First
-Work you’ve booked. A student film’s pay is deferred, so it’s listed and never paid.
+Work you’ve booked. A student film’s pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so it’s listed and never paid.
 TIME AND MONEY
 Tax
 Withheld from each payment as a paycheck’s is: federal income tax, Social Security and Medicare, and the tax of the state the work is in
@@ -42,7 +42,7 @@ Represented, it goes into your agency’s client trust account, shown in what yo
 Each payment counts on your tax return as wages, with what was withheld, the commission and the dues.
 READING THE RESULT
 Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.
-Deferred pay is shown and never paid.
+Deferred pay is shown and never paid: a student film pays only if it earns money later, and no film in the game does.
 On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.
 How It Connects
 COMES FIRST

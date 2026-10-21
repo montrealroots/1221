@@ -238,23 +238,28 @@ On 2026-10-21 the owner had a fictional agent, Thomas Ashgrove of Halberd Talent
 ahead and swap in a fictional agent.", `59da1351`), and later that day had each part written for an actor, an actress or
 either, with only a part written for the player or for either posted to them ("There should be gender neutral and
 different parts for each genders. We need versatility always.", `9c3b7ee8`). His id is in the draws' keys (`rngFor(seed,
-'pro.agent', person, agent.id, …)`) and who a part is written for is in what's posted, so each time the same seed told
-another story, and this walk's saves and pages showed an agent and parts the game no longer has. The life was played
-again and the built app walked again on branch `b19-rewalk2` from `9c3b7ee8`, in a clone of its own; `walk/` stays as
-the record of what was walked then.
+'pro.agent', person, agent.id, …)`) and who a part is written for is in what's posted, so each change told the same
+seed's story another way, and this walk's saves and pages showed an agent and parts the game no longer has. The life was
+played again and the built app walked again on branch `b19-rewalk3` from `a43b4f8f`, in a clone of its own; `walk/`
+stays as the record of what was walked then.
 
-A walk on `59da1351` was made first and superseded the same day (`f0edceab` on `b19-rewalk`, carried here as
-`d783f998`): on seed `app-walk-112` it held at both widths on the same 52 surfaces, and found the four defects
-`9c3b7ee8` fixed (deferred pay said three ways, a part written for a man offered to an actress, the Agreement's ending
-term without "through him", a Calendar entry without the trip its notice promised). This walk's pages replaced its pages
-in `walk-fictional/`.
+Two walks before this one were made and superseded the same day, each kept in the history and its pages replaced in
+`walk-fictional/`. The walk on `59da1351` (seed `app-walk-112`; `4d409712` here) held at both widths on the same 52
+surfaces and found deferred pay said three ways, a part written for a man offered to an actress, the Agreement's ending
+term without "through him" and a Calendar entry without the trip its notice promised, which `9c3b7ee8` fixed. The walk
+on `9c3b7ee8` (defaults `app-walk-112`, `156`, `311`, `564`; `20994608` here) held the same, and found an actress judged
+at two auditions in person at one hour in two towns, and the actor's part Theo given as a classmate's name, Theo
+Sullivan, which `a43b4f8f` fixed ("Two career commitments whose trips meet can't both be gone to; the film's part named
+as no classmate is").
 
 | Item | Status |
 |---|---|
-| The seed | `app-walk-112`, the first seed `draws.ts` lists whose life reaches all nine saves; `make-saves.ts`'s defaults are the four that do, `app-walk-112`, `app-walk-156`, `app-walk-311`, `app-walk-564` |
+| The seed | `app-walk-112`, the first seed `draws.ts` lists whose life reaches all nine saves; `make-saves.ts`'s defaults are the first four that do, `app-walk-112`, `app-walk-156`, `app-walk-311`, `app-walk-374` |
 | V17's automated half | Held at both widths on the same 52 surfaces (`walk-fictional/`) |
-| The four fixes of `9c3b7ee8` | Three show where they were found; deferred pay has nowhere to show in this life, which booked no student film |
-| Defect 3, asked of him | Nobody in the played life is named Thomas, Ashgrove or anything near either; a classmate, Theo Sullivan, shares a part's name (`ashgrove.ts`, `ashgrove.txt`) |
+| Two commitments at once | Never: no two she went to meet or fall on one day; each clash's second was missed, saying where she was |
+| The stop at a clash | Found: the clock doesn't stop at the second of two set for one hour, though On The Way says it will (`clash-stop.mjs`, `clash-stop.txt`) |
+| The guide's deferred pay | How This Works' entries 45 and 50 give the why; 48 says who a part is written for |
+| Defect 3, asked of him | Nobody in the played life is named Thomas, Ashgrove or anything near either, and no part shares a classmate's name (`ashgrove.ts`, `ashgrove.txt`) |
 | A part written for an actor | Never shown to this life: not in its saves, its notices or the walk's pages |
 | The route's setup | `playtest-check.mjs` passed on the new saves (`../playtest-check.txt`) |
 
@@ -264,41 +269,39 @@ Played again on `59da1351`, `app-walk-102`'s office passed on May 25, 2029 with 
 0.0996 where the follow-up's factors gave a chance of 0.09. `make-saves.ts` writes each save once, from the first seed
 that reaches it, so with the old defaults the owner's command in `../PLAYTEST.md` would have written three saves from
 102's life and the rest, if any, from another. `draws.ts` (in the scratchpad, reading the repository's source) listed
-`app-walk-71`, `112`, `156`, `311` and `374` as drawing under 0.1 and 0.2 on the first approach, on both commits, since
-its draw reads only the seed and his id. On `9c3b7ee8` each was played by itself: 71's follow-up drew 0.0903 against the
+`app-walk-71`, `112`, `156`, `311` and `374` as drawing under 0.1 and 0.2 on the first approach, on each commit, since
+its draw reads only the seed and his id. On `a43b4f8f` each was played by itself: 71's follow-up drew 0.0903 against the
 same 0.09 (Your Work, Training And Experience and Room On His List near the bar), so the School passed on no request and
-his office passed on May 25; 112, 156 and 311 reached all nine with `breaches` empty at every save; 374's first offer
-came on May 22, 2030 and no work day before June, where the life stops. Run on from `app-walk-400`, it listed `473`,
-`564`, `611`, `621` and four more; 473 was passed, 564 reached all nine, and 611's first work day came on May 27, 2030
-with no pay before June. The defaults are the four that reach all nine, in that order, and the header says how they were
-chosen and what they were until this day. The owner's command, run with no seed, wrote the nine saves from 112 alone in
-37 seconds, the same to the byte as 112 played by itself. Its log is `make-saves.log`; the real agent's life, which the
-sections above call `make-saves.log`, was moved to `make-saves-real-agent.log`.
+his office passed on May 25; 112, 156, 311 and 374 each reached all nine with `breaches` empty at every save. The
+defaults are those four, in that order, and the header says how they were chosen and what they were on each commit
+before. The owner's command, run with no seed, wrote the nine saves from 112 alone in 35 seconds, the same to the byte
+as 112 played by itself. Its log is `make-saves.log`; the real agent's life, which the sections above call
+`make-saves.log`, was moved to `make-saves-real-agent.log`.
 
-The life, as it went, the same as on `59da1351` to the agreement: in the final term the faculty chose her scenes, The
-Father in Office Hours and June in Two Time Zones; New York's showcase on April 30 and May 1, 2029, Los Angeles's on May
-8. The School's follow-up on May 11 passed on Thomas Ashgrove's office's request to meet, and she sent her materials
-that day; the meeting was set for May 25 at Halberd Talent's New York office. The degree came on May 21, Equity's
-$600.00 down taken. She kept the meeting, he offered on May 30, and she accepted. That day she submitted herself for
-Hester Vane in The Winter Ledger and Ivy in Paper Moons, and both auditions were set for Tuesday, June 5 at 11:00 AM,
-one in Hudson and one in Brooklyn, a clash, as their notices said; she was seen at both, and neither went further. His
-submissions for Nell and Wren in June booked nothing, nor did her own for Sam in Last Bus To Eastview in July. In August
-he submitted her for Jess in Static On Route 9, a fictional SAG-AFTRA Ultra Low Budget film, which was offered through
-him on August 22 at $308.00 a day, scale plus ten on $280.00, and accepted; for Nell and Wren again, which came to
-nothing, as did her own second try for Ivy; and for Hester Vane, which after a callback went to another actor on
-September 13 because she was booked on The Calloway Files for October 2, and Desk Clerk in The Calloway Files, fictional
-television for Bright Harbor Television under SAG-AFTRA's TV/Theatrical contract, offered on September 5 and accepted.
-Jess's four shoot days ran September 17 to 20; Dead Air Films paid $1,232.00 into Halberd Talent's client trust account
-on September 27, less $94.24 withheld for tax, and it was passed on to her October 2, less $112.00 commission:
-$1,025.76. The Calloway Files's two days ran October 1 and 2, its principal role making her eligible to join SAG-AFTRA
-from October 1; its $3,084.40 was still to come at the last save. The nine saves: `last-term` January 8, 2029 at noon,
-`after-new-york` May 2 at 9 AM, `follow-up` May 11 at 4 PM, `meeting` May 25 at 8 AM, `offered` May 30 at 11 AM,
-`audition` June 5 at 7 AM, `offer` August 22 at 6 PM, `work-day` September 17 at 5 AM, `paid` October 3 at 9 AM.
+The life, as it went, the same as on the two commits before to the agreement: in the final term the faculty chose her
+scenes, The Father in Office Hours and June in Two Time Zones; New York's showcase on April 30 and May 1, 2029, Los
+Angeles's on May 8. The School's follow-up on May 11 passed on Thomas Ashgrove's office's request to meet, and she sent
+her materials that day; the meeting was set for May 25 at Halberd Talent's New York office. The degree came on May 21,
+Equity's $600.00 down taken. She kept the meeting, he offered on May 30, and she accepted. That day she submitted
+herself for Hester Vane in The Winter Ledger and Ivy in Paper Moons, both set for Tuesday, June 5 at 11:00 AM, one in
+Hudson and one in Brooklyn, a clash, as Ivy's notice said; she went to Hester Vane's, not called back, and missed Ivy's:
+"You were at the audition for Hester Vane in Hudson, so you missed the audition for Ivy on June 5, 2029 at 11:00 AM, and
+the film's director moved on without you." His submissions in June for Nell, which came to a callback, and Wren booked
+nothing, nor did her own for Sam in July or his for Jess in August. On August 27 his Nell and her second Ivy fell at
+11:00 AM again; she went to Nell's, not called back, and missed Ivy's, said the same way. His submissions that day for
+Hester Vane and Desk Clerk came to an audition, not called back, and a self-tape; Desk Clerk in The Calloway Files,
+fictional network television for Bright Harbor Television under SAG-AFTRA's TV/Theatrical contract, was offered through
+him on September 5 at $1,542.20 a day for two days, scale plus ten on $1,402.00, and accepted. Its shoot days ran
+October 1 and 2 at a studio in Queens, its principal role making her eligible to join SAG-AFTRA from October 1. Bright
+Harbor Television paid $3,084.40 into Halberd Talent's client trust account on October 4, less $235.95 withheld for tax,
+and it was passed on to her October 10, less $280.40 commission: $2,568.05. The nine saves: `last-term` January 8, 2029
+at noon, `after-new-york` May 2 at 9 AM, `follow-up` May 11 at 4 PM, `meeting` May 25 at 8 AM, `offered` May 30 at 11
+AM, `audition` June 5 at 7 AM, `offer` September 5 at 6 PM, `work-day` October 1 at 5 AM, `paid` October 11 at 9 AM.
 
 ### The Walk
 
-`npm run build` (`walk-fictional/build.txt`), the clone's `dist/` served by `vite preview` on port 4194
-(`walk-fictional/served.txt`: the page served is `dist/index.html`, build `assets/index-BVe5RB3j.js`, at `9c3b7ee8`),
+`npm run build` (`walk-fictional/build.txt`), the clone's `dist/` served by `vite preview` on port 4196
+(`walk-fictional/served.txt`: the page served is `dist/index.html`, build `assets/index-1gF9IWyQ.js`, at `a43b4f8f`),
 and `app-walk.mjs` at 1440 by 900 and 390 by 844 on the new saves, as above. One change to the walk, made for the walk
 on `59da1351`: its Calendar step looked for "Meeting At Stewart Talent", and with Halberd Talent's name on the item it
 would have found none and left surface 29 out without a word. It looks for "Meeting At Halberd Talent" now, and says in
@@ -306,8 +309,8 @@ the walk's list when an item it looks for isn't there.
 
 | Width | Surfaces | Found | Controls | Reached By Tab | Grayed |
 |---|---|---|---|---|---|
-| 1440 | 52, the same names in the same order as `walk/` | Nothing, on any | 1,668 | 1,484 of the 1,484 it can | 53, each saying why in its title and its panel |
-| 390 | 52, the same | Nothing, on any | 1,512 | 1,328 of the 1,328 it can | 53, the same |
+| 1440 | 52, the same names in the same order as `walk/` | Nothing, on any | 1,663 | 1,481 of the 1,481 it can | 51, each saying why in its title and its panel |
+| 390 | 52, the same | Nothing, on any | 1,507 | 1,325 of the 1,325 it can | 51, the same |
 
 So at both widths, on every surface: no page or console error, no sideways scroll, every control named and reached by
 Tab, the focus ring on every one Tab reached, and every grayed control saying why. The stop at the meeting at 390 took
@@ -316,10 +319,10 @@ two rows, 25 px inside the dialog; without the footer's wrapping it ran 17.3 px 
 
 ### What Differed From The First Walk, And Why
 
-Each page's words were set beside the first walk's (`walk/<width>/NN-*.txt`) and the walk on `59da1351`'s, the agent's
-and agency's names counted as one. At every surface the words that differed at 390 were the words that differed at 1440,
-but for where a holiday's ✦ fell in the 1440 month grid's comparison (30). Against the walk on `59da1351`, surfaces 01
-to 08, 20 to 22, 25, 28 and 32 to 52 read the same word for word. What differed, by its cause:
+Each page's words were set beside the first walk's (`walk/<width>/NN-*.txt`) and the two walks' before this one, the
+agent's and agency's names counted as one. At every surface the words that differed at 390 were the words that differed
+at 1440, but for where a holiday's ✦ fell in the 1440 month grid's comparison (30). Against the walk on `9c3b7ee8`,
+surfaces 01 to 11, 20 to 22, 25, 26, 28, 29 and 32 to 44 read the same word for word. What differed, by its cause:
 
 - **The agent.** His name and agency. The fictional line, on ten of the first walk's pages, is on none: his panel's
   notice (surface 03) says he and his agency are invented for the game. The real agency's published words on submissions
@@ -331,49 +334,59 @@ to 08, 20 to 22, 25, 28 and 32 to 52 read the same word for word. What differed,
   (Room On His List near the bar this time: room for one lead aged 30 to 40 and one featured actor; five of seven at the
   bar; an offer about 21%), the roles, offers, booked work and their dates, the stops and the Calendar's items, the pay,
   the unions (SAG-AFTRA open to her, 19) and Money's statement.
-- **The four fixes of `9c3b7ee8`, where they were found.** The Ending It term says "no real offer of covered work
-  through him" (09, 10, 17), and at `paid.json` End It: No Offer In 90 Days is grayed until December 10, 2029, counting
-  from his last offer and the six days she was employed (17). The Calendar's entries say "Getting there takes two hours
-  each way, and the trip is part of it." (the meeting, 29; a shoot day, 31). The offer's card says who the part is
-  written for: "Written for an actor or an actress." (12), Jess being the one offer this life had. Deferred pay is on
-  none of this life's career pages, which booked no student film; the build says it in `DEFERRED_WHY`'s words on the
-  offer, Booked Work and the Work tab ("a student film pays its actors only if it earns money later, and no film in the
-  game does"), and How This Works keeps its own (45: "Deferred pay is shown and never paid."; 50: "A student film's pay
-  is deferred, so it's listed and never paid.", "… so nothing is paid."), which `DEFERRED_WHY` now bears out.
+- **The fixes of `9c3b7ee8` and `a43b4f8f`, where they were found.** The Ending It term says "no real offer of covered
+  work through him" (09, 10, 17), and at `paid.json` End It: No Offer In 90 Days is grayed until December 6, 2029,
+  counting from his last offer and the two days she was employed (17). The Calendar's entries say "Getting there takes
+  two hours each way, and the trip is part of it." (29, 31). The offer's card says "Written for an actor or an actress."
+  (12), Desk Clerk being the one offer. How This Works gives deferred pay's why where it had only said "never paid":
+  "Work you've booked. A student film's pay is deferred: a student film pays its actors only if it earns money later,
+  and no film in the game does, so it's listed and never paid." and "Deferred pay is shown and never paid: a student
+  film pays only if it earns money later, and no film in the game does." (45), "… so nothing is paid." (50); deferred
+  pay itself is on none of this life's career pages, which booked no student film. Finding Work's entry says "who it's
+  written for", and "you're posted only the ones written for you or for either" (48); the Open Calls card shows it from
+  the same lines as the offer's (`RoleFacts`), though no walked save had an open call on screen. A clash's second is
+  missed and says where she was, in Settled (12, 13, 18: "Ivy, Paper Moons: You were at the audition for Nell in New
+  York, so you missed the audition for Ivy on August 27, 2029 at 11:00 AM, and the film's director moved on without
+  you.") and in its notice, and the June one on the Opportunities tab once Go is pressed (`clash-stop.txt`).
 - **Anything else: one sentence.** How This Works: The Agreement (44) says End It: No Offer In 90 Days needs "the days
   you're employed on covered work not counted", which `728b4972` added after the first walk's build (`8bac3141`). It is
-  the only difference from the first walk that neither the agent, the life nor the four fixes account for. Against the
-  walk on `59da1351`, there is none.
+  the only difference from the first walk that neither the agent, the life nor the fixes account for. Against the walk
+  on `9c3b7ee8`, there is none.
 
-This life reaches every state the first walk read: an audition through him in progress (12), two at once and a stop that
-passed both (11, 26), promised pay with commission expected at the work day (14), commission over scale on a finished
-engagement and a payday on the Calendar (19, 30). It reaches more: two bookings, SAG-AFTRA open to her, the 90-day
-ending grayed with the days employed counted, and a casting lost to a booking (13, 17, 18, 19). It doesn't reach
-deferred pay, which the walk on `59da1351` did.
+This life reaches most of what the first walk read: two auditions in progress at once and On The Way listing both (11,
+26), promised pay with commission expected over scale at the work day (14), commission on a finished engagement and a
+payday on the Calendar (19, 30). It doesn't reach an audition through him in progress, which the first walk read on 11
+and 12 and the walk on `9c3b7ee8` on 12: none of his rounds was under way at a save this life writes. Nor deferred pay.
+It reaches more: SAG-AFTRA open to her, a round missed for another gone to (12, 13, 18) and the 90-day ending grayed
+with the days employed counted (17).
+
+She is never at two commitments at once. Of what the nine saves hold, she went to six in person, each away from home two
+hours each way as the game reckons it: the meeting on May 25 (9 AM to 2 PM), Hester Vane on June 5 and September 3 and
+Nell on June 18 and August 27 (9 AM to 1:30 PM), Nell's callback on June 25 (noon to 4:30 PM). No two meet, and no two
+fall on one day. Both clashes, June 5 and August 27, ended with the second missed and its notice saying where she was
+(`ashgrove.txt`).
 
 A part written for an actor is never shown to it. The nine saves hold 56 roles: Ivy 13, Hester Vane 11, Jess 14, Sam 13,
-Nell 2, Wren 2 and Desk Clerk 1, none of them Callum, Tobias Marsh, Ferris or Theo; no notice of the career names one of
-those four; nor does any line of the walk's pages, a classmate's full name taken out first (`ashgrove.txt`).
+Nell 2, Wren 2 and Desk Clerk 1, none of them Callum, Tobias Marsh, Ferris or Felix; no notice of the career names one
+of those four; nor does any line of the walk's pages.
 
 Found by reading the new pages, and not fixed:
 
-- **Two auditions in person at the same hour in two towns, and she is seen at both.** On June 5, 2029 at 11:00 AM she
-  was judged for Hester Vane at the company's main stage in Hudson (Strong) and for Ivy at an apartment in Brooklyn
-  (Working); on August 27 at 11:00 AM for Nell in Manhattan and Ivy in Brooklyn (Working each). The notices said each
-  pair clashed and how to move one; the stop passes both, and Go goes to each in turn (26). The audition's handler
-  (`projobs.ts:1243`) misses a round only when she's asleep, ill or at a booked day's work, so another round at the same
-  hour never keeps her from one. On the pages: both cards in progress at the one hour (11, 12), the stop (26), and each
-  judged in Settled (13, 18). The first walk's life did the same on June 11, 2029 (Nell in Manhattan, Theo in Brooklyn),
-  and nobody remarked it.
-- **A classmate's given name is a part's.** Theo, written for an actor (`careerwork.ts:326`), is one of the actors'
-  given names classmates are drawn from (`GIVEN_ACTOR`, `systems/school.ts:1042`), and 64 of the 100 classes of
-  `app-walk-0` to `app-walk-99` have a Theo; this life's has Theo Sullivan. An actress isn't posted Theo, so this life
-  never shows the two together; an actor's life can, which is Defect 3's shape, and the reason `9c3b7ee8` renamed Owen
-  to Callum. Sam, written for either, and the classmate Samuel Patel are near.
-- As found on `59da1351`, and left: a role cast to another actor comes round again after ten weeks (`POSTING.againDays`,
-  the game's assumption) and he submits her for it again, so Nell and Wren each came round twice, Wren twice in Settled
-  (13, 18) and Nell's first past its eight, and the notices don't say it's a new casting of a part already cast. And
-  `jordan.ts` reads `AGENT.fictional`, which went with `59da1351`; run now, it would tell his notices only by his name.
+- **The clock doesn't stop at the second of two auditions set for one hour, though On The Way says it will.** From
+  `audition.json`, Advance to This Evening: On The Way says "passes two commitments. The clock stops at each one so you
+  can choose: press Go to be there and carry on, or Stand Here to stop the clock there." It stops at Hester Vane's,
+  whose stop says only that she's there if she's awake and well, nothing of Ivy's; Go there, and the clock runs to 6:00
+  PM with no stop at Ivy's, which Settled then says was missed, and where she was (`clash-stop.mjs`, which presses Go on
+  a page of its own; `clash-stop.txt`). The stop's words (`TimeControls.tsx`) don't read `attendedAcross`, so nothing
+  before Go says which one going gives up, and the choice On The Way offers isn't there; on the day, Ask For Another
+  Time is grayed (11: "casting needs a day's notice to move it").
+- Small, in the words: How This Works' first deferred-pay sentence names "a student film" twice in one sentence (45, and
+  50 the same), and its second leaves out "its actors" where the screens' sentence has it.
+- As found on the walks before, and left: a role cast to another actor comes round again after ten weeks
+  (`POSTING.againDays`, the game's assumption) and he submits her for it again, so Nell and Wren each came round twice,
+  Wren twice in Settled (13, 18) and Nell's first past its eight, and the notices don't say it's a new casting of a part
+  already cast; Sam, a part for either, and the classmate Samuel Patel are near; and `jordan.ts` reads
+  `AGENT.fictional`, which went with `59da1351`, so run now it would tell his notices only by his name.
 
 ### Defect 3, Asked Of Him
 
@@ -385,20 +398,20 @@ class is Caleb Brooks, Owen Walsh, Aaliyah Osei, Julian Kowalski, Hannah Rivera,
 Abara, Elena Reyes, Jordan Park, Zoe Mendez, Sofia Castillo, Imani Nguyen, Theo Sullivan and Samuel Patel; the save's
 only person is Ada Cole; and the lists classmates are named from (`systems/school.ts`, `GIVEN_ACTRESS`, `GIVEN_ACTOR`,
 `FAMILY`) hold no Thomas and no Ashgrove, so no seed's class can. Of the 957 notices said from the first day to October
-3, 2029, 26 name him or his agency, each in full, and no other names anything near either. On the walk's pages 55 lines
+11, 2029, 27 name him or his agency, each in full, and no other names anything near either. On the walk's pages 52 lines
 at each width name him or Halberd Talent, and none anything else near them. His first notice was sixth of 500 unread at
-`follow-up.json`; at `audition.json` the two auditions' notices were second and third and his offer fifth. Of the eleven
-parts, one shares a name with a classmate, Theo with Theo Sullivan, and Sam is near Samuel Patel, as above. (The first
-walk's own life had a classmate called Jordan Kim, on its surface 20, whose seed `jordan.ts` didn't play.)
+`follow-up.json`. Of the eleven parts none shares a name with a classmate, in this class or in any of the 100 of
+`app-walk-0` to `app-walk-99`, where the walk on `9c3b7ee8` counted a Theo in 64. (The first walk's own life had a
+classmate called Jordan Kim, on its surface 20, whose seed `jordan.ts` didn't play.)
 
 ### The Route's Setup
 
 `playtest-check.mjs`, as its header says: the build above with the nine saves in `dist/saves`, `npx vite preview --port
 4291`. Each of `last-term.json`, `follow-up.json` and `paid.json` opened, Continue went into it, and the Career screen
-opened, at January 8, May 11 and October 3, 2029, with no page errors (`../playtest-check.txt`, its first line naming
+opened, at January 8, May 11 and October 11, 2029, with no page errors (`../playtest-check.txt`, its first line naming
 the build and the day). `../PLAYTEST.md` still names the real agent, his fictional line, the first walk's folder and
-commit, and in steps 4 and 5 facts of the first life that this one changes (one audition in progress, SAG-AFTRA out of
-reach); those lines were passed on to be corrected where that file is kept.
+commit, and in step 4 a stop at each audition, which this life's clash doesn't give; those lines were passed on to be
+corrected where that file is kept.
 
 ### What The Sections Above Say That Is No Longer True Of The Game
 
@@ -406,6 +419,8 @@ They are the record of then. Since `59da1351` the agent is Thomas Ashgrove of Ha
 his ends on "Fictional: his words and decisions here are invented." (How The Walk Was Made, T1, Defect 3); the pay's
 notices name Halberd Talent, and the owner's open decision on the real agent that "Read and left" defers to was made;
 the titles Defect 3 quotes name Thomas Ashgrove's office and Halberd Talent; and the walk's saves are played from
-`app-walk-112`, whose life is the one above. Since `9c3b7ee8` Theo in Paper Moons, for whom the first life auditioned,
-is written for an actor and isn't posted to an actress. And one not from either: the meeting that Found And Not Fixed
-says didn't take a student from class has taken one since `5daaeed8`.
+`app-walk-112`, whose life is the one above. Since `9c3b7ee8` Paper Moons's part for an actor isn't posted to an
+actress, and since `a43b4f8f` it is Felix, not the Theo the first life auditioned for; and since `a43b4f8f` the first
+life's two auditions at 11 AM on June 11, 2029, one in Manhattan and one in Brooklyn, couldn't both be gone to. And one
+not from these: the meeting that Found And Not Fixed says didn't take a student from class has taken one since
+`5daaeed8`.

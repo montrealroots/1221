@@ -1,10 +1,10 @@
 calendar-entry-work-day (work-day.json, 1440 wide)
 
-Static On Route 9: Shoot Day 1
+The Calloway Files: Shoot Day 1
 ✕
 WHEN
 7:00 AM
-September 17, 2029
+October 1, 2029
 LENGTH
 11 hours
 KIND

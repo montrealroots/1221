@@ -1,11 +1,13 @@
 /**
  * Whether anyone else in the walk's played life could be taken for the agent (brief 19, the app part's third defect
- * checked again, 2026-10-21). Defect 3 was a classmate called Jordan beside the agent Jordan Parente (`jordan.ts`); that
- * day the owner had a fictional agent, Thomas Ashgrove of Halberd Talent, take the real one's place (`59da1351`), and
- * this asks the same of him: is any classmate, teacher or other person the life meets named Thomas, Ashgrove or
+ * checked again, 2026-10-21). Defect 3 was a classmate called Jordan beside the agent Jordan Parente (`jordan.ts`);
+ * that day the owner had a fictional agent, Thomas Ashgrove of Halberd Talent, take the real one's place (`59da1351`),
+ * and this asks the same of him: is any classmate, teacher or other person the life meets named Thomas, Ashgrove or
  * something near either, and where do the agent's notices sit among the others in What Needs You. Later that day each
  * part was written for an actor, an actress or either (`9c3b7ee8`), and it asks two things more: whether a classmate
- * shares a name with any of the parts, and whether the life is ever shown a part written for an actor.
+ * shares a name with any of the parts, which one did until the film's Theo became Felix (`a43b4f8f`), and whether the
+ * life is ever shown a part written for an actor. And since `a43b4f8f` it asks whether she is ever at two commitments
+ * in person at once, which until then she could be.
  *
  *   npx vite-node docs/verification/career-2026-10-20/app/ashgrove.ts -- OUT.txt SAVEDIR [WALKDIR]
  *
@@ -15,19 +17,22 @@
  * too). Each of the nine saves it writes is compared with SAVEDIR's, the walk's, byte for byte, so the life read is the
  * life walked. Then: the class and every person in the save, each name held to `NEAR`; each part (`PROJECTS`) with who
  * it's written for, against every classmate's given and family name, the same or one short for the other, and how many
- * of 100 other lives' classes have a classmate with a part's name; every notice
- * naming anything `NEAR` matches, his own told from the rest; every notice from the last term's first day whose title
- * names a classmate's first name; What Needs You's unread list in its own order at `follow-up.json`, an hour after his
- * first notice, and at `audition.json`, the morning of the first audition; every role the nine saves hold and every
- * notice, by the parts written for an actor; and, given WALKDIR (the walk's folder), every line of every surface the walk
- * read that names him, his agency, anything `NEAR` matches or a part written for an actor (a classmate's full name taken
- * out first, so Theo Sullivan isn't counted as the part Theo).
+ * of 100 other lives' classes have a classmate with a part's name; every notice naming anything `NEAR` matches, his own
+ * told from the rest; every notice from the last term's first day whose title names a classmate's first name; What
+ * Needs You's unread list in its own order at `follow-up.json`, an hour after his first notice, and at `audition.json`,
+ * the morning of the first audition; every role the nine saves hold and every notice, by the parts written for an
+ * actor; every commitment in person she went to, with its window, any two that meet or fall on one day, and every
+ * notice of one missed for another; and, given WALKDIR (the walk's folder), every line of every surface the walk read
+ * that names him, his agency, anything `NEAR` matches or a part written for an actor (a classmate's full name taken out
+ * first, as Theo Sullivan had to be while the part was Theo).
  */
 import { mkdtempSync, readFileSync, readdirSync, existsSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Simulation } from '../../../../src/engine/core/simulation';
-import { formatDateTime, instantFromZoned, MS_DAY } from '../../../../src/engine/core/time';
+import { formatDateTime, instantFromZoned, MS_DAY, MS_MINUTE } from '../../../../src/engine/core/time';
+import { WORK, tripMinutes } from '../../../../src/engine/systems/projobs';
+import { AGENT_TIMES, TRAVEL_MINUTES } from '../../../../src/engine/systems/proagent';
 import { unreadNotifications } from '../../../../src/engine/world/world';
 import { AGENTS, agencyOf } from '../../../../src/engine/content/agents';
 import { createSave } from '../../../../src/engine';
@@ -180,6 +185,48 @@ const partRe = (part: string) => new RegExp(`\\b${part}\\b`);
 const actorNotices = heard.filter((n) => n.category === 'career' && actorParts.some((part) => partRe(part).test(`${n.title} ${n.body}`)));
 say(`The career's notices naming a part written for an actor: ${actorNotices.length ? '' : 'none'}`);
 for (const n of actorNotices) say(`  ${formatDateTime(n.at, zone)} ${n.title}: ${n.body.slice(0, 200)}`);
+
+// The commitments in person she went to: every round in person judged and every meeting kept, from the nine saves (an
+// opportunity as the last save that holds it has it), each with its trip each way from where she lived, as the game
+// reckons it (`tripMinutes`, `TRAVEL_MINUTES`). Two whose windows meet, or two on one day, would be two places at once.
+const latest = new Map<string, { o: { projectId: string; rounds?: { round: string; form: string; status: string; at: number }[] }; loc: string }>();
+const kept = new Map<string, { at: number; where: string; loc: string }>();
+for (const n of names9) {
+  const u = JSON.parse(readFileSync(`${PLAYED}/${n}.json`, 'utf8'));
+  const me = u.people[u.playerId];
+  for (const o of me.pro?.opportunities ?? []) latest.set(o.id, { o, loc: me.currentLocationId });
+  for (const rel of Object.values(me.pro?.relations ?? {}) as { meeting?: { id: string; at: number; where: string; status: string } }[]) {
+    if (rel.meeting?.status === 'kept') kept.set(rel.meeting.id, { at: rel.meeting.at, where: rel.meeting.where, loc: me.currentLocationId });
+  }
+}
+const gone: { what: string; at: number; from: number; to: number }[] = [];
+for (const { o, loc } of latest.values()) {
+  const t = forOf.get(o.projectId)!;
+  for (const r of o.rounds ?? []) {
+    if (r.form !== 'in-person' || r.status !== 'done') continue;
+    const away = tripMinutes(loc, t.place.cityId) * MS_MINUTE;
+    gone.push({ what: `the ${r.round} for ${t.role.part} in ${t.place.city}`, at: r.at, from: r.at - away, to: r.at + WORK.auditionMinutes * MS_MINUTE + away });
+  }
+}
+for (const m of kept.values()) {
+  const away = (m.where === 'office' ? TRAVEL_MINUTES[m.loc] ?? 0 : 0) * MS_MINUTE;
+  gone.push({ what: 'the meeting with his office', at: m.at, from: m.at - away, to: m.at + AGENT_TIMES.meetingMinutes * MS_MINUTE + away });
+}
+gone.sort((a, b) => a.at - b.at);
+say('');
+say(`Commitments in person she went to, judged or kept, from the nine saves: ${gone.length}`);
+for (const g of gone) say(`  ${formatDateTime(g.at, zone)} ${g.what}: away from ${formatDateTime(g.from, zone)} to ${formatDateTime(g.to, zone)}`);
+const day = (t: number) => formatDateTime(t, zone).split(' at ')[0];
+const twice: string[] = [];
+for (let i = 0; i < gone.length; i += 1) for (let j = i + 1; j < gone.length; j += 1) {
+  const a = gone[i]!, b = gone[j]!;
+  if ((a.from < b.to && b.from < a.to) || day(a.at) === day(b.at)) twice.push(`  ${a.what} (${formatDateTime(a.at, zone)}) and ${b.what} (${formatDateTime(b.at, zone)})`);
+}
+say(`Two of them whose times meet, or on one day: ${twice.length ? '' : 'none'}`);
+for (const x of twice) say(x);
+const where = heard.filter((n) => /^You were at /.test(n.body));
+say(`Notices of a commitment missed for another one gone to, saying where she was: ${where.length ? '' : 'none'}`);
+for (const n of where) say(`  ${formatDateTime(n.at, zone)} ${n.title}: ${n.body}`);
 
 if (WALKDIR) {
   say('');

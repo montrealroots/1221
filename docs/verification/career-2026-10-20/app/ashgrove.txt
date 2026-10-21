@@ -1,4 +1,4 @@
-The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk2-saves):
+The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk3-saves):
   last-term.json: the same to the byte
   after-new-york.json: the same to the byte
   follow-up.json: the same to the byte
@@ -15,13 +15,12 @@ The class (15): Caleb Brooks, Owen Walsh, Aaliyah Osei, Julian Kowalski, Hannah 
 Former classes' classmates: none
 People in the save (1): Ada Cole (the player)
 
-The parts (11): Nell (actress), Callum (actor), Tobias Marsh (actor), Hester Vane (actress), Desk Clerk (either), Wren (actress), Ferris (actor), Jess (either), Theo (actor), Ivy (actress), Sam (either)
+The parts (11): Nell (actress), Callum (actor), Tobias Marsh (actor), Hester Vane (actress), Desk Clerk (either), Wren (actress), Ferris (actor), Jess (either), Felix (actor), Ivy (actress), Sam (either)
 A classmate who shares a name with a part, or whose name one is short for: 
-  SHARES: classmate Theo Sullivan and the part Theo, written for an actor
   SHORT FOR: classmate Samuel Patel and the part Sam, written for either
-Of the 100 classes of app-walk-0 to app-walk-99, how many have a classmate with a part's name in theirs: Theo, 64
+Of the 100 classes of app-walk-0 to app-walk-99, how many have a classmate with a part's name in theirs: none
 
-Notices said from the first day to October 3, 2029 at 9:00 AM: 957; naming him or his agency: 26.
+Notices said from the first day to October 11, 2029 at 9:00 AM: 957; naming him or his agency: 27.
 His first: May 11, 2029 at 10:00 AM, "The School’s Follow-Up After The Showcase"
 
 Every notice naming anything NEAR matches that is not his, in the order it came, days from his first notice:
@@ -40,14 +39,15 @@ How each of his notices names him in its title:
   2 x An Audition For Nell
   2 x A Self-Tape For Wren
   2 x Not Cast As Wren
+  A Callback For Nell
   2 x Not Cast As Nell
   Submitted For Jess
   A Self-Tape For Jess
+  Not Cast As Jess
   Submitted For Hester Vane
   Submitted For Desk Clerk
   An Audition For Hester Vane
   A Self-Tape For Desk Clerk
-  A Callback For Hester Vane
   Not Cast As Hester Vane
   Pay Held For You At Halberd Talent
   Paid On From Halberd Talent
@@ -117,7 +117,7 @@ What Needs You's unread notices at audition.json (June 5, 2029 at 7:00 AM), 500 
   15. [70] February 6, 2029 at 8:00 PM The Director’s Note: Measure For Measure
   397. [50] May 25, 2029 at 11:00 AM You Met Thomas Ashgrove’s Office  <- HIS
 
-The parts written for an actor: Callum, Tobias Marsh, Ferris, Theo. The roles the nine saves hold, 56 in all, by part:
+The parts written for an actor: Callum, Tobias Marsh, Ferris, Felix. The roles the nine saves hold, 56 in all, by part:
   1 x Desk Clerk, The Calloway Files (written for either)
   11 x Hester Vane, The Winter Ledger (written for actress)
   13 x Ivy, Paper Moons (written for actress)
@@ -128,10 +128,22 @@ The parts written for an actor: Callum, Tobias Marsh, Ferris, Theo. The roles th
 Roles written for an actor among them: none
 The career's notices naming a part written for an actor: none
 
+Commitments in person she went to, judged or kept, from the nine saves: 6
+  May 25, 2029 at 11:00 AM the meeting with his office: away from May 25, 2029 at 9:00 AM to May 25, 2029 at 2:00 PM
+  June 5, 2029 at 11:00 AM the audition for Hester Vane in Hudson: away from June 5, 2029 at 9:00 AM to June 5, 2029 at 1:30 PM
+  June 18, 2029 at 11:00 AM the audition for Nell in New York: away from June 18, 2029 at 9:00 AM to June 18, 2029 at 1:30 PM
+  June 25, 2029 at 2:00 PM the callback for Nell in New York: away from June 25, 2029 at 12:00 PM to June 25, 2029 at 4:30 PM
+  August 27, 2029 at 11:00 AM the audition for Nell in New York: away from August 27, 2029 at 9:00 AM to August 27, 2029 at 1:30 PM
+  September 3, 2029 at 11:00 AM the audition for Hester Vane in Hudson: away from September 3, 2029 at 9:00 AM to September 3, 2029 at 1:30 PM
+Two of them whose times meet, or on one day: none
+Notices of a commitment missed for another one gone to, saying where she was: 
+  June 5, 2029 at 11:00 AM You Missed The Audition For Ivy: You were at the audition for Hester Vane in Hudson, so you missed the audition for Ivy on June 5, 2029 at 11:00 AM, and the film’s director moved on without you.
+  August 27, 2029 at 11:00 AM You Missed The Audition For Ivy: You were at the audition for Nell in New York, so you missed the audition for Ivy on August 27, 2029 at 11:00 AM, and the film’s director moved on without you.
+
 The walk's surfaces (docs/verification/career-2026-10-20/app/walk-fictional): every line naming Thomas Ashgrove, Halberd Talent or anything NEAR matches.
-At 1440: 55 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
+At 1440: 52 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
   none
 At 1440, lines naming a part written for an actor, a classmate's full name taken out first: none
-At 390: 55 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
+At 390: 52 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
   none
 At 390, lines naming a part written for an actor, a classmate's full name taken out first: none

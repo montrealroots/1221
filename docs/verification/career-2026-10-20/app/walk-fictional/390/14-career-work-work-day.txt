@@ -15,26 +15,6 @@ Opportunities
 Work
 Your Engagements
 How This Works
-JESS, STATIC ON ROUTE 9
-Who
-Dead Air Films, SAG-AFTRA Ultra Low Budget. Fictional, as every project in the game is.
-Where
-A motel upstate, New York.
-Status
-Booked
-Dates
-September 17, 2029 to September 20, 2029, four days of work.
-On Your Calendar
-Static On Route 9: Shoot Day 1, September 17, 2029 at 7:00 AM
-Static On Route 9: Shoot Day 2, September 18, 2029 at 7:00 AM
-Static On Route 9: Shoot Day 3, September 19, 2029 at 7:00 AM
-Static On Route 9: Shoot Day 4, September 20, 2029 at 7:00 AM
-Permission To Work
-Read August 22, 2029: You’re a US citizen, so you can work for any employer in the US.
-Pay
-The week of September 17, 2029: $1,232.00 promised by Dead Air Films, due September 27, 2029. It isn’t paid until then, so it isn’t in your accounts yet.
-Commission expected: $112.00. What’s paid over scale ($1,120.00), so you keep scale.
-What Happened
 DESK CLERK, THE CALLOWAY FILES
 Who
 Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.
@@ -74,5 +54,5 @@ Not now: You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role:
 
 Sources And Estimates
 
------ 24 controls; Tab reached 18 of the 18 it can; 1 grayed
+----- 23 controls; Tab reached 17 of the 17 it can; 1 grayed
 Nothing found.
