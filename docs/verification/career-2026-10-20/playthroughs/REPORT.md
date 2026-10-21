@@ -22,8 +22,9 @@ outside the game.
 ## The Record
 
 - `transcripts/`: every notice, question, stop (with its answer) and button press, in order: `life-a-v1-12.txt`,
-  `life-b-v1-5.txt`, `v16-graduate.txt`, `v16-mid-term.txt`. `play.ts lives` wrote them on the worker's head, and they
-  were unchanged when written again.
+  `life-b-v1-5.txt`, `v16-graduate.txt`, `v16-mid-term.txt`, as `play.ts lives` wrote them on `a483247d`, the working
+  branch with the defects below settled (Played Again On The Settled Branch, below). `transcripts/at-0099d518/` holds the
+  four as the worker's head wrote them, unchanged when written again there, which the defects below cite.
 - `seeds.txt`: seeds v1-0 to v1-39 for both lives, where each went and why.
 - `play.ts`: plays the four lives again; its `seeds-a` and `seeds-b` modes are the searches.
 - `mutations.txt`: 24 mutations, all killed.
@@ -154,13 +155,33 @@ mutations are I9 to I15 in `../integration/mutations.txt`):
 | Defect | Evidence | Area | What Became Of It |
 |---|---|---|---|
 | One missed work day under an agreement counts twice against reliability, once as material not sent | `projobs.ts:1102, 1104` note it on the engagement and the relation; `proagent.ts:365–366` count both | agent, work | Fixed: a request let pass is its own kind, `request-missed`, and reliability counts it, missed auditions he set up and job problems once each (`tests/pro-agent.test.ts`, its GUARD and a twin) |
-| A role she has already played is posted to her again ten weeks later and booked again (two Desk Clerk credits) | `life-a-v1-12.txt`, lines 300–461 and 466–575 | work | Fixed: `postingsAt` skips a project with an engagement not canceled or a credit for the part (`tests/pro-work.test.ts`, its GUARD) |
+| A role she has already played is posted to her again ten weeks later and booked again (two Desk Clerk credits) | `at-0099d518/life-a-v1-12.txt`, lines 300–461 and 466–575 | work | Fixed: `postingsAt` skips a project with an engagement not canceled or a credit for the part (`tests/pro-work.test.ts`, its GUARD) |
 | Low Budget, Ultra Low Budget and LORT minimums stay at their 2026–27 figures in 2029 | `minimumOn` returns `rate.amount` for every rate but SAG-AFTRA's day rate | pay | Fixed for Low Budget and Ultra Low Budget, priced at 65% and 20% of the year's day performer minimum as their rate sheets set them (S33, S32); LORT, the Off-Broadway estimate and the non-union rate stay at the figure on file, said as an assumption at `minimumOn`, since no later LORT minimum was read (`tests/pro-core.test.ts`) |
 | An understudy's School credit reads "went on 1 time" | `pro.ts:656` | core | Fixed: "went on once", "twice", "three times" (`tests/pro-core.test.ts`) |
 | The profile's "School Journey" panel keeps that title for a graduate in the career | `ProfileWorkspace.tsx:546` | profile | Kept: the panel is the record of the School years, its parts and its half-years' work, which a graduate still has; the career's record is the Career workspace's Profile tab |
 
 Not a career defect: the attentive player never answers the bank's dormancy question, so each life's untouched Chase
 Savings went to the state's unclaimed-property office in September 2029 (`life-a-v1-12.txt`, line 465).
+
+## Played Again On The Settled Branch
+
+The four lives were played again on `a483247d` (`play.ts lives`), after the defects above were settled, and the
+transcripts in `transcripts/` replaced; the earlier four are in `transcripts/at-0099d518/`.
+- **Life A** changed where the fix reaches. Desk Clerk in The Calloway Files, played in July, wasn't posted to her again
+  in September, so the second submission, self-tape, booking, shoot days and pay (October 8 to 16) are gone, and she
+  holds one Desk Clerk credit. With that round gone the draws after it fell differently: Ostrander Vale didn't call her
+  back for Tobias Marsh, where it had called her back and then cast another actor. Everything before September 3 is as
+  it was, the July booking and its pay to the cent among it, but for words.
+- **Life B and the mid-term save** changed only in words the app part's merge had changed after the worker's head (the
+  New York showcase's second day "played your two scenes again", his titles naming whose office, Equity's down payment
+  as "part 1 of 3").
+- **The graduate's save** is the same, line for line.
+- `tests/journey-career.test.ts` and `tests/journey-career-older.test.ts` passed on `a483247d`.
+
+**Found again, outside the career, for the owner:** each life's Chase Freedom Unlimited limit rose 20% every six months
+(life A: $162,280 in April 2029, $194,736 in October), the review's raise having no ceiling (`credit.ts`, the six-month
+review). It belongs to the banking area, which brief 18 holds paused, so it's recorded here and in the handoff, not
+changed.
 
 ## Checks (On The Worker's Clone)
 

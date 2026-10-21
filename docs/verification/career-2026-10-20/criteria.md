@@ -32,7 +32,7 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| A1 | A student completing the degree normally goes from the final term, the showcase and Commencement into a career that carries every record below forward | Open: the School's side verified (`showcase/REPORT.md`); the career's side waits on the follow-up and the work, and V1 plays it whole |
+| A1 | A student completing the degree normally goes from the final term, the showcase and Commencement into a career that carries every record below forward | Fixed And Verified: the School's side in `showcase/REPORT.md`, the career's in `playthroughs/REPORT.md` (life A, seed v1-12, from the last term's first day through the showcase, the follow-up, Commencement, the meeting, the agreement and a paid job; `tests/journey-career.test.ts`). Until 2026-10-21 it read Open: the career's side waited on the follow-up and the work |
 | A2 | Seeking representation while enrolled is allowed (Yale publishes no rule against it); it never withdraws the student, and signing is neither employment nor permission to work | Fixed And Verified (`agent/REPORT.md`) |
 | A3 | Professional work while enrolled follows the Bulletin: in session it needs good standing and a request the chair recommends and the dean decides, rarely given, and refused where it takes Yale Rep or class time; unapproved work brings the academic step the Bulletin names; summer work is open unless the School holds the student for recess work; an F-1 student needs authorization the game can't give in session (CPT isn't offered for Acting) | Fixed And Verified (`work/REPORT.md`) |
 | A4 | A student who leaves before the degree keeps their history, says truthfully what training they had, and can pursue the same career routes the record supports | Fixed And Verified (`work/REPORT.md`) |
@@ -42,7 +42,7 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| L1 | Identity, attributes, techniques, genres, standing, coursework, productions and the parts played, classmates, money, documents, health, readiness and the calendar carry into the career unchanged; nothing resets | Open: the core's share verified (`core/REPORT.md`); the rest is held by V1 and V16 |
+| L1 | Identity, attributes, techniques, genres, standing, coursework, productions and the parts played, classmates, money, documents, health, readiness and the calendar carry into the career unchanged; nothing resets | Fixed And Verified: the core's share in `core/REPORT.md`; the rest by V1 and V16 in `playthroughs/REPORT.md`, each life's record compared before and after the step into the career (`tests/journey-career.test.ts`, `tests/journey-career-older.test.ts`). Until 2026-10-21 it read Open, held by V1 and V16 |
 | L2 | School credits, practice, self-tapes, professional credits and unreleased work are kept apart; a practice brief is never a professional credit | Fixed And Verified for the structures (`core/REPORT.md`); held again by the work's credits |
 | L3 | An existing graduate's save opens with a career built from its record, once, and plays on | Fixed And Verified (`core/REPORT.md`) |
 
@@ -86,13 +86,13 @@ Every other brief 18 item stays paused (its `criteria.md`).
 | J3 | The agent finds or receives suitable opportunities, submits where appropriate, conveys outcomes and handles offers, within his role | Fixed And Verified against a TEST SETUP agreement (`work/REPORT.md`); V1 plays it on an agreement reached through his office |
 | J4 | The unsigned path: opportunities that take actors without an agent can be pursued; representation changes access, support and obligations, not every action | Fixed And Verified (`work/REPORT.md`) |
 | J5 | Casting decided apart from quality: the performance's band, the role's fit, availability and eligibility, and the competition; high skill raises the chance, never guarantees it; a developing actor can still book suitable work | Fixed And Verified (`work/REPORT.md`) |
-| J6 | The calendar, the school, attributes and genres, health and readiness, banking, papers, classmates and the profile each read or written by the career where it touches them, with drill-downs that say how | Open |
+| J6 | The calendar, the school, attributes and genres, health and readiness, banking, papers, classmates and the profile each read or written by the career where it touches them, with drill-downs that say how | Fixed And Verified (`playthroughs/REPORT.md`: five gaps fixed with tests, among them a meeting at his office taking a student from class; the five defects it recorded were settled on the working branch at `a483247d`, four fixed and one kept with its reason) |
 
 ### Words, Help And Foundation (Sections 15 And 16)
 
 | ID | Closed when | Status |
 |---|---|---|
-| T1 | New text follows `docs/STYLE.md`, `docs/GLOSSARY.md` and Title Case; marked in the inventory and the coverage matrix; the agent's lines one consistent, fictional voice, each from a real event; no repeated congratulations, generic loops or invented observations | Open |
+| T1 | New text follows `docs/STYLE.md`, `docs/GLOSSARY.md` and Title Case; marked in the inventory and the coverage matrix; the agent's lines one consistent, fictional voice, each from a real event; no repeated congratulations, generic loops or invented observations | Fixed And Verified (`app/REPORT.md`, "T1": read on every new surface and in a played life's notices in order, 17 things fixed at their source and marked in both passes, five left with why; the gate's text-inventory, guide-quotes and surfaces checks pass, engine-speak unchanged at 316) |
 | T2 | A tutorial chapter or How This Works entry for each new feature: what to do, why it matters, what it affects | Fixed And Verified (a chapter or How This Works entry for each feature: Your Career, Representation, Finding Work, the Actor Showcase, and the pay's and unions' entries) |
 | T3 | Reusable structures for agents, agreements, opportunities, auditions, engagements, payments and credits; a second agent addable as data; nothing shown as playable that isn't | Fixed And Verified (`core/REPORT.md`; every part built on the core's types, a second agent addable as data, tested) |
 
@@ -102,7 +102,7 @@ Each is a played run with its notices and records read, and a test:
 
 | ID | Case | Status |
 |---|---|---|
-| V1 | A graduating student carrying their history into the career | Open |
+| V1 | A graduating student carrying their history into the career | Fixed And Verified (`playthroughs/REPORT.md`, life A, seed v1-12, and life B; `tests/journey-career.test.ts`) |
 | V2 | An enrolled student pursuing a permitted opportunity | Fixed And Verified (`work/REPORT.md`) |
 | V3 | A player leaving without a degree | Fixed And Verified (`work/REPORT.md`) |
 | V4 | Early graduation unavailable, said so, per the Bulletin | Fixed And Verified (`showcase/REPORT.md`) |
@@ -117,8 +117,8 @@ Each is a played run with its notices and records read, and a test:
 | V13 | A work-authorization restriction | Fixed And Verified (`work/REPORT.md` and `pay/REPORT.md`: an F-1 student refused at acceptance in words; OPT's end refusing later work) |
 | V14 | Commission accounting | Fixed And Verified (`work/REPORT.md`'s J3: $102.80 commission on SAG-AFTRA work over scale, to the cent; `pay/REPORT.md`: Equity's tiers, unrepresented and continuing commission) |
 | V15 | Save and reload at each transition | Fixed And Verified (each part's transitions saved and loaded: `showcase/`, `agent/`, `work/`, `pay/REPORT.md`) |
-| V16 | An existing graduate's save migrated | Open |
-| V17 | Desktop, mobile, keyboard, labels and the tutorials' accuracy on the built app | Open |
+| V16 | An existing graduate's save migrated | Fixed And Verified (`playthroughs/REPORT.md`: J01's save from `8283f80c` played to its first paid job, and the same life's mid-term save played to its degree; `tests/journey-career-older.test.ts`) |
+| V17 | Desktop, mobile, keyboard, labels and the tutorials' accuracy on the built app | Blocked on the owner: the automated half holds on all 52 surfaces at 1440 and 390 from the keyboard (`app/REPORT.md`); the person's look at desktop and mobile it also names is the owner's to give, and an automated walk isn't one |
 | V18 | The full gate on the final candidate | Open |
 
 ## Kept Out

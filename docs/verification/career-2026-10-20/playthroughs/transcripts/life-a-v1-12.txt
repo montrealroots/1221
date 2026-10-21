@@ -254,23 +254,23 @@ April 28, 2029 at 2:00 PM | PRESS | Cut A Reel (one piece) | done
 April 30, 2029 at 1:00 PM | STOP | The Actor Showcase In New York | Go
 April 30, 2029 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. The Teacher in Office Hours: Working, 62 of 100. Priya in Bed Fourteen: Working, 61 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
 May 1, 2029 at 9:00 AM | STOP | The Actor Showcase In New York | Go
-May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. The Teacher in Office Hours: Working, 61 of 100. Priya in Bed Fourteen: Working, 61 of 100. You play them again in Los Angeles on May 8.
+May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. The Teacher in Office Hours: Working, 61 of 100. Priya in Bed Fourteen: Working, 61 of 100. You play them again in Los Angeles on May 8.
 May 8, 2029 at 9:00 AM | STOP | The Actor Showcase In Los Angeles | Go
 May 8, 2029 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. The Teacher in Office Hours: Working, 61 of 100. Priya in Bed Fourteen: Working, 61 of 100. You passed Actor Showcase.
 May 11, 2029 at 10:00 AM | NOTICE | The School’s Follow-Up After The Showcase | The School passed your showcase on to the agencies it follows up with, and Jordan Parente’s office at Stewart Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by June 10, 2029, and his office sets a time. Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: he hasn’t seen your work, and he isn’t involved with the game. Stewart Talent’s New York legit department doesn’t accept unsolicited submissions, so please don’t contact the agency about the game. In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there. Fictional: his words and decisions here are invented.
 May 11, 2029 at 10:00 AM | PRESS | Check Your Materials | done
 May 11, 2029 at 10:00 AM | PRESS | Send Your Materials | done
-May 18, 2029 at 10:00 AM | NOTICE | A Meeting Is Set | Jordan Parente’s office at Stewart Talent has set the meeting it asked the School to pass on: Friday, May 25, 2029 at 11:00 AM, at Stewart Talent’s New York office. It’s on your calendar with two hours to get there from New Haven, a time the game assumes. If you can’t make it, Ask To Move on the Representation tab moves it a week, once. Fictional: his words and decisions here are invented.
+May 18, 2029 at 10:00 AM | NOTICE | A Meeting Is Set At Stewart Talent | Jordan Parente’s office at Stewart Talent has set the meeting it asked the School to pass on: Friday, May 25, 2029 at 11:00 AM, at Stewart Talent’s New York office. It’s on your calendar with two hours to get there from New Haven, a time the game assumes. If you can’t make it, Ask To Move on the Representation tab moves it a week, once. Fictional: his words and decisions here are invented.
 May 21, 2029 at 10:00 AM | STOP | Commencement | Go
 May 21, 2029 at 10:00 AM | NOTICE | Your Equity Initiation Fee | You’re a member of Actors’ Equity Association from your degree. Its initiation fee is $1,800.00, paid within three years: $600.00 down is due now, then $600.00 on May 21, 2030 and $600.00 on May 21, 2031. Basic dues are $88.00 each May and November, from November 1, 2029.
-May 21, 2029 at 10:00 AM | NOTICE | Actors’ Equity Association: $600.00 Paid | Initiation fee, $600.00 down of $1,800.00: $600.00 was taken from your bank.
+May 21, 2029 at 10:00 AM | NOTICE | Actors’ Equity Association: $600.00 Paid | Initiation fee, part 1 of 3, the down payment: $600.00 was taken from your bank.
 May 21, 2029 at 10:00 AM | NOTICE | Your MFA Is Conferred | You graduate from the David Geffen School of Drama at Yale University with an MFA in Acting, class of 2029.
 May 21, 2029 at 1:00 PM | PRESS | Update Your Résumé | done
 May 25, 2029 at 11:00 AM | STOP | Meeting At Stewart Talent | Ask To Move
 June 1, 2029 at 12:00 AM | WHAT NEEDS YOU | Chase Is About To Hand Chase Savings To The State | $413,157 in Chase Savings hasn’t been used for nearly three years. Unless you tell the bank to keep the account by August 24, 2029, it goes to the state’s unclaimed-property office as unclaimed money. | Keep The Account
 June 1, 2029 at 11:00 AM | STOP | Meeting At Stewart Talent | Go
-June 1, 2029 at 11:00 AM | NOTICE | You Met His Office | You met Jordan Parente’s office at Stewart Talent on June 1, 2029. It tells you its decision by June 6, 2029. Fictional: his words and decisions here are invented.
-June 6, 2029 at 10:00 AM | NOTICE | He Offered You Representation | Jordan Parente has offered to represent you at Stewart Talent: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until June 20, 2029. Fictional: his words and decisions here are invented.
+June 1, 2029 at 11:00 AM | NOTICE | You Met Jordan Parente’s Office | You met Jordan Parente’s office at Stewart Talent on June 1, 2029. It tells you its decision by June 6, 2029. Fictional: his words and decisions here are invented.
+June 6, 2029 at 10:00 AM | NOTICE | Jordan Parente Offered You Representation | Jordan Parente has offered to represent you at Stewart Talent: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until June 20, 2029. Fictional: his words and decisions here are invented.
 June 6, 2029 at 10:00 AM | PRESS | Accept The Agreement | done
 June 11, 2029 at 9:00 AM | NOTICE | Submitted For Nell | Jordan Parente submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from May 21, 2029. Pennick Casting answers on Wednesday, June 13, 2029. Fictional: his words and decisions here are invented.
 June 13, 2029 at 10:00 AM | NOTICE | An Audition For Nell | Jordan Parente passed this on: Pennick Casting wants to see you for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, June 18, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go. Fictional: his words and decisions here are invented.
@@ -463,28 +463,6 @@ August 8, 2029 at 5:00 PM | NOTICE | Not Cast As Jess | Jordan Parente passed th
 August 13, 2029 at 9:00 AM | NOTICE | The Emergency Room | You went to the emergency room at Yale New Haven Hospital, York Street Campus Emergency Department. There’s nothing to pay.
 August 15, 2029 at 11:00 AM | PRESS | Update Your Résumé | done
 September 1, 2029 at 12:00 AM | NOTICE | Unclaimed Money | $413,168 left unused in Chase Savings for three years went to the state’s unclaimed-property office. It can be claimed back from that office.
-September 3, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Jordan Parente submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from August 15, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, September 5, 2029. Fictional: his words and decisions here are invented.
-September 5, 2029 at 10:00 AM | NOTICE | A Self-Tape For Desk Clerk | Jordan Parente passed this on: Kettering Casting asks for a self-tape for Desk Clerk in The Calloway Files, due Sunday, September 9, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab. Fictional: his words and decisions here are invented.
-September 5, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for calloway-files | done
-September 5, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for calloway-files | done
-September 5, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for calloway-files | done
-September 5, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for calloway-files | done
-September 5, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for calloway-files | done
-September 5, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 5, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 6, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-September 6, 2029 at 10:00 AM | PRESS | Tape It for calloway-files | done
 September 10, 2029 at 9:00 AM | NOTICE | Submitted For Tobias Marsh | Jordan Parente submitted you for Tobias Marsh in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from August 15, 2029. Ostrander Vale Casting answers on Wednesday, September 12, 2029. Fictional: his words and decisions here are invented.
 September 10, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Jordan Parente submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from August 15, 2029 and your reel from April 28, 2029. Quillon Casting answers on Wednesday, September 12, 2029. Fictional: his words and decisions here are invented.
 September 12, 2029 at 10:00 AM | NOTICE | An Audition For Tobias Marsh | Jordan Parente passed this on: Ostrander Vale Casting wants to see you for Tobias Marsh in The Winter Ledger: the company’s main stage in Hudson, Monday, September 17, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go. Fictional: his words and decisions here are invented.
@@ -500,7 +478,6 @@ September 12, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for winter-
 September 12, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
 September 12, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
 September 12, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-September 12, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Desk Clerk | Jordan Parente passed on an offer. Kettering Casting offers you Desk Clerk in The Calloway Files, a fictional network television drama. It pays $1,542.20 a day for two days, above the SAG-AFTRA Day Performer minimum of $1,402.00. The work is from October 8, 2029 to October 9, 2029, in New York. The offer stands until September 15, 2029 at 5:00 PM. Fictional: his words and decisions here are invented. | Accept The Offer, Decline The Offer
 September 12, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
 September 12, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
 September 12, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
@@ -529,21 +506,10 @@ September 13, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for gull-se
 September 13, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 September 14, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
 September 14, 2029 at 10:00 AM | PRESS | Tape It for gull-season | done
-September 14, 2029 at 11:00 AM | PRESS | Accept The Offer for calloway-files | done
-September 14, 2029 at 11:00 AM | PRESS | Prepare the part (read) for calloway-files | done
-September 14, 2029 at 12:00 PM | PRESS | Prepare the part (lines) for calloway-files | done
-September 14, 2029 at 1:00 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
-September 14, 2029 at 2:30 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
-September 14, 2029 at 4:00 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
-September 14, 2029 at 5:30 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
-September 14, 2029 at 7:00 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
-September 14, 2029 at 8:30 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
-September 15, 2029 at 9:00 AM | PRESS | Prepare the part (rehearse) for calloway-files | done
 September 17, 2029 at 11:00 AM | STOP | Audition: Tobias Marsh, The Winter Ledger | Go
 September 17, 2029 at 5:00 PM | NOTICE | Not Cast As Wren | Jordan Parente passed this on: Quillon Casting didn’t call you back for Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field. Fictional: his words and decisions here are invented.
-September 18, 2029 at 5:00 PM | NOTICE | A Callback For Tobias Marsh | Jordan Parente passed this on: Ostrander Vale Casting wants to see you again for Tobias Marsh in The Winter Ledger: the company’s main stage in Hudson, Monday, September 24, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go. Fictional: his words and decisions here are invented.
+September 18, 2029 at 5:00 PM | NOTICE | Not Cast As Tobias Marsh | Jordan Parente passed this on: Ostrander Vale Casting didn’t call you back for Tobias Marsh. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field. Fictional: his words and decisions here are invented.
 September 24, 2029 at 9:00 AM | NOTICE | Submitted For Nell | Jordan Parente submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from August 15, 2029. Pennick Casting answers on Wednesday, September 26, 2029. Fictional: his words and decisions here are invented.
-September 24, 2029 at 2:00 PM | STOP | Callback: Tobias Marsh, The Winter Ledger | Go
 September 26, 2029 at 10:00 AM | NOTICE | An Audition For Nell | Jordan Parente passed this on: Pennick Casting wants to see you for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, October 1, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go. Fictional: his words and decisions here are invented.
 September 26, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for calder-street | done
 September 26, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for calder-street | done
@@ -563,50 +529,32 @@ September 26, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for calder-
 September 26, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 September 26, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 September 27, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for calder-street | done
-September 27, 2029 at 5:00 PM | NOTICE | Not Cast As Tobias Marsh | Jordan Parente passed this on: Ostrander Vale Casting cast another actor as Tobias Marsh. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field. Fictional: his words and decisions here are invented.
 October 1, 2029 at 11:00 AM | STOP | Audition: Nell, A House On Calder Street | Go
 October 2, 2029 at 5:00 PM | NOTICE | Not Cast As Nell | Jordan Parente passed this on: Pennick Casting didn’t call you back for Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field. Fictional: his words and decisions here are invented.
-October 8, 2029 at 7:00 AM | STOP | The Calloway Files: Shoot Day 1 | Go
-October 9, 2029 at 7:00 AM | STOP | The Calloway Files: Shoot Day 2 | Go
-October 9, 2029 at 7:00 AM | NOTICE | You Wrapped The Calloway Files | The Calloway Files wrapped, and Desk Clerk is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about four months on, estimated. Update your résumé on the Portfolio tab to add it.
-October 9, 2029 at 6:00 PM | PRESS | Update Your Résumé | done
-October 11, 2029 at 12:00 PM | NOTICE | Pay Held For You At Stewart Talent | Bright Harbor Television paid $3,084.40 for The Calloway Files, the week of October 8, 2029, into Stewart Talent’s client trust account, less $235.97 withheld for tax and $48.58 in SAG-AFTRA’s working dues. Stewart Talent passes it on to you by October 16, 2029, less $280.40 commission.
-October 15, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Jordan Parente submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from October 9, 2029 and your reel from April 28, 2029. Brisbane Hall Casting answers on Wednesday, October 17, 2029. Fictional: his words and decisions here are invented.
-October 16, 2029 at 12:00 PM | NOTICE | Paid On From Stewart Talent | Stewart Talent passed on your pay for The Calloway Files, the week of October 8, 2029: $2,799.85 held for you, less $280.40 commission, so $2,519.45 went into your Chase Total Checking.
+October 15, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Jordan Parente submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from August 15, 2029 and your reel from April 28, 2029. Brisbane Hall Casting answers on Wednesday, October 17, 2029. Fictional: his words and decisions here are invented.
 October 17, 2029 at 10:00 AM | NOTICE | A Self-Tape For Jess | Jordan Parente passed this on: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Sunday, October 21, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab. Fictional: his words and decisions here are invented.
-October 17, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for route-nine | done
-October 17, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for route-nine | done
-October 17, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for route-nine | done
-October 17, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
-October 17, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
-October 17, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 17, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 18, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
-October 18, 2029 at 9:45 AM | PRESS | Tape It for route-nine | done
+October 17, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for route-nine | done
+October 17, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for route-nine | done
+October 17, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for route-nine | done
+October 17, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for route-nine | done
+October 17, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for route-nine | done
+October 17, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 17, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 18, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 18, 2029 at 10:00 AM | PRESS | Tape It for route-nine | done
 October 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $194,736 now, because your credit score is 700 or more and you haven’t paid late in the past year.
-October 24, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Jess | Jordan Parente passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $282.70 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00. The work is from November 19, 2029 to November 22, 2029, in New York. The offer stands until October 27, 2029 at 5:00 PM. Fictional: his words and decisions here are invented. | Accept The Offer, Decline The Offer
-October 24, 2029 at 5:45 PM | PRESS | Accept The Offer for route-nine | done
-October 24, 2029 at 5:45 PM | PRESS | Prepare the part (read) for route-nine | done
-October 24, 2029 at 6:45 PM | PRESS | Prepare the part (read) for route-nine | done
-October 24, 2029 at 7:45 PM | PRESS | Prepare the part (read) for route-nine | done
-October 24, 2029 at 8:45 PM | PRESS | Prepare the part (lines) for route-nine | done
-October 24, 2029 at 9:45 PM | PRESS | Prepare the part (lines) for route-nine | done
-October 25, 2029 at 9:45 AM | PRESS | Prepare the part (lines) for route-nine | done
-October 25, 2029 at 10:45 AM | PRESS | Prepare the part (rehearse) for route-nine | done
-October 25, 2029 at 12:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-October 25, 2029 at 1:45 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-October 25, 2029 at 3:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+October 24, 2029 at 5:00 PM | NOTICE | Not Cast As Jess | Jordan Parente passed this on: Brisbane Hall Casting cast another actor as Jess. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field. Fictional: his words and decisions here are invented.
 November 1, 2029 at 9:00 AM | NOTICE | Actors’ Equity Association: $88.00 Paid | Basic dues, half a year: $88.00 was taken from your bank.
 November 1, 2029 at 9:00 AM | NOTICE | SAG-AFTRA: $123.07 Paid | Base dues, half a year: $123.07 was taken from your bank.
-November 1, 2029 at 9:45 AM | PRESS | End It By Agreement | done
-November 1, 2029 at 9:45 AM | NOTICE | Your Agreement Ended | Your agreement with Jordan Parente at Stewart Talent ended on November 1, 2029, by agreement. Commission stays owed on the pay still to come from contracts you made while it ran: Jess in Static On Route 9. It comes out of that pay when it’s paid. An offer he passed on while it ran that you accept within 60 days after it ended owes commission too. Fictional: his words and decisions here are invented.
+November 1, 2029 at 9:00 AM | PRESS | End It By Agreement | done
+November 1, 2029 at 9:00 AM | NOTICE | Your Agreement With Jordan Parente Ended | Your agreement with Jordan Parente at Stewart Talent ended on November 1, 2029, by agreement. No pay is still to come from contracts you made while it ran, so no commission is still owed on them. An offer he passed on while it ran that you accept within 60 days after it ended owes commission too. Fictional: his words and decisions here are invented.
