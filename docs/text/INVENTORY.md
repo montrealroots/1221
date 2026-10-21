@@ -15,21 +15,21 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1906 | 17610 | 0 | 267 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1907 | 17632 | 0 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2563 | 15110 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 197 | 779 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38792 | 594151 | 316 | 1391 | 3154 | 0 | 0 |
+| **All** | 4545 | 38793 | 594173 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 119 | 9953 | 94 | 25 | 0 | 0 |
-| career-agent | 56 | 2699 | 56 | 0 | 0 | 0 |
+| career | 119 | 9962 | 94 | 25 | 0 | 0 |
+| career-agent | 56 | 2712 | 56 | 0 | 0 | 0 |
 | career-pay | 30 | 1221 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 65 | 1977 | 65 | 0 | 0 | 0 |
@@ -3105,7 +3105,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent-answers]` | 39 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]` | 6 | 0 | Rewritten | career | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.reasons]` | 33 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]` | 37 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]` | 37 | 0 | Rewritten | career | Read again on 2026-10-21: the agreement's needs say the days employed on covered work aren't counted toward Equity's 90, as endRefusal now counts them; read in tests/guide.test.ts and against tests/journey-agent.test.ts's refusal, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]` | 47 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]` | 38 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]` | 44 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
@@ -3170,7 +3170,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/proagent.ts#supplyRefusal` | 4 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#moveRefusal` | 3 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#answerRefusal` | 2 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/proagent.ts#endRefusal` | 7 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/proagent.ts#endRefusal` | 8 | 0 | Rewritten | career-agent | Read again on 2026-10-21 when Equity's 90 days came to be extended by the days employed (the audit's fourth reading): the refusal says the days that don't count and the date they move it to; read where the player meets it in tests/journey-agent.test.ts ('Equity’s 90 days are extended by the days employed…' and the 90-day journey), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#stillOwed` | 4 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#ENDED_WORDS` | 4 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#STAGE_LABEL` | 15 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |

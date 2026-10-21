@@ -449,9 +449,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]": {
   "status": "Rewritten",
-  "hash": "9e9edce0b94e",
+  "hash": "ad9935ffe579",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing",
+  "evidence": "Read again on 2026-10-21: the agreement's needs say the days employed on covered work aren't counted toward Equity's 90, as endRefusal now counts them; read in tests/guide.test.ts and against tests/journey-agent.test.ts's refusal, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {

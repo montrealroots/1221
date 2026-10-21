@@ -38,10 +38,12 @@ an actor is employed under the contract between a job's work days as on them. Th
 hours. The clock passes a work day whole once the player goes at its stop, and doesn't stop inside one, so no command was
 ever sent inside those hours and no player could meet the refusal. It holds now from the first work day until the
 engagement is finished or canceled (`finished`). That's an assumption, said at the check: the employment begins on the
-first work day, not at the booking, which for a stage run is its first rehearsal. One thing near it isn't modelled. S29
-also extends the 90 days while the actor is employed, and the count doesn't: it runs from the last offer whatever
-employment followed (`endRefusal`). So once a long run ends, an actor may end the agreement sooner than S29 allows. That
-is recorded in the row and not fixed.
+first work day, not at the booking, which for a stage run is its first rehearsal. One thing near it wasn't modelled. S29
+also extends the 90 days while the actor is employed, and the count didn't: it ran from the last offer whatever
+employment followed (`endRefusal`). So once a long run ended, an actor could end the agreement sooner than S29 allows.
+This reading recorded it in the row; the working branch then counted the days employed (`employedDays`, after
+`a214cd8c`), held by `tests/journey-agent.test.ts` 'Equity’s 90 days are extended by the days employed…' (mutations I26
+and I27, `../integration/mutations.txt`, killed).
 
 **Anything else that reads a work day's own hours.** Nothing a player can't reach. Every other reader of a work day's
 span is read by the clock at an item's own time, which the clock does run inside the span:

@@ -10,8 +10,8 @@ none of it is in `main`, and nothing is deployed.
   (The audit's fourth reading, 2026-10-21, against `9c3e6fa5`: until it this said 548 of 658. `pro.cut_reel` is verified
   on the test written for its gap, so all 22 of brief 19's rows are verified. The two refusals the third reading recorded
   are read now, and Equity's employment check holds for the whole of a job, as S27 says, where it had read only a work
-  day's own hours. S29's extension of the 90 days while employed isn't counted, which is recorded in the row and not
-  fixed. `audit/REPORT.md`, The Fourth Reading.)
+  day's own hours. It recorded that S29's extension of the 90 days while employed wasn't counted; the working branch
+  counted it next, with its test. `audit/REPORT.md`, The Fourth Reading.)
 
   (The audit's third reading, 2026-10-21, against `c01e06f4`, once tests had been written for what the second reading
   found missing: until it this said 545 of 658. The four rows it had kept partial were verified then: `pro.ask_referral`,

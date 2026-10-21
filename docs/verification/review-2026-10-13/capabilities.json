@@ -4396,7 +4396,7 @@
   "verdict": "verified",
   "partialClass": "none",
   "gaps": [
-   "S29’s extension of the 90 days while the actor is employed isn’t counted: they run from the last offer whatever employment followed.",
+   "S29’s extension of the 90 days while the actor is employed wasn’t counted until the working branch counted it after the audit’s fourth reading (`employedDays`); its other extensions, while unavailable or incapacitated, aren’t.",
    "A pass, no answer, a meeting missed, an offer let lapse and the term’s end are played only after an introduction written by hand.",
    "No button is pressed on the rendered screen.",
    "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."

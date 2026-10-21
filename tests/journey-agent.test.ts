@@ -511,6 +511,22 @@ describe('V9 and G8: representation ends by its terms, with what it leaves owed'
     expect(cross(sim).player.pro!.agreements[0]).toEqual(agreement);
   });
 
+  it('PLAYER JOURNEY: Equity’s 90 days are extended by the days employed on covered work through him: a run after his offer moves the date by its length, said in the refusal', () => {
+    // From the audit's fourth reading (2026-10-21): the 90 days ran from his last offer whatever the employment, which S29
+    // extends. TEST SETUP: his offer on November 2 and its run, November 20 to December 20, finished, as the work loop and
+    // the opportunity record leave them.
+    const { sim, agreement } = represented('agent-ninety');
+    const t = projectById('winter-ledger')!;
+    sim.player.pro!.opportunities.push({ id: 'o-run', projectId: t.id, via: 'agent', agentId: AGENT.id, status: 'booked', postedAt: at(2026, 10, 20), submitBy: at(2026, 10, 27), offer: { at: at(2026, 11, 2), until: at(2026, 11, 9), rate: 'lort-c', per: 'week', units: 4 }, resolvedAt: at(2026, 11, 3), history: [], counts: {} });
+    sim.player.pro!.engagements.push({ id: 'e-run', opportunityId: 'o-run', projectId: t.id, role: t.role.part, status: 'finished', days: [{ from: at(2026, 11, 20, 10), to: at(2026, 11, 20, 18), label: t.project }, { from: at(2026, 12, 20, 19), to: at(2026, 12, 20, 22), label: t.project }], agreementId: agreement.id, agentId: AGENT.id, pay: [], history: [], counts: {}, finishedAt: at(2026, 12, 20, 22) });
+    tended(sim, at(2027, 1, 31, 12));
+    // November 20 to December 20 is 31 calendar days, so January 31 becomes March 3.
+    expect(run(sim, 'pro.end_agreement', { how: 'no-offer' }).error).toBe('Equity’s rule lets you end it once 90 days go by with no real offer of covered work through him. His last came on November 2, 2026, and the 31 days you were employed on covered work since don’t count toward them, so that’s from March 3, 2027.');
+    tended(sim, at(2027, 3, 3, 12));
+    sim.must({ kind: 'pro.end_agreement', payload: { how: 'no-offer' } });
+    expect(agreement).toMatchObject({ status: 'ended', endedHow: 'no-offer' });
+  });
+
   it('PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked', () => {
     const { sim, agreement } = represented('agent-ninety');
     expect(run(sim, 'pro.end_agreement', { how: 'no-offer' }).error).toBe('Equity’s rule lets you end it once 90 days go by with no real offer of covered work through him. You signed on September 30, 2026, so that’s from December 29, 2026.');

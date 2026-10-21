@@ -49,9 +49,9 @@
  },
  "src/engine/systems/proagent.ts#endRefusal": {
   "status": "Rewritten And Verified",
-  "hash": "5806c85d8e83",
+  "hash": "93388ab143d1",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Read again on 2026-10-21 when Equity's 90 days came to be extended by the days employed (the audit's fourth reading): the refusal says the days that don't count and the date they move it to; read where the player meets it in tests/journey-agent.test.ts ('Equity’s 90 days are extended by the days employed…' and the 90-day journey), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/systems/proagent.ts#FACTOR_LABEL": {
   "status": "Rewritten And Verified",

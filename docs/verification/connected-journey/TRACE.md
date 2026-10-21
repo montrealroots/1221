@@ -1182,7 +1182,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Action:** `pro.accept_agreement`, `pro.decline_agreement`, `pro.end_agreement`, at Career, Representation, The Agreement (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
 - **Preconditions:**
   - For Accept or Decline, an offer still standing.
-  - For End It: No Offer In 90 Days, 90 days with no real offer of covered work through him, and not while you’re working.
+  - For End It: No Offer In 90 Days, 90 days with no real offer of covered work through him, the days you’re employed on covered work not counted, and not while you’re working.
   - For End It: Under Ten Days’ Work, 151 days from signing, and fewer than ten days of covered work in the last 91.
 - **Costs:**
   - Time: None

@@ -680,6 +680,27 @@ export function coveredDays(person: Person, agreement: Agreement, from: Instant,
 }
 
 /**
+ * Calendar days in the window she was employed on covered work under the agreement, each engagement from its first work
+ * day to its last, days between them included: Equity's 90 days are extended by them (S29). From 2026-10-21 (the
+ * audit's fourth reading): until then the 90 days ran from the last offer whatever the employment, so once a long run
+ * ended its actor could end the agreement sooner than the rule lets them. A canceled engagement counts none, as in
+ * `coveredDays`. ASSUMPTION: S29's other extensions, while unavailable or incapacitated, aren't counted.
+ */
+function employedDays(person: Person, agreement: Agreement, from: Instant, to: Instant, zone: string): number {
+  const days = new Set<string>();
+  const key = (t: Instant) => { const p = zonedParts(t, zone); return `${p.year}-${p.month}-${p.day}`; };
+  for (const e of person.pro?.engagements ?? []) {
+    if (e.agreementId !== agreement.id || e.status === 'canceled' || !e.days.length) continue;
+    const start = Math.max(e.days[0]!.from, from);
+    const end = Math.min(e.days.at(-1)!.to, to);
+    if (start > end) continue;
+    const last = key(end);
+    for (let t = start; ; t = addDays(t, 1, zone)) { const k = key(t); days.add(k); if (k === last || t > end) break; }
+  }
+  return days.size;
+}
+
+/**
  * Whether she's employed now on covered work under the agreement, from its first work day until it's finished: Equity's
  * rule doesn't let it be ended then ("You may not terminate if you are currently employed", S27). Until 2026-10-21 this
  * read only a work day's own hours, which the clock passes whole once the player goes at its stop, so no player could
@@ -693,8 +714,9 @@ export type EndHow = Exclude<EndedHow, 'term'>;
 
 /**
  * Why the agreement can't be ended this way now, or nothing. By agreement, at any time (S2, ASSUMPTION that his office
- * agrees to a release asked for); with no bona fide offer of covered work through him in 90 days, and not while working
- * (Equity's, S29 and S27: "You may not terminate if you are currently employed"); after 151 days, with fewer than ten
+ * agrees to a release asked for); with no bona fide offer of covered work through him in 90 days, extended by the days
+ * employed on covered work (`employedDays`), and not while working (Equity's, S29 and S27: "You may not terminate if you
+ * are currently employed"); after 151 days, with fewer than ten
  * days of covered work in the last 91 (SAG-AFTRA's, S2). Equity's rule asks the offer to be for four weeks at the
  * actor's usual salary: the agreement's own words say a real offer of covered work, and the game counts any.
  */
@@ -707,8 +729,9 @@ export function endRefusal(sim: Simulation, person: Person, agent: Agent, how: E
     if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';
     const last = lastOffer(person, a, sim.now);
     const since = last ?? a.signedAt!;
-    const from = addDays(since, AGREEMENT.noOfferDays, zone);
-    if (sim.now < from) return `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him. ${last ? `His last came on ${formatDate(last, z)}` : `You signed on ${formatDate(a.signedAt!, z)}`}, so that’s from ${formatDate(from, z)}.`;
+    const employed = employedDays(person, a, since, sim.now, zone);
+    const from = addDays(since, AGREEMENT.noOfferDays + employed, zone);
+    if (sim.now < from) return `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him. ${last ? `His last came on ${formatDate(last, z)}` : `You signed on ${formatDate(a.signedAt!, z)}`}${employed ? `, and the ${counted(employed, 'day')} you were employed on covered work since don’t count toward them` : ''}, so that’s from ${formatDate(from, z)}.`;
   }
   if (how === 'too-little-work') {
     const from = addDays(a.signedAt!, AGREEMENT.sag.waitDays, zone);

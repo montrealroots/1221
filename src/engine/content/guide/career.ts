@@ -434,7 +434,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     needs: [
       'For Accept or Decline, an offer still standing.',
-      `For ${NO_OFFER}, ${AGREEMENT.noOfferDays} days with no real offer of covered work through him, and not while you’re working.`,
+      `For ${NO_OFFER}, ${AGREEMENT.noOfferDays} days with no real offer of covered work through him, the days you’re employed on covered work not counted, and not while you’re working.`,
       `For ${TOO_LITTLE}, ${AGREEMENT.sag.waitDays} days from signing, and fewer than ${TEN} days of covered work in the last ${AGREEMENT.sag.windowDays}.`,
     ],
     costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: `Commission on covered work: ${Math.round(AGREEMENT.commission * 100)}% of gross pay, or ${Math.round(AGREEMENT.equityLowTier.rate * 100)}% on an Equity contract paying ${usd(AGREEMENT.equityLowTier.weeklyAtOrBelow)} a week or less` }],
