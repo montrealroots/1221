@@ -13,7 +13,10 @@ lane() {
   echo "lane $L done $(date -u +%T)"
 }
 export -f lane; export S COMMIT
-printf '%s\n' JR1 JR2 JR3 M1 M2 M3 M4 B C D A ADVF ADVR J UI | xargs -P 4 -I{} bash -c 'lane {}'
+# Lanes by name (from 2026-10-21, when the container restarted at 12:31 UTC and stopped the queue with C, ADVR, UI, JRC
+# and MF not done): each skips the steps it passed (runs19.sh). Usage: queue19.sh <commit> ["<lanes>"]
+LANES="${2:-JR1 JR2 JR3 M1 M2 M3 M4 B C D A ADVF ADVR J UI}"
+printf '%s\n' $LANES | xargs -P 4 -I{} bash -c 'lane {}'
 lane JRC
 lane MF
 echo "QUEUE DONE $(date -u +%T)"
