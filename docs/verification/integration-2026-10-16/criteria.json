@@ -4215,7 +4215,7 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "citations": [
@@ -4359,10 +4359,44 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "app"
    }
   },
@@ -4383,7 +4417,7 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "citations": [
@@ -4479,10 +4513,36 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "app"
    }
   },
@@ -4503,7 +4563,7 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "citations": [
@@ -4599,10 +4659,36 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "app"
    }
   },
@@ -4623,7 +4709,7 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "citations": [
@@ -4695,10 +4781,32 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/PLAYTEST.md",
+     "title": "the walkthrough"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/interface-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "app"
    }
   },
@@ -4719,7 +4827,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -4857,10 +4965,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/exits.txt",
+     "title": "each part's command, exit and seconds on 0bc829ec"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -4881,7 +5025,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -4995,10 +5139,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -5019,7 +5195,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -5133,10 +5309,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -5157,7 +5365,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -5343,10 +5551,54 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: reviews, warnings, standings"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: reviews, warnings, status and OPT"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -5367,7 +5619,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -5529,10 +5781,50 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J17-p4.json",
+     "title": "J17: the warning and the review after it"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J18-p4.json",
+     "title": "J18: the concern and the review after it"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the repeat, the holds, the degree"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J22-p4.json",
+     "title": "J22: the leave and the return"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -5553,7 +5845,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -5691,10 +5983,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 1, creation, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: check 1"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J14-p4.json",
+     "title": "J14: check 1"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -5715,7 +6043,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -5901,10 +6229,54 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 2, classes to showings, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J12-p4.json",
+     "title": "J12: check 2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: check 2"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -5925,7 +6297,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -6063,10 +6435,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 3, development, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: check 3"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: check 3"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -6087,7 +6495,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -6225,10 +6633,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 4, advice, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: check 4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: check 4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -6249,7 +6693,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -6411,10 +6855,50 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 5, health, stamina, energy, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: check 5"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J23-p4.json",
+     "title": "J23: check 5"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts",
+     "title": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -6435,7 +6919,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -6573,10 +7057,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 6, money, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: check 6"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: check 6"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -6597,7 +7117,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -6735,10 +7255,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 7, papers, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: check 7"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F1-p4.json",
+     "title": "F1: check 7"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -6759,7 +7315,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7017,10 +7573,66 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 8, warnings, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: check 8"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J02-p4.json",
+     "title": "J02: check 8"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7041,7 +7653,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7203,10 +7815,50 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 9, terms and the end, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J22-p4.json",
+     "title": "J22: check 9"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: check 9"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7227,7 +7879,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7365,10 +8017,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 10, save and reload, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: check 10"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: check 10"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7389,7 +8077,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7503,10 +8191,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F1-p4.json",
+     "title": "F1: documents, photo ID, the bank's ask, monthly"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: the plan owed and paid, the ledger"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7527,7 +8247,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7617,10 +8337,38 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7641,7 +8389,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7755,10 +8503,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7779,7 +8559,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -7893,10 +8673,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: the vocal run of May to September 2028"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -7917,7 +8729,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -8031,10 +8843,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -8055,7 +8899,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -8145,10 +8989,38 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -8169,7 +9041,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -8259,10 +9131,38 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -8283,7 +9183,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -8373,10 +9273,38 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -8397,7 +9325,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -8703,10 +9631,74 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts",
+     "title": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -8770,7 +9762,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -8884,10 +9876,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J14-p4.json",
+     "title": "J14: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -8908,7 +9932,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9022,10 +10046,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J03-p4.json",
+     "title": "J03: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -9046,7 +10102,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9160,10 +10216,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -9184,7 +10272,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9322,10 +10410,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/compare.json",
+     "title": "the advice triples and the specialists against their generalists"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J12-p4.json",
+     "title": "J12: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -9346,7 +10470,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9484,10 +10608,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/compare.json",
+     "title": "the advice triples and the specialists against their generalists"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J03-p4.json",
+     "title": "J03: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -9508,7 +10668,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9622,10 +10782,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -9646,7 +10838,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9760,10 +10952,42 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
@@ -9784,7 +11008,7 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
@@ -9922,10 +11146,46 @@
     },
     {
      "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: the records the clause reads"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/voices-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/continuity-2026-10-20/fixoff/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-2026-10-20/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "ecd961cc",
+    "commit": "728b4972",
     "watch": "engine"
    }
   }
@@ -10994,236 +12254,236 @@
   {
    "id": "advice.F2A10-f",
    "status": "Implemented And Verified",
-   "why": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 17's commit a683f9ea, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs17.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
+   "why": "Brief 19, the final area (docs/verification/career-2026-10-20/final-runs/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 19's commit 728b4972, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs19.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
    "citations": [
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-summary.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-summary.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/runs/exits-ADVF.txt"
+     "file": "docs/verification/career-2026-10-20/final-runs/runs/exits-ADVF.txt"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-0-9.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-0-9.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-10-19.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-10-19.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-100-109.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-100-109.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-110-119.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-110-119.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-20-29.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-20-29.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-30-39.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-30-39.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-40-49.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-40-49.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-50-59.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-50-59.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-60-69.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-60-69.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-70-79.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-70-79.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-80-89.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-80-89.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-90-99.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-90-99.json"
     }
    ],
    "measured": {
-    "commit": "a683f9ea",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
   {
    "id": "advice.F2A10-h",
    "status": "Implemented And Verified",
-   "why": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): The fresh set on a683f9ea: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 75 and another led on 45, changed on 45; rose 5, attributed 5, explained 5; 1965 reads with 0 stale, 3371 forecast changes (1348 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 115 of 120, its own level's part on 120.",
+   "why": "Brief 19, the final area (docs/verification/career-2026-10-20/final-runs/final-result.json): The fresh set on 728b4972: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 75 and another led on 45, changed on 45; rose 5, attributed 5, explained 5; 1965 reads with 0 stale, 3371 forecast changes (1348 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 115 of 120, its own level's part on 120.",
    "citations": [
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-summary.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-summary.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/runs/exits-ADVF.txt"
+     "file": "docs/verification/career-2026-10-20/final-runs/runs/exits-ADVF.txt"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-0-9.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-0-9.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-10-19.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-10-19.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-100-109.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-100-109.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-110-119.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-110-119.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-20-29.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-20-29.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-30-39.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-30-39.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-40-49.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-40-49.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-50-59.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-50-59.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-60-69.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-60-69.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-70-79.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-70-79.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-80-89.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-80-89.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/fresh-adv-v-90-99.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-90-99.json"
     }
    ],
    "measured": {
-    "commit": "a683f9ea",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
   {
    "id": "advice.F2A10-c",
    "status": "Implemented And Verified",
-   "why": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): The held-out set, regression coverage from brief 12, on brief 17's commit a683f9ea (runs17.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); by stratum beginner 1.864, developing 2.057, advanced 1.961, nearMastery 2.046, firstWeek 1.976, midTerm 1.855, later 2.079; F2-A's 30 held out, 2.187.",
+   "why": "Brief 19, the final area (docs/verification/career-2026-10-20/final-runs/final-result.json): The held-out set, regression coverage from brief 12, on brief 19's commit 728b4972 (runs19.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); by stratum beginner 1.864, developing 2.057, advanced 1.961, nearMastery 2.046, firstWeek 1.976, midTerm 1.855, later 2.079; F2-A's 30 held out, 2.187.",
    "citations": [
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-summary.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-summary.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/runs/exits-ADVR.txt"
+     "file": "docs/verification/career-2026-10-20/final-runs/runs/exits-ADVR.txt"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-0-9.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-0-9.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-10-19.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-10-19.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-20-29.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-20-29.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-30-39.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-30-39.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-0-9.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-0-9.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-10-19.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-10-19.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-100-109.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-100-109.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-110-119.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-110-119.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-20-29.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-20-29.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-30-39.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-30-39.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-40-49.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-40-49.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-50-59.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-50-59.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-60-69.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-60-69.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-70-79.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-70-79.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-80-89.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-80-89.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-90-99.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-90-99.json"
     }
    ],
    "measured": {
-    "commit": "a683f9ea",
+    "commit": "728b4972",
     "watch": "engine"
    }
   },
   {
    "id": "advice.heldout",
    "status": "Implemented And Verified",
-   "why": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 17's commit a683f9ea in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
+   "why": "Brief 19, the final area (docs/verification/career-2026-10-20/final-runs/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 19's commit 728b4972 in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
    "citations": [
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-summary.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-summary.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/runs/exits-ADVR.txt"
+     "file": "docs/verification/career-2026-10-20/final-runs/runs/exits-ADVR.txt"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-0-9.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-0-9.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-10-19.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-10-19.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-20-29.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-20-29.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/f2a-adv-30-39.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-30-39.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-0-9.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-0-9.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-10-19.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-10-19.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-100-109.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-100-109.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-110-119.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-110-119.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-20-29.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-20-29.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-30-39.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-30-39.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-40-49.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-40-49.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-50-59.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-50-59.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-60-69.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-60-69.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-70-79.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-70-79.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-80-89.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-80-89.json"
     },
     {
-     "file": "docs/verification/continuity-2026-10-20/advice/regression-adv-h-90-99.json"
+     "file": "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-90-99.json"
     }
    ],
    "measured": {
-    "commit": "a683f9ea",
+    "commit": "728b4972",
     "watch": "engine"
    }
   }

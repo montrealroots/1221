@@ -1,4 +1,4 @@
-at 728b4972, 0 tracked files uncommitted, 2026-10-21T12:52:45Z
-journeys-compare exit=0 secs=8 cmd: npx vite-node tools/journeys.ts -- --compare /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/jr19-state --out /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f19-journeys/compare.json
-journeys-summarize exit=0 secs=7 cmd: npx vite-node tools/journeys.ts -- --summarize /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f19-journeys
-DONE 2026-10-21T12:53:00Z
+at 728b4972, 1 tracked files uncommitted, 2026-10-21T13:44:34Z
+journeys-compare exit=0 secs=6 cmd: npx vite-node tools/journeys.ts -- --compare /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/jr19-state-2 --out /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f19-journeys-2/compare.json
+journeys-summarize exit=0 secs=5 cmd: npx vite-node tools/journeys.ts -- --summarize /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f19-journeys-2
+DONE 2026-10-21T13:44:45Z

@@ -1,0 +1,18 @@
+{
+ "id": "J19",
+ "part": 1,
+ "from": "2026-08-24",
+ "to": "2027-06-01",
+ "secs": 24,
+ "reloads": 9,
+ "done": false,
+ "standing": "concern",
+ "notSame": 0,
+ "notices": 316,
+ "showings": 92,
+ "work": 118,
+ "reviews": [
+  "0 2026-12-11 good",
+  "1 2027-04-23 concern"
+ ]
+}
