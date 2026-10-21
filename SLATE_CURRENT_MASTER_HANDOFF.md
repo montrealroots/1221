@@ -5,7 +5,13 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 527 of 658 rows in scope Implemented And Verified (80.0%); 127 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 540 of 658 rows in scope Implemented And Verified (82.0%); 114 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The independent audit of brief 19's 22 commands, 2026-10-21, against `7bbab80f`: until it this said 527 of 658.
+  Each is an audit row now, in the School's area: 13 verified, so Implemented And Verified; 9 partial, Implemented,
+  Verification Incomplete, each with its gap. The seven agent rows past the check rest on introductions written or
+  scheduled by hand, `pro.join_sag` on an engagement written by hand, and `pro.prepare` on a part's preparation no test
+  reads. `audit/REPORT.md` has each row's reason, the mutations and what closes the gaps.)
 
   (The work loop, merged 2026-10-21 after the pay: until it this said 527 of 651. Its seven commands are rows of their
   own, Implemented, Verification Incomplete until an audit row reads them.)
@@ -37,8 +43,11 @@ none of it is in `main`, and nothing is deployed.
   D8, `pay/REPORT.md`); the work loop, from a posting to a credit, the agent's submissions, work while enrolled and a
   leaver's routes, joined to the pay at its acceptance (J1 to J5, A3, A4, D9, `work/REPORT.md`). Brief 18's criteria mark
   its five items done here.
-- **Still to do:** the playthroughs V1 to V18 on the joined game, its built app at both widths, independent audit rows
-  for the new capabilities, the final runs, and the gate.
+- **Audited:** the 22 commands and their five capabilities, read against the standard by a reader who wrote none of
+  them (`docs/verification/career-2026-10-20/audit/REPORT.md`, 2026-10-21); this said that was still to do until then.
+- **Still to do:** the playthroughs V1 to V18 on the joined game (V1, played from the showcase's follow-up or a finished
+  open role through his office to work through him, is what the nine partial rows wait on), its built app at both
+  widths, the final runs, and the gate.
 - **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
   marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
   owner's call.

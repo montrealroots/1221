@@ -3989,298 +3989,600 @@
   ]
  },
  {
-  "on": "2026-10-20",
-  "against": "d0b1fe65",
+  "on": "2026-10-21",
+  "against": "7bbab80f",
+  "by": "a reader who wrote none of it",
   "id": "career-portfolio",
-  "claim": "Brief 19's portfolio: pro.set_name sets the professional name the résumé reads, or goes back to the display name; pro.headshots takes four hours on the clock and $700 through spend (both estimated) and adds headshots with their provenance, out of date after two years; pro.update_resume takes an hour and makes a résumé from the record, which reads as behind once the record has anything it doesn't; pro.cut_reel takes two hours and $250 (both estimated) and cuts a reel from one to four pieces of recorded work only. Read by materialsCheck (the Career screen's What's Missing, and the agent's and the work's systems once they're built), resumeBehind, reelSources and profileOf.",
-  "implementation": "src/engine/systems/pro.ts (registerPro: pro.set_name, pro.headshots, pro.update_resume, pro.cut_reel; nameRefusal, headshotRefusal, resumeRefusal, reelRefusal; materialsCheck, resumeNow, resumeBehind, reelSources, profileOf; buildOnOpening for an older save, src/engine/index.ts loadSave's pro.begun block); src/ui/workspaces/CareerWorkspace.tsx.",
-  "consumers": "The Career screen's Overview (What's Missing, What's Next) and Portfolio (each material's standing); the ledger and the bank (spend, category career, the Work Costs line); the clock (each command moves it by its time).",
+  "claim": "Brief 19’s portfolio: pro.set_name sets the professional name the profile shows and a résumé is made under; pro.headshots, pro.update_resume and pro.cut_reel each take their time and, for headshots and a reel, their money through spend (estimates said), and add a material with where it came from, when and what’s in it. Read by materialsCheck (the Career screen’s What’s Missing, the agent’s check, a submission and the agent’s breakdowns), resumeBehind, reelSources and profileOf.",
+  "implementation": "src/engine/systems/pro.ts (registerPro, pro.ts:946: the four commands; nameRefusal, headshotRefusal, resumeRefusal, reelRefusal; materialsCheck, resumeNow, resumeBehind, reelSources, profileOf); src/ui/workspaces/CareerWorkspace.tsx.",
+  "consumers": "The Career screen’s Overview and Portfolio; checkRefusal and supplyRefusal (systems/proagent.ts); submitRefusal and agentTries (systems/projobs.ts); the ledger (spend, category career); the clock.",
   "uiEvidence": {
    "needed": true,
-   "have": "tests/pro-screen.test.ts renders Overview and Portfolio over real saves: each control with its command's refusal under it, each material's provenance once made, a graduate's credit and Equity, and the screen Locked until its chapter."
+   "have": "tests/pro-screen.test.ts renders Overview and Portfolio over saves the commands made: each control grayed with its refusal, each material’s provenance, the résumé line by line, a migrated graduate’s credit and Equity, and the screen Locked until its chapter. No Portfolio button is pressed on the rendered screen, and no test renders a reel cut."
   },
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance'",
-    "asserts": "The clock moves four hours, the bank falls by exactly $700.00, the material carries its source and contents, and two years and a day on it reads out of date.",
+    "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance’",
+    "asserts": "Four hours, exactly $700.00 from the bank, the material’s source and contents, materialsCheck then asking only for a résumé, out of date two years on, kept across a reload.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
+    "independent": true
    },
    {
     "kind": "command",
-    "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date'",
-    "asserts": "An hour on the clock; the résumé's lines from the record; behind on a School credit and a new name, said in words; version 2 after the update.",
+    "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date’",
+    "asserts": "The résumé’s lines from the record; behind on the name pro.set_name set and on a School credit filed by hand, said in materialsCheck’s words; the next made under the new name.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the School credit is set by hand as a closed run files it."
+    "independent": true,
+    "problem": "The School credit is filed by hand."
    },
    {
     "kind": "command",
-    "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it'",
-    "asserts": "Refused with nothing recorded, for a voice tape and an unknown piece; two hours and $250.00 for a tape; tapes only and newer work said in words.",
+    "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it’",
+    "asserts": "Cut from self-tapes taped through the brief’s commands; the voice tape and the same pieces refused; tapes only; a newer tape named.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
+    "independent": true
    },
    {
     "kind": "command",
-    "where": "tests/pro-core.test.ts 'sets the professional name, refuses one that isn’t a name, and goes back to the display name'",
-    "asserts": "Each refusal in its words; the name trimmed and kept; blank goes back to the display name.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made’",
+    "asserts": "A submission refused in materialsCheck’s words until both are made through their commands, then taken.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
-   }
-  ],
-  "verdict": "partial",
-  "partialClass": "missing-evidence",
-  "gaps": [
-   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-20."
-  ],
-  "weakTests": [],
-  "todo": "An independent reading at integration, against the integrated commit."
- },
- {
-  "on": "2026-10-21",
-  "against": "8534f276",
-  "id": "school-showcase",
-  "claim": "Brief 19's Actor Showcase: school.choose_showcase takes two different scenes from the course's options and sets them as DRAM 793b's pieces, due at the first showcase day; the fourth week's check reads the Incompletes and keeps a student out or lets them in, the faculty choosing for one who hasn't; rehearsal calls move the scenes' preparation; New York's two days and Los Angeles's judge each scene with judgeWork; a day missed counts as a missed call and meeting; DRAM 793b is settled after Los Angeles. Read by the School's Coursework tab, settleCourses, the Commencement handler and the call tally.",
-  "implementation": "src/engine/systems/proshowcase.ts (registerShowcase: school.choose_showcase, SHOWCASE_KIND, SHOWCASE_CHECK_KIND; beginShowcase, choiceRefusal, decide, perform, endShowcase, settleShowcaseCourse, showcaseHolds, beginOnOpening); src/engine/systems/school.ts (the term handler's beginShowcase, the evaluation's held course, setStanding's settleHeldShowcase); src/engine/systems/coursework.ts (setWork, lapseTerm, reshow); src/engine/systems/courserecord.ts (settleCourses' held); src/engine/index.ts (showcase.begun); src/ui/career/SchoolShowcase.tsx.",
-  "consumers": "The School's Coursework tab (The Actor Showcase) and Terms And Award (Finishing Early); the coursework's cards (the pieces); the work record and the journey (recordWork); settleCourses and the Commencement handler (DRAM 793b's pass and the degree); the call tally (the Player Profile's reliability); the professional record (pro.showcase).",
-  "uiEvidence": {
-   "needed": true,
-   "have": "tests/pro-showcase.test.ts renders the School screen's Coursework tab in the last term (the days, Taking Part, each option's note, Choose These Scenes and its refusal), the panel kept out by an Incomplete, and Terms And Award with the Career's Overview for Finishing Early."
-  },
-  "evidence": [
-   {
-    "kind": "command",
-    "where": "tests/pro-showcase.test.ts 'refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice'",
-    "asserts": "Each refusal's words, the panel's too, with the save byte for byte as it was; two pieces of DRAM 793b due April 30, 2029, with different partners; a second choice refused.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
+    "independent": true
    },
    {
-    "kind": "command",
-    "where": "tests/pro-showcase.test.ts 'PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past the term review, judged in New York and Los Angeles, passed, conferred, every record carried'",
-    "asserts": "The notices in order, the rehearsal calls gone to, DRAM 793b held past the review and passed after Los Angeles, six performances in the work record, the journey and the professional record, the degree and Equity.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the coursework is prepared by TEST SETUP each midnight, as tests/school.test.ts plays a student."
-   },
-   {
-    "kind": "command",
-    "where": "tests/pro-showcase.test.ts 'PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next day and again in Los Angeles; ill, it’s excused; every day missed and the course isn’t passed, nor the degree awarded'",
-    "asserts": "The missed record, the notice, the tally and the course's meeting; excused in hospital; every day missed fails the course and withholds the degree.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the absence is TEST SETUP, the location or a hospital stay set."
-   }
-  ],
-  "verdict": "partial",
-  "partialClass": "missing-evidence",
-  "gaps": [
-   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
-  ],
-  "weakTests": [],
-  "todo": "An independent reading at integration, against the integrated commit."
- },
- {
-  "on": "2026-10-21",
-  "against": "7f510306",
-  "id": "career-representation",
-  "claim": "Brief 19's agent: pro.agent_notice records the notice read before anything else; pro.agent_check refuses an incomplete submission with materialsCheck's words and moves the stage to checked; pro.ask_referral introduces the player from a finished job judged Strong or better, once a job; pro.send_materials refuses an unsolicited send in the agency's published words, a send too soon after a pass, no answer or a declined offer, and one with nothing new, and otherwise puts his office's answer on the clock; pro.supply_material sends what was asked for; pro.ask_to_move moves a meeting once, a week on, also at the meeting's stop; pro.accept_agreement and pro.decline_agreement answer an offered agreement; pro.end_agreement ends it by agreement, under Equity's 90 days or SAG-AFTRA's 151 and 91. Read by interestOf's seven factors and the pro.agent and pro.roster deciders, by activeAgreement for the work and the pay, and by the Representation tab.",
-  "implementation": "src/engine/systems/proagent.ts (registerProAgent: the nine commands and the eight pro.agent_* scheduled kinds; interestOf, chancesFor, drawOf, replyOutcome, offerOutcome, followUpAsks, rosterFor, roomLevel, caseKeys; the refusals; scheduleShowcaseFollowUp; the meeting's stop declared with defineStop); src/ui/career/RepresentationPane.tsx; src/engine/decided.ts (pro.agent, pro.roster).",
-  "consumers": "The Representation tab (every panel); Home's notices; the calendar (the meeting, a request's due date, the offer's last day, the term's end); the clock's stop (Ask To Move); activeAgreement in systems/pro.ts, which the work loop and the pay read.",
-  "uiEvidence": {
-   "needed": true,
-   "have": "tests/pro-representation-screen.test.ts renders the tab over real saves: the notice above all else and then behind Read The Notice Again, each control grayed with its command's refusal under it, the agency's policy in its own words, Why It Went This Way open with its seven factors, every term of the agreement with its basis, the three ending buttons with when each can, the meeting with Ask To Move, and the controls Locked until the chapter is read."
-  },
-  "evidence": [
-   {
-    "kind": "command",
-    "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way'",
-    "asserts": "The check refused in materialsCheck's words until headshots and a résumé are made, then the stage checked; the unsolicited send refused with the agency's quote; the referral and the send moving the stage, each step one keyed event, saved and loaded at each, the laws holding.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads; the finished job is TEST SETUP, the work loop being built apart."
-   },
-   {
-    "kind": "command",
-    "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had'",
-    "asserts": "The request's notice and date; the supply refused until the reel is cut, then the answer a week on; in the other life the missed request noted as a problem and read by Reliability.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the seed is chosen by reading the game's own draw."
-   },
-   {
-    "kind": "command",
-    "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept'",
-    "asserts": "The meeting on the calendar with its trip; missed through the player's own sleep and the approach closed for a year; moved at the stop by answerStop, the jump carried on, a second move refused, and kept with Go.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
-   },
-   {
-    "kind": "command",
-    "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses'",
-    "asserts": "Every term copied in with its basis; accepted sets signedAt, endsAt and the relation represented, read by activeAgreement; declined and lapsed each hold six months, said with the date.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
-   },
-   {
-    "kind": "command",
-    "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked'",
-    "asserts": "Each ending refused with its date until it can, the 90 days restarted by an offer through him, the covered days counted by date, and the ending's notice.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the offer and the covered days are TEST SETUP, the work loop being built apart."
-   },
-   {
-    "kind": "command",
-    "where": "tests/pro-agent.test.ts 'high skill raises the chance and never makes it certain: over seeds at the top band both answers come; and a better band moves the chance'",
-    "asserts": "At the top band and the most room, over 200 seeds, both a meeting and no meeting, both an offer and a pass; the same draws give more meetings for each better band; with the gate short, none.",
+    "kind": "fixture",
+    "where": "tests/pro-core.test.ts ‘adds the School’s filmed monologues once DRAM 473b is passed and posted, and a screen credit’s footage once released’",
+    "asserts": "reelSources lists the monologues once posted and a credit’s footage once released.",
     "reachesAction": false,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Reads the decision functions with a built interest, not a played life; the played draws are in the journeys."
+    "independent": true,
+    "problem": "A course result and a credit set by hand, reelSources called directly."
    }
   ],
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+   "The filmed monologues and a released credit’s footage are reel sources only by calling reelSources on state set by hand; no test cuts a reel from either.",
+   "An office’s request for new headshots or an up-to-date résumé is never played.",
+   "No Portfolio button is pressed on the rendered screen."
   ],
+  "todo": "A journey that cuts a reel from a released credit’s footage, and an office’s request for headshots or a résumé played through.",
+  "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
-  "todo": "An independent reading at integration, against the integrated commit, with the work loop's engagements and offers in place of the TEST SETUP."
+  "builder": {
+   "on": "2026-10-20",
+   "against": "d0b1fe65",
+   "id": "career-portfolio",
+   "claim": "Brief 19's portfolio: pro.set_name sets the professional name the résumé reads, or goes back to the display name; pro.headshots takes four hours on the clock and $700 through spend (both estimated) and adds headshots with their provenance, out of date after two years; pro.update_resume takes an hour and makes a résumé from the record, which reads as behind once the record has anything it doesn't; pro.cut_reel takes two hours and $250 (both estimated) and cuts a reel from one to four pieces of recorded work only. Read by materialsCheck (the Career screen's What's Missing, and the agent's and the work's systems once they're built), resumeBehind, reelSources and profileOf.",
+   "implementation": "src/engine/systems/pro.ts (registerPro: pro.set_name, pro.headshots, pro.update_resume, pro.cut_reel; nameRefusal, headshotRefusal, resumeRefusal, reelRefusal; materialsCheck, resumeNow, resumeBehind, reelSources, profileOf; buildOnOpening for an older save, src/engine/index.ts loadSave's pro.begun block); src/ui/workspaces/CareerWorkspace.tsx.",
+   "consumers": "The Career screen's Overview (What's Missing, What's Next) and Portfolio (each material's standing); the ledger and the bank (spend, category career, the Work Costs line); the clock (each command moves it by its time).",
+   "uiEvidence": {
+    "needed": true,
+    "have": "tests/pro-screen.test.ts renders Overview and Portfolio over real saves: each control with its command's refusal under it, each material's provenance once made, a graduate's credit and Equity, and the screen Locked until its chapter."
+   },
+   "evidence": [
+    {
+     "kind": "command",
+     "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance'",
+     "asserts": "The clock moves four hours, the bank falls by exactly $700.00, the material carries its source and contents, and two years and a day on it reads out of date.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date'",
+     "asserts": "An hour on the clock; the résumé's lines from the record; behind on a School credit and a new name, said in words; version 2 after the update.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the School credit is set by hand as a closed run files it."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it'",
+     "asserts": "Refused with nothing recorded, for a voice tape and an unknown piece; two hours and $250.00 for a tape; tapes only and newer work said in words.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-core.test.ts 'sets the professional name, refuses one that isn’t a name, and goes back to the display name'",
+     "asserts": "Each refusal in its words; the name trimmed and kept; blank goes back to the display name.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    }
+   ],
+   "verdict": "partial",
+   "partialClass": "missing-evidence",
+   "gaps": [
+    "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-20."
+   ],
+   "weakTests": [],
+   "todo": "An independent reading at integration, against the integrated commit."
+  }
  },
  {
   "on": "2026-10-21",
-  "against": "33cfa2ca",
+  "against": "7bbab80f",
+  "by": "a reader who wrote none of it",
+  "id": "school-showcase",
+  "claim": "Brief 19’s showcase: DRAM 793b begun with the last term, its calls on the calendar at each year’s dates; school.choose_showcase takes two of the faculty’s options (or the faculty choose); an Incomplete at the fourth week keeps the student out; each day judges each scene into the work record, the journey and the professional record; the course settled after Los Angeles, which the degree reads; the School’s follow-up put on the calendar.",
+  "implementation": "src/engine/systems/proshowcase.ts (registerShowcase, proshowcase.ts:570; beginShowcase, choiceRefusal, setScenes, decide, perform, endShowcase, settleShowcaseCourse, EARLY_DEGREE); src/ui/career/SchoolShowcase.tsx; src/engine/systems/school.ts (the term handler, setStanding).",
+  "consumers": "The School’s Coursework tab; settleCourses and Commencement; the School’s call tally; person.work and the journey; the agent’s follow-up (scheduleShowcaseFollowUp, systems/proagent.ts).",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/pro-showcase.test.ts renders the Coursework tab (the days, the calls, each option’s notes, Choose These Scenes grayed with its reason, a student kept out) and Terms And Award and the Career’s The Way You’re On with the Bulletin’s sentence; the button isn’t pressed on the rendered screen."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts ‘PLAYER JOURNEY: from the last term’s first day to the morning after Commencement...’",
+    "asserts": "Chosen through the command; rehearsal calls stopped at and gone to; each chosen scene judged in New York and Los Angeles into the work record, the journey and pro.showcase.performed; the course passed after Los Angeles; the follow-up on the calendar and come; the degree conferred, the laws holding.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts ‘refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice...’",
+    "asserts": "Each refusal in choiceRefusal’s words with the save unchanged to the byte; two picks made the course’s pieces due in New York with partners.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts ‘PLAYER JOURNEY: a showcase day missed is a missed call of the course...’",
+    "asserts": "A day missed counted against the course and the tally; ill, excused; every day missed, the course failed and the degree withheld.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The location moved to New York by hand at a call’s hour, so it’s missed."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts ‘PLAYER JOURNEY: the same scenes on the same seed, prepared fully against left...’",
+    "asserts": "The same scenes prepared fully come out more than ten points and a band higher.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The preparation set by hand in one twin."
+   }
+  ],
+  "verdict": "verified",
+  "partialClass": "none",
+  "gaps": [
+   "Choose These Scenes isn’t pressed on the rendered screen.",
+   "The registry can’t call it Verified while its row was added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
+  ],
+  "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
+  "weakTests": [],
+  "builder": {
+   "on": "2026-10-21",
+   "against": "8534f276",
+   "id": "school-showcase",
+   "claim": "Brief 19's Actor Showcase: school.choose_showcase takes two different scenes from the course's options and sets them as DRAM 793b's pieces, due at the first showcase day; the fourth week's check reads the Incompletes and keeps a student out or lets them in, the faculty choosing for one who hasn't; rehearsal calls move the scenes' preparation; New York's two days and Los Angeles's judge each scene with judgeWork; a day missed counts as a missed call and meeting; DRAM 793b is settled after Los Angeles. Read by the School's Coursework tab, settleCourses, the Commencement handler and the call tally.",
+   "implementation": "src/engine/systems/proshowcase.ts (registerShowcase: school.choose_showcase, SHOWCASE_KIND, SHOWCASE_CHECK_KIND; beginShowcase, choiceRefusal, decide, perform, endShowcase, settleShowcaseCourse, showcaseHolds, beginOnOpening); src/engine/systems/school.ts (the term handler's beginShowcase, the evaluation's held course, setStanding's settleHeldShowcase); src/engine/systems/coursework.ts (setWork, lapseTerm, reshow); src/engine/systems/courserecord.ts (settleCourses' held); src/engine/index.ts (showcase.begun); src/ui/career/SchoolShowcase.tsx.",
+   "consumers": "The School's Coursework tab (The Actor Showcase) and Terms And Award (Finishing Early); the coursework's cards (the pieces); the work record and the journey (recordWork); settleCourses and the Commencement handler (DRAM 793b's pass and the degree); the call tally (the Player Profile's reliability); the professional record (pro.showcase).",
+   "uiEvidence": {
+    "needed": true,
+    "have": "tests/pro-showcase.test.ts renders the School screen's Coursework tab in the last term (the days, Taking Part, each option's note, Choose These Scenes and its refusal), the panel kept out by an Incomplete, and Terms And Award with the Career's Overview for Finishing Early."
+   },
+   "evidence": [
+    {
+     "kind": "command",
+     "where": "tests/pro-showcase.test.ts 'refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice'",
+     "asserts": "Each refusal's words, the panel's too, with the save byte for byte as it was; two pieces of DRAM 793b due April 30, 2029, with different partners; a second choice refused.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-showcase.test.ts 'PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past the term review, judged in New York and Los Angeles, passed, conferred, every record carried'",
+     "asserts": "The notices in order, the rehearsal calls gone to, DRAM 793b held past the review and passed after Los Angeles, six performances in the work record, the journey and the professional record, the degree and Equity.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the coursework is prepared by TEST SETUP each midnight, as tests/school.test.ts plays a student."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-showcase.test.ts 'PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next day and again in Los Angeles; ill, it’s excused; every day missed and the course isn’t passed, nor the degree awarded'",
+     "asserts": "The missed record, the notice, the tally and the course's meeting; excused in hospital; every day missed fails the course and withholds the degree.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the absence is TEST SETUP, the location or a hospital stay set."
+    }
+   ],
+   "verdict": "partial",
+   "partialClass": "missing-evidence",
+   "gaps": [
+    "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+   ],
+   "weakTests": [],
+   "todo": "An independent reading at integration, against the integrated commit."
+  }
+ },
+ {
+  "on": "2026-10-21",
+  "against": "7bbab80f",
+  "by": "a reader who wrote none of it",
+  "id": "career-representation",
+  "claim": "Brief 19’s agent: pro.agent_notice before anything else; pro.agent_check refusing an incomplete approach in materialsCheck’s words; pro.ask_referral from a finished job judged Strong or better; pro.send_materials refused unsolicited in the agency’s published words, too soon or with nothing new, else his office’s answer on the clock; pro.supply_material; pro.ask_to_move, once, also at the meeting’s stop; pro.accept_agreement, pro.decline_agreement, and pro.end_agreement by agreement, Equity’s 90 days or SAG-AFTRA’s 151 and 91. Read by interestOf’s seven factors and the pro.agent and pro.roster draws, by activeAgreement for the work and the pay, and by the Representation tab.",
+  "implementation": "src/engine/systems/proagent.ts (registerProAgent, proagent.ts:932: the nine commands and the pro.agent_* kinds; interestOf, drawOf, replyOutcome, offerOutcome, followUpAsks, caseKeys, the refusals, scheduleShowcaseFollowUp, defineStop); src/engine/systems/pro.ts (activeAgreement); src/ui/career/RepresentationPane.tsx.",
+  "consumers": "The Representation tab; Home’s notices; the calendar; the clock’s stop; activeAgreement, read by the work loop’s postings and offers and by the pay’s commission.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/pro-representation-screen.test.ts renders the tab at each stage over saves the commands made: the notice, each control grayed with its refusal, Why It Went This Way, every term with its basis, the meeting and Ask To Move, the endings with their dates, and the controls Locked until the chapter; no button is pressed on the rendered screen, and every stage past the check rests on a finished job written by hand."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’",
+    "asserts": "The check refused in materialsCheck’s words until the portfolio is made, the unsolicited send refused in the agency’s quoted words, the referral and the send each noted once, across reloads.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The referral’s finished job is written by hand: an Off-Broadway part an unrepresented actor couldn’t have been seen for."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses’",
+    "asserts": "Every term copied in; accepted, the agreement in force by activeAgreement; declined and lapsed, each held six months with its date.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "On the same hand-built introduction."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept’",
+    "asserts": "Missed through the player’s own sleep and closed a year; moved at the stop, refused a second time, kept with Go.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "On the same hand-built introduction."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: his breakdown brings a role...’",
+    "asserts": "His breakdown brings a role, he holds the submission and says why, submits, conveys the offer at scale plus ten; the pay comes through the trust account less $102.80.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The agreement is written by hand, not accepted through the command."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "Every approach in a gate test starts from an introduction written or scheduled by hand; no test goes on to him from the showcase’s own follow-up or a job the work loop finished.",
+   "What accepting changes in later opportunities and pay is checked only on agreements written by hand.",
+   "The offers and covered days the endings read are written by hand; continuing commission is checked on an agreement ended by hand."
+  ],
+  "todo": "One journey from the showcase’s follow-up or a finished open role, through his office to an agreement accepted by the command, then a role posted through him and its pay taken with commission (brief 19’s V1).",
+  "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
+  "weakTests": [],
+  "builder": {
+   "on": "2026-10-21",
+   "against": "7f510306",
+   "id": "career-representation",
+   "claim": "Brief 19's agent: pro.agent_notice records the notice read before anything else; pro.agent_check refuses an incomplete submission with materialsCheck's words and moves the stage to checked; pro.ask_referral introduces the player from a finished job judged Strong or better, once a job; pro.send_materials refuses an unsolicited send in the agency's published words, a send too soon after a pass, no answer or a declined offer, and one with nothing new, and otherwise puts his office's answer on the clock; pro.supply_material sends what was asked for; pro.ask_to_move moves a meeting once, a week on, also at the meeting's stop; pro.accept_agreement and pro.decline_agreement answer an offered agreement; pro.end_agreement ends it by agreement, under Equity's 90 days or SAG-AFTRA's 151 and 91. Read by interestOf's seven factors and the pro.agent and pro.roster deciders, by activeAgreement for the work and the pay, and by the Representation tab.",
+   "implementation": "src/engine/systems/proagent.ts (registerProAgent: the nine commands and the eight pro.agent_* scheduled kinds; interestOf, chancesFor, drawOf, replyOutcome, offerOutcome, followUpAsks, rosterFor, roomLevel, caseKeys; the refusals; scheduleShowcaseFollowUp; the meeting's stop declared with defineStop); src/ui/career/RepresentationPane.tsx; src/engine/decided.ts (pro.agent, pro.roster).",
+   "consumers": "The Representation tab (every panel); Home's notices; the calendar (the meeting, a request's due date, the offer's last day, the term's end); the clock's stop (Ask To Move); activeAgreement in systems/pro.ts, which the work loop and the pay read.",
+   "uiEvidence": {
+    "needed": true,
+    "have": "tests/pro-representation-screen.test.ts renders the tab over real saves: the notice above all else and then behind Read The Notice Again, each control grayed with its command's refusal under it, the agency's policy in its own words, Why It Went This Way open with its seven factors, every term of the agreement with its basis, the three ending buttons with when each can, the meeting with Ask To Move, and the controls Locked until the chapter is read."
+   },
+   "evidence": [
+    {
+     "kind": "command",
+     "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way'",
+     "asserts": "The check refused in materialsCheck's words until headshots and a résumé are made, then the stage checked; the unsolicited send refused with the agency's quote; the referral and the send moving the stage, each step one keyed event, saved and loaded at each, the laws holding.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads; the finished job is TEST SETUP, the work loop being built apart."
+    },
+    {
+     "kind": "command",
+     "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had'",
+     "asserts": "The request's notice and date; the supply refused until the reel is cut, then the answer a week on; in the other life the missed request noted as a problem and read by Reliability.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the seed is chosen by reading the game's own draw."
+    },
+    {
+     "kind": "command",
+     "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept'",
+     "asserts": "The meeting on the calendar with its trip; missed through the player's own sleep and the approach closed for a year; moved at the stop by answerStop, the jump carried on, a second move refused, and kept with Go.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    },
+    {
+     "kind": "command",
+     "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses'",
+     "asserts": "Every term copied in with its basis; accepted sets signedAt, endsAt and the relation represented, read by activeAgreement; declined and lapsed each hold six months, said with the date.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    },
+    {
+     "kind": "command",
+     "where": "tests/journey-agent.test.ts 'PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked'",
+     "asserts": "Each ending refused with its date until it can, the 90 days restarted by an offer through him, the covered days counted by date, and the ending's notice.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the offer and the covered days are TEST SETUP, the work loop being built apart."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-agent.test.ts 'high skill raises the chance and never makes it certain: over seeds at the top band both answers come; and a better band moves the chance'",
+     "asserts": "At the top band and the most room, over 200 seeds, both a meeting and no meeting, both an offer and a pass; the same draws give more meetings for each better band; with the gate short, none.",
+     "reachesAction": false,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Reads the decision functions with a built interest, not a played life; the played draws are in the journeys."
+    }
+   ],
+   "verdict": "partial",
+   "partialClass": "missing-evidence",
+   "gaps": [
+    "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+   ],
+   "weakTests": [],
+   "todo": "An independent reading at integration, against the integrated commit, with the work loop's engagements and offers in place of the TEST SETUP."
+  }
+ },
+ {
+  "on": "2026-10-21",
+  "against": "7bbab80f",
+  "by": "a reader who wrote none of it",
   "id": "career-pay",
-  "claim": "Brief 19's pay: schedulePay puts each promised payment of an engagement on the clock, and each is paid once at its due, into the agency's client trust account and on three business days later less commission where commission is owed, or straight to the player; commission only when owed (Equity's 5% at $525 a week or less, 10% above; SAG-AFTRA's only over scale; New York's 10%; continuing after the agreement ends; Equity's 60-day tail); wages through sim.post and recordWages with the employer, the withholding by authority, the commission, the dues and the work's town; permission to work read for each engagement's dates and kept; OPT's days worked read from the engagements; Equity billed at the degree and an older graduate told what's owed; SAG-AFTRA eligibility from a first principal role, membership from its 30th day, and pro.join_sag. Read by the tax return (figuresFor), OPT's weekly count, Papers' Your US Status, the Work tab, Papers' Your Work And Your Permission and Money's statements.",
-  "implementation": "src/engine/systems/propay.ts (schedulePay, payDue, release, owedAgreement, commissionOn, withholdingOn, eligibilityRead, workEligibilityRefusal, equityJoined, equityOnOpening, sagWorkRefusal, joinSagRefusal, registerProPay: pro.join_sag); src/engine/systems/permission.ts (daysWorkedIn, optRunsOut, the OPT week handler); src/engine/systems/school.ts (setStanding emits pro.equity_joined); src/engine/index.ts (pro.unions); src/ui/career/WorkPane.tsx; src/ui/papers/Documents.tsx (WorkReadPanel).",
-  "consumers": "The ledger (salary transactions into the trust escrow and the payee account, the Agent’s Commission and Union Dues lines); the year's earnings and the return (acting, withheldBy, commission, dues, employers, elsewhere); OPT's idle and worked days; the Work tab; Papers' Permission To Work; net worth's held money.",
+  "claim": "Brief 19’s pay: each promised payment put on the clock at acceptance (schedulePay) and paid once on its day, into the agency’s client trust account and on three business days later less commission where owed, or straight to the player; commission only when owed (Equity’s tiers, SAG-AFTRA over scale, New York’s 10%, continuing, Equity’s tail); wages through sim.post and recordWages with the withholding and the work’s town; permission to work read per date; OPT’s days worked; Equity billed at the degree; SAG-AFTRA eligibility, membership from the 30th day, and pro.join_sag.",
+  "implementation": "src/engine/systems/propay.ts (registerProPay, propay.ts:695: the pay, release, dues and SAG eligibility kinds and pro.join_sag; schedulePay, payDue, release, owedAgreement, commissionOn, withholdingOn, eligibilityRead, duesOn, sagWorkRefusal, joinSagRefusal, equityJoined, equityOnOpening); src/ui/career/WorkPane.tsx; src/ui/papers/Documents.tsx.",
+  "consumers": "The ledger (salary transactions, the trust escrow, the commission and dues lines); the year’s earnings and the return; OPT’s count; the Work tab; Papers’ Permission To Work; net worth’s held money; acceptRefusal (sagWorkRefusal).",
   "uiEvidence": {
    "needed": true,
-   "have": "tests/propay-screen.test.ts renders the Work tab over real saves (promised, in trust and received, the commission on its own line, still owed after an agreement ended, the unions with Join SAG-AFTRA grayed and why) and Papers' Permission To Work over an OPT holder with work booked; the built app at 1440 and 390 in docs/verification/career-2026-10-20/pay/screens/."
+   "have": "tests/propay-screen.test.ts renders the Work tab (promised, in trust, received with the commission on its own line, still owed after an agreement ended, the unions with Join SAG-AFTRA grayed and why) and Papers’ permission over an OPT holder; each on engagements written by hand. No test renders the Work tab after joining SAG-AFTRA."
   },
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/propay.test.ts 'GUARD: no payment twice, across a reload mid-week, a jump past several due dates, and the payday fired twice'",
-    "asserts": "Three weeks paid once each, the transactions those the payments name, the year's wages counted once, nothing more after a second reload.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’",
+    "asserts": "Booked through pro.accept_offer; each of nine weeks received by the clock, two weeks’ memos read for their hours.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads; the engagement is written by hand as the work system writes one (TEST SETUP)."
+    "independent": true
    },
    {
     "kind": "command",
-    "where": "tests/propay.test.ts 'PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the agent the ten: into the trust account on Thursday, on to checking three business days later less exactly $256.60'",
-    "asserts": "The trust account's balance, the release date, $256.60 commission to the cent in the postings, the net into checking, the trust back to zero, the year's commission, and once only across a second pass-on item and a reload.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: his breakdown brings a role...’",
+    "asserts": "Paid into the trust account and on to the player, commission only over scale: $102.80 for four days.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the agreement is written by hand as the agent's system writes one (TEST SETUP)."
+    "independent": true,
+    "problem": "The agreement is written by hand."
    },
    {
     "kind": "command",
-    "where": "tests/propay.test.ts 'PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it'",
-    "asserts": "pro.join_sag refused before eligibility in its words, $3,244.07 from the bank once eligible, the 30th day's refusal lifted, refused once a member.",
+    "where": "tests/propay.test.ts ‘GUARD: no payment twice, across a reload mid-week, a jump past several due dates, and the payday fired twice’",
+    "asserts": "Three weeks paid once each, the year’s wages counted once.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
+    "independent": true,
+    "problem": "The engagement written by hand and schedulePay called by the test."
+   },
+   {
+    "kind": "command",
+    "where": "tests/propay.test.ts ‘PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day...’",
+    "asserts": "Eligible by the clock; the fee once; the 30th day’s refusal lifted by calling sagWorkRefusal; refused once a member.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "The engagement written by hand; nothing joining changes afterward is read."
    }
   ],
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "No reader independent of the builder has read it against the standard: this entry is the builder's own reading, made on 2026-10-21.",
-   "The engagements come from the work system, built apart; until integration calls schedulePay at an offer's acceptance, the tests write them by hand."
+   "pro.join_sag’s eligibility comes only from an engagement written by hand: SAG-AFTRA’s qualifying work is agent-only, and no test plays representation into it.",
+   "A member’s SAG-AFTRA working dues and base dues are read by no test (mutations P3 and P4 survived).",
+   "Most of the pay’s rules are checked on engagements written by hand with schedulePay called by the test; the work loop’s journeys play the unsigned and the represented pay through acceptance, the represented one on an agreement written by hand."
   ],
+  "todo": "A represented actor’s SAG-AFTRA booking reached through his office, played to eligibility, joining and a payday with working dues.",
+  "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
-  "todo": "An independent reading at integration, against the integrated commit, with the work system booking the engagements."
+  "builder": {
+   "on": "2026-10-21",
+   "against": "33cfa2ca",
+   "id": "career-pay",
+   "claim": "Brief 19's pay: schedulePay puts each promised payment of an engagement on the clock, and each is paid once at its due, into the agency's client trust account and on three business days later less commission where commission is owed, or straight to the player; commission only when owed (Equity's 5% at $525 a week or less, 10% above; SAG-AFTRA's only over scale; New York's 10%; continuing after the agreement ends; Equity's 60-day tail); wages through sim.post and recordWages with the employer, the withholding by authority, the commission, the dues and the work's town; permission to work read for each engagement's dates and kept; OPT's days worked read from the engagements; Equity billed at the degree and an older graduate told what's owed; SAG-AFTRA eligibility from a first principal role, membership from its 30th day, and pro.join_sag. Read by the tax return (figuresFor), OPT's weekly count, Papers' Your US Status, the Work tab, Papers' Your Work And Your Permission and Money's statements.",
+   "implementation": "src/engine/systems/propay.ts (schedulePay, payDue, release, owedAgreement, commissionOn, withholdingOn, eligibilityRead, workEligibilityRefusal, equityJoined, equityOnOpening, sagWorkRefusal, joinSagRefusal, registerProPay: pro.join_sag); src/engine/systems/permission.ts (daysWorkedIn, optRunsOut, the OPT week handler); src/engine/systems/school.ts (setStanding emits pro.equity_joined); src/engine/index.ts (pro.unions); src/ui/career/WorkPane.tsx; src/ui/papers/Documents.tsx (WorkReadPanel).",
+   "consumers": "The ledger (salary transactions into the trust escrow and the payee account, the Agent’s Commission and Union Dues lines); the year's earnings and the return (acting, withheldBy, commission, dues, employers, elsewhere); OPT's idle and worked days; the Work tab; Papers' Permission To Work; net worth's held money.",
+   "uiEvidence": {
+    "needed": true,
+    "have": "tests/propay-screen.test.ts renders the Work tab over real saves (promised, in trust and received, the commission on its own line, still owed after an agreement ended, the unions with Join SAG-AFTRA grayed and why) and Papers' Permission To Work over an OPT holder with work booked; the built app at 1440 and 390 in docs/verification/career-2026-10-20/pay/screens/."
+   },
+   "evidence": [
+    {
+     "kind": "command",
+     "where": "tests/propay.test.ts 'GUARD: no payment twice, across a reload mid-week, a jump past several due dates, and the payday fired twice'",
+     "asserts": "Three weeks paid once each, the transactions those the payments name, the year's wages counted once, nothing more after a second reload.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads; the engagement is written by hand as the work system writes one (TEST SETUP)."
+    },
+    {
+     "kind": "command",
+     "where": "tests/propay.test.ts 'PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the agent the ten: into the trust account on Thursday, on to checking three business days later less exactly $256.60'",
+     "asserts": "The trust account's balance, the release date, $256.60 commission to the cent in the postings, the net into checking, the trust back to zero, the year's commission, and once only across a second pass-on item and a reload.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the agreement is written by hand as the agent's system writes one (TEST SETUP)."
+    },
+    {
+     "kind": "command",
+     "where": "tests/propay.test.ts 'PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it'",
+     "asserts": "pro.join_sag refused before eligibility in its words, $3,244.07 from the bank once eligible, the 30th day's refusal lifted, refused once a member.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    }
+   ],
+   "verdict": "partial",
+   "partialClass": "missing-evidence",
+   "gaps": [
+    "No reader independent of the builder has read it against the standard: this entry is the builder's own reading, made on 2026-10-21.",
+    "The engagements come from the work system, built apart; until integration calls schedulePay at an offer's acceptance, the tests write them by hand."
+   ],
+   "weakTests": [],
+   "todo": "An independent reading at integration, against the integrated commit, with the work system booking the engagements."
+  }
  },
  {
   "on": "2026-10-21",
-  "against": "692edccd",
+  "against": "7bbab80f",
+  "by": "a reader who wrote none of it",
   "id": "career-work",
-  "claim": "Brief 19's work loop: pro.submit sends the portfolio for an open role, read by materialsCheck; pro.prepare moves the sides or the part by a practice brief's steps; pro.tape_audition judges a self-tape by the taped brief's profile; pro.move_audition moves an audition in person once, a day ahead, to a time clear of the calendar; casting draws a callback or the role (pro.casting) from the band, the fit and the field; pro.accept_offer books the work days and writes the pay promised, refused where usWorkAuthorized fails a day; pro.decline_offer settles it; pro.request_outside_work puts the School's request to the dean, decided seven days on; unapproved work in term brings the School's academic warning, then dismissal.",
-  "implementation": "src/engine/systems/projobs.ts (registerProJobs: the pro.postings passage, the pro.reply, pro.audition, pro.tape_due, pro.casting_decision, pro.offer_lapse, pro.work_day, pro.release and pro.school_answer kinds, and the seven commands; their refusals; awayAt read by present() in src/engine/systems/school.ts); src/ui/career/OpportunitiesPane.tsx.",
-  "consumers": "The Career screen's Opportunities tab; What Needs You on Home (the offer's decision); the calendar (auditions and work days, each wanting the player); the School (present() and the class handler read awayAt; setStanding for unapproved work); the work record and the journey (recordWork); the professional credits (addCredit, releaseScreenCredit); the pay's system (the promised entries, wired at integration).",
+  "claim": "Brief 19’s work loop: roles posted each Monday; pro.submit sending the portfolio; pro.prepare on the sides or the part; pro.tape_audition and auditions in person judged; pro.move_audition once; casting reading the band, the fit and the field; pro.accept_offer booking the work days and the promised pay, refused for permission to work per date; pro.decline_offer; pro.request_outside_work decided by the dean; unapproved work in term bringing the warning and dismissal.",
+  "implementation": "src/engine/systems/projobs.ts (registerProJobs, projobs.ts:1161: the postings passage, the pro.* kinds and the seven commands; their refusals; awayAt read by the School’s present()); src/ui/career/OpportunitiesPane.tsx.",
+  "consumers": "The Opportunities tab; What Needs You; the calendar; the School (present(), setStanding); the work record and the journey; the professional credits; the pay (schedulePay, negotiatedAmount).",
   "uiEvidence": {
    "needed": true,
-   "have": "tests/pro-opportunities-screen.test.ts renders the tab over real saves: each control with its command's refusal under it, an F-1 student's refusal at acceptance, booked work with its pay promised, and the controls Locked until Finding Work is read."
+   "have": "tests/pro-opportunities-screen.test.ts renders the tab over saves the clock and commands made: each control grayed with its refusal, the School’s conditions, an F-1 student’s refusal at acceptance, booked work with its pay promised, and the controls Locked until Finding Work; no button is pressed on the rendered screen."
   },
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice'",
-    "asserts": "A posting to an offer, the decision's words, the promised pay keyed by week and never posted, the work days on the calendar with the trip, each day judged, the credit shot then released, and a reload at each stage holding the same record.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’",
+    "asserts": "Posted by the clock, submitted, auditioned, offered, accepted, worked and credited, across reloads.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the casting draw is found over a list of seeds."
+    "independent": true,
+    "problem": "A skilled actor’s levels set by hand; the seed found over a list."
    },
    {
     "kind": "command",
-    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Providence, its rehearsals and nights judged, the credit and the promised weekly pay'",
-    "asserts": "Two rounds each read by casting at its chance, nine weeks promised at LORT C, rehearsal days moving the part, nights judged as performances, the stage credit at the first night.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’",
+    "asserts": "A self-tape taped and offered; the dean’s approval by the clock, read at acceptance; the class days excused.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the casting draw is found over a list of seeds."
+    "independent": true
    },
    {
     "kind": "command",
-    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept'",
-    "asserts": "Each condition held, the dean's approval, the class days excused through present() and the class handler, good standing kept.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept’",
+    "asserts": "Moved clear of the plan, judged then, the plan kept.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
+    "independent": true
    },
    {
     "kind": "command",
-    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY: work taken in term without approval brings the academic warning at its first day, its classes missed unexcused; and a second time, dismissal'",
-    "asserts": "The warning through setStanding, the classes missed, and dismissal the second time.",
+    "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words...’",
+    "asserts": "Refused through the command in eligibilityOf’s words, the save unchanged.",
     "reachesAction": true,
     "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder; the second time starts from a count set by hand."
-   },
-   {
-    "kind": "command",
-    "where": "tests/pro-work.test.ts 'PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words, and can’t ask the School either; nothing changes'",
-    "asserts": "usWorkAuthorized read for the offer's days; the refusal's words; the save the same to the byte.",
-    "reachesAction": true,
-    "checksConsequence": true,
-    "independent": false,
-    "problem": "Written by the builder of the code it reads."
+    "independent": true
    }
   ],
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+   "pro.prepare: no test compares a prepared audition or work day with an unprepared one; a work day ignoring the part’s preparation survived every test (P2).",
+   "The agent’s part of the loop is played only on an agreement written by hand."
   ],
+  "todo": "A twin journey preparing a booked part fully against not at all, read in its work days’ bands.",
+  "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
-  "todo": "An independent reading at integration, against the integrated commit."
+  "builder": {
+   "on": "2026-10-21",
+   "against": "692edccd",
+   "id": "career-work",
+   "claim": "Brief 19's work loop: pro.submit sends the portfolio for an open role, read by materialsCheck; pro.prepare moves the sides or the part by a practice brief's steps; pro.tape_audition judges a self-tape by the taped brief's profile; pro.move_audition moves an audition in person once, a day ahead, to a time clear of the calendar; casting draws a callback or the role (pro.casting) from the band, the fit and the field; pro.accept_offer books the work days and writes the pay promised, refused where usWorkAuthorized fails a day; pro.decline_offer settles it; pro.request_outside_work puts the School's request to the dean, decided seven days on; unapproved work in term brings the School's academic warning, then dismissal.",
+   "implementation": "src/engine/systems/projobs.ts (registerProJobs: the pro.postings passage, the pro.reply, pro.audition, pro.tape_due, pro.casting_decision, pro.offer_lapse, pro.work_day, pro.release and pro.school_answer kinds, and the seven commands; their refusals; awayAt read by present() in src/engine/systems/school.ts); src/ui/career/OpportunitiesPane.tsx.",
+   "consumers": "The Career screen's Opportunities tab; What Needs You on Home (the offer's decision); the calendar (auditions and work days, each wanting the player); the School (present() and the class handler read awayAt; setStanding for unapproved work); the work record and the journey (recordWork); the professional credits (addCredit, releaseScreenCredit); the pay's system (the promised entries, wired at integration).",
+   "uiEvidence": {
+    "needed": true,
+    "have": "tests/pro-opportunities-screen.test.ts renders the tab over real saves: each control with its command's refusal under it, an F-1 student's refusal at acceptance, booked work with its pay promised, and the controls Locked until Finding Work is read."
+   },
+   "evidence": [
+    {
+     "kind": "command",
+     "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice'",
+     "asserts": "A posting to an offer, the decision's words, the promised pay keyed by week and never posted, the work days on the calendar with the trip, each day judged, the credit shot then released, and a reload at each stage holding the same record.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the casting draw is found over a list of seeds."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Providence, its rehearsals and nights judged, the credit and the promised weekly pay'",
+     "asserts": "Two rounds each read by casting at its chance, nine weeks promised at LORT C, rehearsal days moving the part, nights judged as performances, the stage credit at the first night.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the casting draw is found over a list of seeds."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-work.test.ts 'PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept'",
+     "asserts": "Each condition held, the dean's approval, the class days excused through present() and the class handler, good standing kept.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-work.test.ts 'PLAYER JOURNEY: work taken in term without approval brings the academic warning at its first day, its classes missed unexcused; and a second time, dismissal'",
+     "asserts": "The warning through setStanding, the classes missed, and dismissal the second time.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder; the second time starts from a count set by hand."
+    },
+    {
+     "kind": "command",
+     "where": "tests/pro-work.test.ts 'PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words, and can’t ask the School either; nothing changes'",
+     "asserts": "usWorkAuthorized read for the offer's days; the refusal's words; the save the same to the byte.",
+     "reachesAction": true,
+     "checksConsequence": true,
+     "independent": false,
+     "problem": "Written by the builder of the code it reads."
+    }
+   ],
+   "verdict": "partial",
+   "partialClass": "missing-evidence",
+   "gaps": [
+    "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+   ],
+   "weakTests": [],
+   "todo": "An independent reading at integration, against the integrated commit."
+  }
  }
 ]

@@ -598,6 +598,1150 @@
     "partialClass": "none",
     "gaps": []
    }
+  },
+  "school.choose_showcase": {
+   "area": "school",
+   "follows": "school.request_conversion",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "School, Coursework, The Actor Showcase: the faculty’s options, each with its note, and Choose These Scenes (SchoolShowcase.tsx:135), grayed with choiceRefusal’s words; opened by the tutorial’s “Drama School” (tutorial.ts:388); registered by proshowcase.ts:644 (from 2026-10-21)",
+    "reads": "choiceRefusal (proshowcase.ts:361): at the School, in the program’s last term with its showcase begun, not kept out by an Incomplete at the fourth week’s end, the scenes not chosen yet; two of the course’s options (fixed when the term began, offer, proshowcase.ts:252), two different scenes",
+    "changes": "setScenes (proshowcase.ts:378): each scene a piece of DRAM 793b’s coursework, due at the first showcase day, the classmate least worked with as its partner; ShowcaseRecord.scenes with the part, the piece and by you. Unchosen at the fourth week’s end, the faculty choose their first two (decide, proshowcase.ts:414)",
+    "downstream": "The pieces’ preparation, moved by the coursework’s steps and the course’s rehearsal calls (rehearse, proshowcase.ts:452); each showcase day judges each chosen scene (perform, proshowcase.ts:472, judgeWork) into person.work, the journey and pro.showcase.performed; DRAM 793b settled after Los Angeles on its pieces (endShowcase, proshowcase.ts:515; settleShowcaseCourse, :530), which Commencement’s degree reads; the School’s follow-up put on the calendar from the last day played (scheduleShowcaseFollowUp, proagent.ts:859)",
+    "persistent": "Person.pro.showcase.scenes (id, role, chosenAt, assignmentId, by, prep); the pieces in school.coursework.assignments; DRAM 793b’s course record",
+    "explanation": "The panel’s days and calls, the faculty’s note on each scene and part, Not now under the button; the notices The Actor Showcase, You’re In The Actor Showcase and each day’s; the guide’s The Actor Showcase (guide/showcase.ts:27)",
+    "tests": "tests/pro-showcase.test.ts ‘refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice...’ (each refusal in choiceRefusal’s words, the save unchanged to the byte; the two picks made the course’s pieces due in New York, each with a partner; a second choice refused); ‘PLAYER JOURNEY: from the last term’s first day to the morning after Commencement...’ (chosen through the command, rehearsed at the calls the clock stopped at, each chosen scene judged in New York and Los Angeles, the course passed, the School’s follow-up on the calendar and come, the degree conferred); ‘PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out...’ (refused for a student kept out; the faculty’s first two for one who didn’t choose); ‘PLAYER JOURNEY: the same scenes on the same seed, prepared fully against left...’ (the chosen scenes’ preparation moves their band); ‘shows the faculty’s options on the Coursework tab...’ (rendered, Choose These Scenes grayed with its reason)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M13 (the command setting the faculty’s first two in place of the scenes chosen) failed the choice’s test. Not checked: Choose These Scenes pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Choose These Scenes takes two of the faculty’s options, two different scenes, in the last term while no Incomplete keeps the student out, and makes each a piece of DRAM 793b due at the first showcase day; each showcase day judges the scenes chosen, the course is settled on them, and the School’s follow-up comes after. Refused before the last term, for the wrong count, a scene not offered, one scene twice, once chosen, and for a student kept out.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-showcase.test.ts ‘refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-showcase.test.ts ‘PLAYER JOURNEY: from the last term’s first day to the morning after Commencement...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The body kept tended and the table work answered through the command; the dates are the 2029 calendar’s, worked out by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-showcase.test.ts ‘PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The Incomplete is set by hand as a term review leaves one."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-showcase.test.ts ‘shows the faculty’s options on the Coursework tab...’",
+      "reachesAction": true,
+      "checksConsequence": false,
+      "independent": true,
+      "problem": "Renders the options and the grayed button; nothing is pressed."
+     }
+    ],
+    "uiEvidence": "tests/pro-showcase.test.ts renders the School’s Coursework tab (the days, the calls, each option’s notes, Choose These Scenes grayed with Not now) and the Career’s The Way You’re On; the button isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Choose These Scenes isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.set_name": {
+   "area": "school",
+   "follows": "school.choose_showcase",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Portfolio, Your Profile: Professional Name and Use This Name (CareerWorkspace.tsx:166), grayed with nameRefusal’s words; opened by the tutorial’s “Your Career” (tutorial.ts:475); registered by pro.ts:947 (from 2026-10-20)",
+    "reads": "nameRefusal (pro.ts:936): 40 characters at most, letters with spaces, hyphens, apostrophes and periods between them, not the name already in use; an empty name or the display name goes back to the display name",
+    "changes": "Person.pro.name set, or deleted to go back to the display name (pro.ts:947-957); nothing on the clock, no money",
+    "downstream": "profileOf’s name (pro.ts:741), on the Overview and the Portfolio; resumeNow (pro.ts:762), so a résumé is made under it, and resumeBehind (pro.ts:779): a résumé made under another name reads as behind, which materialsCheck (pro.ts:854) says as what Update Your Résumé brings up to date",
+    "persistent": "Person.pro.name; a résumé’s name and keys (Material.name, Material.keys)",
+    "explanation": "The field and its placeholder (the display name); the toast; What’s Missing’s résumé line naming your name as the new one; the guide’s Your Professional Profile (guide/career.ts:116)",
+    "tests": "tests/pro-core.test.ts ‘sets the professional name, refuses one that isn’t a name, and goes back to the display name’ (each refusal in its words, the name trimmed, profileOf’s name after it, back to the display name); ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date’ (after pro.set_name the résumé reads behind on the name in materialsCheck’s words, and the next is made under it); tests/pro-screen.test.ts ‘PLAYER JOURNEY: Portfolio draws the profile, each material and its control, grayed with the command’s own reason under it’ (the field labeled, Use This Name grayed with the refusal)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M1 (resumeNow keyed by the display name, so a name set leaves the résumé up to date) failed the résumé’s journey. Not checked: Use This Name pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Use This Name sets the professional name the profile shows and a résumé is made under, refused for a name over 40 characters, one that isn’t letters, or the one in use; an empty one or the display name goes back to the display name. A résumé made under another name reads as behind until Update Your Résumé.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘sets the professional name, refuses one that isn’t a name, and goes back to the display name’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The School credit that also makes it behind is filed by hand."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-screen.test.ts ‘PLAYER JOURNEY: Portfolio draws the profile, each material and its control, grayed with the command’s own reason under it’",
+      "reachesAction": true,
+      "checksConsequence": false,
+      "independent": true,
+      "problem": "Renders the field and the grayed button; nothing is pressed."
+     }
+    ],
+    "uiEvidence": "tests/pro-screen.test.ts renders the labeled field and Use This Name grayed with nameRefusal’s words; it isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Use This Name isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.headshots": {
+   "area": "school",
+   "follows": "pro.set_name",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Portfolio, Headshots: Book A Headshot Session (4 Hours, $700.00) (CareerWorkspace.tsx:222), grayed with headshotRefusal’s words; opened by “Your Career” (tutorial.ts:475); registered by pro.ts:959 (from 2026-10-20)",
+    "reads": "headshotRefusal (pro.ts:898): four hours free (startRefusal), a session starting from 9 AM to 4 PM, the bank covering $700.00 (spendRefusal, category career); each figure the game’s estimate (HEADSHOTS, pro.ts:433)",
+    "changes": "$700.00 through spend as a work cost (memo Headshot session), the clock four hours on, and a headshot Material with its source, date and contents, numbered among its kind and kept to the last six (addMaterial, keepBounded) (pro.ts:959-974)",
+    "downstream": "materialsCheck (pro.ts:854): no headshots blocks every purpose, two years on they read as out of date; read by the Career screen’s What’s Missing, pro.agent_check (checkRefusal, proagent.ts:515), pro.submit (submitRefusal, projobs.ts:589) and the agent’s breakdowns (agentTries, projobs.ts:814); out of date, his office can ask for new ones (requestable, proagent.ts:416; supplyRefusal, proagent.ts:587)",
+    "persistent": "Person.pro.materials (kind headshot: made, version, cost, source, contains), pro.made; the transaction",
+    "explanation": "The toast; the panel’s Taken (its date, current or out of date), Where They Came From and What’s In Them; What’s Missing; the guide’s Headshots (guide/career.ts:162)",
+    "tests": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance’ (the clock, the balance, the memo, the material, materialsCheck then asking only for a résumé, out of date two years on, across a reload); ‘refuses a session out of a photographer’s hours, while busy, and with the bank short, in words, charging nothing’ (the money taken out by hand); tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made’; tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (the check refused, then asking only for a résumé once the session is had); tests/pro-screen.test.ts ‘PLAYER JOURNEY: once made, each material shows where it came from, when, and what’s in it, and the résumé opens line by line’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M2 (materialsCheck reading no headshots) failed the submission’s journey. Not checked: an office’s request for new headshots once they’re out of date (every request in a test is for a reel), and Book A Headshot Session pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Book A Headshot Session takes four hours and $700.00 from the bank as a work cost, both estimates said, and leaves headshots with where they came from, when and what’s in them; a submission and an approach to the agent need them, and two years on they read as out of date. Refused out of a photographer’s hours, while busy, and with the bank short, charging nothing.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Two years on, materialsCheck is called with a later moment, on the state the command left."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The graduate is made by Commencement brought forward, as the core’s tests make one."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘refuses a session out of a photographer’s hours, while busy, and with the bank short, in words, charging nothing’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The bank emptied by hand."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-screen.test.ts ‘PLAYER JOURNEY: once made, each material shows where it came from, when, and what’s in it, and the résumé opens line by line’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Made through the command, then rendered; the button isn’t pressed."
+     }
+    ],
+    "uiEvidence": "tests/pro-screen.test.ts renders the Portfolio before (Book A Headshot Session grayed with its reason) and after the command (Taken, Where They Came From, What’s In Them; What’s Missing no longer asking); the button isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "An office’s request for new headshots once they’re out of date is never played.",
+     "Book A Headshot Session isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.update_resume": {
+   "area": "school",
+   "follows": "pro.headshots",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Portfolio, Résumé: Make Your Résumé or Update Your Résumé (1 Hour) (CareerWorkspace.tsx:255), grayed with resumeRefusal’s words; opened by “Your Career” (tutorial.ts:475); registered by pro.ts:976 (from 2026-10-20)",
+    "reads": "resumeRefusal (pro.ts:907): refused while the current résumé has everything on the record (resumeBehind empty), and while there isn’t an hour free (startRefusal)",
+    "changes": "A résumé Material made from the record now (resumeNow, pro.ts:762): the name, the unions, the training in true words, the professional credits, the School’s credits as school credits, the special skills, each line with its key; the clock an hour on; numbered and kept to the last six (pro.ts:976-986)",
+    "downstream": "materialsCheck (pro.ts:854): no résumé blocks every purpose, one behind the record says what it lacks (resumeBehind, pro.ts:779); read by the Career screen’s What’s Missing, pro.agent_check, pro.submit and the agent’s breakdowns; a résumé behind is one thing his office can ask for (requestable, proagent.ts:416)",
+    "persistent": "Person.pro.materials (kind resume: made, version, name, source, contains, keys)",
+    "explanation": "The toast; the panel’s Made, Standing (up to date, or what it lacks) and What It Says, line by line; What’s Missing; the guide’s Your Résumé (guide/career.ts:205)",
+    "tests": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date’ (the hour, its lines, refused while up to date, behind once a School credit is filed by hand and the name set, the second under the new name); ‘PLAYER JOURNEY: an existing graduate’s save opens with its record built once...’ (made on a migrated graduate’s save: the degree, Equity, the School credit and a skill); tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing...’; tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’; tests/pro-screen.test.ts ‘PLAYER JOURNEY: once made, each material shows where it came from, when, and what’s in it, and the résumé opens line by line’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M3 (resumeBehind finding nothing) failed the résumé’s journey. Not checked: an office’s request for an up-to-date résumé (every request in a test is for a reel), and Update Your Résumé pressed on the rendered screen; the School credit that makes it behind is filed by hand."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Make Your Résumé or Update Your Résumé takes an hour and makes a résumé from the record (the name, the unions, the training in true words, professional and School credits apart, special skills); refused while it has everything on the record. A submission and an approach need one; one behind the record says what it lacks.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The School credit is filed by hand, as a closed run files it."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: an existing graduate’s save opens with its record built once...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-screen.test.ts ‘PLAYER JOURNEY: once made, each material shows where it came from, when, and what’s in it, and the résumé opens line by line’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Made through the command, then rendered; the button isn’t pressed."
+     }
+    ],
+    "uiEvidence": "tests/pro-screen.test.ts renders the résumé made through the command (Made, Standing, What It Says line by line) and Update Your Résumé grayed while up to date; it isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "An office’s request for an up-to-date résumé is never played.",
+     "Update Your Résumé isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.cut_reel": {
+   "area": "school",
+   "follows": "pro.update_resume",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Portfolio, Reel: Recorded Work To Cut From and Cut A Reel (2 Hours, $250.00) (CareerWorkspace.tsx:312), grayed with reelRefusal’s words; opened by “Your Career” (tutorial.ts:475); registered by pro.ts:988 (from 2026-10-20)",
+    "reads": "reelRefusal (pro.ts:914) on reelSources (pro.ts:804): something recorded; one to four pieces, each once, each among the recorded work and usable (a voice brief has no picture); not the pieces the current reel holds; two hours free; the bank covering $250.00. The recorded work is each brief’s kept self-tapes, the School’s filmed monologues once DRAM 473b is passed and posted, and a screen credit’s footage once released",
+    "changes": "$250.00 through spend as a work cost, the clock two hours on, and a reel Material with its pieces copied in (title, band, date), numbered and kept to the last six (pro.ts:988-1006)",
+    "downstream": "materialsCheck (pro.ts:854) for screen work and representation: no reel, a reel of self-tapes only, newer recorded work since it was cut; what his office has to go on (workSeen, proagent.ts:224, by the reel’s best band) and what’s new to it (caseKeys, proagent.ts:443, a better reel); a missing reel is what his office asks for (requestable, proagent.ts:416), and supplyRefusal (proagent.ts:587) reads one cut since; a submission sends it with screen work (submit, projobs.ts:797)",
+    "persistent": "Person.pro.materials (kind reel: made, cost, pieces, contains)",
+    "explanation": "The toast; the panel’s pieces, a line each; Worth Doing under What’s Missing; the guide’s Your Reel (guide/career.ts:244)",
+    "tests": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it’ (taped through the brief’s commands; the voice tape refused in its words, the time and the money, its pieces, the same pieces and one twice refused, tapes only, a tape taped after it said by title); ‘adds the School’s filmed monologues once DRAM 473b is passed and posted, and a screen credit’s footage once released’ (reelSources called on a course result and a credit set by hand); tests/journey-agent.test.ts ‘PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings...’ (his office asks for the reel that’s missing, the supply refused until one is cut, then sent)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M4 (no reel ever read as tapes only) failed the reel’s journey. Checked less: the filmed monologues and a released credit’s footage are reel sources only by calling reelSources on state set by hand, and no test cuts a reel from either, though the work loop’s journey releases a credit by the clock (tests/pro-work.test.ts); his office’s request for a reel runs only on a hand-built introduction (pro.send_materials’s row); and no submission in a test sends a reel."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Cut A Reel takes two hours and $250.00, estimates said, and cuts a reel only from recorded work: a camera self-tape, the School’s filmed monologues once posted, a released screen credit’s footage; never a night on stage or a voice tape. What’s Missing says a reel of tapes only and newer work since; his office asks for a missing reel and reads one cut.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-core.test.ts ‘PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "materialsCheck is called after the commands, on the state they left."
+     },
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a finished job written by hand."
+     },
+     {
+      "kind": "fixture",
+      "where": "tests/pro-core.test.ts ‘adds the School’s filmed monologues once DRAM 473b is passed and posted, and a screen credit’s footage once released’",
+      "reachesAction": false,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "reelSources called on a course result and a credit set by hand."
+     }
+    ],
+    "uiEvidence": "tests/pro-screen.test.ts renders Cut A Reel grayed with its reason before anything is recorded; no test renders a reel cut, or presses the button.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "The filmed monologues and a released credit’s footage are reel sources only by calling reelSources on state set by hand; no test cuts a reel from either.",
+     "No test renders the panel after a reel is cut, or sends a reel with a submission."
+    ]
+   }
+  },
+  "pro.agent_notice": {
+   "area": "school",
+   "follows": "pro.cut_reel",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, his panel: the notice at the top and I’ve Read This (RepresentationPane.tsx:80), then Read The Notice Again; opened by the tutorial’s “Representation” (tutorial.ts:502); registered by proagent.ts:933 (from 2026-10-21)",
+    "reads": "noticeRefusal (proagent.ts:474): refused once read, saying when it was read and where to read it again",
+    "changes": "The relation begun at discovered with noticeShownAt now, and one discovered event keyed discovered (proagent.ts:933-942)",
+    "downstream": "checkRefusal, referralRefusal and sendRefusal (proagent.ts:515, :545, :571) refuse every other step until it’s read; nextStep and the panel (the notice moves behind Read The Notice Again; How To Reach Him and Check Your Materials appear)",
+    "persistent": "Person.pro.relations[agentId]: stage, since, stageAt, noticeShownAt, history, counts",
+    "explanation": "The notice’s words (content/agents.ts), marked Fictional on the panel; History With His Office; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
+    "tests": "tests/pro-agent.test.ts ‘PLAYER JOURNEY: his panel holds the notice until it’s read, notes it once, and keeps it to read again’ (the check and the send refused before it in their words, the stage, the one keyed event, refused a second time, across a reload); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G1: where he first appears, the notice stands above all else with the fictional line, and once read it stays one press away’ (rendered before and after the command); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M5 (the command leaving noticeShownAt unset) failed the incomplete submission’s journey. Not checked: I’ve Read This pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "I’ve Read This records the fictional notice read, once, and begins the relation; until it’s read every other step with his office is refused, and once read the notice stays behind Read The Notice Again.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-agent.test.ts ‘PLAYER JOURNEY: his panel holds the notice until it’s read, notes it once, and keeps it to read again’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G1: where he first appears, the notice stands above all else with the fictional line, and once read it stays one press away’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The command issued through execute between the two renders."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders the panel with the notice above all else, I’ve Read This open and nothing else offered, then behind Read The Notice Again after the command; the button isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "I’ve Read This isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.agent_check": {
+   "area": "school",
+   "follows": "pro.agent_notice",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, Your Materials For Him: Check Your Materials (RepresentationPane.tsx:148), grayed with checkRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:944 (from 2026-10-21)",
+    "reads": "checkRefusal (proagent.ts:515): the notice read; no approach under way; not passed already for this approach; and materialsCheck’s blocking problems for representation (no headshots, no résumé), said in its words",
+    "changes": "One checked event keyed by the approach (checked:N), its words naming what materialsCheck says would help (a reel, newer headshots); the stage discovered → checked (proagent.ts:944-956)",
+    "downstream": "referralRefusal and sendRefusal (proagent.ts:545, :571) refuse a referral and a send until a check has passed; nextStep says what comes next",
+    "persistent": "The relation’s stage, history and counts",
+    "explanation": "The refusal under the button; What’s Next; History With His Office; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (refused with no headshots and no résumé in materialsCheck’s words, then with no résumé, then passed and noted once, the stage, refused a second time, across reloads); tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’ (a send refused until the check); ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’ (a referral refused until the check); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M6 (a send taken with no check passed) failed the follow-up’s test. The readers that refuse before a check are reached there on a hand-built introduction (a showcase set by hand, finished jobs written by hand), which they refuse before reading. Not checked: Check Your Materials pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Check Your Materials refuses an incomplete approach with what’s missing in practical words, passes once headshots and a résumé are made, notes it once for the approach, and moves the stage to checked; a referral and a send wait for it.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The showcase’s performances set by hand and its follow-up scheduled by calling scheduleShowcaseFollowUp; the send’s refusal before the check reads none of it."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Commands issued through execute between the renders."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders Check Your Materials grayed with materialsCheck’s words, then the stage after the command; the button isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Check Your Materials isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.ask_referral": {
+   "area": "school",
+   "follows": "pro.agent_check",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, How To Reach Him: People You’ve Worked With and Ask For A Referral (RepresentationPane.tsx:117), each job listed with why it can’t refer you where it can’t; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:958 (from 2026-10-21)",
+    "reads": "referralRefusal (proagent.ts:545) on referrersOf (proagent.ts:526): the notice read, a check passed, no approach under way or held by a cooling-off time; a finished engagement whose credit was judged Strong or better (REFERRAL_BAND, an assumption), once a job",
+    "changes": "A referral kept (engagement, by, job, band), the relation’s route set to the referral and its stage introduced, one referred event, and a notice from the person who made it, never from him (proagent.ts:958-973)",
+    "downstream": "sendRefusal (proagent.ts:571) takes a send once introduced; interestOf’s Your Work (workSeen, proagent.ts:224) reads the referring job’s band; caseKeys (proagent.ts:443) counts a referral as something new; nextStep",
+    "persistent": "The relation’s referrals, via, stage and history; the notice",
+    "explanation": "The notice in the referrer’s name; History With His Office; Why It Went This Way’s Your Work; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (the job listed, the referral noted once, the notice in the referrer’s name, a second refused, then a send taken); tests/pro-agent.test.ts ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’ (refused before the check, for a Working job, an unjudged one and one not finished); ‘works out each factor apart, with its level and its words...’ (Your Work reads the referring job’s band, and the answer keeps those reasons); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’ (the job listed with Ask For A Referral open). In every one the finished job is written by hand (finishedJob)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: every gate test that issues it asks for a referral from a finished job written by hand (finishedJob in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts), an Off-Broadway part whose casting office takes submissions only from agents, which the unrepresented actor of those journeys couldn’t have been seen for. The work loop’s journeys finish jobs of the shape referrersOf reads (finish, projobs.ts:1040), an open role’s for an unrepresented actor, but no gate test asks for a referral from one. Mutation M14 (no route set by the referral) failed the incomplete submission’s journey, on that hand-built job."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Ask For A Referral introduces the player to his office from a finished job whose work was judged Strong or better, once a job, in a notice from the person who made it; a send is taken once introduced, and his office’s Your Work reads the job’s band. Refused before the check, while an approach is under way or held, and for a job not finished, unjudged or judged under the bar, each said.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The finished job is written by hand (finishedJob), an Off-Broadway part an unrepresented actor couldn’t have been seen for."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-agent.test.ts ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Each job written by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-agent.test.ts ‘works out each factor apart, with its level and its words...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "interestOf called after the commands; the job written by hand; the seed chosen by reading the game’s own draw."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders People You’ve Worked With with the job and Ask For A Referral open, on a job written by hand; the button isn’t pressed on the rendered screen.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "Every test asks for a referral from a finished job written by hand; no gate test asks for one from a job the work loop booked and finished."
+    ]
+   }
+  },
+  "pro.send_materials": {
+   "area": "school",
+   "follows": "pro.ask_referral",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, Your Materials For Him: Send Your Materials (RepresentationPane.tsx:149), grayed with sendRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:975 (from 2026-10-21)",
+    "reads": "sendRefusal (proagent.ts:571): the notice read; no approach under way; an introduction, the School’s follow-up or a referral, else refused in the agency’s published words (agencyOf(agent).policy.quote); a check passed; no cooling-off time running (a year after a pass, six months after no answer or a declined offer, tooSoon, proagent.ts:492) and something new since the last decision (nothingNew, proagent.ts:504), both assumptions said where they apply",
+    "changes": "The approach counted (sent:N), what was considered kept by key (caseKeys), the cooling-off cleared, the stage sent, and his office’s answer on the clock (pro.agent_reply, two weeks on, a week where the School passed on a request to meet), with its no-answer date six weeks on (proagent.ts:975-996)",
+    "downstream": "The answer (REPLY handler, proagent.ts:1083; answer, :771): interestOf’s seven factors (:292) and the pro.agent draw keyed by the approach (drawOf, :391) decide a request for what’s missing, a meeting, a pass with a year’s hold, or no answer (waiting, then unanswered at six weeks, SILENCE handler, :1103); Why It Went This Way keeps the reasons (keepWhy, :425)",
+    "persistent": "The relation: stage, considered, cooldown, request, meeting, why, history and counts; the scheduled answer",
+    "explanation": "What’s Next with the answer’s usual time and the no-answer date; the notices His Office Asked For More, His Office Asked To Meet You, His Office Passed and No Answer From His Office, each with the fictional line; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’ (the unsolicited send refused in the agency’s quoted words, then taken on a referral, the answer on the clock, nothing from him meanwhile); ‘PLAYER JOURNEY: no answer: waiting once the usual two weeks go by...’; ‘PLAYER JOURNEY: a request for more: what, by when...’; ‘PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through’ (a pass, too soon, nothing new, then a second approach to a meeting); tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’ (after the School’s follow-up, the request to meet answered by a meeting); ‘GUARD: a reload before the answer gives the same answer...’. Every send in a test follows an introduction the game didn’t make in that test",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: every send in a gate test follows an introduction the game didn’t make in that test: a referral from a finished job written by hand (finishedJob, an Off-Broadway part whose casting office takes submissions only from agents, which the unrepresented actor of those journeys couldn’t have been seen for), or the School’s follow-up on performances set by hand and put on the calendar by calling scheduleShowcaseFollowUp in the showcase’s place (tests/pro-agent.test.ts). The showcase’s full journey brings the School’s follow-up by the clock (tests/pro-showcase.test.ts), and the work loop’s journeys finish jobs of the shape a referral reads (finish, projobs.ts:1040), but no gate test goes on from either to the agent. Mutation M15 (no cooling-off time after a pass) failed the pass’s journey, on that introduction; the new credit its later approach needs is written by hand too."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Send Your Materials, once introduced and checked, puts his office’s answer on the clock: a request for what’s missing, a meeting, a pass held a year, or no answer that counts as no after six weeks and holds six months, decided on seven separate factors and a draw that a reload doesn’t change. Refused unsolicited in the agency’s published words, while an approach is under way, too soon after a pass, no answer or a declined offer, and with nothing new to consider.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The referral is from a finished job written by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: no answer: waiting once the usual two weeks go by...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; the seed chosen by reading the game’s own draw."
+     },
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand, and a second job written by hand as the new credit."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The performances set by hand and scheduleShowcaseFollowUp called in the showcase’s place; the follow-up itself runs on the clock."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders Send Your Materials grayed with the agency’s policy for an unsolicited send, and the panel at each stage after the commands; the button isn’t pressed on the rendered screen.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "Every send in a gate test follows an introduction written or scheduled by hand; no test goes on to the agent from the showcase’s own follow-up or from a job the work loop finished."
+    ]
+   }
+  },
+  "pro.supply_material": {
+   "area": "school",
+   "follows": "pro.send_materials",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, Your Materials For Him: Send What His Office Asked For (RepresentationPane.tsx:156), grayed with supplyRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:998 (from 2026-10-21)",
+    "reads": "supplyRefusal (proagent.ts:587): a request standing; each kind asked for made since (a reel cut, headshots newer than the request, a résumé no longer behind)",
+    "changes": "The request’s due item called off, what was considered kept, one supplied event, the request cleared, the stage sent, and the answer on the clock a week on (pro.agent_reply, after the request) (proagent.ts:998-1016)",
+    "downstream": "The answer (REPLY handler, proagent.ts:1083): interestOf with the material sent, Reliability counting what was sent when asked (interestOf, proagent.ts:362-368), a meeting or a pass; not sent by its date, REQUEST_DUE (proagent.ts:1092) notes a problem Reliability counts against, and decides on what it had",
+    "persistent": "The relation’s request, history (supplied), stage and considered",
+    "explanation": "The refusal under the button naming what to make; What’s Next; His Office Asked For More; the guide’s His Office’s Answers And The Meeting (guide/career.ts:348)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had’ (refused until the reel is cut, sent, the answer a week on a meeting; in the twin not sent, the problem noted and read by Reliability), on a referral from a job written by hand",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: the request it answers comes in every gate test from an approach that followed a referral from a finished job written by hand (pro.send_materials’s row says how every send does), and every request in a test is for a reel, so a request for new headshots or an up-to-date résumé, which supplyRefusal reads apart, is never played. Mutation M16 (the stage left at requested once sent) failed its journey."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Send What His Office Asked For sends what was asked for once it’s made, calls off its due date and puts the answer on the clock a week on; Reliability counts it. Not sent by its date, it’s noted as a problem and his office decides on what it had.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; the seed chosen by reading the game’s own draw."
+     }
+    ],
+    "uiEvidence": "Not rendered: no test draws Send What His Office Asked For.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "The request comes from an approach on a hand-built introduction.",
+     "A request for headshots or a résumé is never played.",
+     "The button is never rendered."
+    ]
+   }
+  },
+  "pro.ask_to_move": {
+   "area": "school",
+   "follows": "pro.supply_material",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, The Meeting: Ask To Move (RepresentationPane.tsx:182), grayed with moveRefusal’s words; and at the meeting’s stop, declared with defineStop (proagent.ts:910); opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1018 (from 2026-10-21)",
+    "reads": "moveRefusal (proagent.ts:610): a meeting set and not yet happened, moved fewer than once (AGENT_TIMES.movesAllowed, an assumption)",
+    "changes": "The meeting a week later, its moves counted, its calendar item rescheduled, one meeting-moved event; at the stop the jump carries on (proagent.ts:1018-1032)",
+    "downstream": "The meeting’s handler at its new time (MEETING handler, proagent.ts:1113): kept if present, the decision five days on; missed, the approach closed for a year; Reliability counts meetings kept and missed",
+    "persistent": "The relation’s meeting (at, moved, status); the scheduled meeting",
+    "explanation": "The refusal under the button; The Meeting’s When and Moved; the stop’s Ask To Move and its words; the guide’s His Office’s Answers And The Meeting (guide/career.ts:348)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept’ (the clock stops at the meeting, Ask To Move answered at the stop moves it a week and carries the jump on, a second refused in words with the stop left open, then kept with Go); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why’ (rendered, the command issued, rendered again)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: the meeting it moves comes in every gate test from an approach that followed a referral from a finished job written by hand (pro.send_materials’s row says how every send does). Mutation M17 (the calendar item left at the old time) failed the stop’s journey."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Ask To Move, on the panel or at the meeting’s stop, moves the meeting a week on, once, before it happens, and the meeting is kept or missed at its new time.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; the seed chosen by reading the game’s own draw."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; the command issued through execute between the renders."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders The Meeting before and after the command, Ask To Move then grayed with why; the stop’s choice is answered through answerStop, not a rendered dialog.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "The meeting comes from an approach on a hand-built introduction."
+    ]
+   }
+  },
+  "pro.accept_agreement": {
+   "area": "school",
+   "follows": "pro.ask_to_move",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, The Agreement: every term with its basis, then Accept The Agreement (RepresentationPane.tsx:271), grayed with answerRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1034 (from 2026-10-21)",
+    "reads": "answerRefusal (proagent.ts:630): an agreement offered and still standing (fourteen days, AGREEMENT.offerStandsDays)",
+    "changes": "The agreement accepted with signedAt now and endsAt a year on, the offer’s lapse called off, the relation represented with its agreementId, accepted and represented events, and the term’s end on the clock (pro.agent_term_end) (proagent.ts:1034-1051)",
+    "downstream": "activeAgreement (pro.ts:509), the one rule for represented on a date: read by the work loop’s postings (postingsAt, projobs.ts:401: roles released to agents only), the offers he handles (makeOffer, projobs.ts:943: scale plus ten through negotiatedAmount) and the engagement’s agreementId (projobs.ts:1345), and by the pay’s commission and trust account (owedAgreement, propay.ts:259; commissionOn, propay.ts:326); sendRefusal refuses a send while represented; endRefusal reads it; the term’s end (TERM_END handler, proagent.ts:1165)",
+    "persistent": "Person.pro.agreements (status, signedAt, endsAt); the relation’s stage and agreementId; the scheduled term end",
+    "explanation": "The Agreement’s terms, each marked A Published Rule or The Game’s Own Term; You signed it on and It runs until; the guide’s The Agreement (guide/career.ts:421)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses’ (signedAt, endsAt, the relation represented, activeAgreement after the command, accepted again and a send refused in words); ‘PLAYER JOURNEY: a first-year introduced, met and signed is still enrolled in good standing...’ (signing changes neither standing nor permission to work); ‘PLAYER JOURNEY: by its term, a year on, on its own and said, with nothing more owed’; tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors...’ (the terms rendered before Accept, the signed agreement after); what it changes in opportunities and pay, each on an agreement written by hand: tests/pro-work.test.ts ‘brings agent-only roles only through the agent while an agreement is in force...’ and ‘PLAYER JOURNEY: his breakdown brings a role...’, tests/propay.test.ts ‘PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten...’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial, for two gaps. What accepting changes in later opportunities and payments (brief 19’s G7) is checked only on agreements written by hand (represent in tests/pro-work.test.ts, signed in tests/fakes/career-work.ts), with the fields the command writes; no gate test accepts through the command and then has the work loop post a role through him or the pay take his commission. And the offer it answers comes in every gate test from an approach that followed a referral from a finished job written by hand (pro.send_materials’s row says how every send does). Mutation M18 (no signedAt) failed the agreement’s journey."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Accept The Agreement, while the offer stands, signs it for a year: the relation represented, the term’s end on the clock, and activeAgreement holding it, which brings agent-only roles through him, has him handle offers at scale plus ten on SAG-AFTRA work, and routes pay through the trust account less commission. Signing changes neither the School’s standing nor permission to work.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let lapse, it lapses’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; activeAgreement called after the command."
+     },
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a first-year introduced, met and signed is still enrolled in good standing...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a summer job written by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: his breakdown brings a role...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The agreement and the relation are written by hand (represent), not accepted through the command."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; the command issued through execute."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders every term with its basis before Accept The Agreement, then the signed agreement and the three endings; the button isn’t pressed on the rendered screen.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "What accepting changes in later opportunities and payments is checked only on agreements written by hand.",
+     "The offer comes from an approach on a hand-built introduction."
+    ]
+   }
+  },
+  "pro.decline_agreement": {
+   "area": "school",
+   "follows": "pro.accept_agreement",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, The Agreement: Decline The Agreement (RepresentationPane.tsx:272), grayed with answerRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1053 (from 2026-10-21)",
+    "reads": "answerRefusal (proagent.ts:630): an agreement offered and still standing",
+    "changes": "The agreement declined, the offer’s lapse called off, the approach closed with a six months’ hold and what was considered kept (closeApproach, proagent.ts:460), one declined event (proagent.ts:1053-1065)",
+    "downstream": "sendRefusal’s tooSoon (proagent.ts:492) says the decline and its date until the six months run, then nothingNew; activeAgreement never reads a declined agreement (it has no signedAt)",
+    "persistent": "Person.pro.agreements (status declined); the relation’s stage, cooldown, considered and history",
+    "explanation": "What’s Next and the send’s refusal with the date it can come from; History With His Office; the guide’s The Agreement (guide/career.ts:421)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: offered with every term and its basis...declined, it holds six months...’ (declined through the command: the agreement declined, the stage, the send refused with the date six months on, nothing in force; its twin lets the offer lapse by the clock)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: the offer it answers comes in every gate test from an approach that followed a referral from a finished job written by hand (pro.send_materials’s row says how every send does). Mutation M19 (no hold after declining) failed the agreement’s journey. Not checked: Decline The Agreement pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Decline The Agreement, while the offer stands, declines it and closes the approach for six months, said with the date a new approach can come from; nothing is in force.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: offered with every term and its basis...declined, it holds six months...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders Decline The Agreement open beside Accept; it isn’t pressed on the rendered screen.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "The offer comes from an approach on a hand-built introduction."
+    ]
+   }
+  },
+  "pro.end_agreement": {
+   "area": "school",
+   "follows": "pro.decline_agreement",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Representation, The Agreement: End It By Agreement, End It: No Offer In 90 Days and End It: Under Ten Days’ Work (RepresentationPane.tsx:282), each grayed with endRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1067 (from 2026-10-21)",
+    "reads": "endRefusal (proagent.ts:676): an agreement in force; by agreement at any time (an assumption that his office agrees); Equity’s, 90 days with no offer of covered work through him (lastOffer, proagent.ts:638, from the opportunities), not while working; SAG-AFTRA’s, from 151 days after signing and fewer than ten days of covered work in the last 91 (coveredDays, proagent.ts:646, from the engagements)",
+    "changes": "endAgreement (proagent.ts:1176): the agreement ended now with how, its items called off, the relation ended, one ended event and a notice saying what stays owed (stillOwed, proagent.ts:698)",
+    "downstream": "activeAgreement (pro.ts:509) no longer holds after it, and still holds for a date inside it; the pay’s continuing commission on contracts made while it ran (commissionOn, propay.ts:326) and Still Owed After An Agreement Ended on the Work tab (owedAfterEnding, propay.ts:747); the postings no longer bring agent-only roles",
+    "persistent": "Person.pro.agreements (status ended, endedAt, endedHow); the relation’s stage and history",
+    "explanation": "Each ending’s refusal with the date it can come; Your Agreement Ended with what stays owed; the guide’s The Agreement (guide/career.ts:421)",
+    "tests": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: by agreement, at any time; it says what commission stays owed on a contract made while it ran’ (ended, activeAgreement after, the items called off, stillOwed naming a booking written by hand, refused again); ‘PLAYER JOURNEY: by the player under Equity’s 90 days with no offer...’ (refused before each rule’s date, the 90 days restarted by an offer written by hand, ten covered days on an engagement written by hand holding SAG-AFTRA’s, then each ended); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors...’ (each ending grayed with when it can, then ended); continuing commission on an agreement ended by hand: tests/propay.test.ts ‘PLAYER JOURNEY: continuing commission...’, tests/propay-screen.test.ts ‘PLAYER JOURNEY: once the agreement has ended, Still Owed After An Agreement Ended lists...’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: its agreement comes in every gate test from an approach that followed a referral from a finished job written by hand (pro.send_materials’s row says how every send does); the offers Equity’s 90 days read and the covered days SAG-AFTRA’s count are written by hand; and the pay’s continuing commission is checked on an agreement ended by hand, never by this command. Mutation M20 (Equity’s 90 days not waited for) failed the endings’ journey."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "End It ends the agreement by agreement at any time, under Equity’s 90 days with no offer through him (not while working), or under SAG-AFTRA’s 151 days with fewer than ten days of covered work in the last 91, each refused with its date until it can; the notice says what commission stays owed, and the pay keeps taking it on contracts made while it ran.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: by agreement, at any time; it says what commission stays owed on a contract made while it ran’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On a referral from a job written by hand; the covered booking written by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: by the player under Equity’s 90 days with no offer...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The offer and the covered days written by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/propay.test.ts ‘PLAYER JOURNEY: continuing commission...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The agreement and the engagement written by hand, and ended by hand, not by the command."
+     }
+    ],
+    "uiEvidence": "tests/pro-representation-screen.test.ts renders the three endings, two grayed with their dates, then the ended agreement with what stays owed; no button is pressed on the rendered screen.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "The agreement comes from an approach on a hand-built introduction; the offers and covered days the rules read are written by hand.",
+     "Continuing commission is checked on an agreement ended by hand, not by this command."
+    ]
+   }
+  },
+  "pro.submit": {
+   "area": "school",
+   "follows": "pro.end_agreement",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, Open Calls: Submit Yourself (OpportunitiesPane.tsx:75), grayed with submitRefusal’s words; opened by the tutorial’s “Finding Work” (tutorial.ts:530); registered by projobs.ts:1292 (from 2026-10-21)",
+    "reads": "submitRefusal (projobs.ts:589): an open role posted to the actor (each Monday, the pro.posting decider, postingsAt, projobs.ts:401), not one his agent submits for, one whose office takes actors’ own submissions, before its window closes; eligibilityProblems (projobs.ts:560): Equity membership for a members’ call, the playing ages, a technique the part needs, no booking on its days; materialProblems (projobs.ts:580): headshots and a résumé, and a reel where the office asks for one",
+    "changes": "submit (projobs.ts:797): what was sent kept by id and date, the status submitted, one submitted event, and the casting office’s answer on the clock two days on (pro.reply)",
+    "downstream": "The answer (REPLY handler, projobs.ts:1179; setRound, projobs.ts:844): an audition in person on the calendar with its trip, or a self-tape due, said in a notice with any clash; then the round, casting’s decision (CASTING handler, projobs.ts:1200), an offer or a pass",
+    "persistent": "Person.pro.opportunities[].sent, status and history; the scheduled answer",
+    "explanation": "The toast; Submitted under In Progress; the notice An Audition For or A Self-Tape For; the guide’s Finding Work And Submitting (guide/career.ts:620)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made’ (refused in materialsCheck’s words, then taken, what it sent by kind); ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part...’ (a role posted by the clock, submitted, the audition’s notice two days on, judged, an offer); ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’; ‘says why an agent-only role...’ (refused for an agent-only office, a members’ call without Equity and outside the playing ages, on opportunities written by hand); tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time...’ (submitted, then the audition and the sides’ steps rendered); ‘PLAYER JOURNEY: a first-year’s tab lists the open roles posted...’ (Submit Yourself grayed with what’s missing)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M7 (the casting office’s answer never put on the clock) failed the In Progress test. Not checked: Submit Yourself pressed on the rendered screen; a reel sent with a submission (no open role asks for one, and no test cuts a reel before submitting)."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Submit Yourself sends the portfolio for an open role posted to the actor and puts the casting office’s answer on the clock two days on: an audition in person or a self-tape, said in a notice. Refused without headshots or a résumé (and a reel where asked), for a role only agents can submit for, a members’ call without Equity, outside the playing ages, a technique short, a clashing booking, or after the window closes.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "A skilled actor’s levels set by hand; the seed found over a list."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The command issued through execute, then the clock run and the tab rendered."
+     },
+     {
+      "kind": "fixture",
+      "where": "tests/pro-work.test.ts ‘says why an agent-only role...’",
+      "reachesAction": false,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "submitRefusal called on opportunities written by hand."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders Open Calls with Submit Yourself grayed with what’s missing, and In Progress after the command with the audition and its steps; the button isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Submit Yourself isn’t pressed on the rendered screen: the command is issued through execute.",
+     "No test sends a reel with a submission."
+    ]
+   }
+  },
+  "pro.prepare": {
+   "area": "school",
+   "follows": "pro.submit",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, In Progress and Booked Work: Break It Down, Learn The Lines and Rehearse It On Your Feet, each with its minutes (OpportunitiesPane.tsx:159), grayed with prepareRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1301 (from 2026-10-21)",
+    "reads": "prepareRefusal (projobs.ts:614): sides only once an audition or callback is set, a part only while the work is live; one of the three steps; not done (0.97); lines before rehearsing; awake; on the feet, the energy and no injury; the step’s time free (startRefusal)",
+    "changes": "prepareOn (projobs.ts:1135): the clock on by the step’s time (a part’s twice the sides’), its part of the preparation moved by the brief’s gain at the hour’s focus, halved for each repeat that day, at the ability’s speed; the body exerted; the ability practised",
+    "downstream": "The sides’ preparation, read by the audition’s judge (auditionContext, projobs.ts:885) into the round’s band, which casting reads; half of it carried into the part at booking (projobs.ts:1359); the part’s preparation, read by each work day’s judge (workContext, projobs.ts:1019) into its band, the credit’s best band and a referral’s bar",
+    "persistent": "Opportunity.prep and Engagement.prep (interpretation, memorization, rehearsal)",
+    "explanation": "The toast; Preparing the sides and the part, each step’s percent; the guide’s Auditions And Callbacks (guide/career.ts:670)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’ (the sides prepared by the command before the audition; after booking the part starts from half of them and the command moves it on); ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’; tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time...’ (the three steps rendered, Rehearse It On Your Feet grayed until lines are learned); ‘PLAYER JOURNEY: accepted, the work shows under Booked Work with its days, the part’s preparation and the pay promised, not yet paid’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial: no test compares a prepared audition or work day with an unprepared twin. Mutation P2, a work day’s judge reading no preparation of the part (workContext), survived every test of the work loop and the Opportunities tab, so preparing a booked part changes nothing a test reads. Mutation P1, an audition’s judge reading no preparation of the sides, failed seven journeys, each through the outcome found over its list of seeds (an offer reached, the notices in order), not through an expectation that preparing raises the band."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Break It Down, Learn The Lines and Rehearse It On Your Feet each spend their time and move the sides or the part by a practice brief’s step; the audition’s judge reads the sides, the work days’ judge the part, half the sides carried into the part. Refused with no sides yet, once done, before lines for rehearsal, asleep, too tired or hurt, or without the time.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Checks the preparation moved and carried half into the part; no expectation reads the preparation in a band."
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: a submission moves to In Progress, and the audition shows its time...’",
+      "reachesAction": true,
+      "checksConsequence": false,
+      "independent": true,
+      "problem": "Renders the steps and one grayed with its reason; none is pressed."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders the sides’ three steps with their minutes and percentages, Rehearse It On Your Feet grayed until lines are learned, and Booked Work’s part steps; none is pressed on the rendered screen.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "The part’s preparation is read by no test: a work day ignoring it survived every test (P2).",
+     "The sides’ preparation is held only through seed-chosen outcomes (P1), never by a twin."
+    ]
+   }
+  },
+  "pro.tape_audition": {
+   "area": "school",
+   "follows": "pro.prepare",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, In Progress: Tape It (OpportunitiesPane.tsx:131), grayed with tapeRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1311 (from 2026-10-21)",
+    "reads": "tapeRefusal (projobs.ts:633): a self-tape asked for and still to come, an hour free before it’s due, a craft to tape, awake, the hour free (startRefusal)",
+    "changes": "Judged at once on the taped brief’s profile with the sides’ preparation (auditionContext, projobs.ts:885), the clock an hour on, energy spent; finishRound (projobs.ts:900): the round done with its band and what held it back, kept on the work record, and casting’s decision on the clock",
+    "downstream": "Casting’s decision (CASTING handler, projobs.ts:1200): the round’s band, the role’s fit and the field (castingDraw, projobs.ts:419, the pro.casting decider) → a callback, an offer or a pass; the work record and the journey (recordWork); not taped by its time, the TAPE_DUE handler (projobs.ts:1194) lapses the role",
+    "persistent": "The round (status, band, overall, held, casting); person.work",
+    "explanation": "The toast with its band; the notices; Why It Went This Way under a settled role; the guide’s Auditions And Callbacks (guide/career.ts:670)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’ (a non-union short taped through the command, casting’s offer by the clock, booked and worked); ‘PLAYER JOURNEY: his breakdown brings a role...’ (a role through the agent taped and offered, on an agreement written by hand); ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’ (casting reads a round’s band at the chance its band, fit and field give, for an audition in person); ‘refuses a self-tape with less than its hour before it’s due, said with the time’ (tapeRefusal on an opportunity written by hand); ‘PLAYER JOURNEY: an audition slept through lapses the role, said; a self-tape not in by its time does too’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M8 (the tape judged with no casting decision put on the clock) failed the approved request’s journey. Checked less: that casting reads a round’s band at its chance is asserted on rounds in person, through the same handler; the late tape’s refusal is called on an opportunity written by hand. Not checked: Tape It pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Tape It, with an hour free before the tape is due, judges the self-tape at once on the taped brief’s profile with the sides’ preparation, keeps it on the work record and puts casting’s decision on the clock; casting reads its band with the fit and the field. A tape not in by its time lapses the role.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "A first-year whose levels are set by hand; the seed found over a list."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: his breakdown brings a role...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "On an agreement written by hand."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": false,
+      "problem": "The round’s chance compared with chanceOf, the code’s own figure; an audition in person."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders In Progress with Tape It where the round is a self-tape; it isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Casting’s reading of the band at its chance is asserted on rounds in person only, through the same handler.",
+     "Tape It isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.move_audition": {
+   "area": "school",
+   "follows": "pro.tape_audition",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, In Progress: Ask For Another Time (OpportunitiesPane.tsx:132), grayed with moveRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1326 (from 2026-10-21)",
+    "reads": "moveRefusal (projobs.ts:678): an audition in person to come, not moved before (WORK.movesAllowed), at least a day ahead, and another of casting’s times in the next three weekdays clear of the calendar with the trip (otherTime, projobs.ts:644; clashesAt, projobs.ts:663)",
+    "changes": "The round’s time and the audition’s calendar item moved to that time, its moves counted, one event (projobs.ts:1326-1343)",
+    "downstream": "The audition’s handler at the new time (AUDITION handler, projobs.ts:1185), which judges the round only at the time it holds; the School’s present() (awayAt, projobs.ts:479), so the classes or plan it cleared are kept",
+    "persistent": "The round’s at and moved; the opportunity’s auditionAt or callbackAt; the scheduled audition",
+    "explanation": "The audition’s notice naming the clash and Ask For Another Time; the round’s history; the guide’s Auditions And Callbacks (guide/career.ts:670)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept’ (the clash in the notice, moved to a time clear of the plan, refused a second time, judged at the new time, the plan not missed); ‘PLAYER JOURNEY: a student’s audition in person in term clashes with classes...’ (moved clear of classes or refused in casting’s words; going at the first time counts the classes missed)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M9 (the calendar item left at the first time) failed the clash’s journey. Not checked: Ask For Another Time pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Ask For Another Time, at least a day ahead and once, moves an audition in person to another of casting’s times clear of the calendar with the trip; it’s judged then, and what it cleared is kept. Refused once moved, within a day, and where casting has no clear time.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an audition in person against a plan of your own is said to clash, and Ask For Another Time moves it once to a time clear of it, the plan kept’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: a student’s audition in person in term clashes with classes...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Which branch runs depends on the seed: moved, or refused in casting’s words."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders Ask For Another Time where the round is in person; it isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Ask For Another Time isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.accept_offer": {
+   "area": "school",
+   "follows": "pro.move_audition",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, Offers: Accept The Offer (OpportunitiesPane.tsx:195), grayed with acceptRefusal’s words, the School’s warning under it in term; and What Needs You on Home (requireDecision, projobs.ts:963); opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1345 (from 2026-10-21)",
+    "reads": "acceptRefusal (projobs.ts:688): an offer standing; usWorkAuthorized for every day of the work, said in eligibilityOf’s words; SAG-AFTRA membership from the 30th day after a first job of its (sagWorkRefusal, propay.ts:673); no other booking on its days; out of term, no School call held on them. acceptWarning (projobs.ts:714) says what work in term without approval brings",
+    "changes": "An engagement with its days, its agreement where one’s in force, the part’s preparation from half the sides’, and in term the School’s approval or none; the pay promised a week at a time, never posted (promisedPay, projobs.ts:981), and put on the clock (schedulePay, propay.ts:542, keeping what permission to work read); each work day on the calendar, wanting the player, with its trip (bookDays, projobs.ts:1007); the offer’s lapse called off and the decision resolved; the role settled as booked",
+    "downstream": "Each work day’s handler (WORK_DAY, projobs.ts:1232): worked or missed, judged, the part rehearsed, the credit at the first night or when shot and released later, the run or shoot finished, replaced after misses, unapproved work in term reported (setStanding); each payday (PAY handler, propay.ts:696): paid once, into the trust account less commission where owed or straight to the player, as wages recordWages reports; the School’s present() (awayAt, projobs.ts:479)",
+    "persistent": "Person.pro.engagements (days, pay, prep, school, eligibility, log, creditId) and credits; the scheduled work days and paydays; the ledger",
+    "explanation": "The decision’s detail with the pay’s words and the School’s warning; Booked Work; the notices of each day, payday and credit; the guide’s Offers And Booked Work (guide/career.ts:726)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’ (accepted through the command: the decision resolved, the pay promised deferred and unposted, three shoot days on the calendar with their trip, each judged, the credit shot and released by the clock, across reloads); ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’ (nine weeks promised, the rehearsals and nights judged, the stage credit at the first night, each week paid by the clock with its hours); ‘PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words...’ (refused through the command, the save unchanged); ‘PLAYER JOURNEY (V2): a permitted request...’; ‘PLAYER JOURNEY: work taken in term without approval brings the academic warning...’; ‘PLAYER JOURNEY: a shoot day slept through replaces the actor...’; ‘refuses another booking on the same days...’; tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: accepted, the work shows under Booked Work...’",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M10 (the pay never put on the clock) failed the run’s journey. Checked less: a represented actor’s acceptance (his agreement on the engagement, the pay into the trust account less commission) is played only on an agreement written by hand (pro.accept_agreement’s row); another booking on the same days and the summer’s School call are refused on offers written by hand; the 30th day’s SAG-AFTRA refusal by calling acceptRefusal on membership set by hand. Not checked: Accept The Offer pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Accept The Offer, while it stands and permission to work covers every day, books the work: its days on the calendar, each wanting the player, judged as they come, the credit left, and the pay promised week by week and paid on its days, never posted before. Refused in words for permission, SAG-AFTRA’s 30th day, another booking or a School call held in summer; in term the School’s warning is said first.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "A skilled actor’s levels set by hand; the seed found over a list."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: a shoot day slept through replaces the actor...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: accepted, the work shows under Booked Work...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The offer written by hand; accepted through execute, then rendered."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders the offer with Accept The Offer grayed for an F-1 student and open for a citizen with the School’s warning, and Booked Work after the command; the button isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "A represented acceptance is played only on an agreement written by hand.",
+     "Accept The Offer isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.decline_offer": {
+   "area": "school",
+   "follows": "pro.accept_offer",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, Offers: Decline The Offer (OpportunitiesPane.tsx:196); and What Needs You on Home (requireDecision, projobs.ts:963); opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1377 (from 2026-10-21)",
+    "reads": "An offer standing, else refused: There’s no offer to decline (projobs.ts:1380). It has no refusal function, since the button is drawn only on an offer",
+    "changes": "The offer’s lapse called off, one declined event, the role settled as declined and its decision resolved (settle, projobs.ts:832)",
+    "downstream": "Nothing booked and no lapse to come; the decision gone from What Needs You; the role under Settled; an offer through him still counts as one under Equity’s 90 days (lastOffer, proagent.ts:638)",
+    "persistent": "The opportunity’s status, resolvedAt, outcome and history",
+    "explanation": "The toast; Settled with the outcome; the guide’s Offers And Booked Work (guide/career.ts:726)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked’ (declined through the command on a played offer: declined, no engagement, nothing pending for it, refused a second time; its twin let lapse by the clock)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M11 (the offer’s lapse left on the clock) failed it. Not checked: the decision gone from What Needs You after a decline (checked after a lapse), and Decline The Offer pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Decline The Offer settles the role as declined, calls off its lapse and books nothing; a second decline is refused.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "A skilled actor’s levels set by hand; the seed found over a list."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders Decline The Offer open beside a grayed Accept The Offer; it isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "The decision’s removal from What Needs You is checked after a lapse, not a decline.",
+     "Decline The Offer isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.request_outside_work": {
+   "area": "school",
+   "follows": "pro.decline_offer",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Opportunities, In Term At The School: the School’s conditions, each said, and Ask The School (OpportunitiesPane.tsx:102), grayed with requestRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1389 (from 2026-10-21)",
+    "reads": "requestRefusal (projobs.ts:730): at the School; a role not settled whose days fall in term (inSessionAt, projobs.ts:434); not asked already; good standing (the Bulletin’s); not an F-1 student, whom the School can’t authorize (CPT); an hour free",
+    "changes": "The request kept (first day, working days, class days), an hour on the clock, and the dean’s decision seven days on (pro.school_answer) (projobs.ts:1389-1405)",
+    "downstream": "The dean (SCHOOL_ANSWER handler, projobs.ts:1273): approved where every condition holds (conditionsFor, projobs.ts:521), refused with those that fail, each said; acceptance reads it (the engagement’s school approved, projobs.ts:1360) and acceptWarning says so; approved, the work’s class days excused through present() (awayAt, projobs.ts:479); without approval, the academic warning, then dismissal (reportUnapproved, projobs.ts:1109)",
+    "persistent": "Person.pro.outsideWork (status, decidedAt, why); the engagement’s school",
+    "explanation": "The conditions under In Term At The School; the dean’s notice with each condition; the offer’s warning; the guide’s Work While You’re At The School (guide/career.ts:777)",
+    "tests": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’ (asked through the command, approved by the clock with each condition said, the acceptance’s school approved, the class days excused, the standing kept); ‘PLAYER JOURNEY: a request the dean refuses, said with the condition that failed...’; ‘PLAYER JOURNEY: an F-1 student in term is refused at acceptance in words, and can’t ask the School either...’ (requestRefusal); ‘PLAYER JOURNEY: withdraws through the School...’ (no School rule for a leaver); tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: a first-year’s tab lists the open roles posted...’ (the conditions rendered, Ask The School drawn)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M12 (the acceptance ignoring the dean’s approval) failed the approved journey. Checked less: the F-1’s and the leaver’s refusals are read by calling requestRefusal after the play; the second unapproved booking’s dismissal starts from a count set by hand. Not checked: Ask The School pressed on the rendered screen."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Ask The School puts a request for work in term to the chair and the dean, decided seven days on: approved only where good standing, timeliness, shortness, professional work, no School call and at most two class days all hold, each said; approved, its class days are excused and the work kept in good standing; refused, or never asked, work in term brings the academic warning, then dismissal. Refused out of term, once asked, out of good standing, and for an F-1 student.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "A first-year whose levels are set by hand; the seed found over a list."
+     },
+     {
+      "kind": "command",
+      "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY: a request the dean refuses, said with the condition that failed...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "render",
+      "where": "tests/pro-opportunities-screen.test.ts ‘PLAYER JOURNEY: a first-year’s tab lists the open roles posted...’",
+      "reachesAction": true,
+      "checksConsequence": false,
+      "independent": true,
+      "problem": "Renders the conditions and Ask The School; nothing is pressed."
+     }
+    ],
+    "uiEvidence": "tests/pro-opportunities-screen.test.ts renders In Term At The School with each condition and Ask The School; it isn’t pressed on the rendered screen.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "Ask The School isn’t pressed on the rendered screen: the command is issued through execute."
+    ]
+   }
+  },
+  "pro.join_sag": {
+   "area": "school",
+   "follows": "pro.request_outside_work",
+   "added": "2026-10-21",
+   "row": {
+    "kind": "command",
+    "entry": "Career, Work, Your Unions: Join SAG-AFTRA ($3,244.07) (WorkPane.tsx:169), grayed with joinSagRefusal’s words; opened by the tutorial’s “Your Career” (tutorial.ts:475); registered by propay.ts:730 (from 2026-10-21)",
+    "reads": "joinSagRefusal (propay.ts:681): not a member already; eligible from a first SAG-AFTRA principal role’s first day (a network drama or a Low Budget film, SAG_QUALIFIES, set by the SAG_ELIGIBLE handler, propay.ts:712, and the work day’s unionsFrom, projobs.ts:1120); the bank covering the initiation fee and half a year’s base dues",
+    "changes": "The fee through payFromBank (category dues), membership from now (pro.sag.memberSince), and the next half-year’s base dues billed (addBill, duesBill) (propay.ts:730-740)",
+    "downstream": "sagWorkRefusal (propay.ts:673) lifts the 30th day’s refusal at acceptance (acceptRefusal, projobs.ts:688); duesOn (propay.ts:369) takes 1.575% working dues from SAG-AFTRA pay; the base dues billed each May and November (DUES handler, propay.ts:706); the résumé lists SAG-AFTRA (resumeNow, pro.ts:762), which makes the current one behind",
+    "persistent": "Person.pro.sag.memberSince; pro.unionBills; the transaction",
+    "explanation": "The toast; Your Unions on the Work tab; the notice You Can Join SAG-AFTRA; the guide’s Your Unions (guide/career.ts:567)",
+    "tests": "tests/propay.test.ts ‘PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day...’ (refused before eligibility in its words, eligible by the clock on the job’s first day, $3,244.07 from the bank, the 30th day’s refusal lifted by calling sagWorkRefusal after it, refused once a member, across a reload); ‘refuses Join SAG-AFTRA where the bank can’t cover it, and nothing is charged’ (the money taken out by hand); tests/propay-screen.test.ts ‘PLAYER JOURNEY: a graduate with no work booked reads that work appears here...’ and ‘PLAYER JOURNEY: in a guided life, the Work tab and Join SAG-AFTRA stay shut until...’ (rendered, grayed with why; Locked); tests/pro-work.test.ts ‘GUARD: from the 30th day after a first SAG-AFTRA job began, a SAG-AFTRA role is refused at acceptance until the actor joins...’ (acceptRefusal called on an offer and membership set by hand)",
+    "issue": "Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Partial, for two gaps. Its eligibility comes in every test from an engagement written by hand with its pay put on the clock by calling schedulePay (booked in tests/fakes/career-work.ts): SAG-AFTRA’s qualifying work, the network drama and the Low Budget film, takes submissions only from agents, and no gate test plays representation into such a booking. And what joining changes afterward is read by no test: mutations P3 (no member’s working dues taken from SAG-AFTRA pay) and P4 (no base dues billed on joining) each survived every test of the pay, the Work tab and the work loop; the 30th day’s refusal is lifted only by calling sagWorkRefusal, and at acceptance only on membership set by hand. Mutation M21 (no membership recorded) failed its journey."
+   },
+   "review": {
+    "against": "7bbab80f",
+    "claim": "Join SAG-AFTRA, once a first SAG-AFTRA principal role makes the actor eligible, takes the initiation fee and half a year’s base dues from the bank and makes them a member: SAG-AFTRA work from the 30th day is no longer refused, its pay has working dues taken, and base dues are billed each May and November. Refused before eligibility, once a member, and with the bank short, charging nothing.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/propay.test.ts ‘PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day...’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The engagement written by hand and schedulePay called by the test; sagWorkRefusal called after the command."
+     },
+     {
+      "kind": "command",
+      "where": "tests/propay.test.ts ‘refuses Join SAG-AFTRA where the bank can’t cover it, and nothing is charged’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The engagement written by hand; the bank emptied by hand."
+     },
+     {
+      "kind": "render",
+      "where": "tests/propay-screen.test.ts ‘PLAYER JOURNEY: a graduate with no work booked reads that work appears here...’",
+      "reachesAction": true,
+      "checksConsequence": false,
+      "independent": true,
+      "problem": "Renders Join SAG-AFTRA grayed with why; nothing is pressed."
+     },
+     {
+      "kind": "fixture",
+      "where": "tests/pro-work.test.ts ‘GUARD: from the 30th day after a first SAG-AFTRA job began, a SAG-AFTRA role is refused at acceptance until the actor joins...’",
+      "reachesAction": false,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "acceptRefusal called on an offer and a membership set by hand."
+     }
+    ],
+    "uiEvidence": "tests/propay-screen.test.ts renders Join SAG-AFTRA grayed with joinSagRefusal’s words and Locked in a guided life; it isn’t pressed, and no test renders the Work tab after joining.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": [
+     "Eligibility comes only from an engagement written by hand: SAG-AFTRA’s qualifying work is agent-only, and no test plays representation into it.",
+     "What joining changes afterward is read by no test: working dues (P3) and base dues (P4) survived."
+    ]
+   }
   }
  }
 }
