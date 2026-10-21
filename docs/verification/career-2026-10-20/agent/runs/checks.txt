@@ -87,7 +87,7 @@ And how the long lists begin, where one word does too much of it.
   None. Every long list opens more than one way.
 
 31 in all, across 9 habits.
-1046 files named across 25 docs.
+1047 files named across 25 docs.
 Every one of them is there.
 What SLATE declares, and what nothing reads.
 
@@ -129,7 +129,7 @@ Every draw is owned by a decider, and every decider owns a real one.
 246 countries carry at least one city and the 6 that do not are uninhabited or dissolved; America alone carries 17,342 across all 51 states and the District.
 The gazetteer is public reference data. Every cost figure derived from it is SLATE’s own.
 The world holds.
-Inventory matches the code: 171 commands, 96 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 6 routes.
+Inventory matches the code: 171 commands, 104 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 6 routes.
 docs/DEVMAP.md matches the code: 171 commands.
 docs/TRACEABILITY.md matches the code: 171 commands, 104 scheduled kinds.
 66 capabilities: Missing 0, Partial 11, Implemented 33, Verified 3, Blocked 0, Retired 19. 171 player commands, every one in a live row, and docs/GAMEPLAY-COVERAGE.md agreed with on the 158 both name.
@@ -166,4 +166,4 @@ all: 4413 sources, 37821 strings, 583655 words, 316 engine-speak hits; second pa
 The text inventory holds.
 578 quoted sentences in the guide; 578 the game says (4 of them held by the test that plays the example), 0 it no longer says.
 290 surfaces; 4413 of 4413 sources claimed; 0 problems.
-The completion matrix holds: 689 rows. Completion, by the matrix: 566 of 649 rows in scope Implemented And Verified (87.2%); 79 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md or docs/verification/integration-2026-10-16/completion-matrix.json is behind its sources: run node tools/completion-matrix.mjs

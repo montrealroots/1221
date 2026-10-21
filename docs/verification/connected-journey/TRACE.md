@@ -1150,11 +1150,11 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Action:** `pro.accept_agreement`, `pro.decline_agreement`, `pro.end_agreement`, at Career, Representation, The Agreement (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
 - **Preconditions:**
   - For Accept or Decline, an offer still standing.
-  - For No Offer In 90 Days, 90 days with no real offer of covered work through him, and not while you’re working.
-  - For Under Ten Days’ Work, 151 days from signing, and fewer than 10 days of covered work in the last 91.
+  - For End It: No Offer In 90 Days, 90 days with no real offer of covered work through him, and not while you’re working.
+  - For End It: Under Ten Days’ Work, 151 days from signing, and fewer than ten days of covered work in the last 91.
 - **Costs:**
   - Time: None
-  - Money: Commission on covered work: 10% of gross pay, or 5% on an Equity contract paying $525 a week or less
+  - Money: Commission on covered work: 10% of gross pay, or 5% on an Equity contract paying $525.00 a week or less
 - **State (what changes at once):**
   - Accepting makes him your agent from today. Declining closes the approach.
 - **Consumer (what reads it):**
@@ -1164,6 +1164,6 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **History (kept in the record):**
   - The Agent And How To Reach Him: Accepting, declining and the agreement’s end each go in History With His Office.
 - **Later consequence:**
-  - An offer you don’t answer lapses after its fourteen days.
+  - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
 - **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`

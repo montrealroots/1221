@@ -3007,14 +3007,14 @@
         "pro.decline_agreement",
         "pro.end_agreement"
       ],
-      "effects": "Each moves the relation's stage and notes one event under a stable key. A send puts his office's answer on the clock (pro.agent.reply, fourteen days): a request for more (pro.agent.request_due), a meeting (pro.agent.meeting, a commitment that stops the clock, with Ask To Move), a pass, or no answer (pro.agent.silence, six weeks). A meeting kept brings a decision (pro.agent.decision, five days): an offer (pro.agent.offer_lapse, fourteen days) or a pass. Accepting sets the agreement accepted with signedAt and endsAt and the relation represented (pro.agent.term_end, a year). Ending sets endedAt and endedHow and says what stays owed. The School's follow-up after the showcase (scheduleShowcaseFollowUp, pro.agent.school_follow_up) introduces the player and may pass on a request to meet. No money moves",
+      "effects": "Each moves the relation's stage and notes one event under a stable key. A send puts his office's answer on the clock (pro.agent_reply, fourteen days): a request for more (pro.agent_request_due), a meeting (pro.agent_meeting, a commitment that stops the clock, with Ask To Move), a pass, or no answer (pro.agent_silence, six weeks). A meeting kept brings a decision (pro.agent_decision, five days): an offer (pro.agent_offer_lapse, fourteen days) or a pass. Accepting sets the agreement accepted with signedAt and endsAt and the relation represented (pro.agent_term_end, a year). Ending sets endedAt and endedHow and says what stays owed. The School's follow-up after the showcase (scheduleShowcaseFollowUp, pro.agent_follow_up) introduces the player and may pass on a request to meet. No money moves",
       "persists": "Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
       "readers": [
         "interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way",
         "replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider",
         "rosterFor: the year's room on his list, through the pro.roster decider",
         "activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date",
-        "the clock's stop: Ask To Move, declared with defineStop for pro.agent.meeting"
+        "the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting"
       ],
       "looks": [],
       "routes": [

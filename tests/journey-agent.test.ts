@@ -513,7 +513,7 @@ describe('nothing from him arrives unasked', () => {
     tended(quiet, at(2026, 12, 1, 12));
     expect(notices(quiet)).toEqual([]);
     expect(relationOf(quiet.player, AGENT.id)).toBeUndefined();
-    expect(quiet.universe.scheduled.some((i) => i.kind.startsWith('pro.agent.'))).toBe(false);
+    expect(quiet.universe.scheduled.some((i) => i.kind.startsWith('pro.agent_'))).toBe(false);
     const { sim } = represented('agent-unasked');
     const his = sim.universe.notifications.filter((n) => n.refType === 'pro-agent');
     const sentAt = rel(sim).history.find((e) => e.kind === 'sent')!.at;

@@ -3,8 +3,8 @@
  * the showcase (from 2026-10-21, the owner's brief 19, G1 to G8, W3 and A2; `docs/verification/career-2026-10-20/
  * design.md`, The Agent, The Agent's Interest, The Relationship and The Agreement).
  *
- * **He's a real person.** Jordan Parente is an agent in Stewart Talent's New York legit department, and the game holds
- * only what's published (`content/agents.ts`; `docs/research/career-2026-10-20/agent.md`). Every word and decision of
+ * **He's a real person.** The agent `AGENTS` holds is a real agent in a real agency's New York legit department, and the
+ * game holds only what's published (`content/agents.ts`; `docs/research/career-2026-10-20/agent.md`). Every word and decision of
  * his here is fictional, and each message carries the agent's `fictional` line. He never seeks the player out: the
  * agency warns that people pose as its representatives to approach unrepresented actors (agent.md). So nothing from
  * him arrives unasked: the School's follow-up comes from the School, a referral from the person who made it, and his
@@ -66,14 +66,14 @@ import { countWords, yearOfStudy } from './school';
 // The rules: kinds, times, bars and chances (every one an ASSUMPTION, said where a player reads it)
 // ---------------------------------------------------------------------------------------------------------------------
 
-export const REPLY_KIND = 'pro.agent.reply';
-export const SILENCE_KIND = 'pro.agent.silence';
-export const REQUEST_DUE_KIND = 'pro.agent.request_due';
-export const MEETING_KIND = 'pro.agent.meeting';
-export const DECISION_KIND = 'pro.agent.decision';
-export const OFFER_LAPSE_KIND = 'pro.agent.offer_lapse';
-export const TERM_END_KIND = 'pro.agent.term_end';
-export const FOLLOW_UP_KIND = 'pro.agent.school_follow_up';
+export const REPLY_KIND = 'pro.agent_reply';
+export const SILENCE_KIND = 'pro.agent_silence';
+export const REQUEST_DUE_KIND = 'pro.agent_request_due';
+export const MEETING_KIND = 'pro.agent_meeting';
+export const DECISION_KIND = 'pro.agent_decision';
+export const OFFER_LAPSE_KIND = 'pro.agent_offer_lapse';
+export const TERM_END_KIND = 'pro.agent_term_end';
+export const FOLLOW_UP_KIND = 'pro.agent_follow_up';
 
 /** The Career screen's Representation tab, where every notice of this system sends the player. */
 export const REPRESENTATION_ROUTE = '/workspace/career?tab=representation';
@@ -140,7 +140,7 @@ const bestBand = (bands: readonly (Band | undefined)[]): Band | undefined =>
 /** The agents an approach can be made to: every one in `AGENTS`. */
 export const agentsOpen = (): readonly Agent[] => AGENTS;
 
-/** His office, as a sentence names it: "Jordan Parente’s office at Stewart Talent". */
+/** His office, as a sentence names it: his name and his agency's, "<name>’s office at <agency>". */
 export const officeOf = (agent: Agent): string => `${agent.name}’s office at ${agencyOf(agent).name}`;
 
 /** The relation with an agent, where there is one. */

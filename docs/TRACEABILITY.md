@@ -127,18 +127,18 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `plays.research` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also researchRefusal) | — | — | — | 3 | — |
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 26 | — |
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 35 | journey-agent.test.ts |
-| `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | pro.agent.term_end | 2 | journey-agent.test.ts |
+| `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | pro.agent_term_end | 2 | journey-agent.test.ts |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.ask_to_move` | Verified (journey) | Representation | RepresentationPane.tsx TimeControls.tsx | `systems/proagent.ts` | — (also moveRefusal) | — | — | — | 2 | journey-agent.test.ts |
 | `pro.cut_reel` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also reelRefusal) | — | Yes | reel | 3 | journey-agent.test.ts |
 | `pro.decline_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | — | 1 | journey-agent.test.ts |
-| `pro.end_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also endRefusal) | — | — | pro.agent.decision | 2 | journey-agent.test.ts |
+| `pro.end_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also endRefusal) | — | — | pro.agent_decision | 2 | journey-agent.test.ts |
 | `pro.headshots` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | — | Yes | headshot | 5 | journey-agent.test.ts |
-| `pro.send_materials` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also sendRefusal) | — | — | pro.agent.reply | 3 | journey-agent.test.ts |
+| `pro.send_materials` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also sendRefusal) | — | — | pro.agent_reply | 3 | journey-agent.test.ts |
 | `pro.set_name` | Implemented But Unverified | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also nameRefusal) | — | — | — | 1 | — |
-| `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.agent.reply | 1 | journey-agent.test.ts |
+| `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.agent_reply | 1 | journey-agent.test.ts |
 | `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 5 | journey-agent.test.ts |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 7 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |
@@ -250,14 +250,14 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pension.imss_month` | `systems/imss.ts` | systems/imss.ts | — | Yes | pension.imss_month | 0 |
 | `pension.ss_month` | `systems/socialsecurity.ts` | systems/socialsecurity.ts | — | Yes | pension.ss_month | 2 |
 | `pension.state_payment` | `systems/statepension.ts` | systems/statepension.ts | — | Yes | pension.state_payment | 0 |
-| `pro.agent.decision` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.agent.meeting` | `systems/proagent.ts` | systems/proagent.ts | — | — | pro.agent.decision | 2 |
-| `pro.agent.offer_lapse` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.agent.reply` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.agent.request_due` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.agent.school_follow_up` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 2 |
-| `pro.agent.silence` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.agent.term_end` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
+| `pro.agent_decision` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
+| `pro.agent_follow_up` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 2 |
+| `pro.agent_meeting` | `systems/proagent.ts` | systems/proagent.ts | — | — | pro.agent_decision | 2 |
+| `pro.agent_offer_lapse` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
+| `pro.agent_reply` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
+| `pro.agent_request_due` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
+| `pro.agent_silence` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
+| `pro.agent_term_end` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
 | `school.account_due` | `systems/leave.ts` | systems/leave.ts | — | — | — | 12 |
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 27 |
