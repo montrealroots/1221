@@ -15,10 +15,10 @@
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten",
-  "hash": "74b7e2e395c4",
+  "hash": "7d1aaeef8e4d",
   "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples",
-  "first": "Rewritten And Verified"
+  "evidence": "tests/b20-papers-defects.test.ts (P1: the Permission To Work entry's Status line says Approved, as the row does)",
+  "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
   "status": "Rewritten",
@@ -3039,9 +3039,9 @@
  },
  "src/ui/looks/papers.tsx#top": {
   "status": "Rewritten",
-  "hash": "374b0109f28c",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'a document reported stolen says stolen on its page, and one reported lost says lost' resolves the look",
+  "hash": "88b3bb8d06f0",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-papers-defects.test.ts (P1: an OPT approved before the program ends reads Approved, and its page says the day it starts)",
   "first": "Pending"
  },
  "src/ui/looks/papers.tsx#whatItDoes": {
@@ -3053,9 +3053,9 @@
  },
  "src/ui/papers/Documents.tsx#DocumentList": {
   "status": "Rewritten",
-  "hash": "5ca1d479c36d",
-  "on": "2026-10-20",
-  "evidence": "brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts",
+  "hash": "250fb7571cad",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-papers-defects.test.ts (P1: the Work tab's row reads Approved until the OPT's first day)",
   "first": "Pending"
  },
  "src/ui/papers/Documents.tsx#idCardWords": {

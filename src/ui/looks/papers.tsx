@@ -89,9 +89,14 @@ const lastOf = (number: string): string => number.replace(/\W/g, '').slice(-4);
 
 interface ThePaper { doc: PersonDocument; person: Person }
 
-/** Where it stands now, in a word a person uses. */
-function standingOf(doc: PersonDocument, now: number): 'pending' | 'valid' | 'lost' | 'cancelled' | 'expired' {
+/**
+ * Where it stands now, in a word a person uses. Approved and starting on a later day is its own (from 2026-10-21, brief
+ * 20's papers area): an OPT decided before the program's end runs from the end (`documents.permission`), and until then
+ * this read it as valid, so its page said "It’s in force until …" over the out-of-force words of `whatItDoes`.
+ */
+function standingOf(doc: PersonDocument, now: number): 'pending' | 'approved' | 'valid' | 'lost' | 'cancelled' | 'expired' {
   if (doc.status === 'valid' && doc.expiresAt !== undefined && doc.expiresAt <= now) return 'expired';
+  if (doc.status === 'valid' && doc.issuedAt !== undefined && doc.issuedAt > now) return 'approved';
   return doc.status;
 }
 
@@ -170,6 +175,7 @@ defineLook<ThePaper>('document', {
     const mailed = idCardOnItsWay(doc, sim.now);
     const summary = state === 'pending'
       ? mailed ? `You’ve applied and paid, and the card is on its way. It should arrive by ${formatDate(doc.readyAt!, zone)}.` : `${visit}You’ve applied, and it’s being decided. It should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
+      : state === 'approved' ? `It’s approved, and it starts on ${formatDate(doc.issuedAt!, zone)}.${doc.expiresAt ? ` It runs to ${formatDate(doc.expiresAt, zone)}, and its number ends ${last}.` : ` Its number ends ${last}.`}`
       : state === 'lost' ? `You reported it ${doc.stolen ? 'stolen' : 'lost'}, so the number ending ${last} is canceled.`
         : state === 'cancelled' ? `It’s canceled, so the number ending ${last} is no use to you now.`
           : state === 'expired' ? `It ran out on ${formatDate(doc.expiresAt!, zone)} and no longer counts for anything.`
@@ -207,8 +213,8 @@ defineLook<ThePaper>('document', {
       body: (
         <>
           <p className="small">
-            {issuer} issued it{doc.issuedAt ? ` on ${formatDate(doc.issuedAt, zone)}` : ''}.{' '}
-            {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'You don’t hold it yet, so it doesn’t let you do anything until it arrives.' : ''}
+            {state === 'approved' ? `${issuer} approved it.` : `${issuer} issued it${doc.issuedAt ? ` on ${formatDate(doc.issuedAt, zone)}` : ''}.`}{' '}
+            {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'You don’t hold it yet, so it doesn’t let you do anything until it arrives.' : state === 'approved' ? (doc.kind === 'permit' ? 'It doesn’t let you work until then.' : 'It doesn’t let you do anything until then.') : ''}
             {/* A US state card issued non-verified says so, as the card itself does (from 2026-10-16: a non-citizen’s
                 Connecticut card was marked REAL ID until then, `documents.apply_idcard`). */}
             {doc.realId ? ' It meets REAL ID.' : doc.kind === 'idcard' && doc.issuer.startsWith('us-') && doc.realId === false ? ' It’s marked Not For Federal Identification: it isn’t REAL ID.' : ''}
@@ -216,12 +222,12 @@ defineLook<ThePaper>('document', {
           <div className="grid grid-3">
             <Stat label="Number Ends" value={<span className="mono">{last}</span>} note="The last digits of its number" />
             {/* Not yet while pending (from 2026-10-17), as the row: a replacement carries the lost card’s date until it comes. */}
-            <Stat label="Issued" value={doc.issuedAt && state !== 'pending' ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'Issued directly, with no application on record'} />
+            <Stat label="Issued" value={doc.issuedAt && state !== 'pending' && state !== 'approved' ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'Issued directly, with no application on record'} />
             <Stat
               label={state === 'expired' ? 'Ran Out' : 'Runs Out'}
               value={doc.expiresAt ? formatDate(doc.expiresAt, zone) : 'No End Date'}
               tone={state === 'valid' ? undefined : 'warning'}
-              note={state === 'valid' ? 'In force until then' : state === 'pending' ? (mailed ? 'On its way' : 'Being decided') : 'No longer in force'}
+              note={state === 'valid' ? 'In force until then' : state === 'approved' ? `In force from ${formatDate(doc.issuedAt!, zone)}` : state === 'pending' ? (mailed ? 'On its way' : 'Being decided') : 'No longer in force'}
             />
           </div>
         </>
