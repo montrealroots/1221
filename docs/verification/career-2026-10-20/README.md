@@ -13,8 +13,10 @@ stays paused but for the items this needed (D1 to D9).
 - **The criteria first:** `criteria.md` (60 items, each Open until the game does it and a test fails without it),
   `design.md` (binding: the agent's limits, the pathways, the record, the agreement, the work loop, who builds what) and
   the research in `../../research/career-2026-10-20/`, each fact with its source, the date it was read and its words.
-- **The tested commit** is `728b4972`. Every final run was made on its game. After it came documents, the journeys tool's
-  check 2 (`9afb8548`), and nothing under `src/`.
+- **The tested commits:** the final runs were made first on `728b4972`, then again on the final game once the owner's
+  fictional agent and parts and the walks' fixes had changed `src`: the lanes that read the engine on `63fe7391`, the
+  built app's on `ef2ab8b9`, which changed only `src/ui/shell/TimeControls.tsx` after it. After `ef2ab8b9` came documents
+  and nothing under `src/`.
 
 ## What Was Built
 
@@ -43,10 +45,11 @@ follow-up or a referral), said as the game's own rule. Nothing contacts anyone o
 - **Played as a player plays it** (`playthroughs/REPORT.md`): two lives from the last term's first morning through the
   showcase, the follow-up, Commencement, the meeting, the agreement and a paid job, and an older graduate's save and a
   mid-term save carried on into the career (V1, A1, L1, V16, J6), every notice, stop and press written down
-  (`playthroughs/transcripts/`, played again on `a483247d` once the defects below were settled).
+  (`playthroughs/transcripts/`, played again on `a483247d` once the defects below were settled, and again on `a43b4f8f`
+  with the fictional agent and the parts, life A on seed v1-21 and life B on v1-7, the same on `ef2ab8b9` byte for byte).
 - **The built app** (`app/REPORT.md`): the career's 52 surfaces walked at 1440 and 390 from the keyboard, each held to no
   errors, no sideways scroll, every control named and reached, and its words read in the order a player meets them (V17's
-  automated half, T1). An automated walk isn't a person's look, and V17 waits on the owner's.
+  automated half, T1); walked again on the final build `ef2ab8b9` with the fictional agent and the parts, nothing found. An automated walk isn't a person's look, and V17 waits on the owner's.
 - **Audited by a reader who wrote none of it** (`audit/REPORT.md`): the 22 career commands read against the standard,
   four times. The first reading verified 13 and left 9 partial; the second, once the played journeys landed, 18; the
   third and fourth, against tests written for each gap they named, all 22. Each gap is in its row, rewritten in the past
@@ -71,13 +74,30 @@ On the working branch after the parts merged, each with its test and mutation:
   (I26, I27);
 - the journeys tool's check 2 read both showcase scenes' records for each (a tool, not the game; `9afb8548`).
 
+After the owner's fictional agent (`59da1351`) and parts (`9c3b7ee8`), the app was walked again as each fix landed, five
+walks superseded the same day (`app/REPORT.md`), and what they found was fixed, each with its test and mutation (I28 to
+I51):
+- deferred pay said three ways that couldn't all be true; it's one sentence everywhere (`DEFERRED_WHY`);
+- the agreement's Ending It term left out "through him", which the button's rule reads; it says it now;
+- the Calendar's entry for a meeting didn't say the trip its notice promised;
+- the posting decider signed its sweep with the real agent's old id, so being represented reached nothing (the suite);
+- an actress was judged at two auditions at 11 AM the same day in Hudson and Brooklyn, and a meeting at an audition's
+  hour was kept too; one whose trip meets one gone to is missed now, saying where she was (`attendedAcross`);
+- the stop said nothing of what a clash gives up, and then On The Way counted a stop it doesn't make (`careerClashes`);
+- the film's part Theo, and the brother's Owen, were classmates' given names; they're Felix and Callum, and a test holds
+  that no part is;
+- the built app was blank on `40eab86a`: a constant read at load across the import ring proagent → school → projobs →
+  proagent, which the suite's module runner hides; `tests/module-load-order.test.ts` bundles the app as the build does.
+
 Found outside the career, not changed: every played life's credit card limit rose 20% every six months with no ceiling
 (life A's to $194,736), which belongs to banking and paused brief 18 (`playthroughs/REPORT.md`).
 
 ## The Final Runs
 
-`final-runs/runs/README.md`. Brief 17's lanes again on `728b4972`, each step exit 0, compared with brief 17's file by file
-(`final-runs/numbers-same.json`):
+`final-runs/runs/README.md`. Brief 17's lanes again, first on `728b4972` and then on the final game (`63fe7391` for the
+lanes that read the engine, `ef2ab8b9` for the built app's, 197 steps, each exit 0), each run compared with brief 17's file
+by file (`final-runs/numbers-same.json`). The second run's outputs are the first's in every number but each run's own
+record and one dialog count (24 at 1440 in the normal interface playthrough, brief 17's, where the first run's was 23):
 - **The judge's outputs:** all 35 brief 17's in every number (`final-runs/final/README.md`).
 - **The advice:** brief 17's in every number; F2-A 40 of 40, and F2-A10's rows close as before.
 - **The built app:** 77 of 77 at each width; brief 13's three interface playthroughs every step at each width; brief 14's

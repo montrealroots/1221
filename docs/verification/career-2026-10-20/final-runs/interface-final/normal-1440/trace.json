@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "728b4972",
+ "commit": "ef2ab8b9",
  "uncommitted": 0,
- "startedAt": "2026-10-21T11:41:31.670Z",
+ "startedAt": "2026-10-21T19:27:47.599Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": "1-AlexRivera-mvi1kxl3"
+  "seed": "1-AlexRivera-mvii8jj6"
  },
  "steps": [
   {
@@ -208,7 +208,7 @@
     "Rehearse Alone (grayed, forced)"
    ],
    "said": [
-    "Read The Scene: 7:00 AM → 7:40 AM; Knows The Scene 0% → 56%",
+    "Read The Scene: 7:00 AM → 7:40 AM; Knows The Scene 0% → 57%",
     "refused: Rehearse Alone: Learn some of the lines first."
    ],
    "ok": true,
@@ -222,11 +222,11 @@
    "pressed": [
     "School",
     "Coursework (tab)",
-    "Table Work: A winter afternoon going dark in their Washington Square stu",
-    "Table Work: Husband and wife of a few years; she has been reading his ev",
-    "Table Work: Find out what the analysis said",
-    "Table Work: Her own creed: she has preached that the unconscious can’t b",
-    "Table Work: Cross-examine him: did the doctor know he was married to her",
+    "Table Work: An October morning, the house emptied and the carriages wait",
+    "Table Work: Two people everyone expects to marry, who have never said a ",
+    "Table Work: Hear him ask, without asking him to",
+    "Table Work: Neither of them can say it, and there’s no time left",
+    "Table Work: Look for something in the luggage, to have something to do",
     "Read The Scene",
     "Read The Scene",
     "Read The Scene",
@@ -245,7 +245,7 @@
     "Learn Lines",
     "Learn Lines",
     "Learn Lines",
-    "Learn Lines",
+    "Rehearse Alone",
     "Advance",
     "Tomorrow Morning",
     "School",
@@ -257,11 +257,13 @@
     "Classes: Go",
     "School",
     "Coursework (tab)",
+    "Say Yes",
     "Rehearse Alone",
     "Advance",
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
+    "Rehearsal With Nadia: Go",
     "School",
     "Coursework (tab)",
     "Rehearse Alone",
@@ -296,7 +298,6 @@
     "Rehearse Alone",
     "Rehearse Alone",
     "Rehearse Alone",
-    "Rehearse Alone",
     "Run It With A Reader",
     "Advance",
     "Tomorrow Morning",
@@ -317,18 +318,18 @@
     "Coursework (tab)"
    ],
    "said": [
-    "August 29, 2026 11:55 AM: 21.6 → 28.7 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
-    "August 30, 2026 2:30 PM: 28.7 → 32.4 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines)",
-    "August 31, 2026 8:00 AM: 32.4 → 35.8 (1 steps: Rehearse Alone)",
-    "September 1, 2026 8:00 AM: 35.8 → 38.2 (1 steps: Rehearse Alone)",
-    "September 2, 2026 8:00 AM: 38.2 → 39.9 (1 steps: Rehearse Alone)",
-    "September 3, 2026 8:00 AM: 39.9 → 41.1 (1 steps: Rehearse Alone)",
-    "September 4, 2026 8:00 AM: 41.1 → 41.9 (1 steps: Rehearse Alone)",
-    "September 5, 2026 9:00 AM: 41.9 → 42.9 (2 steps: Rehearse Alone, Rehearse Alone)",
-    "September 6, 2026 12:00 PM: 42.9 → 49 (5 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
-    "September 7, 2026 8:00 AM: 48.9 → 53.8 (1 steps: Run It With A Reader)",
-    "September 8, 2026 8:00 AM: 53.8 → 57.1 (1 steps: Run It With A Reader)",
-    "11 days; Shown Today 21.6 → 57.1"
+    "August 29, 2026 11:55 AM: 20.8 → 27.7 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 2:45 PM: 27.7 → 34.7 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
+    "August 31, 2026 8:00 AM: 34.7 → 37.3 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 37.3 → 39.1 (2 steps: answered yes, Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 43.8 → 45.1 (1 steps: Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 45.1 → 46 (1 steps: Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 46.1 → 46.7 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 46.7 → 47.4 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 11:00 AM: 47.4 → 51.4 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 51.4 → 54.5 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 54.5 → 56.6 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 20.8 → 56.6"
    ],
    "ok": true,
    "date": "September 9, 2026",
@@ -351,9 +352,9 @@
     "Work On The Note"
    ],
    "said": [
-    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Mateo hadn’t rehearsed together. You ran it with a reader 3 times. (With Your Partner: 66% prepared.) You played Henrietta in Suppressed Desires.",
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Nadia had rehearsed together once. You ran it with a reader 3 times. (With Your Partner: 75% prepared.) You played Varya in The Cherry Orchard.",
     "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
-    "feedback: FEEDBACK: WORKING, 57 OF 100 · A NEW NOTE",
+    "feedback: FEEDBACK: WORKING, 56 OF 100 · A NEW NOTE",
     "Shown: Scene Study, Working"
    ],
    "ok": true,
@@ -399,7 +400,7 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Alex Rivera’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE September 9, 2026 LOCATION New Haven NET WORTH $503K PLAYED 0s Version 1.1.0 · Save Format 94 · 24 KB Backup from September 6, 2026 Continue Restore",
+    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE September 9, 2026 LOCATION New Haven NET WORTH $503K PLAYED 0s Version 1.1.0 · Save Format 94 · 25 KB Backup from September 6, 2026 Continue Restore",
     "September 9, 2026 8:00 AM; 6 notices as they were"
    ],
    "ok": true,
@@ -504,6 +505,12 @@
   {
    "step": 11,
    "title": "Classes",
+   "pressed": "Go",
+   "after": "September 1, 2026 7:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Rehearsal With Nadia",
    "pressed": "Go",
    "after": "September 2, 2026 7:00 AM"
   },
@@ -614,5 +621,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-21T11:44:45.504Z"
+ "finishedAt": "2026-10-21T19:31:01.215Z"
 }

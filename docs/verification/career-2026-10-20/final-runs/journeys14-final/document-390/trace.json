@@ -2,14 +2,14 @@
  "playthrough": "document",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "728b4972",
+ "commit": "ef2ab8b9",
  "uncommitted": 0,
- "startedAt": "2026-10-21T12:44:37.356Z",
+ "startedAt": "2026-10-21T19:46:09.864Z",
  "startingPoint": {
   "kind": "save",
   "file": "brief.json",
-  "bytes": 109355,
-  "sha256": "bb84cc4a308125ae398588192dac4ecff6b64d6351638cac0e53fa3327eb1a35",
+  "bytes": 109357,
+  "sha256": "2d0dd1762dfeda25c02eee5a9db22771c61d85b8444101e024f616c28089601c",
   "seed": "sc-0",
   "command": "npx vite-node tools/scenarios.ts -- --scenario brief --seed sc-0 --save SAVEDIR/brief.json"
  },
@@ -766,5 +766,5 @@
    }
   ]
  },
- "finishedAt": "2026-10-21T12:47:34.122Z"
+ "finishedAt": "2026-10-21T19:49:06.623Z"
 }

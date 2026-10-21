@@ -2,14 +2,14 @@
  "playthrough": "health",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "728b4972",
+ "commit": "ef2ab8b9",
  "uncommitted": 0,
- "startedAt": "2026-10-21T12:48:53.727Z",
+ "startedAt": "2026-10-21T19:50:25.943Z",
  "startingPoint": {
   "kind": "save",
   "file": "health.json",
-  "bytes": 109559,
-  "sha256": "4882d408ae2524392384584ba0f1c54c52159d928f2ca8e3fbcf7ad75db840dd",
+  "bytes": 109561,
+  "sha256": "40770daa0e71b8f2e601da62547441774fc2449b102e3e18aebd3e967969fbd7",
   "seed": "sc-0",
   "command": "npx vite-node tools/scenarios.ts -- --scenario health --seed sc-0 --save SAVEDIR/health.json",
   "testSetup": "a fall forced through the game’s own mayHurt, with a chance of one, on the first morning from Saturday 12 September 2026 at nine on which a fall would be a sprained ankle (tools/scenarios.ts, health); the run stopped right after it"
@@ -501,5 +501,5 @@
    }
   ]
  },
- "finishedAt": "2026-10-21T12:50:14.188Z"
+ "finishedAt": "2026-10-21T19:51:46.404Z"
 }

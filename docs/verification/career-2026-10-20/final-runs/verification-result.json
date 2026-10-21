@@ -6,7 +6,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appropriate, but play through normal commands and progression rather than directly assigning successful outcomes.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"How A Journey Is Played\" and \"The Journeys\": each journey played hour by hour through sim.execute and the clock by a public-command player, nothing after creation written by hand except what a profile names TEST SETUP, run to the end the game gives it.",
    "exercised": "tools/journeys.ts (beside tools/lives.ts, with tools/policy.ts's players) played J01 to J23 and F1, F2 on 25 seeds (j13-1 to j13-17, j13-f1, j13-f2), each in four foreground parts under ten minutes, saving and opening every thirty days. 23 journeys and 2 focused scenarios: 22 graduated (J20 and J22 in 2030), J15 and J16 dismissed, J21's life ended by the mortality draw in its third year.",
@@ -73,7 +73,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -83,7 +83,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Include: Beginners. Balanced generalists. Specialists with different strengths. Highly developed or mastered actors. Players who follow advice. Players who partly follow or ignore advice. Players who experience missed work, financial restrictions, or health interruptions.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Journeys\": each kind on two seeds or more, a hand-set start named TEST SETUP in the profile.",
    "exercised": "Beginners J01, J02 (and J03 to J08 as made); generalists J09, J10; specialists J11 (feeling) and J12 (voice and body), each on its generalist's seed and budget; mastered J13, J14; follows J03, J06, J09 to J12; partly J04, J07; ignores J05, J08; missed work J15 to J18, J20; financial restriction J16, J18, J19, J20 and F2; health J21, J22, J23.",
@@ -144,7 +144,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -154,7 +154,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Set expected outcomes before running each scenario.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md committed at 546bb26e, before the harness (baf5fa4f) and before any journey; J23's at 1b7431cc before it ran. A difference is a defect (fixed, tested, run again) or an expectation that was wrong (said so, not moved).",
    "exercised": "Every outcome read against its expectation. Defects: D1 to D5. Expectations that were wrong, each kept as written: J02's path (stage work, a warning), the partly-follower's favorite at the scale's top (J03 to J05), the specialists' 49s rising past 90 and a 90 named in 6 and 15 weeks (J11, J12), stamina as the ability that limits a mastered actor (J13, J14), J21's life ended, F2's plan paid from savings.",
@@ -215,7 +215,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -225,7 +225,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count every dismissal as a defect or force every player to graduate.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, J15 and J16: a concern in December 2026, a warning in April 2027, dismissed at the third review on 10 December 2027, each review warned in its term, every notice saying what was short and what follows; J16's F-1 status ending with no grace, OPT refused for leaving without the degree.",
    "exercised": "Both played to 23 February 2028. Each as written; nothing of the school's after the end; J16 out of status on 10 December 2027 and its cover ended; J15 refused OPT as a citizen. D2 and D4 were found in their notices and fixed.",
@@ -354,7 +354,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -364,7 +364,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "At least some journeys must recover from setbacks through available gameplay.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J17 (warned, then keeps up), J18 (a concern, then keeps up), J20 (a course failed, a repeat, a hold), J22 (a medical leave), J21's illnesses.",
    "exercised": "J17 good after its first-term warning; J18 good at the review after its concern; J20 repeated the year, paid its holds, graduated in 2030; J22 returned from the dean's medical leave and graduated in 2030; J02 back to good after a warning; J19, J21 and F2 back to good after a concern; J23 through the flu and a broken bone.",
@@ -437,7 +437,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -447,7 +447,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Creation choices affect the intended state.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 1: what it reads and what fails it, written before any journey ran.",
    "exercised": "At creation: bank by family, need, citizenship and F-1, discipline from conscientiousness, the title from the pronouns; at the first term, the scholarship or the plan paid. The same seed made again with one choice changed (family across the line of need, conscientiousness +20, home across the US border, pronouns) moved need, discipline by 10, the visa and the title in all 25.",
@@ -514,7 +514,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -524,7 +524,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Classes, preparation, rehearsal, interpretation, and showings connect.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 2: what it reads and what fails it, written before any journey ran.",
    "exercised": "Every showing has its one record with its band; each term's last piece judged again with preparation at nothing comes out lower and complete no lower (a neglect journey's higher); table-work answers and ways of playing on the records; class days and calls kept.",
@@ -627,7 +627,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -637,7 +637,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Attributes and genres develop and influence applicable work.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 3: what it reads and what fails it, written before any journey ran.",
    "exercised": "Every ability at creation and the end; the last twelve pieces judged again at the levels the journey began with (`replayAs`): what rose never lowers the work, and what fell is costed apart (only stamina fell, unworked, `settleTheBody`); genres met known better, unmet ones not (speed 1 for an unmet genre).",
@@ -704,7 +704,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -714,7 +714,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Advice responds to progress and changing circumstances.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 4: what it reads and what fails it, written before any journey ran.",
    "exercised": "Weekly: the first recommendation, level, forecast, standing, next and attention. No run of the same words over four weeks while the level moved a point or the forecast a tenth; no input at full named first; a follower's target moves on once raised; conditions and preparation named where work was judged ill, hurt or unprepared.",
@@ -781,7 +781,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -791,7 +791,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Health, stamina, and energy remain distinct and interact correctly.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 5: what it reads and what fails it, written before any journey ran.",
    "exercised": "Each morning: energy, stamina, condition, stress. Daily changes of energy and stamina never correlate at 0.9 (-0.01 to 0.07 in the 25); illness tolls condition and energy, not stamina; every class day in hospital, laid up or called in sick excused; work ill or hurt recorded so and lower than well work.",
@@ -888,7 +888,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -898,7 +898,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Money, school charges, holds, and payments reconcile.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 6: what it reads and what fails it, written before any journey ran.",
    "exercised": "At every reload and the end: the ledger's audit and the save's laws (0 unbalanced, 0 breaches in all 25); each term's scholarship or plan once by memo; holds only with a sum owed past due, lifted when paid; nothing owed at the end.",
@@ -965,7 +965,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -975,7 +975,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Papers and document status affect the appropriate actions.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 7: what it reads and what fails it, written before any journey ran.",
    "exercised": "Monthly: documents, photo ID in force, the bank's ask of a new customer, OPT's refusal, status and cover. The bank asks only while no photo ID is in force; OPT refused to citizens, before its window and after leaving without the degree, allowed in its window; status ends by its rule's day; a passport applied for is issued and the old cancelled.",
@@ -1042,7 +1042,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1052,7 +1052,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Warnings arrive consistently with later evaluations.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 8: what it reads and what fails it, written before any journey ran.",
    "exercised": "Each coursework warning, missed-class, not-registered and not-passed notice against its term's review: no step down for coursework unwarned in its term, no warning counting above the review, each concern or warning followed by what its notice said, the named cause among the parts short on the pieces it counts.",
@@ -1199,7 +1199,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1209,7 +1209,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Term progression and the school endpoint work.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 9: what it reads and what fails it, written before any journey ran.",
    "exercised": "Each term begun once and in order, each review once, the degree on its rule's day to a student in standing, nothing of the school's done or pending after the end except what `setStanding` keeps on purpose, the standing still after it.",
@@ -1294,7 +1294,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1304,7 +1304,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Saving, exiting, reloading, and continuing preserve the journey.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 10: what it reads and what fails it, written before any journey ran.",
    "exercised": "At every reload (every thirty days and each part) the save serialised, opened and serialised again: 931 reloads, every one the same to the byte; 160 kept results replayed from their inputs in each journey, 0 different.",
@@ -1371,7 +1371,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1381,7 +1381,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Focused Scenarios\": F1 (a passport running out in the first fall), F2 (the spring plan unpayable from checking); F3 and after for a branch no journey reaches.",
    "exercised": "F1 and F2 played to 4 August 2029, every check passed (see focusedScenarios). No F3 was needed: the hold and its late fee (J20), the medical leave (J22), the status ended by a dismissal (J16) and after the program with no OPT (J19), OPT approved (J14, J20 and others) and need at $43 (J18, J19) were reached in complete journeys.",
@@ -1442,7 +1442,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1452,7 +1452,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Previously completed actions remain completed.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Completed stays completed: a piece shown, a course passed or failed, a credit, a document issued is never undone by a term, a reload or a part's boundary.",
    "exercised": "continuity.perJourney[*].undone: 0 in all 25, across 931 reloads.",
@@ -1507,7 +1507,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1517,7 +1517,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Consequences and scheduled events occur once.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Each term's begin notice, review, scholarship and plan, each casting's notice, Commencement once; the coursework warning at most once a term; every scheduled item done at most once.",
    "exercised": "No coursework warning, concern or warning twice in a term in any journey; memos once a term (check 6); nothing of the school's done after the end (check 9) once D1 was fixed.",
@@ -1590,7 +1590,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1600,7 +1600,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Advice acknowledges what has changed.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": A week whose first recommendation's input moved says something different; a week where nothing moved may say the same, counted justified (check 4's rule: no run over four weeks of the same words while its level moved a point or its forecast a tenth).",
    "exercised": "3,741 weekly reads; check 4 passed on all 25; the 7 runs the cruder count flags each kept its words over a move of hundredths, under what the screen shows.",
@@ -1661,7 +1661,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1671,7 +1671,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Repeated feedback reflects the current state.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": A note given again (`recurring`) is on a part short on the piece it's given on, or a choice unsupported there.",
    "exercised": "1,194 recurring notes of 6,607, 0 on a part not short, read as the showing read it (after D4, the round shown).",
@@ -1756,7 +1756,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1766,7 +1766,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Exercises and situations vary where the current catalog supports variation.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Distinct templates, scenes, plays, exercises, moments and targets; the longest run of one, and whether the catalog had another.",
    "exercised": "18 templates in every complete journey, 62 to 64 scenes; a scene comes back only once every fitting one was studied (`scenesFor`, `revisitOf`). The ignorers' one exercise for up to 669 sessions is the profile, not the catalog.",
@@ -1821,7 +1821,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1831,7 +1831,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Repetition is not disguised by changing words alone.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Advice and notices compared with figures and dates taken out: the same words over a changed state, or new words over an unchanged one, counted and read.",
    "exercised": "1,094 advice changes in words alone, each a figure moving under the same recommendation; 99 notices the same twice, each a different piece, day or classmate's moment. None hid the same recommendation under new words.",
@@ -1886,7 +1886,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1896,7 +1896,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just to make a repetition count smaller.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Every repetition recorded with its count and whether it stays justified; nothing in the advice changed to shrink a count.",
    "exercised": "continuityAndFreshness: per journey and in total, each long run read. Nothing in the advice changed.",
@@ -1951,7 +1951,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -1961,7 +1961,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios.",
    "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Each defect fixed with a test that fails before and passes after, labeled as the house does; every journey it could touch run again.",
    "exercised": "D1 to D5 fixed, each with its PLAYER JOURNEY or FIXTURE, every mutation tried in a copy caught (one after the FIXTURE was strengthened); all 25 journeys run again on 0bc829ec, after the last fix.",
@@ -2174,7 +2174,7 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2184,7 +2184,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Maximum-quality prepared mastery.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J13 and J14: a piece shown complete on a sufficient day judged at mastery; one short of it limited by preparation, condition, fit or suitability.",
    "exercised": "J13 43 of 377 pieces at mastery (overall 100), J14 42 of 379. Short of it: preparation 98 and 102, condition 112 and 115, and stamina 124 and 120, the only ability ever a first limit, detrained unworked from 99.4 to 35; put back up, the last twelve come to 95.8 to 100.",
@@ -2245,7 +2245,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2255,7 +2255,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Relevant attribute improvement without unintended regression.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 3: what rose never lowers the work; a fall only by a recorded cause.",
    "exercised": "All 25: the last twelve judged at the starting levels with what rose put back never higher; the only fall stamina's, by `settleTheBody`.",
@@ -2316,7 +2316,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2326,7 +2326,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Genre-specific benefits without unrelated leakage.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 3: genres met known better; a genre never met known no better (speed 1).",
    "exercised": "All 25: the best-known genre's steps faster (1.04 to 1.13), a genre never met (absurdist) at 1.",
@@ -2387,7 +2387,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2397,7 +2397,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Specialist opportunities and valid limitations.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J11 and J12 against J09 and J10 on brief 10's fixed 24 pieces: above where strengths are read, below where weaknesses are.",
    "exercised": "At the setup levels 24 of 24 and 24 of 24; at the final levels 24 of 24 and 21 of 24, the three within 0.39 points. The 49s did rise past some 90s under the advice (an expectation that was wrong).",
@@ -2464,7 +2464,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2474,7 +2474,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Accurate advice forecasts.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J03 to J05 and J06 to J08: the advised inputs rise most for the follower, the ignorer's favorite most for the ignorer, and the follower's last twelve, judged again, highest at the follower's levels.",
    "exercised": "Advised rises 222 / 188.7 / 169.9 and 227 / 223 / 209.1; the last twelve 77.55 / 75.36 / 71.98 and 76.79 / 74.47 / 71.39; the favorite +1.7 / +32.7 / +32.6 and +2.6 / +36.8 / +36.9.",
@@ -2541,7 +2541,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2551,7 +2551,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Stamina's duration, participation, intensity, and recovery behavior.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 5: stamina distinct from energy, its moves by its own rules, illness not tolling it.",
    "exercised": "Daily changes of energy and stamina correlated at -0.01 to 0.07 over 549 to 1,441 mornings; stamina detrains to its floor unworked and limits a mastered actor's work.",
@@ -2612,7 +2612,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2622,7 +2622,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Ledger balance.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 6.",
    "exercised": "At every reload of all 25: 0 unbalanced, 0 breaches.",
@@ -2683,7 +2683,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2693,7 +2693,7 @@
    "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+   "statusNote": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
    "ownersWords": "Save compatibility and historical results.",
    "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 10, and an older save opened through the new opening step.",
    "exercised": "931 reloads the same to the byte; 160 kept results per journey replayed, 0 different; a save from before D3 opens through `writtenUnplayed` (FIXTURE). The schema stayed 94 in both places.",
@@ -2760,7 +2760,7 @@
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "63fe7391",
     "watch": "engine"
    }
   },
@@ -2825,7 +2825,7 @@
     {
      "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json",
      "kind": "measurement",
-     "proves": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+     "proves": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
     }
    ],
    "fixes": [
@@ -2863,10 +2863,10 @@
     }
    ],
    "measured": {
-    "commit": "728b4972",
+    "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+   "statusNote": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
   },
   {
    "id": "B13-UI.setback",
@@ -2917,17 +2917,17 @@
     {
      "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json",
      "kind": "measurement",
-     "proves": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+     "proves": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
     }
    ],
    "fixes": [],
    "mutations": [],
    "gap": "The term’s own review (December 10, 2027) falls after the playthrough ends: whether the warning and the review agree over a whole term is the journeys area’s (section 4).",
    "measured": {
-    "commit": "728b4972",
+    "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+   "statusNote": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
   },
   {
    "id": "B13-UI.specialist",
@@ -2978,16 +2978,16 @@
     {
      "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json",
      "kind": "measurement",
-     "proves": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+     "proves": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
     }
    ],
    "fixes": [],
    "mutations": [],
    "measured": {
-    "commit": "728b4972",
+    "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+   "statusNote": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
   },
   {
    "id": "B13-UI.walkthrough",
@@ -3032,19 +3032,19 @@
     {
      "file": "docs/verification/career-2026-10-20/final-runs/interface-final/summary.json",
      "kind": "measurement",
-     "proves": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+     "proves": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
     }
    ],
    "fixes": [],
    "mutations": [],
    "gap": "How the game feels to play is the owner’s to judge, by playing it: no automated run is human usability approval.",
    "measured": {
-    "commit": "728b4972",
+    "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "statusNote": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+   "statusNote": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
   }
  ],
- "journeys": "Played again on brief 19's commit 728b4972 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
- "interface": "Played again on brief 19's commit 728b4972 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+ "journeys": "Played again on brief 19's commit 63fe7391 (runs19.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 17's final run ended.",
+ "interface": "Played again on brief 19's commit ef2ab8b9 (runs19.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
 }

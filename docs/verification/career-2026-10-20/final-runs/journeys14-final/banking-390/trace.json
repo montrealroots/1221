@@ -2,9 +2,9 @@
  "playthrough": "banking",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "728b4972",
+ "commit": "ef2ab8b9",
  "uncommitted": 0,
- "startedAt": "2026-10-21T12:40:46.988Z",
+ "startedAt": "2026-10-21T19:42:18.612Z",
  "startingPoint": {
   "kind": "save",
   "file": "roundups.json",
@@ -317,5 +317,5 @@
   "fails": [],
   "recorded": []
  },
- "finishedAt": "2026-10-21T12:41:53.511Z"
+ "finishedAt": "2026-10-21T19:43:25.681Z"
 }

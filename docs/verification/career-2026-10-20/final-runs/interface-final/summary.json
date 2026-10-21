@@ -4,12 +4,12 @@
   {
    "playthrough": "normal",
    "width": 1440,
-   "commit": "728b4972",
+   "commit": "ef2ab8b9",
    "trackedChangesWhenRun": 0,
    "startingPoint": {
     "kind": "new life",
     "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-    "seed": "1-AlexRivera-mvi1kxl3"
+    "seed": "1-AlexRivera-mvii8jj6"
    },
    "steps": 14,
    "passed": 14,
@@ -47,7 +47,7 @@
    "sixMissing": [],
    "gameFrom": "August 24, 2026 7:30 AM",
    "gameTo": "September 9, 2026 8:00 AM",
-   "dialogsGoneThrough": 23,
+   "dialogsGoneThrough": 24,
    "errors": 0,
    "overflows": 0,
    "trace": "docs/verification/career-2026-10-20/final-runs/interface-final/normal-1440/trace.json",
@@ -79,12 +79,12 @@
   {
    "playthrough": "normal",
    "width": 390,
-   "commit": "728b4972",
+   "commit": "ef2ab8b9",
    "trackedChangesWhenRun": 0,
    "startingPoint": {
     "kind": "new life",
     "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-    "seed": "1-AlexRivera-mvi1p3e1"
+    "seed": "1-AlexRivera-mviicpnv"
    },
    "steps": 14,
    "passed": 14,
@@ -154,13 +154,13 @@
   {
    "playthrough": "setback",
    "width": 1440,
-   "commit": "728b4972",
+   "commit": "ef2ab8b9",
    "trackedChangesWhenRun": 0,
    "startingPoint": {
     "kind": "save",
     "file": "workload.json",
-    "bytes": 1070615,
-    "sha256": "27d9b9c4247140b0ee85d218c9097d4c9b517cea4aee4b5690f6c4ac554de42e",
+    "bytes": 1070623,
+    "sha256": "d5510996447949223adc3e8155217e2fd2fe0a223fce2bf28d65968ce6a8b700",
     "seed": "sc-0",
     "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
    },
@@ -220,13 +220,13 @@
   {
    "playthrough": "setback",
    "width": 390,
-   "commit": "728b4972",
+   "commit": "ef2ab8b9",
    "trackedChangesWhenRun": 0,
    "startingPoint": {
     "kind": "save",
     "file": "workload.json",
-    "bytes": 1070615,
-    "sha256": "27d9b9c4247140b0ee85d218c9097d4c9b517cea4aee4b5690f6c4ac554de42e",
+    "bytes": 1070623,
+    "sha256": "d5510996447949223adc3e8155217e2fd2fe0a223fce2bf28d65968ce6a8b700",
     "seed": "sc-0",
     "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
    },
@@ -286,13 +286,13 @@
   {
    "playthrough": "specialist",
    "width": 1440,
-   "commit": "728b4972",
+   "commit": "ef2ab8b9",
    "trackedChangesWhenRun": 0,
    "startingPoint": {
     "kind": "save",
     "file": "specialist.json",
-    "bytes": 105757,
-    "sha256": "056b5fad6be7cffcdef57d8238683a2b21bfc71bb8decb9c00e5960ef3c37da2",
+    "bytes": 105759,
+    "sha256": "463a0d908dcab084242c8318c4e38c5664cebd6e091a530ceb7616bdad64d698",
     "seed": "sc-0",
     "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
     "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
@@ -354,13 +354,13 @@
   {
    "playthrough": "specialist",
    "width": 390,
-   "commit": "728b4972",
+   "commit": "ef2ab8b9",
    "trackedChangesWhenRun": 0,
    "startingPoint": {
     "kind": "save",
     "file": "specialist.json",
-    "bytes": 105757,
-    "sha256": "056b5fad6be7cffcdef57d8238683a2b21bfc71bb8decb9c00e5960ef3c37da2",
+    "bytes": 105759,
+    "sha256": "463a0d908dcab084242c8318c4e38c5664cebd6e091a530ceb7616bdad64d698",
     "seed": "sc-0",
     "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
     "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"

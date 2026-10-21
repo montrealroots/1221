@@ -1,27 +1,27 @@
 {
- "commit": "728b49729b297cd6d0ad1879fda73944641053d0",
+ "commit": "63fe73910f6c79b39421b8319bdcb5bf6d2aa1ef",
  "clean": true,
- "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-0-9.json docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-10-19.json docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-20-29.json docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-30-39.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-0-9.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-10-19.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-20-29.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-30-39.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-40-49.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-50-59.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-60-69.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-70-79.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-80-89.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-90-99.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-100-109.json docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-110-119.json --out docs/verification/career-2026-10-20/final-runs/advice/regression-summary.json",
+ "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-0-9.json docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-10-19.json docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-20-29.json docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-30-39.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-0-9.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-10-19.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-20-29.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-30-39.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-40-49.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-50-59.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-60-69.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-70-79.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-80-89.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-90-99.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-100-109.json docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-110-119.json --out docs/verification/career-2026-10-20/final-runs-b/advice/regression-summary.json",
  "files": [
-  "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-0-9.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-10-19.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-20-29.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/f2a-adv-30-39.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-0-9.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-10-19.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-20-29.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-30-39.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-40-49.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-50-59.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-60-69.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-70-79.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-80-89.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-90-99.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-100-109.json",
-  "docs/verification/career-2026-10-20/final-runs/advice/regression-adv-h-110-119.json"
+  "docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-0-9.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-10-19.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-20-29.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/f2a-adv-30-39.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-0-9.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-10-19.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-20-29.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-30-39.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-40-49.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-50-59.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-60-69.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-70-79.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-80-89.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-90-99.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-100-109.json",
+  "docs/verification/career-2026-10-20/final-runs-b/advice/regression-adv-h-110-119.json"
  ],
  "commits": [
-  "728b49729b297cd6d0ad1879fda73944641053d0"
+  "63fe73910f6c79b39421b8319bdcb5bf6d2aa1ef"
  ],
  "cases": 160,
  "roles": {

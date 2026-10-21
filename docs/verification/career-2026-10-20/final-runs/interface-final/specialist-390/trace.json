@@ -2,14 +2,14 @@
  "playthrough": "specialist",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "728b4972",
+ "commit": "ef2ab8b9",
  "uncommitted": 0,
- "startedAt": "2026-10-21T12:38:12.352Z",
+ "startedAt": "2026-10-21T19:39:43.910Z",
  "startingPoint": {
   "kind": "save",
   "file": "specialist.json",
-  "bytes": 105757,
-  "sha256": "056b5fad6be7cffcdef57d8238683a2b21bfc71bb8decb9c00e5960ef3c37da2",
+  "bytes": 105759,
+  "sha256": "463a0d908dcab084242c8318c4e38c5664cebd6e091a530ceb7616bdad64d698",
   "seed": "sc-0",
   "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
   "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
@@ -254,7 +254,7 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 13, 2026 LOCATION New Haven NET WORTH $503K PLAYED 55s Version 1.1.0 · Save Format 94 · 32 KB Backup from September 13, 2026 Continue Restore Ba",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 13, 2026 LOCATION New Haven NET WORTH $503K PLAYED 53s Version 1.1.0 · Save Format 94 · 32 KB Backup from September 13, 2026 Continue Restore Ba",
     "September 13, 2026 2:05 PM"
    ],
    "ok": true,
@@ -322,5 +322,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-21T12:39:22.499Z"
+ "finishedAt": "2026-10-21T19:40:53.421Z"
 }

@@ -1,7 +1,7 @@
 {
- "commit": "728b49729b297cd6d0ad1879fda73944641053d0",
+ "commit": "63fe73910f6c79b39421b8319bdcb5bf6d2aa1ef",
  "clean": true,
- "command": "npx vite-node tools/advice.ts -- --cases adv-v-0..9 --fresh --out docs/verification/career-2026-10-20/final-runs/advice/fresh-adv-v-0-9.json",
+ "command": "npx vite-node tools/advice.ts -- --cases adv-v-0..9 --fresh --out docs/verification/career-2026-10-20/final-runs-b/advice/fresh-adv-v-0-9.json",
  "roles": {
   "fresh": "unseen validation (brief 12): run once, on the tested commit, after the clarified criteria were written"
  },

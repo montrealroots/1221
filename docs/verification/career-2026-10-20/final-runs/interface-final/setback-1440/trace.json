@@ -2,14 +2,14 @@
  "playthrough": "setback",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "728b4972",
+ "commit": "ef2ab8b9",
  "uncommitted": 0,
- "startedAt": "2026-10-21T11:48:13.410Z",
+ "startedAt": "2026-10-21T19:34:29.132Z",
  "startingPoint": {
   "kind": "save",
   "file": "workload.json",
-  "bytes": 1070615,
-  "sha256": "27d9b9c4247140b0ee85d218c9097d4c9b517cea4aee4b5690f6c4ac554de42e",
+  "bytes": 1070623,
+  "sha256": "d5510996447949223adc3e8155217e2fd2fe0a223fce2bf28d65968ce6a8b700",
   "seed": "sc-0",
   "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
  },
@@ -469,5 +469,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-21T11:50:13.335Z"
+ "finishedAt": "2026-10-21T19:36:28.937Z"
 }

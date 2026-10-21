@@ -5,7 +5,18 @@
 verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed. There is no stash and one worktree.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 19's final runs made again on the final game, 2026-10-21: the lanes that read the engine on `63fe7391`, the built
+  app's on `ef2ab8b9`, which changed only `src/ui/shell/TimeControls.tsx` after it; 197 steps, every one exit 0, and every
+  output the first run's but each run's own record and one dialog count (`final-runs/runs/README.md`, Made Again). Until
+  them this said 588 of 658. The row short of the 634 the first run's fold reached is the gate's, its figure from
+  `a6b82e07` until the gate runs on the commit that holds these runs.)
+
+  (The owner's parts, 2026-10-21: "There should be gender neutral and different parts for each genders. We need
+  versatility always." Each part is written for an actor, an actress or either, and only one written for the player or
+  for either is posted to them (`9c3b7ee8`); with the four defects the app's walks found after it, each fixed with its
+  test, it changed `src` again and the matrix still said 588 of 658 until the runs above.)
 
   (The fictional agent, 2026-10-21, at the owner's word, "Let's go ahead and swap in a fictional agent.": Thomas
   Ashgrove of Halberd Talent in the real agent's place. It changed `src/engine`, so the 46 rows brief 19's final runs had
@@ -95,11 +106,25 @@ none of it is in `main`, and nothing is deployed. There is no stash and one work
   59 of 60 Fixed And Verified; V17's person's look at desktop and mobile is the owner's (`PLAYTEST.md` is the route).
 - **Nothing merged or deployed:** merging to `main` and any Base44 deployment wait on the owner.
 - **The agent is fictional** (2026-10-21, the owner's decision: "Let's go ahead and swap in a fictional agent."): Thomas
-  Ashgrove of Halberd Talent, New York legit, neither found as a real agent or agency when checked. Until then he was a
-  real person, Jordan Parente of Stewart Talent, depicted only from what was published; the research on him stays in
-  `docs/research/career-2026-10-20/agent.md` as history. The agent's draws are keyed by his id, so the career journeys'
-  fixed seeds are being found again for the new one (`journey-career` and `journey-career-older` fail until then). No
+  Ashgrove of Halberd Talent, New York legit, neither found as a real agent or agency when checked (`59da1351`). Until
+  then he was a real person, Jordan Parente of Stewart Talent, depicted only from what was published; the research on
+  him stays in `docs/research/career-2026-10-20/agent.md` as history. The agent's draws are keyed by his id, so the career
+  journeys' fixed seeds were found again: life A v1-21, life B v1-7, the older graduate played on to Hester Vane's run,
+  whose casting office refers her (`playthroughs/REPORT.md`, The Fictional Agent, The Parts And The Trips That Meet). No
   save carrying the old id was shipped, so none is migrated.
+- **The parts** (2026-10-21, the owner's word above): eleven in the seven projects, three for either and four each for
+  an actor and an actress, so each is posted every project and kind as often (`content/careerwork.ts`, `writtenFor`);
+  the card says who a part is written for. No part shares a classmate's given name (Owen became Callum and Theo Felix).
+- **What the app's walks found after the swap, each fixed with its test and mutation** (I28 to I51,
+  `integration/mutations.txt`): deferred pay said three ways; the Ending It term without "through him"; the Calendar's
+  entry without the trip; the posting decider signing with the real agent's old id; two auditions at one hour, or an
+  audition and a meeting, both gone to (`attendedAcross`); the stop and On The Way silent on what a clash gives up, then
+  On The Way counting a stop it doesn't make (`careerClashes`, `clashesAhead`); and the built app blank on 40eab86a, a
+  constant read at load across the import ring proagent → school → projobs → proagent, which the suite's module runner
+  hides: `tests/module-load-order.test.ts` bundles `src/main.tsx` as the build does (`tools/load-order.mjs`). Loading
+  `projobs.ts` first in a bundle of its own still stops at coursework's `PARTNER_KIND`: an older hazard in the same ring
+  that no entry the app has reaches, recorded and not changed. The app was walked again on the final build `ef2ab8b9`:
+  52 surfaces at 1440 and 390, nothing found (`app/REPORT.md`).
 - **Found outside the career, for the owner, not changed:** every played life's credit card limit rose 20% every six
   months with no ceiling (life A's to $194,736, `credit.ts`'s six-month review), which belongs to banking and paused
   brief 18 (`playthroughs/REPORT.md`, Played Again On The Settled Branch).

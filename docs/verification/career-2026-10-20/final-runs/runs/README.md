@@ -1,6 +1,8 @@
 # Brief 19's Final Runs, 2026-10-21
 
-These are brief 17's final runs again, on brief 19's tested code, `728b4972`:
+These are brief 17's final runs again, on brief 19's tested code: first on `728b4972`, then again on the final game,
+`63fe7391` for the lanes that read the engine and `ef2ab8b9` for the built app's (Made Again, below), whose outputs
+these are:
 - the build, the regenerated scenario saves, and the built app at 1440 and 390;
 - the long runs and the mastery plans;
 - the advice's fresh set again, and its regression set;
@@ -17,7 +19,7 @@ read "measured before what it reads last changed"). Brief 19 changed play on pur
 17's numbers but the judge's, which no part of brief 19 was meant to move. They're compared with brief 17's file by file
 (`../numbers-same.py`, `../numbers-same.json`), and each difference is said where it starts.
 
-## How They Ran
+## How They Ran The First Time, On `728b4972`
 
 They ran in clones of the branch, one per lane, through `runs19.sh`, which is brief 17's `runs17.sh` writing to brief 19's
 folder. `queue19.sh` ran the lanes four at a time, then the journeys' compare (JRC) and the judge's merge (MF) once
@@ -32,7 +34,8 @@ their parts were done, and `collect19.sh` gathered them here.
   left none, and ran again in full.
 - **The trees:** each lane's `exits-<lane>.txt` starts with its commit and "0 tracked files uncommitted", but the
   journeys' (below). The judge's `../final/exits.txt` counts one: its lanes' own `runs/` folder, which isn't tracked.
-- **Each step's command and exit** is in `exits-<lane>.txt`. Every one exit 0.
+- **Each step's command and exit** was in `exits-<lane>.txt`, in `at-728b4972/` since the lanes were run again (below),
+  the judge's (M1 to M4, MF) and the acting area's (J) still here. Every one exit 0.
 
 **The journeys played again** (`journeys-again19.sh`), from 13:01 UTC, in the clones of `728b4972`, with
 `tools/journeys.ts`'s check 2 reading each piece's own record where two of one title are shown at one moment. The first
@@ -41,13 +44,37 @@ shown together, so each read both records (`9afb8548`). That tool isn't the game
 one file. The replay passed 24 of 25: F1's two scenes scored the same, 61.8, so the score couldn't tell their records
 apart either. The check was made to pair such pieces one to one, a record more than its pieces still failing (`a9654e24`),
 and F1 alone was played again with it, from 13:46 UTC, then the compare and summary (`journeys-f1-again19.sh`, its exits
-in `exits-F1-again.txt`). The first play's exits, summary and compare are in `../journeys-first-play/`.
+in `at-728b4972/exits-F1-again.txt`). The first play's exits, summary and compare are in `../journeys-first-play/`.
 
 `figures.py` reads each figure from these outputs into `figures.json`. `../../../integration-2026-10-16/criteria.py`
 reads that for the matrix, `../verify.py` reads the journeys' and the interface's results into
 `../verification-result.json`, and `../advice/close.py` the advice's four rows into `../final-result.json`. The gate ran
 after the runs, on the commit `gate.txt` names on its first line (`a6b82e07`), with only documents and the journeys tool
 changed after `728b4972`: exit 0, 421 of 421 test files and 5,080 of 5,080 tests, none skipped, and all 21 checks.
+
+## Made Again On The Final Game, 2026-10-21
+
+After the first run the owner swapped in a fictional agent for the real one (`59da1351`) and asked for parts written for
+an actor, an actress or either (`9c3b7ee8`); the app's walks then found two auditions at one hour both judged
+(`a43b4f8f`), the stop silent on what a clash gives up (`40eab86a`), the build blank from a constant read across an
+import ring (`63fe7391`), and On The Way counting a stop it doesn't make (`ef2ab8b9`). Each changed `src`, so every lane
+here but the judge's (M1 to M4, MF) and the acting area's (J), which read nothing that changed, was run again:
+- **Two commits, one game:** the lanes that read the engine alone (B, C, D, ADVF, ADVR, JR1 to JR3, JRC) on `63fe7391`,
+  and the built app's (A, UI) on `ef2ab8b9`, which changed only `src/ui/shell/TimeControls.tsx` after it. Each lane's
+  `exits-<lane>.txt` starts with its commit and "0 tracked files uncommitted".
+- **Started three times:** on `59da1351`, `9c3b7ee8` and `40eab86a`, each stopped when a fix changed `src` (the last
+  because its build was blank); none of their outputs are here, their clones removed. `queue19c.sh` ran this one, with
+  `runs19b.sh` writing to `final-runs-b/` in each clone, since a clone of the branch holds the first run's outputs in
+  `final-runs/`; `collect19c.sh` gathered them here and moved the first run's exits to `at-728b4972/`.
+- **Every step exit 0:** 197 steps across the eleven lanes.
+- **Against the first run:** every output the same, byte for byte, but each run's own record (its commit, its clean
+  tree, its seconds) and one count: the interface's normal playthrough at 1440 went through 24 dialogs, where the first
+  run's went through 23 and brief 17's 24; at 390, 25 both times. Not traced. The lives, the workload, the plans, the
+  variety and freshness runs, the advice's batches, the brief 14 journeys and the 25 journeys read as the first run's:
+  whatever the agent's swap, the parts and the clash fixes moved inside these lives, nothing these runs record moved
+  with it. Why not was not traced.
+- **Against brief 17** (`../numbers-same.json`): as the first run (below), the journeys' differences each the first
+  run's.
 
 ## The Outputs
 
@@ -63,6 +90,6 @@ changed after `728b4972`: exit 0, 421 of 421 test files and 5,080 of 5,080 tests
 | `freshness.json` | `tools/freshness.ts --months 4 --seeds fr-0,fr-1` | brief 17's in every number |
 | `../advice/` | brief 17's advice batches, fresh and held out, then `--summarize`; `--cases tuning` | brief 17's in every number (only each run's commit and seconds differ): F2-A 40 of 40; F2-A10 (f), (h), (c) and the held-out set close as in brief 17 (`../final-result.json`) |
 | `../final/` | `../../../decisions-2026-10-16/measure.sh <out> <part>`, 23 parts in lanes M1 to M4 and MF; the acting area's in lane J | every JSON file brief 17's in every number (`../final/README.md`) |
-| `../interface-final/` | `node tools/playthroughs-ui.mjs <normal\|setback\|specialist> <1440\|390> <saves> <out>`, then `summary.py` | normal 14 of 14, setback 9 of 9, specialist 11 of 11, at each width, as in brief 17. The dialogs the normal playthrough went through differ, 23 at 1440 and 25 at 390 where brief 17's were 24 at each, the clock's dialogs being brief 19's (D1 to D5) |
+| `../interface-final/` | `node tools/playthroughs-ui.mjs <normal\|setback\|specialist> <1440\|390> <saves> <out>`, then `summary.py` | normal 14 of 14, setback 9 of 9, specialist 11 of 11, at each width, as in brief 17. The dialogs the normal playthrough went through: 24 at 1440 and 25 at 390, where brief 17's were 24 at each, the clock's dialogs being brief 19's (D1 to D5); the first run on `728b4972` went through 23 at 1440 |
 | `../journeys14-final/` | `node tools/playthroughs-ui.mjs <banking\|document\|health> <1440\|390> <saves> <out>` | banking 10 of 10, document 8 of 8 and health 10 of 10 at each width. Banking was 9 of 10 in brief 17: its step 8 asks One Week from a Friday evening and expects On The Way to ask first (brief 14's `journeys-3`), and it passes now, after brief 19's clock work (D1 to D5), which brief 18 had named for it |
 | `../journeys-final/` | `tools/journeys.ts`, each of brief 13's 25 journeys in four parts, then `--compare` and `--summarize` | as played again (above): 25 of 25 played to the end, all ten checks passed in each, each ending as brief 17's (`../verify.py`). Parts 1 and 2, to 1 June 2028, are brief 17's in every number but the run's own record, the notices' counts and the measures of words; each journey's notices first differ on the last term's first day, at the Actor Showcase (17 of 22), or at an understudy's night on now named for its part (4), or, in J01, at a classmate's request to rehearse in October 2027 that brief 17's life had and this one's didn't, not traced; 3 are brief 17's notice for notice |
