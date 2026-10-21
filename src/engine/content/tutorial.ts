@@ -55,7 +55,7 @@ import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE
 import { BAND_LABEL } from '../systems/coursework';
 import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
 import { PAY as PRO_PAY, sagJoinUsd } from '../systems/propay';
-import { AGREEMENT as PRO_AGREEMENT, UNIONS as PRO_UNIONS } from './careerwork';
+import { AGREEMENT as PRO_AGREEMENT, AUDITION_TOWNS as PRO_AUDITION_TOWNS, UNIONS as PRO_UNIONS } from './careerwork';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
 import { OUTSIDE_WORK as PRO_OUTSIDE, WORK as PRO_WORK } from '../systems/projobs';
 import { BRIEF } from '../systems/briefs';
@@ -511,7 +511,7 @@ export const CHAPTERS: readonly Chapter[] = [
       `The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
       'Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.',
       'To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.',
-      `${counted(PRO_WORK.replyDays, 'day').replace(/^./, (c) => c.toUpperCase())} later the casting office answers with an audition: in person in New York or Providence at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.`,
+      `${counted(PRO_WORK.replyDays, 'day').replace(/^./, (c) => c.toUpperCase())} later the casting office answers with an audition: in person in ${PRO_AUDITION_TOWNS} at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.`,
       `Before it, prepare the sides with ${PRO_STEPS}, the way you prepare a practice brief. For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.`,
       'If an audition clashes with something on your calendar, the notice says so. Press Ask For Another Time at least a day ahead, and casting moves it once, to a time it has that’s clear of your calendar.',
       'Casting decides from how your audition went, how well the role suits you and how many other actors it saw. Some roles call you back first. A strong audition raises your chance without making it certain, and a role that suits you can go your way before you’re at your best.',

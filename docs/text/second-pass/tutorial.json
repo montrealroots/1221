@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "c79cfd51ea93",
+  "hash": "91cd48fd0253",
   "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

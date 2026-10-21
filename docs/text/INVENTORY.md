@@ -9,26 +9,26 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 1327 | 15854 | 7 | 58 | 269 | 0 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 548 | 15008 | 0 | 31 | 20 | 0 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 548 | 15004 | 0 | 31 | 20 | 0 | 0 |
 | Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 289 | 1892 | 17560 | 0 | 264 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 289 | 1892 | 17556 | 0 | 264 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 196 | 1119 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 195 | 758 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4542 | 38758 | 593682 | 316 | 1388 | 3154 | 0 | 0 |
+| **All** | 4542 | 38758 | 593674 | 316 | 1388 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 119 | 9954 | 94 | 25 | 0 | 0 |
+| career | 119 | 9950 | 94 | 25 | 0 | 0 |
 | career-agent | 54 | 2671 | 54 | 0 | 0 | 0 |
 | career-pay | 30 | 1238 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
@@ -42,7 +42,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | papers | 475 | 56967 | 106 | 369 | 0 | 0 |
 | profile | 621 | 55956 | 179 | 442 | 0 | 0 |
 | school | 638 | 67352 | 185 | 453 | 0 | 0 |
-| tutorial | 51 | 15008 | 31 | 20 | 0 | 0 |
+| tutorial | 51 | 15004 | 31 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
 
@@ -426,7 +426,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/tutorial.ts#CHAPTERS [profile]` | 36 | 0 | Rewritten | tutorial | Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [career]` | 29 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [representation]` | 27 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
-| `src/engine/content/tutorial.ts#CHAPTERS [finding-work]` | 25 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
+| `src/engine/content/tutorial.ts#CHAPTERS [finding-work]` | 25 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [papers]` | 39 | 0 | Rewritten | tutorial | Your Doctor, Call It Off, Book An Appointment beside a visit owed, The Marketplace's Enroll and File It traced to src/ui/workspaces/PapersWorkspace.tsx; tests/guide-chapter-facts.test.ts holds the Book An Appointment sentence and passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [documents]` | 23 | 0 | Rewritten | tutorial | Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [money]` | 11 | 0 | Rewritten | tutorial | split where one paragraph held what the score decides and how it moves; tests/defects-g12-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
@@ -3055,7 +3055,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/careerwork.ts#UNIONS` | 7 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/careerwork.ts#PROJECTS [calder-street]` | 6 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/careerwork.ts#PROJECTS [performance]` | 4 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/careerwork.ts#PROJECTS [winter-ledger]` | 6 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/careerwork.ts#PROJECTS [winter-ledger]` | 6 | 0 | Rewritten | career | Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects | Rewritten And Verified |
 | `src/engine/content/careerwork.ts#PROJECTS [calloway-files]` | 6 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/careerwork.ts#PROJECTS [camera]` | 10 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/careerwork.ts#PROJECTS [gull-season]` | 6 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3110,7 +3110,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]` | 38 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]` | 44 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 41 | 0 | Rewritten | career | Read again on 2026-10-21: "as you would a practice brief" became "the way you prepare a practice brief", the uncontracted form voice-check counts gone; read in tests/guide.test.ts and tests/tutorial.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 41 | 0 | Rewritten | career | Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/showcase.ts#TERM_WEEK` | 6 | 0 | Rewritten | career-showcase | tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md | Rewritten And Verified |

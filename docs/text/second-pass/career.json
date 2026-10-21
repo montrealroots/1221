@@ -288,10 +288,10 @@
  },
  "src/engine/content/careerwork.ts#PROJECTS [winter-ledger]": {
   "status": "Rewritten",
-  "hash": "56842366f2f4",
+  "hash": "6340861f8b86",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/careerwork.ts#RATES [lort-b]": {
   "status": "Rewritten",
@@ -456,9 +456,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {
   "status": "Rewritten",
-  "hash": "83f0b38f5a44",
+  "hash": "c03bf5682bd2",
   "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21: \"as you would a practice brief\" became \"the way you prepare a practice brief\", the uncontracted form voice-check counts gone; read in tests/guide.test.ts and tests/tutorial.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {

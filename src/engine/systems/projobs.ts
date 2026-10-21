@@ -172,9 +172,13 @@ export const RELEASE_DAYS: Readonly<Partial<Record<ProjectKind, number>>> = {
 /** The School's rule on outside work in term: the design's ASSUMPTIONS for the Bulletin's words (this file's header). */
 export const OUTSIDE_WORK = { aheadDays: 14, mostDays: 10, decisionDays: 7, mostClassDays: 2, minutes: 60, decisionHour: 10 } as const;
 
-/** Getting there, each way, from where you live: across town, or between the projects' cities. ASSUMPTION: by train, as the game estimates it. */
+/**
+ * Getting there, each way, from where you live: across town, or between the projects' cities. ASSUMPTION: by train or by
+ * road, as the game estimates it. Providence's two trips went with it on 2026-10-21, when the regional company moved to
+ * Hudson.
+ */
 const TRIPS: Readonly<Record<string, number>> = {
-  'us-ct-newhaven|us-ny-newyork': 120, 'us-ct-newhaven|us-ri-providence': 120, 'us-ny-newyork|us-ri-providence': 180,
+  'us-ct-newhaven|us-ny-newyork': 120, 'us-ct-newhaven|us-ny-hudson': 120, 'us-ny-hudson|us-ny-newyork': 120,
 };
 export function tripMinutes(from: string, to: string): number {
   if (from === to) return IN_TOWN_MINUTES;

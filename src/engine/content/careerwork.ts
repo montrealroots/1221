@@ -195,7 +195,9 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     id: 'winter-ledger', kind: 'lort', fictional: true,
     project: 'The Winter Ledger', company: 'Harrow Point Repertory Theater', casting: 'Ostrander Vale Casting',
     medium: 'stage', genres: ['comedy', 'farce'],
-    place: { city: 'Providence', cityId: 'us-ri-providence', venue: 'the company’s main stage' },
+    // In Providence until 2026-10-21, a town the gazetteer doesn't hold, so the tax return couldn't read where the work
+    // was done; Hudson, New York, is held, and its work is taxed as a nonresident's New York wages like the city's.
+    place: { city: 'Hudson', cityId: 'us-ny-hudson', venue: 'the company’s main stage' },
     role: { part: 'Tobias Marsh', size: 'lead', about: 'A young clerk who keeps two sets of books and two fiancées, and loses track of both in one night.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
     union: 'equity', contract: 'Equity LORT C',
     requirements: { ages: [22, 30], sends: ['headshot', 'resume'] },
@@ -266,6 +268,12 @@ export const PROJECTS: readonly ProjectTemplate[] = [
 ];
 
 export const projectById = (id: string): ProjectTemplate | undefined => PROJECTS.find((p) => p.id === id);
+
+/**
+ * The towns an audition in person is held in, as the help says them: "New York or Hudson" (from 2026-10-21, read from the
+ * projects so the help names the towns the game has; it named Providence by hand until the company moved).
+ */
+export const AUDITION_TOWNS = [...new Set(PROJECTS.filter((p) => p.stages.audition === 'in-person').map((p) => p.place.city))].join(' or ');
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The agreement an agent offers

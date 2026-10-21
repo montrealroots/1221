@@ -402,7 +402,7 @@ describe('the whole loop, played', () => {
 });
 
 describe('a callback, a run and its nights', () => {
-  it('PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Providence, its rehearsals and nights judged, the credit and the promised weekly pay', () => {
+  it('PLAYER JOURNEY (V11, V15): an Equity open call with a callback, saved and loaded at each stage, to a booked run in Hudson, its rehearsals and nights judged, the credit and the promised weekly pay', () => {
     const seeds = Array.from({ length: 30 }, (_, n) => `work-run-${n}`);
     let sim: Simulation | undefined;
     let id = '';
@@ -431,8 +431,8 @@ describe('a callback, a run and its nights', () => {
       // The degree's Equity bill comes first, the pay's since the parts were merged on 2026-10-21.
       expect.stringMatching(/^Your Equity Initiation Fee \| You’re a member of Actors’ Equity Association from your degree\./),
       expect.stringMatching(/^Actors’ Equity Association: \$600\.00 Paid \| /),
-      expect.stringMatching(/^An Audition For Tobias Marsh \| Ostrander Vale Casting wants to see you for Tobias Marsh in The Winter Ledger: the company’s main stage in Providence, \w+day, .+ at 11:00 AM\. Getting there takes about two hours each way\./),
-      expect.stringMatching(/^A Callback For Tobias Marsh \| Ostrander Vale Casting wants to see you again for Tobias Marsh in The Winter Ledger: the company’s main stage in Providence, \w+day, .+ at 2:00 PM\./),
+      expect.stringMatching(/^An Audition For Tobias Marsh \| Ostrander Vale Casting wants to see you for Tobias Marsh in The Winter Ledger: the company’s main stage in Hudson, \w+day, .+ at 11:00 AM\. Getting there takes about two hours each way\./),
+      expect.stringMatching(/^A Callback For Tobias Marsh \| Ostrander Vale Casting wants to see you again for Tobias Marsh in The Winter Ledger: the company’s main stage in Hudson, \w+day, .+ at 2:00 PM\./),
     ]);
     expect(o.rounds!.map((r) => [r.round, r.form, r.status, r.casting?.yes])).toEqual([['audition', 'in-person', 'done', true], ['callback', 'in-person', 'done', true]]);
     expect(o.rounds![0]!.casting!.chance).toBe(chanceOf(o.rounds![0]!.band!, o.rounds![0]!.casting!.fit, 'lort', 'callback'));
@@ -444,7 +444,7 @@ describe('a callback, a run and its nights', () => {
     expect(e.pay.map((p) => [p.key, p.promised, p.currency, zonedParts(p.due, zone).weekday, p.received])).toEqual(Array.from({ length: 9 }, (_, w) => [`${e.id}:${w + 1}`, RATES['lort-c'].amount, 'USD', 4, undefined]));
     expect(payGroups(e, t).map((g) => g.length)).toEqual([5, 5, 5, 5, 6, 6, 6, 6, 6]);
     for (const [w, g] of payGroups(e, t).entries()) expect(e.pay[w]!.due).toBeGreaterThan(e.days[g.at(-1)!]!.to);
-    // The days in Providence, with the trip from New Haven.
+    // The days in Hudson, with the trip from New Haven (the company was in Providence until 2026-10-21, the same two hours away).
     expect(s.universe.scheduled.filter((i) => i.kind === WORK_DAY_KIND && i.refId === e.id).map((i) => i.travelMinutes)).toEqual(Array(50).fill(120));
     const before = { ...e.prep! };
     played(s, e.days[19]!.to + 60_000);

@@ -29,7 +29,7 @@ import { HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPE
 import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, tripWords } from '../../systems/proagent';
 import { YALE_DRAMA } from '../school';
 import { AGENTS, agencyOf } from '../agents';
-import { AGREEMENT, UNIONS } from '../careerwork';
+import { AGREEMENT, AUDITION_TOWNS, UNIONS } from '../careerwork';
 import { BAND_LABEL } from '../../systems/coursework';
 import { PAY, sagJoinUsd } from '../../systems/propay';
 import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
@@ -675,7 +675,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I prepare for an audition?', 'Can I move my audition?', 'How does casting decide?'],
     where: on('opportunities', 'Career, Opportunities, In Progress'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once a casting office has answered a submission.`,
-    short: `An audition is in person, in New York or Providence at a set time, or a self-tape due by an evening. Prepare the sides first with ${STEPS}, the way you prepare a practice brief. Then press Tape It, or be there when the clock stops for the audition and press Go.\n\nCasting decides from how the audition went, how well the role suits you and how many other actors it saw. Some roles call you back for a second audition first.`,
+    short: `An audition is in person, in ${AUDITION_TOWNS} at a set time, or a self-tape due by an evening. Prepare the sides first with ${STEPS}, the way you prepare a practice brief. Then press Tape It, or be there when the clock stops for the audition and press Go.\n\nCasting decides from how the audition went, how well the role suits you and how many other actors it saw. Some roles call you back for a second audition first.`,
     steps: [
       'Open Career, then Opportunities, and find the role under In Progress.',
       `Press ${STEPS}, each as many times as it helps. Each says its time.`,

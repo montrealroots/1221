@@ -49,8 +49,8 @@
  * - **Counted** as the return counts it (`figuresFor`, `systems/taxreturn.ts`): the work's town (`where`) puts New York
  *   work by a Connecticut resident under `elsewhere`, so New York taxes it as a nonresident's and Connecticut credits
  *   that tax (Schedule 2, S48); New York City's tax reads only where they lived (`byResidence`). A town the gazetteer
- *   doesn't hold, such as Providence, can't be read by the return, so its wages are counted where they live and the Work
- *   tab says so.
+ *   doesn't hold can't be read by the return, so its wages are counted where they live and the Work tab says so. The
+ *   regional company's Providence was one until 2026-10-21, when it moved to Hudson, New York; no project's town is now.
  * - **Hours** in the memo, eight a day of the week's work (ASSUMPTION), which `workedBetween` reads.
  *
  * **Permission to work** (`eligibilityRead`): `usWorkAuthorized` for each date of an engagement, read when it's booked
