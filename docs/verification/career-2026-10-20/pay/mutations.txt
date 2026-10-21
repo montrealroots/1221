@@ -43,3 +43,8 @@ M26 killed: uncovered work commissioned [src/engine/systems/propay.ts] — by: �
 M29 killed: the release paid a second time [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
 M32 killed: New York City's tax withheld from no resident [src/engine/systems/propay.ts] — by: × wages, as the tax return counts them > withholds New York City’s tax from a resident of the city on top of the state’s, and only the state’s from a New Haven 
 M33 killed: green card read as no permission in the words [src/engine/systems/propay.ts] — by: × permission to work, for each engagement’s dates > counts a green card, a permit of its own, as permission to work, and says it’s the green card 14ms
+
+# tests/cohesion.test.ts read a kind's constant with one dot only, so pro.pay.payday and its three siblings read as
+# handlers nothing schedules; its reading was made general (any number of parts, every dot escaped). Checked that it
+# still catches a dead handler:
+M34 killed: the union bill's schedule call hidden from the source (kind: [DUES_KIND][0]!) [src/engine/systems/propay.ts] — by: × everything is wired to something > schedules every kind of work it has a handler for
