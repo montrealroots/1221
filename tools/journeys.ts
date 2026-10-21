@@ -57,8 +57,8 @@ import { fixedPieces } from './pieces';
 // The journeys, as the criteria name them
 // ---------------------------------------------------------------------------
 
-type Player = 'attentive' | 'follows' | 'partly' | 'ignores' | 'neglect';
-type Setup = 'low40' | 'generalist' | 'feeling' | 'body' | 'mastered';
+export type Player = 'attentive' | 'follows' | 'partly' | 'ignores' | 'neglect';
+export type Setup = 'low40' | 'generalist' | 'feeling' | 'body' | 'mastered';
 export interface Spec {
   id: string; profile: string; seed: string; config: Partial<NewSaveConfig>; setup?: Setup; player: Player;
   /** Neglect until this notice comes, then attentive. */
@@ -126,7 +126,7 @@ const r2 = (x: number) => Math.round(x * 100) / 100;
 // The record a journey keeps, part to part
 // ---------------------------------------------------------------------------
 
-interface Rec {
+export interface Rec {
   id: string; seed: string; profile: string; player: string; expect: Spec['expect'];
   parts: { part: number; from: string; to: string; secs: number; reloads: number }[];
   creation?: Record<string, unknown>; counterfactual?: Record<string, unknown>; setup?: Record<string, unknown>;
@@ -152,7 +152,7 @@ interface Rec {
   continuity?: Record<string, unknown>;
 }
 
-interface PolicyState {
+export interface PolicyState {
   seen: Record<string, number>; workAt: number; workSeenAtLast: number; shown: string[]; reviews: number; lastDay: string;
   lastMonth: string; lastAdviceDay: number; lastReload: number; switched: boolean; struck: string[]; skipped: string[]; considered: string[];
   standing: string; adverseLog: string[]; lastHealth: { careLog: number; injuryAt?: number; hospitalUntil?: number; fluUntil?: number };
@@ -163,12 +163,12 @@ interface PolicyState {
 // Creation and its TEST SETUP
 // ---------------------------------------------------------------------------
 
-function make(spec: Spec, config: Partial<NewSaveConfig> = spec.config): Simulation {
+export function make(spec: Spec, config: Partial<NewSaveConfig> = spec.config): Simulation {
   return createSave(1, spec.seed, newLifeFrom({ firstName: 'Ada', lastName: 'Cole', ...config }));
 }
 
 /** What creation chose, read back from the state it made. */
-function creationRead(sim: Simulation) {
+export function creationRead(sim: Simulation) {
   const p = sim.player;
   const accounts = Object.values(sim.universe.accounts).filter((a) => a.ownerId === p.id && !a.nominal);
   return {
@@ -180,7 +180,7 @@ function creationRead(sim: Simulation) {
   };
 }
 
-function applySetup(sim: Simulation, setup: Setup): Record<string, unknown> {
+export function applySetup(sim: Simulation, setup: Setup): Record<string, unknown> {
   const p = sim.player;
   const at = (v: number) => { for (const k of ['emotion', 'memorization', 'voice', 'movement'] as const) p.craft![k] = v; p.attrs = { ...(p.attrs ?? {}), presence: v, composure: v, listening: v, imagination: v, focus: v, adaptability: v, discipline: v } as typeof p.attrs; };
   if (setup === 'low40') { p.craft = evenCraft(40); at(40); p.wellbeing.fitness = 40; }
@@ -206,7 +206,7 @@ function applySetup(sim: Simulation, setup: Setup): Record<string, unknown> {
 }
 
 /** The falsifiability test at creation: the same seed made again with one choice changed. */
-function counterfactual(spec: Spec, base: ReturnType<typeof creationRead>) {
+export function counterfactual(spec: Spec, base: ReturnType<typeof creationRead>) {
   const read = (c: Partial<NewSaveConfig>) => creationRead(make(spec, { ...spec.config, ...c }));
   const fam = base.need ? 'wealthy' : 'scraping';
   const a = read({ wealth: fam as NewSaveConfig['wealth'] });
@@ -249,7 +249,7 @@ function ownHour(sim: Simulation): boolean {
   return false;
 }
 
-function practiceFor(spec: Spec, sim: Simulation): boolean {
+export function practiceFor(spec: Spec, sim: Simulation): boolean {
   if (spec.player === 'follows') return practiceHour(sim);
   if (spec.player === 'ignores') return ownHour(sim);
   if (spec.player === 'partly') {
@@ -261,7 +261,7 @@ function practiceFor(spec: Spec, sim: Simulation): boolean {
 }
 
 /** The way of playing the screen previews highest, on each axis against leaving it open; the previews kept. */
-function choosePlaying(sim: Simulation, rec: Rec, st: PolicyState, a: Assignment, choose: boolean) {
+export function choosePlaying(sim: Simulation, rec: Rec, st: PolicyState, a: Assignment, choose: boolean) {
   st.considered.push(a.id);
   const today = keyOf(dateOf(sim.now));
   const base = playingPreview(sim, sim.player, a, today, {});
@@ -282,13 +282,13 @@ function choosePlaying(sim: Simulation, rec: Rec, st: PolicyState, a: Assignment
   if (choose && Object.keys(pick).length) sim.execute({ kind: 'school.choose_playing', payload: { assignmentId: a.id, ...pick } });
 }
 
-const dateOf = (t: number): SchoolDate => { const p = zonedParts(t, NY); return { year: p.year, month: p.month, day: p.day }; };
+export const dateOf = (t: number): SchoolDate => { const p = zonedParts(t, NY); return { year: p.year, month: p.month, day: p.day }; };
 
 // ---------------------------------------------------------------------------
 // One part of a journey
 // ---------------------------------------------------------------------------
 
-function instrument(sim: Simulation, rec: Rec): void {
+export function instrument(sim: Simulation, rec: Rec): void {
   const exec = sim.execute.bind(sim);
   const refusedLast: Record<string, string | undefined> = {};
   const notable = /^(documents\.|school\.(request_|pay_balance|reregister|call_in_sick|choose_playing|return_notice|withdraw)|health\.enroll)/;
@@ -308,15 +308,15 @@ function instrument(sim: Simulation, rec: Rec): void {
   }) as typeof sim.execute;
 }
 
-function fresh(spec: Spec): Rec {
+export function fresh(spec: Spec): Rec {
   return { id: spec.id, seed: spec.seed, profile: spec.profile, player: spec.player, expect: spec.expect, parts: [], daily: [], monthly: [], notices: [], saidAgain: [], work: [], showings: [], reviews: [], advice: [], practice: {}, commands: {}, acts: [], health: [], reloads: [], standings: [], interpretations: [], ledger: [] };
 }
-function freshPolicy(): PolicyState {
+export function freshPolicy(): PolicyState {
   return { seen: {}, workAt: 0, workSeenAtLast: 0, shown: [], reviews: 0, lastDay: '', lastMonth: '', lastAdviceDay: -1, lastReload: 0, switched: false, struck: [], skipped: [], considered: [], standing: '', adverseLog: [], lastHealth: { careLog: 0 }, docs: {}, courses: {}, credits: 0 };
 }
 
 /** What's new since the last look: notices, work, showings, reviews, standings, health events. */
-function scan(sim: Simulation, rec: Rec, st: PolicyState, prev: { condition: number; fitness: number; energy: number }): void {
+export function scan(sim: Simulation, rec: Rec, st: PolicyState, prev: { condition: number; fitness: number; energy: number }): void {
   const p = sim.player;
   for (const n of sim.universe.notifications) {
     const was = st.seen[n.id];
@@ -391,7 +391,7 @@ function scan(sim: Simulation, rec: Rec, st: PolicyState, prev: { condition: num
 }
 
 /** The month's look: standing, abilities, money, papers and the refusals they govern, the ledger. */
-function monthly(sim: Simulation, rec: Rec, st: PolicyState): void {
+export function monthly(sim: Simulation, rec: Rec, st: PolicyState): void {
   const p = sim.player;
   const banks = banksFor(homeOf(p));
   const asked = banks.map((b) => ({ bank: b.name, no: openRefusal(sim, p, b.id) })).find((x) => !x.no?.startsWith('You already keep'));
@@ -416,7 +416,7 @@ function monthly(sim: Simulation, rec: Rec, st: PolicyState): void {
   void st;
 }
 
-function weeklyAdvice(sim: Simulation, rec: Rec): void {
+export function weeklyAdvice(sim: Simulation, rec: Rec): void {
   const recs = adviceFor(sim, sim.player);
   const first = recs.find((r) => r.forecast) ?? recs[0];
   rec.advice.push({
@@ -427,7 +427,7 @@ function weeklyAdvice(sim: Simulation, rec: Rec): void {
 }
 
 /** The day's own play beside the hour's: papers kept, the meetings slept through, the repeat, the hold, the leave, the TEST SETUP. */
-function dailyActs(spec: Spec, sim: Simulation, rec: Rec, st: PolicyState): void {
+export function dailyActs(spec: Spec, sim: Simulation, rec: Rec, st: PolicyState): void {
   const p = sim.player;
   const s = p.school;
   if (spec.papers) {
@@ -474,7 +474,7 @@ function dailyActs(spec: Spec, sim: Simulation, rec: Rec, st: PolicyState): void
 }
 
 /** The flu on 15 October and 15 February and a fall on 1 March, through the game's own care (`tools/lives.ts`'s pressure). */
-function adverse(sim: Simulation, rec: Rec, st: PolicyState): void {
+export function adverse(sim: Simulation, rec: Rec, st: PolicyState): void {
   const p = zonedParts(sim.now, sim.zone);
   const key = (m: number, d: number) => (p.month === m && p.day >= d) || (p.month === m + 1 && p.day < d) ? `${p.year}-${m}` : undefined;
   const w = sim.player.wellbeing;
@@ -494,7 +494,7 @@ function adverse(sim: Simulation, rec: Rec, st: PolicyState): void {
 }
 
 /** The night before a meeting to sleep through: twelve hours from eleven, so the nine o'clock classes go by. */
-function skipTonight(spec: Spec, sim: Simulation, st: PolicyState): boolean {
+export function skipTonight(spec: Spec, sim: Simulation, st: PolicyState): boolean {
   if (!spec.skip || st.skipped.length >= spec.skip.times) return false;
   const tomorrow = dateOf(sim.now + 3 * MS_HOUR);
   const period = classPeriod(spec.skip.term);
@@ -615,7 +615,7 @@ function partSummary(rec: Rec) {
 const KEPT_WORDS = /Begins$|Coursework|Concern|Warning|Dismiss|Degree|Commencement|Graduat|Not Passed|Not Registered|Missed Classes|Hold|Repeat|Aid|Tuition|Leave|Return|Status|OPT|Issued|Passport|Plan|Owed|Cover|Enrolled|Incomplete|Called In Sick|Hospital|Injur|Flu/;
 
 /** A finished journey's output: the checks, the continuity record, the end, and compact traces of what the checks read. */
-function compact(rec: Rec) {
+export function compact(rec: Rec) {
   const shown = /^Shown: /;
   return {
     id: rec.id, seed: rec.seed, profile: rec.profile, player: rec.player, expect: rec.expect, done: true, parts: rec.parts,
@@ -634,14 +634,14 @@ function compact(rec: Rec) {
   };
 }
 
-function firstDiff(a: string, b: string): string {
+export function firstDiff(a: string, b: string): string {
   let i = 0;
   while (i < a.length && a[i] === b[i]) i += 1;
   return `at ${i}: ${JSON.stringify(a.slice(Math.max(0, i - 80), i + 80))} against ${JSON.stringify(b.slice(Math.max(0, i - 80), i + 80))}`;
 }
 
 /** Saved and opened, as a player between sessions: the state after must be the state before, and the kept results replay. */
-function reload(sim: Simulation, rec: Rec): Simulation {
+export function reload(sim: Simulation, rec: Rec): Simulation {
   const before = serialise(sim.universe);
   const next = loadSave(deserialise(before) as never);
   const after = serialise(next.universe);
@@ -654,7 +654,7 @@ function reload(sim: Simulation, rec: Rec): Simulation {
 // The end, and the ten checks
 // ---------------------------------------------------------------------------
 
-function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
+export function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
   const p = sim.player;
   const s = p.school;
   const work = p.work ?? [];
@@ -706,7 +706,7 @@ function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
 const messageOf = (x: Rec['advice'][number]) => `${x.why ?? ''} ${x.standing ?? ''} ${x.next ?? ''} ${x.attention ?? ''}`;
 const has = (rec: Rec, title: string | RegExp) => rec.notices.filter((n) => (typeof title === 'string' ? n[2] === title : title.test(n[2])));
 
-function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
+export function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
   const out: NonNullable<Rec['checks']> = {};
   const put = (k: string, fails: string[], evidence: string[]) => { out[k] = { pass: fails.length === 0, evidence, fails }; };
   const e = rec.end as Record<string, unknown>;
@@ -943,7 +943,7 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
 }
 
 /** Continuity and freshness (section 6), from the record. */
-function continuity(rec: Rec): Record<string, unknown> {
+export function continuity(rec: Rec): Record<string, unknown> {
   const undone = (rec.monthly as { on: string; undone: string[] }[]).flatMap((m) => m.undone.map((u) => `${m.on} ${u}`));
   // Said again, by title; and each title's count, once-per-term ones flagged where doubled within a term.
   const again: Record<string, number> = {};
@@ -1111,7 +1111,9 @@ else if (process.argv.includes('--recheck')) {
   if (!spec) throw new Error(`No journey "${arg('journey')}"`);
   recheck(spec, arg('state'), arg('out'));
 }
-else {
+// Run only when a journey is named (from 2026-10-21, brief 20's `tools/b20-journeys.ts`, which imports this file's player
+// and checks): until then a bare import ran this and threw "No journey". Every invocation above names one.
+else if (process.argv.includes('--journey')) {
   const named = JOURNEYS.find((j) => j.id === arg('journey'));
   if (!named) throw new Error(`No journey "${arg('journey')}": ${JOURNEYS.map((j) => j.id).join(', ')}`);
   // `--seed` plays a journey's profile on another seed, under its own id (the harness was developed on dev-0 this way).
