@@ -9,26 +9,26 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 323 | 1322 | 15721 | 7 | 55 | 268 | 0 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 461 | 12701 | 0 | 27 | 20 | 0 | 0 |
-| Home And Its Retained Actions | 17 | 168 | 800 | 0 | 4 | 13 | 0 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 462 | 12809 | 0 | 27 | 20 | 0 | 0 |
+| Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 663 | 6711 | 70296 | 7 | 185 | 478 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6634 | 151915 | 13 | 265 | 499 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 4587 | 56842 | 3 | 101 | 372 | 0 | 0 |
-| Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8177 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2544 | 14602 | 0 | 16 | 67 | 0 | 0 |
-| Notifications, Invitations, Feedback And Generated Messages | 28 | 187 | 1041 | 0 | 1 | 27 | 0 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 178 | 686 | 0 | 6 | 34 | 0 | 0 |
+| Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
+| Notifications, Invitations, Feedback And Generated Messages | 31 | 196 | 1107 | 0 | 3 | 28 | 0 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 41 | 187 | 736 | 0 | 8 | 33 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4230 | 36710 | 572934 | 316 | 1093 | 3137 | 0 | 0 |
+| **All** | 4236 | 36753 | 573548 | 316 | 1100 | 3136 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| frame | 491 | 32850 | 82 | 409 | 0 | 0 |
-| health | 178 | 38674 | 38 | 140 | 0 | 0 |
+| frame | 497 | 33258 | 89 | 408 | 0 | 0 |
+| health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 264 | 54945 | 107 | 157 | 0 | 0 |
@@ -36,7 +36,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | papers | 473 | 56842 | 101 | 372 | 0 | 0 |
 | profile | 621 | 55956 | 179 | 442 | 0 | 0 |
 | school | 635 | 67278 | 181 | 454 | 0 | 0 |
-| tutorial | 47 | 12701 | 27 | 20 | 0 | 0 |
+| tutorial | 47 | 12809 | 27 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
 
@@ -44,18 +44,18 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 |---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 323 | 15 | 253 | 55 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 12 | 8 | 27 | 0 |
-| Home And Its Retained Actions | 17 | 4 | 9 | 4 | 0 |
+| Home And Its Retained Actions | 19 | 5 | 9 | 5 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 144 | 238 | 239 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 663 | 119 | 353 | 191 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 118 | 377 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 145 | 225 | 103 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 29 | 37 | 17 | 0 |
-| Notifications, Invitations, Feedback And Generated Messages | 28 | 16 | 11 | 1 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 7 | 28 | 5 | 0 |
+| Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 41 | 7 | 28 | 6 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4230 | 669 | 2392 | 1169 | 0 |
+| **All** | 4236 | 672 | 2393 | 1171 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -401,12 +401,12 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/index.ts#SEARCH_EXAMPLES` | 2 | 0 | Retained | tutorial | Two searches written the way a player would type them, lower case and plain, each of which tests/guide.test.ts holds to finding an entry. | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#hoursOf` | 1 | 0 | Retained | tutorial | The Sleep chapter's shortest sleep said the way a person says it, half an hour, and any other count through plural (eight hours, one hour). | Reviewed And Retained |
 | `src/engine/content/tutorial.ts#CHAPTERS [welcome]` | 13 | 0 | Rewritten | tutorial | Read against docs/STYLE.md; the new paragraph's I’ve Read It, What It Opens, Next, Try It, Later and the strip's Read traced to src/ui/guide/Guide.tsx (GuideDialog, GuideStrip); tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [calendar]` | 13 | 0 | Rewritten | tutorial | Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [clock]` | 7 | 0 | Rewritten | tutorial | tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter clock, and follow-1440/chapter-03-clock.txt; Play, a minute of real time, Pause | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [advance]` | 9 | 0 | Rewritten | tutorial | Brief 17 tutorial area, the frame editor's finding: the chapter says what Go and Stand Here do to a jump (onGo, clearStandingAt, halt); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on'); read word for word in the guide's dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt, docs/verification/continuity-2026-10-20/tutorial/after/follow-390/log.txt) | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [calendar]` | 13 | 0 | Rewritten | tutorial | The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [clock]` | 7 | 0 | Rewritten | tutorial | The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [advance]` | 10 | 0 | Rewritten | tutorial | The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [needs]` | 11 | 0 | Rewritten | tutorial | Mark {n} Read, Go There, an answer's button and Dismiss traced to src/ui/screens/Home.tsx; an answer closing the question or saying why traced to world.take_decision_action in src/engine/world/world.ts; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [body]` | 12 | 0 | Rewritten | tutorial | How You Are's three meters traced to src/ui/screens/Home.tsx; readiness from seven measures, all but fitness, traced to readinessParts in src/engine/systems/life.ts; tests/guide-chapter-facts.test.ts and tests/defects-g1-1.test.ts pass; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [sleep]` | 9 | 0 | Rewritten | tutorial | Sleep {n} Hours and Not Yet traced to SleepDialog in src/ui/shell/TimeControls.tsx; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [sleep]` | 9 | 0 | Rewritten | tutorial | The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [looking-after]` | 13 | 0 | Rewritten | tutorial | the menu's lines, Needed Now and Most Worth It and the done-at message traced to LookAfterMenu in src/ui/shell/TimeControls.tsx; groceries bought each day and No Money For Food Today traced to buyTheDaysFood in src/engine/systems/spending.ts; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [plans]` | 10 | 0 | Rewritten | tutorial | What Is It, When It Starts, How Long It Takes, Put It On, the Clash chip and Call It Off traced to PlanForm and EntryDetail in src/ui/workspaces/CalendarWorkspace.tsx; tests/defects-g2-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [weather]` | 9 | 0 | Rewritten | tutorial | tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter weather, and follow-1440/chapter-10-weather.txt; today’s weather opened | Pending |
@@ -452,7 +452,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/life.ts#startRefusal` | 2 | 0 | Retained | frame | Short and in the player’s situation: not from a hospital bed, or where you are and until when. | Reviewed And Retained |
 | `src/engine/systems/life.ts#lookAfterRefusal` | 7 | 0 | Rewritten | frame | Held by tests/life-fixes.test.ts, tests/evidence-g01-life.test.ts, tests/evidence-g06-life.test.ts, tests/evidence-g07-life.test.ts, tests/evidence-g30-ui.test.ts and tests/attributes-phase-2b.test.ts, each with the flu's own end date: 'Not with the flu: rest until it passes on …' | Pending |
 | `src/engine/systems/life.ts#whyNow` | 14 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu: Eat A Meal and Order In say 'Nourishment at 63: little to gain yet.' as Shower and Unwind say theirs) | Pending |
-| `src/engine/systems/life.ts#suggestedSleep` | 3 | 0 | Retained | frame | Says why the Sleep dialog suggests its hours: a clear calendar, a commitment you are standing at, or one too soon for a full night. | Rewritten And Verified |
+| `src/engine/systems/life.ts#suggestedSleep` | 8 | 0 | Rewritten | frame | The Sleep dialog's reasons with a commitment and its trip, read at 11 PM and 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-1440.txt) and held by tests/time-stops.test.ts, a trip inside the call's hours among them | Pending |
+| `src/engine/systems/life.ts#napNow` | 3 | 0 | Rewritten | frame | The nap's two reasons, rested and low, read at 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-390.txt) and held word for word by tests/time-stops.test.ts | Rewritten And Verified |
+| `src/engine/systems/life.ts#hoursSaid` | 11 | 0 | Rewritten | frame | Hours at the start of a sentence, Half an hour to Fourteen hours, in the nap's reasons; tests/time-stops.test.ts holds one and a half and seven and a half | Rewritten And Verified |
 | `src/engine/systems/life.ts#sleepReason` | 11 | 0 | Retained | frame | Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less. | Rewritten And Verified |
 | `src/ui/screens/Home.tsx#Home` | 71 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (What Needs You, six of 310); held by tests/evidence-g32-ui.test.ts and tests/language-dynamic.test.ts word for word | Pending |
 | `src/ui/screens/Home.tsx#SchoolLine` | 10 | 0 | Retained | frame | The year, the standing and the place in the class, then the next class with its date, and a pointer to the School screen when the standing needs explaining. | Rewritten And Verified |
@@ -3019,7 +3021,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/body.ts#BODY [evaluation]` | 4 | 0 | Retained | health | Each How It Connects line names one link in plain words with its figure: readiness sets what a class builds, under 60 a tired night on stage costs you, missed classes are absences, the weather decides a run. | Rewritten And Verified |
 | `src/engine/content/guide/body.ts#BODY [optional]` | 2 | 0 | Retained | health | Two concrete options with their catch stated: under 55 condition a sick day is excused, and skipping through the night sleeps for you but stops at 74 energy. | Rewritten And Verified |
 | `src/engine/content/guide/body.ts#BODY [history]` | 3 | 0 | Retained | health | Three short lines that say where each thing is kept: long-term conditions on Papers, slept-through commitments in the next morning's notice, and fitness as the Profile's Stamina. | Rewritten And Verified |
-| `src/engine/content/guide/body.ts#BODY [body.sleep]` | 61 | 0 | Rewritten | health | Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4, the dialog and the clock first, then the warning and what a night does; a night eases stress and pays back debt, as applySleep in systems/life.ts does, where it said it cleared them; tests/guide-examples-start-day-body.test.ts passes. | Pending |
+| `src/engine/content/guide/body.ts#BODY [body.sleep]` | 61 | 0 | Rewritten | health | The suggestion reads whether the night's behind you, your energy and the trip, and a commitment slept through is missed; held by tests/time-stops.test.ts beside the behavior | Pending |
 | `src/engine/content/guide/body.ts#BODY [body.look-after]` | 75 | 0 | Rewritten | health | Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4 in two paragraphs, the menu and its order, then what each line says and that pressing one moves the clock; tests/guide.test.ts and tests/guide-examples-start-day-body.test.ts pass. | Pending |
 | `src/engine/content/guide/body.ts#BODY [scheduled]` | 1 | 0 | Rewritten | health | docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections | Pending |
 | `src/engine/content/injury.ts#INJURY_KIND` | 7 | 0 | Retained | health | Seven injuries by their everyday names in Title Case, A Sprained Ankle and A Broken Bone, the titles of their notices and looks. | Reviewed And Retained |
@@ -3119,13 +3121,13 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM` | 2 | 0 | Retained | frame | Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#RUN_COLD` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule. | Reviewed And Retained |
 | `src/engine/content/guide/day.ts#RUN_HOT` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule. | Reviewed And Retained |
-| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 57 | 0 | Rewritten | frame | Read on the built app by tools/screen-text.mjs, How This Works opened from the Calendar panel (brief 16): the summary of 4 sentences became 1 and 2 in two paragraphs, naming Skip It and Call It Off; Stand Here now says the commitment starts when the clock next moves (tools/voices.ts --guide, vague 4 to 2). | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 58 | 0 | Rewritten | frame | Skip It and Call It Off carry the jump on and a refusal changes nothing, held beside the behavior by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [prerequisite]` | 1 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First | Pending |
 | `src/engine/content/guide/day.ts#DAY [immediate]` | 11 | 0 | Retained | frame | Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [optional]` | 10 | 0 | Retained | frame | Lines under Worth Doing With It, each one plain sentence on why the two features go together. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [evaluation]` | 2 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Counts Toward | Pending |
-| `src/engine/content/guide/day.ts#DAY [day.clock]` | 53 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Clock: Play And Pause | Pending |
-| `src/engine/content/guide/day.ts#DAY [day.advance]` | 52 | 0 | Rewritten | frame | Brief 17 tutorial area, the frame editor's finding: the last step says what Go and Stand Here do to a jump, read against onGo and clearStandingAt (ui/shell/TimeControls.tsx) and halt (app/game-context.tsx); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on') presses each on the real provider; read word for word on the built app (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt) | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.clock]` | 55 | 0 | Rewritten | frame | The three dialogs that move the clock hold it, held beside the behavior by tests/time-controls.test.ts on the real provider | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.advance]` | 54 | 0 | Rewritten | frame | Each line gives its day, Tomorrow Morning after midnight is that morning's, On The Way lists what isn't on the calendar yet; held by tests/time-controls.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [scheduled]` | 2 | 0 | Retained | frame | Lines under Changes Later: midnight’s groceries, and a plan stopping the clock, each said as what happens when. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [day.needs]` | 55 | 0 | Rewritten | frame | the life editor traced world.take_decision_action: an answer runs the same command, its label not always the same (Reactivate on Money); tests/guide-examples-start-day-body.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [history]` | 2 | 0 | Retained | frame | Lines under Kept In Your Record: a notice for a plan skipped or slept through, said where it appears. | Rewritten And Verified |
@@ -3213,6 +3215,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/world/bootstrap.ts#createUniverse` | 1 | 0 | Retained | frame | A developer’s error for a place id the gazetteer lacks, thrown before any life exists; creation only offers places that are there. | Reviewed And Retained |
 | `src/engine/world/calendar.ts#CALENDAR_LEGEND` | 10 | 0 | Retained | frame | Each kind on the legend with what it holds on hover, the School row naming each term’s review, the glossary’s word. | Rewritten And Verified |
 | `src/engine/world/calendar.ts#skipTargets` | 3 | 0 | Retained | frame | Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of. | Reviewed And Retained |
+| `src/engine/world/clock.ts#defineStop` | 1 | 0 | Retained | frame | A developer's error, thrown when a system declares one kind's stop twice, at startup; no player ever reaches it, and it names the kind to fix. | Reviewed And Retained |
+| `src/engine/world/clock.ts#refusalOf` | 1 | 0 | Rewritten | frame | The fallback refusal a stop's choice says when its command gives no reason, the same words run() says; tests/time-stops.test.ts reads refusals | Rewritten And Verified |
+| `src/engine/world/clock.ts#top` | 7 | 0 | Rewritten | frame | Skip It's and Call It Off's words at the stop and on On The Way, and Call It Off's toast; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts | Rewritten And Verified |
 | `src/engine/world/place.ts#placeKindLabel` | 2 | 0 | Retained | frame | Capital and Regional, the plain words a place’s look uses for a national or a regional capital. | Reviewed And Retained |
 | `src/engine/world/place.ts#REGION_WORD` | 28 | 0 | Retained | frame | Each country’s own word for its regions’ capitals, State, Provincial, Prefectural, Cantonal, as a place’s look names them. | Reviewed And Retained |
 | `src/engine/world/place.ts#placeProfile` | 2 | 0 | Retained | frame | Only the en-US locale tag for grouping a population’s digits, never words a player reads as such. | Reviewed And Retained |
@@ -3251,10 +3256,11 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/shell/LifeEnded.tsx#LifeEnded` | 12 | 0 | Rewritten | frame | tests/evidence-g04-life.test.ts and tests/evidence2-b03.test.ts and tests/evidence-g08-life.test.ts render the ended life's screen and hold its new notes and closing line word for word | Pending |
 | `src/ui/shell/TimeControls.tsx#MENU_FOOT` | 1 | 0 | Retained | frame | Layout values for the foot of a top-bar menu, padding and a border, which no player reads as words. | Reviewed And Retained |
 | `src/ui/shell/TimeControls.tsx#DIAL_LABEL` | 8 | 0 | Retained | frame | The eight wellbeing measures by the names How You Are gives them, so the menu’s figures match the panel’s. | Reviewed And Retained |
-| `src/ui/shell/TimeControls.tsx#TimeControls` | 19 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (On The Way); held by tests/language-frame-ui.test.ts, 'On The Way says how many commitments…', and what Go and Stand Here do by 'PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on…' | Pending |
+| `src/ui/shell/TimeControls.tsx#choicesAhead` | 5 | 0 | Rewritten | frame | On The Way's sentence of the choices on the way and what the clock does after them; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts | Rewritten And Verified |
+| `src/ui/shell/TimeControls.tsx#TimeControls` | 21 | 0 | Rewritten | frame | On The Way names only the choices of what it lists and marks what isn't on the calendar yet; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/ui/shell/TimeControls.tsx#SleepDialog` | 13 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Sleep dialog); the claim it makes, a commitment slept through is missed, held by tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through…' | Pending |
-| `src/ui/shell/TimeControls.tsx#DueNow` | 15 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Next Event: the stop); held by tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer' | Pending |
-| `src/ui/shell/TimeControls.tsx#SkipDialog` | 16 | 0 | Retained | frame | Lists what the clock will stop at on the way and what else happens in order, and says why Skip is gray, with the event named on its button. | Rewritten And Verified |
+| `src/ui/shell/TimeControls.tsx#DueNow` | 16 | 0 | Rewritten | frame | The stop says what Skip It, Call It Off and Stand Here each do to the jump before the press; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/ui/shell/TimeControls.tsx#SkipDialog` | 17 | 0 | Rewritten | frame | Skip To Event lists a foreseen stop as not on your calendar yet; held by tests/time-controls.test.ts on the real provider | Pending |
 | `src/ui/shell/TimeControls.tsx#AdvanceMenu` | 14 | 0 | Retained | frame | Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing. | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#LookAfterMenu` | 6 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu); Readiness held by tests/evidence-g30-ui.test.ts, 'PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower…' | Rewritten And Verified |
 | `src/ui/shell/destinations.ts#DESTINATIONS` | 14 | 0 | Retained | frame | The rail’s names and one line under each listing what that screen holds, in the tabs’ own words. | Rewritten And Verified |

@@ -32,7 +32,7 @@ import { buyTheDaysFood, fedOn, mealOf, spend, spendRefusal } from './spending';
 import { heatIndexC, weatherAt } from './weather';
 import { alreadyApplied, developmentOf, markApplied, recordDevelopment, repeatsSoFar, repeatsToday } from './attributes';
 import { DEVELOPMENT } from '../content/abilities';
-import { nextCommitmentItem } from '../world/calendar';
+import { GETTING_UP_MINUTES, nextCommitmentItem, travelMinutesOf } from '../world/calendar';
 
 /** What delivery costs over a meal cooked at home: $21.00 against $3.03 for the same meals (LendingTree, October 2025), near seven times. */
 export const DELIVERY = { times: 21 / 3.03 };
@@ -1428,6 +1428,15 @@ export const SHORTEST_SLEEP = 0.5;
  * Seven and a half hours, plus a little for any debt, used to be the advice
  * for everybody: it sat under what a day costs, and a player who took it every
  * night wore down.
+ *
+ * And read at the hour it's asked (from 2026-10-20, the owner's brief 19, D3: brief 18's S3). A sleep that would end on
+ * a day whose night has already been slept (`lastSleptAt` since that day's midnight, as the night nobody chose reads it)
+ * isn't a night: it's a nap, and the suggestion is a nap's (`napNow`), unless the clock is inside a night nobody chose
+ * that's still running (`nightEndsAt`), where the rest of the night is still the night. Until then it suggested a full
+ * night at any hour: at 7:15 AM, up from eight hours, "A normal night." and 8 hours, which slept to 3:15 PM (brief 17's
+ * frame editor found it on the built app). And the time kept back before the next commitment is an hour to get up and
+ * that commitment's own trip (`travelMinutesOf`, `world/calendar.ts`), half an hour across town as the hour and a half
+ * it kept for everything was until then, and longer where the commitment says so, an audition in another city.
  */
 export function suggestedSleep(sim: Simulation): { hours: number; reason: string } {
   const next = nextCommitmentItem(sim);
@@ -1449,28 +1458,94 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   const ideal = clamp(needed, 6, LONGEST_NIGHT);
   const hours = Math.round(ideal * 2) / 2;
   const why = sleepReason({ night, restores, age, owed, hours, needed });
+  const nap = napNow(sim, person, hours, owed);
   if (!next) {
-    return { hours, reason: needed > LONGEST_NIGHT ? why : 'Your calendar’s clear, so sleep as long as you need.' };
+    return nap ?? { hours, reason: needed > LONGEST_NIGHT ? why : 'Your calendar’s clear, so sleep as long as you need.' };
   }
 
-  // An hour and a half kept back to get up and get there. The reason says how far off it is, which it said
-  // less that hour and a half until 2026-09-27.
+  // An hour to get up, and the commitment's own trip to get there. The reason says how far off it is, which it said
+  // less the hour and a half it kept for both until 2026-09-27.
   const away = (next.at - sim.now) / MS_HOUR;
-  const available = away - 1.5;
-  if (available < ideal) {
-    // What's left before it, to the half hour below, and half an hour at the
-    // least. Until 2026-09-28 it was never under three hours, which with a
-    // call four hours off slept straight through it: an actor jet-lagged in
-    // London, in bed at four for a seven o'clock call, was fired on the day.
-    // Standing at it, the reason says so (from 2026-10-12): it would have said it was in 0.0 hours.
-    return {
-      hours: Math.max(SHORTEST_SLEEP, Math.floor(available * 2) / 2),
-      reason: next.at <= sim.now
-        ? `It’s time for “${next.label}”, and you’re standing at it, so any sleep would go through it.`
-        : `“${next.label}” is in ${formatDurationWords(away * MS_HOUR)}. Getting up and there takes an hour and a half, so there isn’t time for a full night.`,
-    };
+  const trip = travelMinutesOf(next) / 60;
+  const available = away - GETTING_UP_MINUTES / 60 - trip;
+  // What's left before it, to the half hour below, and half an hour at the
+  // least. Until 2026-09-28 it was never under three hours, which with a
+  // call four hours off slept straight through it: an actor jet-lagged in
+  // London, in bed at four for a seven o'clock call, was fired on the day.
+  const fits = Math.max(SHORTEST_SLEEP, Math.floor(available * 2) / 2);
+  // Standing at it, the reason says so (from 2026-10-12): it would have said it was in 0.0 hours.
+  if (next.at <= sim.now) return { hours: fits, reason: `It’s time for “${next.label}”, and you’re standing at it, so any sleep would go through it.` };
+  // A commitment whose trip is inside its own hours (`travelMinutes: 0`, a call that leaves from the School) keeps the
+  // hour to get up alone.
+  const getting = next.travelMinutes === undefined
+    ? 'Getting up and there takes an hour and a half'
+    : next.travelMinutes === 0
+      ? 'Getting up takes an hour'
+      : `Getting up takes an hour, and getting there ${formatDurationWords(trip * MS_HOUR)}`;
+  const inHours = `“${next.label}” is in ${formatDurationWords(away * MS_HOUR)}. ${getting}`;
+  // A nap that fits before it is the nap's own; one that doesn't is cut to what fits, and says so.
+  if (nap) {
+    if (nap.hours <= fits) return nap;
+    return { hours: fits, reason: `${inHours}, so there’s time for ${hoursSaid(fits).toLowerCase()}. ${nap.reason}` };
   }
+  if (available < ideal) return { hours: fits, reason: `${inHours}, so there isn’t time for a full night.` };
   return { hours, reason: why };
+}
+
+/** Sleep owed past a normal day's that the suggestion calls real sleep debt (`sleepReason`), and treats as a night's at any hour. */
+const REAL_DEBT = 8;
+
+/** The hour the small hours end: a sleep started before it is the night's. */
+const SMALL_HOURS_END = 5;
+
+/**
+ * The nap a sleep now would be, or nothing where it would be a night (from 2026-10-20, brief 19's D3).
+ *
+ * A sleep counts as the night of the day it ends in (`lastSleptAt`, `life.sleep`), so a sleep now of the night's `hours`
+ * ending on a day already slept, from five in the morning on and with no real sleep debt, is a second sleep that day.
+ * Its suggestion is what the sleep model says it would do:
+ * with energy at `SPENT` or more, the line under which the game says to sleep before training, nothing is needed yet, and
+ * the dialog starts at the shortest sleep with the reason why, since a sleep under six hours adds to the sleep owed
+ * (`applySleep`); under it, the hours that bring energy back to full, as `applySleep` would pay them tonight, to the half
+ * hour above and no longer than the night.
+ */
+function napNow(sim: Simulation, person: Person, hours: number, owed: number): { hours: number; reason: string } | undefined {
+  if (person.nightEndsAt !== undefined && sim.now < person.nightEndsAt) return undefined;
+  // Real sleep debt asks for a night's length at any hour: a sleep of six hours or more pays debt back, and a nap under
+  // six adds to it (`applySleep`), so the night's own suggestion and its reason stand.
+  if (owed > REAL_DEBT) return undefined;
+  // In the small hours, before five, a sleep is the rest of the night, whatever came before it: back from a call at four
+  // after two hours' sleep, the night is still to be had. Five is where the hours `nightParts` counts late end, and the
+  // scripted players' bedtimes (`tools/policy.ts`, at eleven or before five) are left as they were.
+  if (zonedParts(sim.now, sim.zone).hour < SMALL_HOURS_END) return undefined;
+  const wakes = sim.now + Math.round(hours * MS_HOUR);
+  if (person.lastSleptAt === undefined || person.lastSleptAt < startOfLocalDay(sim, wakes)) return undefined;
+  const energy = person.wellbeing.energy;
+  const at = Math.round(energy);
+  if (energy >= SPENT) {
+    return { hours: SHORTEST_SLEEP, reason: `You’ve already slept since midnight, and with your energy at ${at} you don’t need more sleep yet. A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.` };
+  }
+  const quality = sleepQuality(sim, person);
+  let nap = SHORTEST_SLEEP;
+  for (; nap < hours; nap += 0.5) {
+    const body = { ...person, wellbeing: { ...person.wellbeing } } as Person;
+    applySleep(body, nap, quality, sim.now);
+    if (body.wellbeing.energy >= 99.5) break;
+  }
+  return {
+    hours: nap,
+    reason: `You’ve already slept since midnight, but your energy is down to ${at}. ${hoursSaid(nap)} would bring it back to full${nap < 6 ? ', though a sleep under six hours adds to the sleep you owe' : ''}.`,
+  };
+}
+
+/** Hours at the start of a sentence: "Half an hour", "One hour", "Two and a half hours", "Nine hours". */
+function hoursSaid(hours: number): string {
+  if (hours === 0.5) return 'Half an hour';
+  const whole = Math.floor(hours);
+  const word = HOURS_WORD[whole] ?? ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'][whole] ?? String(whole);
+  const head = word.charAt(0).toUpperCase() + word.slice(1);
+  if (hours === whole) return `${head} ${whole === 1 ? 'hour' : 'hours'}`;
+  return `${head} and a half hours`;
 }
 
 /** The longest night as a word, read from LONGEST_NIGHT: numbers under twenty are words in this prose. */
@@ -1490,7 +1565,7 @@ function sleepReason(tonight: {
       ? `Going to bed this late, not even ${HOURS_WORD[LONGEST_NIGHT] ?? LONGEST_NIGHT} hours of sleep would make up for a whole day. An earlier night would.`
       : `Not even ${HOURS_WORD[LONGEST_NIGHT] ?? LONGEST_NIGHT} hours of sleep would make up for a whole day tonight.`;
   }
-  if (owed > 8) return 'You’re carrying real sleep debt.';
+  if (owed > REAL_DEBT) return 'You’re carrying real sleep debt.';
   if (hours <= 8) return 'A normal night.';
   const calm = 0.82 - night.stressLoss;
   // How much of a night each thing takes away, as the share left: the smallest

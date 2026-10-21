@@ -109,6 +109,10 @@ describe('standing at a commitment', () => {
   it('is still counted from its hour, a little before it', () => {
     const sim = quickSave({}, 'g4-2-before');
     clearCalendar(sim);
+    // At bedtime (from 2026-10-20, brief 19's D3): until then this was asked on the save's first morning, up from the
+    // night, where the suggestion is a nap's now, since the day's night is behind it, and a nap that fits names no
+    // commitment. The night is what a commitment two hours off cuts short.
+    sim.advanceTo(sim.now + 15 * MS_HOUR);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 2 * MS_HOUR, durationMinutes: 60 } });
     expect(hoursUntilNextCommitment(sim)).toBe(2);
     expect(suggestedSleep(sim).reason).toMatch(/^“Gym” is in 2 hours\./);

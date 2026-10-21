@@ -158,7 +158,10 @@ describe('the top bar’s dialogs', () => {
     press(button(/^One Week/));
     let said = dialog(drawn(sim, TimeControls).html, 'On The Way');
     const week = sim.now + 7 * MS_DAY;
-    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.`);
+    // Only the choices the commitments on the way offer, and what the jump does after them (from 2026-10-20, brief 19's
+    // D1): until then it named Call It Off too, with no rehearsal on the way, and nothing said the clock carries on.
+    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, and the clock then carries on.`);
+    expect(said).not.toContain('call off a rehearsal');
     expect(said).toMatch(/Dinner — /);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 40 * MS_HOUR, durationMinutes: 60 } });
     h.given = new Map();

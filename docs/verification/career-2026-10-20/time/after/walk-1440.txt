@@ -1,0 +1,109 @@
+=========== The Advance menu at 11:00 PM (the clock at August 27, 2026 11:00 PM)
+One Hour · 12:00 AM · Friday, August 28, 2026
+This Evening · 6:00 PM · Friday, August 28, 2026
+Tonight · 10:00 PM · Friday, August 28, 2026
+Tomorrow Morning · 7:00 AM · Friday, August 28, 2026
+Next Event · Meet Sam At The Station · August 27, 2026 at 11:30 PM
+Next Monday · 9:00 AM · Monday, August 31, 2026
+One Week · 11:00 PM · Thursday, September 3, 2026
+Choose An Event… · Pick from everything on the calendar
+
+=========== Tomorrow Morning pressed: the dialog (the clock at August 27, 2026 11:00 PM)
+On The Way
+✕
+
+Moving the clock to Tomorrow Morning (August 28, 2026 at 7:00 AM) passes two commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, and the clock then carries on.
+
+Meet Sam At The Station — August 27, 2026 at 11:30 PM
+Call Home — August 28, 2026 at 2:00 AM
+Cancel
+Advance
+
+=========== Advance pressed: the first stop (the clock at August 27, 2026 11:30 PM)
+Meet Sam At The Station
+✕
+
+It’s 11:30 PM on August 27, 2026, and this needs you now. Going takes 1 hour, and the clock moves on to August 28, 2026 at 7:00 AM.
+
+Skip It marks your plan missed, at no cost but the plan, and the clock carries on to August 28, 2026 at 7:00 AM, stopping at the next commitment on the way. Stand Here keeps the clock paused here, and Meet Sam At The Station starts the next time it moves.
+
+How This Works
+Stand Here
+Skip It
+Go
+
+=========== Skip It pressed: the clock at August 28, 2026 2:00 AM, and the dialog
+Call Home
+✕
+
+It’s 2:00 AM on August 28, 2026, and this needs you now. Going takes 30 minutes, and the clock moves on to August 28, 2026 at 7:00 AM.
+
+Skip It marks your plan missed, at no cost but the plan, and the clock carries on to August 28, 2026 at 7:00 AM, stopping at the next commitment on the way. Stand Here keeps the clock paused here, and Call Home starts the next time it moves.
+
+How This Works
+Stand Here
+Skip It
+Go
+
+=========== Stand Here pressed: the clock at August 28, 2026 2:00 AM
+no dialog
+
+=========== The Advance menu at 2:00 AM (the clock at August 28, 2026 2:00 AM)
+One Hour · 3:00 AM · Friday, August 28, 2026
+This Evening · 6:00 PM · Friday, August 28, 2026
+Tonight · 10:00 PM · Friday, August 28, 2026
+Tomorrow Morning · 7:00 AM · Friday, August 28, 2026
+Next Event · The Courses And What They Ask · August 28, 2026 at 10:00 AM
+Next Monday · 9:00 AM · Monday, August 31, 2026
+One Week · 2:00 AM · Friday, September 4, 2026
+Choose An Event… · Pick from everything on the calendar
+
+=========== Tomorrow Morning pressed at 2:00 AM (the clock at August 28, 2026 7:00 AM)
+no dialog
+
+=========== The Sleep dialog at August 27, 2026 11:00 PM
+Sleep
+✕
+
+A normal night.
+
+Hours
+8
+NOW
+11:00 PM
+YOU’D WAKE AT
+7:00 AM, August 28, 2026
+Your next commitment is in 11 hours.
+
+The clock moves on while you sleep. What happens without you still happens, and you miss any commitment in those hours.
+
+How This Works
+Not Yet
+Sleep 8 Hours
+
+=========== The live clock and the Sleep dialog
+Play pressed; the clock at August 27, 2026 11:00 PM.
+The Sleep dialog open for 65 seconds: its Now reads 11:00 PM, the top bar August 27, 2026 11:00 PM.
+Not Yet pressed: the clock at August 27, 2026 11:00 PM.
+65 seconds after: the clock at August 27, 2026 11:01 PM.
+
+=========== The Sleep dialog at August 29, 2026 7:15 AM
+Sleep
+✕
+
+You’ve already slept since midnight, and with your energy at 100 you don’t need more sleep yet. A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.
+
+Hours
+0.5
+NOW
+7:15 AM
+YOU’D WAKE AT
+7:45 AM, August 29, 2026
+Your next commitment is in 1 day and 2 hours.
+
+The clock moves on while you sleep. What happens without you still happens, and you miss any commitment in those hours.
+
+How This Works
+Not Yet
+Sleep 0.5 Hours
+

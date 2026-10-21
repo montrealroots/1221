@@ -140,7 +140,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Press an entry’s name or its time to see when it starts, how long it lasts, where it is and what missing it would cost.',
       'Anything you need to be at is a commitment: a class, a rehearsal call, a work-study shift, an appointment, a plan of your own. When the clock reaches one, it stops, and a dialog with the commitment’s name asks what you want to do.',
       'Press Go to be there. Going takes as long as the commitment lasts, and the clock runs on through it. Stand Here closes the dialog and keeps the clock paused at the commitment.',
-      'You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. If you press Stand Here, the commitment starts the next time the clock moves, whether you press Play, Advance or Sleep.',
+      'You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. Skip It marks your plan missed and carries the clock on, as Go does. If you press Stand Here, the commitment starts the next time the clock moves, whether you press Play, Advance or Sleep.',
       'You miss a commitment if you’re asleep or in hospital when it starts. An injury that lays you up also keeps you from classes, calls, performances, work-study shifts and an office appointment for your papers, though not from your doctor, your therapist, orientation or a plan of your own.',
       'The clock hasn’t moved yet, so nothing has come due. Read “The Clock” next: it opens Play, which starts the clock.',
     ],
@@ -154,7 +154,7 @@ export const CHAPTERS: readonly Chapter[] = [
     body: [
       'Press Play, in the top bar, to start the clock, and Pause to stop it. The button always shows what pressing it will do. A new life starts with the clock paused.',
       'The clock runs in real time: a minute in the game is a minute for you. While it runs, life goes on around you. Hours pass, you get tired and hungry, and anything that’s due happens.',
-      'The clock stops by itself at every commitment and waits for your answer, as “What’s Coming” explained. Sleep is the exception: it runs straight through everything in those hours, so the Sleep dialog lists what you’d sleep through before you start.',
+      'The clock stops by itself at every commitment and waits for your answer, as “What’s Coming” explained. Sleep is the exception: it runs straight through everything in those hours, so the Sleep dialog lists what you’d sleep through before you start. The clock also waits while the Sleep, On The Way or Skip To Event dialog is open, so nothing moves while you decide.',
       'If you don’t want to wait, read “Moving Time On” next to jump ahead.',
     ],
     names: ['Play and Pause'],
@@ -162,14 +162,18 @@ export const CHAPTERS: readonly Chapter[] = [
   },
   // Until 2026-10-20 (brief 17, the frame editor's finding) the chapter said the clock stops at each commitment on the
   // way and not what the stop's answers do to the jump: Go carries it on, and Stand Here ends it there with the clock
-  // paused (`onGo` and `clearStandingAt` in `ui/shell/TimeControls.tsx`, `halt` in `app/game-context.tsx`).
+  // paused (`onGo` and `clearStandingAt` in `ui/shell/TimeControls.tsx`, `halt` in `app/game-context.tsx`). From later
+  // that day (the owner's brief 19, D1, D2 and D5) it says Skip It and Call It Off carry the jump on too (`carryOnTo`,
+  // `world/clock.ts`), that each line gives the day it lands (Tomorrow Morning after midnight is that date's seven,
+  // `nextAtHour`), and that On The Way lists what isn't on the calendar yet (`onTheWay`, `foresight.ts`).
   {
     id: 'advance',
     title: 'Moving Time On',
     lead: 'Jumping ahead, and what happens on the way.',
     body: [
-      'To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Choose An Event opens Skip To Event: pick one of the next fourteen things on your calendar and press Skip To with its name.',
+      'To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Each line shows the day and the time it lands. Choose An Event opens Skip To Event: pick one of the next fourteen things on your calendar and press Skip To with its name.',
       'Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many: press Advance there to go on, or Cancel to stay where you are. The clock still stops at each commitment to ask what you want to do: Go takes you to it and carries the jump on afterwards, and Stand Here ends the jump there, with the clock paused.',
+      'Skip It, on a plan of your own, and Call It Off, on a rehearsal with a partner, carry the jump on too. On The Way also lists what isn’t on your calendar yet but will be by then, such as next week’s classes.',
       'Time only moves forward, so you can’t undo a jump.',
       'Read “What Needs You” next: it’s where you find out what happened.',
     ],
@@ -228,10 +232,10 @@ export const CHAPTERS: readonly Chapter[] = [
     lead: 'Going to sleep, and getting your energy back.',
     body: [
       // The dialog's own limits (from 2026-10-12: until then this said "between one and fourteen", and the slider began at one).
-      `Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks how many hours, from ${hoursOf(SHORTEST_SLEEP)} to ${hoursOf(LONGEST_NIGHT)}. It suggests a number, from when you next need to be somewhere and how much sleep you owe, and shows when you’d wake.`,
-      'Press the button with the hours on it, such as Sleep 8 Hours, and the clock runs on to when you wake. Not Yet closes the dialog.',
+      `Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks how many hours, from ${hoursOf(SHORTEST_SLEEP)} to ${hoursOf(LONGEST_NIGHT)}. It suggests a number, from how much sleep you owe, whether you’ve already slept since midnight and when you next need to be somewhere, and shows when you’d wake.`,
+      'Press the button with the hours on it, such as Sleep 8 Hours, and the clock runs on to when you wake. Not Yet closes the dialog. The clock waits while it’s open, so Not Yet leaves it where it was.',
       'A night’s sleep gives you energy back, though less the more sleep you owe. More than about five hours of real rest also mends your condition, as far as your fitness and age allow, and less than that wears it down. A night under six hours adds to the sleep you owe.',
-      'Life goes on while you sleep. Anything on your calendar in those hours happens without you, and the dialog lists it before you press.',
+      'Life goes on while you sleep, and you miss any commitment in those hours. The dialog lists them before you press.',
       'While you’re at a commitment, Sleep is grayed out, and the top bar says when you’ll be free.',
       'Read “Looking After Yourself” next, about eating, washing, working out and unwinding.',
     ],

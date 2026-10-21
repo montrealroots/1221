@@ -1,0 +1,300 @@
+{
+ "playthrough": "banking",
+ "width": 1440,
+ "base": "http://localhost:4502",
+ "commit": "2fc6493d",
+ "uncommitted": 0,
+ "startedAt": "2026-10-20T23:55:08.655Z",
+ "startingPoint": {
+  "kind": "save",
+  "file": "roundups.json",
+  "bytes": 46658,
+  "sha256": "c4807ad1bacd505936273c877f5ec50e98399d2bab12c8519052c4476e63b03a",
+  "seed": "sc-0",
+  "command": "npx vite-node tools/scenarios.ts -- --scenario roundups --seed sc-0 --save SAVEDIR/roundups.json"
+ },
+ "steps": [
+  {
+   "n": 1,
+   "name": "[save: roundups scenario] Money by the rail: Accounts, each account’s balance, Move Money offered",
+   "exercises": [
+    "navigation"
+   ],
+   "pressed": [
+    "Continue",
+    "Money",
+    "Accounts (tab)"
+   ],
+   "said": [
+    "Citi Access Checking $90,469, Citi Savings $413,043; Move Money from Citi Access Checking to Citi Savings"
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "4:50 PM"
+  },
+  {
+   "n": 2,
+   "name": "more than the current account holds, refused in words, naming what it holds; nothing moved, the clock as it was",
+   "exercises": [
+    "unavailable"
+   ],
+   "pressed": [
+    "Amount: 91469",
+    "Move It"
+   ],
+   "said": [
+    "refused (negative): Citi Access Checking has only $90,469.00 available, so nothing was moved.",
+    "Citi Access Checking has only $90,469.00 available, so nothing was moved."
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "4:50 PM"
+  },
+  {
+   "n": 3,
+   "name": "$500 moved: the toast says it, the current account $500 less and savings $500 more, the clock as it was",
+   "exercises": [],
+   "pressed": [
+    "Amount: 500",
+    "Move It"
+   ],
+   "said": [
+    "Moved $500 to Citi Savings. Citi Access Checking $89,969, Citi Savings $413,543"
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "4:50 PM"
+  },
+  {
+   "n": 4,
+   "name": "a card payment: Look After Yourself, the first item with a price and offered, pressed",
+   "exercises": [],
+   "pressed": [
+    "Look After Yourself",
+    "Eat A Meal"
+   ],
+   "said": [
+    "Eat A Meal, $5.00: Eat A Meal: done at 5:30 PM."
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "5:30 PM"
+  },
+  {
+   "n": 5,
+   "name": "pending, not available: Statements, the current account this month; what’s available and the posted balance differ by what’s pending; the payment pending, its day to post; its line’s look says so",
+   "exercises": [
+    "navigation",
+    "drill-down"
+   ],
+   "pressed": [
+    "Money",
+    "Statements (tab)",
+    "Account: Citi Access Checking",
+    "Period: August 2026, So Far",
+    "A meal",
+    "Close A Meal"
+   ],
+   "said": [
+    "August 2026, So Far: Opening Balance $0.00, Money In $92,391.00, Money Out $2,427.00, Interest, After Tax $0.00, Fees $0.00, Available Now $89,964.00, Posted Balance $89,989.00; pending: A meal · Pending, posts September 1, 2026 -5; Groceries · Pending, posts September 1, 2026 -10; Groceries · Pending, posts August 31, 2026 -10",
+    "look “A Meal” (AN ENTRY ON A STATEMENT): It took $5.00 out of Citi Access Checking, on Friday, August 28, 2026.",
+    "A meal · Pending, posts September 1, 2026, −$5.00, posts September 1, 2026; available $89964, posted $89989"
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "5:30 PM"
+  },
+  {
+   "n": 6,
+   "name": "Statement Ready turned on, the clock as it was",
+   "exercises": [],
+   "pressed": [
+    "Statement Ready: Off"
+   ],
+   "said": [
+    "Statement Ready: Off → Statement Ready: On"
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "5:30 PM"
+  },
+  {
+   "n": 7,
+   "name": "Save & Exit; Delete asked and kept; Continue: the same moment, the same lines pending on the same days, the same figures, Statement Ready still on",
+   "exercises": [
+    "confirmation",
+    "save-continue"
+   ],
+   "pressed": [
+    "Save & Exit",
+    "Delete",
+    "Keep It",
+    "Continue",
+    "Money",
+    "Statements (tab)",
+    "Account: Citi Access Checking",
+    "Period: August 2026, So Far"
+   ],
+   "said": [
+    "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE August 28, 2026 LOCATION New Haven NET WORTH $504K PLAYED 19s Version 1.1.0 · Save Format 94 · 12 KB Backup from an unknown date Continue Restore Backup D",
+    "August 28, 2026 5:30 PM; 3 lines pending as they were"
+   ],
+   "ok": true,
+   "date": "August 28, 2026",
+   "clock": "5:30 PM"
+  },
+  {
+   "n": 8,
+   "name": "One Week, asked: On The Way names what’s on the way, Cancel leaves the clock",
+   "exercises": [
+    "confirmation"
+   ],
+   "pressed": [
+    "Advance",
+    "One Week",
+    "Stand Here"
+   ],
+   "said": [],
+   "ok": false,
+   "why": "One Week wasn’t asked first: the clock ran from August 28, 2026 5:30 PM to August 31, 2026 9:00 AM and stopped at “Classes ✕ It’s 9:00 AM on August 31, 2026, and this needs you now. Going takes 6 hours, and the clock moves on to September 4, 2026 at 5:30 PM. Press Go, or Stand Here to wait with the clock paused. Classes starts the ne”; Stand Here pressed",
+   "date": "August 31, 2026",
+   "clock": "9:00 AM"
+  },
+  {
+   "n": 9,
+   "name": "to the day after the payment posts, each stop gone to: the month’s statement for the current account on Home, its balance at the close; Go There opens Money",
+   "exercises": [
+    "notification",
+    "navigation"
+   ],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Show All 18",
+    "Home",
+    "Go There"
+   ],
+   "said": [
+    "notice “Statement Ready: Citi Access Checking”: It ended the month with $89,919.00 in it. The statement is on Money, under Statements.",
+    "2 mornings, to September 2, 2026 7:00 AM: “Statement Ready: Citi Access Checking”: It ended the month with $89,919.00 in it. The statement is on Money, under Statements."
+   ],
+   "ok": true,
+   "date": "September 2, 2026",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 10,
+   "name": "posted: the payment’s line no longer pending; the closed month’s closing balance is the notice’s figure, to the cent",
+   "exercises": [
+    "drill-down"
+   ],
+   "pressed": [
+    "Money",
+    "Statements (tab)",
+    "Account: Citi Access Checking",
+    "Period: August 2026"
+   ],
+   "said": [
+    "August 2026: Opening Balance $0.00, Money In $92,391.00, Money Out $2,472.00, Interest, After Tax $0.00, Fees $5.00, Closing Balance $89,919.00",
+    "August 2026: A meal posted; closing $89919, the notice’s $89919"
+   ],
+   "ok": true,
+   "date": "September 2, 2026",
+   "clock": "7:00 AM"
+  }
+ ],
+ "milestones": [
+  {
+   "file": "01-transfer-refused.jpg",
+   "step": 2,
+   "at": "August 28, 2026 4:50 PM"
+  },
+  {
+   "file": "02-statement-pending.jpg",
+   "step": 5,
+   "at": "August 28, 2026 5:30 PM"
+  },
+  {
+   "file": "03-confirm-deletion.jpg",
+   "step": 7,
+   "at": ""
+  },
+  {
+   "file": "04-statement-notice.jpg",
+   "step": 9,
+   "at": "September 2, 2026 7:00 AM"
+  },
+  {
+   "file": "05-statement-posted.jpg",
+   "step": 10,
+   "at": "September 2, 2026 7:00 AM"
+  }
+ ],
+ "dialogs": [
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 1, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 1, 2026 9:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 2, 2026 7:00 AM"
+  }
+ ],
+ "errors": [],
+ "overflows": [],
+ "exercised": {
+  "navigation": [
+   1,
+   5,
+   9
+  ],
+  "drill-down": [
+   5,
+   10
+  ],
+  "unavailable": [
+   2
+  ],
+  "confirmation": [
+   7
+  ],
+  "notification": [
+   9
+  ],
+  "save-continue": [
+   7
+  ]
+ },
+ "summary": {
+  "steps": 10,
+  "passed": 9,
+  "failed": 1,
+  "sixMissing": [],
+  "errors": 0,
+  "overflows": 0,
+  "languageFails": 0,
+  "languageRecorded": 0
+ },
+ "language": {
+  "fails": [],
+  "recorded": []
+ },
+ "finishedAt": "2026-10-20T23:56:05.814Z"
+}

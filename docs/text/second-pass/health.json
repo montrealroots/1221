@@ -505,9 +505,9 @@
  },
  "src/engine/content/guide/body.ts#BODY [body.sleep]": {
   "status": "Rewritten",
-  "hash": "f55bd64284ec",
+  "hash": "4088b0a29295",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4, the dialog and the clock first, then the warning and what a night does; a night eases stress and pays back debt, as applySleep in systems/life.ts does, where it said it cleared them; tests/guide-examples-start-day-body.test.ts passes.",
+  "evidence": "The suggestion reads whether the night's behind you, your energy and the trip, and a commitment slept through is missed; held by tests/time-stops.test.ts beside the behavior",
   "first": "Pending"
  },
  "src/engine/content/guide/body.ts#BODY [evaluation]": {
