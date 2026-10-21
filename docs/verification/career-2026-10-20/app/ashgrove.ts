@@ -3,7 +3,9 @@
  * checked again, 2026-10-21). Defect 3 was a classmate called Jordan beside the agent Jordan Parente (`jordan.ts`); that
  * day the owner had a fictional agent, Thomas Ashgrove of Halberd Talent, take the real one's place (`59da1351`), and
  * this asks the same of him: is any classmate, teacher or other person the life meets named Thomas, Ashgrove or
- * something near either, and where do the agent's notices sit among the others in What Needs You.
+ * something near either, and where do the agent's notices sit among the others in What Needs You. Later that day each
+ * part was written for an actor, an actress or either (`9c3b7ee8`), and it asks two things more: whether a classmate
+ * shares a name with any of the parts, and whether the life is ever shown a part written for an actor.
  *
  *   npx vite-node docs/verification/career-2026-10-20/app/ashgrove.ts -- OUT.txt SAVEDIR [WALKDIR]
  *
@@ -11,12 +13,15 @@
  * folder of its own, with every notice the game is asked to say recorded as it is said (`Simulation.prototype.notify`
  * wrapped, so the log's cap of 500 loses nothing; a notice said inside a command the game then refused would be counted
  * too). Each of the nine saves it writes is compared with SAVEDIR's, the walk's, byte for byte, so the life read is the
- * life walked. Then: the class and every person in the save, each name held to `NEAR`; every notice naming anything
- * `NEAR` matches, his own told from the rest; every notice from the last term's first day whose title names a
- * classmate's first name; What Needs You's unread list in its own order at `follow-up.json`, an hour after his first
- * notice, and at `audition.json`, where this life's first part, Theo in Paper Moons, shares its name with a classmate,
- * Theo Sullivan; and, given WALKDIR (the walk's folder), every line of every surface the walk read that names him, his
- * agency or anything `NEAR` matches.
+ * life walked. Then: the class and every person in the save, each name held to `NEAR`; each part (`PROJECTS`) with who
+ * it's written for, against every classmate's given and family name, the same or one short for the other, and how many
+ * of 100 other lives' classes have a classmate with a part's name; every notice
+ * naming anything `NEAR` matches, his own told from the rest; every notice from the last term's first day whose title
+ * names a classmate's first name; What Needs You's unread list in its own order at `follow-up.json`, an hour after his
+ * first notice, and at `audition.json`, the morning of the first audition; every role the nine saves hold and every
+ * notice, by the parts written for an actor; and, given WALKDIR (the walk's folder), every line of every surface the walk
+ * read that names him, his agency, anything `NEAR` matches or a part written for an actor (a classmate's full name taken
+ * out first, so Theo Sullivan isn't counted as the part Theo).
  */
 import { mkdtempSync, readFileSync, readdirSync, existsSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -25,6 +30,9 @@ import { Simulation } from '../../../../src/engine/core/simulation';
 import { formatDateTime, instantFromZoned, MS_DAY } from '../../../../src/engine/core/time';
 import { unreadNotifications } from '../../../../src/engine/world/world';
 import { AGENTS, agencyOf } from '../../../../src/engine/content/agents';
+import { createSave } from '../../../../src/engine';
+import { newLifeConfig } from '../../../../src/engine/world/bootstrap';
+import { PROJECTS } from '../../../../src/engine/content/careerwork';
 
 const [OUT = 'ashgrove.txt', SAVEDIR = '.', WALKDIR] = process.argv.slice(2).filter((a) => a !== '--');
 const SEED = 'app-walk-112';
@@ -55,8 +63,8 @@ process.argv = argv;
 Simulation.prototype.notify = said;
 
 say(`The life make-saves.ts plays on ${SEED}, played again by it into a folder of its own, against the walk's saves (${SAVEDIR.split('/').at(-1)}):`);
-const names = ['last-term', 'after-new-york', 'follow-up', 'meeting', 'offered', 'audition', 'offer', 'work-day', 'paid'];
-for (const n of names) {
+const names9 = ['last-term', 'after-new-york', 'follow-up', 'meeting', 'offered', 'audition', 'offer', 'work-day', 'paid'];
+for (const n of names9) {
   const mine = existsSync(`${PLAYED}/${n}.json`) ? readFileSync(`${PLAYED}/${n}.json`) : undefined;
   const walked = existsSync(`${SAVEDIR}/${n}.json`) ? readFileSync(`${SAVEDIR}/${n}.json`) : undefined;
   say(`  ${n}.json: ${!mine ? 'not written' : !walked ? 'not in the walk' : mine.equals(walked) ? 'the same to the byte' : 'DIFFERENT'}`);
@@ -76,6 +84,33 @@ for (const m of [...classmates, ...former]) if (near(m.name).length) say(`  NEAR
 const people = Object.values(paid.people) as { firstName: string; lastName: string; isPlayer?: boolean }[];
 say(`People in the save (${people.length}): ${people.map((p) => `${p.firstName} ${p.lastName}${p.isPlayer ? ' (the player)' : ''}`).join(', ')}`);
 for (const p of people) if (near(`${p.firstName} ${p.lastName}`).length) say(`  NEAR: person ${p.firstName} ${p.lastName}`);
+
+// The parts, and a classmate whose given or family name is a part's, or one a part's name is short for (Sam, Samuel).
+const parts = [...new Map(PROJECTS.map((t) => [t.role.part, t.role.for])).entries()];
+say('');
+say(`The parts (${parts.length}): ${parts.map(([part, f]) => `${part} (${f})`).join(', ')}`);
+const names = (n: string) => n.split(' ');
+const shares: string[] = [];
+for (const m of classmates) {
+  for (const [part, f] of parts) {
+    for (const w of names(part)) {
+      for (const x of names(m.name)) {
+        if (w === x) shares.push(`  SHARES: classmate ${m.name} and the part ${part}, written for ${f === 'either' ? 'either' : `an ${f}`}`);
+        else if (w.length >= 3 && x.length >= 3 && (x.startsWith(w) || w.startsWith(x))) shares.push(`  SHORT FOR: classmate ${m.name} and the part ${part}, written for ${f === 'either' ? 'either' : `an ${f}`}`);
+      }
+    }
+  }
+}
+say(`A classmate who shares a name with a part, or whose name one is short for: ${shares.length ? '' : 'none'}`);
+for (const x of shares) say(x);
+// How often a class has one: the classes of 100 other lives, `app-walk-0` to `app-walk-99`, drawn when the save is made.
+const tally = new Map<string, number>();
+for (let i = 0; i < 100; i += 1) {
+  const other = createSave(1, `app-walk-${i}`, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+  const words = new Set((other.player.school?.classmates ?? []).flatMap((m) => names(m.name)));
+  for (const [part] of parts) for (const w of names(part)) if (words.has(w)) tally.set(w, (tally.get(w) ?? 0) + 1);
+}
+say(`Of the 100 classes of app-walk-0 to app-walk-99, how many have a classmate with a part's name in theirs: ${tally.size ? [...tally].map(([w, c]) => `${w}, ${c}`).join('; ') : 'none'}`);
 
 const isHis = (t: string, b: string) => `${t} ${b}`.includes(AGENT.name) || `${t} ${b}`.includes(AGENCY);
 const end = paid.now as number;
@@ -122,6 +157,30 @@ for (const save of ['follow-up', 'audition']) {
   list.forEach((n, i) => { if (i < 15 || mark(n)) say(`  ${i + 1}. [${n.importance}] ${formatDateTime(n.at, zone)} ${n.title}${mark(n)}`); });
 }
 
+// The parts written for an actor, and whether the life is ever shown one: every role its nine saves hold, every notice.
+const actorParts = parts.filter(([, f]) => f === 'actor').map(([part]) => part);
+const forOf = new Map(PROJECTS.map((t) => [t.id, t]));
+const roles = new Map<string, { part: string; for: string; project: string; via: string; status: string }>();
+for (const n of names9) {
+  const u = JSON.parse(readFileSync(`${PLAYED}/${n}.json`, 'utf8'));
+  for (const o of u.people[u.playerId].pro?.opportunities ?? []) {
+    const t = forOf.get(o.projectId);
+    roles.set(o.id, { part: t?.role.part ?? '?', for: t?.role.for ?? '?', project: t?.project ?? o.projectId, via: o.via, status: o.status });
+  }
+}
+say('');
+say(`The parts written for an actor: ${actorParts.join(', ')}. The roles the nine saves hold, ${roles.size} in all, by part:`);
+const byPart = new Map<string, number>();
+for (const r of roles.values()) byPart.set(`${r.part}, ${r.project} (written for ${r.for})`, (byPart.get(`${r.part}, ${r.project} (written for ${r.for})`) ?? 0) + 1);
+for (const [k, c] of [...byPart.entries()].sort()) say(`  ${c} x ${k}`);
+const actorRoles = [...roles.values()].filter((r) => r.for === 'actor');
+say(`Roles written for an actor among them: ${actorRoles.length ? actorRoles.map((r) => `${r.part}, ${r.project} (${r.via}, ${r.status})`).join('; ') : 'none'}`);
+const partRe = (part: string) => new RegExp(`\\b${part}\\b`);
+// The career's notices: a classmate's own ("Theo: A Request For Help") are the School's, and name the classmate.
+const actorNotices = heard.filter((n) => n.category === 'career' && actorParts.some((part) => partRe(part).test(`${n.title} ${n.body}`)));
+say(`The career's notices naming a part written for an actor: ${actorNotices.length ? '' : 'none'}`);
+for (const n of actorNotices) say(`  ${formatDateTime(n.at, zone)} ${n.title}: ${n.body.slice(0, 200)}`);
+
 if (WALKDIR) {
   say('');
   say(`The walk's surfaces (${WALKDIR}): every line naming ${AGENT.name}, ${AGENCY} or anything NEAR matches.`);
@@ -141,6 +200,17 @@ if (WALKDIR) {
     say(`At ${w}: ${his} lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:`);
     for (const o of odd) say(o);
     if (!odd.length) say('  none');
+    const actorLines: string[] = [];
+    for (const f of readdirSync(dir).filter((x) => x.endsWith('.txt')).sort()) {
+      for (const l of readFileSync(`${dir}/${f}`, 'utf8').split('\n')) {
+        let rest = l;
+        for (const m of classmates) rest = rest.replaceAll(m.name, '');
+        const hit = actorParts.filter((part) => partRe(part).test(rest));
+        if (hit.length) actorLines.push(`  ${w}/${f}: ${l.trim().slice(0, 300)}  (${hit.join(', ')})`);
+      }
+    }
+    say(`At ${w}, lines naming a part written for an actor, a classmate's full name taken out first: ${actorLines.length ? '' : 'none'}`);
+    for (const o of actorLines) say(o);
   }
 }
 writeFileSync(OUT, `${lines.join('\n')}\n`);

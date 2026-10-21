@@ -1,4 +1,4 @@
-The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk-saves):
+The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk2-saves):
   last-term.json: the same to the byte
   after-new-york.json: the same to the byte
   follow-up.json: the same to the byte
@@ -15,7 +15,13 @@ The class (15): Caleb Brooks, Owen Walsh, Aaliyah Osei, Julian Kowalski, Hannah 
 Former classes' classmates: none
 People in the save (1): Ada Cole (the player)
 
-Notices said from the first day to September 6, 2029 at 9:00 AM: 953; naming him or his agency: 28.
+The parts (11): Nell (actress), Callum (actor), Tobias Marsh (actor), Hester Vane (actress), Desk Clerk (either), Wren (actress), Ferris (actor), Jess (either), Theo (actor), Ivy (actress), Sam (either)
+A classmate who shares a name with a part, or whose name one is short for: 
+  SHARES: classmate Theo Sullivan and the part Theo, written for an actor
+  SHORT FOR: classmate Samuel Patel and the part Sam, written for either
+Of the 100 classes of app-walk-0 to app-walk-99, how many have a classmate with a part's name in theirs: Theo, 64
+
+Notices said from the first day to October 3, 2029 at 9:00 AM: 957; naming him or his agency: 26.
 His first: May 11, 2029 at 10:00 AM, "The School’s Follow-Up After The Showcase"
 
 Every notice naming anything NEAR matches that is not his, in the order it came, days from his first notice:
@@ -34,20 +40,17 @@ How each of his notices names him in its title:
   2 x An Audition For Nell
   2 x A Self-Tape For Wren
   2 x Not Cast As Wren
-  A Callback For Nell
-  Not Cast As Nell
-  Submitted For Tobias Marsh
+  2 x Not Cast As Nell
   Submitted For Jess
-  An Audition For Tobias Marsh
   A Self-Tape For Jess
-  A Callback For Tobias Marsh
-  Not Cast As Jess
+  Submitted For Hester Vane
   Submitted For Desk Clerk
-  A Callback For Wren
+  An Audition For Hester Vane
   A Self-Tape For Desk Clerk
+  A Callback For Hester Vane
+  Not Cast As Hester Vane
   Pay Held For You At Halberd Talent
   Paid On From Halberd Talent
-  Not Cast As Desk Clerk
 
 Every notice from the last term's first day (January 8, 2029 at 12:00 PM) whose title names a classmate's first name, in the order it came, days from his first notice:
   January 23, 2029 at 9:00 AM [school, not his, -108.0 days] Aaliyah: A Request For Help: Aaliyah has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now. It’s the sixth time they’ve asked.
@@ -78,7 +81,6 @@ Every notice from the last term's first day (January 8, 2029 at 12:00 PM) whose 
   April 18, 2029 at 9:00 AM [school, not his, -23.0 days] Julian Asks To Rehearse: Julian asks to rehearse Office Hours on April 21, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Julian on the Coursework tab. Saying no costs nothing.
   April 21, 2029 at 5:00 PM [school, not his, -19.7 days] Julian Didn’t Hear Back: You didn’t answer Julian about rehearsing on April 21, 2029, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.
   April 27, 2029 at 9:00 AM [school, not his, -14.0 days] Isaiah: Run Lines Together?: Isaiah wonders if you’d like to run lines together for an hour on April 28, 2029 at 7:00 PM. They’ve asked before.
-  June 1, 2029 at 10:00 AM [career, not his, 21.0 days] An Audition For Theo: The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Tuesday, June 5, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides o
 
 What Needs You's unread notices at follow-up.json (May 11, 2029 at 4:00 PM), 500 in all, as ordered: the first 15, then his and, for a first name a notice among them shares with a classmate (none), that classmate's own.
   1. [80] February 24, 2029 at 10:00 AM A Bad Knock
@@ -97,34 +99,39 @@ What Needs You's unread notices at follow-up.json (May 11, 2029 at 4:00 PM), 500
   14. [70] October 28, 2028 at 5:00 PM The Director’s Note: Mrs Warren’s Profession
   15. [70] January 29, 2028 at 8:00 PM The Director’s Note: The Wild Duck
 
-What Needs You's unread notices at audition.json (June 5, 2029 at 7:00 AM), 500 in all, as ordered: the first 15, then his and, for a first name a notice among them shares with a classmate (Theo), that classmate's own.
+What Needs You's unread notices at audition.json (June 5, 2029 at 7:00 AM), 500 in all, as ordered: the first 15, then his and, for a first name a notice among them shares with a classmate (none), that classmate's own.
   1. [85] May 21, 2029 at 10:00 AM Your MFA Is Conferred
-  2. [80] June 1, 2029 at 10:00 AM An Audition For Theo  <- SHARES A CLASSMATE'S FIRST NAME
-  3. [80] February 24, 2029 at 10:00 AM A Bad Knock
-  4. [75] May 30, 2029 at 10:00 AM Thomas Ashgrove Offered You Representation  <- HIS
-  5. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
-  6. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
-  7. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
-  8. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
-  9. [70] May 18, 2029 at 10:00 AM A Meeting Is Set At Halberd Talent  <- HIS
-  10. [70] May 11, 2029 at 10:00 AM The School’s Follow-Up After The Showcase  <- HIS
-  11. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
-  12. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
-  13. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
-  14. [70] February 6, 2029 at 8:00 PM The Director’s Note: Measure For Measure
-  15. [70] February 2, 2029 at 5:00 PM You’re In The Actor Showcase
-  113. [60] April 6, 2028 at 9:00 AM Theo Asks To Rehearse  <- THE CLASSMATE OF THAT NAME
-  115. [60] March 31, 2028 at 9:00 AM Theo Asks To Rehearse  <- THE CLASSMATE OF THAT NAME
-  224. [55] February 26, 2029 at 9:00 AM Theo: A Request For Help  <- THE CLASSMATE OF THAT NAME
-  295. [55] September 18, 2028 at 9:00 AM Theo: A Request For Help  <- THE CLASSMATE OF THAT NAME
-  364. [55] January 13, 2028 at 9:00 AM Theo: A Request For Help  <- THE CLASSMATE OF THAT NAME
+  2. [80] June 1, 2029 at 10:00 AM An Audition For Hester Vane
+  3. [80] June 1, 2029 at 10:00 AM An Audition For Ivy
+  4. [80] February 24, 2029 at 10:00 AM A Bad Knock
+  5. [75] May 30, 2029 at 10:00 AM Thomas Ashgrove Offered You Representation  <- HIS
+  6. [75] February 9, 2029 at 9:00 AM A Word On Your Coursework
+  7. [75] January 8, 2029 at 9:00 AM Cast: Shakespeare Repertory Project I
+  8. [75] August 28, 2028 at 9:00 AM Cast: Directors’ Thesis Production II
+  9. [75] January 3, 2028 at 9:00 AM Cast: Directors’ Thesis Production III
+  10. [70] May 18, 2029 at 10:00 AM A Meeting Is Set At Halberd Talent  <- HIS
+  11. [70] May 11, 2029 at 10:00 AM The School’s Follow-Up After The Showcase  <- HIS
+  12. [70] May 8, 2029 at 9:00 AM The Actor Showcase In Los Angeles
+  13. [70] May 1, 2029 at 9:00 AM The Actor Showcase In New York
+  14. [70] April 30, 2029 at 1:00 PM The Actor Showcase In New York
+  15. [70] February 6, 2029 at 8:00 PM The Director’s Note: Measure For Measure
   397. [50] May 25, 2029 at 11:00 AM You Met Thomas Ashgrove’s Office  <- HIS
-  449. [40] February 16, 2029 at 9:00 AM Theo: A Word After Class  <- THE CLASSMATE OF THAT NAME
-  460. [40] April 8, 2028 at 5:00 PM Theo Didn’t Hear Back  <- THE CLASSMATE OF THAT NAME
-  463. [40] April 1, 2028 at 5:00 PM Theo Didn’t Hear Back  <- THE CLASSMATE OF THAT NAME
+
+The parts written for an actor: Callum, Tobias Marsh, Ferris, Theo. The roles the nine saves hold, 56 in all, by part:
+  1 x Desk Clerk, The Calloway Files (written for either)
+  11 x Hester Vane, The Winter Ledger (written for actress)
+  13 x Ivy, Paper Moons (written for actress)
+  14 x Jess, Static On Route 9 (written for either)
+  2 x Nell, A House On Calder Street (written for actress)
+  13 x Sam, Last Bus To Eastview (written for either)
+  2 x Wren, Gull Season (written for actress)
+Roles written for an actor among them: none
+The career's notices naming a part written for an actor: none
 
 The walk's surfaces (docs/verification/career-2026-10-20/app/walk-fictional): every line naming Thomas Ashgrove, Halberd Talent or anything NEAR matches.
-At 1440: 53 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
+At 1440: 55 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
   none
-At 390: 53 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
+At 1440, lines naming a part written for an actor, a classmate's full name taken out first: none
+At 390: 55 lines name him, his agency or a NEAR word; those with a NEAR word besides his full name and his agency's:
   none
+At 390, lines naming a part written for an actor, a classmate's full name taken out first: none

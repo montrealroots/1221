@@ -8,7 +8,7 @@ Your Plans And Commitments
 
 Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
 
-July 2029
+September 2029
 ‹
 Today
 ›
@@ -19,30 +19,51 @@ WED
 THU
 FRI
 SAT
+26
+Self-Tape Due: Wren, Gull Season
+27
+Audition: Nell, A House On Calder Street
+Audition: Ivy, Paper Moons
+Casting Decides: Wren
+28
+Casting Decides: Nell
+29
+Casting Answers: Hester Vane
+Casting Answers: Desk Clerk
+30
+Casting Decides: Ivy
+31
 1
 2
-Paper Moons: Shoot Day 1
+Self-Tape Due: Desk Clerk, The Calloway Files
 3
-Paper Moons: Shoot Day 2
+Labor Day
+Audition: Hester Vane, The Winter Ledger
 4
-Independence Day
-Paper Moons: Shoot Day 3
+Casting Decides: Hester Vane
 5
+Casting Decides: Desk Clerk
 6
 7
 8
 9
 10
+Callback: Hester Vane, The Winter Ledger
 11
 12
 13
+Casting Decides: Hester Vane
 14
 15
 16
 17
+Static On Route 9: Shoot Day 1
 18
+Static On Route 9: Shoot Day 2
 19
+Static On Route 9: Shoot Day 3
 20
+Static On Route 9: Shoot Day 4
 Card Statement
 21
 22
@@ -51,31 +72,49 @@ Card Statement
 25
 26
 27
+Payday: Static On Route 9
 28
 29
 30
-31
 1
+The Calloway Files: Shoot Day 1
 2
+The Calloway Files: Shoot Day 2
 3
 4
+Payday: The Calloway Files
+5
+6
 Personal
 School
 Career
 Money
 Holiday
 Next Thirty Days
-Paper Moons: Shoot Day 1
-July 2, 2029 · 7:00 AM
+Static On Route 9: Shoot Day 1
+September 17, 2029 · 7:00 AM
 You
-Paper Moons: Shoot Day 2
-July 3, 2029 · 7:00 AM
+Static On Route 9: Shoot Day 2
+September 18, 2029 · 7:00 AM
 You
-Paper Moons: Shoot Day 3
-July 4, 2029 · 7:00 AM
+Static On Route 9: Shoot Day 3
+September 19, 2029 · 7:00 AM
+You
+Static On Route 9: Shoot Day 4
+September 20, 2029 · 7:00 AM
 You
 Card Statement
-July 20, 2029 · 9:00 AM
+September 20, 2029 · 9:00 AM
+Payday: Static On Route 9
+September 27, 2029 · 12:00 PM
+The Calloway Files: Shoot Day 1
+October 1, 2029 · 7:00 AM
+You
+The Calloway Files: Shoot Day 2
+October 2, 2029 · 7:00 AM
+You
+Payday: The Calloway Files
+October 4, 2029 · 12:00 PM
 
------ 53 controls; Tab reached 52 of the 52 it can; 0 grayed
+----- 65 controls; Tab reached 64 of the 64 it can; 0 grayed
 Nothing found.

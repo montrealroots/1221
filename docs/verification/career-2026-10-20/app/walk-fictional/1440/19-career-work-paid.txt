@@ -21,39 +21,40 @@ No work booked. Work you accept appears here with its dates, its calls, its pay 
 Sources And Estimates
 Finished Engagements
 How This Works
-SAM, LAST BUS TO EASTVIEW
+DESK CLERK, THE CALLOWAY FILES
 Who
-Ferrous Pictures, Non-Union. Fictional, as every project in the game is.
+Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.
 Where
-A bus depot in the Bronx, New York.
+A studio in Queens, New York.
 Status
 Finished
 Dates
-August 27, 2029 to August 28, 2029, two days of work.
+October 1, 2029 to October 2, 2029, two days of work.
 On Your Calendar
 Its calls are over.
 Permission To Work
-Read August 1, 2029: You’re a US citizen, so you can work for any employer in the US.
+Read September 5, 2029: You’re a US citizen, so you can work for any employer in the US.
 Pay
-The week of August 27, 2029: $250.00 promised by Ferrous Pictures. Received September 5, 2029, passed on from Halberd Talent’s client trust account.
-Gross $250.00, withheld for tax $19.13, to you $205.87.
-Commission: $25.00, taken before it reached you.
+The week of October 1, 2029: $3,084.40 promised by Bright Harbor Television, due October 4, 2029. It isn’t paid until then, so it isn’t in your accounts yet.
+Commission expected: $280.40. What’s paid over scale ($2,804.00), so you keep scale.
 What Happened
-THEO, PAPER MOONS
+JESS, STATIC ON ROUTE 9
 Who
-a graduate film program’s thesis production, SAG-AFTRA Student Film. Fictional, as every project in the game is.
+Dead Air Films, SAG-AFTRA Ultra Low Budget. Fictional, as every project in the game is.
 Where
-An apartment in Brooklyn, New York.
+A motel upstate, New York.
 Status
 Finished
 Dates
-July 2, 2029 to July 4, 2029, three days of work.
+September 17, 2029 to September 20, 2029, four days of work.
 On Your Calendar
 Its calls are over.
 Permission To Work
-Read June 8, 2029: You’re a US citizen, so you can work for any employer in the US.
+Read August 22, 2029: You’re a US citizen, so you can work for any employer in the US.
 Pay
-The week of July 2, 2029: $0.00 promised by a graduate film program’s thesis production, deferred. SAG-AFTRA’s Student Film Agreement defers the pay, so it’s shown here and never paid.
+The week of September 17, 2029: $1,232.00 promised by Dead Air Films. Received October 2, 2029, passed on from Halberd Talent’s client trust account.
+Gross $1,232.00, withheld for tax $94.24, to you $1,025.76.
+Commission: $112.00, taken before it reached you.
 What Happened
 Your Unions
 How This Works
@@ -67,13 +68,10 @@ Initiation fee, part 2 of 3: $600.00, due May 21, 2030.
 Initiation fee, part 3 of 3: $600.00, due May 21, 2031.
 SAG-AFTRA
 
-You aren’t eligible to join SAG-AFTRA yet.
+You’ve been able to join SAG-AFTRA since October 1, 2029. SAG-AFTRA work from October 31, 2029 needs you to be a member.
 
 Join SAG-AFTRA ($3,244.07)
-
-Not now: You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role: a TV, theatrical or Low Budget film part. Ultra Low Budget and student films don’t count toward it.
-
 Sources And Estimates
 
------ 31 controls; Tab reached 25 of the 25 it can; 1 grayed
+----- 31 controls; Tab reached 26 of the 26 it can; 0 grayed
 Nothing found.

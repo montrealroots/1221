@@ -43,22 +43,23 @@ No work booked.
 
 Settled
 How This Works
-Desk Clerk, The Calloway Files: Kettering Casting cast another actor as Desk Clerk.
+You accepted Desk Clerk in The Calloway Files: two work days, from October 1, 2029.
 Why It Went This Way
-Wren, Gull Season: Quillon Casting cast another actor as Wren.
+Hester Vane, The Winter Ledger: You’re booked for The Calloway Files: Shoot Day 2 on October 2, 2029, so Ostrander Vale Casting cast another actor as Hester Vane.
 Why It Went This Way
-Nell, A House On Calder Street: You missed the audition for Nell on August 27, 2029 at 11:00 AM, so Pennick Casting moved on without you.
-Jess, Static On Route 9: Brisbane Hall Casting cast another actor as Jess.
-Why It Went This Way
-Tobias Marsh, The Winter Ledger: You missed the callback for Tobias Marsh on August 27, 2029 at 2:00 PM, so Ostrander Vale Casting moved on without you.
-Why It Went This Way
-You accepted Sam in Last Bus To Eastview: two work days, from August 27, 2029.
+Ivy, Paper Moons: The film’s director cast another actor as Ivy.
 Why It Went This Way
 Wren, Gull Season: Quillon Casting didn’t call you back for Wren.
 Why It Went This Way
-Nell, A House On Calder Street: Pennick Casting cast another actor as Nell.
+Nell, A House On Calder Street: Pennick Casting didn’t call you back for Nell.
+Why It Went This Way
+You accepted Jess in Static On Route 9: four work days, from September 17, 2029.
+Why It Went This Way
+Sam, Last Bus To Eastview: The producers cast another actor as Sam.
+Why It Went This Way
+Wren, Gull Season: Quillon Casting didn’t call you back for Wren.
 Why It Went This Way
 Sources And Estimates
 
------ 31 controls; Tab reached 26 of the 26 it can; 0 grayed
+----- 32 controls; Tab reached 27 of the 27 it can; 0 grayed
 Nothing found.

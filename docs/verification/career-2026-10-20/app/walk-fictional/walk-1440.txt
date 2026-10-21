@@ -1,4 +1,4 @@
-The built app at 1440 wide (http://localhost:4193): 52 surfaces.
+The built app at 1440 wide (http://localhost:4194): 52 surfaces.
 
 01-career-overview-last-term (last-term.json): 25 controls; Tab reached 20 of the 20 it can; 0 grayed — nothing found
 02-career-portfolio-last-term (last-term.json): 35 controls; Tab reached 28 of the 28 it can; 2 grayed — nothing found
@@ -10,26 +10,26 @@ The built app at 1440 wide (http://localhost:4193): 52 surfaces.
 08-career-overview-offered (offered.json): 25 controls; Tab reached 20 of the 20 it can; 0 grayed — nothing found
 09-career-representation-offered (offered.json): 40 controls; Tab reached 33 of the 33 it can; 2 grayed — nothing found
 10-career-representation-reasons-offered (offered.json): 40 controls; Tab reached 33 of the 33 it can; 2 grayed — nothing found
-11-career-opportunities-audition (audition.json): 34 controls; Tab reached 25 of the 25 it can; 4 grayed — nothing found
-12-career-opportunities-offer (offer.json): 31 controls; Tab reached 26 of the 26 it can; 0 grayed — nothing found
-13-career-opportunities-work-day (work-day.json): 36 controls; Tab reached 28 of the 28 it can; 3 grayed — nothing found
-14-career-work-work-day (work-day.json): 29 controls; Tab reached 23 of the 23 it can; 1 grayed — nothing found
+11-career-opportunities-audition (audition.json): 39 controls; Tab reached 26 of the 26 it can; 8 grayed — nothing found
+12-career-opportunities-offer (offer.json): 52 controls; Tab reached 47 of the 47 it can; 0 grayed — nothing found
+13-career-opportunities-work-day (work-day.json): 44 controls; Tab reached 33 of the 33 it can; 6 grayed — nothing found
+14-career-work-work-day (work-day.json): 30 controls; Tab reached 24 of the 24 it can; 1 grayed — nothing found
 15-career-overview-paid (paid.json): 25 controls; Tab reached 20 of the 20 it can; 0 grayed — nothing found
 16-career-portfolio-paid (paid.json): 38 controls; Tab reached 31 of the 31 it can; 2 grayed — nothing found
-17-career-representation-paid (paid.json): 43 controls; Tab reached 33 of the 33 it can; 5 grayed — nothing found
-18-career-opportunities-paid (paid.json): 37 controls; Tab reached 32 of the 32 it can; 0 grayed — nothing found
-19-career-work-paid (paid.json): 31 controls; Tab reached 25 of the 25 it can; 1 grayed — nothing found
+17-career-representation-paid (paid.json): 43 controls; Tab reached 32 of the 32 it can; 6 grayed — nothing found
+18-career-opportunities-paid (paid.json): 38 controls; Tab reached 33 of the 33 it can; 0 grayed — nothing found
+19-career-work-paid (paid.json): 31 controls; Tab reached 26 of the 26 it can; 0 grayed — nothing found
 20-school-coursework-last-term (last-term.json): 91 controls; Tab reached 84 of the 84 it can; 1 grayed — nothing found
 21-school-terms-and-award-last-term (last-term.json): 38 controls; Tab reached 32 of the 32 it can; 0 grayed — nothing found
 22-school-coursework-after-new-york (after-new-york.json): 158 controls; Tab reached 130 of the 130 it can; 16 grayed — nothing found
 23-papers-permission-to-work-paid (paid.json): 38 controls; Tab reached 30 of the 30 it can; 3 grayed — nothing found
-24-money-statements-paid (paid.json): 65 controls; Tab reached 60 of the 60 it can; 0 grayed — nothing found
+24-money-statements-paid (paid.json): 59 controls; Tab reached 54 of the 54 it can; 0 grayed — nothing found
 25-stop-meeting (meeting.json): 5 controls; Tab reached 5 of the 5 it can; 0 grayed — nothing found
 26-stop-audition (audition.json): 4 controls; Tab reached 4 of the 4 it can; 0 grayed — nothing found
 27-stop-work-day (work-day.json): 4 controls; Tab reached 4 of the 4 it can; 0 grayed — nothing found
 28-calendar-meeting (meeting.json): 58 controls; Tab reached 57 of the 57 it can; 0 grayed — nothing found
 29-calendar-entry-meeting (meeting.json): 1 controls; Tab reached 1 of the 1 it can; 0 grayed — nothing found
-30-calendar-work-day (work-day.json): 59 controls; Tab reached 58 of the 58 it can; 0 grayed — nothing found
+30-calendar-work-day (work-day.json): 71 controls; Tab reached 70 of the 70 it can; 0 grayed — nothing found
 31-calendar-entry-work-day (work-day.json): 1 controls; Tab reached 1 of the 1 it can; 0 grayed — nothing found
 32-guide-drama-school (last-term.json): 23 controls; Tab reached 23 of the 23 it can; 0 grayed — nothing found
 33-guide-your-career (last-term.json): 23 controls; Tab reached 23 of the 23 it can; 0 grayed — nothing found
