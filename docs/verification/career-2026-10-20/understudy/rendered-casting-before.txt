@@ -1,0 +1,203 @@
+# The School screen's Casting tab on 31 August 2027, seed us-86 (she/her), as the player has it (react-dom/server, tags taken out).
+# before: the before run's save (fb4a3a53's game), drawn on fb4a3a53's tree.
+
+ School
+David Geffen School of Drama at Yale University 
+MFA in Acting , class of 2029. Year 2 of 3, good standing.
+Standing And Craft Classes Coursework Casting Shifts And Pay Terms And Award 
+Why This Cast
+Hedda Gabler, Fall Term 2027
+How This Works 
+The play asks for Scene Study, Emotional Depth, Character Work and Script Analysis, as its kinds of play do (Drama, Domestic Drama). The chair reads every student for it the same way: their fit for the play, with a fifth of it scaled by how much of themselves they delivered in their runs since the last casting, and then a balance for who had the big parts in the School’s last productions. The best read gets the biggest part written for them.
+Your 100% delivered comes from The Seagull, Yale Rep, 2 nights (100%, counted as 2 nights); Carlotta Festival Of New Plays, a School production, 4 nights (100%, counted as 4 nights). A Cabaret or Summer run counts half as much as a School production, each run up to eight nights, and a night missed when you weren’t in hospital counts as nothing delivered. How the nights were judged doesn’t count here: that’s in your work.
+Student Fit Delivered Balance Read Part 
+You 58.6 100% 0 58.6 Hedda Tesman 
+Aaliyah Alvarez 58.8 83% -2 54.8 Thea Elvsted 
+Imani Carter 57.8 89% -2 54.5 Juliane Tesman 
+Priya Fischer 53.5 88% +2 54.2 Berte 
+Mateo Morales 55.7 85% 0 54.1 Eilert Løvborg 
+Maya Kowalski 55.9 83% 0 53.9 In The Company 
+Elena Bennett 57.7 84% -2 53.9 In The Company 
+Grace Kim 56.4 76% 0 53.6 In The Company 
+Sources And Estimates Fit is how a night of the play would go, fully prepared and on a good day. Stamina and discipline count as full for everyone, since the game doesn’t simulate your classmates’ bodies and habits. A classmate’s delivery is the share of calls they keep. Who someone is plays no part.
+Hedda Gabler
+Directors’ Thesis Production I, by Henrik Ibsen
+How This Works 
+Role Hedda Tesman A Leading Part 
+Performed 0 
+Calls Ahead 21 
+The Rehearsal Process
+How This Works 
+Lines 97% You’re asked to be off book 40% of the way through 
+Blocking 0% Set at the blocking calls 
+Growth From A Night 115% How much a night would grow your craft, against keeping every call. It doesn’t change the night’s result 
+A Night Now 30.1 A forecast: what a night would come to if it opened now, without good or bad luck 
+The Evening’s Workload. With your stamina as it is and readiness at 75, tiring takes 18% off the parts of your performance it affects by the final curtain, and the evening costs 12 energy.
+How It’s Worked Out The evening runs 2 hours and 40 minutes, with one break of 20 minutes. As a lead, you’re on stage for about 75% of its 2 hours and 20 minutes of playing. Its physical demand is 1 of 3 and its vocal demand 1 of 3, so its workload is 2.5 of a possible 8. The running time: National Theatre, the Lyttelton, to March 2017 (Ivo van Hove, in Patrick Marber’s version): 2 h 40; its listing names no interval, and National Theatre Live’s screening gives one of 20 minutes.
+Learn The Part Catch Up The Blocking Work On The Note 
+Learn The Part: You already know the part.
+Catch Up The Blocking: You haven’t missed any blocking.
+Work On The Note: There’s no note to work on.
+The Part Now, Movement By Movement
+Part Tone Result Its Rehearsal Stamina What Happened 
+The Opening Grave 31.7 0% of 70% Tiring: 3% off The blocking cost it most 
+The Middle Grave 30.1 0% of 70% Tiring: 9% off The blocking cost it most 
+The Close Grave 28.6 0% of 70% Tiring: 14% off The blocking cost it most 
+Continuity, how evenly the character held from part to part: 97.1. The whole is the average of the parts; continuity comes from them, and isn’t added to it.
+Work It Through
+How This Works 
+What the forecast shows, worst first. Pick one to work on:
+The Opening Isn’t Secure The Opening hasn’t been rehearsed enough: it’s at 0% of the 70% it needs. It comes to 31.7, against 30.1 for the whole piece. 
+The Turn Into The Middle The change into the middle needs more rehearsal than the rest: it’s at 0% of the 70% it needs. It comes to 30.1, against 30.1 for the whole piece. 
+The Turn Into The Close The change into the close needs more rehearsal than the rest: it’s at 0% of the 70% it needs. It comes to 28.6, against 30.1 for the whole piece. 
+Emotional Depth Holds It Back Your emotional depth costs your believability 22.7 points, and the whole piece 4. The piece is weakest in the close, at 28.6. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability. 
+Tiring Late In The Piece Your stamina costs the piece 0.8 points, most of it in the close, which comes to 28.6. 
+Sources And Estimates Problems come from the piece’s own forecast, its expected result without luck, so the same way tried on the same day shows the same result. A way of playing part of it, or places to breathe, is kept or put back; work done is kept. Working a part slowly moves its own rehearsal by 50% of what’s left, and a part a turn leads into asks up to 15% more of a brief’s rehearsal. The sizes are estimated.
+What Hedda Gabler Asks
+Everyday Speech 
+Timing: Much 
+Physical Work: Some 
+Playing Off The Partner: Built On It . Ibsen’s naturalism is played in what is withheld between people.
+Vocal Demand: Some 
+What’s Kept Hidden: Built On It . What is withheld between people is the play.
+A Private Exchange: Much . A drawing room, a few people.
+Tone: grave , 2 changes of tone to play
+How You’ll Play It
+How This Works 
+Aspect Choice The Scene Abilities It Uses Fully Prepared 
+Pace Measured Taking the time each thought needs: the choices specific, the pauses earned. Suits The Scene Its Grave Beats: for it
+Its 2 Turns: for it
+Drama’s Played Straight: played with complete earnestness, never winked at: for it
+Focus 52.4 
+Driven Picking up cues and pressing on: the scene played at the speed of what the characters want. Suits The Scene Its Timing: for it
+Adaptability 52.0 
+Scale Restrained Less shown than felt: the feeling held under the surface. Suits The Scene What’s Kept Hidden: for it
+A Private Exchange: for it
+Drama’s Played Straight: played with complete earnestness, never winked at: for it
+Emotional Depth, Composure, Focus 53.4 
+Expansive Sized to the room: voice, body and feeling played out to the audience. Works Against The Scene What’s Kept Hidden: against it
+A Private Exchange: against it
+Drama’s Played Straight: played with complete earnestness, never winked at: against it
+Presence, Vocal Expression, Physical Expression 50.5 
+Structure Set Fixed and repeatable: every beat placed, the same each time. Suits The Scene Its Timing: for it
+Discipline, Memory 52.8 
+Open Live each time: taking the next moment from what the partner gives. Suits The Scene Its Partner: for it
+Listening And Responsiveness 52.5 
+Fully prepared and on a good day, playing it this way would come to 51.6, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.
+Play It This Way 
+Sources And Estimates Each way of playing shifts what counts most in your work toward what it is, and uses the abilities shown. It moves the balance without adding to it, so at full ability every choice that fits reaches 100; below that, a choice that leans on what you do well shows you at your best. A choice the material or the director doesn’t take holds the qualities it leans on to 85% of themselves. A choice that fits can still suit the scene or go against it, by what the scene is (its genre, its reader, its tones and turns, its features and language, its circumstances, the medium and the reading you’ve taken): one that suits it is easier to make work and needs less rehearsal, one that goes against it is harder and needs more, and at full ability either reaches 100. Judged movement by movement, the piece only counts stamina as tiring late in it, however it’s played, so no choice uses it here. The sizes are estimated.
+Sources And Estimates The stages and their order are a rehearsal’s; how far a call or an hour moves the lines and blocking, what a note asks and what answers it, and what they make of a night, are estimated. A night is judged movement by movement: each movement’s blocking, where stamina tells late in the evening, and a slip carried into the next.
+From the class with you: Aaliyah Alvarez as Thea Elvsted; Imani Carter as Juliane Tesman; Priya Fischer as Berte; Mateo Morales as Eilert Løvborg; Maya Kowalski as In The Company; Elena Bennett as In The Company; Grace Kim as In The Company. The rest of the cast are from the other two classes.
+An Enemy Of The People
+Yale Rep’s October Production, by Henrik Ibsen
+How This Works 
+Role An Understudy In The Company 
+Went On 0 
+Calls Ahead 24 14 of them on call 
+The Rehearsal Process
+How This Works 
+Lines 98% You’re asked to be off book 40% of the way through 
+Blocking 44% Set at the blocking calls 
+Growth From A Night 99% How much a night would grow your craft, against keeping every call. It doesn’t change the night’s result 
+A Night Now 35.0 A forecast: what a night would come to if it opened now, without good or bad luck 
+The Evening’s Workload. With your stamina as it is and readiness at 75, tiring takes 17% off the parts of your performance it affects by the final curtain, and the evening costs 11 energy.
+How It’s Worked Out The evening runs 2 hours and 15 minutes, with one break of 20 minutes. As a lead, you’re on stage for about 75% of its 1 hour and 55 minutes of playing. Its physical demand is 1 of 3 and its vocal demand 2 of 3, so its workload is 2.4 of a possible 8. The running time: Duke of York’s Theatre, 2024 (Thomas Ostermeier, Duncan Macmillan’s version): 2 h 15 with the interval.
+Learn The Part Catch Up The Blocking Work On The Note 
+Learn The Part: You already know the part.
+Catch Up The Blocking: You haven’t missed any blocking.
+Work On The Note: There’s no note to work on.
+The Part Now, Movement By Movement
+Part Tone Result Its Rehearsal Stamina What Happened 
+The Opening Grave 36.7 44% of 96% Tiring: 3% off Emotional Depth cost it most 
+The Middle Grave 35.0 44% of 96% Tiring: 8% off Emotional Depth cost it most 
+The Close Grave 33.2 44% of 96% Tiring: 14% off Emotional Depth cost it most 
+Continuity, how evenly the character held from part to part: 97.6. The whole is the average of the parts; continuity comes from them, and isn’t added to it.
+Work It Through
+How This Works 
+What the forecast shows, worst first. Pick one to work on:
+The Opening Isn’t Secure The Opening hasn’t been rehearsed enough: it’s at 44% of the 96% it needs. It comes to 36.7, against 35 for the whole piece. 
+The Turn Into The Middle The change into the middle needs more rehearsal than the rest: it’s at 44% of the 96% it needs. It comes to 35, against 35 for the whole piece. 
+The Turn Into The Close The change into the close needs more rehearsal than the rest: it’s at 44% of the 96% it needs. It comes to 33.2, against 35 for the whole piece. 
+Emotional Depth Holds It Back Your emotional depth costs your believability 24.9 points, and the whole piece 4.6. The piece is weakest in the close, at 33.2. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability. 
+Tiring Late In The Piece Your stamina costs the piece 1.1 points, most of it in the close, which comes to 33.2. 
+Sources And Estimates Problems come from the piece’s own forecast, its expected result without luck, so the same way tried on the same day shows the same result. A way of playing part of it, or places to breathe, is kept or put back; work done is kept. Working a part slowly moves its own rehearsal by 50% of what’s left, and a part a turn leads into asks up to 15% more of a brief’s rehearsal. The sizes are estimated.
+What An Enemy Of The People Asks
+Everyday Speech 
+Timing: Some 
+Physical Work: Some 
+Playing Off The Partner: Much 
+Vocal Demand: Much . A public meeting: Stockmann addresses a hostile crowd.
+Spoken To Many: Built On It . A public meeting, to a hostile crowd.
+A Conflict Out Loud: Built On It . Stockmann against the town.
+Tone: grave , 2 changes of tone to play
+How You’ll Play It
+How This Works 
+Aspect Choice The Scene Abilities It Uses Fully Prepared 
+Pace Measured Taking the time each thought needs: the choices specific, the pauses earned. Suits The Scene Its Grave Beats: for it
+Its 2 Turns: for it
+Political Drama’s Command Of The Frame: economy and presence in the frame: for it
+Focus 52.4 
+Driven Picking up cues and pressing on: the scene played at the speed of what the characters want. Suits The Scene Political Drama’s Dense Text, Exact: dense text spoken exactly and at speed: for it
+Its Timing: for it
+Adaptability 51.8 
+Scale Restrained Less shown than felt: the feeling held under the surface. Works Against The Scene Spoken To Many: against it
+A Conflict Out Loud: against it
+Political Drama’s Command Of The Frame: economy and presence in the frame: for it
+Emotional Depth, Composure, Focus 49.4 
+Expansive Sized to the room: voice, body and feeling played out to the audience. Suits The Scene Spoken To Many: for it
+A Conflict Out Loud: for it
+Presence, Vocal Expression, Physical Expression 52.9 
+Structure Set Fixed and repeatable: every beat placed, the same each time. Suits The Scene Political Drama’s Dense Text, Exact: dense text spoken exactly and at speed: for it
+Its Timing: for it
+Discipline, Memory 53.1 
+Open Live each time: taking the next moment from what the partner gives. Either Way Political Drama’s Dense Text, Exact: dense text spoken exactly and at speed: against it
+Political Drama’s Command Of The Frame: economy and presence in the frame: against it
+Listening And Responsiveness 51.5 
+Fully prepared and on a good day, playing it this way would come to 51.5, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.
+Play It This Way 
+Sources And Estimates Each way of playing shifts what counts most in your work toward what it is, and uses the abilities shown. It moves the balance without adding to it, so at full ability every choice that fits reaches 100; below that, a choice that leans on what you do well shows you at your best. A choice the material or the director doesn’t take holds the qualities it leans on to 85% of themselves. A choice that fits can still suit the scene or go against it, by what the scene is (its genre, its reader, its tones and turns, its features and language, its circumstances, the medium and the reading you’ve taken): one that suits it is easier to make work and needs less rehearsal, one that goes against it is harder and needs more, and at full ability either reaches 100. Judged movement by movement, the piece only counts stamina as tiring late in it, however it’s played, so no choice uses it here. The sizes are estimated.
+Sources And Estimates The stages and their order are a rehearsal’s; how far a call or an hour moves the lines and blocking, what a note asks and what answers it, and what they make of a night, are estimated. A night is judged movement by movement: each movement’s blocking, where stamina tells late in the evening, and a slip carried into the next.
+Around The Class
+Who’s playing what this term
+Student Production Part Last Run To You 
+You Hedda Gabler Hedda Tesman 
+Aaliyah Alvarez Hedda Gabler Thea Elvsted 54 in Carlotta Festival Of New Plays 
+Imani Carter Hedda Gabler Juliane Tesman 54 in Carlotta Festival Of New Plays 
+Priya Fischer Hedda Gabler Berte 49 in Carlotta Festival Of New Plays 
+Mateo Morales Hedda Gabler Eilert Løvborg 52 in Carlotta Festival Of New Plays Friend 
+Maya Kowalski Hedda Gabler In The Company 50 in Carlotta Festival Of New Plays Friend 
+Elena Bennett Hedda Gabler In The Company 53 in Carlotta Festival Of New Plays 
+Grace Kim Hedda Gabler In The Company 47 in Carlotta Festival Of New Plays 
+Daniel Nguyen Langston Hughes Festival Of New Work A Leading Part In The Festival 47 in Carlotta Festival Of New Plays Friend 
+Theo Haddad Langston Hughes Festival Of New Work A Leading Part In The Festival 48 in Carlotta Festival Of New Plays Friend 
+Sofia Chen Langston Hughes Festival Of New Work A Supporting Part In The Festival 45 in Carlotta Festival Of New Plays Friend 
+Julian Abara Langston Hughes Festival Of New Work A Supporting Part In The Festival 46 in Carlotta Festival Of New Plays Friend 
+Isaiah Osei Langston Hughes Festival Of New Work A Supporting Part In The Festival 48 in Carlotta Festival Of New Plays Friend 
+Marcus Park Langston Hughes Festival Of New Work A Featured Part In The Festival 48 in Carlotta Festival Of New Plays Friend 
+Caleb Castillo Langston Hughes Festival Of New Work A Featured Part In The Festival 44 in Carlotta Festival Of New Plays Friend 
+Chloe Walsh Langston Hughes Festival Of New Work A Featured Part In The Festival 45 in Carlotta Festival Of New Plays Friend 
+Sources And Estimates Casting is the Bulletin’s: the chair assigns every role, balancing what each student needs; a student who’s cast is expected to play the part; missed calls take an actor out of the pool; and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how much of yourself you delivered in the last runs (not how the nights were judged). The best read gets the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the chair’s reading are estimated, since the seasons you’re cast in aren’t announced. The characters are the plays’ own. Source: https://bulletin.yale.edu (School of Drama, 2026–2027: Acting, Production, Casting); https://drama.yale.edu/productions; LORT Rule 39(E).
+The Yale Cabaret
+Yale Cabaret, Season 60
+Join A Cabaret Show How This Works 
+Sources And Estimates The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, and nobody on academic warning may take part (a warning during a show takes you out of what’s left of it). It never wins a conflict with classes, casting or work-study, so the game finds you a week clear of all three. The rehearsals, 9 weekday evenings before it, and one show a term are estimated. Source: https://www.yalecabaret.org; https://bulletin.yale.edu (School of Drama, 2026–2027: the Yale Cabaret).
+The Yale Summer Cabaret
+Three shows a summer in New Haven
+How This Works 
+The company forms in the spring, from students with at least a year still to go.
+Sources And Estimates Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays $375.00 a week. That, later summers’ dates, and the company taking a student in good standing who asks by the end of April are estimated: neither how it’s chosen nor what it pays is published. Miss a performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: https://www.summercabaret.org (2026 season); https://bulletin.yale.edu (School of Drama, 2026–2027).
+Calls Ahead
+Yale Rep’s October Production: Understudy Rehearsal September 1, 2027 at 3:00 PM 
+Yale Rep’s October Production: Understudy Rehearsal September 3, 2027 at 3:00 PM 
+Directors’ Thesis Production I: Read-Through September 7, 2027 at 3:00 PM 
+Yale Rep’s October Production: Understudy Rehearsal September 8, 2027 at 3:00 PM 
+Directors’ Thesis Production I: Blocking Rehearsal September 9, 2027 at 3:00 PM 
+Yale Rep’s October Production: Understudy Rehearsal September 10, 2027 at 3:00 PM 
+Directors’ Thesis Production I: Blocking Rehearsal September 14, 2027 at 3:00 PM 
+Yale Rep’s October Production: Understudy Rehearsal September 15, 2027 at 3:00 PM 
+
+
+# the Rep's calls on the calendar, as labeled:
+Yale Rep’s October Production: Understudy Rehearsal
+Yale Rep’s October Production: On Call
+Yale Rep’s October Production: Understudy Run-Through
