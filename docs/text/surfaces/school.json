@@ -1041,7 +1041,7 @@
    "details",
    "director"
   ],
-  "outcome": "Kept",
+  "outcome": "Revised",
   "why": "Read on the leave and direction saves: What Arms And The Man Asks gives each demand its level and the play’s own reason in a vivid line of the scene (“A fugitive at a window, a pistol, the search, the chocolate creams.”), and the chooser shows every way of playing with whether it suits the scene, the abilities it uses and its fully prepared figure before anything is chosen, saying that choosing isn’t rehearsing. The scenes’ notes are the material’s, kept as written.",
   "evidence": [
    {
@@ -1051,8 +1051,13 @@
    {
     "kind": "walk",
     "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/direction.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-app.test.ts: 'PLAYER JOURNEY: the last term’s showcase scenes, chosen, draw two choosers on Coursework whose groups share no name, so Tab stops in each'"
    }
-  ]
+  ],
+  "changes": "From 2026-10-21 (brief 19's app walk, on the showcase's scene cards): Play It This Way, grayed until a way is picked, says why in its title and under it; each chooser's radio groups are its own, so Tab stops in each of two on one screen."
  },
  {
   "surface": "A practice brief, from the breakdown to the take",

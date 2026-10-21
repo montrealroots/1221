@@ -9,7 +9,7 @@
  */
 
 import { useId, useState } from 'react';
-import { Fine } from '@/ui/components/primitives';
+import { Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '@/engine/content/approaches';
@@ -90,6 +90,8 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
   // The scene as the take reads it: the caller's, or a class scene's or a play's own genre (`sceneOfMaterial`).
   const sceneRead = scene ?? sceneOfMaterial(material);
   const completeAt = requiredFor(draftSides, material, sceneRead);
+  const label = current && sidesOf(current).length ? 'Change How You Play It' : 'Play It This Way';
+  const unchanged = current && sidesOf(current).length ? 'That’s how you play it now. Choose another way above to change it.' : 'Choose a way to play it above first.';
   return (
     <div className="col gap-2">
       {help ? <div className="row-between"><div className="eyebrow">How You’ll Play It</div><HowItWorks help={help} /></div> : <div className="eyebrow">How You’ll Play It</div>}
@@ -134,9 +136,12 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
         {draftSides.length > 0 ? ` This choice is complete once it’s rehearsed to ${Math.round(completeAt * 100)}%: ${completeAt < PLAYING.complete ? 'it suits the scene, so it asks less' : completeAt > PLAYING.complete ? 'it goes against the scene, so it asks more' : 'the scene neither favors nor resists it'}.` : ''}
         {changed && current && sidesOf(current).length > 0 ? ` If you change it, you keep ${Math.round(PLAYING.keptOnChange * 100)}% of that rehearsal.` : ''}
       </p>
+      {/* Grayed with its reason (from 2026-10-21): until then it said nothing under it or in its title until a way was
+          picked, on the showcase's scene cards among the rest (brief 19's app walk). */}
       <div>
-        <Gated feature={feature} className="btn btn-sm" disabled={!changed} onClick={() => onChoose(draft)}>{current && sidesOf(current).length ? 'Change How You Play It' : 'Play It This Way'}</Gated>
+        <Gated feature={feature} className="btn btn-sm" disabled={!changed} title={changed ? undefined : unchanged} onClick={() => onChoose(draft)}>{label}</Gated>
       </div>
+      {!changed && <WhyNot reasons={[[label, unchanged]]} />}
       <Fine>Each way of playing shifts what counts most in your work toward what it is, and uses the abilities shown. It moves the balance without adding to it, so at full ability every choice that fits reaches 100; below that, a choice that leans on what you do well shows you at your best. A choice the material or the director doesn’t take holds the qualities it leans on to {Math.round(MISFIT * 100)}% of themselves. A choice that fits can still suit the scene or go against it, by what the scene is (its genre, its reader, its tones and turns, its features and language, its circumstances, the medium and the reading you’ve taken): one that suits it is easier to make work and needs less rehearsal, one that goes against it is harder and needs more, and at full ability either reaches 100.{movements ? ' Judged movement by movement, the piece only counts stamina as tiring late in it, however it’s played, so no choice uses it here.' : ''} The sizes are estimated.</Fine>
     </div>
   );

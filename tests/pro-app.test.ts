@@ -136,6 +136,11 @@ describe('4. each How You’ll Play It chooser has radio groups of its own', () 
     for (const names of tables) expect(names.map((n) => n.replace(/^.*axis-/, '')).sort()).toEqual(['pace', 'scale', 'structure']);
     const all = tables.flat();
     expect(new Set(all).size).toBe(all.length);
+    // Play It This Way, grayed until a way is picked, says why in its title and under it (from 2026-10-21, the walk's).
+    const grayed = [...html.matchAll(/<button type="button" class="btn btn-sm" title="([^"]*)" disabled="">Play It This Way<\/button>/g)].map((m) => m[1]);
+    expect(grayed.length).toBeGreaterThanOrEqual(2);
+    expect(new Set(grayed)).toEqual(new Set(['Choose a way to play it above first.']));
+    expect(html.split('Not now: Choose a way to play it above first.').length - 1).toBe(grayed.length);
   });
 });
 

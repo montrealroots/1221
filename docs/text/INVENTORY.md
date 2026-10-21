@@ -12,7 +12,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 548 | 15004 | 0 | 31 | 20 | 0 | 0 |
 | Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1903 | 17601 | 0 | 267 | 25 | 0 | 0 |
@@ -22,7 +22,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 197 | 779 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38774 | 593862 | 316 | 1391 | 3154 | 0 | 0 |
+| **All** | 4545 | 38776 | 593883 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -41,7 +41,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
 | papers | 475 | 56967 | 106 | 369 | 0 | 0 |
 | profile | 621 | 55956 | 179 | 442 | 0 | 0 |
-| school | 638 | 67352 | 185 | 453 | 0 | 0 |
+| school | 638 | 67373 | 185 | 453 | 0 | 0 |
 | tutorial | 51 | 15004 | 31 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
@@ -52,7 +52,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 19 | 8 | 24 | 0 |
 | Home And Its Retained Actions | 19 | 5 | 9 | 5 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 144 | 238 | 239 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 126 | 352 | 188 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 127 | 352 | 187 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 119 | 376 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 150 | 225 | 100 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 292 | 267 | 25 | 0 | 0 |
@@ -62,7 +62,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 13 | 27 | 5 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4545 | 968 | 2417 | 1160 | 0 |
+| **All** | 4545 | 969 | 2417 | 1159 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -1731,7 +1731,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/components/PlayingChooser.tsx#FEATURE_WORD` | 5 | 0 | Retained | school | The scene's features by name, Timing, Physical Work, Playing Off The Partner, Vocal Demand and Freedom To Improvise, as the guide names them too. | Reviewed And Retained |
 | `src/ui/components/PlayingChooser.tsx#LANGUAGE_WORD` | 3 | 0 | Retained | school | The scene's language as everyday speech, heightened prose or verse, the three a teacher would name. | Reviewed And Retained |
 | `src/ui/components/PlayingChooser.tsx#MaterialDemands` | 6 | 0 | Rewritten | school | docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts): Tone: grave to lyric to grave, 5 changes of tone to play, the brief pane's own name for the count; tests/material-words.test.ts | Pending |
-| `src/ui/components/PlayingChooser.tsx#PlayingChooser` | 30 | 0 | Rewritten | school | docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): playing it this way would come to 54.9, the same as with nothing chosen (the casting tab's How You’ll Play It) | Pending |
+| `src/ui/components/PlayingChooser.tsx#PlayingChooser` | 32 | 0 | Rewritten | school | Read on the built app's School Coursework tab after New York's showcase days, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the coursework surface): Play It This Way, grayed until a way is picked, said nothing in its title or under it; it gives its reason in both now. Held by tests/pro-app.test.ts | Rewritten And Verified |
 | `src/ui/components/RehearsalProcess.tsx#DRESS_WORD` | 4 | 0 | Retained | school | The dress rehearsal's result in four plain words, An Off Run, Solid, Strong, Remarkable, the same scale as a night's. | Reviewed And Retained |
 | `src/ui/components/RehearsalProcess.tsx#OUTCOME_WORD` | 3 | 0 | Retained | school | What came of a director's note, beside it in the notes so far: taken and better, tried and learned from, or not taken, each short and distinct. | Reviewed And Retained |
 | `src/ui/components/RehearsalProcess.tsx#noteState` | 2 | 0 | Retained | school | A note's state beside it, Worked On or Not Taken, two short labels a player can scan down the list of notes. | Reviewed And Retained |
