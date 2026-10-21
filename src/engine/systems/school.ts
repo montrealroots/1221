@@ -3248,8 +3248,12 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const stepped: Standing = reviewed ? 'warning' : !short ? 'good' : !shortOtherwise ? school.standing : stepDown(school.standing);
   const shortfall = degreeShortfall(school);
   // A last year with a course failed: a repeat offered for thirty days (`offerRepeat`, from 2026-10-10), before the degree
-  // is withheld; with a warning unmet, withheld as it was.
-  const repeatable = last && stepped !== 'dismissed' && stepped !== 'warning' && shortfall.failed.length > 0;
+  // is withheld; with a warning unmet, withheld as it was. A warning this term's faculty review gave on the Fails
+  // themselves (`reviewed`) isn't a warning unmet: the review keeps the student "to repeat the year" (`facultyReview`,
+  // systems/leave.ts, and the guide's Standing entry), so the thirty days are offered with it (from 2026-10-21, brief 20's
+  // School area). Until then the last year's review said so and withheld the degree at the same instant, and the repeat
+  // it named was refused “You’re not at school.” (tests/b20-school-degree.test.ts, G3).
+  const repeatable = last && stepped !== 'dismissed' && (stepped !== 'warning' || reviewed) && shortfall.failed.length > 0;
   let next: Standing = last && stepped !== 'dismissed' && (stepped === 'warning' || shortfall.failed.length > 0) && !repeatable ? 'withheld' : stepped;
   const notes = teachersNotes(person, term);
   const review: TermReview = { term, standing: next, attendance, growth, classGrowth, reason, ...(work !== undefined ? { work } : {}), ...(cw.shown ? { coursework: cw } : {}), ...(notes.length ? { notes } : {}) };

@@ -44,6 +44,9 @@ describe('a week and a month moved at once: each School obligation falls due onc
       expect(count(CLASSES_KIND)).toBeGreaterThanOrEqual(days === 7 ? 5 : 20);
       expect(count(SHIFT_KIND)).toBeGreaterThan(0);
       for (const i of window) expect([i.kind, i.status]).toEqual([i.kind, expect.stringMatching(/^(done|missed)$/)]);
+      // Each class day and each shift on the calendar once: a day booked twice would be counted twice.
+      expect(new Set(window.filter((i) => i.kind === CLASSES_KIND).map((i) => i.payload.day)).size).toBe(count(CLASSES_KIND));
+      expect(new Set(window.filter((i) => i.kind === SHIFT_KIND).map((i) => i.at)).size).toBe(count(SHIFT_KIND));
       const after = tallyOf(one);
       // Each class day counted once, each lab once among the calls, each assigned shift once.
       expect(after.classDays - before.classDays).toBe(count(CLASSES_KIND));
