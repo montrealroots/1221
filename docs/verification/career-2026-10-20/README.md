@@ -86,11 +86,23 @@ Found outside the career, not changed: every played life's credit card limit ros
 
 ## The Gate
 
-To run in a clean clone once the journeys are folded; said here once it has.
+`npm run gate` in a clean clone of `a6b82e07`, the commit that holds every final run's record, its exit read from the
+file it wrote (`final-runs/runs/gate.txt`): **exit 0**. 421 of 421 test files and 5,080 of 5,080 tests passed, none
+skipped, then all 21 checks, the completion matrix last. After it came documents only: this receipt, the gate's own
+figure folded in, the criteria's V18 and the handoff.
 
 ## Completion
 
-The handoff's top section states the matrix's line as it stands.
+- **Brief 19's criteria** (`criteria.md`): 59 of 60 Fixed And Verified. V17 is blocked on the owner: its automated half
+  holds, and the person's look at desktop and mobile it also names is theirs.
+- **The completion matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification
+  Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly
+  Deferred. The 20 are earlier briefs' rows: twelve commands no current life can reach and eight banking decisions for the
+  owner. It read 566 of 636 before brief 19's core merged; the parts' new rows, the audit's four readings and the final
+  runs moved it (the handoff's top section has each step).
+
+Test counts aren't a claim that the career is finished or right: they say what was checked. What wasn't is said above
+and in each report.
 
 ## What's Left, And Whose It Is
 

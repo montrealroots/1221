@@ -1,17 +1,19 @@
-# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, In Progress, 2026-10-21
+# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, Done But For The Owner, 2026-10-21
 
 **This section is the current status, and where a new session starts.** The owner gave brief 19
 (`docs/verification/briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept
-verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
-none of it is in `main`, and nothing is deployed.
+verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
+none of it is in `main`, and nothing is deployed. There is no stash and one worktree.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
-  (Brief 19's final runs, 2026-10-21, on `728b4972`, folded by `criteria.py`: until them this said 549 of 658. Every row
-  measured on brief 17's commit is measured again: the judge's on figures brief 17's in every number, the long runs',
-  the advice's, the journeys' (25 of 25 played to the end, all ten checks passed, each ending as brief 17's) and the
-  interface's (`docs/verification/career-2026-10-20/final-runs/`). Of the 21 left, 20 are earlier briefs' unreachable
-  and owner-decision rows, and the gate's waits on the gate.)
+  (Brief 19's gate, 2026-10-21, in a clean clone of `a6b82e07`, exit 0 read from its file: 421 of 421 test files, 5,080 of
+  5,080 tests, none skipped, and all 21 checks (`docs/verification/career-2026-10-20/final-runs/runs/gate.txt`). Its
+  figure folded in, this said 633 of 658 until then. Brief 19's final runs before it, on `728b4972`, moved every row
+  measured on brief 17's commit: the judge's on figures brief 17's in every number, the long runs', the advice's, the
+  journeys' (25 of 25 played to the end, all ten checks passed, each ending as brief 17's) and the interface's; until
+  them this said 549 of 658. The 20 left are earlier briefs' rows: twelve commands no current life can reach and eight
+  banking decisions for the owner.)
 
   (The audit's fourth reading, 2026-10-21, against `9c3e6fa5`: until it this said 548 of 658. `pro.cut_reel` is verified
   on the test written for its gap, so all 22 of brief 19's rows are verified. The two refusals the third reading recorded
@@ -82,10 +84,11 @@ none of it is in `main`, and nothing is deployed.
   (`integration/mutations.txt`, I9 to I27): reliability counting a missed day twice, a role posted again after it was
   booked, Low Budget pay held at 2026–27's figure, "went on 1 time", Equity's ending while employed (S27) and its 90
   days extended by employment (S29).
-- **Still to do (until this says otherwise):** brief 19's final runs, on `728b4972`, started 10:00 UTC (the runs begun
-  on `a483247d` and `9c3e6fa5` were stopped when `src/engine` changed under them); the matrix folded from them; the full
-  gate in a clean clone; the receipt (`docs/verification/career-2026-10-20/README.md`). V17's person's look is the
-  owner's.
+- **Done (2026-10-21):** brief 19's final runs on `728b4972` (`docs/verification/career-2026-10-20/final-runs/`), the
+  matrix folded from them, the full gate in a clean clone (exit 0), and the receipt
+  (`docs/verification/career-2026-10-20/README.md`). Until then this listed them as still to do. Brief 19's criteria:
+  59 of 60 Fixed And Verified; V17's person's look at desktop and mobile is the owner's (`PLAYTEST.md` is the route).
+- **Nothing merged or deployed:** merging to `main` and any Base44 deployment wait on the owner.
 - **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
   marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
   owner's call.

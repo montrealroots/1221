@@ -46,8 +46,8 @@ in `exits-F1-again.txt`). The first play's exits, summary and compare are in `..
 `figures.py` reads each figure from these outputs into `figures.json`. `../../../integration-2026-10-16/criteria.py`
 reads that for the matrix, `../verify.py` reads the journeys' and the interface's results into
 `../verification-result.json`, and `../advice/close.py` the advice's four rows into `../final-result.json`. The gate ran
-after the runs, on the commit `gate.txt` names on its first line, with only documents and tools changed after
-`728b4972`.
+after the runs, on the commit `gate.txt` names on its first line (`a6b82e07`), with only documents and the journeys tool
+changed after `728b4972`: exit 0, 421 of 421 test files and 5,080 of 5,080 tests, none skipped, and all 21 checks.
 
 ## The Outputs
 

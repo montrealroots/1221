@@ -119,7 +119,7 @@ Each is a played run with its notices and records read, and a test:
 | V15 | Save and reload at each transition | Fixed And Verified (each part's transitions saved and loaded: `showcase/`, `agent/`, `work/`, `pay/REPORT.md`) |
 | V16 | An existing graduate's save migrated | Fixed And Verified (`playthroughs/REPORT.md`: J01's save from `8283f80c` played to its first paid job, and the same life's mid-term save played to its degree; `tests/journey-career-older.test.ts`) |
 | V17 | Desktop, mobile, keyboard, labels and the tutorials' accuracy on the built app | Blocked on the owner: the automated half holds on all 52 surfaces at 1440 and 390 from the keyboard (`app/REPORT.md`); the person's look at desktop and mobile it also names is the owner's to give, and an automated walk isn't one |
-| V18 | The full gate on the final candidate | Open |
+| V18 | The full gate on the final candidate | Fixed And Verified (`final-runs/runs/gate.txt`: `npm run gate` in a clean clone of `a6b82e07`, exit 0 read from the file, 421 of 421 test files and 5,080 of 5,080 tests, none skipped, and all 21 checks) |
 
 ## Kept Out
 
