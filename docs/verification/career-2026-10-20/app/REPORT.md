@@ -47,7 +47,11 @@ One thing the TEST SETUP leaves short: it prepares a piece's steps but answers n
 out Unready. The walk reads screens and their words, which that doesn't touch.
 
 The nine saves (`last-term`, `after-new-york`, `follow-up`, `meeting`, `offered`, `audition`, `offer`, `work-day`,
-`paid`) are 1.6 MB each and aren't committed: `make-saves.ts` writes them again, the same to the byte, in 16 seconds.
+`paid`) are 1.6 MB each and aren't committed: `make-saves.ts` wrote them again, the same to the byte, in 16 seconds,
+until `a483247d` priced Ultra Low Budget work by its contract year. Written again on it, the life is the same to the day
+but for Jess's pay: $308.00 a day, scale plus ten on 2029's $280.00 minimum, where the walk read $282.70 on 2026's
+$257.00; $1,232.00 for the week, $112.00 commission, $1,025.76 to her where she was paid $941.49. The walk's pages
+below are the build it read.
 
 **The walk** (`app-walk.mjs`): `npm run build`, the clone's `dist/` served on port 4187 (`served.txt`: the page served is
 `dist/index.html`, build `assets/index-C42mdylw.js`, at `8bac3141`; `2cc42ad3` after it changed one help sentence the

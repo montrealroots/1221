@@ -10,6 +10,9 @@ Each step says what to press, what you should read, and what to report.
   and a mid-term save on into it, with every notice, stop and button press written down (`playthroughs/transcripts/`).
 - **The built app:** `app/` walked 52 of the career's surfaces at 1440 and 390 from the keyboard, read each, and held
   each to no errors, no sideways scroll and every control named and reached (`app/walk/`).
+- **This route's setup:** `playtest-check.mjs` takes the console snippet below from this file and runs it on a build
+  with the saves in place: each save opens, Continue goes into it, and the Career screen opens, with no page errors
+  (`playtest-check.txt`, on `a483247d`).
 - **What none of that is:** a person's look. Whether the agent reads as a person's office and not a calculation,
   whether the money is clear, whether a step is where you'd look for it, is what this route is for, and only you can say
   it. Criterion V17 stays open on it.
@@ -39,8 +42,9 @@ where the game keeps its own and reloads the page:
 const open = async (name) => { const t = await (await fetch(`/saves/${name}`)).text(); await new Promise((res, rej) => { const r = indexedDB.open('slate', 1); r.onupgradeneeded = () => r.result.createObjectStore('saves'); r.onerror = () => rej(r.error); r.onsuccess = () => { const tx = r.result.transaction('saves', 'readwrite'); tx.objectStore('saves').put(t, 'slate.save.1'); tx.oncomplete = res; }; }); location.reload(); };
 ```
 
-Then `await open('last-term.json')` for the first step. Opening a save replaces the one in this browser. Each save opens
-paused; press Go or Advance to move on from it, as a player would.
+Then `await open('last-term.json')` for the first step. The page comes back at the save slots, with the save in Slot 1:
+press Continue. Opening a save replaces Slot 1's life in this browser. Each save opens paused; press Play, Advance or Go
+to move on from it, as a player would.
 
 **As you go, note any sentence that:**
 - you had to read twice;
