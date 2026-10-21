@@ -23,10 +23,10 @@ import { breaches } from '@/engine/core/invariants';
 import { COMMENCEMENT_KIND, EVALUATION_KIND } from '@/engine/systems/school';
 import { BRIEFS } from '@/engine/content/briefs';
 import { AGENTS, AGENCIES, agencyOf, agentById } from '@/engine/content/agents';
-import { AGREEMENT_TERMS, PROJECTS, RATES } from '@/engine/content/careerwork';
+import { AGREEMENT_TERMS, PROJECTS, RATES, minimumOn, type RateId } from '@/engine/content/careerwork';
 import {
   ENGAGEMENTS_KEPT, HEADSHOTS, HISTORY_KEPT, MATERIALS_KEPT, OPPORTUNITIES_KEPT, REEL, RESUME, activeAgreement, addCredit, countOf, currentOf,
-  headshotRefusal, keepBounded, materialsCheck, noteEvent, proCreditWords, profileOf, reelSources, releaseScreenCredit, resumeBehind,
+  headshotRefusal, keepBounded, materialsCheck, noteEvent, proCreditWords, profileOf, reelSources, releaseScreenCredit, resumeBehind, schoolCreditWords,
   type Agreement, type AgentRelation, type Engagement, type Opportunity,
 } from '@/engine/systems/pro';
 
@@ -425,6 +425,31 @@ describe('the agent and the work, as data', () => {
     const text = JSON.stringify([AGENTS, AGENCIES]);
     expect(text).not.toMatch(/@|\bphone\b|\(\d{3}\) ?\d{3}-\d{4}|\b\d{3}[-.]\d{3}[-.]\d{4}\b|\bStreet\b|\bAvenue\b|\bclients?\b/i);
     for (const s of agent.sources) expect(s.read).toBe('2026-10-20');
+  });
+
+  it('prices each SAG-AFTRA day rate by its contract year, Low Budget at 65% and Ultra Low Budget at 20% of the day performer’s, and holds the rest at the figure on file', () => {
+    // Until 2026-10-21 Low Budget and Ultra Low Budget stayed at their 2026–27 figures in 2029 (brief 19's playthroughs).
+    const on = (id: RateId, day: string) => minimumOn(RATES[id], day);
+    expect(['2026-08-24', '2027-07-01', '2028-07-01', '2029-07-01'].map((d) => on('sag-tv-day', d))).toEqual([1_283_00, 1_321_00, 1_361_00, 1_402_00]);
+    // The 2026–27 shares are the rate sheets' own figures.
+    expect(on('low-budget-day', '2026-08-24')).toBe(RATES['low-budget-day'].amount);
+    expect(on('ultra-low-budget-day', '2026-08-24')).toBe(RATES['ultra-low-budget-day'].amount);
+    expect(on('low-budget-day', '2029-07-01')).toBe(911_00);
+    expect(on('ultra-low-budget-day', '2029-07-01')).toBe(280_00);
+    // The day before a contract year turns is the old year's.
+    expect(on('low-budget-day', '2027-06-30')).toBe(834_00);
+    for (const id of ['lort-c', 'off-broadway', 'non-union-day'] as const) expect(on(id, '2029-07-01')).toBe(RATES[id].amount);
+  });
+
+  it('says how often an understudy went on in words, as a résumé does: “once”, “twice”, “three times”, never “1 time”', () => {
+    // Until 2026-10-21 the line read "went on 1 time" (brief 19's playthroughs, `playthroughs/REPORT.md`).
+    const line = (wentOn: number, understudy = true) => schoolCreditWords({ key: 'k', production: 'Hedda Gabler', role: 'Thea Elvsted', venue: 'Yale Repertory Theatre', year: 2028, understudy, wentOn });
+    expect(line(1)).toBe('Thea Elvsted (understudy, went on once), Hedda Gabler, Yale Repertory Theatre, 2028');
+    expect(line(2)).toBe('Thea Elvsted (understudy, went on twice), Hedda Gabler, Yale Repertory Theatre, 2028');
+    expect(line(3)).toBe('Thea Elvsted (understudy, went on three times), Hedda Gabler, Yale Repertory Theatre, 2028');
+    expect(line(12)).toBe('Thea Elvsted (understudy, went on 12 times), Hedda Gabler, Yale Repertory Theatre, 2028');
+    // A part cast to them says nothing of how often: they played it.
+    expect(line(9, false)).toBe('Thea Elvsted, Hedda Gabler, Yale Repertory Theatre, 2028');
   });
 
   it('names no agent in the engine’s code: a second one, or a fictional one in his place, is another entry of data', () => {

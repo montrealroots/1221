@@ -148,15 +148,16 @@ Paths under `src/` and `src/engine/`; line numbers at the worker's head.
    meeting's hour and the trip each way, unexcused. GUARD in `pro-work.test.ts`, with a twin of the same day without the
    meeting.
 
-**Recorded, not fixed:**
+**Recorded, not fixed by the playthroughs** (each settled on the working branch the same day, after the merge; the
+mutations are I9 to I15 in `../integration/mutations.txt`):
 
-| Defect | Evidence | Area |
-|---|---|---|
-| One missed work day under an agreement counts twice against reliability, once as material not sent | `projobs.ts:1102, 1104` note it on the engagement and the relation; `proagent.ts:365–366` count both | agent, work |
-| A role she has already played is posted to her again ten weeks later and booked again (two Desk Clerk credits) | `life-a-v1-12.txt`, lines 300–461 and 466–575 | work |
-| Low Budget, Ultra Low Budget and LORT minimums stay at their 2026–27 figures in 2029 | `minimumOn` returns `rate.amount` for every rate but SAG-AFTRA's day rate | pay |
-| An understudy's School credit reads "went on 1 time" | `pro.ts:656` | core |
-| The profile's "School Journey" panel keeps that title for a graduate in the career | `ProfileWorkspace.tsx:546` | profile |
+| Defect | Evidence | Area | What Became Of It |
+|---|---|---|---|
+| One missed work day under an agreement counts twice against reliability, once as material not sent | `projobs.ts:1102, 1104` note it on the engagement and the relation; `proagent.ts:365–366` count both | agent, work | Fixed: a request let pass is its own kind, `request-missed`, and reliability counts it, missed auditions he set up and job problems once each (`tests/pro-agent.test.ts`, its GUARD and a twin) |
+| A role she has already played is posted to her again ten weeks later and booked again (two Desk Clerk credits) | `life-a-v1-12.txt`, lines 300–461 and 466–575 | work | Fixed: `postingsAt` skips a project with an engagement not canceled or a credit for the part (`tests/pro-work.test.ts`, its GUARD) |
+| Low Budget, Ultra Low Budget and LORT minimums stay at their 2026–27 figures in 2029 | `minimumOn` returns `rate.amount` for every rate but SAG-AFTRA's day rate | pay | Fixed for Low Budget and Ultra Low Budget, priced at 65% and 20% of the year's day performer minimum as their rate sheets set them (S33, S32); LORT, the Off-Broadway estimate and the non-union rate stay at the figure on file, said as an assumption at `minimumOn`, since no later LORT minimum was read (`tests/pro-core.test.ts`) |
+| An understudy's School credit reads "went on 1 time" | `pro.ts:656` | core | Fixed: "went on once", "twice", "three times" (`tests/pro-core.test.ts`) |
+| The profile's "School Journey" panel keeps that title for a graduate in the career | `ProfileWorkspace.tsx:546` | profile | Kept: the panel is the record of the School years, its parts and its half-years' work, which a graduate still has; the career's record is the Career workspace's Profile tab |
 
 Not a career defect: the attentive player never answers the bank's dormancy question, so each life's untouched Chase
 Savings went to the state's unclaimed-property office in September 2029 (`life-a-v1-12.txt`, line 465).

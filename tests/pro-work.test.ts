@@ -211,6 +211,21 @@ describe('J1: fictional roles, posted on a schedule', () => {
     for (const t of PROJECTS) expect(reachOf(t, outside)).toBe(t.access.open ? 'open' : undefined);
   });
 
+  it('GUARD: a role the actor has been booked for, or holds the credit for, isn’t posted to them again; without either it comes round (found by brief 19’s playthroughs, 2026-10-21, two Desk Clerks credited)', () => {
+    const sim = graduate('work-repost');
+    const t = PROJECTS.find((x) => x.access.open === 'anyone')!;
+    const posted = () => postingTimes(sim.now, sim.now + 60 * 7 * MS_DAY).some((when) => postingsAt(sim, sim.player, when).some((p) => p.project.id === t.id));
+    expect(posted()).toBe(true);
+    // TEST SETUP: the role played, its engagement finished and its credit filed, as the work loop's `finish` leaves them.
+    const e = { id: 'e-done', opportunityId: 'o-done', projectId: t.id, role: t.role.part, status: 'finished' as const, days: [], pay: [], history: [], counts: {} };
+    sim.player.pro!.engagements.push(e);
+    expect(posted()).toBe(false);
+    // The engagement trimmed away, as `keepBounded` trims the oldest finished: the credit, kept for good, still holds it.
+    sim.player.pro!.engagements = [];
+    sim.player.pro!.credits.push({ id: 'c-done', kind: t.medium === 'stage' ? 'stage' : 'screen', project: t.project, role: t.role.part, company: t.company, year: 2026, medium: t.medium, status: t.medium === 'stage' ? 'performed' : 'shot', at: sim.now });
+    expect(posted()).toBe(false);
+  });
+
   it('brings agent-only roles only through the agent while an agreement is in force, with his id and the agreement’s on each', () => {
     const sim = graduate('work-agent-postings');
     const before = postingTimes(sim.now, sim.now + 40 * 7 * MS_DAY).flatMap((b) => postingsAt(sim, sim.player, b));

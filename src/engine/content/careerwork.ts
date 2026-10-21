@@ -94,16 +94,30 @@ export const SAG_DAY_BY_YEAR: readonly { from: string; amount: number }[] = [
 ];
 
 /**
+ * The SAG-AFTRA day rates set as a share of the Basic Agreement's day performer minimum: Low Budget at 65% (S33) and
+ * Ultra Low Budget at 20% (S32), each the year's, rounded to the dollar as the rate sheets print them. Both reproduce
+ * `RATES`' 2026–27 figures, $834 and $257.
+ */
+const SHARE_OF_SAG_DAY: Partial<Record<RateId, number>> = { 'sag-tv-day': 1, 'low-budget-day': 0.65, 'ultra-low-budget-day': 0.2 };
+
+/**
  * A rate's minimum on a day (`YYYY-MM-DD`): the SAG-AFTRA day performer's by its contract year (S30, `SAG_DAY_BY_YEAR`),
- * every other as `RATES` has it. The work loop prices an offer by it on the work's first day (`rateOn`,
- * `systems/projobs.ts`), and the pay measures a commission against the same scale (`scaleOf`, `systems/propay.ts`). Moved
- * here from the work loop on 2026-10-21 (brief 19's playthroughs), when the pay was found reading `RATES`' 2026–27 figure
- * for work from July 2027 on: a 2029 co-star offered scale plus ten paid its agent the full ten percent of the gross,
- * which left the actor under scale.
+ * and Low Budget's and Ultra Low Budget's day rates as their shares of it (`SHARE_OF_SAG_DAY`), every other as `RATES`
+ * has it. The work loop prices an offer by it on the work's first day (`rateOn`, `systems/projobs.ts`), and the pay
+ * measures a commission against the same scale (`scaleOf`, `systems/propay.ts`). Moved here from the work loop on
+ * 2026-10-21 (brief 19's playthroughs), when the pay was found reading `RATES`' 2026–27 figure for work from July 2027 on:
+ * a 2029 co-star offered scale plus ten paid its agent the full ten percent of the gross, which left the actor under
+ * scale. Low Budget and Ultra Low Budget stayed at their 2026–27 figures until later that day, found by the same
+ * playthroughs.
+ *
+ * ASSUMPTION: Equity's LORT minimums after 28 June 2027, the Off-Broadway estimate and the non-union day rate stay at the
+ * figure `RATES` holds: no later LORT minimum was read (S36 quotes 29 June 2026's), and the other two are estimates.
  */
 export function minimumOn(rate: Rate, day: string): number | undefined {
-  if (rate.id !== 'sag-tv-day') return rate.amount;
-  return [...SAG_DAY_BY_YEAR].reverse().find((r) => r.from <= day)?.amount ?? rate.amount;
+  const share = SHARE_OF_SAG_DAY[rate.id];
+  const scale = [...SAG_DAY_BY_YEAR].reverse().find((r) => r.from <= day)?.amount;
+  if (share === undefined || scale === undefined) return rate.amount;
+  return Math.round((scale * share) / 100) * 100;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

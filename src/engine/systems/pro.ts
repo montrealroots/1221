@@ -80,7 +80,10 @@ export type ProEventKind =
   | 'discovered' | 'checked' | 'introduced' | 'referred' | 'sent' | 'silence' | 'requested' | 'supplied' | 'passed'
   | 'meeting-set' | 'meeting-kept' | 'meeting-missed' | 'meeting-moved' | 'promise' | 'offer' | 'accepted' | 'declined'
   | 'lapsed' | 'represented' | 'ended' | 'refused' | 'opportunity' | 'submitted' | 'audition' | 'callback' | 'booked'
-  | 'worked' | 'paid' | 'success' | 'problem';
+  | 'worked' | 'paid' | 'success' | 'problem'
+  // What an agent's office asked for and didn't get (from 2026-10-21): a `problem` until then, which the work loop's
+  // problems on his submissions and a missed work day also wrote, so his reliability read all three as material not sent.
+  | 'request-missed';
 
 /** One event in a history: a stable id, when, what, its words as the player reads them, and what it's about. */
 export interface ProEvent {
@@ -652,8 +655,12 @@ export function schoolCreditsOf(person: Person): SchoolCreditLine[] {
   }));
 }
 
-/** A school credit as one line: the part, the production, where and when. */
-export const schoolCreditWords = (c: SchoolCreditLine): string => `${c.role}${c.understudy ? ` (understudy, went on ${plural(c.wentOn, 'time')})` : ''}, ${c.production}, ${c.venue}, ${c.year}`;
+/**
+ * A school credit as one line: the part, the production, where and when. An understudy's says how often they went on,
+ * "once", "twice", "three times": until 2026-10-21 it said "went on 1 time" (brief 19's playthroughs). A credit is filed
+ * only for a part played at least once (`keepCredit`, `systems/school.ts`).
+ */
+export const schoolCreditWords = (c: SchoolCreditLine): string => `${c.role}${c.understudy ? ` (understudy, went on ${c.wentOn === 1 ? 'once' : c.wentOn === 2 ? 'twice' : `${countWords(c.wentOn)} times`})` : ''}, ${c.production}, ${c.venue}, ${c.year}`;
 /** A professional credit as one line. */
 export const proCreditWords = (c: ProCredit): string => `${c.role}, ${c.project}, ${c.company}, ${c.year}${c.status === 'unreleased' ? ' (unreleased)' : c.status === 'shot' ? ' (not yet released)' : ''}`;
 

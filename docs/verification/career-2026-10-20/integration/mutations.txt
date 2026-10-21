@@ -7,3 +7,12 @@ I5 an offer through him priced at scale | src/engine/systems/projobs.ts (makeOff
 I6 the pay's eligibility read not asked at acceptance | src/engine/systems/projobs.ts (acceptRefusal) | tests/pro-work.test.ts, tests/propay.test.ts | SURVIVED: it refuses only where a date fails usWorkAuthorized, the check before it; taken out the same day
 I7 SAG-AFTRA's 30 days not asked at acceptance | src/engine/systems/projobs.ts (acceptRefusal) | tests/pro-work.test.ts 'from the 30th day after a first SAG-AFTRA job began' | KILLED
 I8 a payment written without the days it pays for | src/engine/systems/projobs.ts (promisedPay) | tests/pro-work.test.ts 'an Equity open call with a callback' (a run week's 48 hours on its wages) | KILLED
+
+Mutations at the playthroughs' defect fixes (2026-10-21), each run against the test that holds it, on the working branch with the fixes in.
+I9 reliability counting every problem on the relationship as material not sent | src/engine/systems/proagent.ts (reliability's `late`) | tests/pro-agent.test.ts 'GUARD: a missed work day under him counts once against reliability' | KILLED
+I10 a role booked before posted again | src/engine/systems/projobs.ts (postingsAt, the engagement) | tests/pro-work.test.ts 'GUARD: a role the actor has been booked for, or holds the credit for, isn’t posted to them again' | KILLED
+I11 the credit not read where the engagement was trimmed | src/engine/systems/projobs.ts (postingsAt, the credit) | tests/pro-work.test.ts, the same GUARD | KILLED
+I12 a missed audition he set up not counted against reliability | src/engine/systems/proagent.ts (reliability's `against`) | tests/pro-agent.test.ts, the same GUARD | SURVIVED at first: the test's audition sat beside a job problem that already set the level; a twin with the audition alone was added, and it KILLED
+I13 Low Budget's day rate left at its 2026–27 figure | src/engine/content/careerwork.ts (SHARE_OF_SAG_DAY) | tests/pro-core.test.ts 'prices each SAG-AFTRA day rate by its contract year' | KILLED
+I14 an understudy's School credit back to "went on 1 time" | src/engine/systems/pro.ts (schoolCreditWords) | tests/pro-core.test.ts 'says how often an understudy went on in words' | KILLED
+I15 a share rounded down rather than to the dollar | src/engine/content/careerwork.ts (minimumOn) | tests/pro-core.test.ts 'prices each SAG-AFTRA day rate by its contract year' ($834, the sheet's figure) | KILLED

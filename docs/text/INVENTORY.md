@@ -15,21 +15,21 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1905 | 17606 | 0 | 267 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1906 | 17610 | 0 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2563 | 15110 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 197 | 779 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38791 | 594147 | 316 | 1391 | 3154 | 0 | 0 |
+| **All** | 4545 | 38792 | 594151 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
 | career | 119 | 9953 | 94 | 25 | 0 | 0 |
-| career-agent | 56 | 2695 | 56 | 0 | 0 | 0 |
+| career-agent | 56 | 2699 | 56 | 0 | 0 | 0 |
 | career-pay | 30 | 1221 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 65 | 1977 | 65 | 0 | 0 | 0 |
@@ -3124,7 +3124,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/pro.ts#placeOf` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#trainingOf` | 8 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#VENUE` | 4 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/pro.ts#schoolCreditWords` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/pro.ts#schoolCreditWords` | 1 | 0 | Rewritten | career | Read again on 2026-10-21 after brief 19's playthroughs, when an understudy's credit came to say "went on once", "twice", "three times" where it said "went on 1 time"; read in tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#proCreditWords` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#unionsOf` | 5 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#eligibilityOf` | 5 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3155,7 +3155,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/proagent.ts#workSeen` | 3 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#BILLING_WORDS` | 3 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#openingWords` | 5 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/proagent.ts#interestOf` | 32 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/proagent.ts#interestOf` | 33 | 0 | Rewritten | career-agent | Read again on 2026-10-21 after brief 19's playthroughs, when reliability came to name a missed audition he set up ("You missed one audition he set up.") and to count a missed work day once; read where the player meets it in tests/pro-agent.test.ts (its GUARD and twin) and tests/journey-agent.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#KIND_WORDS` | 3 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#FOUND` | 6 | 0 | Rewritten | career-agent | Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#mustRead` | 1 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |

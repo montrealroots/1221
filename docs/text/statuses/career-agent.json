@@ -73,9 +73,9 @@
  },
  "src/engine/systems/proagent.ts#interestOf": {
   "status": "Rewritten And Verified",
-  "hash": "9a1f0a7dec3b",
+  "hash": "5fb505710428",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Read again on 2026-10-21 after brief 19's playthroughs, when reliability came to name a missed audition he set up (\"You missed one audition he set up.\") and to count a missed work day once; read where the player meets it in tests/pro-agent.test.ts (its GUARD and twin) and tests/journey-agent.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/systems/proagent.ts#KIND_WORDS": {
   "status": "Rewritten And Verified",

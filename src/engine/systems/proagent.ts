@@ -364,18 +364,22 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const roster = roomLevel(openings, age, billing);
   add('roster', roster, `Assumed for ${year}: room for ${spokenList(openings.map(openingWords))}. Your record shows you as ${BILLING_WORDS[billing]}, aged ${age}, so ${fits ? `${fits === 1 ? 'one opening fits' : `${countWords(fits)} openings fit`}` : openings.some(ages) ? 'an opening fits your age but not your billing' : 'none of them fits'}. ${agent.roster.words}`);
 
-  // 7. Reliability, from real events: meetings kept or missed, material sent when asked, problems on a job.
+  // 7. Reliability, from real events: meetings kept or missed, material sent when asked, auditions he set up and missed,
+  // problems on a job. Until 2026-10-21 `late` counted every `problem` on the relationship, where the work loop also
+  // copies a missed work day and the problems on his submissions, so one missed day counted twice, the second time as
+  // material not sent (found by the playthroughs). Each is counted once now, from where it's kept.
   const kept = rel ? countOf(rel, 'meeting-kept') : 0;
   const missed = rel ? countOf(rel, 'meeting-missed') : 0;
   const supplied = rel ? countOf(rel, 'supplied') : 0;
-  const late = rel ? countOf(rel, 'problem') : 0;
+  const late = rel ? countOf(rel, 'request-missed') : 0;
+  const auditions = (pro?.opportunities ?? []).filter((o) => o.via === 'agent' && o.agentId === agent.id && o.history.some((h) => h.kind === 'problem' && h.key?.endsWith(':missed'))).length;
   const onJobs = (pro?.engagements ?? []).reduce((n, e) => n + countOf(e, 'problem'), 0);
-  const against = missed + late + onJobs;
+  const against = missed + late + auditions + onJobs;
   const reliability: Level = against >= 2 ? 'short' : against === 1 ? 'near' : kept + supplied > 0 ? 'beyond' : 'at';
   const events = [
     kept ? `kept ${counted(kept, 'meeting')} with his office` : '', missed ? `missed ${counted(missed, 'meeting')}` : '',
     supplied ? `sent what it asked for ${supplied === 1 ? 'once' : counted(supplied, 'time')}, on time` : '', late ? `didn’t send what it asked for ${late === 1 ? 'once' : counted(late, 'time')}` : '',
-    onJobs ? `had ${counted(onJobs, 'problem')} on a job` : '',
+    auditions ? `missed ${counted(auditions, 'audition')} he set up` : '', onJobs ? `had ${counted(onJobs, 'problem')} on a job` : '',
   ].filter(Boolean);
   add('reliability', reliability, events.length ? `You ${spokenList(events)}.` : 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.');
 
@@ -1112,7 +1116,7 @@ export function registerProAgent(sim: Simulation): void {
     const rel = person && agent ? relationOf(person, agent.id) : undefined;
     const r = rel?.request;
     if (!person || !agent || !rel || !r || rel.stage !== 'requested' || r.id !== item.payload.requestId) return;
-    note(s, rel, 'problem', `request-missed:${r.id}`, `What his office asked for by ${formatDate(r.by, s.zone)} didn’t come: ${spokenList(r.what.map((k) => KIND_WORDS[k]))}.`);
+    note(s, rel, 'request-missed', `request-missed:${r.id}`, `What his office asked for by ${formatDate(r.by, s.zone)} didn’t come: ${spokenList(r.what.map((k) => KIND_WORDS[k]))}.`);
     setStage(s, rel, 'sent');
     answer(s, person, agent, rel, { approach: Number(item.payload.approach), step: 'request-missed', ...(typeof item.payload.reelId === 'string' ? { reelId: item.payload.reelId } : {}), from: s.now, silenceAt: Number(item.payload.silenceAt) });
   });

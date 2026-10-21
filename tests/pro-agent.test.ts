@@ -26,7 +26,7 @@ import { COMMENCEMENT_KIND, EVALUATION_KIND } from '@/engine/systems/school';
 import { AGENTS } from '@/engine/content/agents';
 import { projectById } from '@/engine/content/careerwork';
 import type { Band } from '@/engine/systems/coursework';
-import { addCredit, type Engagement } from '@/engine/systems/pro';
+import { addCredit, noteEvent, type Engagement } from '@/engine/systems/pro';
 import {
   CHANCE, FOLLOW_UP_KIND, chancesFor, drawOf, interestOf, nextStep, offerOutcome, relationOf, replyOutcome, roomLevel, rosterFor,
   scheduleShowcaseFollowUp,
@@ -187,6 +187,30 @@ describe('G4 and G6: the factors, the draw, and a reload that can’t redraw', (
     tended(sim, at(2026, 9, 17, 12));
     expect(rel(sim).why).toMatchObject({ step: 'reply', outcome: 'pass', atOrBeyond: i.atOrBeyond, needed: 4 });
     expect(rel(sim).why!.factors.map((x) => x.level)).toEqual(i.factors.map((x) => x.level));
+  });
+
+  it('GUARD: a missed work day under him counts once against reliability, as a problem on a job, and material his office didn’t get counts as that (found by brief 19’s playthroughs, 2026-10-21)', () => {
+    const { sim, job } = referredGraduate(seedWhere('agent-reliable', (d) => passes(d(1, 'interest'))));
+    const reliability = () => interestOf(sim, sim.player, AGENT, sim.now).factors.find((f) => f.id === 'reliability')!;
+    // TEST SETUP: what the work loop writes for one missed work day on a job through him (`missDay`, systems/projobs.ts):
+    // the job's problem, and the same day copied into the relationship.
+    noteEvent(sim, job, { kind: 'problem', key: 'missed:0', words: 'You missed a shoot day.' });
+    noteEvent(sim, rel(sim), { kind: 'problem', key: `eng:${job.id}:missed:0`, words: 'You missed a shoot day.', ref: job.id });
+    expect(reliability()).toMatchObject({ level: 'near', words: 'You had one problem on a job.' });
+    // TEST SETUP: his office's request let go by, as its due date writes it.
+    noteEvent(sim, rel(sim), { kind: 'request-missed', key: 'request-missed:r0', words: 'What his office asked for didn’t come.' });
+    expect(reliability()).toMatchObject({ level: 'short', words: 'You didn’t send what it asked for once and had one problem on a job.' });
+    // TEST SETUP: an audition he set up and she missed, as the work loop notes a round missed on a role through him.
+    const o = { id: 'o-missed', projectId: job.projectId, via: 'agent' as const, agentId: AGENT.id, status: 'passed' as const, postedAt: sim.now, submitBy: sim.now, history: [], counts: {} };
+    sim.player.pro!.opportunities.push(o);
+    noteEvent(sim, o, { kind: 'problem', key: 'audition:missed', words: 'You missed the audition.' });
+    expect(reliability()).toMatchObject({ level: 'short', words: 'You didn’t send what it asked for once, missed one audition he set up and had one problem on a job.' });
+    // The missed audition alone, in a twin: it moves the level as one problem does.
+    const { sim: twin, job: twinJob } = referredGraduate(seedWhere('agent-reliable', (d) => passes(d(1, 'interest'))));
+    const lone = { ...o, history: [], counts: {}, projectId: twinJob.projectId };
+    twin.player.pro!.opportunities.push(lone);
+    noteEvent(twin, lone, { kind: 'problem', key: 'audition:missed', words: 'You missed the audition.' });
+    expect(interestOf(twin, twin.player, AGENT, twin.now).factors.find((f) => f.id === 'reliability')).toMatchObject({ level: 'near', words: 'You missed one audition he set up.' });
   });
 
   it('GUARD: a reload before the answer gives the same answer, the draw keyed by the approach and its step', () => {

@@ -404,6 +404,11 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
     const via = reachOf(t, agreement);
     if (!via) continue;
     if (person.pro?.opportunities.some((o) => o.projectId === t.id && o.postedAt < at && at - o.postedAt < POSTING.againDays * MS_DAY)) continue;
+    // A role the actor has been booked for isn't posted to them again: until 2026-10-21 it came round after its ten weeks
+    // and could be booked and credited a second time (two Desk Clerks in The Calloway Files, found by the playthroughs).
+    // Read from the engagements, live or kept, and from the credits, which are kept for good where finished engagements are
+    // trimmed.
+    if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
     const chance = via === 'agent' ? POSTING.agent : POSTING.open[t.kind] ?? 0;
     if (sim.rng('pro.posting', week, t.id, via).next() < chance) out.push({ project: t, via });
   }

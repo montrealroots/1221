@@ -759,8 +759,8 @@
   "status": "Rewritten",
   "hash": "6e7a1ea64ad7",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "Read again on 2026-10-21 after brief 19's playthroughs, when an understudy's credit came to say \"went on once\", \"twice\", \"three times\" where it said \"went on 1 time\"; read in tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
  },
  "src/engine/systems/pro.ts#SESSION_HOURS": {
   "status": "Rewritten",

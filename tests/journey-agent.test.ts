@@ -242,7 +242,10 @@ describe('G3: his office’s answers', () => {
     other.must({ kind: 'pro.send_materials', payload: {} });
     tended(other, at(2026, 10, 8, 18));
     other = cross(other);
-    expect(rel(other).history.find((e) => e.kind === 'problem')!.words).toBe('What his office asked for by October 8, 2026 didn’t come: a reel.');
+    // Filed as its own kind from 2026-10-21, `request-missed`: as a `problem` it was counted again with a job's
+    // (brief 19's playthroughs).
+    expect(rel(other).history.find((e) => e.kind === 'request-missed')!.words).toBe('What his office asked for by October 8, 2026 didn’t come: a reel.');
+    expect(rel(other).history.filter((e) => e.kind === 'problem')).toEqual([]);
     expect(rel(other).why!.step).toBe('request-missed');
     expect(rel(other).why!.factors.find((f) => f.id === 'reliability')).toMatchObject({ level: 'near', words: 'You didn’t send what it asked for once.' });
   });
