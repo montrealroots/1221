@@ -90,6 +90,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { FRAUD_LAW, type FraudLaw } from '@/engine/content/security';
 import { cardRoom, cardsOf, stateOf } from '@/engine/systems/credit';
+import { ASK_EVERY } from '@/engine/systems/cardlife';
 import { REPLACED_KIND } from '@/engine/systems/security';
 import { paymentsOf } from '@/engine/systems/payments';
 
@@ -593,13 +594,19 @@ describe('card.request_limit', () => {
   it('keeps the limit and says the rule for a payment late within the year, a record under 700, nothing in the bank and a card suspended on a plan, and raises it for a payment late more than a year ago', () => {
     const sim = settled('g12-limit-declined');
     const card = chaseCard(sim);
-    /** Asked for more, a minute on, and declined: the limit kept, and the notice brought up to now with the rule. */
+    /** TEST SETUP: six months passed since the last ask or raise (`ASK_EVERY`, from 2026-10-21, brief 20's D2), set back by hand, so the next ask is looked at as the first in six months. */
+    const waited = () => { const st = stateOf(sim.player, card); if (st.askedAt !== undefined) st.askedAt -= ASK_EVERY; if (st.raisedAt !== undefined) st.raisedAt -= ASK_EVERY; };
+    /**
+     * Asked for more, a minute on, and declined: the limit kept, and the notice brought up to now with the rule. Each ask
+     * comes six months after the last (`waited`): until 2026-10-21 one could follow another a minute on.
+     */
     const declined = (limit: number, kept: string) => {
       sim.advanceBy(60_000);
+      waited();
       expect(must(sim, 'card.request_limit', { limit })).toEqual({ limit: card.creditLimit, granted: false });
       const notice = notes(sim, 'Limit Increase Declined').at(-1)!;
       expect(notice.at).toBe(sim.now);
-      expect(notice.body).toBe(`The bank kept your limit at ${kept}. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.`);
+      expect(notice.body).toBe(`The bank kept your limit at ${kept}. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and income or savings that cover the payments on a higher one.`);
     };
     expect(must(sim, 'card.request_limit', { limit: 5_000_00 })).toEqual({ limit: 5_000_00, granted: true });
 
@@ -607,6 +614,7 @@ describe('card.request_limit', () => {
     declined(6_000_00, '$5,000.00');
     expect(card.creditLimit).toBe(5_000_00);
     sim.player.credit!.late = [sim.now - 366 * MS_DAY]; // TEST SETUP: late a year and a day ago
+    waited();
     expect(must(sim, 'card.request_limit', { limit: 6_000_00 })).toEqual({ limit: 6_000_00, granted: true });
 
     sim.player.credit!.score = 699; // TEST SETUP
@@ -663,7 +671,7 @@ describe('card.request_limit', () => {
     sim.player.credit!.late = [sim.now - 30 * MS_DAY]; // TEST SETUP: a payment late a month ago
     drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1000', h.keep]).press('Ask For This Limit');
     expect(card.creditLimit).toBe(500_00);
-    expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept your limit at $500.00. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.']);
+    expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept your limit at $500.00. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and income or savings that cover the payments on a higher one.']);
   });
 });
 

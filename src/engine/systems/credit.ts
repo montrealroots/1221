@@ -52,6 +52,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, normalDate, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { drawFromBank, inTheBank } from './spending';
+import { earningsOf } from './earnings';
 import { statementReady } from './statements';
 import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
@@ -84,6 +85,12 @@ export interface CardState {
   carrying: boolean;
   /** When the card's limit was last reviewed. */
   reviewedAt?: Instant;
+  /**
+   * When the bank last raised the limit, at a review or an ask, and when the holder last asked (from 2026-10-21, brief
+   * 20's D2): an ask is looked at six months after the last of them (`askRefusal`, `systems/cardlife.ts`).
+   */
+  raisedAt?: Instant;
+  askedAt?: Instant;
   /** The interest the last statement charged, which a minimum can add. */
   statementInterest?: Money;
   /** The day of the month the statement comes, which moves the due date with it (C25). Absent, the 20th. */
@@ -190,7 +197,7 @@ export interface CreditState extends CardState {
 
 /** The fields that are a card's own, which move when another card becomes the everyday one. */
 const CARD_KEYS: readonly (keyof CardState)[] = [
-  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'statementInterest', 'statementDay', 'statementAt', 'dayMovedAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
+  'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'raisedAt', 'askedAt', 'statementInterest', 'statementDay', 'statementAt', 'dayMovedAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost', 'waiting',
 ];
@@ -320,6 +327,68 @@ const REVIEW_EVERY = 182 * 86_400_000;
  * 2026-10-17 the ask, its notice and the guide each typed 700 beside this (brief 14's cross-area pass).
  */
 export const RAISE_FROM = 700;
+
+/**
+ * The most of a holder's monthly income the minimum payments may take for a bank to raise a limit (from 2026-10-21,
+ * brief 20's D2). Until then a review raised a limit a fifth every six months for a good record and nothing else, so it
+ * grew without end: every life brief 19 played reached six figures, life A's Chase card $194,736 by October 2029 on a
+ * student's income of about $3,100 a year. Regulation Z §1026.51(a) has a bank raise a limit, at its own review or at the
+ * holder's ask, only once it has considered the holder's ability to make the minimum payments "based on the consumer's
+ * income or assets and the consumer's current obligations", the payments on the new limit worked out as if all of it
+ * were used (§1026.51(a)(2)(ii)); the rule names the ratios a bank may use and no figure. A quarter is the stricter of the
+ * two shares of income Fulford and Stavins (Federal Reserve Bank of Boston Working Paper 24-3, 2024, Table 3) took as what
+ * a holder has to spare, the one they called conservative. SLATE's estimate on that reading, held to every bank: a raise
+ * outside the US is a significant increase that Britain's CONC 5.2A and the EU's Consumer Credit Directive (Article 8(2))
+ * also ask a creditworthiness assessment for.
+ */
+export const PAYMENTS_SHARE = 0.25;
+
+/** A month of the holder's income, from the twelve months before this one in the earnings record (`systems/earnings.ts`). */
+export function monthlyIncome(sim: Simulation, person: Person): Money {
+  const now = zonedParts(sim.now, zoneOf(sim, person));
+  const months = earningsOf(person).months;
+  let sum = 0;
+  for (let back = 1; back <= 12; back += 1) {
+    const m = new Date(Date.UTC(now.year, now.month - 1 - back, 1));
+    sum += months[`${m.getUTCFullYear()}-${String(m.getUTCMonth() + 1).padStart(2, '0')}`] ?? 0;
+  }
+  return Math.round(sum / 12);
+}
+
+/**
+ * The highest limit, up to `want`, the bank will give the card on the holder's income or assets (`PAYMENTS_SHARE`), in
+ * whole units of the money, as the review's fifth is rounded; the limit it has where no higher one passes. The interest in
+ * the minimum is a month's at the rate the card charges for purchases now (§1026.51(a)(2)(ii)(B)(1), for an existing
+ * account), an introductory rate while it lasts. The income's test: the minimum on the whole limit, at the
+ * card's rate and its own minimum, with what the holder already owes each month (the minimums on their other cards'
+ * statements and their loans' payments: §1026.51's commentary lets a bank leave the other lines as they're used), within
+ * a quarter of a month's income. The assets' test, the debt-to-assets ratio the rule names: the whole limit and everything
+ * else owed on cards and loans covered by what they hold in the bank. Either passes.
+ */
+export function limitCarried(sim: Simulation, person: Person, card: Account, want: Money): Money {
+  const now = card.creditLimit ?? 0;
+  if (want <= now) return want;
+  const terms = cardTerms(sim, card, person.credit?.score ?? 650);
+  const others = cardsOf(sim, person).filter((c) => c.id !== card.id);
+  const loans = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === 'personal');
+  const obligations = others.reduce((sum, c) => sum + minimumDue(sim, stateOf(person, c).statementBalance, cardTerms(sim, c, person.credit?.score ?? 650), 0, 0), 0)
+    + loans.reduce((sum, l) => sum + (l.loanPayment ?? 0), 0);
+  const owedElsewhere = others.reduce((sum, c) => sum + Math.max(0, -c.balance), 0) + loans.reduce((sum, l) => sum + Math.max(0, -l.balance), 0);
+  const held = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings')).reduce((sum, a) => sum + Math.max(0, a.balance), 0);
+  const spare = monthlyIncome(sim, person) * PAYMENTS_SHARE;
+  const carried = (limit: Money): boolean => minimumDue(sim, limit, terms, terms.minimumPlusInterest ? Math.round((limit * terms.apr) / 12) : 0, 0) + obligations <= spare
+    || limit + owedElsewhere <= held;
+  if (carried(want)) return want;
+  // The highest whole unit between the limit now and the one asked that passes: the tests only grow harder as it rises.
+  let lo = Math.ceil(now / 100);
+  let hi = Math.floor(want / 100) - 1;
+  let best = now;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (carried(mid * 100)) { best = Math.max(best, mid * 100); lo = mid + 1; } else hi = mid - 1;
+  }
+  return best;
+}
 
 /**
  * How long a mark stays on the record, by the country it was reported in
@@ -809,16 +878,21 @@ export function registerCredit(sim: Simulation): void {
     persistentDebt(s, person, card, credit);
     credit.statementBalance = Math.max(0, -card.balance);
     credit.paidSinceStatement = 0;
-    // Every six months, a good record raises the limit, unless the holder asked it never to be raised unasked.
+    // Every six months, a good record raises the limit, unless the holder asked it never to be raised unasked, by a fifth
+    // or as far toward it as their income or savings carry (`limitCarried`, from 2026-10-21; until then a fifth whatever
+    // they earned or held, so the limit grew without end).
     if (!credit.noAutoRaise && !credit.suspended && credit.closing === undefined && (credit.reviewedAt === undefined || s.now - credit.reviewedAt >= REVIEW_EVERY)) {
       credit.reviewedAt = s.now;
       const clean = !record.late.some((when) => s.now - when < 365 * 86_400_000);
-      if (record.score >= RAISE_FROM && clean && (card.creditLimit ?? 0) > 0) {
-        card.creditLimit = Math.round((card.creditLimit ?? 0) * 1.2 / 100) * 100;
+      const was = card.creditLimit ?? 0;
+      const raised = record.score >= RAISE_FROM && clean && was > 0 ? limitCarried(s, person, card, Math.round(was * 1.2 / 100) * 100) : was;
+      if (raised > was) {
+        card.creditLimit = raised;
+        credit.raisedAt = s.now;
         if (person.id === s.universe.playerId) {
           // Its card and why, the review's own terms (from 2026-10-17, brief 14's editorial review): until then “It’s … now,
-          // because your record has been clean.”, of no card named.
-          s.notify({ category: 'bank', title: 'Your Card Limit Went Up', body: `The ${card.name}’s limit is ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, because your credit score is ${RAISE_FROM} or more and you haven’t paid late in the past year.`, importance: 40 });
+          // because your record has been clean.”, of no card named. From 2026-10-21 it says the income or savings too.
+          s.notify({ category: 'bank', title: 'Your Card Limit Went Up', body: `The ${card.name}’s limit is ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, because your credit score is ${RAISE_FROM} or more, you haven’t paid late in the past year, and your income or savings cover the payments on it.`, importance: 40 });
         }
       }
     }

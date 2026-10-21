@@ -27,7 +27,7 @@ import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, stateOf, statementD
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
-import { APPROVE_FROM, cardOffer, limitFor } from '@/engine/systems/cardlife';
+import { APPROVE_FROM, askRefusal, cardOffer, limitFor } from '@/engine/systems/cardlife';
 import { useState } from 'react';
 import { inTheBank } from '@/engine/systems/spending';
 import { PENDING } from '@/engine/content/pending';
@@ -186,6 +186,9 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
   const credit = useWorld((s) => s.player.credit)!;
   const state = stateOf(person, card);
+  // Why a higher limit can't be asked for yet (from 2026-10-21, brief 20's D2): six months from the card's opening and
+  // from the last ask or raise, said under the button, as the statement day's own wait is.
+  const askWait = useWorld((s) => askRefusal(s, card, stateOf(s.player, card)));
   const payable = useWorld((s) => Math.min(Math.max(0, -card.balance), inTheBank(s, s.player)));
   // Its own due date, or, the everyday card's, one from before cards were named.
   const due = useWorld((s) => s.timeline.pending().find((i) => i.kind === DUE_KIND && i.payload.personId === s.player.id
@@ -380,6 +383,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
               const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: centsFromTyped(limitWanted), accountId: card.id });
               if (answer.ok && answer.value?.granted) { toast(`Your limit is now ${money(answer.value.limit)}.`, 'positive'); setLimitWanted(''); }
             }}>Ask For This Limit</Gated>
+            <WhyNot reasons={[['Ask For A Higher Limit', askWait]]} />
           </div>
         </div>
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>

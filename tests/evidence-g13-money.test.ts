@@ -536,7 +536,7 @@ describe('card.statement', () => {
     // $65,217 and a fifth, $78,260.40, to the dollar.
     expect(card(again).creditLimit).toBe(78_260_00);
     expect(cardRoom(again.player, card(again))).toBe(78_260_00);
-    expect(notes(again, 'Your Card Limit Went Up').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more and you haven’t paid late in the past year.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted 'It\'s …', with the notice's straight apostrophe.
+    expect(notes(again, 'Your Card Limit Went Up').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more, you haven’t paid late in the past year, and your income or savings cover the payments on it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted 'It\'s …', with the notice's straight apostrophe; until 2026-10-21 (brief 20's D2) it said nothing of the income or savings, which the review didn't read. A wealthy start's savings cover the new limit.
     expect(card(never).creditLimit).toBe(65_217_00);
     expect(notes(never, 'Your Card Limit Went Up')).toEqual([]);
   });

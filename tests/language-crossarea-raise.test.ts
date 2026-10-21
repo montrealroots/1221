@@ -17,6 +17,8 @@ import { createSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { GUIDE_BY_ID } from '@/engine/content/guide';
+import { stateOf } from '@/engine/systems/credit';
+import { ASK_EVERY } from '@/engine/systems/cardlife';
 
 const MOVED = 720;
 vi.mock('@/engine/systems/credit', async (orig) => ({ ...(await orig<typeof import('@/engine/systems/credit')>()), RAISE_FROM: 720 }));
@@ -41,14 +43,15 @@ describe('the score a raised card limit needs', () => {
     sim.player.credit!.score = MOVED - 1; // TEST SETUP
     expect(sim.must({ kind: 'card.request_limit', payload: { limit: limit + 100_00 } })).toEqual({ limit, granted: false });
     expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual([
-      expect.stringMatching(new RegExp(`^The bank kept your limit at \\$[\\d,]+\\.\\d\\d\\. It raises a limit only with a credit score of ${MOVED} or more, no late payment in the last year, and money in the bank to repay it\\.$`)),
+      expect.stringMatching(new RegExp(`^The bank kept your limit at \\$[\\d,]+\\.\\d\\d\\. It raises a limit only with a credit score of ${MOVED} or more, no late payment in the last year, and income or savings that cover the payments on a higher one\\.$`)),
     ]);
     sim.player.credit!.score = MOVED; // TEST SETUP
+    stateOf(sim.player, card).askedAt! -= ASK_EVERY; // TEST SETUP: six months since the declined ask (brief 20's D2)
     expect(sim.must({ kind: 'card.request_limit', payload: { limit: limit + 100_00 } })).toEqual({ limit: limit + 100_00, granted: true });
 
     const entry = GUIDE_BY_ID['bank.card']!;
-    expect(entry.reads.find((f) => f.label === 'A Limit Review')?.value).toBe(`Every six months: a fifth more for a score of ${MOVED} or more with no late payment in a year, unless you turned Raise My Limit Automatically off`);
-    expect(entry.now.filter((line) => line.startsWith('Ask For This Limit:'))).toEqual([`Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, needs a credit score of ${MOVED} or more, no late payment in a year, a card that isn’t suspended, and money in the bank.`]);
+    expect(entry.reads.find((f) => f.label === 'A Limit Review')?.value).toBe(`Every six months: a fifth more for a score of ${MOVED} or more with no late payment in a year, or as much of it as your income or savings cover, unless you turned Raise My Limit Automatically off. Income covers it when the minimum payment on the whole new limit, with your other cards’ and loans’, is no more than a quarter of what you earned a month over the past year; savings cover it when what you hold in the bank is at least the new limit and all you owe on cards and loans`);
+    expect(entry.now.filter((line) => line.startsWith('Ask For This Limit:'))).toEqual([`Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, can be asked for six months after the card opened and six months after you last asked or it was last raised. It needs a credit score of ${MOVED} or more, no late payment in a year, a card that isn’t suspended, and income or savings that cover the payments on it, as a review does.`]);
     // No 700 is left in what the guide says of the card.
     expect(JSON.stringify(entry)).not.toMatch(/\b700\b/);
   });

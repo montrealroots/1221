@@ -99,9 +99,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten",
-  "hash": "18f37d2fb2fd",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), its two-missed rule played by tests/guide-chapter-facts.test.ts and its example by tests/guide-examples-money.test.ts",
+  "hash": "a98233d0680a",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
@@ -587,6 +587,13 @@
   "reason": "Your New Card Arrives is the calendar entry for an approved card's day, a Title Case event name saying what happens that day",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/cardlife.ts#askRefusal": {
+  "status": "Rewritten",
+  "hash": "1eff6caeeb3e",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/cardlife.ts#registerCardLife": {
   "status": "Retained",
   "hash": "12a579df75db",
@@ -616,11 +623,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>": {
-  "status": "Retained",
-  "hash": "b8bf2a9e626d",
-  "on": "2026-10-19",
-  "reason": "A declined limit says the limit stays where it was and the bank's three conditions for raising one, the score, no late payment in a year, money to repay",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "f50f6497e063",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
+  "first": "Pending"
  },
  "src/engine/systems/cardlife.ts#registerCardLife <card.set_auto_raise>": {
   "status": "Retained",
@@ -757,9 +764,9 @@
  },
  "src/engine/systems/credit.ts#registerCredit": {
   "status": "Rewritten",
-  "hash": "eb8ea9ee549d",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' and 'Britain: Barclays puts the first miss on the record' hold the late notice's due date and the next miss's suspension, exact; read in order in docs/verification/continuity-2026-10-20/money/card-missed-six.txt",
+  "hash": "1f746b293b7d",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
   "first": "Pending"
  },
  "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {
@@ -1485,9 +1492,9 @@
  },
  "src/ui/bank/BankCard.tsx#CardPanel": {
   "status": "Rewritten",
-  "hash": "6070e995c1e6",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-money.test.ts 'a statement owed' and 'suspended: what lifts it', tests/language-money.test.ts, tests/hardship-plan-minimum.test.ts; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json and /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/card-owed.json",
+  "hash": "54e092a7e2b4",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#MONTH_NAMES": {

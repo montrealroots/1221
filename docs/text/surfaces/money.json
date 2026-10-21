@@ -477,6 +477,7 @@
    "src/engine/systems/cardlife.ts#registerCardLife <card.close>",
    "src/engine/systems/cardlife.ts#registerCardLife <card.set_statement_day>",
    "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>",
+   "src/engine/systems/cardlife.ts#askRefusal",
    "src/engine/systems/cardlife.ts#registerCardLife <card.set_auto_raise>",
    "src/engine/systems/cardlife.ts#registerCardLife <card.set_over_limit>",
    "src/engine/systems/cardlife.ts#registerCardLife <card.request_hardship>",

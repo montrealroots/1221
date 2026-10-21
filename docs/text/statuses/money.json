@@ -2569,9 +2569,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten And Verified",
-  "hash": "bca25d73fdc4",
-  "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (money area); A Limit Review and Ask For This Limit read RAISE_FROM, held at a moved figure in tests/language-crossarea-raise.test.ts (the cross-area pass, 2026-10-17)"
+  "hash": "a98233d0680a",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts and tests/language-crossarea-raise.test.ts: the guide's card entry says the review and the ask as they now work (brief 20's D2)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
   "status": "Rewritten And Verified",
@@ -3041,6 +3041,12 @@
   "on": "2026-10-17",
   "reason": "'Your New Card Arrives', a calendar label in Title Case: plain"
  },
+ "src/engine/systems/cardlife.ts#askRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "1eff6caeeb3e",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)"
+ },
  "src/engine/systems/cardlife.ts#registerCardLife": {
   "status": "Rewritten And Verified",
   "hash": "12a579df75db",
@@ -3067,9 +3073,9 @@
  },
  "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>": {
   "status": "Rewritten And Verified",
-  "hash": "b8bf2a9e626d",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g12-money.test.ts 'keeps the limit and says the rule for a payment late within the year, a record under 700, nothing in the bank and a card suspended on a plan, and raises it for a payment late more than a year ago' (Limit Increase Declined word for word: … a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.); tests/language-crossarea-raise.test.ts (the figure is RAISE_FROM's, moved to 720 and said so; the cross-area pass, 2026-10-17)"
+  "hash": "f50f6497e063",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)"
  },
  "src/engine/systems/cardlife.ts#registerCardLife <card.set_auto_raise>": {
   "status": "Reviewed And Retained",
@@ -3181,9 +3187,9 @@
  },
  "src/engine/systems/credit.ts#registerCredit": {
   "status": "Rewritten And Verified",
-  "hash": "0358fca8c9e7",
-  "on": "2026-10-18",
-  "evidence": "Editorial review, batch 5: tests/evidence-g13-money.test.ts \"raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; …\" (“The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more and you haven’t paid late in the past year.”); tests/evidence-g28-ui.test.ts \"PLAYER JOURNEY: the same groceries on the card each midnight: …\" (five statements, each with its due date 21 days on), tests/evidence-g34-ui.test.ts, tests/evidence-g11-money.test.ts and tests/evidence2-b04.test.ts (a hardship plan’s payment as the least)"
+  "hash": "1f746b293b7d",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)"
  },
  "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {
   "status": "Reviewed And Retained",
@@ -3781,9 +3787,9 @@
  },
  "src/ui/bank/BankCard.tsx#CardPanel": {
   "status": "Rewritten And Verified",
-  "hash": "c8f296d8719f",
-  "on": "2026-10-17",
-  "evidence": "Its Source line's day as the game writes it (formatDateKey), said once where the source already ends on it: tests/language-data-dates.test.ts 'says the day a product, a card, its cash, its security and its term deposit were read…' (drawn). As the money area verified the rest: tests/language-money.test.ts 'says the card’s rate as set when it opened…' (rate, interest, penalty, fee, statement, minimum and late-fee lines, the tiles' names); tests/hardship-plan-minimum.test.ts (on a plan); tests/evidence-g12-money.test.ts (everyday and second card, closing, over the limit, New Limit, Ask For This Limit); tests/evidence-g13-money.test.ts (a payment's hold, today's record)"
+  "hash": "54e092a7e2b4",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)"
  },
  "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
   "status": "Reviewed And Retained",
