@@ -25,9 +25,9 @@ import { BRIEFS } from '@/engine/content/briefs';
 import { AGENTS, AGENCIES, agencyOf, agentById } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, PROJECTS, RATES } from '@/engine/content/careerwork';
 import {
-  ENGAGEMENTS_KEPT, HEADSHOTS, HISTORY_KEPT, MATERIALS_KEPT, OPPORTUNITIES_KEPT, REEL, RESUME, addCredit, countOf, currentOf,
+  ENGAGEMENTS_KEPT, HEADSHOTS, HISTORY_KEPT, MATERIALS_KEPT, OPPORTUNITIES_KEPT, REEL, RESUME, activeAgreement, addCredit, countOf, currentOf,
   headshotRefusal, keepBounded, materialsCheck, noteEvent, proCreditWords, profileOf, reelSources, releaseScreenCredit, resumeBehind,
-  type AgentRelation, type Engagement, type Opportunity,
+  type Agreement, type AgentRelation, type Engagement, type Opportunity,
 } from '@/engine/systems/pro';
 
 const zone = 'America/New_York';
@@ -390,6 +390,22 @@ describe('the history and the bounds', () => {
     expect(pro.trimmed).toEqual({ opportunities: 10, engagements: 5 });
     expect(pro.materials.map((m) => m.id)).toEqual(['m3', 'm4', 'm5', 'm6', 'm7', 'm8']);
     expect(MATERIALS_KEPT).toBe(6);
+  });
+
+  it('holds an agreement in force from its signing to its end or its term’s last day, and never one offered, declined or let lapse', () => {
+    const sim = student('pro-agreement');
+    const pro = sim.player.pro!;
+    const deal = (id: string, status: Agreement['status'], more: Partial<Agreement> = {}): Agreement => ({ id, agentId: AGENTS[0]!.id, offeredAt: at(2027, 1, 1), standsUntil: at(2027, 1, 15), status, terms: [], ...more });
+    const signed = at(2027, 1, 10);
+    pro.agreements = [deal('offered', 'offered'), deal('declined', 'declined'), deal('lapsed', 'lapsed'), deal('kept', 'accepted', { signedAt: signed, endsAt: at(2028, 1, 10) })];
+    expect(activeAgreement(sim.player, signed - 1)).toBeUndefined();
+    expect(activeAgreement(sim.player, signed)?.id).toBe('kept');
+    expect(activeAgreement(sim.player, at(2028, 1, 9))?.id).toBe('kept');
+    expect(activeAgreement(sim.player, at(2028, 1, 10))).toBeUndefined();
+    // Ended early by agreement: in force for a date inside what it ran, not after.
+    Object.assign(pro.agreements[3]!, { status: 'ended', endedAt: at(2027, 6, 1), endedHow: 'agreement' });
+    expect(activeAgreement(sim.player, at(2027, 5, 31))?.id).toBe('kept');
+    expect(activeAgreement(sim.player, at(2027, 6, 1))).toBeUndefined();
   });
 });
 

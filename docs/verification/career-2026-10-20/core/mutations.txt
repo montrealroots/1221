@@ -29,3 +29,7 @@ M28 the session button not gated | src/ui/workspaces/CareerWorkspace.tsx | tests
 M29 the chapter opens nothing of the portfolio | src/engine/content/tutorial.ts | tests/tutorial.test.ts | KILLED | Tests  3 failed | 14 passed (17)
 M30 the reel entry covers nothing | src/engine/content/guide/career.ts | tests/guide.test.ts | KILLED | Tests  1 failed | 13 passed (14)
 M31 the Career screen not on the rail | src/ui/shell/destinations.ts | tests/evidence2-b10.test.ts | KILLED | Tests  1 failed | 17 passed (18)
+M32 an agreement in force before it was signed | src/engine/systems/pro.ts (activeAgreement, added at the merge) | tests/pro-core.test.ts | KILLED | Tests  1 failed
+M33 an agreement ended by agreement still in force | src/engine/systems/pro.ts | tests/pro-core.test.ts | KILLED | Tests  1 failed
+M34 an agreement in force past its term's last day | src/engine/systems/pro.ts | tests/pro-core.test.ts | KILLED | Tests  1 failed
+M35 in force on the day it ended | src/engine/systems/pro.ts | tests/pro-core.test.ts | KILLED | Tests  1 failed

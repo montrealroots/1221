@@ -390,6 +390,17 @@ export function noteEvent(sim: Simulation, holder: HasHistory, e: { kind: ProEve
 /** How many events of a kind a history has had, kept or trimmed. */
 export const countOf = (holder: HasHistory, kind: ProEventKind): number => holder.counts[kind] ?? 0;
 
+/**
+ * The agreement in force at `at`, if one was: signed by then, and neither ended nor past its term's last day. The one
+ * rule the agent's relationship, the work's submissions and the pay's commission read for "represented on this date"
+ * (from 2026-10-21, written into the core before those three were built apart, so they couldn't each keep their own).
+ * An agreement ended since is still the one in force for a date inside its term, as a payment's commission needs.
+ */
+export function activeAgreement(person: Person, at: Instant): Agreement | undefined {
+  // Only a signed agreement has `signedAt`: one offered, declined or let lapse never does.
+  return person.pro?.agreements.find((a) => a.signedAt !== undefined && a.signedAt <= at && at < Math.min(a.endedAt ?? Infinity, a.endsAt ?? Infinity));
+}
+
 const RESOLVED: readonly OpportunityStatus[] = ['booked', 'passed', 'declined', 'lapsed', 'withdrawn', 'refused'];
 export const resolved = (o: Opportunity): boolean => RESOLVED.includes(o.status);
 export const finished = (e: Engagement): boolean => e.status === 'finished' || e.status === 'canceled';

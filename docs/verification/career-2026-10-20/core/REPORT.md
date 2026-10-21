@@ -159,7 +159,7 @@ It Says opens with Enter; no input without a label.
 
 ## Mutations
 
-`mutations.txt`: 31 run, 31 killed.
+`mutations.txt`: 31 run by the builder, 31 killed; four more on `activeAgreement`, killed.
 
 ## Checks Run (On The Builder's Clone, HEAD `8285ce79`)
 
@@ -189,7 +189,9 @@ It Says opens with Enter; no input without a label.
 - **Equity is joined at the degree but not paid for.** The $600 down is in `UNIONS`; nothing charges it yet.
 - **Every life now begins a record,** not only School lives.
 - **Helpers:** call `keepBounded(pro)` after settling an opportunity or finishing an engagement, and `addCredit` /
-  `releaseScreenCredit` from the work system.
+  `releaseScreenCredit` from the work system. `activeAgreement(person, at)` is the one rule for "represented on this
+  date": added by the coordinator after the merge, before the agent, the work and the pay were built apart, with a test
+  and four mutations (M32 to M35, killed).
 
 ## Shared Files Touched
 
