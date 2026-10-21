@@ -2,7 +2,7 @@
 
 The owner's "Professional Career Foundation And The First Individual Agent"
 (`../briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept verbatim): the step
-from drama student to professional actor, with one real agent in depth and one complete playable career loop. Brief 18
+from drama student to professional actor, with one agent in depth and one complete playable career loop. Brief 18
 stays paused but for the items this needed (D1 to D9).
 
 ## Where It Started
@@ -26,13 +26,17 @@ Each part in its own clone and branch, merged with its report:
 | The clock (D1 to D5, brief 18's S1 to S5) | each stop's own choices; Tomorrow Morning the next seven; Sleep from the hour and the next commitment; the dialogs holding the clock; On The Way foreseeing | `time/REPORT.md` |
 | The core | the professional record, the agent's data, the work's data, the portfolio (headshots, résumé, reel) with provenance | `core/REPORT.md` |
 | The showcase (W1, W2, A5) | the Actor Showcase as DRAM 793b's own, at each year's dates; no early degree, as the Bulletin says | `showcase/REPORT.md` |
-| The agent (G1 to G8, W3, A2) | the relationship with Jordan Parente's office, his interest factor by factor, the agreement and its end, the School's follow-up | `agent/REPORT.md` |
+| The agent (G1 to G8, W3, A2) | the relationship with the agent's office (Jordan Parente's as it was built, Thomas Ashgrove's from `59da1351`), his interest factor by factor, the agreement and its end, the School's follow-up | `agent/REPORT.md` |
 | The pay (D7, D8) | payments promised then paid once, commission only when owed, wages with their withholding, permission to work and OPT, the unions, the Work tab | `pay/REPORT.md` |
 | The work loop (J1 to J5, A3, A4, D9) | from a posting to a credit, the agent's submissions, the unsigned path, work while enrolled, a leaver's routes | `work/REPORT.md` |
 
-The agent is a real person, Jordan Parente of Stewart Talent's New York legit department, depicted only from what's
-published and marked fictional wherever he speaks ("Fictional: his words and decisions here are invented."). Every
-project, company and casting office is invented. Nothing contacts anyone outside the game.
+The agent was a real person until the owner's word on 2026-10-21, "Let's go ahead and swap in a fictional agent.": Jordan
+Parente of Stewart Talent's New York legit department, depicted only from what was published and marked fictional
+wherever he spoke ("Fictional: his words and decisions here are invented."). From `59da1351` he's Thomas Ashgrove of
+Halberd Talent, invented as every project, company and casting office is, neither name found as a real New York agent or
+agency when checked. Where he first appears, one notice says so; the line after each of his words went with the real
+name. His office keeps the real department's published way in (no submissions it hasn't asked for; the School's
+follow-up or a referral), said as the game's own rule. Nothing contacts anyone outside the game.
 
 ## How It Was Verified
 
@@ -107,7 +111,8 @@ and in each report.
 ## What's Left, And Whose It Is
 
 - **V17's person's look** at desktop and mobile: the owner's. `PLAYTEST.md` is the route.
-- **The real agent:** written permission, or a fictional agent in his place (one data entry): the owner's.
+- **The real agent:** the owner chose a fictional agent in his place on 2026-10-21 (`59da1351`); until then this was
+  theirs to decide.
 - **The card limits** compounding with no ceiling: banking's, in paused brief 18.
 - **Brief 18** stays paused, its nine areas not begun; brief 19 did its D1 to D9.
 - **Nothing is merged or deployed.** Merging to `main` and any Base44 deployment wait on the owner, after the gate.

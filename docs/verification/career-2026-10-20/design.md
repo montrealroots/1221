@@ -15,6 +15,14 @@ Every rule in the code carries one of three marks in its comment, and the player
 
 ## The Agent: One Real Person, Depicted With Care
 
+**From 2026-10-21 he's fictional, at the owner's word** ("Let's go ahead and swap in a fictional agent."): Thomas
+Ashgrove of Halberd Talent's New York legit department, both names invented, in Jordan Parente's place as one entry in
+`content/agents.ts` (`59da1351`). What follows was the design for the real agent, and holds where it still can: the
+department's published way in is kept (no submissions it hasn't asked for; the School's follow-up or a referral), said as
+the game's own rule; he never seeks the player out; his voice. What went with the real name: the sources, the line
+marking each of his words fictional, and the notice's warning not to contact the agency. The notice where he first
+appears says he and his agency are invented, as every project and casting office is.
+
 - **Jordan Parente, agent in the Legit (Theatrical) Department of Stewart Talent's New York office** (`../../research/career-2026-10-20/agent.md`:
   the agency's own New York staff page, read 2026-10-20; Deadline, 2025-09-18; the Actors Connection listing, 2025-06-02).
   His published scope: television, film, Broadway, Off-Broadway, national tours and regional theatre.
