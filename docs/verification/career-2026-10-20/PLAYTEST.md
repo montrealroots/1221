@@ -9,17 +9,22 @@ Each step says what to press, what you should read, and what to report.
 - **The lives:** `playthroughs/` played two lives through the whole step into the career, and an older graduate's save
   and a mid-term save on into it, with every notice, stop and button press written down (`playthroughs/transcripts/`).
 - **The built app:** `app/` walked 52 of the career's surfaces at 1440 and 390 from the keyboard, read each, and held
-  each to no errors, no sideways scroll and every control named and reached (`app/walk/`).
+  each to no errors, no sideways scroll and every control named and reached (`app/walk/` with the real agent; walked
+  again on the final build with the fictional one, the parts and the clash fixes, in `app/walk-fictional/`, nothing
+  found on any surface).
 - **This route's setup:** `playtest-check.mjs` takes the console snippet below from this file and runs it on a build
   with the saves in place: each save opens, Continue goes into it, and the Career screen opens, with no page errors
-  (`playtest-check.txt`, on `a483247d`).
+  (`playtest-check.txt`, its first line naming the build it ran on).
 - **What none of that is:** a person's look. Whether the agent reads as a person's office and not a calculation,
   whether the money is clear, whether a step is where you'd look for it, is what this route is for, and only you can say
   it. Criterion V17 stays open on it.
 
-**The agent.** Jordan Parente and Stewart Talent are a real agent and agency's names, used under your open decision
-(written permission, or a fictional name in their place). Every one of his screens and notices says his words and
-decisions are invented. Nothing here sends anything to anyone outside the game.
+**The agent.** Thomas Ashgrove and Halberd Talent are invented, at your word of 2026-10-21; until then the agent was a
+real one's name, Jordan Parente of Stewart Talent. Where he first appears, a notice says "Thomas Ashgrove and Halberd
+Talent are invented for the game, as every agency, project and casting office in it is.", and it stays one press away
+on his panel; the line that ended each of his notices ("Fictional: …") went with the real name. **The parts** are
+written for an actor, an actress or either, at your word the same day, and Ada is posted only hers and either's.
+Nothing here sends anything to anyone outside the game.
 
 ## Setting Up
 
@@ -51,7 +56,7 @@ to move on from it, as a player would.
 - sounds like a form, or like the game explaining its own workings;
 - says the same thing twice in one place;
 - calls something by a name the screen doesn't use;
-- claims something of the real agent or agency beyond the game's data;
+- reads as though the agent, the agency or a production were real;
 - tells you to do something the screen doesn't let you do.
 
 The page and the sentence are enough.
@@ -79,8 +84,8 @@ January 8, 2029, the last term's first day.
 3. Read Your Materials For Him. Press Check Your Materials, then Send Your Materials. If the check finds something
    missing, fix it from the Portfolio tab, as it says, and send again.
 
-**Report:** whether his office reads as a busy office answering an actor, or as a score; whether "Fictional: his words
-and decisions here are invented." is clear without being in the way.
+**Report:** whether his office reads as a busy office answering an actor, or as a score; whether the notice that he and
+his agency are invented is clear without being in the way.
 
 ## 3. The Meeting And The Agreement (8 Minutes), on `meeting.json`, then `offered.json`
 
@@ -97,22 +102,26 @@ offered and what would have changed it.
 ## 4. An Audition And An Offer (8 Minutes), on `audition.json`, then `offer.json`
 
 1. `audition.json`: Career, **Opportunities**. Read In Progress: each audition says where, when, and how prepared you
-   are. The preparation buttons (Break It Down, Learn The Lines, Rehearse It On Your Feet) say their time.
-2. Go to an audition when the clock stops at it.
+   are. The preparation buttons (Break It Down, Learn The Lines, Rehearse It On Your Feet) say their time. Two are set
+   for 11 AM that day, Hester Vane in Hudson and Ivy in Brooklyn, and their notices said they clash.
+2. Press Advance or Go. On The Way and the stop should say you can be at only one: the clock stops at Hester Vane's, and
+   Ivy's is missed. Go to it, then read Settled: Ivy's says where you were.
 3. `offer.json`: the offer's card under Offers. Read The Project, The Part, What It Asks, When And Where, and Pay against
    the minimum it names. Accept The Offer.
 
-**Report:** whether you could tell what the part asks of you, and whether the pay line says enough to decide on.
+**Report:** whether you could tell what the part asks of you, who it's written for, and whether the pay line says
+enough to decide on; and whether you saw the clash coming in time to Ask For Another Time.
 
 ## 5. The Work And The Pay (8 Minutes), on `work-day.json`, then `paid.json`
 
-1. `work-day.json`: 5 AM on the first shoot day. Press Go; the clock stops at the call. Go to it. Read the **Work** tab:
-   promised pay and the commission expected.
+1. `work-day.json`: 5 AM on the first shoot day, Desk Clerk in The Calloway Files. Press Go; the clock stops at the
+   call. Go to it. Read the **Work** tab: promised pay and the commission expected, on what's paid over scale.
 2. `paid.json`: Career, Work, Finished Engagements. The pay should show gross, tax withheld, what reached you, and the
-   commission on its own line, taken only on what's over scale.
+   commission on its own line ($280.40 of $3,084.40: what's paid over scale, so you keep scale).
 3. Open **Money**, Statements: the pay passed on from the agency's client trust account.
 4. Open **Papers**, Permission To Work: what the game read when you accepted the work.
-5. Back on Career, Work, Your Unions: Equity's payments and when the next is due; whether you can join SAG-AFTRA yet.
+5. Back on Career, Work, Your Unions: Equity's payments and when the next is due. The Desk Clerk days made you
+   SAG-AFTRA-eligible from October 1, 2029, so Join SAG-AFTRA should be open, with its cost.
 
 **Report:** whether the money adds up as you read it, and whether you'd know from these screens what you owe the unions
 and when.
