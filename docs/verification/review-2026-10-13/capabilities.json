@@ -3990,7 +3990,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "c01e06f4",
+  "against": "9c3e6fa5",
   "by": "a reader who wrote none of it",
   "id": "career-portfolio",
   "claim": "Brief 19’s portfolio: pro.set_name sets the professional name the profile shows and a résumé is made under; pro.headshots, pro.update_resume and pro.cut_reel each take their time and, for headshots and a reel, their money through spend (estimates said), and add a material with where it came from, when and what’s in it. Read by materialsCheck (the Career screen’s What’s Missing, the agent’s check, a submission and the agent’s breakdowns), resumeBehind, reelSources and profileOf.",
@@ -4001,6 +4001,15 @@
    "have": "tests/pro-screen.test.ts renders Overview and Portfolio over saves the commands made: each control grayed with its refusal, each material’s provenance, the résumé line by line, a migrated graduate’s credit and Equity, and the screen Locked until its chapter. No Portfolio button is pressed on the rendered screen, and no test renders a reel cut."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepared tape lets the next approach through’",
+    "asserts": "A reel cut a band higher through the commands is the only thing new a year after a pass, and the send is no longer refused.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "On an introduction written by hand."
+   },
    {
     "kind": "command",
     "where": "tests/journey-career.test.ts ‘A1, the School’s side played: the faculty’s two scenes chosen on the first morning...’",
@@ -4065,12 +4074,11 @@
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
-   "pro.cut_reel: a better reel counted as something new after a decision is read by no test (mutation R8 survived).",
    "A released credit’s footage is a reel source only by calling reelSources on state set by hand; no test cuts a reel from it.",
    "No played life is asked for new headshots: the request is reached on headshots dated back by hand.",
    "No Portfolio button is pressed on the rendered screen."
   ],
-  "todo": "A test that reads a better reel as something new after a pass; a journey that cuts a reel from a released credit’s footage.",
+  "todo": "A journey that cuts a reel from a released credit’s footage.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
@@ -4256,7 +4264,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "c01e06f4",
+  "against": "9c3e6fa5",
   "by": "a reader who wrote none of it",
   "id": "career-representation",
   "claim": "Brief 19’s agent: pro.agent_notice before anything else; pro.agent_check refusing an incomplete approach in materialsCheck’s words; pro.ask_referral from a finished job judged Strong or better; pro.send_materials refused unsolicited in the agency’s published words, too soon or with nothing new, else his office’s answer on the clock; pro.supply_material; pro.ask_to_move, once, also at the meeting’s stop; pro.accept_agreement, pro.decline_agreement, and pro.end_agreement by agreement, Equity’s 90 days or SAG-AFTRA’s 151 and 91. Read by interestOf’s seven factors and the pro.agent and pro.roster draws, by activeAgreement for the work and the pay, and by the Representation tab.",
@@ -4267,6 +4275,15 @@
    "have": "tests/pro-representation-screen.test.ts renders the tab at each stage over saves the commands made: the notice, each control grayed with its refusal, Why It Went This Way, every term with its basis, the meeting and Ask To Move, the endings with their dates, and the controls Locked until the chapter; no button is pressed on the rendered screen, and every stage past the check rests on a finished job written by hand."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished’",
+    "asserts": "Refused through the command between the two shoot days, the agreement still in force; the 90 days’ words once the job is finished.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "A twin of the played life from its save between her shoot days."
+   },
    {
     "kind": "command",
     "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through’",
@@ -4379,7 +4396,7 @@
   "verdict": "verified",
   "partialClass": "none",
   "gaps": [
-   "Two refusals are read by no test: a referral while an approach is under way or held (R10), and Equity’s ending while covered work is going on (R9).",
+   "S29’s extension of the 90 days while the actor is employed isn’t counted: they run from the last offer whatever employment followed.",
    "A pass, no answer, a meeting missed, an offer let lapse and the term’s end are played only after an introduction written by hand.",
    "No button is pressed on the rendered screen.",
    "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."

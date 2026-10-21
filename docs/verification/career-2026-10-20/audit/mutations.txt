@@ -293,3 +293,30 @@ R10  pro.ask_referral  SURVIVED  (Tests  36 passed (36), 124 s)
     ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts
 
 Totals: 7 of 10 killed; R8, R9, R10 survived.
+
+Round Four, 2026-10-21, against 9c3e6fa5, once tests had been written for what the third reading found unread, and
+Equity’s employment check changed to hold from a job’s first work day until it’s finished. The third round’s survivors
+run again on those tests (S1 to S3 name the one they repeat), and the check put back as it was (S4). Each in a copy of
+the tree, with one worker, by the same runner (mutate.cjs, mutations4-list.json, mutations4.json).
+
+S1   pro.cut_reel  KILLED  (Tests  1 failed | 14 skipped (15), 17 s)
+    src/engine/systems/proagent.ts: "if (reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);" -> "if (false && reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);" (R8 again)
+    ran: tests/journey-agent.test.ts -t "a better reel alone"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepared tape lets the next approach through
+
+S2   pro.end_agreement  KILLED  (Tests  1 failed | 12 skipped (13), 148 s)
+    src/engine/systems/proagent.ts: "if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';" -> "if (false && workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';" (R9 again)
+    ran: tests/journey-career.test.ts -t "Equity’s ending with no offer is refused"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished
+
+S3   pro.ask_referral  KILLED  (Tests  1 failed | 14 skipped (15), 15 s)
+    src/engine/systems/proagent.ts: "if (busy) return busy; const soon = tooSoon(sim, rel); if (soon) return soon; const job = referrersOf(" -> "const job = referrersOf(" (R10 again)
+    ran: tests/journey-agent.test.ts -t "a referral alone is something new"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through
+
+S4   pro.end_agreement  KILLED  (Tests  1 failed | 12 skipped (13), 147 s)
+    src/engine/systems/proagent.ts: "(person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && (e.days[0]?.from ?? Infinity) <= at);" -> "(person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && e.days.some((d) => d.from <= at && at <= d.to));"
+    ran: tests/journey-career.test.ts -t "Equity’s ending with no offer is refused"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished
+
+Totals: 4 of 4 killed.

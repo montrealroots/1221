@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 548 of 658 rows in scope Implemented And Verified (83.2%); 106 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 658 rows in scope Implemented And Verified (83.4%); 105 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -27,7 +27,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Life, Health And Time | 70 | 69 |  |  |  |  |  | 1 |
 | Money | 68 | 60 | 8 |  |  |  |  |  |
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
-| School | 101 | 100 | 1 |  |  |  |  |  |
+| School | 101 | 101 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
@@ -55,7 +55,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 |  | 4 |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 1 | 32 |  |  |  |  |  |
-| **All** | **698** | **548** | **106** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **698** | **549** | **105** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -348,7 +348,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `pro.set_name` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/pro-core.test.ts ‘sets the professional name, refuses one that isn’t a name, and goes back to the display name’ (each refusal in its words, the name trim… |
 | `pro.headshots` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/pro-core.test.ts ‘PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance’ (the… |
 | `pro.update_resume` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/pro-core.test.ts ‘PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused wh… |
-| `pro.cut_reel` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | partial | tests/pro-core.test.ts ‘PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it’ (taped thr… |
+| `pro.cut_reel` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepa… |
 | `pro.agent_notice` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/pro-agent.test.ts ‘PLAYER JOURNEY: his panel holds the notice until it’s read, notes it once, and keeps it to read again’ (the check and the send refused… |
 | `pro.agent_check` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (refused with no headshots … |
 | `pro.ask_referral` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it th… |
@@ -357,7 +357,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `pro.ask_to_move` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: the meet… |
 | `pro.accept_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: the agre… |
 | `pro.decline_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’ (life … |
-| `pro.end_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it… |
+| `pro.end_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented And Verified | verified | tests/journey-career.test.ts ‘Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and … |
 | `pro.submit` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once th… |
 | `pro.prepare` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/journey-career.test.ts ‘the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, again… |
 | `pro.tape_audition` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented And Verified | verified | tests/pro-work.test.ts ‘PLAYER JOURNEY (V2): a permitted request, approved by the dean and worked, its class days excused and the standing kept’ (a non-union s… |
@@ -914,7 +914,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (106)
+### Implemented, Verification Incomplete (105)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -928,7 +928,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`tax.catch_up_state_plan`** (Papers): Unreachable: Connecticut, the only state a life files in, ends its plan at the first payment missed (its cure “none”, SLATE’s reading), so Catch Up is never drawn and the command says the plan isn’t behind (tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: its payment missed, Catch Up drawn on Papers and pressed…’ (a New York plan kept past the day it would have ended, …
 - **`tax.lien_dispute`** (Papers): Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Read again on 2026-10-16 (brief 09): unchanged. An Inherited family’s student who files nothing …
 - **`tax.request_waiver`** (Papers): Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…
-- **`pro.cut_reel`** (School): Added on 2026-10-21 (brief 19’s audit, docs/verification/career-2026-10-20/audit/REPORT.md), traced until then in docs/verification/connected-journey/TRACE.md alone, and read that day against 7bbab80f by a reader who wrote neither the code nor its tests, its words corrected against a483247d, and read again against c01e06f4 through its Downstream, reader by reader; its mutations are in docs/verification/career-2026-10-20/audit/mutations.txt. Mutation M4 (no reel ever read as tapes only) failed the reel’s journey. Checked less: a released credit’s footage is a reel source only by calling reelSo…
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision
 - **`banking.2.cancel_new`** (Brief 09 Area: banking): owner decision (its last unfinished item implemented: banking.1.pro-rata)
 - **`banking.2.switch`** (Brief 09 Area: banking): owner decision

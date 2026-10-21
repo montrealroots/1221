@@ -12,8 +12,66 @@ Read again the same day against `a483247d`, once V1's journeys had landed (The S
 rows the first reading left partial were verified on the played journeys, and four stayed partial, two for the gaps their
 first reviews named, only partly closed, and two for readers that reading found no test reading. Read a third time
 against `c01e06f4`, once tests had been written for those four (The Third Reading, below): the four are verified, and
-`pro.cut_reel`, verified by the first reading, is partial for a reader no test reads. The sections after the third are
-the earlier readings', kept as they were but for the words a later one falsified.
+`pro.cut_reel`, verified by the first reading, was partial for a reader no test read. Read a fourth time against
+`9c3e6fa5` (The Fourth Reading, below): `pro.cut_reel` is verified, so all 22 are. The sections after the fourth are the
+earlier readings', kept as they were but for the words a later one falsified.
+
+## The Fourth Reading, Against `9c3e6fa5`
+
+The coordinator merged the third reading (`ded6f820`), and `9c3e6fa5` answered what it found unread. It changed one
+thing under `src/`, Equity's employment check (`workingNow`, `proagent.ts:689`), and added tests. The clone was brought
+to `9c3e6fa5` by a merge (it fast-forwarded). The third round's survivors were run again on the new tests, and the check
+was put back as it was (`mutations.txt`, Round Four; `mutations4-list.json`, `mutations4.json`). All four were killed.
+
+- **`pro.cut_reel`: verified.** A year after a pass, the same reel is refused as nothing new. A reel cut through the
+  command from the same brief, prepared and taped again through its commands, comes out a band higher and is the only
+  thing new, and the send is no longer refused (`journey-agent`). The test starts from that file's introduction written
+  by hand, which only sets the reader up, as for the other rows. R8 run again (S1) was killed.
+- **`pro.ask_referral`: verified, its recorded refusals now read.** It's refused during the pass's year and again while
+  the next approach is under way, each in its words. R10 run again (S3) was killed.
+- **`pro.end_agreement`: verified, its recorded refusal now read.** A twin of life A, from its played save between her two
+  shoot days, is refused Equity's ending in its words through the command, and the agreement stays in force; once the
+  job is finished, the 90 days' words come instead. R9 run again (S2) and the check as it was (S4) were each killed.
+
+**The employment check, against S27.** It's right. S27 says "You may not terminate if you are currently employed", and
+an actor is employed under the contract between a job's work days as on them. The check had read only a work day's own
+hours. The clock passes a work day whole once the player goes at its stop, and doesn't stop inside one, so no command was
+ever sent inside those hours and no player could meet the refusal. It holds now from the first work day until the
+engagement is finished or canceled (`finished`). That's an assumption, said at the check: the employment begins on the
+first work day, not at the booking, which for a stage run is its first rehearsal. One thing near it isn't modelled. S29
+also extends the 90 days while the actor is employed, and the count doesn't: it runs from the last offer whatever
+employment followed (`endRefusal`). So once a long run ends, an actor may end the agreement sooner than S29 allows. That
+is recorded in the row and not fixed.
+
+**Anything else that reads a work day's own hours.** Nothing a player can't reach. Every other reader of a work day's
+span is read by the clock at an item's own time, which the clock does run inside the span:
+- the School's `present()` through `awayAt`, at a class or a call;
+- an audition missed for a shoot day (`workDayAt`, at the audition);
+- the School's excused days (`school.ts`, at the item).
+
+The rest read the days ahead (`bookedClash`, `availabilityOf`, `sagWorkRefusal`) or count them (`coveredDays`,
+`engagementDaysIn`). No command's refusal reads `present()`, `awayAt` or `workDayAt` at its own moment.
+
+**Corrected besides.** The rows' citations of `proagent.ts` were carried to `9c3e6fa5` (26 of 170 cited lines had moved
+six, below the check's longer comment), and `pro.end_agreement`'s Reads says the check as it now stands. The capabilities'
+limits and this reader's readings say the refusals are read and `pro.cut_reel` is verified.
+
+**Tallies.**
+
+- Coverage: 321 verified and 1 partial before; 322 verified and 0 partial after. Unresolved 12, deferred 16, legacy 3
+  and informational 8, unchanged.
+- The completion matrix: 548 of 658 (83.2%), 106 Implemented, Verification Incomplete before; 549 of 658 (83.4%), 105
+  after.
+- The registry: 69 capabilities, Partial 11, Implemented 36, Verified 3, unchanged.
+
+**Defects:** none open in the game's code. The employment check was the third reading's finding, fixed in `9c3e6fa5` by
+the coordinator.
+
+**Checks run for it** (each exit read from a file):
+
+- The twelve test files the rows cite, at `9c3e6fa5` with one worker: 157 of 157 passed in 346 seconds, exit 0.
+- `tests/audit-pipeline.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b13.test.ts`: 26 of 26, exit 0.
+- The gate's chain without the suite (21 checks), on the tree as committed: exit 0. No TypeScript changed here.
 
 ## The Third Reading, Against `c01e06f4`
 
