@@ -389,6 +389,12 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {
+  "status": "Rewritten And Verified",
+  "hash": "83f0b38f5a44",
+  "on": "2026-10-21",
+  "evidence": "Read again on 2026-10-21: \"as you would a practice brief\" became \"the way you prepare a practice brief\", the uncontracted form voice-check counts gone; read in tests/guide.test.ts and tests/tutorial.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
   "status": "Rewritten And Verified",
   "hash": "636bfa774038",
@@ -400,6 +406,24 @@
   "hash": "461c859c90b3",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
+  "status": "Rewritten And Verified",
+  "hash": "ccc4eee701b8",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
+  "status": "Rewritten And Verified",
+  "hash": "c51b1ac6bc5b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]": {
+  "status": "Rewritten And Verified",
+  "hash": "ffad91336a29",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.overview]": {
   "status": "Rewritten And Verified",
@@ -445,21 +469,21 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
   "status": "Rewritten And Verified",
-  "hash": "9c3645a5649e",
+  "hash": "1cb2b1f9f7d1",
   "on": "2026-10-21",
-  "evidence": "Read at the pay's merge, 2026-10-21: the agent's and the pay's lines, each read by its builder, joined with no word changed; read together against docs/STYLE.md, each line one fact from the record"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
   "status": "Rewritten And Verified",
-  "hash": "2febc4bad986",
+  "hash": "23a27c6d4c27",
   "on": "2026-10-21",
-  "evidence": "Read at the pay's merge, 2026-10-21: the agent's and the pay's lines, each read by its builder, joined with no word changed; read together against docs/STYLE.md, each line one fact from the record"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
   "status": "Rewritten And Verified",
-  "hash": "8abf0983f29d",
+  "hash": "78328b01ef5f",
   "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten And Verified",
@@ -469,15 +493,15 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Rewritten And Verified",
-  "hash": "d2ce0eb68f2b",
+  "hash": "b5621a820a2a",
   "on": "2026-10-21",
-  "evidence": "Read at the pay's merge, 2026-10-21: the agent's and the pay's lines, each read by its builder, joined with no word changed; read together against docs/STYLE.md, each line one fact from the record"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
   "status": "Rewritten And Verified",
-  "hash": "49a5c4ae6c71",
+  "hash": "37799d8e75ad",
   "on": "2026-10-21",
-  "evidence": "Read at the pay's merge, 2026-10-21: the agent's and the pay's lines, each read by its builder, joined with no word changed; read together against docs/STYLE.md, each line one fact from the record"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/guide/career.ts#hours": {
   "status": "Rewritten And Verified",

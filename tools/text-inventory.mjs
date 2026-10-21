@@ -101,6 +101,9 @@ const AREAS2 = [
   // From 2026-10-21 (brief 19's pay): its files, the pay system and the Career screen's Work tab, are its own builder's to
   // mark, apart from the core's career files, so the wave's builders working apart write their own second-pass files.
   ['career-pay', [/^src\/engine\/systems\/propay\.ts$/, /^src\/ui\/career\/WorkPane\.tsx$/]],
+  // From 2026-10-21 (brief 19's work loop): the work loop's own sources, read by the area that built them, apart from the
+  // career core's, so the builders working at once each keep their own status files.
+  ['career-work', [/^src\/engine\/systems\/projobs\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
 ];
 const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', career: 'career', health: 'health', world: 'health', material: 'material-a' };
 const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';

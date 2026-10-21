@@ -98,6 +98,7 @@ import { beginPro, buildOnOpening, registerPro } from './systems/pro';
 import { beginOnOpening, registerShowcase } from './systems/proshowcase';
 import { registerProAgent } from './systems/proagent';
 import { equityOnOpening, registerProPay } from './systems/propay';
+import { registerProJobs } from './systems/projobs';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -170,6 +171,7 @@ export function registerAllSystems(sim: Simulation): void {
   // The agent's relationship, interest and agreement, on the professional record (brief 19, from 2026-10-21).
   registerProAgent(sim);
   registerProPay(sim);
+  registerProJobs(sim);
 }
 
 /** Recurring world processes every save needs running. */

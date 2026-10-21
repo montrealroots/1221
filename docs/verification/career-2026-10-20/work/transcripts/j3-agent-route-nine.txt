@@ -1,0 +1,38 @@
+J3 (seed work-agent-1): represented (TEST SETUP agreement), his breakdown, his hold, his submission, the offer he passes on
+
+DECISION  An Offer For Jess
+    Jordan Parente passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $257.00 a day for four days, the SAG-AFTRA Ultra Low Budget Day Performer minimum. The work is from October 12, 2026 to October 15, 2026, in New York. The offer stands until September 23, 2026 at 5:00 PM. Fictional: his words and decisions here are invented.
+
+THE RELATIONSHIP’S HISTORY
+    [opportunity] opp:pro_000006:posted: Pennick Casting’s breakdown for Nell in A House On Calder Street came to Jordan Parente.
+    [opportunity] opp:pro_000009:posted: Brisbane Hall Casting’s breakdown for Jess in Static On Route 9 came to Jordan Parente.
+    [problem] opp:pro_000006:held:0: Jordan Parente didn’t submit you for Nell in A House On Calder Street. You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab. You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record.
+    [problem] opp:pro_000009:held:0: Jordan Parente didn’t submit you for Jess in Static On Route 9. You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab. You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record.
+    [submitted] opp:pro_000006:submitted: Jordan Parente submitted you for Nell in A House On Calder Street, sending your headshots from September 11, 2026 and your résumé from September 11, 2026.
+    [submitted] opp:pro_000009:submitted: Jordan Parente submitted you for Jess in Static On Route 9, sending your headshots from September 11, 2026 and your résumé from September 11, 2026.
+    [audition] opp:pro_000006:audition:set: Pennick Casting wants to see you for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Thursday, September 17, 2026 at 11:00 AM. Getting there takes about two hours each way.
+    [audition] opp:pro_000009:audition:set: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Thursday, September 17, 2026 at 6:00 PM.
+    [opportunity] opp:pro_00000s:posted: Quillon Casting’s breakdown for Wren in Gull Season came to Jordan Parente.
+    [problem] opp:pro_00000s:held:0: Jordan Parente didn’t submit you for Wren in Gull Season. Quillon Casting asks for a reel with every submission, and you have none. You have nothing recorded to cut one from yet: tape a practice brief on the Player Profile first.
+    [audition] opp:pro_000009:audition:done: Your self-tape for Jess was Exceptional.
+    [audition] opp:pro_000006:audition:done: Your audition for Nell was Unready.
+    [callback] opp:pro_000006:callback:set: Pennick Casting wants to see you again for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Tuesday, September 22, 2026 at 2:00 PM. Getting there takes about two hours each way.
+    [offer] opp:pro_000009:offer: Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $257.00 a day for four days, the SAG-AFTRA Ultra Low Budget Day Performer minimum. The work is from October 12, 2026 to October 15, 2026, in New York. The offer stands until September 23, 2026 at 5:00 PM.
+
+NOTICES, IN THE ORDER THE PLAYER READ THEM
+September 7, 2026 at 9:00 AM  Not Submitted For Nell
+    Jordan Parente didn’t submit you for Nell in A House On Calder Street. You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab. You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record. Jordan Parente can still submit you until September 14, 2026, once that’s put right. Fictional: his words and decisions here are invented.
+September 7, 2026 at 9:00 AM  Not Submitted For Jess
+    Jordan Parente didn’t submit you for Jess in Static On Route 9. You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab. You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record. Jordan Parente can still submit you until September 14, 2026, once that’s put right. Fictional: his words and decisions here are invented.
+September 11, 2026 at 3:16 PM  Submitted For Nell
+    Jordan Parente submitted you for Nell in A House On Calder Street, sending your headshots from September 11, 2026 and your résumé from September 11, 2026. Pennick Casting answers on Sunday, September 13, 2026. Fictional: his words and decisions here are invented.
+September 11, 2026 at 3:16 PM  Submitted For Jess
+    Jordan Parente submitted you for Jess in Static On Route 9, sending your headshots from September 11, 2026 and your résumé from September 11, 2026. Brisbane Hall Casting answers on Sunday, September 13, 2026. Fictional: his words and decisions here are invented.
+September 13, 2026 at 10:00 AM  An Audition For Nell
+    Jordan Parente passed this on: Pennick Casting wants to see you for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Thursday, September 17, 2026 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go. Fictional: his words and decisions here are invented.
+September 13, 2026 at 10:00 AM  A Self-Tape For Jess
+    Jordan Parente passed this on: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Thursday, September 17, 2026 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab. Fictional: his words and decisions here are invented.
+September 14, 2026 at 9:00 AM  Not Submitted For Wren
+    Jordan Parente didn’t submit you for Wren in Gull Season. Quillon Casting asks for a reel with every submission, and you have none. You have nothing recorded to cut one from yet: tape a practice brief on the Player Profile first. Jordan Parente can still submit you until September 21, 2026, once that’s put right. Fictional: his words and decisions here are invented.
+September 18, 2026 at 5:00 PM  A Callback For Nell
+    Jordan Parente passed this on: Pennick Casting wants to see you again for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Tuesday, September 22, 2026 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go. Fictional: his words and decisions here are invented.

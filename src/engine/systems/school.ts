@@ -121,6 +121,7 @@ import { withRepeat, considerWelfare, facultyReview, followFormerClasses, FORMER
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, directorVoiceFor, nightFactor, prepOf, processOf, reflect, stagesOf, type DirectorVoice, type Stage } from './production';
 import { voiceOf, type Voice } from './feedback';
 import { SHOWCASE_COURSE, beginShowcase, settleHeldShowcase, showcaseHolds } from './proshowcase';
+import { awayAt } from './projobs';
 
 export type Craft = Record<Skill, number>;
 /**
@@ -1570,8 +1571,10 @@ export function offSick(person: Person, when: Instant): boolean {
 
 export function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
-  // In hospital, they're in no class (`systems/health.ts`).
-  return !asleep && !inHospital(person, when) && !laidUp(person, when) && person.currentLocationId === YALE_DRAMA.cityId;
+  // In hospital, they're in no class (`systems/health.ts`). Away at professional work or an audition in person, its
+  // hours and the trip each way, they're in none either (`awayAt`, from 2026-10-21, brief 19's A3): until then a
+  // student could shoot a day in New York and be counted at every class in New Haven the same day.
+  return !asleep && !inHospital(person, when) && !laidUp(person, when) && person.currentLocationId === YALE_DRAMA.cityId && !awayAt(person, when);
 }
 
 function tire(person: Person, energy: number): void {
@@ -3523,8 +3526,12 @@ export function registerSchool(sim: Simulation): void {
       return;
     }
     item.status = 'missed';
+    // Away at outside work the dean approved (from 2026-10-21, brief 19's A3): excused, as the approval arranged it; at
+    // most two class days, the approval's own limit (`OUTSIDE_WORK`, `systems/projobs.ts`).
+    const approved = awayAt(person, item.at)?.approved === true;
     // A day in hospital is excused, as a sick day called in is.
-    meet(false, offSick(person, item.at));
+    meet(false, offSick(person, item.at) || approved);
+    if (approved) { school.tally.excused += 1; return; }
     if (offSick(person, item.at)) { school.tally.excused += 1; considerWelfare(s, person); return; }
     // The control named as the Classes tab names it, and the hour it has to be pressed by (from 2026-10-20, brief 17): the
     // day is counted at nine, when this runs, and until then the notice said only “call in sick before classes start”.

@@ -3512,5 +3512,26 @@
   "on": "2026-10-19",
   "reason": "Says the address isn’t a screen in this game and offers Go Home, the one way back, in two lines.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
  }
 }

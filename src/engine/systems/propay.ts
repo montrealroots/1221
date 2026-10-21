@@ -311,7 +311,7 @@ function scaleOf(sim: Simulation, person: Person, e: Engagement, project: Projec
   if (minimum.amount === undefined) return gross;
   if (offer?.amount) return Math.round(gross * Math.min(1, minimum.amount / offer.amount));
   const zone = zoneOfCity(project.place.cityId);
-  const week = weekPaidOn(p.due, zone);
+  const week = weekOf(p, zone);
   const units = minimum.per === 'week' ? 1 : Math.max(1, engagementDaysIn(e, week.from, week.to, zone));
   return Math.min(gross, inSaveMoney(sim, minimum.amount * units, 'USD'));
 }
@@ -428,9 +428,18 @@ export function trustAccount(sim: Simulation, person: Person, agency: string): A
   return found ?? sim.openAccount({ id: sim.nextId('account'), kind: 'escrow', category: 'trust', name: `Held For You By ${agency}`, institution: agency, ownerId: person.id, openedAt: sim.now });
 }
 
+/**
+ * The days a payment is for: the week its work wrote on it, or, for a payment written without one, the calendar week
+ * before its payday. Until the work loop's merge (2026-10-21) every payment was read by its payday alone, which put a
+ * stage run's Tuesday-to-Monday week's hours and words in the wrong week.
+ */
+export function weekOf(p: ProPayment, zone: string = WORK_ZONE): { from: Instant; to: Instant } {
+  return p.week ?? weekPaidOn(p.due, zone);
+}
+
 /** The week a payment is for, in words: "the week of March 1, 2027". */
 export function weekWords(p: ProPayment, zone: string = WORK_ZONE): string {
-  return `the week of ${formatDate(weekPaidOn(p.due, zone).from, zone)}`;
+  return `the week of ${formatDate(weekOf(p, zone).from, zone)}`;
 }
 
 /** An engagement and its payment, found by the payment's key. */
@@ -463,7 +472,7 @@ function payDue(s: Simulation, person: Person, e: Engagement, p: ProPayment, pro
   const dues = duesOn(person, project, gross, s.now);
   const w = withholdingOn(s, person, gross, s.now, project.place.cityId);
   const kept = gross - w.total - dues.amount;
-  const week = weekPaidOn(p.due, workZone);
+  const week = weekOf(p, workZone);
   const days = engagementDaysIn(e, week.from, week.to, workZone);
   const hours = days ? `, ${days * PAY.hoursPerDay} hours` : '';
   const memo = `Wages${hours}: ${project.company}, ${project.project}, ${weekWords(p, workZone)}`;

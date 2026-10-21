@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 40 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 44 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -1050,7 +1050,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`
+- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1067,13 +1067,14 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Career Screen, immediate: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.
   - The Nights, history: A School production’s part goes on your résumé once its run has closed.
   - Your Unions reads it, history: Your résumé lists your unions once you’re a member.
+  - Offers And Booked Work reads it, history: The part goes on your professional credits, and your résumé reads as behind until it has it.
 - **Feedback (how to read what comes back):**
   - Up To Date means it has everything on your record. Behind names what it’s missing.
 - **History (kept in the record):**
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1275,3 +1276,99 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Each union bill is taken from your bank on its day. If the bank can’t cover it, it’s owed under Bills Owed and paid off the first day there’s money.
   - Union pay has its working dues taken before it reaches you.
 - **Tested by:** `pro.join_sag`: `tests/propay-screen.test.ts`, `tests/propay.test.ts`
+
+### Finding Work And Submitting (`career.opportunities`)
+
+- **Action:** `pro.submit`, at Career, Opportunities, Open Calls (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”.
+- **Preconditions:**
+  - Headshots and a résumé, made on the Portfolio tab, and a reel where the casting office asks for one.
+  - A role that takes your own submission, before its window closes.
+  - The role’s playing ages, and Equity membership for an Equity open call.
+  - Headshots first: A submission starts with your headshots: without them it can’t be sent.
+- **Costs:**
+  - Time: None: a submission is sent at once
+  - Money: None
+- **State (what changes at once):**
+  - The role moves to In Progress, with what you sent and when each was made.
+- **Consumer (what reads it):**
+  - Auditions And Callbacks, scheduled: A submission puts the casting office’s answer on the clock, and the answer sets an audition.
+- **Feedback (how to read what comes back):**
+  - Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.
+  - Each role says it’s fictional: no real production is casting.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - Two days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.
+- **Tested by:** `pro.submit`: `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
+
+### Auditions And Callbacks (`career.auditions`)
+
+- **Action:** `pro.prepare`, `pro.tape_audition`, `pro.move_audition`, at Career, Opportunities, In Progress (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once a casting office has answered a submission.
+- **Preconditions:**
+  - Free for each step’s time, and awake. Rehearsing on your feet needs some of the lines learned and the energy for it.
+  - For a self-tape, an hour free before it’s due.
+  - For a new time, a day’s notice, asked once.
+- **Costs:**
+  - Time: 30 minutes to 45 minutes a step; an hour for a self-tape; an audition in person 30 minutes, with the trip each way (an estimate)
+  - Money: None
+- **State (what changes at once):**
+  - A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.
+- **Consumer (what reads it):**
+  - Offers And Booked Work, evaluation: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.
+  - The Calendar, scheduled: An audition in person goes on your calendar with its trip, and stops the clock when it comes.
+- **Feedback (how to read what comes back):**
+  - The band says how good the audition was. Casting’s chance reads the band, the fit and the field together, and even the best audition doesn’t make it certain.
+  - Why It Went This Way, under a settled role, shows each part of it.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
+- **Tested by:** `pro.prepare`: `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+
+### Offers And Booked Work (`career.offers`)
+
+- **Action:** `pro.accept_offer`, `pro.decline_offer`, at Career, Opportunities, Offers (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once casting makes you an offer.
+- **Preconditions:**
+  - Permission to work in the US for every day of it, as Papers shows it.
+  - No other booking on the same days, and in the summer no School call on them.
+  - Permission To Work first: An offer can be accepted only where your permission to work covers every one of its days.
+- **Costs:**
+  - Time: Each work day’s hours, with the trip each way
+  - Money: None: the work pays you
+- **State (what changes at once):**
+  - The work days go on your calendar, and the pay for each week is promised, due the Thursday after it. It isn’t paid yet.
+- **Consumer (what reads it):**
+  - Your Résumé, history: The part goes on your professional credits, and your résumé reads as behind until it has it.
+  - The Calendar, scheduled: Accepting puts each work day on your calendar, and each stops the clock for you.
+  - Auditions And Callbacks reads it, evaluation: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.
+- **Feedback (how to read what comes back):**
+  - Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred, so nothing is paid.
+- **History (kept in the record):**
+  - Your Résumé: The part goes on your professional credits, and your résumé reads as behind until it has it.
+- **Later consequence:**
+  - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
+  - Miss a shoot day, or a second day of a run, and the production replaces you.
+- **Tested by:** `pro.accept_offer`: `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/pro-work.test.ts`
+
+### Work While You’re At The School (`career.outside-work`)
+
+- **Action:** `pro.request_outside_work`, at Career, Opportunities, Open Calls (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, while you’re a student and a role’s days fall in term.
+- **Preconditions:**
+  - Good standing at the School.
+  - A role whose days fall in term, not settled yet.
+  - Permission to work outside the School: on an F-1, there’s none while you’re a student.
+  - Offers And Booked Work first: An offer in term is accepted on the School’s approval, or against it with the warning said first.
+- **Costs:**
+  - Time: An hour to talk to the chair and write the proposal (an estimate)
+  - Money: None
+- **State (what changes at once):**
+  - The request is with the chair and the dean, and the role says when the dean decides.
+- **Consumer (what reads it):**
+  - Your Standing And Classes, immediate: Work in term without approval moves your standing to academic warning, and a second time to dismissal.
+- **Feedback (how to read what comes back):**
+  - The School’s rule is the Bulletin’s. The fourteen days, ten working days and two class days, and the dean’s week, are the game’s estimates of its words.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - A week on, the dean approves or refuses it, and the notice says each condition. Approved, the class days it takes are excused.
+- **Tested by:** `pro.request_outside_work`: `tests/pro-work.test.ts`

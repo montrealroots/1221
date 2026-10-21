@@ -3126,6 +3126,62 @@
         "verified": "Implemented"
       },
       "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it, so it isn’t called Verified. Engagements come from the work system, built apart: the tests write them as it does (TEST SETUP) until integration calls schedulePay at an offer’s acceptance. Providence, the regional theater’s town, isn’t in the gazetteer, so its pay is counted where the player lives and its state’s tax isn’t worked out. Equity’s rehearsal-period rate at minimum, per diem and renewals have nothing in the game to read"
+    },
+    {
+      "id": "career-work",
+      "goal": "Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on tape and a callback where the project has one, casting's decision, an offer accepted or declined, the work days on the calendar judged, and the lasting credit; through an agent while an agreement is in force; and, at the School, work in term only with the dean's approval",
+      "entry": "Career, under Your Work: Opportunities (Open Calls and Submit Yourself; In Term At The School and Ask The School; Through An Agent; In Progress with Break It Down, Learn The Lines, Rehearse It On Your Feet, Tape It and Ask For Another Time; Offers with Accept The Offer and Decline The Offer, also under What Needs You on Home; Booked Work; Settled with Why It Went This Way)",
+      "entities": [
+        "Opportunity",
+        "AuditionRound",
+        "PartPrep",
+        "Engagement",
+        "ProPayment",
+        "ProCredit",
+        "OutsideWorkRequest"
+      ],
+      "state": "src/engine/systems/projobs.ts",
+      "preconditions": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal)",
+      "commands": [
+        "pro.submit",
+        "pro.prepare",
+        "pro.tape_audition",
+        "pro.move_audition",
+        "pro.accept_offer",
+        "pro.decline_offer",
+        "pro.request_outside_work"
+      ],
+      "effects": "A submission schedules the casting office's answer two days on; the answer sets an audition in person on the calendar with its trip, or a self-tape due date; a step of preparation moves the sides or the part on its time; a tape or an audition is judged by the evaluation and kept on the work record; casting draws a callback or the role (decider pro.casting) from the band, the role's fit and the field; an offer stands three days; accepting books each work day (requiresPlayer, with the trip) and writes the pay promised for each week, never posted here; each work day is judged, a stage credit added at the first night and a screen credit when shot, released later; a missed shoot day or a second missed day of a run replaces the actor; a request is decided by the dean seven days on; unapproved work in term brings the School's academic warning, then dismissal. Every timing and chance is estimated, said so on the screen",
+      "persists": "Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+      "readers": [
+        "materialsCheck: what a submission and the agent's try at one read",
+        "usWorkAuthorized: every day of an offer, at acceptance",
+        "awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused",
+        "setStanding: work in term without approval",
+        "activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules",
+        "the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (wired at integration)",
+        "the pay's schedulePay: the promised entries (wired at integration)"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/pro-work.test.ts",
+      "provenance": "docs/research/career-2026-10-20/ (work.md S30, S32, S33, S36 for the rates; representation.md S3 and S5 for scale plus ten and Thursday's pay; yale.md §4 and §6, B27 pp.142 and 148, for work in term and an F-1 student); the projects are fictional (content/careerwork.ts), and a casting office's timings, the chances, the trips, the lead time and the School rule's figures are the game's estimates, said so",
+      "tests": [
+        "tests/pro-work.test.ts",
+        "tests/pro-opportunities-screen.test.ts",
+        "tests/tutorial.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Implemented"
+      },
+      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The promised pay is posted by the pay's system, wired at integration; the agent's relationship and agreement are the agent's system's"
     }
   ]
 }

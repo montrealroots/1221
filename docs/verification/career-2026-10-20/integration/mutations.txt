@@ -2,3 +2,8 @@ Mutations at the wave's merges (2026-10-21), each run against the test that hold
 I1 the showcase's end puts no follow-up on the calendar | src/engine/systems/proshowcase.ts (endShowcase) | tests/pro-showcase.test.ts 'from the last term’s first day to the morning after Commencement' | KILLED
 I2 a showcase with nothing played puts a follow-up on the calendar | src/engine/systems/proshowcase.ts (endShowcase's guard) | tests/pro-showcase.test.ts 'a showcase day missed is a missed call' | KILLED
 I3 a stop's command no screen or stop reaches | src/engine/world/clock.ts (calendar.skip renamed in its defineStop) | tests/interface.test.ts 'leaves no engine command that a person cannot reach' | KILLED
+I4 the accepted offer's pay never scheduled | src/engine/systems/projobs.ts (pro.accept_offer) | tests/pro-work.test.ts 'J3' (played on to the pay passed on through the trust account) | KILLED
+I5 an offer through him priced at scale | src/engine/systems/projobs.ts (makeOffer) | tests/pro-work.test.ts 'J3' ($282.70 a day, $102.80 commission) | KILLED
+I6 the pay's eligibility read not asked at acceptance | src/engine/systems/projobs.ts (acceptRefusal) | tests/pro-work.test.ts, tests/propay.test.ts | SURVIVED: it refuses only where a date fails usWorkAuthorized, the check before it; taken out the same day
+I7 SAG-AFTRA's 30 days not asked at acceptance | src/engine/systems/projobs.ts (acceptRefusal) | tests/pro-work.test.ts 'from the 30th day after a first SAG-AFTRA job began' | KILLED
+I8 a payment written without the days it pays for | src/engine/systems/projobs.ts (promisedPay) | tests/pro-work.test.ts 'an Equity open call with a callback' (a run week's 48 hours on its wages) | KILLED

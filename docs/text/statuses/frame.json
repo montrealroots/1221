@@ -2950,5 +2950,23 @@
   "hash": "3a463e4b5a94",
   "on": "2026-10-17",
   "reason": "No Such Screen, 'That address isn’t a screen in this game.' and Go Home: plain, and it says the one way on. Reached only by an old bookmark's address."
+ },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Reviewed And Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Reviewed And Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten And Verified",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing"
  }
 }

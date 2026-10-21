@@ -1,0 +1,12 @@
+V3 (seed work-leaver-0): withdrawn through the School, then an open role booked and worked
+
+TRAINING  You studied acting in the MFA program at the David Geffen School of Drama at Yale University for one term, 2026, and didn’t complete the degree.
+STANDING  withdrawn
+CREDIT    {"id":"pro_00000i","kind":"student-film","project":"Paper Moons","role":"Theo","company":"a graduate film program’s thesis production","year":2026,"medium":"film","status":"shot","union":"sag-aftra","engagementId":"pro_000009","at":1792407600000,"band":"strong"}
+SUBMIT    You’ve already been submitted for it.
+
+NOTICES, IN THE ORDER THE PLAYER READ THEM
+September 18, 2026 at 10:00 AM  An Audition For Theo
+    The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Tuesday, September 22, 2026 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+October 21, 2026 at 7:00 AM  You Wrapped Paper Moons
+    Paper Moons wrapped, and Theo is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about six months on, estimated. Update your résumé on the Portfolio tab to add it.

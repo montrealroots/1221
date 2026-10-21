@@ -34,7 +34,7 @@ import { BRIEFS } from '@/engine/content/briefs';
 import { AGENTS, agencyOf } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, projectById } from '@/engine/content/careerwork';
 import type { Band } from '@/engine/systems/coursework';
-import { activeAgreement, addCredit, eligibilityOf, type Engagement, type Opportunity } from '@/engine/systems/pro';
+import { HISTORY_KEPT, activeAgreement, addCredit, eligibilityOf, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import { MEETING_KIND, interestOf, nextStep, referrersOf, relationOf, sendRefusal, stillOwed } from '@/engine/systems/proagent';
 
 const zone = 'America/New_York';
@@ -466,7 +466,13 @@ describe('G5 and V15: history with stable ids, nothing noted twice', () => {
     const straight = play(false);
     const reloaded = play(true);
     const h = rel(reloaded).history;
-    expect(h.map((e) => e.kind)).toEqual(['discovered', 'checked', 'referred', 'sent', 'meeting-set', 'meeting-kept', 'offer', 'accepted', 'represented', 'ended']);
+    // From the work loop's merge (2026-10-21) the year represented also notes the roles he handled (`opp:` keys, G5's
+    // opportunities handled), so the history rolls past its cap and the relationship's first steps leave the list; each
+    // is still counted once. Until then this asserted the ten steps as the whole history.
+    const steps = ['discovered', 'checked', 'referred', 'sent', 'meeting-set', 'meeting-kept', 'offer', 'accepted', 'represented', 'ended'] as const;
+    for (const k of steps) expect(rel(reloaded).counts[k], k).toBe(1);
+    expect(h.length).toBeLessThanOrEqual(HISTORY_KEPT);
+    expect(h.filter((e) => !e.key?.startsWith('opp:')).map((e) => e.kind).at(-1)).toBe('ended');
     expect(new Set(h.map((e) => e.key)).size).toBe(h.length);
     expect(new Set(h.map((e) => e.id)).size).toBe(h.length);
     expect(h).toEqual(rel(straight).history);

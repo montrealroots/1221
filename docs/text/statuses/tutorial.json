@@ -93,7 +93,7 @@
   "status": "Rewritten And Verified",
   "hash": "e8c0e949cd89",
   "on": "2026-10-21",
-  "evidence": "Read at the pay's merge, 2026-10-21: the agent's closing line and the pay's three paragraphs and two details, each read by its builder, joined with no word changed; read in order against docs/STYLE.md, the portfolio, then the work's pay and unions, then on to Representation"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten And Verified",
@@ -106,6 +106,12 @@
   "hash": "44263e7d0129",
   "on": "2026-10-17",
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/defects-g27-1.test.ts holds what Report Lost takes and where a lost license is replaced"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
+  "status": "Rewritten And Verified",
+  "hash": "c79cfd51ea93",
+  "on": "2026-10-21",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {
   "status": "Rewritten And Verified",
@@ -151,9 +157,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [representation]": {
   "status": "Rewritten And Verified",
-  "hash": "1122c8a7363d",
+  "hash": "adc400747361",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md: the Representation chapter teaches the agent’s panel in the screen’s own labels, read in tests/tutorial.test.ts, tests/pro-representation-screen.test.ts and tests/journey-agent.test.ts, with tools/voice-check.mjs and tools/tics.mjs passing; the Your Career chapter’s last line sends the player to it"
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten And Verified",
