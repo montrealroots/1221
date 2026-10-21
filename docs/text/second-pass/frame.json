@@ -2386,6 +2386,13 @@
   "reason": "Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/world/clock.ts#declareOwn": {
+  "status": "Rewritten",
+  "hash": "8755674025df",
+  "on": "2026-10-21",
+  "evidence": "The words of src/engine/world/clock.ts#top, moved unchanged into declareOwn by brief 20's School area (D4); read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-stops.test.ts",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/world/clock.ts#defineStop": {
   "status": "Retained",
   "hash": "2ff2f915a89e",
@@ -2398,13 +2405,6 @@
   "hash": "30a12bfb9806",
   "on": "2026-10-20",
   "evidence": "The fallback refusal a stop's choice says when its command gives no reason, the same words run() says; tests/time-stops.test.ts reads refusals",
-  "first": "Pending"
- },
- "src/engine/world/clock.ts#top": {
-  "status": "Rewritten",
-  "hash": "8755674025df",
-  "on": "2026-10-20",
-  "evidence": "Skip It's and Call It Off's words at the stop and on On The Way, and Call It Off's toast; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts",
   "first": "Pending"
  },
  "src/engine/world/place.ts#placeKindLabel": {

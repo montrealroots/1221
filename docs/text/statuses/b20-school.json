@@ -1,0 +1,8 @@
+{
+ "src/engine/world/clock.ts#declareOwn": {
+  "status": "Rewritten And Verified",
+  "hash": "8755674025df",
+  "on": "2026-10-21",
+  "evidence": "The words of src/engine/world/clock.ts#top, moved unchanged into declareOwn by brief 20's School area (D4, the stops declared on first read); held by tests/time-stops.test.ts and tests/module-load-order.test.ts"
+ }
+}
