@@ -12,17 +12,17 @@ school's way into them, and this brief is the owner's word to build a new beginn
 
 ## Brief 18's Items This Needs (Section 14), And Why
 
-| ID | Brief 18 | Why the career needs it |
-|---|---|---|
-| D1 | S1, the stop's Skip It and Call It Off | Auditions, meetings and work stop the clock; what each choice at the stop does to a career appointment must be defined, or a jump can skip or keep one wrongly |
-| D2 | S2, Tomorrow Morning at 2 AM | An early call or audition the next morning must not be jumped past |
-| D3 | S3, the Sleep dialog's suggestion | Sleep must be suggested around the next commitment, an audition among them |
-| D4 | S4, the Sleep dialog holds the clock | A dialog open while an appointment comes due must not let it pass |
-| D5 | S5, One Week asks On The Way first | A week's jump must name the career appointments it would pass |
-| D6 | U1, the understudy's part | A credit must be the part actually played; an understudy "in the company" would carry no part into the résumé |
-| D7 | (new) payment and commission accounting | Pay into the right account and currency; promised money apart from money received; commission taken only when owed; no payment twice through a reload or a jump; wages reported as wages, with what was withheld, the commission and where the work was done |
-| D8 | (new) work eligibility | `usWorkAuthorized` read for every paid engagement; OPT's weeks counted as weeks worked when they are; the OPT notice's "no work after the degree" and the tests pinning it made true; signing with an agent changing nothing of permission to work |
-| D9 | (new) the tutorial's guard against offering a job | It guarded a game with no work. It's rewritten to guard what's true now, offering only work the game has, never weakened |
+| ID | Brief 18 | Why the career needs it | Status |
+|---|---|---|---|
+| D1 | S1, the stop's Skip It and Call It Off | Auditions, meetings and work stop the clock; what each choice at the stop does to a career appointment must be defined, or a jump can skip or keep one wrongly | Fixed And Verified (`time/REPORT.md`) |
+| D2 | S2, Tomorrow Morning at 2 AM | An early call or audition the next morning must not be jumped past | Fixed And Verified (`time/REPORT.md`) |
+| D3 | S3, the Sleep dialog's suggestion | Sleep must be suggested around the next commitment, an audition among them | Fixed And Verified (`time/REPORT.md`) |
+| D4 | S4, the Sleep dialog holds the clock | A dialog open while an appointment comes due must not let it pass | Fixed And Verified (`time/REPORT.md`) |
+| D5 | S5, One Week asks On The Way first | A week's jump must name the career appointments it would pass | Fixed And Verified (`time/REPORT.md`) |
+| D6 | U1, the understudy's part | A credit must be the part actually played; an understudy "in the company" would carry no part into the résumé | Fixed And Verified (`understudy/REPORT.md`) |
+| D7 | (new) payment and commission accounting | Pay into the right account and currency; promised money apart from money received; commission taken only when owed; no payment twice through a reload or a jump; wages reported as wages, with what was withheld, the commission and where the work was done | Open |
+| D8 | (new) work eligibility | `usWorkAuthorized` read for every paid engagement; OPT's weeks counted as weeks worked when they are; the OPT notice's "no work after the degree" and the tests pinning it made true; signing with an agent changing nothing of permission to work | Open |
+| D9 | (new) the tutorial's guard against offering a job | It guarded a game with no work. It's rewritten to guard what's true now, offering only work the game has, never weakened | Open |
 
 Every other brief 18 item stays paused (its `criteria.md`).
 
@@ -42,19 +42,19 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| L1 | Identity, attributes, techniques, genres, standing, coursework, productions and the parts played, classmates, money, documents, health, readiness and the calendar carry into the career unchanged; nothing resets | Open |
-| L2 | School credits, practice, self-tapes, professional credits and unreleased work are kept apart; a practice brief is never a professional credit | Open |
-| L3 | An existing graduate's save opens with a career built from its record, once, and plays on | Open |
+| L1 | Identity, attributes, techniques, genres, standing, coursework, productions and the parts played, classmates, money, documents, health, readiness and the calendar carry into the career unchanged; nothing resets | Open: the core's share verified (`core/REPORT.md`); the rest is held by V1 and V16 |
+| L2 | School credits, practice, self-tapes, professional credits and unreleased work are kept apart; a practice brief is never a professional credit | Fixed And Verified for the structures (`core/REPORT.md`); held again by the work's credits |
+| L3 | An existing graduate's save opens with a career built from its record, once, and plays on | Fixed And Verified (`core/REPORT.md`) |
 
 ### The Professional Profile And Portfolio (Section 5)
 
 | ID | Closed when | Status |
 |---|---|---|
-| F1 | A profile with the professional name, training and true education status, school and professional credits apart, skills, availability and location, and work eligibility, each read from the record | Open |
-| F2 | Headshots, a résumé and a reel as materials with provenance (where from, when made, what's in them, whether usable); a reel holds only what was recorded | Open |
-| F3 | Making or updating each is playable, its time and cost stated before it's done | Open |
-| F4 | Each component has an effect: what a submission or the agent reads, and what's missing or unsuitable said in practical words | Open |
-| F5 | Credits and portfolio assets kept apart from the rolling evaluation history, durable across long careers and reloads, with bounded save growth | Open |
+| F1 | A profile with the professional name, training and true education status, school and professional credits apart, skills, availability and location, and work eligibility, each read from the record | Fixed And Verified (`core/REPORT.md`) |
+| F2 | Headshots, a résumé and a reel as materials with provenance (where from, when made, what's in them, whether usable); a reel holds only what was recorded | Fixed And Verified (`core/REPORT.md`) |
+| F3 | Making or updating each is playable, its time and cost stated before it's done | Fixed And Verified (`core/REPORT.md`) |
+| F4 | Each component has an effect: what a submission or the agent reads, and what's missing or unsuitable said in practical words | Open: what's missing is said; it closes when the agent and the work read it |
+| F5 | Credits and portfolio assets kept apart from the rolling evaluation history, durable across long careers and reloads, with bounded save growth | Fixed And Verified (`core/REPORT.md`) |
 
 ### The Showcase (Section 6)
 
@@ -68,7 +68,7 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| G1 | One agent, verified: Jordan Parente, agent in Stewart Talent's New York legit (theatrical) department, with the agency's published policy (no unsolicited legit submissions); the agency modeled only as far as his role needs; his words and decisions marked fictional where he first appears and on his panel; nothing private used | Open |
+| G1 | One agent, verified: Jordan Parente, agent in Stewart Talent's New York legit (theatrical) department, with the agency's published policy (no unsolicited legit submissions); the agency modeled only as far as his role needs; his words and decisions marked fictional where he first appears and on his panel; nothing private used | Open: the data and the notice are built (`core/REPORT.md`); it closes with his panel |
 | G2 | The relationship's stages, discovery to active representation, each a state the game holds, with the routes the policy allows (the showcase's follow-up, a referral from someone the player has worked with); an unsolicited submission refused in the agency's own published terms | Open |
 | G3 | The outcomes: no response, a request for more material, a pass, a meeting, an offer, the player declining, representation ending | Open |
 | G4 | No persistence exploit: a pass or a silence holds for a stated time, and a new approach needs something new to consider | Open |
