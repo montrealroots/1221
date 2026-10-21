@@ -5,12 +5,13 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 566 of 641 rows in scope Implemented And Verified (88.2%); 71 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
   (Brief 19's core, merged 2026-10-21: until it this said 566 of 636. Its four commands are rows of their own,
   Implemented, Verification Incomplete until an audit row reads them, and 46 measured rows read the engine's whole
   source, so the understudy's, the clock's and the core's changes leave them measured before what they read last
-  changed, until brief 19's final runs measure them again.)
+  changed, until brief 19's final runs measure them again. The pay's branch, `b19-pay`, adds `pro.join_sag`, a row of
+  its own the same way: 566 of 641 there, until then 566 of 640.)
 
 - **Read first:** `docs/verification/career-2026-10-20/criteria.md` (the items, each Open until the game does it and a
   test fails without it), `design.md` (binding: the agent's limits, the pathways, the record, the agreement, the work

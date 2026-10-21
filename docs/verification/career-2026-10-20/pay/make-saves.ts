@@ -10,8 +10,8 @@
  * Writes `OUTDIR/work-none.json` (a graduate on September 4, 2026, nothing booked), `OUTDIR/work-paid.json` (the same
  * graduate on October 8, 2026: represented SAG-AFTRA work paid and passed on, an Off-Broadway run contracted while
  * represented and still owed after the agreement ended, and an unsigned short paid straight to checking) and prints,
- * in order, every notice the player reads and every line the checking account's statement gains, and what the trust
- * account holds at each step.
+ * in order, every notice the player reads and every line the checking account's statement gains but the day's food, and
+ * what the trust account holds at each step.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createSave } from '../../../../src/engine';
@@ -89,7 +89,8 @@ const report = (title: string) => {
   for (const n of sim.universe.notifications.slice(seenNotices)) console.log(`NOTICE ${n.title}: ${n.body}`);
   seenNotices = sim.universe.notifications.length;
   const lines = activity(sim, checking(), from, sim.now).lines;
-  for (const l of lines.slice(seenLines)) console.log(`STATEMENT ${formatDateTime(l.at, NY)}  ${l.amount >= 0 ? '+' : ''}${money(l.amount)}  ${l.memo}  (balance ${money(l.balance)})`);
+  // The day's food, bought each midnight, is left out: it's every day's, and the pay isn't among it.
+  for (const l of lines.slice(seenLines).filter((x) => x.category !== 'food')) console.log(`STATEMENT ${formatDateTime(l.at, NY)}  ${l.amount >= 0 ? '+' : ''}${money(l.amount)}  ${l.memo}  (balance ${money(l.balance)})`);
   seenLines = lines.length;
   console.log(`TRUST ACCOUNT ${trust() ? money(trust()!.balance) : 'none'}`);
 };

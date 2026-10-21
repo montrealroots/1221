@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 566 of 641 rows in scope Implemented And Verified (88.2%); 71 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -7561,6 +7561,29 @@
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
   },
   {
+   "id": "pro.join_sag",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (Your Unions (`career.unions`))",
+   "goal": "Be paid for professional work: each payment promised when the work is accepted and paid once on its day, through the agency’s client trust account less commission where it’s owed and straight to you where not, as wages your tax return reads with where the work was done; permission to work read for each engagement’s dates; and the unions’ membership, fees and dues | Your Unions (`career.unions`)",
+   "entry": "`pro.join_sag`, at Career, Work, Your Unions (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. Join SAG-AFTRA opens once you’ve worked a SAG-AFTRA principal role. | guide: Your Career | WorkPane.tsx",
+   "preconditions": "For Equity: the degree.; For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank. | An engagement with promised pay, written by the work system on accepting an offer, and schedulePay called then; a payment not deferred, not received and not in trust; for Join SAG-AFTRA, eligibility from a first SAG-AFTRA principal role, not yet a member, and the bank covering the fee (joinSagRefusal) | refused where: Your bank can’t cover …, so nothing was charged. (also joinSagRefusal)",
+   "reads": "src/engine/systems/propay.ts",
+   "decisions": "Not recorded",
+   "validation": "refusals: Your bank can’t cover …, so nothing was charged. (also joinSagRefusal) | Equity’s Initiation Fee: $1,800.00 within three years: $600.00 at the degree, then two parts a year apart. The two parts’ dates are estimated; Equity’s Dues: $88.00 each May and November, and 2.5% of Equity pay, taken from it. Taking it from the pay is estimated; Joining SAG-AFTRA: About $3,244.07: the initiation fee and half a year’s base dues, then half a year’s dues each May and November, and 1.575% of SAG-AFTRA pay. Read from a search engine’s copy of its pages (an estimate) | moves money through the ledger | costs: On a payday, the gross less tax withheld and union working dues into the agency’s client trust account (an account of the player’s held by the agency) where commission is owed, or into the payee account; three business days later, from the trust account to the payee account less commission. Each through sim.post, category salary, and recordWages with the employer, the withholding by authority, the commission, the dues and the work’s town. Equity’s $600 down at the degree, its two later parts and basic dues each May and November; joining SAG-AFTRA’s initiation fee and half a year’s base dues, then base dues each May and November",
+   "changes": "Join SAG-AFTRA takes its fee from your bank and makes you a member today. Your next SAG-AFTRA work takes its working dues.",
+   "later": "Each union bill is taken from your bank on its day. If the bank can’t cover it, it’s owed under Bills Owed and paid off the first day there’s money.; Union pay has its working dues taken before it reaches you.",
+   "systems": "Your Accounts, scheduled: Each union bill comes out of your bank on its day.; Your Résumé, history: Your résumé lists your unions once you’re a member.; Your Tax Return, evaluation: Dues count toward the cost of your work on the year’s return. | the tax return (figuresFor): New York taxes a nonresident’s New York work, Connecticut credits it, New York City only its residents; OPT’s weekly count (daysWorkedIn): each engagement’s days are days worked; Papers’ Your US Status (optRunsOut): when OPT’s days without work run out, by the work booked; unemployment’s base period and the month’s income tests, through recordWages and the salary transactions; the Work tab, Papers’ Your Work And Your Permission, Money’s statements and net worth’s held money",
+   "sees": "A bill marked owed is a debt: it’s paid off when money comes in.; Ultra Low Budget films and student films don’t count toward SAG-AFTRA eligibility in the game.",
+   "saveLoad": "Your Résumé: Your résumé lists your unions once you’re a member. | Person.pro: engagements[].pay[].received and inTrust, engagements[].eligibility, unionBills, sag.eligibleSince and memberSince; the OPT document’s workedDays and idleDays; earnings’ years (acting, withheldBy, commission, dues, employers, elsewhere)",
+   "failure": "refusals said in the player's words: Your bank can’t cover …, so nothing was charged. (also joinSagRefusal) | Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it, so it isn’t called Verified. Engagements come from the work system, built apart: the tests write them as it does (TEST SETUP) until integration calls schedulePay at an offer’s acceptance. Providence, the regional theater’s town, isn’t in the gazetteer, so its pay is counted where the player lives and its state’s tax isn’t worked out. Equity’s rehearsal-period rate at minimum, per diem and renewals have nothing in the game to read",
+   "implementation": "`systems/propay.ts` | WorkPane.tsx",
+   "evidence": "`pro.join_sag`: `tests/propay-screen.test.ts`, `tests/propay.test.ts` | 2 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
    "id": "pro.set_name",
    "group": "Commands Traced Outside The Audit",
    "kind": "command",
@@ -7596,7 +7619,7 @@
    "validation": "refusals: — (also resumeRefusal) | Time: an hour (an estimate); Money: None | costs: A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
    "changes": "The clock moves on an hour, and the new résumé is on the panel with what it says.",
    "later": "A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new. | resume",
-   "systems": "The Career Screen, immediate: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.; The Nights, history: A School production’s part goes on your résumé once its run has closed. | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
+   "systems": "The Career Screen, immediate: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.; The Nights, history: A School production’s part goes on your résumé once its run has closed.; Your Unions reads it, history: Your résumé lists your unions once you’re a member. | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
    "sees": "Up To Date means it has everything on your record. Behind names what it’s missing.",
    "saveLoad": "The Nights: A School production’s part goes on your résumé once its run has closed. | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
    "failure": "refusals said in the player's words: — (also resumeRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",

@@ -1,0 +1,13 @@
+none at 1440: tabs ["Overview","Portfolio","Work"]
+ArrowRight from Portfolio selects: Work
+work-none at 1440: 926 characters, horizontal overflow 0px
+Join SAG-AFTRA: 1 button, disabled true
+Sources And Estimates opened by Enter: true
+none at 1440: page errors none
+paid at 1440: tabs ["Overview","Portfolio","Work"]
+ArrowRight from Portfolio selects: Work
+work-paid at 1440: 3180 characters, horizontal overflow 0px
+Join SAG-AFTRA: 1 button, disabled false
+Sources And Estimates opened by Enter: true
+papers-paid at 1440: 2268 characters, horizontal overflow 0px, Your Work And Your Permission shown: true
+paid at 1440: page errors none

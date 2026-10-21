@@ -19,7 +19,7 @@ import { plural } from '@/engine/core/text';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { UNIONS } from '@/engine/content/careerwork';
-import { finished, unionsOf, type Engagement, type ProPayment, type UnionBill } from '@/engine/systems/pro';
+import { finished, type Engagement, type ProPayment, type UnionBill } from '@/engine/systems/pro';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
   commissionOn, joinSagRefusal, owedAfterEnding, placeKnown, projectOf, sagJoinUsd, sagMembershipFrom, weekWords, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, DUES_KIND,
@@ -93,7 +93,7 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
       <h3 className="eyebrow" style={{ margin: 0 }}>{`${e.role}, ${project?.project ?? 'Your Work'}`}</h3>
       <dl className="col gap-2 small" style={{ margin: 0 }}>
         <div><dt className="strong">Who</dt><dd style={{ margin: 0 }}>{project ? `${project.company}, ${project.contract}. Fictional, as every project in the game is.` : 'The production.'}</dd></div>
-        {project && <div><dt className="strong">Where</dt><dd style={{ margin: 0 }}>{`${project.place.venue}, ${project.place.city}.`}</dd></div>}
+        {project && <div><dt className="strong">Where</dt><dd style={{ margin: 0 }}>{`${project.place.venue[0]!.toUpperCase()}${project.place.venue.slice(1)}, ${project.place.city}.`}</dd></div>}
         <div><dt className="strong">Status</dt><dd style={{ margin: 0 }}>{STATUS[e.status]}</dd></div>
         <div><dt className="strong">Dates</dt><dd style={{ margin: 0 }}>{datesWords(e, zone)}</dd></div>
         <div>
@@ -137,7 +137,6 @@ function UnionsPanel() {
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const zone = sim.zone;
-  const unions = unionsOf(person, zone);
   const bills = [...(person.pro?.unionBills ?? [])].sort((a, b) => a.due - b.due);
   const equity = bills.filter((b) => b.union === 'equity');
   const sag = bills.filter((b) => b.union === 'sag-aftra');
@@ -153,12 +152,12 @@ function UnionsPanel() {
   return (
     <Panel title="Your Unions" help="career.unions">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>{unions.words}</p>
         <div className="col gap-2">
           <h3 className="eyebrow" style={{ margin: 0 }}>Actors’ Equity</h3>
-          {equity.length
-            ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{equity.map((b) => <li key={b.key}>{billWords(b, zone, cur)}</li>)}</ul>
-            : <p className="small" style={{ margin: 0 }}>{person.pro?.equity ? 'No bills from Equity yet.' : 'The degree makes you a member, as the School’s Bulletin says, and its initiation fee is billed then.'}</p>}
+          <p className="small" style={{ margin: 0 }}>{person.pro?.equity
+            ? `You joined ${UNIONS.equity.name}${person.pro.equity.how === 'degree' ? ' with the degree' : ''} on ${formatDate(person.pro.equity.since, zone)}.`
+            : 'The degree makes you a member, as the School’s Bulletin says, and its initiation fee is billed then.'}</p>
+          {equity.length > 0 && <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{equity.map((b) => <li key={b.key}>{billWords(b, zone, cur)}</li>)}</ul>}
         </div>
         <div className="col gap-2">
           <h3 className="eyebrow" style={{ margin: 0 }}>SAG-AFTRA</h3>
@@ -202,7 +201,7 @@ export function WorkPane() {
       {owed.length > 0 && (
         <Panel title="Still Owed After An Agreement Ended" help="career.commission">
           <ul className="small col gap-2" style={{ margin: 0, paddingLeft: '1.1rem' }}>
-            {owed.map(({ e, p, commission }) => <li key={p.key}>{`${projectOf(e)?.project ?? 'Your work'}, ${weekWords(p, zone)}: ${formatMoney(p.promised, p.currency)} due ${formatDate(p.due, zone)}, with ${formatMoney(commission.amount, cur)} commission owed to ${commission.agency ?? 'your agency'}. ${commission.words}`}</li>)}
+            {owed.map(({ e, p, commission }) => <li key={p.key}>{`${projectOf(e)?.project ?? 'Your work'}, ${weekWords(p, zone)}: ${formatMoney(p.promised, p.currency)} ${p.inTrust ? `held in trust until ${formatDate(p.inTrust.releaseAt, zone)}` : `due ${formatDate(p.due, zone)}`}, with ${formatMoney(p.inTrust?.commission ?? commission.amount, cur)} commission owed to ${commission.agency ?? 'your agency'}. ${commission.words}`}</li>)}
           </ul>
         </Panel>
       )}

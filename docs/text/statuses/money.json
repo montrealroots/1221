@@ -3966,10 +3966,10 @@
   "evidence": "tests/money-plan-interest.test.ts (would cost about $… a year); tests/guide-examples-money.test.ts 'money.affairs' (They’re charged no interest today; You’re using …%; a year's interest)"
  },
  "src/ui/looks/money.tsx#HELD_AS": {
-  "status": "Reviewed And Retained",
-  "hash": "34e6c4ec54b5",
-  "on": "2026-10-17",
-  "reason": "'on its way between your banks', 'in SNAP on your EBT card': plain, and each names where the held money is"
+  "status": "Rewritten And Verified",
+  "hash": "e82875d47009",
+  "on": "2026-10-21",
+  "evidence": "tests/propay.test.ts reads what you're worth while pay is held in the agency's trust account"
  },
  "src/ui/looks/money.tsx#heldFor": {
   "status": "Reviewed And Retained",

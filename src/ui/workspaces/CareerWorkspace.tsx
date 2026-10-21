@@ -42,7 +42,7 @@ export function CareerWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Work</div>
         <h1>Career</h1>
-        <p className="muted">Where you stand as a professional actor, and your portfolio: your profile, headshots, résumé and reel.</p>
+        <p className="muted">Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.</p>
       </div>
       <div className="tabs" role="tablist" aria-label="Career">
         {CAREER_TABS.map((one, i) => (

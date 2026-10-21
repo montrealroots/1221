@@ -1,0 +1,45 @@
+# The pay's mutations (brief 19, 2026-10-21): each applied alone to the code at the head it names, the tests holding its
+# claim run (tests/propay.test.ts, and tests/propay-screen.test.ts where it says so), and the code restored. The runner is
+# mut/run.py in the builder's scratchpad: a mutation is killed when the tests' run exits non-zero. First run, on the tree between 75b2ce05 and e95bdab5:
+
+M1 killed: payday guard: a payment received or in trust paid again [src/engine/systems/propay.ts] — by: × a payment promised and received once > GUARD: no payment twice, across a reload mid-week, a jump past several due dates, and the payday fired twice 134ms
+M2 killed: schedulePay schedules a payment already on the clock again [src/engine/systems/propay.ts] — by: × a payment promised and received once > PLAYER JOURNEY: an unsigned graduate’s three weeks Off-Broadway are promised on booking, nothing posted, then each week
+M3 killed: deferred pay scheduled like any other [src/engine/systems/propay.ts] — by: × a payment promised and received once > shows deferred pay as deferred and never posts it: a student film 60ms
+M4 killed: SAG-AFTRA commission 10% of gross even at scale plus ten [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
+M5 killed: Equity at $525 or less charged 10% [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: Equity work at both sides of $525 a week: 10% of $1,051.00 is $105.10; 
+M6 killed: commission read from the work's first day, not the contract's [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: unrepresented work, a contract made before the agreement was signed, pa
+M7 killed: no agreement in force on the contract day considered [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: unrepresented work, a contract made before the agreement was signed, pa
+M8 killed: Equity's 60-day tail ignored [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > owes commission on Equity’s tail, an offer conveyed in the term and accepted within 60 
+M9 killed: commission after the agreement ended not said as continuing [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: continuing commission: a contract made while the agreement ran is still
+M10 killed: represented pay sent straight to the player [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
+M11 killed: pay passed on from trust without the commission taken [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
+M12 killed: the work state's tax not withheld [src/engine/systems/propay.ts] — by: × wages, as the tax return counts them > withholds New York’s tax on New York work by a New Haven resident and no New York City tax, and the return taxes it in 
+M13 killed: where the work was done not reported [src/engine/systems/propay.ts] — by: × a payment promised and received once > PLAYER JOURNEY: an unsigned graduate’s three weeks Off-Broadway are promised on booking, nothing posted, then each week
+M14 killed: Equity working dues not taken [src/engine/systems/propay.ts] — by: × a payment promised and received once > PLAYER JOURNEY: an unsigned graduate’s three weeks Off-Broadway are promised on booking, nothing posted, then each week
+M15 killed: F-1 student read as without permission, not as a student [src/engine/systems/propay.ts] — by: × permission to work, for each engagement’s dates > PLAYER JOURNEY: an F-1 student in session can’t accept outside acting work, and signing with an agent change
+M16 SURVIVED: green card not permission to work [src/engine/systems/permission.ts]
+M17 killed: OPT counts every day without work again [src/engine/systems/permission.ts] — by: × permission to work, for each engagement’s dates > PLAYER JOURNEY: OPT counts each engagement’s days as days worked, so twelve days of work move its end two of
+M18 killed: Equity down payment not charged at the degree [src/engine/systems/propay.ts] — by: × the unions’ money > PLAYER JOURNEY: the degree makes the graduate a member of Equity and charges $600 down once, then each part and half-year’s dues on its da
+M19 killed: older graduate charged for a past date [src/engine/systems/propay.ts] — by: × the unions’ money > PLAYER JOURNEY: an older graduate’s save, its Equity membership from before the fees were charged, is told what’s owed and charged nothing
+M20 killed: SAG-AFTRA eligibility not set at the first principal job [src/engine/systems/propay.ts] — by: × the unions’ money > PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs me
+M21 killed: SAG-AFTRA membership required at once, not from the 30th day [src/engine/systems/propay.ts] — by: × the unions’ money > PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs me
+M22 killed: Join SAG-AFTRA's bank refusal not said before pressing [src/engine/systems/propay.ts] — by: × the unions’ money > refuses Join SAG-AFTRA where the bank can’t cover it, and nothing is charged 59ms
+M23 killed: scale plus ten not negotiated for a represented SAG-AFTRA offer [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
+M24 killed: payday the Wednesday after the week [src/engine/systems/propay.ts] — by: × a payment promised and received once > PLAYER JOURNEY: an unsigned graduate’s three weeks Off-Broadway are promised on booking, nothing posted, then each week
+M25 killed: settled union bills kept without bound [src/engine/systems/propay.ts] — by: × the unions’ money > keeps every unsettled bill and the last twelve settled, so years of dues don’t grow the save 15ms
+M26 SURVIVED: uncovered work commissioned [src/engine/systems/propay.ts]
+M27 killed: covered work read without its territory [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > owes commission on Equity’s tail, an offer conveyed in the term and accepted within 60 
+M28 killed: union bill charged twice: settle without its guard [src/engine/systems/propay.ts] — by: × the unions’ money > PLAYER JOURNEY: the degree makes the graduate a member of Equity and charges $600 down once, then each part and half-year’s dues on its da
+M29 SURVIVED: the release paid a second time [src/engine/systems/propay.ts]
+M30 killed: trust account held in no account of the player's [src/ui/looks/money.tsx] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
+M31 killed: eligibility read not kept on the engagement [src/engine/systems/propay.ts] — by: × permission to work, for each engagement’s dates > PLAYER JOURNEY: OPT counts each engagement’s days as days worked, so twelve days of work move its end two of
+
+# M16 survived: a green card is a US permit (systems/residence.ts), which usWorkAuthorized's permits already counted, so
+# the line of its own was redundant and came out (e95bdab5), its comment saying so. M26 and M29 survived because no test
+# reached them; each was killed once one did (a project abroad, TEST SETUP; a second pass-on item and a reload while the
+# pay was held). M32 and M33 were added for New York City's withholding and the green card's own words. Second run:
+
+M26 killed: uncovered work commissioned [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > owes commission on Equity’s tail, an offer conveyed in the term and accepted within 60 
+M29 killed: the release paid a second time [src/engine/systems/propay.ts] — by: × commission, only when owed, checked to the cent against the postings > PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the a
+M32 killed: New York City's tax withheld from no resident [src/engine/systems/propay.ts] — by: × wages, as the tax return counts them > withholds New York City’s tax from a resident of the city on top of the state’s, and only the state’s from a New Haven 
+M33 killed: green card read as no permission in the words [src/engine/systems/propay.ts] — by: × permission to work, for each engagement’s dates > counts a green card, a permit of its own, as permission to work, and says it’s the green card 14ms

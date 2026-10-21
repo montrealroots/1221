@@ -433,6 +433,13 @@
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
+  "status": "Rewritten",
+  "hash": "636bfa774038",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.headshots]": {
   "status": "Rewritten",
   "hash": "461c859c90b3",
@@ -446,6 +453,13 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]": {
+  "status": "Rewritten",
+  "hash": "9e6b55b69d8d",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]": {
   "status": "Rewritten",
@@ -468,19 +482,33 @@
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]": {
+  "status": "Rewritten",
+  "hash": "9177ac9d44d1",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
+  "status": "Rewritten",
+  "hash": "acbc310a86bc",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
   "status": "Rewritten",
-  "hash": "722498d129cd",
+  "hash": "9c8dab2374fe",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
   "status": "Rewritten",
-  "hash": "fc29027fdb6f",
+  "hash": "8abf0983f29d",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten",
@@ -491,10 +519,17 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Rewritten",
-  "hash": "cf1d361bd2f1",
+  "hash": "5013272eacc4",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
+  "status": "Rewritten",
+  "hash": "f398fa90d9ad",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#hours": {
   "status": "Rewritten",
@@ -687,10 +722,10 @@
  },
  "src/ui/workspaces/CareerWorkspace.tsx#CareerWorkspace": {
   "status": "Rewritten",
-  "hash": "0a66c81d56a4",
+  "hash": "eed254ba3436",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "Read on the built app's Career screen at 1440 and 390, docs/verification/career-2026-10-20/pay/screens/work-paid-1440.png and work-paid-390.png",
+  "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#HeadshotsPanel": {
   "status": "Rewritten",

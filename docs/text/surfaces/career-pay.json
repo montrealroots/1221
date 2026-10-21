@@ -20,7 +20,7 @@
    { "kind": "test", "ref": "tests/propay-screen.test.ts: 'PLAYER JOURNEY: represented SAG-AFTRA work reads promised with its expected commission, then held in trust, then received with the commission on its own line, and Money’s statement shows it land less the commission'" },
    { "kind": "test", "ref": "tests/propay-screen.test.ts: 'PLAYER JOURNEY: once the agreement has ended, Still Owed After An Agreement Ended lists the payments still to come with the commission each carries'" },
    { "kind": "test", "ref": "tests/propay-screen.test.ts: 'PLAYER JOURNEY: a graduate with no work booked reads that work appears here, Equity’s bills and SAG-AFTRA’s first step, with Join SAG-AFTRA grayed and why under it'" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/pay/screens/work-1440.txt" }
+   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt" }
   ]
  },
  {

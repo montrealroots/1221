@@ -1987,9 +1987,9 @@
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
   "status": "Rewritten And Verified",
-  "hash": "cfc941a4f6e4",
-  "on": "2026-10-17",
-  "evidence": "Printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt: School’s row says “each term’s review”, as the school’s Term Review entries are titled; the Calendar screen in the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar)"
+  "hash": "219b4e15ae29",
+  "on": "2026-10-21",
+  "evidence": "The Calendar's legend as tests/calendar.test.ts draws it; paydays and union bills shown under Money in tests/propay.test.ts's played weeks"
  },
  "src/engine/world/calendar.ts#skipTargets": {
   "status": "Reviewed And Retained",
@@ -2790,10 +2790,10 @@
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
  },
  "src/ui/shell/sections.ts#SECTIONS [work]": {
-  "status": "Reviewed And Retained",
-  "hash": "f29c41d765fd",
-  "on": "2026-10-17",
-  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+  "status": "Rewritten And Verified",
+  "hash": "973abd660059",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws the Career screen's Work tab, and the built app's docs/verification/career-2026-10-20/pay/screens/walk-1440.txt lists the three tabs"
  },
  "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
   "status": "Rewritten And Verified",

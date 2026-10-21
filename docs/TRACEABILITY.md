@@ -86,7 +86,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `cash.deposit` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | Enter how much cash to pay in.; You have only … in cash, so nothing was paid in.; Cash goes into your checking account or savings.; …’s customers can’t pay cash in at the Post Office.; and 2 more | — | Yes | — | 6 | journey-money.test.ts |
 | `cash.withdraw` | Verified (journey) | Your Bank | BankCash.tsx | `systems/cash.ts` | Enter an amount.; Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Offic | — | Yes | — | 17 | journey-money.test.ts |
 | `documents.apply_idcard` | Implemented But Unverified | Passports And ID | Documents.tsx papers.tsx | `systems/identity.ts` | Your bank can’t cover …, so nothing was charged. (also idCardRefusal) | documentsOf (added to) | Yes | idcard; documents.idcard_arrives | 14 | — |
-| `documents.apply_opt` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/permission.ts` | — (also optRefusal) | usOutOfStatus; documentsOf (added to) | — | permit; documents.permission; documents.opt_week | 10 | — |
+| `documents.apply_opt` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/permission.ts` | — (also optRefusal) | usOutOfStatus; documentsOf (added to) | — | permit; documents.permission; documents.opt_week | 11 | — |
 | `documents.apply_passport` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | Your bank can’t cover …, so nothing was charged. (also passportRefusal) | documentsOf (added to) | Yes | passport; documents.decided | 11 | journey-life.test.ts |
 | `documents.apply_ssn` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/taxid.ts` | — (also ssnRefusal) | ssn | — | documents.ssn_arrives | 15 | — |
 | `documents.naturalize` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/citizenship.ts` | Your bank can’t cover …, so nothing was charged. (also naturalizeRefusal) | naturalizing; naturalized | Yes | citizenship.decided | 3 | — |
@@ -244,7 +244,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pension.state_payment` | `systems/statepension.ts` | systems/statepension.ts | — | Yes | pension.state_payment | 0 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 2 |
 | `pro.pay.payday` | `systems/propay.ts` | systems/propay.ts | — | — | — | 2 |
-| `pro.pay.release` | `systems/propay.ts` | systems/propay.ts | — | — | — | 0 |
+| `pro.pay.release` | `systems/propay.ts` | systems/propay.ts | — | — | — | 2 |
 | `pro.pay.sag_eligible` | `systems/propay.ts` | systems/propay.ts | — | Yes | success | 0 |
 | `school.account_due` | `systems/leave.ts` | systems/leave.ts | — | — | — | 12 |
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |

@@ -106,10 +106,10 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "36dd5bc77aaf",
+  "hash": "76417f088587",
   "on": "2026-10-21",
-  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts",
-  "first": "Pending"
+  "evidence": "tests/tutorial.test.ts and tests/guide.test.ts read the chapter; its figures are the rules' own, held by tests/propay.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten",

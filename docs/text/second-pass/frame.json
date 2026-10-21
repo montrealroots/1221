@@ -2345,10 +2345,10 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
-  "status": "Retained",
-  "hash": "cfc941a4f6e4",
-  "on": "2026-10-19",
-  "reason": "Each kind on the legend with what it holds on hover, the School row naming each term’s review, the glossary’s word.",
+  "status": "Rewritten",
+  "hash": "219b4e15ae29",
+  "on": "2026-10-21",
+  "evidence": "The Calendar's legend as tests/calendar.test.ts draws it; paydays and union bills shown under Money in tests/propay.test.ts's played weeks",
   "first": "Rewritten And Verified"
  },
  "src/engine/world/calendar.ts#skipTargets": {
@@ -3318,11 +3318,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/shell/sections.ts#SECTIONS [work]": {
-  "status": "Retained",
-  "hash": "f29c41d765fd",
-  "on": "2026-10-19",
-  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "973abd660059",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws the Career screen's Work tab, and the built app's docs/verification/career-2026-10-20/pay/screens/walk-1440.txt lists the three tabs",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
   "status": "Retained",

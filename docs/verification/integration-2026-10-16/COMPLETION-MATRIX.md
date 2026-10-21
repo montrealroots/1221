@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 566 of 641 rows in scope Implemented And Verified (88.2%); 71 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -29,7 +29,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
 | School | 79 | 79 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
-| Commands Traced Outside The Audit | 4 |  | 4 |  |  |  |  |  |
+| Commands Traced Outside The Audit | 5 |  | 5 |  |  |  |  |  |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
@@ -56,7 +56,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 |  | 4 |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 1 | 32 |  |  |  |  |  |
-| **All** | **680** | **566** | **70** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **681** | **566** | **71** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -428,6 +428,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 |---|---|---|---|---|
 | `pro.cut_reel` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.cut_reel`: `tests/pro-core.test.ts` / 1 test files |
 | `pro.headshots` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.headshots`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts` / 2 test files |
+| `pro.join_sag` | Be paid for professional work: each payment promised when the work is accepted and paid once on its day, through the agency’s client trust … | Implemented, Verification Incomplete | capability Implemented | `pro.join_sag`: `tests/propay-screen.test.ts`, `tests/propay.test.ts` / 2 test files |
 | `pro.set_name` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.set_name`: `tests/pro-core.test.ts` / 1 test files |
 | `pro.update_resume` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.update_resume`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts` / 2 test files |
 
@@ -902,7 +903,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (70)
+### Implemented, Verification Incomplete (71)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -918,6 +919,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`tax.request_waiver`** (Papers): Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…
 - **`pro.cut_reel`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.headshots`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
+- **`pro.join_sag`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.set_name`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.update_resume`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision

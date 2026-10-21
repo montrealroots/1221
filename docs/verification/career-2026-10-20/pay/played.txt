@@ -1,0 +1,27 @@
+NOTICE Your Equity Initiation Fee: You’re a member of Actors’ Equity Association from your degree. Its initiation fee is $1,800.00, paid within three years: $600.00 down is due now, then $600.00 on September 3, 2027 and $600.00 on September 3, 2028. Basic dues are $88.00 each May and November, from November 1, 2026.
+NOTICE Actors’ Equity Association: $600.00 Paid: Initiation fee, $600.00 down of $1,800.00: $600.00 was taken from your bank.
+
+=== Booked: The Calloway Files at scale plus ten, and two weeks of A House On Calder Street, both through the agent (September 8, 2026 at 10:00 AM)
+TRUST ACCOUNT none
+
+=== The Calloway Files’ payday (October 1, 2026 at 1:00 PM)
+NOTICE You Can Join SAG-AFTRA: Your part in The Calloway Files is a SAG-AFTRA principal role, so you can join SAG-AFTRA from today. A union contract can require you to be a member from the 30th day after your first job under it began, so SAG-AFTRA work from October 21, 2026 needs you to join first. Joining costs about $3,244.07: press Join SAG-AFTRA on the Career screen’s Work tab.
+NOTICE Pay Held For You At Stewart Talent: Bright Harbor Television paid $2,822.60 for The Calloway Files, the week of September 20, 2026, into Stewart Talent’s client trust account, less $215.93 withheld for tax. Stewart Talent passes it on to you by October 6, 2026, less $256.60 commission.
+TRUST ACCOUNT $2,606.67
+
+=== Passed on from the trust account, three business days on (October 6, 2026 at 1:00 PM)
+NOTICE Paid On From Stewart Talent: Stewart Talent passed on your pay for The Calloway Files, the week of September 20, 2026: $2,606.67 held for you, less $256.60 commission, so $2,350.07 went into your Chase Total Checking.
+STATEMENT October 6, 2026 at 12:00 PM  +$2,350.07  The Calloway Files, the week of September 20, 2026: paid on from Stewart Talent’s client trust account, less $256.60 commission  (balance $91,829.07)
+TRUST ACCOUNT $0.00
+
+=== A House On Calder Street’s first week, after the agreement ended: still commissioned (October 8, 2026 at 1:00 PM)
+NOTICE Pay Held For You At Stewart Talent: Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of September 27, 2026, into Stewart Talent’s client trust account, less $80.40 withheld for tax and $26.28 in Equity’s working dues. Stewart Talent passes it on to you by October 14, 2026, less $105.10 commission.
+TRUST ACCOUNT $944.32
+
+=== Its second week, and its pass-on (October 16, 2026 at 1:00 PM)
+NOTICE Paid On From Stewart Talent: Stewart Talent passed on your pay for A House On Calder Street, the week of September 27, 2026: $944.32 held for you, less $105.10 commission, so $839.22 went into your Chase Total Checking.
+NOTICE Pay Held For You At Stewart Talent: Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of October 4, 2026, into Stewart Talent’s client trust account, less $80.41 withheld for tax and $26.28 in Equity’s working dues. Stewart Talent passes it on to you by October 20, 2026, less $105.10 commission.
+STATEMENT October 14, 2026 at 12:00 PM  +$839.22  A House On Calder Street, the week of September 27, 2026: paid on from Stewart Talent’s client trust account, less $105.10 commission  (balance $92,588.29)
+TRUST ACCOUNT $944.31
+
+breaches: []
