@@ -240,23 +240,25 @@ either, with only a part written for the player or for either posted to them ("T
 different parts for each genders. We need versatility always.", `9c3b7ee8`). His id is in the draws' keys (`rngFor(seed,
 'pro.agent', person, agent.id, …)`) and who a part is written for is in what's posted, so each change told the same
 seed's story another way, and this walk's saves and pages showed an agent and parts the game no longer has. The life was
-played again and the built app walked again on branch `b19-rewalk5` from `63fe7391`, in a clone of its own; `walk/`
+played again and the built app walked again on branch `b19-rewalk6` from `ef2ab8b9`, in a clone of its own; `walk/`
 stays as the record of what was walked then.
 
-Three walks before this one were made and superseded the same day, each kept in the history and its pages replaced in
-`walk-fictional/`. The walk on `59da1351` (seed `app-walk-112`; `e5eed350` here) held at both widths on the same 52
+Four walks before this one were made and superseded the same day, each kept in the history and its pages replaced in
+`walk-fictional/`. The walk on `59da1351` (seed `app-walk-112`; `49d75454` here) held at both widths on the same 52
 surfaces and found deferred pay said three ways, a part written for a man offered to an actress, the Agreement's ending
 term without "through him" and a Calendar entry without the trip its notice promised, which `9c3b7ee8` fixed. The walk
-on `9c3b7ee8` (defaults `app-walk-112`, `156`, `311`, `564`; `3431153b` here) held the same, and found an actress judged
+on `9c3b7ee8` (defaults `app-walk-112`, `156`, `311`, `564`; `06a538f1` here) held the same, and found an actress judged
 at two auditions in person at one hour in two towns, and the actor's part Theo given as a classmate's name, Theo
 Sullivan, which `a43b4f8f` fixed ("Two career commitments whose trips meet can't both be gone to; the film's part named
-as no classmate is"). The walk on `a43b4f8f` (defaults `app-walk-112`, `156`, `311`, `374`; `246e30bd` here) held the
+as no classmate is"). The walk on `a43b4f8f` (defaults `app-walk-112`, `156`, `311`, `374`; `80e5e024` here) held the
 same, and found the clock running past the second of two auditions set for one hour, missed and said only afterwards,
 though On The Way said it stops at each one; `40eab86a` made the stop and On The Way say so. `40eab86a`'s build was
 blank on every page ("Cannot access 'Xb' before initialization", `Xb` being the bundle's `MEETING_KIND`): a Set it made
 as `projobs.ts` loaded read `MEETING_KIND` across the career systems' import ring before `proagent.ts` had run, which
 the suite's module runner didn't show; `63fe7391` reads the kinds when asked, and its suite now loads the bundle in the
-build's order.
+build's order. The walk on `63fe7391` (`a529bafc` here) held the same, and found On The Way still opening with "The
+clock stops at each one so you can choose" above its new line saying the clock stops only at the first of the two, which
+`ef2ab8b9` made "The clock stops at one of them so you can choose". This walk, on `ef2ab8b9`, found nothing new.
 
 | Item | Status |
 |---|---|
@@ -264,7 +266,7 @@ build's order.
 | V17's automated half | Held at both widths on the same 52 surfaces (`walk-fictional/`) |
 | The built app | Loads, with no page error, before a save and after one |
 | Two commitments at once | Never: no two she went to meet or fall on one day; each clash's second was missed, saying where she was |
-| The stop at a clash | The stop names the clash and says the second is missed and the clock won't stop at it, and the clock does so (`clash-stop.mjs`, `clash-stop.txt`); On The Way still opens by saying it stops at each one |
+| The stop at a clash | The stop names the clash and says the second is missed and the clock won't stop at it; On The Way says the clock stops at one of the two and names it; and the clock does so (`clash-stop.mjs`, `clash-stop.txt`) |
 | The guide's deferred pay | How This Works' entries 45 and 50 give the why, saying "a student film" once a sentence; 48 says who a part is written for |
 | Defect 3, asked of him | Nobody in the played life is named Thomas, Ashgrove or anything near either, and no part shares a classmate's name (`ashgrove.ts`, `ashgrove.txt`) |
 | A part written for an actor | Never shown to this life: not in its saves, its notices or the walk's pages |
@@ -281,10 +283,10 @@ its draw reads only the seed and his id. On `a43b4f8f` each was played by itself
 same 0.09 (Your Work, Training And Experience and Room On His List near the bar), so the School passed on no request and
 his office passed on May 25; 112, 156, 311 and 374 each reached all nine with `breaches` empty at every save. The
 defaults are those four, in that order, and the header says how they were chosen and what they were on each commit
-before. `40eab86a` and `63fe7391` changed what the stop says and when the work's kinds are read, not what's played: on
-each, the owner's command, run with no seed, wrote nine saves the same to the byte as on `a43b4f8f`, 112's alone, in
-about 30 seconds, and on `40eab86a` the other three seeds' saves were the same to the byte too. Its log is
-`make-saves.log`; the real agent's life, which the sections above call `make-saves.log`, was moved to
+before. `40eab86a`, `63fe7391` and `ef2ab8b9` changed what the stop and On The Way say and when the work's kinds are
+read, not what's played: on each, the owner's command, run with no seed, wrote nine saves the same to the byte as on
+`a43b4f8f`, 112's alone, in about 30 seconds, and on `40eab86a` the other three seeds' saves were the same to the byte
+too. Its log is `make-saves.log`; the real agent's life, which the sections above call `make-saves.log`, was moved to
 `make-saves-real-agent.log`.
 
 The life, as it went, the same as on `59da1351` and `9c3b7ee8` to the agreement and the same as on `a43b4f8f`
@@ -310,8 +312,8 @@ PM, `meeting` May 25 at 8 AM, `offered` May 30 at 11 AM, `audition` June 5 at 7 
 
 ### The Walk
 
-`npm run build` (`walk-fictional/build.txt`), the clone's `dist/` served by `vite preview` on port 4198
-(`walk-fictional/served.txt`: the page served is `dist/index.html`, build `assets/index-7un1CKgb.js`, at `63fe7391`).
+`npm run build` (`walk-fictional/build.txt`), the clone's `dist/` served by `vite preview` on port 4199
+(`walk-fictional/served.txt`: the page served is `dist/index.html`, build `assets/index-QCJfMxJP.js`, at `ef2ab8b9`).
 The page was read first, before a save was put in its slot and after: it loaded with no page error. Then `app-walk.mjs`
 at 1440 by 900 and 390 by 844 on the new saves, as above. One change to the walk, made for the walk on `59da1351`: its
 Calendar step looked for "Meeting At Stewart Talent", and with Halberd Talent's name on the item it would have found
@@ -333,7 +335,8 @@ two rows, 25 px inside the dialog; without the footer's wrapping it ran 17.3 px 
 Each page's words were set beside the first walk's (`walk/<width>/NN-*.txt`) and the walks' before this one, the agent's
 and agency's names counted as one. At every surface the words that differed at 390 were the words that differed at 1440,
 but for where a holiday's ✦ fell in the 1440 month grid's comparison against the first walk (30). Against the walk on
-`a43b4f8f`, every surface but 26, 45 and 50 read the same word for word, at both widths. What differed, by its cause:
+`a43b4f8f`, every surface but 26, 45 and 50 read the same word for word, at both widths; against the walk on `63fe7391`,
+every surface but 26, whose On The Way opens with the clock stopping at one of the two. What differed, by its cause:
 
 - **The agent.** His name and agency. The fictional line, on ten of the first walk's pages, is on none: his panel's
   notice (surface 03) says he and his agency are invented for the game. The real agency's published words on submissions
@@ -345,30 +348,32 @@ but for where a holiday's ✦ fell in the 1440 month grid's comparison against t
   (Room On His List near the bar this time: room for one lead aged 30 to 40 and one featured actor; five of seven at the
   bar; an offer about 21%), the roles, offers, booked work and their dates, the stops and the Calendar's items, the pay,
   the unions (SAG-AFTRA open to her, 19) and Money's statement.
-- **The fixes of `9c3b7ee8`, `a43b4f8f` and `40eab86a`, where they were found.** The Ending It term says "no real offer
-  of covered work through him" (09, 10, 17), and at `paid.json` End It: No Offer In 90 Days is grayed until December 6,
-  2029, counting from his last offer and the two days she was employed (17). The Calendar's entries say "Getting there
-  takes two hours each way, and the trip is part of it." (29, 31). The offer's card says "Written for an actor or an
-  actress." (12), Desk Clerk being the one offer. How This Works gives deferred pay's why, "a student film" once a
-  sentence: "Work you've booked. A student film's pay is deferred: it's paid only if the film earns money later, and no
-  film in the game does, so it's listed and never paid." and "Deferred pay is shown and never paid: a student film pays
-  its actors only if it earns money later, and no film in the game does." (45), "… it's paid only if the film earns
-  money later, and no film in the game does, so nothing is paid." (50); deferred pay itself is on none of this life's
-  career pages, which booked no student film. Finding Work's entry says "who it's written for", and "you're posted only
-  the ones written for you or for either" (48); the Open Calls card shows it from the same lines as the offer's
-  (`RoleFacts`), though no walked save had an open call on screen. A clash's second is missed and says where she was, in
-  Settled (12, 13, 18: "Ivy, Paper Moons: You were at the audition for Nell in New York, so you missed the audition for
-  Ivy on August 27, 2029 at 11:00 AM, and the film's director moved on without you.") and in its notice. And the stop at
-  the first of two (26) says "It clashes with Audition: Ivy, Paper Moons at 11:00 AM. Each trip is from home and back,
-  so you can be at only one, and it's this one, the first the clock reaches: that one is missed, and the clock won't
-  stop at it.", and On The Way "Audition: Hester Vane, The Winter Ledger and Audition: Ivy, Paper Moons clash: each trip
-  is from home and back, so you can be at only one. The clock stops only at Audition: Hester Vane, The Winter Ledger,
-  and Audition: Ivy, Paper Moons is missed." `clash-stop.mjs` pressed Go at that stop: the clock ran to 6:00 PM with no
-  stop at Ivy's, and Settled said it was missed and where she was, as the stop had said (`clash-stop.txt`).
+- **The fixes of `9c3b7ee8`, `a43b4f8f`, `40eab86a` and `ef2ab8b9`, where they were found.** The Ending It term says "no
+  real offer of covered work through him" (09, 10, 17), and at `paid.json` End It: No Offer In 90 Days is grayed until
+  December 6, 2029, counting from his last offer and the two days she was employed (17). The Calendar's entries say
+  "Getting there takes two hours each way, and the trip is part of it." (29, 31). The offer's card says "Written for an
+  actor or an actress." (12), Desk Clerk being the one offer. How This Works gives deferred pay's why, "a student film"
+  once a sentence: "Work you've booked. A student film's pay is deferred: it's paid only if the film earns money later,
+  and no film in the game does, so it's listed and never paid." and "Deferred pay is shown and never paid: a student
+  film pays its actors only if it earns money later, and no film in the game does." (45), "… it's paid only if the film
+  earns money later, and no film in the game does, so nothing is paid." (50); deferred pay itself is on none of this
+  life's career pages, which booked no student film. Finding Work's entry says "who it's written for", and "you're
+  posted only the ones written for you or for either" (48); the Open Calls card shows it from the same lines as the
+  offer's (`RoleFacts`), though no walked save had an open call on screen. A clash's second is missed and says where she
+  was, in Settled (12, 13, 18: "Ivy, Paper Moons: You were at the audition for Nell in New York, so you missed the
+  audition for Ivy on August 27, 2029 at 11:00 AM, and the film's director moved on without you.") and in its notice.
+  And the stop at the first of two (26) says "It clashes with Audition: Ivy, Paper Moons at 11:00 AM. Each trip is from
+  home and back, so you can be at only one, and it's this one, the first the clock reaches: that one is missed, and the
+  clock won't stop at it.", and On The Way "passes two commitments. The clock stops at one of them so you can choose:
+  press Go to be there and carry on, or Stand Here to stop the clock there." and "Audition: Hester Vane, The Winter
+  Ledger and Audition: Ivy, Paper Moons clash: each trip is from home and back, so you can be at only one. The clock
+  stops only at Audition: Hester Vane, The Winter Ledger, and Audition: Ivy, Paper Moons is missed." `clash-stop.mjs`
+  pressed Go at that stop: the clock ran to 6:00 PM with no stop at Ivy's, and Settled said it was missed and where she
+  was, as the stop had said (`clash-stop.txt`).
 - **Anything else: one sentence.** How This Works: The Agreement (44) says End It: No Offer In 90 Days needs "the days
   you're employed on covered work not counted", which `728b4972` added after the first walk's build (`8bac3141`). It is
-  the only difference from the first walk that neither the agent, the life nor the fixes account for. Against the walk
-  on `a43b4f8f`, there is none.
+  the only difference from the first walk that neither the agent, the life nor the fixes account for. Against the walks
+  on `a43b4f8f` and `63fe7391`, there is none.
 
 This life reaches most of what the first walk read: two auditions in progress at once and On The Way listing both (11,
 26), promised pay with commission expected over scale at the work day (14), commission on a finished engagement and a
@@ -387,15 +392,11 @@ A part written for an actor is never shown to it. The nine saves hold 56 roles: 
 Nell 2, Wren 2 and Desk Clerk 1, none of them Callum, Tobias Marsh, Ferris or Felix; no notice of the career names one
 of those four; nor does any line of the walk's pages.
 
-Found by reading the new pages, and not fixed:
+Found on the walks before this one, and not fixed unless said (this walk found nothing new):
 
-- **On The Way says two things of a clash that can't both be true.** Its first sentence, as before `40eab86a`, still
-  says "passes two commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or
-  Stand Here to stop the clock there."; the line `40eab86a` added under it says "The clock stops only at Audition:
-  Hester Vane, The Winter Ledger, and Audition: Ivy, Paper Moons is missed." (26, at both widths; `clash-stop.txt`). The
-  clock does as the second says. The opening sentence is On The Way's own (`TimeControls.tsx`), and wasn't made to
-  agree. Smaller, in the stop's new line: "you can be at only one, and it's this one, the first the clock reaches: that
-  one is missed" names the two by "this one" and "that one" where On The Way names them.
+- Found on `63fe7391` and answered by `ef2ab8b9`: On The Way opened with the clock stopping at each one above its line
+  saying it stops only at the first, and now opens "The clock stops at one of them so you can choose". The stop's "it's
+  this one … that one is missed" was left, the dialog's title naming this one.
 - Found on `a43b4f8f` and answered in words by `40eab86a`: the stop at the first of two auditions at one hour said
   nothing of the second, which the clock then ran past; and How This Works' deferred-pay sentences named "a student
   film" twice in one sentence.
@@ -426,10 +427,12 @@ classmate called Jordan Kim, on its surface 20, whose seed `jordan.ts` didn't pl
 `playtest-check.mjs`, as its header says: the build above with the nine saves in `dist/saves`, `npx vite preview --port
 4291`. Each of `last-term.json`, `follow-up.json` and `paid.json` opened, Continue went into it, and the Career screen
 opened, at January 8, May 11 and October 11, 2029, with no page errors (`../playtest-check.txt`, its first line naming
-the build and the day). On `40eab86a`'s build it stopped at the first save, where no Continue was drawn.
-`../PLAYTEST.md` still names the real agent, his fictional line, the first walk's folder and commit, and in step 4 a
-stop at each audition, which this life's clash doesn't give, as the stop now says; those lines were passed on to be
-corrected where that file is kept.
+the build and the day). On `40eab86a`'s build it stopped at the first save, where no Continue was drawn. As this walk
+was made, `../PLAYTEST.md` named the real agent, his fictional line, the first walk's folder and commit, and in step 4 a
+stop at each audition, which this life's clash doesn't give; those lines were passed on, and `6ae8fca0` rewrote the
+route for this life, where this walk's pages bear it out but for two small points: step 4 says the two auditions'
+notices said they clash, where only Ivy's did, and step 5's "what's paid over scale" is the work day's promised line,
+not the line paid on, which says "Commission: $280.40, taken before it reached you."
 
 ### What The Sections Above Say That Is No Longer True Of The Game
 

@@ -1,4 +1,4 @@
-The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk5-saves):
+The life make-saves.ts plays on app-walk-112, played again by it into a folder of its own, against the walk's saves (rewalk6-saves):
   last-term.json: the same to the byte
   after-new-york.json: the same to the byte
   follow-up.json: the same to the byte

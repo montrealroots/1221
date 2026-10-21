@@ -1,3 +1,3 @@
-served page is this clone's dist/index.html (vite preview, port 4198)
-assets/index-7un1CKgb.js
-63fe7391 The built app loads again: the career commitments' kinds are read when asked, not as the work's module loads
+served page is this clone's dist/index.html (vite preview, port 4199)
+assets/index-QCJfMxJP.js
+ef2ab8b9 On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk)

@@ -7,7 +7,8 @@
  * `a43b4f8f`, it found On The Way saying the clock stops at each one, the first stop saying nothing of Ivy's, and the
  * clock running past Ivy's with no stop after Go. From `40eab86a` the stop names the clash and says Ivy's is missed and
  * the clock won't stop at it, and On The Way names the pair; run on `63fe7391`, the clock did as they say, though On
- * The Way still opened by saying it stops at each one.
+ * The Way still opened by saying it stops at each one. `ef2ab8b9` made that "at one of them", and run on it the
+ * dialog's two sentences agreed with each other and with the clock.
  *
  *   node docs/verification/career-2026-10-20/app/clash-stop.mjs BASE SAVEDIR > OUT.txt
  */
