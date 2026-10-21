@@ -176,6 +176,13 @@ describe('G4 and G6: the factors, the draw, and a reload that can’t redraw', (
     expect(f.reliability).toMatchObject({ level: 'at', words: 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.' });
     expect(f.roster!.words).toMatch(/^Assumed for 2026: room for .+\. Your record shows you as a lead, aged 24, so .+\. How many new actors his list takes on in a year, and of which types, is assumed in the game\. The game knows nothing of his real list and uses none of it\.$/);
     expect(i.gate).toBe(true);
+    // A first-year with nothing his office could go on is short of the gate: four needed, fewer at the bar.
+    const first = student('agent-first-year');
+    const raw = interestOf(first, first.player, AGENT, first.now);
+    expect(raw.factors.find((x) => x.id === 'work')).toMatchObject({ level: 'short' });
+    expect(raw.atOrBeyond).toBeLessThan(4);
+    expect(raw.gate).toBe(false);
+    expect(raw.chance).toBe(0);
     sim.must({ kind: 'pro.send_materials', payload: {} });
     tended(sim, at(2026, 9, 17, 12));
     expect(rel(sim).why).toMatchObject({ step: 'reply', outcome: 'pass', atOrBeyond: i.atOrBeyond, needed: 4 });
@@ -256,6 +263,8 @@ describe('W3: the School’s follow-up after the showcase', () => {
     expect(said[0]).not.toMatch(/\b(attended|saw you|was at the showcase)\b/);
     // The showcase is among the work his office has to go on, by its judged band.
     expect(rel(sim).why!.factors[0]).toMatchObject({ id: 'work', level: 'at', words: 'His office has your showcase scenes, as the School recorded them, at best Strong.' });
+    // Introduced, but not sent until the materials are checked.
+    expect(run(sim, 'pro.send_materials').error).toBe('Check your materials first: Check Your Materials says whether an approach has what it needs.');
     sim.must({ kind: 'pro.agent_check', payload: {} });
     sim.must({ kind: 'pro.send_materials', payload: {} });
     expect(rel(sim).history.at(-1)!.words).toBe('You sent your headshots and your résumé to his office, after the School’s follow-up, answering its request to meet.');

@@ -552,8 +552,9 @@ export function referralRefusal(sim: Simulation, person: Person, agent: Agent, e
   if (soon) return soon;
   const job = referrersOf(sim, person, agent).find((r) => r.engagementId === engagementId);
   if (!job) return 'A referral comes from a job you’ve finished, and that isn’t one.';
-  if (job.why) return job.why;
-  return blocking(person, sim.now);
+  // The materials aren't checked again here: a referral needs a passed check, and materials are never taken away (the
+  // core keeps the last six of each kind), so a check here could never refuse; its mutation survived, and it went.
+  return job.why;
 }
 
 /** Whether the School's passed-on request to meet still stands for this agent, and until when. */
@@ -577,7 +578,9 @@ export function sendRefusal(sim: Simulation, person: Person, agent: Agent): stri
     return `${agency.name}’s page for ${agency.office.city} ${agency.department.called.toLowerCase()} submissions says: “${agency.policy.quote}” The game keeps to it: his office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
   }
   if (!countOf(rel, 'checked')) return 'Check your materials first: Check Your Materials says whether an approach has what it needs.';
-  return tooSoon(sim, rel) ?? nothingNew(sim, person, rel) ?? blocking(person, sim.now);
+  // No materials check here either, for the referral's reason: a send needs a passed check, and nothing takes the
+  // headshots or the résumé away again.
+  return tooSoon(sim, rel) ?? nothingNew(sim, person, rel);
 }
 
 /** Why what his office asked for can't be sent yet, or nothing. */

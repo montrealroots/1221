@@ -295,6 +295,8 @@ describe('V7: a meeting missed, and one moved and kept', () => {
     expect(rel(sim).stage).toBe('passed');
     expect(notices(sim).at(-1)).toBe('You Missed The Meeting: You missed the meeting with Jordan Parente’s office at Stewart Talent at 11:00 AM on September 25, 2026. In the game a meeting comes before an offer, so his office closed your approach. It looks again only after a year, from September 25, 2027, and then only at something new. Fictional: his words and decisions here are invented.');
     expect(keys(sim).slice(-2)).toEqual([`meeting:${m.id}:missed`, `decision:${m.id}:passed`]);
+    // The miss counts against Reliability in the decision it closed.
+    expect(rel(sim).why!.factors.find((f) => f.id === 'reliability')).toMatchObject({ level: 'near', words: 'You missed one meeting.' });
 
     // The other life: the clock stops at the meeting, and Ask To Move there moves it a week and carries the jump on.
     let other = prepared();
