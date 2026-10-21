@@ -728,9 +728,17 @@ function transactionsBetween(sim: Simulation, account: Account, from: Instant, t
   return { count, wages };
 }
 
+/**
+ * A loan's next payment after a moment: on the day of the month it was taken, or the month's last day where the month is
+ * shorter, as the payment schedule a lender discloses when the loan is made (Reg Z §1026.18(g)) is a day of each month.
+ * From 2026-10-21 (brief 20's money audit): until then each payment was set a calendar month after the one before, so a
+ * loan taken on 31 October was paid on 30 November, 30 December, 30 January, 28 February and on the 28th from then on.
+ */
 function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
+  let months = 1;
+  while (addMonths(loan.openedAt, months, sim.homeZone) <= after) months += 1;
   sim.schedule({
-    at: addMonths(after, 1, sim.homeZone), kind: LOAN_DUE_KIND, label: 'World Simulation', category: 'system', priority: 85,
+    at: addMonths(loan.openedAt, months, sim.homeZone), kind: LOAN_DUE_KIND, label: 'World Simulation', category: 'system', priority: 85,
     refType: 'account', refId: loan.id, payload: { accountId: loan.id },
   });
 }
