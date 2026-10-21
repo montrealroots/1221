@@ -699,7 +699,9 @@ function PersonalityStep({ config, setConfig }: {
               <li>how sharp you are in the morning or the evening;</li>
               <li>which part of preparing a scene goes furthest;</li>
               <li>how you warm to classmates, and how much a slight from one hurts;</li>
-              <li>and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.</li>
+              {/* Until 2026-10-21 (brief 20) this said Generous moved how much a meal lifts you as well: Generous moves what
+                  food costs and how fast you warm to a classmate, and declares no `mealMood`. */}
+              <li>and, for Frugal, Spender and Generous, what your food costs, and for Frugal and Spender how much a meal lifts you.</li>
             </ul>
             <p className="muted small" style={{ marginTop: 'var(--s2)' }}>
               A trait’s description and cost describe the whole person, but the game uses only the effects above.

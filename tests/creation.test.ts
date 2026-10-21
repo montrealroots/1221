@@ -16,6 +16,7 @@
 
 import { createSave,defaultConfig,migrate,refreshMeta } from '@/engine';
 import { CITIES } from '@/engine/content/geography';
+import { choosesWealth, newLifeConfig, newLifeFrom } from '@/engine/world/bootstrap';
 import { ceilingAt } from '@/engine/content/lifespan';
 import { settledTitle } from '@/engine/core/performer';
 import { yearOf } from '@/engine/systems/earnings';
@@ -232,11 +233,21 @@ describe('Starting Point', () => {
     expect(SOURCE).not.toContain('function MonthByMonth');
   });
 
-  it('asks where you live and what you start with', () => {
+  // Until 2026-10-21 (brief 20) this was called "asks where you live and what you start with", and held that the step's
+  // source had the controls: no player meets them. They're drawn only for a life outside the School, and creation begins
+  // every life at it (`newLifeConfig`, `newLifeFrom`), the family chosen on Genres & Background, so `livesWhereBorn` is
+  // written there and read by nothing a player's life reaches (docs/verification/audit-2026-10-21/areas/creation/REPORT.md).
+  it('asks where you live and what you start with only for a life outside the School, which creation never begins', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
-    expect(step).toContain('id="live-here"');
-    expect(step).toContain('idPrefix="live"');
-    expect(step).toContain('id="wealth"');
+    const outside = step.slice(step.indexOf('{!config.school && (<>'));
+    expect(outside.indexOf('id="live-here"')).toBeGreaterThan(0);
+    expect(outside.indexOf('idPrefix="live"')).toBeGreaterThan(0);
+    expect(step).toContain('{choosesWealth(config) && (');
+    expect(step.indexOf('id="wealth"')).toBeGreaterThan(step.indexOf('{choosesWealth(config) && ('));
+    for (const config of [newLifeConfig(), newLifeFrom({}), newLifeFrom({ school: undefined, startLocationId: 'us-ny-newyork' })]) {
+      expect(config.school).toBe('yale-drama');
+      expect(choosesWealth(config)).toBe(false);
+    }
   });
 
   it('puts the player where they said they live, on that place’s clock', () => {
