@@ -24,3 +24,9 @@ I18 (Q17) the request's refusal for headshots older than the request taken out |
 I19 (Q14) a member's résumé without SAG-AFTRA | src/engine/systems/pro.ts (resumeNow) | tests/journey-career.test.ts 'Join SAG-AFTRA after her first SAG-AFTRA principal job began' (the résumé made after she joined) | KILLED (it survived)
 I20 commission owed only while an agreement is in force, not on a contract made under one | src/engine/systems/propay.ts (owedAgreement) | tests/journey-career.test.ts 'End It By Agreement before a job’s pay comes leaves his commission owed on it' | KILLED
 I21 the ending's notice saying nothing is owed with pay still to come | src/engine/systems/proagent.ts (stillOwed) | the same test | KILLED
+
+Mutations at the tests for what the audit's third reading found unread (2026-10-21), its own run again, and the employment check as it was.
+I22 (the audit's R8) a better reel not counted as something new | src/engine/systems/proagent.ts (caseKeys) | tests/journey-agent.test.ts 'a year on, a better reel alone is something new for his office' | KILLED (it survived the audit's reading)
+I23 (R9) Equity's refusal while employed taken out | src/engine/systems/proagent.ts (endRefusal) | tests/journey-career.test.ts 'Equity’s ending with no offer is refused while she’s employed on covered work through him' | KILLED (it survived)
+I24 the employment check back to a work day's own hours, as it was until this fix | src/engine/systems/proagent.ts (workingNow) | the same test (life A between her two shoot days) | KILLED
+I25 (R10) a referral not refused while an approach is held or under way | src/engine/systems/proagent.ts (referralRefusal) | tests/journey-agent.test.ts 'a year on, a referral alone is something new for his office' (asked during the pass's year, and after the second send) | KILLED (it survived)

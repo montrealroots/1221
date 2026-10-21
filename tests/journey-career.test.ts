@@ -499,6 +499,23 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(reachOf(projectById('calloway-files')!, before.player.pro!.agreements[0])).toBe('agent');
   });
 
+  it('Equity’s ending with no offer is refused while she’s employed on covered work through him, between its work days as on them, and not once it’s finished', () => {
+    // From the audit's third reading (2026-10-21): with this refusal taken out every test still passed, and it read only
+    // a work day's own hours, which the clock passes whole. Life A's save from the evening she joined SAG-AFTRA, between
+    // her two shoot days.
+    const sim = opened('sag-joined');
+    const job = sim.player.pro!.engagements.find((e) => e.projectId === 'calloway-files')!;
+    expect(job.days.some((d) => d.from <= sim.now && sim.now <= d.to)).toBe(false);
+    expect(job.days[0]!.from).toBeLessThan(sim.now);
+    const words = 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';
+    expect(endRefusal(sim, sim.player, AGENT, 'no-offer')).toBe(words);
+    expect(sim.execute({ kind: 'pro.end_agreement', payload: { how: 'no-offer' } }).error).toBe(words);
+    expect(sim.player.pro!.agreements[0]!.status).toBe('accepted');
+    // Finished, the rule's own days are what's read: the offer for this job was too recent.
+    const wrapped = opened('wrapped');
+    expect(endRefusal(wrapped, wrapped.player, AGENT, 'no-offer')).toMatch(/^Equity’s rule lets you end it once 90 days go by with no real offer of covered work through him\. His last came on /);
+  });
+
   it('End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes', () => {
     // From the audit's second reading (2026-10-21): the commission still owed after an ending was read only on agreements
     // ended by hand, and life A's played ending left nothing to pay. A twin of life A from its save the day the shoot

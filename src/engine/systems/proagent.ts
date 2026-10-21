@@ -679,9 +679,15 @@ export function coveredDays(person: Person, agreement: Agreement, from: Instant,
   return days.size;
 }
 
-/** Whether covered work under the agreement is going on now: Equity's rule doesn't let it be ended then (S27). */
+/**
+ * Whether she's employed now on covered work under the agreement, from its first work day until it's finished: Equity's
+ * rule doesn't let it be ended then ("You may not terminate if you are currently employed", S27). Until 2026-10-21 this
+ * read only a work day's own hours, which the clock passes whole once the player goes at its stop, so no player could
+ * meet the refusal (found by the audit's third reading, its mutation R9 surviving). ASSUMPTION: the employment begins on
+ * the first work day, not at the booking.
+ */
 const workingNow = (person: Person, agreement: Agreement, at: Instant): boolean =>
-  (person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && e.days.some((d) => d.from <= at && at <= d.to));
+  (person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && (e.days[0]?.from ?? Infinity) <= at);
 
 export type EndHow = Exclude<EndedHow, 'term'>;
 

@@ -38,6 +38,7 @@ import { HISTORY_KEPT, activeAgreement, addCredit, currentOf, eligibilityOf, typ
 import { MEETING_KIND, interestOf, newSince, nextStep, referrersOf, relationOf, sendRefusal, stillOwed, supplyRefusal } from '@/engine/systems/proagent';
 
 const zone = 'America/New_York';
+const BAND_RANK: Readonly<Record<Band, number>> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
 const AGENT = AGENTS[0]!;
 const PERSON = 'person_000001';
@@ -325,6 +326,9 @@ describe('V6 and G4: a pass, an approach refused too soon or with nothing new, a
     tended(sim, at(2026, 10, 1, 12));
     sim = cross(sim);
     expect(rel(sim).stage).toBe('passed');
+    // Held: a referral waits with the approach (from the audit's third reading: with this refusal and the one while an
+    // approach is under way taken out, every test still passed).
+    expect(run(sim, 'pro.ask_referral', { engagementId: second.id }).error).toMatch(/^His office passed on September \d+, 2026\. In the game his office looks again only after a year, from September \d+, 2027, and then only at something new\.$/);
     tended(sim, at(2027, 10, 2, 12));
     sim = cross(sim);
     expect(sendRefusal(sim, sim.player, AGENT)).toMatch(/^His office already looked at everything on your record, on September \d+, 2026\. In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral\.$/);
@@ -332,6 +336,36 @@ describe('V6 and G4: a pass, an approach refused too soon or with nothing new, a
     expect(newSince(sim.player, rel(sim))).toEqual([`referral:${second.id}`]);
     expect(sendRefusal(sim, sim.player, AGENT)).toBeUndefined();
     expect(sim.must<{ approach: number }>({ kind: 'pro.send_materials', payload: {} }).approach).toBe(2);
+    // Under way: refused with where the approach stands. TEST SETUP: a third job finished, judged Strong.
+    const third = finishedJob(sim, 'strong', 'route-nine');
+    expect(run(sim, 'pro.ask_referral', { engagementId: third.id }).error).toBe('Your materials went to his office on October 2, 2027, and its answer is still to come.');
+  });
+
+  it('PLAYER JOURNEY: a year on, a better reel alone is something new for his office: the same reel is refused, and one cut from a prepared tape lets the next approach through', () => {
+    // From the audit's third reading (2026-10-21): with the reel's bands taken out of `caseKeys` every test still passed,
+    // though the pass's notice tells the player a better reel counts. The reel is cut from a camera brief taped cold first,
+    // then the same brief prepared on the Player Profile and taped again.
+    const seed = seedWhere('agent-v6', (d) => passes(d(1, 'interest')) && d(2, 'interest') < SURE.meet);
+    let { sim } = referredGraduate(seed);
+    reel(sim);
+    const cold = currentOf(sim.player.pro, 'reel')!.pieces![0]!.band;
+    sim.must({ kind: 'pro.send_materials', payload: {} });
+    tended(sim, at(2026, 10, 1, 12));
+    sim = cross(sim);
+    expect(rel(sim).stage).toBe('passed');
+    tended(sim, at(2027, 10, 2, 12));
+    sim = cross(sim);
+    expect(sendRefusal(sim, sim.player, AGENT)).toMatch(/^His office already looked at everything on your record/);
+    const brief = BRIEFS.find((x) => x.medium === 'camera')!;
+    for (const step of ['read', 'lines', 'rehearse']) for (let i = 0; i < 12 && sim.execute({ kind: 'brief.prepare', payload: { brief: brief.id, step } }).ok; i += 1) tended(sim, sim.now + MS_HOUR);
+    sim.must({ kind: 'practice.self_tape', payload: { genre: brief.kinds[0], brief: brief.id } });
+    const take = sim.player.briefs![brief.id]!.takes.reduce((x, y) => (y.at > x.at ? y : x));
+    sim.must({ kind: 'pro.cut_reel', payload: { pieces: [`tape:${brief.id}:${take.at}`] } });
+    const better = currentOf(sim.player.pro, 'reel')!.pieces![0]!.band;
+    expect(BAND_RANK[better!]).toBeGreaterThan(BAND_RANK[cold!]);
+    expect(newSince(sim.player, rel(sim))).toEqual(expect.arrayContaining([`reel:${better}`]));
+    expect(newSince(sim.player, rel(sim)).every((k) => k.startsWith('reel:'))).toBe(true);
+    expect(sendRefusal(sim, sim.player, AGENT)).toBeUndefined();
   });
 });
 
