@@ -27,8 +27,12 @@ six years are out, and the record stops there).
 | Inherited | $163,043 | **$1,211,424**, 24 August 2032 | 11 | $0 |
 
 The wealthy life's limit passed what it held from October 2029, when its untouched savings, $413,168, went to the state's
-unclaimed-property office on 1 September 2029 (the bank's dormancy rule, `content/accountlife.ts`; the player can claim it
-back, `bank.claim_unclaimed`), and went on rising a fifth twice a year on no income.
+unclaimed-property office on 1 September 2029, and went on rising a fifth twice a year on no income. The savings going was
+the bank's dormancy rule as built, read by the money area (`areas/money/REPORT.md`): the measurement's clock touches
+nothing, and the bank's interest isn't the owner's activity (Conn. Gen. Stat. §3-57a(a)(1)). The player is told twice
+first, "Chase Savings Is Dormant" at thirty months and a decision on 1 June 2029, "Chase Is About To Hand Chase Savings
+To The State", whose Keep The Account keeps it; and `bank.claim_unclaimed` brings it back
+(`tests/b20-money-clock.test.ts`, on the money area's branch).
 
 ## The Rule Now
 
