@@ -339,7 +339,11 @@ function scan(sim: Simulation, rec: Rec, st: PolicyState, prev: { condition: num
     // one moment, by its score too (from 2026-10-21: the Actor Showcase's two scenes, both Your Showcase Scene, are shown
     // together, and each had read both records; brief 19's final runs). A record's overall is its piece's score × 100.
     const same = work.filter((w) => w.at === a.shown!.at && w.what === t.title);
-    const recs = same.length > 1 ? same.filter((w) => Math.abs(w.overall - a.shown!.score * 100) < 0.06) : same;
+    const byScore = same.length > 1 ? same.filter((w) => Math.abs(w.overall - a.shown!.score * 100) < 0.06) : same;
+    // Two pieces at one score too (F1's two scenes, both 61.8): paired one to one, so each has its own where there are as
+    // many records as pieces, and a record more than its pieces still fails.
+    const twins = byScore.length > 1 ? (cw?.assignments ?? []).filter((x) => x.shown?.at === a.shown!.at && x.template === a.template && Math.abs(x.shown.score - a.shown!.score) < 0.0006).length : 1;
+    const recs = byScore.length > 1 && byScore.length === twins ? byScore.slice(0, 1) : byScore;
     // As its showing read it: the round shown, for work in rounds (`shortAtShowing`; until 2026-10-17 this read the next
     // round's parts, J15's three "recurring" notes on table work counted as on a part not short).
     const short = shortAtShowing(p, a);
