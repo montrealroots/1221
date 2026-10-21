@@ -260,10 +260,10 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "84b6a52ea373",
-  "on": "2026-10-20",
-  "evidence": "Skip It and Call It Off carry the jump on and a refusal changes nothing, held beside the behavior by tests/time-controls.test.ts and tests/time-stops.test.ts",
-  "first": "Pending"
+  "hash": "ce338b9703ee",
+  "on": "2026-10-21",
+  "evidence": "each new sentence read against the code it describes on 2026-10-21 by the playthroughs: Ask To Move's stop (proagent defineStop, carry-on, once), a refusal changing nothing (world/clock answerStop), the trip carried (travelMinutes), an audition missed from a booked day of work (tests/pro-work.test.ts GUARD on double attendance), and each miss's cost (proagent MEETING_KIND, projobs missRound and missDay); tests/guide.test.ts holds the entry to the game's names",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten",
@@ -1959,6 +1959,20 @@
   "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/decided.ts#top [pro.roster]": {
   "status": "Rewritten",
   "hash": "d02a5a6b6572",
@@ -2360,9 +2374,9 @@
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
   "status": "Rewritten",
-  "hash": "219b4e15ae29",
+  "hash": "a6062e3a5d9d",
   "on": "2026-10-21",
-  "evidence": "The Calendar's legend as tests/calendar.test.ts draws it; paydays and union bills shown under Money in tests/propay.test.ts's played weeks",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: every entry the career books is drawn with the legend's Career row, which names auditions and callbacks, self-tapes, meetings, work days, an offer's last day and the answers to come, each read against the kinds the career schedules in the career category",
   "first": "Rewritten And Verified"
  },
  "src/engine/world/calendar.ts#skipTargets": {
@@ -2892,10 +2906,10 @@
  },
  "src/ui/looks/day.tsx#missCost": {
   "status": "Rewritten",
-  "hash": "0b6afe5010e8",
-  "on": "2026-10-20",
-  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (Classes' entry); held by tests/language-frame.test.ts, 'says a missed class is excused by a sick day called in, a hospital bed or an injury, as its handler excuses it'",
-  "first": "Pending"
+  "hash": "ac490e9c295a",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs",
+  "first": "Rewritten And Verified"
  },
  "src/ui/looks/day.tsx#quarterSentence": {
   "status": "Retained",
@@ -2927,10 +2941,10 @@
  },
  "src/ui/looks/day.tsx#top": {
   "status": "Rewritten",
-  "hash": "3884a8d9afb9",
-  "on": "2026-10-20",
-  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (tomorrow's day: 'You need to be at all of them.'); held by tests/language-frame.test.ts, 'says a day’s commitments as it, both or all of them…'",
-  "first": "Pending"
+  "hash": "2f6edcb8f6a1",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs",
+  "first": "Rewritten And Verified"
  },
  "src/ui/looks/day.tsx#top [observed]": {
   "status": "Retained",
@@ -3275,6 +3289,13 @@
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/shell/sections.ts#SECTIONS [overview]": {
   "status": "Rewritten",
   "hash": "0efc2e6be4c2",
@@ -3512,26 +3533,5 @@
   "on": "2026-10-19",
   "reason": "Says the address isn’t a screen in this game and offers Go Home, the one way back, in two lines.",
   "first": "Reviewed And Retained"
- },
- "src/engine/decided.ts#top [pro.casting]": {
-  "status": "Retained",
-  "hash": "463e16217581",
-  "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
-  "first": "Reviewed And Retained"
- },
- "src/engine/decided.ts#top [pro.posting]": {
-  "status": "Retained",
-  "hash": "9f5280e59f15",
-  "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
-  "first": "Reviewed And Retained"
- },
- "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
-  "status": "Rewritten",
-  "hash": "51b7a8a4c68a",
-  "on": "2026-10-21",
-  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
  }
 }

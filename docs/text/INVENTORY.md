@@ -9,20 +9,20 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 1327 | 15854 | 7 | 58 | 269 | 0 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 548 | 15004 | 0 | 31 | 20 | 0 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 548 | 15006 | 0 | 31 | 20 | 0 | 0 |
 | Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
-| Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
+| Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55971 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 289 | 1892 | 17556 | 0 | 264 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
-| Notifications, Invitations, Feedback And Generated Messages | 31 | 196 | 1119 | 0 | 4 | 27 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2563 | 15088 | 0 | 16 | 67 | 0 | 0 |
+| Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1152 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 195 | 758 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4542 | 38758 | 593674 | 316 | 1388 | 3154 | 0 | 0 |
+| **All** | 4542 | 38774 | 594014 | 316 | 1388 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -33,16 +33,16 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-pay | 30 | 1238 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 64 | 1937 | 64 | 0 | 0 | 0 |
-| frame | 505 | 33425 | 99 | 406 | 0 | 0 |
+| frame | 505 | 33748 | 99 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 264 | 54954 | 108 | 156 | 0 | 0 |
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
 | papers | 475 | 56967 | 106 | 369 | 0 | 0 |
-| profile | 621 | 55956 | 179 | 442 | 0 | 0 |
+| profile | 621 | 55971 | 179 | 442 | 0 | 0 |
 | school | 638 | 67352 | 185 | 453 | 0 | 0 |
-| tutorial | 51 | 15004 | 31 | 20 | 0 | 0 |
+| tutorial | 51 | 15006 | 31 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
 
@@ -51,18 +51,18 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 17 | 255 | 55 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 19 | 8 | 24 | 0 |
 | Home And Its Retained Actions | 19 | 5 | 9 | 5 | 0 |
-| Player Profile, Attributes, Genres, Mastery And Progression | 621 | 144 | 238 | 239 | 0 |
+| Player Profile, Attributes, Genres, Mastery And Progression | 621 | 146 | 238 | 237 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 126 | 352 | 188 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 119 | 376 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 150 | 225 | 100 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 289 | 264 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 29 | 37 | 17 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 32 | 37 | 14 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 12 | 27 | 6 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4542 | 963 | 2417 | 1162 | 0 |
+| **All** | 4542 | 968 | 2417 | 1157 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -423,7 +423,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/tutorial.ts#CHAPTERS [plans]` | 10 | 0 | Rewritten | tutorial | What Is It, When It Starts, How Long It Takes, Put It On, the Clash chip and Call It Off traced to PlanForm and EntryDetail in src/ui/workspaces/CalendarWorkspace.tsx; tests/defects-g2-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [weather]` | 9 | 0 | Rewritten | tutorial | tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter weather, and follow-1440/chapter-10-weather.txt; today’s weather opened | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [school]` | 55 | 0 | Rewritten | tutorial | tests/tutorial.test.ts and tests/guide.test.ts hold the chapter's opens and words; the Actor Showcase paragraph names the controls tests/pro-showcase.test.ts renders | Rewritten And Verified |
-| `src/engine/content/tutorial.ts#CHAPTERS [profile]` | 36 | 0 | Rewritten | tutorial | Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts | Rewritten And Verified |
+| `src/engine/content/tutorial.ts#CHAPTERS [profile]` | 36 | 0 | Rewritten | tutorial | tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [career]` | 29 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [representation]` | 27 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [finding-work]` | 25 | 0 | Rewritten | tutorial | Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects | Rewritten And Verified |
@@ -843,7 +843,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/craft.ts#CRAFT [immediate]` | 12 | 3 | Retained | profile | Each names one thing an action changes at once, with its figure where it has one: the clock's minutes, a new reading keeping half the breakdown, a take with a classmate adding to your bond | Rewritten And Verified |
 | `src/engine/content/guide/craft.ts#CRAFT [evaluation]` | 5 | 4 | Rewritten | profile | The entries' evaluation connections rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: practice's line names the abilities and techniques where practice left them, the genre's says it counts toward the take's interpretation, and the reader's says your own result counts nothing the reader brings | Pending |
 | `src/engine/content/guide/craft.ts#CRAFT [history]` | 8 | 3 | Retained | profile | Each says what the record keeps and which part of the Profile reads it back: School Journey's latest pieces in full, Range's genres, the habits and Playing With Others in Your Work So Far | Rewritten And Verified |
-| `src/engine/content/guide/craft.ts#CRAFT [craft.genre]` | 63 | 9 | Rewritten | profile | The Genres entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: Study It said with where it is and what it costs, and the example quoting the genre look's new summary | Pending |
+| `src/engine/content/guide/craft.ts#CRAFT [craft.genre]` | 63 | 9 | Rewritten | profile | tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing | Rewritten And Verified |
 | `src/engine/content/guide/craft.ts#CRAFT [craft.brief-prepare]` | 66 | 3 | Rewritten | profile | Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, the brief and how to open it, then the three steps and a step a day; the beats a turn leads into moved to Reading The Result; tests/guide-examples-craft.test.ts passes. | Pending |
 | `src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]` | 59 | 6 | Rewritten | profile | The reading and way-to-play entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: its short says where in the brief the two choices are, under Your Reading and How You'll Play It | Pending |
 | `src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]` | 63 | 13 | Rewritten | profile | Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, who reads and what earns a callback, then a recording against a classmate; how the take with the reader blends what they bring moved to Later On; tests/guide-examples-craft.test.ts passes. | Pending |
@@ -934,7 +934,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/components/AttributesPanel.tsx#AttributesPanel` | 7 | 0 | Rewritten | profile | the coordinator read the composure panel whole as the 1440 walk shows it on the School screen (after-1440/brief.json): the source note says how fast it changes in the game is estimated, money-data's form for a source's here; the rest kept, each sentence saying what composure does, how it grows and where to train it | Pending |
 | `src/ui/looks/actor.tsx#BAND_WORD` | 7 | 0 | Retained | profile | The band names exactly as the School screen and the Profile show them, Unready to Exceptional for a piece and An Off Night to Remarkable for a night, each a plain capitalized word the player already knows from their notes | Reviewed And Retained |
 | `src/ui/looks/actor.tsx#sourceWords` | 30 | 0 | Rewritten | profile | every development source printed through sourceWords in docs/verification/editorial-2026-10-19/profile/b1-looks.txt (render-looks.ts.txt) | Pending |
-| `src/ui/looks/actor.tsx#top` | 95 | 0 | Rewritten | profile | tests/guide-examples-craft.test.ts (the genre summary and the piece's foot line) and tests/decisions-stamina.test.ts (the old ruleset's line, exactly); every ability, genre and work look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt | Pending |
+| `src/ui/looks/actor.tsx#top` | 95 | 0 | Rewritten | profile | tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing | Rewritten And Verified |
 | `src/ui/workspaces/ProfileWorkspace.tsx#riskWords` | 4 | 0 | Rewritten | profile | tests/need-paths.test.ts asserts the line with no card exactly on the Profile drawn, and tests/evidence-g31-ui.test.ts the two with one | Pending |
 | `src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS` | 13 | 0 | Retained | profile | Each disposition named as creation names it, with what it does in creation's own words, so the player reads the same seven effects on both screens; the frame area keeps creation's wording | Rewritten And Verified |
 | `src/ui/workspaces/ProfileWorkspace.tsx#sleepOwed` | 2 | 0 | Retained | profile | The sleep owed in whole hours through the shared plural helper, or No sleep owed, a short stat note beside Energy and Stress that needs nothing more | Rewritten And Verified |
@@ -3435,7 +3435,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM` | 2 | 0 | Retained | frame | Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#RUN_COLD` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule. | Reviewed And Retained |
 | `src/engine/content/guide/day.ts#RUN_HOT` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule. | Reviewed And Retained |
-| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 58 | 0 | Rewritten | frame | Skip It and Call It Off carry the jump on and a refusal changes nothing, held beside the behavior by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 60 | 0 | Rewritten | frame | each new sentence read against the code it describes on 2026-10-21 by the playthroughs: Ask To Move's stop (proagent defineStop, carry-on, once), a refusal changing nothing (world/clock answerStop), the trip carried (travelMinutes), an audition missed from a booked day of work (tests/pro-work.test.ts GUARD on double attendance), and each miss's cost (proagent MEETING_KIND, projobs missRound and missDay); tests/guide.test.ts holds the entry to the game's names | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [prerequisite]` | 1 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First | Pending |
 | `src/engine/content/guide/day.ts#DAY [immediate]` | 11 | 0 | Retained | frame | Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [optional]` | 10 | 0 | Retained | frame | Lines under Worth Doing With It, each one plain sentence on why the two features go together. | Rewritten And Verified |
@@ -3473,9 +3473,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/looks/day.tsx#STATUS_WORD` | 5 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
 | `src/ui/looks/day.tsx#dayKindOf` | 5 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
 | `src/ui/looks/day.tsx#spokenWhen` | 1 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
-| `src/ui/looks/day.tsx#missCost` | 9 | 0 | Rewritten | frame | Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (Classes' entry); held by tests/language-frame.test.ts, 'says a missed class is excused by a sick day called in, a hospital bed or an injury, as its handler excuses it' | Pending |
+| `src/ui/looks/day.tsx#missCost` | 18 | 0 | Rewritten | frame | tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs | Rewritten And Verified |
 | `src/ui/looks/day.tsx#entryDetail` | 4 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
-| `src/ui/looks/day.tsx#top` | 117 | 0 | Rewritten | frame | Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (tomorrow's day: 'You need to be at all of them.'); held by tests/language-frame.test.ts, 'says a day’s commitments as it, both or all of them…' | Pending |
+| `src/ui/looks/day.tsx#top` | 120 | 0 | Rewritten | frame | tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs | Rewritten And Verified |
 | `src/ui/looks/day.tsx#top [observed]` | 8 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
 | `src/ui/looks/day.tsx#loadOf` | 5 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
 | `src/ui/looks/day.tsx#daySentence` | 11 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
@@ -3527,7 +3527,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/world/bootstrap.ts#defaultConfig` | 2 | 0 | Retained | frame | The placeholder name of a life made without creation, Alex Rivera, a plain name a tester or a quick save carries. | Reviewed And Retained |
 | `src/engine/world/bootstrap.ts#WEALTH_PROFILE` | 6 | 0 | Retained | frame | One line of character for each family, said to the player in their own terms, before the figures that follow it in the same callout. | Reviewed And Retained |
 | `src/engine/world/bootstrap.ts#createUniverse` | 1 | 0 | Retained | frame | A developer’s error for a place id the gazetteer lacks, thrown before any life exists; creation only offers places that are there. | Reviewed And Retained |
-| `src/engine/world/calendar.ts#CALENDAR_LEGEND` | 10 | 0 | Rewritten | frame | The Calendar's legend as tests/calendar.test.ts draws it; paydays and union bills shown under Money in tests/propay.test.ts's played weeks | Rewritten And Verified |
+| `src/engine/world/calendar.ts#CALENDAR_LEGEND` | 12 | 0 | Rewritten | frame | tests/journey-career-older.test.ts, J6 calendar: every entry the career books is drawn with the legend's Career row, which names auditions and callbacks, self-tapes, meetings, work days, an offer's last day and the answers to come, each read against the kinds the career schedules in the career category | Rewritten And Verified |
 | `src/engine/world/calendar.ts#skipTargets` | 3 | 0 | Retained | frame | Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of. | Reviewed And Retained |
 | `src/engine/world/clock.ts#defineStop` | 1 | 0 | Retained | frame | A developer's error, thrown when a system declares one kind's stop twice, at startup; no player ever reaches it, and it names the kind to fix. | Reviewed And Retained |
 | `src/engine/world/clock.ts#refusalOf` | 1 | 0 | Rewritten | frame | The fallback refusal a stop's choice says when its command gives no reason, the same words run() says; tests/time-stops.test.ts reads refusals | Rewritten And Verified |

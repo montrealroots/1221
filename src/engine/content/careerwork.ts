@@ -93,6 +93,19 @@ export const SAG_DAY_BY_YEAR: readonly { from: string; amount: number }[] = [
   { from: '2028-07-01', amount: 1_361_00 }, { from: '2029-07-01', amount: 1_402_00 },
 ];
 
+/**
+ * A rate's minimum on a day (`YYYY-MM-DD`): the SAG-AFTRA day performer's by its contract year (S30, `SAG_DAY_BY_YEAR`),
+ * every other as `RATES` has it. The work loop prices an offer by it on the work's first day (`rateOn`,
+ * `systems/projobs.ts`), and the pay measures a commission against the same scale (`scaleOf`, `systems/propay.ts`). Moved
+ * here from the work loop on 2026-10-21 (brief 19's playthroughs), when the pay was found reading `RATES`' 2026–27 figure
+ * for work from July 2027 on: a 2029 co-star offered scale plus ten paid its agent the full ten percent of the gross,
+ * which left the actor under scale.
+ */
+export function minimumOn(rate: Rate, day: string): number | undefined {
+  if (rate.id !== 'sag-tv-day') return rate.amount;
+  return [...SAG_DAY_BY_YEAR].reverse().find((r) => r.from <= day)?.amount ?? rate.amount;
+}
+
 // ---------------------------------------------------------------------------------------------------------------------
 // The unions
 // ---------------------------------------------------------------------------------------------------------------------

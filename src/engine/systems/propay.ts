@@ -84,13 +84,13 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
-import { MS_DAY, MS_HOUR, addDays, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, addDays, dateKey, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, federalStandardDeduction, LOCAL_TAX } from '../content/tax';
 import { exchange } from '../content/currency';
-import { AGREEMENT, RATES, UNIONS, projectById, type ProjectKind, type ProjectTemplate, type ProMedium } from '../content/careerwork';
+import { AGREEMENT, RATES, UNIONS, minimumOn, projectById, type ProjectKind, type ProjectTemplate, type ProMedium } from '../content/careerwork';
 import { agencyOf, agentById } from '../content/agents';
 import { activeAgreement, ensurePro, noteEvent, type Agreement, type EligibilityRead, type Engagement, type ProPayment, type UnionBill } from './pro';
 import { inSaveMoney } from './banking';
@@ -302,18 +302,24 @@ function weeklySalary(person: Person, e: Engagement, project: ProjectTemplate): 
 }
 
 /**
- * The scale part of a SAG-AFTRA payment, in the save's money: its gross in the share the minimum is of what's offered
- * (`RATES`), or, without the offer's figure, the minimum for each day or week the payment's week holds.
+ * The scale part of a SAG-AFTRA payment, in the save's money: its gross in the share the minimum is of what's offered,
+ * or, without the offer's figure, the minimum for each day or week the payment's week holds. The minimum is the one on
+ * the work's first day, the day the offer was priced on (`minimumOn`): until 2026-10-21 it was `RATES`' figure, the
+ * 2026–27 contract year's, so on SAG-AFTRA day work from July 2027 the scale read low, what's over it read high, and a
+ * scale-plus-ten offer's commission came to the full ten percent of the gross, leaving the actor under scale (brief 19's
+ * playthroughs found it on a co-star role shot in October 2029: $308.44 taken where $280.40 was over scale).
  */
 function scaleOf(sim: Simulation, person: Person, e: Engagement, project: ProjectTemplate, p: ProPayment, gross: Money): Money {
   const offer = offerOf(person, e);
-  const minimum = RATES[offer?.rate ?? project.pay];
-  if (minimum.amount === undefined) return gross;
-  if (offer?.amount) return Math.round(gross * Math.min(1, minimum.amount / offer.amount));
+  const rate = RATES[offer?.rate ?? project.pay];
+  const first = e.days[0]?.from;
+  const minimum = first !== undefined ? minimumOn(rate, dateKey(first, WORK_ZONE)) : rate.amount;
+  if (minimum === undefined) return gross;
+  if (offer?.amount) return Math.round(gross * Math.min(1, minimum / offer.amount));
   const zone = zoneOfCity(project.place.cityId);
   const week = weekOf(p, zone);
-  const units = minimum.per === 'week' ? 1 : Math.max(1, engagementDaysIn(e, week.from, week.to, zone));
-  return Math.min(gross, inSaveMoney(sim, minimum.amount * units, 'USD'));
+  const units = rate.per === 'week' ? 1 : Math.max(1, engagementDaysIn(e, week.from, week.to, zone));
+  return Math.min(gross, inSaveMoney(sim, minimum * units, 'USD'));
 }
 
 const pct = (r: number) => `${Math.round(r * 1000) / 10}%`;

@@ -184,7 +184,7 @@ defineLook<TheGenre>('genre', {
         <>
           <div className="grid grid-3">
             <Stat label="Familiarity" value={one(g?.familiarity ?? 0)} note="Films watched and plays read" />
-            <Stat label="Work In It" value={one(g?.practice ?? 0)} note="Nights on stage and self-tapes in it" />
+            <Stat label="Work In It" value={one(g?.practice ?? 0)} note="Nights on stage, shoot days and self-tapes in it" />
             {/* What it speeds, said (from 2026-10-12: until then "The best of the two, never a cap on the work", beside a
                 summary saying a brief in it reads knowing it, so it read as speeding the brief; a brief’s steps read the
                 material met before, `prepSpeed`, and never this). */}

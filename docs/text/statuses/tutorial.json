@@ -151,9 +151,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
   "status": "Rewritten And Verified",
-  "hash": "321f2c5d89d7",
+  "hash": "35e851e8ebde",
   "on": "2026-10-21",
-  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts"
+  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [representation]": {
   "status": "Rewritten And Verified",

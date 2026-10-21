@@ -926,6 +926,30 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     expect(o.outcome).toMatch(/^You’re booked for Paper Moons: Shoot Day 1 on \w+ \d+, 2026, so the film’s director cast another actor as Theo\.$/);
   });
 
+  it('GUARD: an audition in person set inside a booked work day’s hours is missed, the actor being at work, and the role lapses; the same audition on a free day is gone to and judged (found by brief 19’s playthroughs, 2026-10-21)', () => {
+    const sim = graduate('work-double');
+    const t = PROJECTS.find((x) => x.kind === 'non-union-short')!;
+    const posted = postingTimes(sim.now, sim.now + 8 * MS_DAY)[0]!;
+    const job = offered(sim, t.id, posted, 'test-job');
+    sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: job.id } });
+    const shoot = datesOf(job)[0]!;
+    const film = PROJECTS.find((x) => x.kind === 'student-film')!;
+    // TEST SETUP: an audition in person set for the student film, as `setRound` sets one: the round and its item.
+    const audition = (id: string, when: number): Opportunity => {
+      const o: Opportunity = { id, projectId: film.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, auditionAt: when, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
+      sim.player.pro!.opportunities.push(o);
+      sim.schedule({ at: when, kind: AUDITION_KIND, label: `Audition: ${film.role.part}, ${film.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: 120, locationId: film.place.cityId, refType: 'pro.opportunity', refId: id, payload: { personId: sim.player.id, opportunityId: id, round: 0 } });
+      return o;
+    };
+    const free = audition('test-free', shoot.from - 2 * MS_DAY + 4 * MS_HOUR);
+    const during = audition('test-during', shoot.from + 4 * MS_HOUR);
+    played(sim, shoot.to + MS_HOUR);
+    expect(sim.player.pro!.engagements.find((e) => e.opportunityId === job.id)!.log![0]!.status).toBe('worked');
+    expect([free.rounds![0]!.status, free.rounds![0]!.band !== undefined]).toEqual(['done', true]);
+    expect([during.rounds![0]!.status, during.status]).toEqual(['missed', 'lapsed']);
+    expect(during.outcome).toBe(`You missed the audition for ${film.role.part} on ${formatDate(shoot.from + 4 * MS_HOUR, zone)} at 11:00 AM, so ${film.casting} moved on without you.`);
+  });
+
   it('refuses a self-tape with less than its hour before it’s due, said with the time', () => {
     const sim = graduate('work-tape-late');
     const t = PROJECTS.find((x) => x.stages.audition === 'self-tape' && x.access.open === 'anyone')!;

@@ -31,14 +31,19 @@ export interface CalendarLegendEntry {
  * the player. Those systems are gone, and a legend that names colors nothing
  * can ever be drawn in is a legend that lies about the game. Work, for the
  * day job's shifts, tips and paydays, went with the job engine on 2026-09-26, and its second meaning (auditions,
- * a job's days, residuals) with the career on 2026-10-09; from 2026-10-10 it isn't in the legend, nothing being
+ * a job's days, residuals) with the career on 2026-10-09; from 2026-10-10 it wasn't in the legend, nothing being
  * drawn in it. Home, which was rent and bills, is the money's since the home went.
+ *
+ * Career came back on 2026-10-21 (brief 19): the professional career puts its meetings, auditions, self-tapes, answers
+ * and work days on the calendar under `career`. Its row was left out when the career was built, so they were drawn
+ * with no color and no row to say what they were, until brief 19's playthroughs found it (J6, the calendar's drill-down).
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Your own plans, and your birthday, appointments and tax dates.' },
   { category: 'school', label: 'School', colour: '#6b8ca8', description: 'Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s review, the showcase and Commencement.' },
   // From 2026-10-21 (brief 19's pay) a professional payday, pay passed on from an agency and a union's bill are Money's
   // too (`systems/propay.ts`).
+  { category: 'career', label: 'Career', colour: '#a8916b', description: 'Your professional work: auditions and callbacks, self-tapes due, meetings with an agent’s office, booked work days, an offer’s last day, and when casting, an agent or the dean is to answer.' },
   { category: 'home', label: 'Money', colour: '#8ca86b', description: 'The card’s statement and payment, a new card’s arrival, a savings account’s notice, paydays for professional work, pay passed on by your agency, and union bills.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
