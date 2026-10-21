@@ -43,6 +43,8 @@ import { mayRefer, waitDays } from './systems/appointments';
 import { reliabilityOf, setWork } from './systems/coursework';
 import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
+import { AGENTS } from './content/agents';
+import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -549,4 +551,46 @@ defineDecider<{ sim: Simulation; who: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), who: seed % 15 }),
   decide: ({ sim, who }) => priorityOf(sim, sim.player, who),
+});
+
+// ---------------------------------------------------------------------------
+// The agent (from 2026-10-21, the owner's brief 19, G4 and G6)
+// ---------------------------------------------------------------------------
+
+const BANDS_IN_ORDER = ['unready', 'working', 'strong', 'exceptional'] as const;
+
+defineDecider<{ sim: Simulation; band: number; room: number; atBar: number; approach: number }, string>({
+  id: 'pro.agent',
+  decides: 'An agent’s office’s answer to an approach, a meeting or a request, a pass or no answer, and after a meeting an offer or a pass: from the factors at the bar and a draw against the year’s other actors whose chance rises with the work’s band and the room on the list.',
+  drawnIn: 'src/engine/systems/proagent.ts',
+  reads: {
+    // The best band of the work his office has to go on.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    // The room on his list this year, short of the bar to beyond it.
+    room: (o, t) => ({ ...o, room: Math.round(t * 3) }),
+    // How many of the seven factors are at the bar or beyond.
+    atBar: (o, t) => ({ ...o, atBar: Math.round(t * 7) }),
+    // Which approach: each draws its own.
+    approach: (o, t) => ({ ...o, approach: 1 + Math.round(t * 40) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: 1 + (seed % 3), room: 1 + (seed % 3), atBar: 4 + (seed % 4), approach: 1 + seed }),
+  decide: ({ sim, band, room, atBar, approach }) => {
+    const b = BANDS_IN_ORDER[band]!;
+    const interest = { factors: [], atOrBeyond: atBar, needed: GATE, gate: atBar >= GATE, band: b, ...chancesFor(b, LEVELS[room]!) };
+    const agent = AGENTS[0]!;
+    return Array.from({ length: 30 }, (_, n) => `${replyOutcome(interest, drawOf(sim, sim.player, agent, approach + n, 'interest'), { requestable: [] })[0]}${offerOutcome(interest, drawOf(sim, sim.player, agent, approach + n, 'offer'))[0]}`).join(' ');
+  },
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'pro.roster',
+  decides: 'How many new actors an agent’s list has room for in a year, one to three, and of which billing and playing ages: the game’s assumption, drawn for each year.',
+  drawnIn: 'src/engine/systems/proagent.ts',
+  reads: {
+    year: (o, t) => ({ ...o, year: 2026 + Math.round(t * 12) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
+  decide: ({ sim, year }) => JSON.stringify(rosterFor(sim, AGENTS[0]!, year)),
 });

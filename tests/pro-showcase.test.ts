@@ -29,6 +29,7 @@ import { YALE_DRAMA } from '@/engine/content/school';
 import { courseworkOf, questionsFor, type Assignment } from '@/engine/systems/coursework';
 import { journeyOf } from '@/engine/systems/evaluation';
 import { pathwayOf } from '@/engine/systems/pro';
+import { FOLLOW_UP_KIND } from '@/engine/systems/proagent';
 import {
   EARLY_DEGREE, LOS_ANGELES, NEW_YORK, SHOWCASE, SHOWCASE_CHECK_KIND, SHOWCASE_COURSE, SHOWCASE_KIND, choiceRefusal, sceneForecast, showcaseCalendar,
   showcaseOptions, showcasePieces,
@@ -422,7 +423,14 @@ describe('the showcase, played', () => {
     for (const p of sc.performed) expect(p.overall).toBeGreaterThan(0);
     // Settled after Los Angeles, on its meetings and its pieces, and passed.
     expect(course793(sim).result).toBe('pass');
+    // The School's follow-up (W3, the agent's part), put on the calendar by the showcase's end once the two parts were
+    // merged on 2026-10-21: three days after the last day, at ten, once, and nothing passed on before it comes.
+    expect(pending(sim, FOLLOW_UP_KIND).map((i) => i.at)).toEqual([at(2029, 5, 11, 10)]);
+    expect(sc.followUp).toBeUndefined();
     jump(sim, at(2029, 5, 22, 9));
+    expect(sc.followUp?.at).toBe(at(2029, 5, 11, 10));
+    expect(pending(sim, FOLLOW_UP_KIND)).toEqual([]);
+    expect(notice(sim, 'The School’s Follow-Up After The Showcase')!.body).toMatch(/^The School passed your showcase on to the agencies it follows up with\./);
     // The notices, in the order the player reads them.
     const said = titles(sim, from).filter((t) => /Actor Showcase|Term \d{4} Begins|Good Standing|Academic|MFA/.test(t));
     expect(said).toEqual(['Spring Term 2029 Begins', 'The Actor Showcase', 'You’re In The Actor Showcase', 'In Good Standing', 'The Actor Showcase In New York', 'The Actor Showcase In New York', 'The Actor Showcase In Los Angeles', 'Your MFA Is Conferred']);
@@ -495,6 +503,8 @@ describe('the showcase, played', () => {
       none.player.currentLocationId = YALE_DRAMA.cityId;
     }
     expect(none.player.pro!.showcase!.performed).toEqual([]);
+    // Nothing played, nothing for the School to pass on: no follow-up on the calendar (from the parts' merge, 2026-10-21).
+    expect(pending(none, FOLLOW_UP_KIND)).toEqual([]);
     expect(showcasePieces(none, none.player).map((a) => a.status)).toEqual(['missed', 'missed']);
     expect(course793(none)).toMatchObject({ result: 'fail', why: '2 of its 2 pieces weren’t shown' });
     expect(notice(none, 'You Missed The Actor Showcase In Los Angeles')!.body).toBe('You weren’t at the School’s call for the showcase in Los Angeles, so your scenes weren’t seen there. It counts as a missed call, and as an unexcused absence from Actor Showcase. A scene played at no showcase day counts as a piece not shown, and a course with half its pieces not shown isn’t passed. You didn’t pass Actor Showcase: 2 of its 2 pieces weren’t shown. The degree needs every course passed, so it can’t be awarded at Commencement.');

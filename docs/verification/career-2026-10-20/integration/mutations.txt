@@ -1,0 +1,4 @@
+Mutations at the wave's merges (2026-10-21), each run against the test that holds it; the build and test of each is the merged working branch.
+I1 the showcase's end puts no follow-up on the calendar | src/engine/systems/proshowcase.ts (endShowcase) | tests/pro-showcase.test.ts 'from the last term’s first day to the morning after Commencement' | KILLED
+I2 a showcase with nothing played puts a follow-up on the calendar | src/engine/systems/proshowcase.ts (endShowcase's guard) | tests/pro-showcase.test.ts 'a showcase day missed is a missed call' | KILLED
+I3 a stop's command no screen or stop reaches | src/engine/world/clock.ts (calendar.skip renamed in its defineStop) | tests/interface.test.ts 'leaves no engine command that a person cannot reach' | KILLED

@@ -91,9 +91,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten And Verified",
-  "hash": "36dd5bc77aaf",
+  "hash": "bf575370ac54",
   "on": "2026-10-21",
-  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts"
+  "evidence": "Written for brief 19 to docs/STYLE.md: the Representation chapter teaches the agent’s panel in the screen’s own labels, read in tests/tutorial.test.ts, tests/pro-representation-screen.test.ts and tests/journey-agent.test.ts, with tools/voice-check.mjs and tools/tics.mjs passing; the Your Career chapter’s last line sends the player to it"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten And Verified",
@@ -148,6 +148,12 @@
   "hash": "321f2c5d89d7",
   "on": "2026-10-21",
   "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [representation]": {
+  "status": "Rewritten And Verified",
+  "hash": "1122c8a7363d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md: the Representation chapter teaches the agent’s panel in the screen’s own labels, read in tests/tutorial.test.ts, tests/pro-representation-screen.test.ts and tests/journey-agent.test.ts, with tools/voice-check.mjs and tools/tics.mjs passing; the Your Career chapter’s last line sends the player to it"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten And Verified",

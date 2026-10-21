@@ -7,17 +7,27 @@
  * goes on a résumé from; and the versions kept. Each of those is the game's estimate, and the entries say so. The
  * Bulletin's sentences (Equity at the degree, the filmed monologues posted at the end of the final term) are its own
  * (`docs/research/career-2026-10-20/yale.md`, B27 pp.24 and 33).
+ *
+ * From 2026-10-21 the agent's four entries (`systems/proagent.ts`): his panel and the routes, his office's answers, Why
+ * It Went This Way, and the agreement. Their times, the bar and the cooling-off times are the game's estimates,
+ * imported from the rules; the agreement's figures are `AGREEMENT`'s; the agency's policy is quoted from its data, never
+ * copied. The agent is named from `AGENTS`, so an entry names whichever agent the game holds.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
 import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
 import { HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
+import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, tripWords } from '../../systems/proagent';
+import { YALE_DRAMA } from '../school';
+import { AGENTS, agencyOf } from '../agents';
+import { AGREEMENT } from '../careerwork';
+import { BAND_LABEL } from '../../systems/coursework';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
 /** A Career section's id: a parameter typed by its literals would read to `tools/title-case.mjs` as a label. */
-type Section = 'overview' | 'portfolio';
+type Section = 'overview' | 'portfolio' | 'representation';
 const on = (section: Section, label: string) => ({ route: CAREER, tab: section, label });
 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
@@ -27,6 +37,14 @@ const hours = (minutes: number): string => (minutes === 60 ? 'an hour' : `${word
 const usd = (cents: number): string => formatMoney(cents, 'USD');
 const andList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
 const SKILLS = andList(SPECIAL_SKILLS.map((s) => SKILL_WORDS[s]));
+const AGENT = AGENTS[0]!;
+const AGENCY = agencyOf(AGENT);
+const REP_CHAPTER = CHAPTER_FOR['pro.agent_notice']!.title;
+const weeks = (days: number): string => `${word(days / 7)} ${days === 7 ? 'week' : 'weeks'}`;
+const BAR = BAND_LABEL[REFERRAL_BAND];
+/** The agreement's two ending buttons, as the Representation tab names them. */
+const NO_OFFER = `End It: No Offer In ${AGREEMENT.noOfferDays} Days`;
+const TOO_LITTLE = `End It: Under ${TEN.charAt(0).toUpperCase()}${TEN.slice(1)} Days’ Work`;
 
 export const CAREER_GUIDE: readonly GuideEntry[] = [
   {
@@ -245,6 +263,179 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'Three self-tapes of camera briefs taped, one of them Strong.',
       steps: ['Tick the Strong tape and one other.', 'Press Cut A Reel.'],
       result: `Two hours on, ${usd(REEL.cost)} comes out of your bank, and Reel lists the two pieces with their bands. What’s Missing says it holds only self-tapes.`,
+    },
+  },
+  {
+    id: 'career.agent',
+    title: 'The Agent And How To Reach Him',
+    goal: 'career',
+    covers: ['pro.agent_notice', 'pro.agent_check', 'pro.ask_referral', 'pro.send_materials'],
+    synonyms: ['agent', 'representation', AGENT.name, AGENCY.name, 'referral', 'send my materials', 'unsolicited submission'],
+    questions: ['How do I get an agent?', 'Why was my submission refused?', 'How do I get a referral?'],
+    where: on('representation', 'Career, Representation'),
+    available: `From the guide’s chapter “${REP_CHAPTER}”.`,
+    short: `The Representation tab holds the game’s one agent, ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department. He’s a real person, and everything he says and decides in the game is invented: his panel says so first, before anything else.\n\n${AGENCY.name}’s page for ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} submissions says “${AGENCY.policy.quote}”, and the game keeps to it. His office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+    steps: [
+      'Open Career, then the Representation tab.',
+      'Read the notice at the top of his panel, then press I’ve Read This.',
+      'Under Your Materials For Him, press Check Your Materials. If something’s missing, the line under it says what, and where to make it.',
+      'Under How To Reach Him, press Ask For A Referral beside a finished job, or wait for the School’s follow-up after the showcase.',
+      'Press Send Your Materials.',
+    ],
+    needs: [
+      'The notice read.',
+      'Headshots and a résumé: a check refuses without them.',
+      `For a referral, a finished professional job whose work was judged ${BAR} or better, once for each job.`,
+      'For a send, an introduction: the School’s follow-up or a referral.',
+    ],
+    costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'Your Materials For Him', value: 'Your headshots, résumé and reel, checked as a submission would be' },
+      { label: 'A Referral', value: `A finished job’s work, judged ${BAR} or better`, estimate: true },
+      { label: 'An Answer', value: `Usually within ${TIME_WORDS.reply}; no answer in ${TIME_WORDS.silence} counts as no`, estimate: true },
+    ],
+    now: ['Sending moves Where You Stand With Him to Materials Sent, and his office’s answer is on the way.'],
+    later: [
+      `His office answers in about ${TIME_WORDS.reply}: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after ${TIME_WORDS.silence} that counts as no.`,
+      `After a pass, his office looks again only after ${COOLDOWN_WORDS.pass}; after no answer or a declined offer, ${COOLDOWN_WORDS.silence}. Then it looks only at something new: a new credit, a better reel or a referral.`,
+    ],
+    interpret: [
+      'Where You Stand With Him names the step you’re at, and What’s Next says what to do about it.',
+      'A referral comes from the casting office of a job you’ve finished, never from him, and he never writes to you first.',
+    ],
+    unavailable: [
+      `Stewart Talent’s page for New York legit submissions says: “${AGENCY.policy.quote}”`,
+      'Check your materials first: a referral passes them on.',
+      `A referral needs work judged ${BAR} or better in the game.`,
+      'In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral.',
+    ],
+    mistakes: ['Sending again too soon after a pass. The refusal says the date his office looks again from, and what it would look at.'],
+    next: ['Keep your materials current while you wait: his office may ask for more.'],
+    related: ['career.agent-answers', 'career.reasons', 'career.agreement', 'career.headshots', 'career.resume'],
+    connections: [
+      { to: 'career.headshots', kind: 'prerequisite', why: 'A check refuses an approach with no headshots, since every submission starts with one.' },
+      { to: 'career.resume', kind: 'prerequisite', why: 'A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.' },
+      { to: 'career.agent-answers', kind: 'scheduled', why: `Sending your materials puts his office’s answer on the way, about ${TIME_WORDS.reply} on.` },
+    ],
+    example: {
+      setup: `A graduate with headshots and a résumé, and a finished job judged ${BAR}.`,
+      steps: ['Press I’ve Read This, then Check Your Materials.', 'Press Ask For A Referral beside the job.', 'Press Send Your Materials.'],
+      result: `The job’s casting office refers you, your materials go to his office, and its answer comes about ${TIME_WORDS.reply} later.`,
+    },
+  },
+  {
+    id: 'career.agent-answers',
+    title: 'His Office’s Answers And The Meeting',
+    goal: 'career',
+    covers: ['pro.supply_material', 'pro.ask_to_move'],
+    synonyms: ['agent meeting', 'move the meeting', 'asked for more', 'send what was asked', 'no answer', 'pass'],
+    questions: ['What happens after I send my materials?', 'Can I move the meeting?', 'What if I miss the meeting?'],
+    where: on('representation', 'Career, Representation, The Meeting'),
+    available: `From the guide’s chapter “${REP_CHAPTER}”.`,
+    short: `His office answers an approach in one of four ways: it asks for more, asks to meet, passes, or doesn’t answer. Each answer comes as a notice, and History With His Office keeps every step.\n\nA meeting is on your calendar at ${clockWords(AGENT_TIMES.meetingHour)}, at the agency’s ${AGENCY.office.city} office or by video, and the clock stops at it like any commitment. You can move it once, ${TIME_WORDS.move} on.`,
+    steps: [
+      'When his office asks for more, make what it asked for on the Portfolio tab, then press Send What His Office Asked For.',
+      'When it asks to meet, be there: press Go when the clock stops at it.',
+      'If you can’t make it, press Ask To Move on the Representation tab, or at the stop.',
+    ],
+    needs: ['For a request, what it asked for made by its date.', 'For a move, a meeting not moved before, and not yet started.'],
+    costs: [{ label: 'Time', value: `The meeting’s hour, and the trip: ${tripWords(TRAVEL_MINUTES[YALE_DRAMA.cityId]!)} from New Haven`, estimate: true }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'A Request', value: `What’s missing: a reel, newer headshots or a résumé brought up to date, due in ${TIME_WORDS.request}`, estimate: true },
+      { label: 'A Move', value: `Once, ${TIME_WORDS.move} on`, estimate: true },
+    ],
+    now: [`What you send goes to his office, and its answer comes about ${TIME_WORDS.afterSupply} later.`, 'A moved meeting is on your calendar at its new time.'],
+    later: [`After a meeting you keep, his office tells you its decision ${word(AGENT_TIMES.decisionDays)} days later: an offer or a pass.`, 'A meeting you miss closes the approach, since a meeting comes before an offer in the game.'],
+    interpret: ['Material sent when asked, and meetings kept, count for you under Reliability; a missed one counts against you.'],
+    unavailable: ['His office hasn’t asked you for anything.', 'You haven’t cut a reel yet.', 'In the game his office moves a meeting once.'],
+    mistakes: ['Sleeping through the meeting. A commitment slept through is missed.'],
+    next: ['After a meeting, wait for the decision, then read the agreement if one comes.'],
+    related: ['career.agent', 'career.reasons', 'career.agreement', 'day.clock'],
+    connections: [
+      { to: 'career.reasons', kind: 'evaluation', why: 'A meeting kept or missed, and material sent when asked, are read under Reliability.' },
+      { to: 'day.clock', kind: 'scheduled', why: 'A meeting stops the clock like any commitment, and offers Ask To Move at the stop.' },
+    ],
+    example: {
+      setup: 'His office asked for a reel, and you have a self-tape to cut one from.',
+      steps: ['Cut a reel on the Portfolio tab.', 'Press Send What His Office Asked For.'],
+      result: `The reel goes to his office, and its answer comes about ${TIME_WORDS.afterSupply} later, as a notice.`,
+    },
+  },
+  {
+    id: 'career.reasons',
+    title: 'Why It Went This Way',
+    goal: 'career',
+    covers: ['ui.career-reasons'],
+    synonyms: ['why did the agent pass', 'agent decision', 'factors', 'room on his list', 'reliability'],
+    questions: ['Why did his office pass?', 'What does his office consider?', 'Does better work guarantee an agent?'],
+    where: on('representation', 'Career, Representation, Why It Went This Way'),
+    available: `From the guide’s chapter “${REP_CHAPTER}”.`,
+    short: `Why It Went This Way gives the game’s reasons for his office’s last decision, and where they stand now. There are seven, each set apart: your work, stage and screen, training and experience, fit with his department, availability, room on his list, and reliability. Each is short of a bar the game sets, near it, at it or beyond it.\n\nAn approach goes further only with ${word(GATE)} of them at the bar or beyond, and then against the year’s other actors. Better work raises the chance, and nothing makes it certain.`,
+    steps: ['Open Career, then the Representation tab.', 'Under Why It Went This Way, press Show The Reasons.'],
+    needs: ['The notice read.'],
+    costs: [{ label: 'Time', value: 'None: reading it moves no clock' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'Your Work', value: 'The best judged band of the work his office has: your showcase scenes once the School follows them up, your reel, a referring job' },
+      { label: 'Room On His List', value: 'One to three openings a year, by billing and age, drawn for each year', estimate: true },
+      { label: 'The Bar', value: `${word(GATE)} of the seven at it or beyond`, estimate: true },
+    ],
+    now: ['The table opens, and closes with Hide The Reasons.'],
+    later: ['As Things Stand Now changes with your record: a new credit, a better reel, the degree, a meeting kept.'],
+    interpret: ['None of it is his. The bar and the chances are the game’s own, and Room On His List is assumed.', 'At The Last Decision is kept as it was, so it reads the same after your record moves on.'],
+    unavailable: ['The reasons are there once you’ve read the notice about him.'],
+    mistakes: ['Reading one factor as the decision. It takes enough of them at the bar, and then the competition.'],
+    next: ['Work on what’s short: a reel, newer work, a credit.'],
+    related: ['career.agent', 'career.agent-answers', 'career.reel'],
+    connections: [
+      { to: 'career.reel', kind: 'evaluation', why: 'Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.' },
+      { to: 'career.agent', kind: 'history', why: 'Each answer his office gives keeps its reasons here.' },
+    ],
+    example: {
+      setup: `A graduate with one job judged ${BAR} and no reel.`,
+      steps: ['Press Show The Reasons.'],
+      result: `Your Work is At The Bar and Stage And Screen Near The Bar, until a reel shows screen work too.`,
+    },
+  },
+  {
+    id: 'career.agreement',
+    title: 'The Agreement',
+    goal: 'career',
+    covers: ['pro.accept_agreement', 'pro.decline_agreement', 'pro.end_agreement'],
+    synonyms: ['agency agreement', 'sign with an agent', 'commission', 'end representation', 'terminate the agreement'],
+    questions: ['What does the agreement say?', 'How much commission does he take?', 'How do I end the agreement?'],
+    where: on('representation', 'Career, Representation, The Agreement'),
+    available: `From the guide’s chapter “${REP_CHAPTER}”.`,
+    short: `When he offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up.`,
+    steps: [
+      'Read every term under The Agreement.',
+      'Press Accept The Agreement, or Decline The Agreement.',
+      `While it runs, press End It By Agreement, ${NO_OFFER} or ${TOO_LITTLE}. A grayed one says when it can.`,
+    ],
+    needs: [
+      'For Accept or Decline, an offer still standing.',
+      `For ${NO_OFFER}, ${AGREEMENT.noOfferDays} days with no real offer of covered work through him, and not while you’re working.`,
+      `For ${TOO_LITTLE}, ${AGREEMENT.sag.waitDays} days from signing, and fewer than ${TEN} days of covered work in the last ${AGREEMENT.sag.windowDays}.`,
+    ],
+    costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: `Commission on covered work: ${Math.round(AGREEMENT.commission * 100)}% of gross pay, or ${Math.round(AGREEMENT.equityLowTier.rate * 100)}% on an Equity contract paying ${usd(AGREEMENT.equityLowTier.weeklyAtOrBelow)} a week or less` }],
+    reads: [
+      { label: 'How Long', value: 'One year from signing', estimate: true },
+      { label: 'Ending It', value: `Equity’s ${AGREEMENT.noOfferDays} days and SAG-AFTRA’s ${AGREEMENT.sag.waitDays} and ${AGREEMENT.sag.windowDays} days, from their published rules` },
+    ],
+    now: ['Accepting makes him your agent from today. Declining closes the approach.'],
+    later: [`An offer you don’t answer lapses after its ${weeks(AGREEMENT.offerStandsDays)}.`, 'When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.'],
+    interpret: ['A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: his own agreement isn’t published.'],
+    unavailable: ['He hasn’t offered you an agreement.', 'You’re not represented by him.', `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him.`],
+    mistakes: ['Ending it while a contract made in the term is still to be paid, and expecting no commission. It stays owed.'],
+    next: ['Keep your availability and your materials current: covered work comes through him.'],
+    related: ['career.agent', 'career.reasons', 'documents.work'],
+    connections: [
+      { to: 'documents.work', kind: 'optional', why: 'Signing with him gives no permission to work: Papers, under Permission To Work, still says what you may do.' },
+      { to: 'career.agent', kind: 'history', why: 'Accepting, declining and the agreement’s end each go in History With His Office.' },
+    ],
+    example: {
+      setup: 'An offer standing, read in full.',
+      steps: ['Press Accept The Agreement.'],
+      result: 'Where You Stand With Him reads Represented, and The Agreement gives the day it ends and the three ways to end it sooner.',
     },
   },
 ];

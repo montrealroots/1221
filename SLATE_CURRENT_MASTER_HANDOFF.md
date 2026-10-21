@@ -5,7 +5,10 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 527 of 641 rows in scope Implemented And Verified (82.2%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 527 of 650 rows in scope Implemented And Verified (81.0%); 119 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The agent, merged 2026-10-21 after the showcase: until it this said 527 of 641. Its nine commands are rows of their
+  own, Implemented, Verification Incomplete until an audit row reads them.)
 
   (The showcase, merged 2026-10-21: until it this said 566 of 640. Its one command is a row of its own, Implemented,
   Verification Incomplete until an audit row reads it, and the rows measured on the engine's or the app's whole source
@@ -22,10 +25,10 @@ none of it is in `main`, and nothing is deployed.
 - **Merged so far, each from a builder's branch with its report:** the understudy's part (D6, brief 18's U1,
   `understudy/REPORT.md`); the clock (D1 to D5, brief 18's S1 to S5, `time/REPORT.md`); the core, the professional
   record, the agent's data, the work's data and the portfolio (`core/REPORT.md`); the Actor Showcase and no early degree
-  (W1, W2, A5, `showcase/REPORT.md`). Brief 18's criteria mark its five items done here.
-- **Still to build:** the showcase's follow-up (W3); the agent's relationship, interest and agreement (G2 to G8); the work
-  loop, its pay and commission, work eligibility and the tutorial's job guard (J1 to J6, D7 to D9, A3); then the
-  playthroughs V1 to V18, the built app at both widths, and the gate.
+  (W1, W2, A5, `showcase/REPORT.md`); the agent's relationship, interest, agreement and the showcase's follow-up (G1 to
+  G8, W3, A2, `agent/REPORT.md`). Brief 18's criteria mark its five items done here.
+- **Still to build:** the work loop, its pay and commission, work eligibility and the tutorial's job guard (J1 to J6, D7
+  to D9, A3), each being built apart; then the playthroughs V1 to V18, the built app at both widths, and the gate.
 - **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
   marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
   owner's call.

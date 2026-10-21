@@ -274,3 +274,12 @@ said in a past-tense comment: in `beginShowcase`, a leave, an additional term, a
   tests pinning the list each name it.
 - **Classmate names:** a classmate can be named Jordan (the School's name list, `GIVEN_ACTOR`), and his "Jordan Asks To
   Rehearse" notices can land near the showcase's; where the agent's first notice lands is worth a look.
+
+## After The Merge
+
+- `tests/cohesion.test.ts` failed from the showcase's merge on: it reads the source for `kind:` beside each kind put on
+  the clock, and `beginShowcase`'s helper took the kind as its second argument. Neither the builder's batch nor the
+  coordinator's run of the merge read that file. Fixed at the agent's merge, the helper taking a named `kind:`
+  (`../agent/REPORT.md`, The Merge).
+- The follow-up (W3) is wired at `endShowcase`'s comment, and the full journey here holds it.
+

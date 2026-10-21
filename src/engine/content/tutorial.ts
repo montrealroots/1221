@@ -50,6 +50,10 @@ import { EVALUATION } from './tasks';
 import { ENROLLMENT, PUBLIC_COVER, RETURN } from './safetynet';
 import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
 import { EARLY_DEGREE } from '../systems/proshowcase';
+import { AGENTS, agencyOf } from './agents';
+import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND, TEN as PRO_TEN } from '../systems/proagent';
+import { AGREEMENT as PRO_AGREEMENT } from './careerwork';
+import { BAND_LABEL } from '../systems/coursework';
 import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
 import { BRIEF } from '../systems/briefs';
@@ -80,6 +84,10 @@ const pct = (x: number): string => `${+(x * 100).toFixed(2)}%`;
 const andList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
 /** A month and day, month first, the way the game writes a date: [4, 30] is April 30. */
 const monthDay = ([month, day]: readonly [number, number]): string => `${MONTH_NAMES[month - 1]} ${day}`;
+/** The agent the Representation chapter names, and his agency: `AGENTS`' one entry (brief 19). */
+const PRO_AGENT = AGENTS[0]!;
+const PRO_AGENCY = agencyOf(PRO_AGENT);
+const PRO_BAR = BAND_LABEL[REFERRAL_BAND];
 /** The banks whose card plan costs nothing for its life when made while the introductory rate runs. */
 const PLAN_FREE_AT = [...PLAN_FREE_IN_INTRO].map((id) => bankById(id)?.name ?? id);
 
@@ -444,7 +452,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
       'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
       'If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.',
-      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+      // Until 2026-10-21 this sent the player to Papers' chapter; “Representation” comes between them from then (brief 19).
+      'Read “Representation” next. It opens the agent’s panel on the Career screen: how to reach him, and the agreement.',
     ],
     more: [
       `A technique goes on your résumé as a special skill once it reaches ${PRO_SKILL_AT}: ${andList(PRO_SKILLS.map((s) => SKILL_WORDS[s]))}. Once it’s mastered, the résumé says so.`,
@@ -453,6 +462,32 @@ export const CHAPTERS: readonly Chapter[] = [
     ],
     names: ['Career', 'Overview', 'Portfolio', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel'],
     opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel'],
+  },
+  // From 2026-10-21 (the owner's brief 19): the agent's relationship, his office's interest and the agreement
+  // (`systems/proagent.ts`), after the portfolio an approach sends. The agent is named from `AGENTS`.
+  {
+    id: 'representation',
+    title: 'Representation',
+    lead: 'The agent, how to reach him, why his office decides as it does, and the agreement.',
+    body: [
+      `Career’s Representation tab holds the game’s one agent, ${PRO_AGENT.name}, at ${PRO_AGENCY.name} in ${PRO_AGENCY.office.city}. He’s a real person, and everything he says and decides in the game is invented. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.`,
+      `His agency doesn’t take unsolicited submissions, and the game keeps to that. His office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+      'Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.',
+      `For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged ${PRO_BAR} or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.`,
+      `Then press Send Your Materials. His office answers in about ${counted(PRO_TIMES.replyDays / 7, 'week')}: it asks for more, asks to meet, passes, or doesn’t answer at all, which after ${counted(PRO_TIMES.silenceDays / 7, 'week')} counts as no. Each answer comes as a notice, and History With His Office keeps every step.`,
+      `When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it ${PRO_TIMES.moveDays === 7 ? 'a week' : plural(PRO_TIMES.moveDays, 'day')}, once. A meeting missed closes the approach.`,
+      `Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
+      `After a pass, his office looks again only after ${PRO_HOLDS.pass}, and after no answer or a declined offer ${PRO_HOLDS.silence}, and then only at something new: a new credit, a better reel or a referral.`,
+      'If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.',
+      `While it runs, End It By Agreement ends it at once. End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.`,
+      'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
+    ],
+    more: [
+      `Every time here is the game’s estimate: the ${counted(PRO_TIMES.replyDays / 7, 'week')} to an answer, the ${counted(PRO_TIMES.silenceDays / 7, 'week')} with none, the ${counted(PRO_TIMES.requestDays / 7, 'week')} for what his office asks, the meeting ${counted(PRO_TIMES.meetingAfterDays, 'day')} or more on at ${word(PRO_TIMES.meetingHour)} in the morning, the ${counted(PRO_TIMES.decisionDays, 'day')} to a decision after it, and the bar for a referral.`,
+      `The agreement runs ${PRO_AGREEMENT.termDays === 365 ? 'a year' : plural(PRO_AGREEMENT.termDays, 'day')}, and its commission is ${pct(PRO_AGREEMENT.commission)} of gross pay for covered work, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, as the unions’ and New York’s rules allow.`,
+    ],
+    names: ['Representation', 'I’ve Read This', 'Check Your Materials', 'Ask For A Referral', 'Send Your Materials', 'Send What His Office Asked For', 'Ask To Move', 'Show The Reasons', 'Accept The Agreement and Decline The Agreement', `End It By Agreement, End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work`],
+    opens: ['pro.agent_notice', 'pro.agent_check', 'pro.ask_referral', 'pro.send_materials', 'pro.supply_material', 'pro.ask_to_move', 'ui.career-reasons', 'pro.accept_agreement', 'pro.decline_agreement', 'pro.end_agreement'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

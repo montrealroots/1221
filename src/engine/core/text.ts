@@ -57,6 +57,13 @@ export function plural(count: number, one: string, many = `${one}s`): string {
 }
 
 /**
+ * A count under ten in words, as prose says it: two, six, 12 (the leave's notices and the Standing And Craft tab's say
+ * theirs with it). It was `systems/school.ts`'s until 2026-10-21, when the agent's sentences read it as their module
+ * loaded and the showcase's call into the agent made the School load the agent first: here it needs nothing loaded.
+ */
+export const countWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+
+/**
  * A place in an order, "1st", "2nd", "11th", "23rd" (from 2026-10-17, brief 14's editorial review, for Home's place in
  * the class, which read "1 of 16 in the class" where the School's look said "1st of 16").
  */

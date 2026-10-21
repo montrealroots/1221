@@ -371,6 +371,24 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent-answers]": {
+  "status": "Rewritten And Verified",
+  "hash": "e0d1d7ef8710",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent]": {
+  "status": "Rewritten And Verified",
+  "hash": "c05806fb3ce0",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]": {
+  "status": "Rewritten And Verified",
+  "hash": "9e9edce0b94e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.headshots]": {
   "status": "Rewritten And Verified",
   "hash": "461c859c90b3",
@@ -389,6 +407,12 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reasons]": {
+  "status": "Rewritten And Verified",
+  "hash": "bdaf0d5fb74b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reel]": {
   "status": "Rewritten And Verified",
   "hash": "e3ea0f2c7283",
@@ -401,11 +425,17 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
+  "status": "Rewritten And Verified",
+  "hash": "f193875dd93c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
   "status": "Rewritten And Verified",
-  "hash": "722498d129cd",
+  "hash": "e222bc8ede01",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
   "status": "Rewritten And Verified",
@@ -415,21 +445,39 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten And Verified",
-  "hash": "48cfcd14898c",
+  "hash": "b1b5c27e6171",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Rewritten And Verified",
-  "hash": "cf1d361bd2f1",
+  "hash": "35951077a190",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
+  "status": "Rewritten And Verified",
+  "hash": "27692c040a73",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing"
  },
  "src/engine/content/guide/career.ts#hours": {
   "status": "Rewritten And Verified",
   "hash": "90335b649ade",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#NO_OFFER": {
+  "status": "Rewritten And Verified",
+  "hash": "4a98dec423ce",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and Title Case: the agreement’s two ending buttons as the Representation tab names them, read in tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#TOO_LITTLE": {
+  "status": "Rewritten And Verified",
+  "hash": "49cc99a1da6b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and Title Case: the agreement’s two ending buttons as the Representation tab names them, read in tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/title-case.mjs passing"
  },
  "src/engine/systems/pro.ts#availabilityOf": {
   "status": "Rewritten And Verified",

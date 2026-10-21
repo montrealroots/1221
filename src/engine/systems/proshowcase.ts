@@ -78,6 +78,7 @@ import { TEMPLATE_TASK } from '../content/tasks';
 import { rehearseWays } from './piece';
 import { nerves } from './attributes';
 import { ensurePro, type ShowcaseRecord } from './pro';
+import { scheduleShowcaseFollowUp } from './proagent';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules
@@ -334,13 +335,15 @@ export function beginShowcase(sim: Simulation, person: Person, term: number): Sh
   if (last.at <= sim.now) return undefined;
   const sc: ShowcaseRecord = { term, scenes: [], performed: [], options: offer(sim, person) };
   pro.showcase = sc;
-  const item = (at: Instant, kind: string, label: string, minutes: number, payload: Record<string, unknown>, requiresPlayer: boolean) => {
+  // Each item names its kind as `kind:`, the way `tests/cohesion.test.ts` reads the source for what's put on the clock
+  // (until 2026-10-21 the kind was the helper's second argument, and the test read both kinds as scheduled nowhere).
+  const item = ({ at, kind, label, minutes, payload, requiresPlayer }: { at: Instant; kind: string; label: string; minutes: number; payload: Record<string, unknown>; requiresPlayer: boolean }) => {
     if (at <= sim.now) return;
     sim.schedule({ at, kind, label, category: 'school', priority: 32, requiresPlayer, durationMinutes: minutes, locationId: YALE_DRAMA.cityId, ...(requiresPlayer ? { travelMinutes: 0 } : {}), payload: { personId: person.id, term, ...payload } });
   };
-  item(cal.checkBy, SHOWCASE_CHECK_KIND, 'Actor Showcase: Scenes And Incompletes Due', 0, {}, false);
-  for (const r of cal.rehearsals) item(r, SHOWCASE_KIND, 'Actor Showcase Rehearsal', SHOWCASE.rehearsal.minutes, { call: 'rehearsal' }, true);
-  for (const d of cal.days) item(d.at, SHOWCASE_KIND, d.label, d.minutes, { call: 'showcase', city: d.city, day: d.key, ...(d.last ? { last: true } : {}) }, true);
+  item({ at: cal.checkBy, kind: SHOWCASE_CHECK_KIND, label: 'Actor Showcase: Scenes And Incompletes Due', minutes: 0, payload: {}, requiresPlayer: false });
+  for (const r of cal.rehearsals) item({ at: r, kind: SHOWCASE_KIND, label: 'Actor Showcase Rehearsal', minutes: SHOWCASE.rehearsal.minutes, payload: { call: 'rehearsal' }, requiresPlayer: true });
+  for (const d of cal.days) item({ at: d.at, kind: SHOWCASE_KIND, label: d.label, minutes: d.minutes, payload: { call: 'showcase', city: d.city, day: d.key, ...(d.last ? { last: true } : {}) }, requiresPlayer: true });
   if (person.id === sim.universe.playerId) {
     const [ny1, ny2, la] = cal.days;
     const open = outstandingOf(person);
@@ -516,7 +519,10 @@ function endShowcase(sim: Simulation, person: Person, sc: ShowcaseRecord): strin
     a.status = (sc.missed ?? []).some((m) => !m.excused) ? 'missed' : 'excused';
   }
   const result = settleShowcaseCourse(sim, person, sc.term);
-  // Integration (brief 19, W3): the School's follow-up is scheduled here.
+  // The School's follow-up in the week after (W3, `scheduleShowcaseFollowUp`, `systems/proagent.ts`), from the last day
+  // the showcase had, played or missed; wired here at the two parts' merge on 2026-10-21. A showcase with nothing played
+  // has nothing for it to pass on, so none is put on the calendar.
+  if (sc.performed.length) scheduleShowcaseFollowUp(sim, person, Math.max(...sc.performed.map((p) => p.at), ...(sc.missed ?? []).map((m) => m.at)));
   return result;
 }
 

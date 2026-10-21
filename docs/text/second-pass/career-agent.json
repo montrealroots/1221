@@ -1,0 +1,380 @@
+{
+ "src/engine/systems/proagent.ts#agentIn": {
+  "status": "Rewritten",
+  "hash": "8b9fce36ed05",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#answer": {
+  "status": "Rewritten",
+  "hash": "d39e6a679c1c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#answerRefusal": {
+  "status": "Rewritten",
+  "hash": "c40b3fc66b53",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#BILLING_WORDS": {
+  "status": "Rewritten",
+  "hash": "08caf6d785ea",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#checkRefusal": {
+  "status": "Rewritten",
+  "hash": "fd873caa0560",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#COOLDOWN_WORDS": {
+  "status": "Rewritten",
+  "hash": "d113af35cd15",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#endAgreement": {
+  "status": "Rewritten",
+  "hash": "bb6f291485df",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#ENDED_WORDS": {
+  "status": "Rewritten",
+  "hash": "afff6fef42f0",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#endRefusal": {
+  "status": "Rewritten",
+  "hash": "5806c85d8e83",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#FACTOR_LABEL": {
+  "status": "Rewritten",
+  "hash": "82342350faed",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#followUp": {
+  "status": "Rewritten",
+  "hash": "10b7898f0d2b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#interestOf": {
+  "status": "Rewritten",
+  "hash": "9a1f0a7dec3b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#KIND_WORDS": {
+  "status": "Rewritten",
+  "hash": "8f9b878e66ff",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#LEVEL_LABEL": {
+  "status": "Rewritten",
+  "hash": "509fb2c85236",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#moveRefusal": {
+  "status": "Rewritten",
+  "hash": "5305bbe6c049",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#mustRead": {
+  "status": "Rewritten",
+  "hash": "655dccec1e3c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#nextStep": {
+  "status": "Rewritten",
+  "hash": "561c73be9226",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#nothingNew": {
+  "status": "Rewritten",
+  "hash": "a29466d80147",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#noticeRefusal": {
+  "status": "Rewritten",
+  "hash": "1888a90b102c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#offerAgreement": {
+  "status": "Rewritten",
+  "hash": "a7b90e2d7af3",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#officeOf": {
+  "status": "Rewritten",
+  "hash": "c4dcedcef599",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#officeZone": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#openingWords": {
+  "status": "Rewritten",
+  "hash": "16f9cf1c6730",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#referralRefusal": {
+  "status": "Rewritten",
+  "hash": "df8c7f1884ac",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#referrersOf": {
+  "status": "Rewritten",
+  "hash": "d01fde02b695",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent": {
+  "status": "Rewritten",
+  "hash": "53f894163428",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>": {
+  "status": "Rewritten",
+  "hash": "e4d8019a8148",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.agent_check>": {
+  "status": "Rewritten",
+  "hash": "f9f40ded758b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.agent_notice>": {
+  "status": "Rewritten",
+  "hash": "617a560e0546",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.ask_referral>": {
+  "status": "Rewritten",
+  "hash": "969fcd188796",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.ask_to_move>": {
+  "status": "Rewritten",
+  "hash": "e96ad663b78b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.decline_agreement>": {
+  "status": "Rewritten",
+  "hash": "c11455f90e05",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.send_materials>": {
+  "status": "Rewritten",
+  "hash": "fd210ad07003",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#registerProAgent <pro.supply_material>": {
+  "status": "Rewritten",
+  "hash": "b3a06bd1cd5f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#scheduleMeeting": {
+  "status": "Rewritten",
+  "hash": "02f586d3c30b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#scheduleShowcaseFollowUp": {
+  "status": "Rewritten",
+  "hash": "0f75393c9ed7",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#sendRefusal": {
+  "status": "Rewritten",
+  "hash": "3ef48287b60d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#STAGE_LABEL": {
+  "status": "Rewritten",
+  "hash": "207bc48583c1",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#stillOwed": {
+  "status": "Rewritten",
+  "hash": "88d57c47aacc",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#supplyRefusal": {
+  "status": "Rewritten",
+  "hash": "f6f4d5ececb8",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#tooSoon": {
+  "status": "Rewritten",
+  "hash": "dfbd3d4c6c32",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#top": {
+  "status": "Rewritten",
+  "hash": "1d50140f3532",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#tripWords": {
+  "status": "Rewritten",
+  "hash": "bbce7c890355",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#underWay": {
+  "status": "Rewritten",
+  "hash": "3f0859017cb9",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#weeksWords": {
+  "status": "Rewritten",
+  "hash": "60b480e48cb6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proagent.ts#workSeen": {
+  "status": "Rewritten",
+  "hash": "51b016933708",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#AgentPanel": {
+  "status": "Rewritten",
+  "hash": "657d9a6e55fc",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#AgreementPanel": {
+  "status": "Rewritten",
+  "hash": "c5e08257298e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#HistoryPanel": {
+  "status": "Rewritten",
+  "hash": "1077c7b3ded4",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#MaterialsPanel": {
+  "status": "Rewritten",
+  "hash": "ca265261502d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#MeetingPanel": {
+  "status": "Rewritten",
+  "hash": "eb901a72f363",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#ofSeven": {
+  "status": "Rewritten",
+  "hash": "7511c16f9807",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#ReachPanel": {
+  "status": "Rewritten",
+  "hash": "fb8485141fc9",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/RepresentationPane.tsx#WhyPanel": {
+  "status": "Rewritten",
+  "hash": "34305c9a5be6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), each factor a block that reads at 390, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ }
+}

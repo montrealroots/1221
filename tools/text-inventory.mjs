@@ -95,6 +95,9 @@ const AREAS2 = [
   ['frame', [/^index\.html$/, /^public\//]],
   // Brief 19's builders each read their own new career sources in both passes (from 2026-10-21): the showcase's.
   ['career-showcase', [/^src\/engine\/systems\/proshowcase\.ts$/, /^src\/engine\/content\/guide\/showcase\.ts$/, /^src\/ui\/career\/SchoolShowcase\.tsx$/]],
+  // From 2026-10-21 (brief 19's second wave): each career builder reads its own sources, so the agent's system and its
+  // tab are the career area's part `career-agent`, marked and claimed apart from the core's `career`.
+  ['career-agent', [/^src\/engine\/systems\/proagent\.ts$/, /^src\/ui\/career\/RepresentationPane\.tsx$/]],
 ];
 const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', career: 'career', health: 'health', world: 'health', material: 'material-a' };
 const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';

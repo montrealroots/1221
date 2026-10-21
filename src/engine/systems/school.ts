@@ -77,7 +77,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
-import { spokenList } from '../core/text';
+import { countWords, spokenList } from '../core/text';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
@@ -129,8 +129,8 @@ export type Craft = Record<Skill, number>;
  */
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated' | 'withheld' | 'withdrawn';
 
-/** A count under ten in words, as prose says it: two, six, 12 (the leave's notices and the Standing And Craft tab's say theirs with it). */
-export const countWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+/** A count under ten in words (`core/text.ts`, where it moved on 2026-10-21), still offered here to what reads it from the School. */
+export { countWords };
 
 /**
  * How to register, as a notice says it (from 2026-10-19, brief 15: until then “Register on the School screen”, which has
