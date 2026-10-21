@@ -18,10 +18,11 @@ M = [
  ('I43', 'src/engine/systems/proagent.ts', "    if (present(person, item.at) && !elsewhere) {", "    if (present(person, item.at)) {", 'tests/pro-work.test.ts', 'a meeting at the agent’s office and an audition'),
  ('I44', 'src/engine/systems/projobs.ts', "    const away = tripMinutes(person.currentLocationId, t.place.cityId) * MIN;\n    for (const r of o.rounds ?? []) {\n      if (r.form === 'in-person' && r.status === 'done'", "    const away = 0;\n    for (const r of o.rounds ?? []) {\n      if (r.form === 'in-person' && r.status === 'done'", 'tests/pro-work.test.ts', 'two auditions in person whose trips meet'),
  ('I45', 'src/engine/content/careerwork.ts', "part: 'Felix', size: 'lead'", "part: 'Theo', size: 'lead'", 'tests/pro-core.test.ts', 'names no part as the School names a classmate'),
- ('I46', 'src/engine/systems/projobs.ts', "  if (!CAREER_STOPS.has(item.kind)) return [];\n", "  return [];\n", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
+ ('I46', 'src/engine/systems/projobs.ts', "  if (!careerStop(item.kind)) return [];\n", "  return [];\n", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
  ('I47', 'src/ui/shell/TimeControls.tsx', "      {clashes.length > 0 && (\n        <p className=\"small\">", "      {false && clashes.length > 0 && (\n        <p className=\"small\">", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
  ('I48', 'src/ui/shell/TimeControls.tsx', "confirm.missed.slice(n + 1).map((w) => w.item)", "confirm.missed.map((w) => w.item)", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
  ('I49', 'src/engine/systems/projobs.ts', "const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at - (i.travelMinutes ?? 0) * MIN, i.at + ((i.durationMinutes ?? 0) + (i.travelMinutes ?? 0)) * MIN];", "const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at, i.at + (i.durationMinutes ?? 0) * MIN];", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
+ ('I50', 'src/engine/systems/projobs.ts', "const careerStop = (kind: string): boolean => kind === AUDITION_KIND || kind === MEETING_KIND;", "const CAREER_STOPS = new Set([AUDITION_KIND, MEETING_KIND]);\nconst careerStop = (kind: string): boolean => CAREER_STOPS.has(kind);", 'tests/module-load-order.test.ts', 'load in the bundle'),
 ]
 import os
 ONLY = os.environ.get('ONLY', '').split(',') if os.environ.get('ONLY') else None

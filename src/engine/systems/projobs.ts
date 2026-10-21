@@ -571,8 +571,14 @@ export function attendedAcross(person: Person, from: Instant, to: Instant, excep
   return undefined;
 }
 
-/** The career's commitments on the calendar that can't both be gone to: an audition in person and a meeting. */
-const CAREER_STOPS = new Set([AUDITION_KIND, MEETING_KIND]);
+/**
+ * The career's commitments on the calendar that can't both be gone to: an audition in person and a meeting. Read when
+ * it's called, never at this module's load: `proagent.ts` imports `school.ts`, which imports this module, which imports
+ * `proagent.ts`, so in the built app this module can load before `MEETING_KIND` exists. From 40eab86a it was a Set
+ * made at load, and the built app was blank on every page (`Cannot access … before initialization`), which the suite,
+ * loading the modules in another order, didn't see; the app's fifth walk found it, the same day.
+ */
+const careerStop = (kind: string): boolean => kind === AUDITION_KIND || kind === MEETING_KIND;
 /** A commitment's window, its trip each way included, as the calendar puts it (`travelMinutes`, `durationMinutes`). */
 const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at - (i.travelMinutes ?? 0) * MIN, i.at + ((i.durationMinutes ?? 0) + (i.travelMinutes ?? 0)) * MIN];
 
@@ -584,10 +590,10 @@ const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at - (i.t
  * each, where the second was missed with no stop and only Settled said so.
  */
 export function careerClashes(sim: Simulation, item: ScheduledItem, among?: readonly ScheduledItem[]): ScheduledItem[] {
-  if (!CAREER_STOPS.has(item.kind)) return [];
+  if (!careerStop(item.kind)) return [];
   const [from, to] = windowOf(item);
   return (among ?? sim.universe.scheduled.filter((i) => i.status === 'pending')).filter((i) => {
-    if (i.id === item.id || !CAREER_STOPS.has(i.kind) || i.payload.personId !== item.payload.personId || i.at < item.at) return false;
+    if (i.id === item.id || !careerStop(i.kind) || i.payload.personId !== item.payload.personId || i.at < item.at) return false;
     const [a, b] = windowOf(i);
     return a < to && b > from;
   });

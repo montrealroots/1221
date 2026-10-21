@@ -60,3 +60,6 @@ I46 no career commitment found to clash | src/engine/systems/projobs.ts (careerC
 I47 the stop's clash paragraph taken out (as until this fix) | src/ui/shell/TimeControls.tsx (DueNow) | the same test | KILLED
 I48 On The Way's pairs read both ways, so each said twice and the later named as stopped at | src/ui/shell/TimeControls.tsx (On The Way) | the same test | KILLED
 I49 the windows without their trips | src/engine/systems/projobs.ts (windowOf) | the same test (the audition three hours on) | KILLED
+
+The mutation at what the app's fifth walk found (2026-10-21, on 40eab86a): the built app blank on every page, `projobs.ts` making a Set of `proagent.ts`'s `MEETING_KIND` as it loaded, across the import ring `proagent.ts` → `school.ts` → `projobs.ts` → `proagent.ts`. The suite passed it, its module runner handing the binding back as undefined; I46 was run again on `careerStop`, the Set's place since.
+I50 the career commitments' kinds a Set made at load again (as on 40eab86a) | src/engine/systems/projobs.ts (careerStop) | tests/module-load-order.test.ts, which bundles src/main.tsx as the build does (`tools/load-order.mjs`) | KILLED
