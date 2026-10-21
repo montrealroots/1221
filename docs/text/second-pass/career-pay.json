@@ -1,9 +1,9 @@
 {
  "src/engine/systems/propay.ts#commissionOn": {
   "status": "Rewritten",
-  "hash": "ca79ca6d866b",
+  "hash": "47ffb40d5da5",
   "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
+  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/propay.ts#duesBill": {
@@ -36,9 +36,9 @@
  },
  "src/engine/systems/propay.ts#equityParts": {
   "status": "Rewritten",
-  "hash": "e88b40c47021",
+  "hash": "9a6ae71919ea",
   "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
+  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/propay.ts#joinSagRefusal": {
@@ -197,9 +197,9 @@
  },
  "src/ui/career/WorkPane.tsx#UnionsPanel": {
   "status": "Rewritten",
-  "hash": "94142b448b5f",
+  "hash": "e98575d22f95",
   "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
+  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/ui/career/WorkPane.tsx#WorkPane": {

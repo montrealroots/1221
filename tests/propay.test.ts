@@ -352,7 +352,8 @@ describe('the unions’ money', () => {
     const sim = graduate('union-equity');
     const bills = sim.player.pro!.unionBills!;
     expect(bills.find((b) => b.key === 'equity:initiation:1')).toMatchObject({ amount: 600_00, settled: { how: 'paid' } });
-    const down = sim.universe.transactions.filter((t) => t.memo === 'Actors’ Equity Association: Initiation fee, $600.00 down of $1,800.00');
+    // The bill's name in the memo (from 2026-10-21 without its amount, which the posting carries: brief 19's app walk).
+    const down = sim.universe.transactions.filter((t) => t.memo === 'Actors’ Equity Association: Initiation fee, part 1 of 3, the down payment');
     expect(down).toHaveLength(1);
     expect(down[0]!.at).toBe(at(2026, 9, 3, 10));
     expect(titled(sim, 'Your Equity Initiation Fee')[0]!.body).toBe('You’re a member of Actors’ Equity Association from your degree. Its initiation fee is $1,800.00, paid within three years: $600.00 down is due now, then $600.00 on September 3, 2027 and $600.00 on September 3, 2028. Basic dues are $88.00 each May and November, from November 1, 2026.');
@@ -384,7 +385,7 @@ describe('the unions’ money', () => {
     expect(titled(second, 'What You Owe Actors’ Equity')).toHaveLength(1);
     tended(second, at(2026, 11, 2));
     expect(second.universe.transactions.filter((t) => t.memo.startsWith('Actors’ Equity')).map((t) => [t.memo, t.at])).toEqual([
-      ['Actors’ Equity Association: Initiation fee, $600.00 down of $1,800.00', at(2026, 11, 1, 9)],
+      ['Actors’ Equity Association: Initiation fee, part 1 of 3, the down payment', at(2026, 11, 1, 9)],
       ['Actors’ Equity Association: Basic dues, half a year', at(2026, 11, 1, 9)],
     ]);
     expect(breaches(second.universe, second.now)).toEqual([]);

@@ -350,7 +350,9 @@ export function commissionOn(sim: Simulation, person: Person, e: Engagement, p: 
       ? `${pct(ten)} of ${formatMoney(gross, cur)} gross, the most SAG-AFTRA allows, taken from what you’re paid over scale.${still}`
       : amount === 0
         ? `No commission: this pays SAG-AFTRA scale, and an agent takes commission only on what’s above it.${still}`
-        : `${formatMoney(amount, cur)}, what’s paid over scale (${formatMoney(scale, cur)}), so you keep scale.${still}`;
+        // Said after the amount ("Commission expected: $102.80."), so not the amount again: until 2026-10-21 it opened on it,
+        // and the Work tab read "$102.80. $102.80, what’s paid over scale" (brief 19's app walk).
+        : `What’s paid over scale (${formatMoney(scale, cur)}), so you keep scale.${still}`;
     return { agreement: owed.agreement, agency, how, rule: amount === full ? 'sag' : 'sag-scale', amount, rate: gross > 0 ? amount / gross : 0, words };
   }
   const amount = Math.round(gross * ten);
@@ -616,10 +618,11 @@ function equityParts(sim: Simulation, since: Instant): UnionBill[] {
   const down = usdIn(sim, UNIONS.equity.down);
   const rest = total - down;
   const later = Math.round(rest / (EQUITY_PARTS - 1));
-  const cur = saveCurrency(sim.universe);
   return Array.from({ length: EQUITY_PARTS }, (_, i) => ({
     key: `equity:initiation:${i + 1}`, union: 'equity' as const,
-    what: i === 0 ? `Initiation fee, ${formatMoney(down, cur)} down of ${formatMoney(total, cur)}` : `Initiation fee, part ${i + 1} of ${EQUITY_PARTS}`,
+    // Named without its amount, which every line that names it gives after it: until 2026-10-21 the down payment's name
+    // carried it too, and the Work tab read "Initiation fee, $600.00 down of $1,800.00: $600.00" (brief 19's app walk).
+    what: i === 0 ? `Initiation fee, part 1 of ${EQUITY_PARTS}, the down payment` : `Initiation fee, part ${i + 1} of ${EQUITY_PARTS}`,
     amount: i === 0 ? down : i === EQUITY_PARTS - 1 ? rest - later * (EQUITY_PARTS - 2) : later,
     due: i === 0 ? since : addYears(since, i),
   }));
