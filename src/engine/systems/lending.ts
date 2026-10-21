@@ -94,7 +94,7 @@ import { markRecord } from './credit';
 import { openingOf, usPerson } from './bankmoves';
 import { hasSsn } from './taxid';
 import { pendingOn } from './pending';
-import { abroadRefusal, balanceText, cardFeeAbroad, heldOf } from './abroad';
+import { abroadRefusal, balanceText, cardFeeAbroad, heldOf, nonResidentTaxOn } from './abroad';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -923,12 +923,17 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
 
 /**
  * Iceland: on the assessment's day, the tax taken on the first 300,000 kr of
- * last year's interest comes back into the current account.
+ * last year's interest comes back into the current account. The allowance is a
+ * resident's, as `interestAllowanceLeft` in `systems/banking.ts` reads it: a
+ * customer abroad has 12% taken at source (`NON_RESIDENT_TAX`) and nothing back.
+ * From 2026-10-21 (brief 20's money audit): until then a Reykjavík-raised student
+ * keeping her account at Arion from New Haven was given back 22% of the first
+ * 300,000 kr on 1 June, more than the 12% taken.
  */
 function refundInterestTax(sim: Simulation, person: Person, current: Account, bank: Bank): void {
   const rule = bankingIn(bank.iso)?.interestTax;
   const refund = rule?.refund;
-  if (!rule || !refund || !rule.rate) return;
+  if (!rule || !refund || !rule.rate || nonResidentTaxOn(sim, current) !== undefined) return;
   const today = zonedParts(sim.now, sim.homeZone);
   if (today.month !== refund.month || today.day !== refund.day) return;
   const from = instantFromZoned({ year: today.year - 1, month: 1, day: 1, hour: 0 }, sim.homeZone);

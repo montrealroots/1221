@@ -8,6 +8,11 @@
  *   `drawFromBank` for a loan in `systems/lending.ts`). A notice describing a shortfall that wasn't there (D1). It reads
  *   now what the payment would draw, the link included where the payment draws it; a standing order, which the link
  *   doesn't pay, is read as before. With the link off, the alert still comes.
+ * - Iceland's assessment gave back interest tax a customer abroad never paid: on 1 June the bank refunded the tax on the
+ *   first 300,000 kr of last year's interest at the resident's 22%, to a Reykjavík-raised student keeping her account at
+ *   Arion from New Haven, whose interest had 12% taken at source as a customer abroad's (`NON_RESIDENT_TAX`). The
+ *   allowance is a resident's, as `interestAllowanceLeft` already said for the tax taken; the refund now reads it the same
+ *   way, and a customer abroad's 12% stays taken.
  * - A loan's payment day drifted: each payment was set a calendar month after the one before, so a loan taken on 31
  *   October was paid on 30 November, 30 December, 30 January, 28 February and the 28th for good. A lender's payment
  *   schedule, disclosed when the loan is made (Reg Z §1026.18(g)), is a day of each month: each payment now falls on the
@@ -15,14 +20,14 @@
  *
  * PLAYER JOURNEYS: new lives as creation makes them (`newLifeConfig`), Ada Cole, born in New York, a US citizen, an
  * actor at Yale in New Haven from Monday 24 August 2026 at 7:30 AM, with the wealthy family's money, at Citi, where Yale's
- * work-study pays $138 each Friday. Nothing is set by hand but where it says TEST SETUP. Seeds: b20-money-alert,
- * b20-money-loan.
+ * work-study pays $138 each Friday; and a Reykjavík-raised student who kept her account at Arion (Before Yale), her
+ * wealthy family's savings kept there. Nothing is set by hand. Seeds: b20-money-alert, b20-money-loan, b20-money-iceland.
  */
 import { describe, expect, it } from 'vitest';
-import { createSave } from '@/engine';
+import { createSave, loadPlacesFor } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
-import { newLifeConfig } from '@/engine/world/bootstrap';
+import { newLifeConfig, newLifeFrom, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { instantFromZoned, MS_DAY } from '@/engine/core/time';
 import { cardsOf } from '@/engine/systems/credit';
 
@@ -103,5 +108,27 @@ describe('a loan’s payment day', () => {
     // Twelve payments and twelve months' interest, one each, none twice.
     expect(sim.universe.transactions.filter((t) => t.category === 'loan_interest')).toHaveLength(12);
     expect(days.every((d, i) => i === 0 || d - days[i - 1]! >= 28 * MS_DAY)).toBe(true);
+  });
+});
+
+describe('Iceland’s interest tax refund', () => {
+  it('gives a customer abroad nothing back on 1 June: the 12% taken at source from her Arion interest stays taken', async () => {
+    const sim = createSave(1, 'b20-money-iceland', newLifeFrom({
+      homeRegionId: 'is-39-reykjavik', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth: 'wealthy', bankId: 'us-chase',
+      priorResidence: { cityId: 'is-39-reykjavik', fromYear: 2010, fromMonth: 6 }, homeBankId: 'is-arion', savingsAtHome: true,
+    } as Partial<NewSaveConfig>));
+    await loadPlacesFor(sim.universe);
+    sim.advanceTo(at(2027, 6, 3));
+    const arion = new Set(Object.values(sim.universe.accounts).filter((a) => a.bankId === 'is-arion').map((a) => a.id));
+    const line = (t: { postings: { accountId: string; amount: number }[] }, name: string) => t.postings.filter((p) => sim.universe.accounts[p.accountId]?.name === name).reduce((n, p) => n + p.amount, 0);
+    const interest2026 = sim.universe.transactions.filter((t) => t.category === 'interest' && t.at < at(2027, 1, 1, 0) && t.postings.some((p) => arion.has(p.accountId)));
+    // Last year's interest at Arion was taxed at the customer abroad's 12%, each month to the nearest unit.
+    const gross = -interest2026.reduce((n, t) => n + line(t, 'Interest'), 0);
+    const taken = interest2026.reduce((n, t) => n + line(t, 'Tax On Interest'), 0);
+    expect(gross).toBeGreaterThan(0);
+    expect(Math.abs(taken - gross * 0.12)).toBeLessThan(interest2026.length * 2);
+    // And none of it comes back at the assessment.
+    expect(sim.universe.transactions.filter((t) => t.memo === 'Tax on interest refunded at assessment')).toEqual([]);
+    expect(sim.universe.notifications.filter((n) => n.title === 'Tax On Interest Refunded')).toEqual([]);
   });
 });
