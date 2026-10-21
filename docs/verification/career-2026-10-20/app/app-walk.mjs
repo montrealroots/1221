@@ -271,12 +271,16 @@ for (const file of ['meeting.json', 'work-day.json']) {
   await press(o.page, o.page.getByRole('button', { name: 'Open Calendar' }));
   await o.page.waitForTimeout(800);
   await surface(o, `calendar-${file.replace('.json', '')}`, async () => main(o.page));
-  const item = o.page.locator('main .list-item').filter({ hasText: file === 'meeting.json' ? 'Meeting At Stewart Talent' : 'Shoot Day' }).first();
+  // The meeting's item is named for the agency. Until 2026-10-21 this looked for "Meeting At Stewart Talent"; with the
+  // fictional agent in the real one's place that day it would have found no item and left the entry's surface out
+  // without a word, so a missing item is now said in the walk's list.
+  const wanted = file === 'meeting.json' ? 'Meeting At Halberd Talent' : 'Shoot Day';
+  const item = o.page.locator('main .list-item').filter({ hasText: wanted }).first();
   if (await item.count()) {
     await press(o.page, item);
     await surface(o, `calendar-entry-${file.replace('.json', '')}`, async () => o.page.locator('[role=dialog]:visible').last().innerText(), '[role=dialog]:last-of-type');
     await o.page.keyboard.press('Escape');
-  }
+  } else log.push(`The Calendar on ${file} has no item called ${wanted}, so its entry wasn't opened`);
   await o.page.close();
 }
 

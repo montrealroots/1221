@@ -16,9 +16,28 @@
  *
  * TEST SETUP, as the showcase journey's and said here: the body kept fed, rested and steady each time the clock moves;
  * every open piece of coursework prepared each midnight, the showcase's scenes among them. And the seed: the first of
- * those given whose life reaches each state, chosen by playing each in turn (the default list is the first four of the
- * prefix whose first approach to his office draws low enough to go to a meeting and an offer, `draws.ts` in the
- * scratchpad, as `../agent/make-saves.ts` chose its seed).
+ * those given whose life reaches each state, chosen by playing each in turn. Each save is written once, by the first
+ * seed that reaches it, so a seed whose life stops partway ahead of one that goes on leaves the nine saves two lives:
+ * the seed that reaches all nine goes first.
+ *
+ * The default list was `app-walk-102`, `app-walk-314`, `app-walk-93` and `app-walk-150` until 2026-10-21: the first
+ * four of the prefix whose first approach to the real agent's office drew low enough to go to a meeting and an offer
+ * (`draws.ts` in the scratchpad, as `../agent/make-saves.ts` chose its seed), with 102, whose life reached all nine,
+ * first. That day the owner had a fictional agent, Thomas Ashgrove of Halberd Talent, take the real one's place
+ * (`59da1351`), and his id is in the draws' keys (`rngFor(seed, 'pro.agent', person, agent.id, …)`), so the same seed
+ * drew another story: 102's life, played again, was passed on May 25, 2029, with no meeting. `draws.ts`, run on
+ * `59da1351`, listed `app-walk-71`, `112`, `156`, `311` and `374`; played one at a time, 71's office passed on May 25
+ * and 112's life reached all nine with breaches none, and the defaults were the list's first four with 112 first. Later
+ * that day the owner had each part written for an actor, an actress or either, and only one for the player or for
+ * either posted to them (`9c3b7ee8`), so the parts each life was posted, and what came of them, changed again.
+ * `draws.ts` listed the same five on `9c3b7ee8` (its draw reads only the seed and his id), and each was played by
+ * itself: 71 was passed on May 25 again; 112, 156 and 311 reached all nine; 374's first offer came in May 2030 and no
+ * work day before June. Run on from `app-walk-400`, it listed `473`, `564`, `611`, `621` and more; 473 was passed, 564
+ * reached all nine, and 611's first work day came in May 2030 with no pay before June. The defaults were those four,
+ * 112, 156, 311 and 564, until later that day, when two commitments whose trips meet couldn't both be gone to any more
+ * and the film's part Theo became Felix (`a43b4f8f`), which changed the lives again. Played one at a time on
+ * `a43b4f8f`, 71 was passed on May 25 again, and 112, 156, 311 and 374 each reached all nine with breaches none. The
+ * defaults are those four, in that order (`make-saves.log`; the real agent's life is `make-saves-real-agent.log`).
  *
  * Writes, where the life reaches them:
  * - `last-term.json`: the last term's first day (January 8, 2029, noon): the showcase's scenes still to choose.
@@ -49,7 +68,7 @@ import { roundToCome } from '../../../../src/engine/systems/projobs';
 
 const [OUT = '.', ...SEEDS] = process.argv.slice(2).filter((a) => a !== '--');
 mkdirSync(OUT, { recursive: true });
-const seeds = SEEDS.length ? SEEDS : ['app-walk-102', 'app-walk-314', 'app-walk-93', 'app-walk-150'];
+const seeds = SEEDS.length ? SEEDS : ['app-walk-112', 'app-walk-156', 'app-walk-311', 'app-walk-374'];
 const zone = 'America/New_York';
 const at = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h, minute: 0 }, zone);
 const AGENT = AGENTS[0]!;

@@ -1,0 +1,19 @@
+calendar-entry-work-day (work-day.json, 1440 wide)
+
+The Calloway Files: Shoot Day 1
+✕
+WHEN
+7:00 AM
+October 1, 2029
+LENGTH
+11 hours
+KIND
+Career
+New York
+STATUS
+Pending
+
+You need to be there. The clock stops when it’s time, so you can go. Getting there takes two hours each way, and the trip is part of it.
+
+----- 1 controls; Tab reached 1 of the 1 it can; 0 grayed
+Nothing found.
