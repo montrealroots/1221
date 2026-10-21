@@ -174,8 +174,9 @@ describe('a genre marked Mastered, on the Player Profile', () => {
     const older = JSON.parse(serialise(sim.universe)) as Older;
     delete older.people[older.playerId]!.briefs[ABSURDIST.id]!.mastered;
     // That build had neither step: from 2026-10-17 the later one, `writtenUnplayed`, is taken off too, and from 2026-10-20
-    // `nameTheCover` (brief 19's D6) and `pro.begun` (brief 19's professional record).
-    older.opened = older.opened!.filter((x) => x !== 'briefsMastered' && x !== 'writtenUnplayed' && x !== 'nameTheCover' && x !== 'pro.begun');
+    // `nameTheCover` (brief 19's D6) and `pro.begun` (brief 19's professional record), and from 2026-10-21 `showcase.begun`
+    // (brief 19's Actor Showcase).
+    older.opened = older.opened!.filter((x) => x !== 'briefsMastered' && x !== 'writtenUnplayed' && x !== 'nameTheCover' && x !== 'pro.begun' && x !== 'showcase.begun');
     expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls']);
     const opened = loadSave(deserialise(JSON.stringify(older)) as never);
     expect(opened.universe.opened).toContain('briefsMastered');

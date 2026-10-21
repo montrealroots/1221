@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 32 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 33 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -83,7 +83,7 @@ Home, how the guide and this help work, and finding your way around.
 
 ## Coursework And Partners
 
-Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates and working a problem through.
+Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates, working a problem through and the Actor Showcase.
 
 ### Preparing Coursework (`coursework.prepare`)
 
@@ -125,7 +125,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - Once 6 of the term’s pieces have been due and 35% or more of them were Unready or not shown, as the review counts them, A Word On Your Coursework comes, once. It’s a warning, not the term review: it says how many, the day the faculty review the term and what the review would do to your standing if the term ends short, then what they were short on (the part most often unfinished on two or more of them with the steps that work on it, or that every part of each was unfinished, or that each was short on a different part). The review’s notice says what they were short on the same way.
   - At the term’s review, once 3 or more pieces are due, 50% or more of them Unready or not shown is short, and 50% or more Strong or better is noted.
   - A piece the course revises comes back to be shown again at its next class, with the note to take; a piece in rounds is shown a round at a time. A piece still open when the term’s classes end lapses.
-- **Tested by:** `school.prepare`: `tests/approaches.test.ts`, `tests/attributes-phase-2a.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/defects-g10-1.test.ts`, `tests/defects-g28-1.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-g8-9.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b03.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b10.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/mastery-integration.test.ts`, `tests/partners.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/table-work-unread.test.ts`, `tests/trace-commands.test.ts`, `tests/traits-connected.test.ts`
+- **Tested by:** `school.prepare`: `tests/approaches.test.ts`, `tests/attributes-phase-2a.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/defects-g10-1.test.ts`, `tests/defects-g28-1.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-g8-9.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b03.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b10.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/mastery-integration.test.ts`, `tests/partners.test.ts`, `tests/pro-showcase.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/table-work-unread.test.ts`, `tests/trace-commands.test.ts`, `tests/traits-connected.test.ts`
 
 ### Table Work (`coursework.table`)
 
@@ -157,7 +157,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - When the piece is shown, the table work is one part of the preparation, and each quality it affects is held back by the least prepared part. Its Note Priority only decides what the note is about.
   - You put a note about an answer right when this piece, shown again, or a later one answers that question the way the text supports.
   - If you come back to a scene and are asked to read it another way, your answers are compared with last time’s.
-- **Tested by:** `school.choose`: `tests/defects-g8-9.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/integration-mastery.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/table-work-unread.test.ts`
+- **Tested by:** `school.choose`: `tests/defects-g8-9.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/integration-mastery.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/pro-showcase.test.ts`, `tests/table-work-unread.test.ts`
 
 ### How You’ll Play A Scene (`coursework.playing`)
 
@@ -213,6 +213,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - How You’ll Play A Scene reads it, evaluation: The showing counts the choice: what it favors, the abilities it uses, and how far it’s rehearsed.
   - Rehearsing With A Partner reads it, evaluation: The showing’s scene together shows their preparation, timing, agreement and reliability, separately from your band.
   - Working A Problem Through reads it, evaluation: The showing judges the scene with each part’s own work and every discovery you kept.
+  - The Actor Showcase reads it, evaluation: Each scene’s note comes at its first showcase day, and Los Angeles shows whether you took it.
   - The Director’s Notes reads it, history: Notes still open when the run closes go into your notes from the courses, and the next piece can ask for them.
   - The Nights reads it, history: At the closing, the notes still open go into your notes from the courses for the next piece.
 - **Feedback (how to read what comes back):**
@@ -307,7 +308,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - In class, on a day with nothing booked between you, they may ask (on 40% of such days) for 7 p.m. on one of the next three evenings they’re free. If you don’t answer, it lapses, and their trust falls 2.
   - When the piece is shown, a scene together at Strong or better brings you 1 closer, and a slip of theirs you covered earns 2 of their trust.
   - If you’re not there for the showing and have no excuse, their trust and the bond fall as for a missed rehearsal.
-- **Tested by:** `school.ask_partner`: `tests/attributes-phase-2b.test.ts`, `tests/commands-kept.test.ts`, `tests/coursework-defects.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/partners.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`; `school.answer_partner`: `tests/evidence-g24-school.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/language-frame-ui.test.ts`, `tests/partners.test.ts`, `tests/school-journey-gaps.test.ts`; `school.cancel_rehearsal`: `tests/commands-kept.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/guide-examples-coursework.test.ts`
+- **Tested by:** `school.ask_partner`: `tests/attributes-phase-2b.test.ts`, `tests/commands-kept.test.ts`, `tests/coursework-defects.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/partners.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`; `school.answer_partner`: `tests/evidence-g24-school.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/language-frame-ui.test.ts`, `tests/partners.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/time-stops.test.ts`; `school.cancel_rehearsal`: `tests/commands-kept.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/time-stops.test.ts`
 
 ### Your Class (`coursework.class`)
 
@@ -378,6 +379,35 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - Every later forecast and performance of the piece includes what you kept: the take of a brief, the showing of a scene, a night of a part.
   - What You’ve Found lists each part played its own way and how far it’s rehearsed, places to breathe you’ve found, and each try kept that moved its figure half a point or more.
 - **Tested by:** `work.identify`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-9.test.ts`, `tests/determinism-played.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`; `work.try`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-9.test.ts`, `tests/determinism-played.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`; `work.settle`: `tests/defects-g8-13.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/direction-mastery.test.ts`, `tests/direction.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/rehearsal-notes-history.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`
+
+### The Actor Showcase (`coursework.showcase`)
+
+- **Action:** `school.choose_showcase`, at School, Coursework, The Actor Showcase (`/workspace/school?tab=coursework`). Opens: In your last spring term, from its first day, once you’ve read the guide’s chapter “Drama School”.
+- **Preconditions:**
+  - To be in your last spring term, enrolled in it: not on leave, and not in an additional term.
+  - Every Incomplete made up by the end of the term’s fourth week, its Friday at five. One still open then keeps you out.
+  - Two different scenes from the options, each in one of its parts.
+  - Repeating, Extra Terms And Incompletes first: An Incomplete still open at the end of the term’s fourth week keeps you out of the showcase.
+- **Costs:**
+  - Time: None to choose. Each rehearsal call takes three hours; New York’s days ten hours and eight hours, and Los Angeles’s a day and a night, each with its trip (an estimate)
+  - Money: None: the School takes you
+- **State (what changes at once):**
+  - Your two scenes become pieces of Actor Showcase’s coursework, due in New York, each with a partner from your class.
+- **Consumer (what reads it):**
+  - Preparing Coursework, immediate: Your two scenes become pieces of coursework, each prepared with its own steps.
+  - Feedback And Your Notes, evaluation: Each scene’s note comes at its first showcase day, and Los Angeles shows whether you took it.
+  - The Career Screen, history: How each scene went at each showcase day stays on your professional record.
+- **Feedback (how to read what comes back):**
+  - A forecast is what a scene would come to fully prepared on a good day. It’s a forecast, not a result.
+  - Each day’s band is how that scene came out that day: Unready, Working, Strong or Exceptional, with its score of 100.
+  - A showcase day missed counts as a missed call and an unexcused absence from Actor Showcase, and your scenes aren’t seen there. Ill, you’re excused.
+- **History (kept in the record):**
+  - The Career Screen: How each scene went at each showcase day stays on your professional record.
+- **Later consequence:**
+  - At the end of the term’s fourth week, the School reads your Incompletes. With none, you’re in, and the faculty choose two scenes for you if you haven’t.
+  - At the first showcase day, each scene is shown and gets the faculty’s note. It’s played again the next day, and in Los Angeles it’s shown again with the note taken.
+  - Actor Showcase is settled after Los Angeles, not at the term review. A course with half its pieces not shown isn’t passed, and the degree needs every course passed.
+- **Tested by:** `school.choose_showcase`: `tests/pro-showcase.test.ts`
 
 ## Productions And Casting
 
@@ -966,7 +996,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **State (what changes at once):**
   - The screen shows your record and doesn’t move it.
 - **Consumer (what reads it):**
-  - (none)
+  - The Actor Showcase reads it, history: How each scene went at each showcase day stays on your professional record.
 - **Feedback (how to read what comes back):**
   - Needed For Any Submission is what a submission can’t go without: headshots and a résumé.
   - Worth Doing is what would help: a reel, newer headshots, or a résumé brought up to date.

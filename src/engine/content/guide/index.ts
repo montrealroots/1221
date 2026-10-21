@@ -19,6 +19,7 @@ import { PAPERS } from './papers';
 import { TAXES } from './taxes';
 import { DOCUMENTS } from './documents';
 import { CAREER_GUIDE } from './career';
+import { SHOWCASE_GUIDE } from './showcase';
 
 export type { Connection, ConnectionKind, Fact, Goal, GoalId, GuideEntry } from './types';
 
@@ -35,7 +36,7 @@ export const GOALS: readonly Goal[] = [
   { id: 'day', title: 'Your Day And The Clock', lead: 'What’s coming, the clock, moving time on, what needs you, your own plans and the weather.' },
   { id: 'body', title: 'Looking After Yourself', lead: 'How you are, sleep, and eating, washing, working out and unwinding.' },
   { id: 'school', title: 'Staying At School', lead: 'Your standing and classes, calling in sick, orientation, leave, repeating a year, what you owe the school and work-study.' },
-  { id: 'coursework', title: 'Coursework And Partners', lead: 'Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates and working a problem through.' },
+  { id: 'coursework', title: 'Coursework And Partners', lead: 'Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates, working a problem through and the Actor Showcase.' },
   { id: 'productions', title: 'Productions And Casting', lead: 'Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read.' },
   { id: 'craft', title: 'Your Craft', lead: 'Your Player Profile, practice, genres, practice briefs from preparing to taping, how a piece was judged, and your work so far.' },
   { id: 'money', title: 'Money And The Bank', lead: 'What you’re worth, your accounts, moving money, savings, paying, cards, borrowing, another bank and an account at home.' },
@@ -50,7 +51,8 @@ export const GOALS: readonly Goal[] = [
  */
 export const SEARCH_EXAMPLES: readonly string[] = ['clock stopped', 'how do I pay my card'];
 
-export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS, ...CAREER_GUIDE];
+// The Actor Showcase's entry after the coursework's, from 2026-10-21 (brief 19): its scenes are the course's pieces.
+export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...SHOWCASE_GUIDE, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS, ...CAREER_GUIDE];
 
 export const GUIDE_BY_ID: Readonly<Record<string, GuideEntry>> = Object.fromEntries(GUIDE.map((e) => [e.id, e]));
 

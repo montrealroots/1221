@@ -1,0 +1,61 @@
+Mutations of brief 19's showcase, 2026-10-21. Each mutation was applied alone to a copy of this tree's src and tests,
+the tests holding its claim run (vitest -t on tests/pro-showcase.test.ts, one worker), and the file put back. Killed
+means those tests failed with the mutation in place. The first run, against the tree as it stood after the built app's
+walk, killed 33 of 35; the two that survived were each answered with a test, and run again:
+
+- M14 (the part shown before is listed first) survived because the GUARD's class scene was one shown in its first
+  part, which is the scene's own order too. The GUARD now takes a scene shown in its second part and expects it listed
+  first: killed.
+- M25 (the course sets no drawn scene while its showcase is on) survived because the journey it was run against
+  chooses its scenes on the term's first day, before the course first meets, and an open piece already stops the class
+  setting another. The Incomplete journey, whose student leaves the choice to the faculty, now says her course's work is
+  the two scenes alone, and that a student kept out has her classes set their scenes from the fourth week: killed. M36,
+  the same rule's other half, added then: killed.
+
+Before the first run, five guards were found unreachable while the mutations were planned (in beginShowcase a leave,
+an additional term, a second beginning of a term, and !person.craft; in perform a performance kept twice): each left
+every test passing and nothing could reach it, so each was taken out, and the code's comment says so.
+
+First run:
+M1  killed  New York is the Monday after the last class  [src/engine/systems/proshowcase.ts]  test: 'the last term begins its showcase'  failed: × the Actor Showcase, on the calendar > PLAYER JOURNEY: the last term begins its showcase: the fourth week’s check, eight rehearsal calls an
+M2  killed  Los Angeles is the Tuesday a week after New York  [src/engine/systems/proshowcase.ts]  test: 'the last term begins its showcase'  failed: × the Actor Showcase, on the calendar > PLAYER JOURNEY: the last term begins its showcase: the fourth week’s check, eight rehearsal calls an
+M3  killed  the Incompletes are read at the end of the fourth week  [src/engine/systems/proshowcase.ts]  test: 'the last term begins its showcase'  failed: × the Actor Showcase, on the calendar > PLAYER JOURNEY: the last term begins its showcase: the fourth week’s check, eight rehearsal calls an
+M4  killed  each call has its trip inside its hours (travelMinutes 0)  [src/engine/systems/proshowcase.ts]  test: 'the last term begins its showcase'  failed: × the Actor Showcase, on the calendar > PLAYER JOURNEY: the last term begins its showcase: the fourth week’s check, eight rehearsal calls an
+M5  killed  an Incomplete outstanding keeps the student out  [src/engine/systems/proshowcase.ts]  test: 'an Incomplete still open'  failed: × taking part > PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out, said in the notice, the refusal and th
+M6  killed  an Incomplete is a course still incomplete  [src/engine/systems/proshowcase.ts]  test: 'an Incomplete still open'  failed: × taking part > PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out, said in the notice, the refusal and th
+M7  killed  the faculty choose for a student who has not  [src/engine/systems/proshowcase.ts]  test: 'an Incomplete still open'  failed: × taking part > PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out, said in the notice, the refusal and th
+M8  killed  a choice is two scenes  [src/engine/systems/proshowcase.ts]  test: 'refuses a choice before the last term'  failed: × choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice
+M9  killed  a choice is from the course options  [src/engine/systems/proshowcase.ts]  test: 'refuses a choice before the last term'  failed: × choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice
+M10  killed  a choice is two different scenes  [src/engine/systems/proshowcase.ts]  test: 'refuses a choice before the last term'  failed: × choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice
+M11  killed  the scenes are due at the first showcase day  [src/engine/systems/proshowcase.ts]  test: 'refuses a choice before the last term'  failed: × choosing the scenes > refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice
+M12  killed  a genre known moves a scene up the shortlist  [src/engine/systems/proshowcase.ts]  test: 'comedy known well'  failed: × choosing the scenes > GUARD: the faculty’s options follow the record: comedy known well moves a comedy onto the shortlist, and its note sa
+M13  killed  a scene shown Strong before moves up the shortlist  [src/engine/systems/proshowcase.ts]  test: 'a scene shown Strong or better before'  failed: × choosing the scenes > GUARD: a scene shown Strong or better before moves onto the shortlist, the part it was shown in listed first; a writ
+M14  SURVIVED  the part shown before is listed first  [src/engine/systems/proshowcase.ts]  test: 'a scene shown Strong or better before'
+M15  killed  a written analysis counts as no part played  [src/engine/systems/proshowcase.ts]  test: 'a scene shown Strong or better before'  failed: × choosing the scenes > GUARD: a scene shown Strong or better before moves onto the shortlist, the part it was shown in listed first; a writ
+M16  killed  the showcase judges each scene on its preparation  [src/engine/systems/proshowcase.ts]  test: 'prepared fully against left'  failed: × the showcase, played > PLAYER JOURNEY: the same scenes on the same seed, prepared fully against left as the rehearsal calls left them: the
+M17  killed  a rehearsal call kept works both scenes  [src/engine/systems/proshowcase.ts]  test: 'rehearsal calls work both scenes'  failed: × the showcase, played > PLAYER JOURNEY: the course’s rehearsal calls work both scenes on their feet with their partners: what they add, and
+M18  killed  a showcase day missed is a missed meeting of the course  [src/engine/systems/proshowcase.ts]  test: 'a showcase day missed'  failed: × the showcase, played > PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next 
+M19  killed  a showcase day is a call in the School tally  [src/engine/systems/proshowcase.ts]  test: 'a showcase day missed'  failed: × the showcase, played > PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next 
+M20  killed  a day missed ill is excused  [src/engine/systems/proshowcase.ts]  test: 'a showcase day missed'  failed: × the showcase, played > PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next 
+M21  killed  the course is held past the term review  [src/engine/systems/school.ts]  test: 'from the last term'  failed: × the showcase, played > PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past 
+M22  killed  the course is settled after Los Angeles  [src/engine/systems/proshowcase.ts]  test: 'from the last term'  failed: × the showcase, played > PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past 
+M23  killed  a scene played nowhere is a piece not shown  [src/engine/systems/proshowcase.ts]  test: 'a showcase day missed'  failed: × the showcase, played > PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next 
+M24  killed  the School ending settles a held course  [src/engine/systems/school.ts]  test: 'leaving the School between'  failed: × the showcase, played > PLAYER JOURNEY: leaving the School between the term review and New York settles Actor Showcase on what it had, and 
+M25  SURVIVED  the course sets no drawn scene while its showcase is on  [src/engine/systems/coursework.ts]  test: 'from the last term'
+M26  killed  a showcase piece does not lapse at the term review  [src/engine/systems/coursework.ts]  test: 'from the last term'  failed: × the showcase, played > PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past 
+M27  killed  an older save in its last term opens onto the showcase  [src/engine/index.ts]  test: 'a save from before the showcase'  failed: × an older save > PLAYER JOURNEY: a save from before the showcase, in its last term, opens onto it once: before the fourth week its choice i
+M28  killed  an older save opened after Los Angeles begins nothing  [src/engine/systems/proshowcase.ts]  test: 'a save from before the showcase'  failed: × an older save > PLAYER JOURNEY: a save from before the showcase, in its last term, opens onto it once: before the fourth week its choice i
+M29  killed  the Career says the Bulletin on early graduation  [src/engine/systems/pro.ts]  test: 'says the Bulletin'  failed: × graduating early > says the Bulletin’s sentence, and that the game offers no early degree, on the School’s Terms And Award and in the Care
+M30  killed  Terms And Award says the Bulletin on early graduation  [src/ui/workspaces/SchoolWorkspace.tsx]  test: 'says the Bulletin'  failed: × graduating early > says the Bulletin’s sentence, and that the game offers no early degree, on the School’s Terms And Award and in the Care
+M31  killed  only a student in the showcase has the course held  [src/engine/systems/proshowcase.ts]  test: 'an Incomplete still open'  failed: × taking part > PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out, said in the notice, the refusal and th
+M32  killed  the last term begins its showcase  [src/engine/systems/school.ts]  test: 'the last term begins its showcase'  failed: × the Actor Showcase, on the calendar > PLAYER JOURNEY: the last term begins its showcase: the fourth week’s check, eight rehearsal calls an
+M33  killed  Los Angeles shows each scene again with the note taken  [src/engine/systems/proshowcase.ts]  test: 'from the last term'  failed: × the showcase, played > PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past 
+M34  killed  a showcase day needs the student at the call  [src/engine/systems/proshowcase.ts]  test: 'a showcase day missed'  failed: × the showcase, played > PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next 
+M35  killed  a rehearsal call missed is a missed call and meeting  [src/engine/systems/proshowcase.ts]  test: 'rehearsal calls work both scenes'  failed: × the showcase, played > PLAYER JOURNEY: the course’s rehearsal calls work both scenes on their feet with their partners: what they add, and
+
+Run again after the tests were strengthened:
+M14  killed  the part shown before is listed first  [src/engine/systems/proshowcase.ts]  test: 'a scene shown Strong or better before'  failed: × choosing the scenes > GUARD: a scene shown Strong or better before moves onto the shortlist, the part it was shown in listed first; a writ
+M25  killed  the course sets no drawn scene while its showcase is on  [src/engine/systems/coursework.ts]  test: 'an Incomplete still open'  failed: × taking part > PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out, said in the notice, the refusal and th
+M36  killed  a student kept out has the course set its work as it always had  [src/engine/systems/coursework.ts]  test: 'an Incomplete still open'  failed: × taking part > PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out, said in the notice, the refusal and th
+
+Final: 36 of 36 killed.

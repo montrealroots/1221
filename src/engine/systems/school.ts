@@ -120,6 +120,7 @@ import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCo
 import { withRepeat, considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, aidOnAccount, billUnsupportedTerm, closeLeave, liftHold, yaleAccount, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, directorVoiceFor, nightFactor, prepOf, processOf, reflect, stagesOf, type DirectorVoice, type Stage } from './production';
 import { voiceOf, type Voice } from './feedback';
+import { SHOWCASE_COURSE, beginShowcase, settleHeldShowcase, showcaseHolds } from './proshowcase';
 
 export type Craft = Record<Skill, number>;
 /**
@@ -1567,7 +1568,7 @@ export function offSick(person: Person, when: Instant): boolean {
   return inHospital(person, when) || laidUp(person, when);
 }
 
-function present(person: Person, when: Instant): boolean {
+export function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're in no class (`systems/health.ts`).
   return !asleep && !inHospital(person, when) && !laidUp(person, when) && person.currentLocationId === YALE_DRAMA.cityId;
@@ -2002,6 +2003,8 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
     closeLeave(school, to === 'withdrawn' ? 'withdrawn' : 'dismissed');
     // The coursework ends with it (`endCoursework`, from 2026-10-10).
     endCoursework(sim, person);
+    // An Actor Showcase held past the term review, settled on what it had (`settleHeldShowcase`, from 2026-10-21).
+    settleHeldShowcase(sim, person);
     // The degree added to reputation and a dismissal took from it until 2026-10-09, when what read it went with the career.
     keepCredit(sim, school);
     // The class they were in goes on without them (`leaveClassBehind`, from 2026-10-11), after a dismissal or a
@@ -2083,7 +2086,7 @@ export function leaveCabaret(sim: Simulation, person: Person, why: string): void
  * checked, so two labs missed left a student castable where one lab and one rehearsal took them out, and a missed
  * run-through took them out without a word). A missed performance is counted among them and is a breach of its own.
  */
-function missedCallsOut(sim: Simulation, person: Person): boolean {
+export function missedCallsOut(sim: Simulation, person: Person): boolean {
   const school = person.school!;
   if (!school.castable || school.tally.calls - school.tally.answered < ESTIMATE.missedCallsOut) return false;
   school.castable = false;
@@ -3437,9 +3440,12 @@ export function registerSchool(sim: Simulation): void {
     scheduleLabs(s, person, term);
     if (academic >= 1) cast(s, person, term);
     else { if (school.around?.term !== term) school.around = { term, list: [] }; classCabaret(s, person, term, new Map()); }
-    // The last spring ended in the Actor Showcase for the agents until the career went on 2026-10-09. The degree's
-    // filmed monologues were marked posted at its end (`school.filmed`), footage for a reel, until 2026-10-10: with the
-    // career gone nothing cut a reel, and the mark went.
+    // The last spring ended in the Actor Showcase for the agents until the career went on 2026-10-09, and from then in
+    // nothing after its classes; from 2026-10-21 (brief 19) it ends in the School's own showcase again, DRAM 793b's two
+    // scenes in New York and Los Angeles (`beginShowcase`, `systems/proshowcase.ts`). The degree's filmed monologues were
+    // marked posted at its end (`school.filmed`), footage for a reel, until 2026-10-10: with the career gone nothing cut a
+    // reel, and the mark went; from 2026-10-20 the professional record reads them from DRAM 473b's pass (`reelSources`).
+    if (academic === YALE_DRAMA.terms - 1) beginShowcase(s, person, term);
     schedule(s, person, at(classPeriod(term).to, 17), { kind: EVALUATION_KIND, label: `Term Review, ${termLabel(term)}`, minutes: 0, payload: { term }, requiresPlayer: false });
     if (academic + 1 < YALE_DRAMA.terms) s.schedule({ at: Math.max(at(termStart(term + 1).date, 9), s.now + 60_000), kind: TERM_KIND, label: termBegins(term + 1), category: 'school', priority: 30, payload: { personId: person.id, term: term + 1 } });
   });
@@ -3884,10 +3890,12 @@ export function registerSchool(sim: Simulation): void {
     // Each course passed, incomplete or failed (`settleCourses`, from 2026-10-10), which the evaluation then reads.
     if (person.school && !schoolEnded(person.school.standing)) {
       const work = courseworkOf(s, person)?.assignments.filter((a) => a.term === term) ?? [];
+      // The final term's Actor Showcase is held to its last day, three days and more after this review, and settled then
+      // (`showcaseHolds`, from 2026-10-21): its scenes are played there, and a course settled here couldn't read them.
       settleCourses(s, person, term, (code) => {
         const due = work.filter((a) => a.course === code && (a.shown || a.status === 'missed'));
         return { due: due.length, notShown: due.filter((a) => !a.shown).length };
-      }, (code) => COURSES.find((c) => c.code === code)?.perWeek ?? 4);
+      }, (code) => COURSES.find((c) => c.code === code)?.perWeek ?? 4, (code) => code === SHOWCASE_COURSE && showcaseHolds(person, term, s.now));
       // The Bulletin's disqualification by Fails (p.194): the faculty "may" disqualify, so it's their review
       // (`facultyReview`, from 2026-10-10; that morning it was automatic).
       const review = facultyReview(s, person, term);

@@ -1,0 +1,8 @@
+The built app (npm run build, then vite preview on port 4181, its page checked to be this build's dist/index.html), walked in Chromium by Playwright on 2026-10-21. Two saves of seed showcase-final written on this tree: the last term's first day (January 8, 2029 at noon) and the morning after New York (May 2, 2029 at noon), each put in the save slot and opened with Continue, as the game opens a slot. On the first: the School's Coursework tab read, two parts of one scene ticked, then two scenes, and Choose These Scenes pressed; then Terms And Award, and the Career. On the second: the Coursework tab. Each file is the panel's text as the page renders it (innerText).
+
+1: button before ticking: disabled=true
+1: options offered as checkboxes: 8
+1: two parts of one scene ticked: disabled=true
+1: two scenes ticked: disabled=false
+1: console errors: none
+2: console errors: none

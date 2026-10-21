@@ -13,9 +13,9 @@
  },
  "src/engine/content/guide/index.ts#GOALS [coursework]": {
   "status": "Rewritten And Verified",
-  "hash": "8aa56f945953",
-  "on": "2026-10-17",
-  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+  "hash": "48e5359fa28b",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the contents and its entries' order; the lead names the Actor Showcase entry, last in Coursework And Partners"
  },
  "src/engine/content/guide/index.ts#GOALS [craft]": {
   "status": "Rewritten And Verified",
@@ -151,9 +151,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten And Verified",
-  "hash": "d11e959febd0",
-  "on": "2026-10-17",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/remaining-school.test.ts, 'the guide says whose each rule is…', holds the Bulletin's standings apart from what's estimated, and the note as the game's"
+  "hash": "1885e64d7f7f",
+  "on": "2026-10-21",
+  "evidence": "tests/tutorial.test.ts and tests/guide.test.ts hold the chapter's opens and words; the Actor Showcase paragraph names the controls tests/pro-showcase.test.ts renders"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
   "status": "Rewritten And Verified",

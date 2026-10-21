@@ -4044,5 +4044,53 @@
   ],
   "weakTests": [],
   "todo": "An independent reading at integration, against the integrated commit."
+ },
+ {
+  "on": "2026-10-21",
+  "against": "8534f276",
+  "id": "school-showcase",
+  "claim": "Brief 19's Actor Showcase: school.choose_showcase takes two different scenes from the course's options and sets them as DRAM 793b's pieces, due at the first showcase day; the fourth week's check reads the Incompletes and keeps a student out or lets them in, the faculty choosing for one who hasn't; rehearsal calls move the scenes' preparation; New York's two days and Los Angeles's judge each scene with judgeWork; a day missed counts as a missed call and meeting; DRAM 793b is settled after Los Angeles. Read by the School's Coursework tab, settleCourses, the Commencement handler and the call tally.",
+  "implementation": "src/engine/systems/proshowcase.ts (registerShowcase: school.choose_showcase, SHOWCASE_KIND, SHOWCASE_CHECK_KIND; beginShowcase, choiceRefusal, decide, perform, endShowcase, settleShowcaseCourse, showcaseHolds, beginOnOpening); src/engine/systems/school.ts (the term handler's beginShowcase, the evaluation's held course, setStanding's settleHeldShowcase); src/engine/systems/coursework.ts (setWork, lapseTerm, reshow); src/engine/systems/courserecord.ts (settleCourses' held); src/engine/index.ts (showcase.begun); src/ui/career/SchoolShowcase.tsx.",
+  "consumers": "The School's Coursework tab (The Actor Showcase) and Terms And Award (Finishing Early); the coursework's cards (the pieces); the work record and the journey (recordWork); settleCourses and the Commencement handler (DRAM 793b's pass and the degree); the call tally (the Player Profile's reliability); the professional record (pro.showcase).",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/pro-showcase.test.ts renders the School screen's Coursework tab in the last term (the days, Taking Part, each option's note, Choose These Scenes and its refusal), the panel kept out by an Incomplete, and Terms And Award with the Career's Overview for Finishing Early."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts 'refuses a choice before the last term, of the wrong count, of a scene the course didn’t offer and of one scene twice, leaving the save as it was; takes two of its options as pieces of the course due in New York; and refuses a second choice'",
+    "asserts": "Each refusal's words, the panel's too, with the save byte for byte as it was; two pieces of DRAM 793b due April 30, 2029, with different partners; a second choice refused.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts 'PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past the term review, judged in New York and Los Angeles, passed, conferred, every record carried'",
+    "asserts": "The notices in order, the rehearsal calls gone to, DRAM 793b held past the review and passed after Los Angeles, six performances in the work record, the journey and the professional record, the degree and Equity.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the coursework is prepared by TEST SETUP each midnight, as tests/school.test.ts plays a student."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-showcase.test.ts 'PLAYER JOURNEY: a showcase day missed is a missed call of the course: unseen in New York, counted, played the next day and again in Los Angeles; ill, it’s excused; every day missed and the course isn’t passed, nor the degree awarded'",
+    "asserts": "The missed record, the notice, the tally and the course's meeting; excused in hospital; every day missed fails the course and withholds the degree.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the absence is TEST SETUP, the location or a hospital stay set."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-21."
+  ],
+  "weakTests": [],
+  "todo": "An independent reading at integration, against the integrated commit."
  }
 ]

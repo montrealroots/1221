@@ -373,7 +373,7 @@ The rows with each kind of evidence, a row counted under every kind it has, and,
 
 ### The Capabilities, Reviewed
 
-The 46 live capabilities of `docs/capabilities.json`, read the same day against the same standard (`docs/verification/review-2026-10-13/capabilities.json`), but career-portfolio, read on 2026-10-20 by its builder. The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, 339 of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. 158 commands are named by both; a command only a capability names is traced in `docs/verification/connected-journey/TRACE.md`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.
+The 47 live capabilities of `docs/capabilities.json`, read the same day against the same standard (`docs/verification/review-2026-10-13/capabilities.json`), but career-portfolio, read on 2026-10-20 by its builder, school-showcase, read on 2026-10-21 by its builder. The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, 339 of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. 158 commands are named by both; a command only a capability names is traced in `docs/verification/connected-journey/TRACE.md`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.
 
 | Capability | Status In The Registry | The Review Found | Disposition | Gaps |
 |---|---|---|---|---|
@@ -423,6 +423,7 @@ The 46 live capabilities of `docs/capabilities.json`, read the same day against 
 | plays-to-read | Implemented | partial | missing-evidence | 2 |
 | accounts-and-transfers | Implemented | partial | stale-claim | 5 |
 | career-portfolio | Implemented | partial | missing-evidence | 1 |
+| school-showcase | Implemented | partial | missing-evidence | 1 |
 
 ## Read By Eye On 2026-10-12
 

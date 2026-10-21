@@ -32,11 +32,11 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| A1 | A student completing the degree normally goes from the final term, the showcase and Commencement into a career that carries every record below forward | Open |
+| A1 | A student completing the degree normally goes from the final term, the showcase and Commencement into a career that carries every record below forward | Open: the School's side verified (`showcase/REPORT.md`); the career's side waits on the follow-up and the work, and V1 plays it whole |
 | A2 | Seeking representation while enrolled is allowed (Yale publishes no rule against it); it never withdraws the student, and signing is neither employment nor permission to work | Open |
 | A3 | Professional work while enrolled follows the Bulletin: in session it needs good standing and a request the chair recommends and the dean decides, rarely given, and refused where it takes Yale Rep or class time; unapproved work brings the academic step the Bulletin names; summer work is open unless the School holds the student for recess work; an F-1 student needs authorization the game can't give in session (CPT isn't offered for Acting) | Open |
 | A4 | A student who leaves before the degree keeps their history, says truthfully what training they had, and can pursue the same career routes the record supports | Open |
-| A5 | Early graduation: the Bulletin lets the faculty "on rare occasions" reduce residency, never below two years, and publishes no criteria or way to ask. The route is unavailable, the game says so where a player would look for it, and no accelerated degree is made | Open |
+| A5 | Early graduation: the Bulletin lets the faculty "on rare occasions" reduce residency, never below two years, and publishes no criteria or way to ask. The route is unavailable, the game says so where a player would look for it, and no accelerated degree is made | Fixed And Verified (`showcase/REPORT.md`) |
 
 ### Carried Forward (Section 4)
 
@@ -60,8 +60,8 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| W1 | The Actor Showcase (DRAM 793b) in the final term, in New York and Los Angeles, after spring classes end and before Commencement; eligibility as the Bulletin gives it (an Incomplete cleared by the fourth week of the final term) | Open |
-| W2 | Scenes chosen, prepared, scheduled and performed, judged by the existing judge with preparation and condition; feedback recorded | Open |
+| W1 | The Actor Showcase (DRAM 793b) in the final term, in New York and Los Angeles, after spring classes end and before Commencement; eligibility as the Bulletin gives it (an Incomplete cleared by the fourth week of the final term) | Fixed And Verified (`showcase/REPORT.md`) |
+| W2 | Scenes chosen, prepared, scheduled and performed, judged by the existing judge with preparation and condition; feedback recorded | Fixed And Verified (`showcase/REPORT.md`) |
 | W3 | Follow-up comes through the School, not guaranteed; the agent's attendance is a fictional event, never claimed as fact; a strong showcase improves the chance of interest without promising it | Open |
 
 ### The Agent (Sections 7 To 10)
@@ -105,7 +105,7 @@ Each is a played run with its notices and records read, and a test:
 | V1 | A graduating student carrying their history into the career | Open |
 | V2 | An enrolled student pursuing a permitted opportunity | Open |
 | V3 | A player leaving without a degree | Open |
-| V4 | Early graduation unavailable, said so, per the Bulletin | Open |
+| V4 | Early graduation unavailable, said so, per the Bulletin | Fixed And Verified (`showcase/REPORT.md`) |
 | V5 | An incomplete submission and its remedy | Open |
 | V6 | A rejection and a valid later attempt | Open |
 | V7 | A meeting missed, and one rescheduled | Open |

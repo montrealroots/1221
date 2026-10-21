@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 527 of 641 rows in scope Implemented And Verified (82.2%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -29,7 +29,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
 | School | 79 | 79 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
-| Commands Traced Outside The Audit | 4 |  | 4 |  |  |  |  |  |
+| Commands Traced Outside The Audit | 5 |  | 5 |  |  |  |  |  |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
@@ -38,25 +38,25 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: tax | 18 | 16 |  |  |  |  |  | 2 |
 | Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
 | Brief 09 Area: coverage | 14 | 13 |  |  |  |  | 1 |  |
-| Brief 09 Area: genres | 21 | 21 |  |  |  |  |  |  |
+| Brief 09 Area: genres | 21 | 20 | 1 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 4 |  |  |  |  |  | 6 |
-| Brief 10 Area: advice | 14 | 10 | 4 |  |  |  |  |  |
+| Brief 10 Area: advice | 14 | 9 | 5 |  |  |  |  |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
-| Brief 10 Area: judge | 36 | 27 |  |  |  |  |  | 9 |
+| Brief 10 Area: judge | 36 | 25 | 2 |  |  |  |  | 9 |
 | Brief 10 Area: stamina | 13 | 12 |  |  |  |  |  | 1 |
-| Criteria: The Stage | 11 | 9 |  |  |  |  |  | 2 |
-| Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 21 | 1 |  |  |  |  | 3 |
-| Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  |  | 1 |
+| Criteria: The Stage | 11 |  | 9 |  |  |  |  | 2 |
+| Criteria: Interpretation | 5 |  | 5 |  |  |  |  |  |
+| Criteria: The Attributes | 25 | 6 | 16 |  |  |  |  | 3 |
+| Criteria: Long-Term Continuity | 3 | 1 | 1 |  |  |  |  | 1 |
 | Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
-| Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
+| Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 |  | 4 |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 1 | 32 |  |  |  |  |  |
-| **All** | **680** | **566** | **70** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **681** | **527** | **110** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -430,6 +430,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `pro.headshots` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.headshots`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts` / 2 test files |
 | `pro.set_name` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.set_name`: `tests/pro-core.test.ts` / 1 test files |
 | `pro.update_resume` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.update_resume`: `tests/pro-core.test.ts`, `tests/pro-screen.test.ts` / 2 test files |
+| `school.choose_showcase` | Take part in the School's Actor Showcase in the last term: choose two scenes from the faculty's options, prepare them as the course's cours… | Implemented, Verification Incomplete | capability Implemented | `school.choose_showcase`: `tests/pro-showcase.test.ts` ## Productions And Casting Being cast, learning a part, the director’s notes, how you’ll play a part, th… |
 
 ## Remaining Area: banking
 
@@ -591,7 +592,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `genres.4-kept` | The 41 genres kept as they were, each with its reason | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09.md ‘§4, the per-genre table’ (static) |
 | `genres.5-saves` | An older save that prepared or taped a retired brief | Implemented And Verified | older-save compatibility kept and tested | tests/remaining-genres.test.ts ‘a save that prepared a retired brief > keeps its record as it was across a reload, and nothing offers it or reads it as the new… |
 | `genres.6-table` | The per-genre table, before and after | Implemented And Verified | implemented | docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json ‘npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …’ (static) |
-| `genres.7-measured` | Measured again after the changes | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
+| `genres.7-measured` | Measured again after the changes | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
 | `genres.8-docs` | docs/GENRE-COVERAGE.md and guide text that names a brief’s scene | Implemented And Verified | verified as it stands | tests/genre-coverage.test.ts ‘the coverage record > is what the tables say, and accounts for every genre once’ (static) |
 
 ## Brief 09 Area: journeys
@@ -640,7 +641,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
 | `advice.harness` | The harness, before any held-out case is run: the tuning and held-out seeds apart; four bands and three stages built through the game's com… | Implemented And Verified | implemented | docs/verification/decisions-2026-10-16/advice/tuning-before.json ‘npx vite-node tools/advice.ts -- --cases tuning --out tuning-before.json (on 974785af, before… |
-| `advice.F2` | F2 as written, kept in the record and still reported. | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2… |
+| `advice.F2` | F2 as written, kept in the record and still reported. | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2… |
 | `advice.F2A10-a` | F2-A10 (a): cases, tuning apart from held out; 120 fresh held-out cases stratified as four bands, three stages and ten seeds each, their ge… | Implemented And Verified | implemented | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
 | `advice.F2A10-b` | F2-A10 (b): right often enough: at least 80% of the 120 fresh held-out cases pass F2-A, and at least 70% of each band and of each stage. | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
 | `advice.F2A10-c` | F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs'… | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
@@ -697,13 +698,13 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H4-R.e` | H4-R (e) It catches what it should | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (m… |
 | `H4.asWritten` | H4 as written and H5 beside H4-R | Explicitly Deferred | superseded by H4-R; kept as the record,… | docs/verification/decisions-2026-10-16/integrated/after/criteria.txt ‘node tools/ag-criteria.mjs (H4, H5)’ (measurement) |
 | `L3-R.a` | L3-R (a) A fixed set, controlled | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
-| `L3-R.b` | L3-R (b) Enough journeys | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
+| `L3-R.b` | L3-R (b) Enough journeys | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
 | `L3-R.c` | L3-R (c) Growth | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the f… |
 | `L3-R.d` | L3-R (d) More never makes it worse | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers… |
 | `L3-R.e` | L3-R (e) The journey kept in view | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
 | `L3.asWritten` | L3 as written, kept as the record | Explicitly Deferred | superseded by L3-R; kept as the record,… | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘tools/l3r.mjs (verdict.e)’ (measurement) |
 | `M1` | Mastery is kept | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day,… |
-| `judge.together` | Every criterion section 5 lists, after the change | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <after> <part>’ (measurement) |
+| `judge.together` | Every criterion section 5 lists, after the change | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <after> <part>’ (measurement) |
 | `judge.tests` | The tests of section 1 | Implemented And Verified | implemented | tests/decisions-judge.test.ts (test file) |
 | `judge.stamina` | stamina owned 1 piece and led on none; A1 failed (brief 0.39, scene 0.40, night 0.32); W1 to W10 held | Implemented And Verified | fixed | tests/decisions-judge.test.ts ‘The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > the full drain is 0.4, and a… |
 | `judge.memory` | memory’s own work 119 briefs, no other kind | Implemented And Verified | fixed | tests/decisions-judge.test.ts ‘The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > a night reads memory by its … |
@@ -733,47 +734,47 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `ST1` | No universal best: each scale side ahead on at least 25% of materials where both fit, for an even actor | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-1… |
-| `ST2` | The house moves no scale; the better side rests on the scene | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
+| `ST1` | No universal best: each scale side ahead on at least 25% of materials where both fit, for an even actor | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-1… |
+| `ST2` | The house moves no scale; the better side rests on the scene | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
 | `ST3` | Projection is a demand: the voice-and-body specialist better on stage; the even actor the same on both | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts |
-| `ST4` | Scenes within a genre differ: drama, comedy and tragedy each suit both sides somewhere | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/… |
-| `ST5` | Mastery: a mastered, prepared actor reaches 100 on every fitting combination | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
+| `ST4` | Scenes within a genre differ: drama, comedy and tragedy each suit both sides somewhere | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/… |
+| `ST5` | Mastery: a mastered, prepared actor reaches 100 on every fitting combination | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
 | `ST6` | Strength carries the harder side: specialists ahead against the grain on at least 25% | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts |
-| `ST7` | More than one good way: two or more interpretations within a point of the best | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
-| `ST8` | The even actor follows the scene where the sides are a band apart | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
-| `ST9` | Nothing else lost: I1 to I5, the signature, the camera and microphone briefs, G2 | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/int… |
-| `Stage F1` | Fresh validation: the plays as a night (ST1, ST5, ST7, ST8) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
-| `Stage F2` | Fresh validation: even actors at 40 and 75 (ST1, ST8) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
+| `ST7` | More than one good way: two or more interpretations within a point of the best | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
+| `ST8` | The even actor follows the scene where the sides are a band apart | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
+| `ST9` | Nothing else lost: I1 to I5, the signature, the camera and microphone briefs, G2 | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/int… |
+| `Stage F1` | Fresh validation: the plays as a night (ST1, ST5, ST7, ST8) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
+| `Stage F2` | Fresh validation: even actors at 40 and 75 (ST1, ST8) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/dec… |
 
 ## Criteria: Interpretation
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `I1` | A mastered actor reaches 100 on every fitting combination of briefs and readings | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I2` | The better-suited side differs within a genre on each axis | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I3` | Suitability spreads results and neither scale side dominates | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I4` | The even actor follows suitability where the sides are a band apart | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I5` | Two or more ways within a point of the best | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I1` | A mastered actor reaches 100 on every fitting combination of briefs and readings | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I2` | The better-suited side differs within a genre on each axis | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I3` | Suitability spreads results and neither scale side dominates | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I4` | The even actor follows suitability where the sides are a band apart | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I5` | Two or more ways within a point of the best | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
 
 ## Criteria: The Attributes
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `A1` | Every ability is causal somewhere | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `A2` | No two abilities do the same job | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `A3` | No ability is a universal bonus | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `T2` | Training resists exploits (a): four hours of one exercise at most half four different ones | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `T3` | Caps don’t erase progression early (a): the gain an hour at 90 at least 25% of that at 30 | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `G3` | Different genres reward different actors | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `G4` | Every genre offers enough to play | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `G5` | Genre proficiency progresses across its range | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `M1` | Maximum work quality under the qualifying conditions is 100 on every judged piece | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `M3` | Nobody else can hold a mastered player’s own result under 100 | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `O1` | Your own result is invariant to the reader | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `O2` | The take together moves with the reader | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H2` | No universally dominant allocation | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H5` | Generalists are useful | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `A1` | Every ability is causal somewhere | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `A2` | No two abilities do the same job | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `A3` | No ability is a universal bonus | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `T2` | Training resists exploits (a): four hours of one exercise at most half four different ones | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `T3` | Caps don’t erase progression early (a): the gain an hour at 90 at least 25% of that at 30 | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `G3` | Different genres reward different actors | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `G4` | Every genre offers enough to play | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `G5` | Genre proficiency progresses across its range | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `M1` | Maximum work quality under the qualifying conditions is 100 on every judged piece | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `M3` | Nobody else can hold a mastered player’s own result under 100 | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `O1` | Your own result is invariant to the reader | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `O2` | The take together moves with the reader | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H2` | No universally dominant allocation | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H5` | Generalists are useful | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
 | `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
@@ -790,7 +791,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
 | `L1` | Repeated feedback changes or is acted on | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; d… |
-| `L2` | No mindless repetition | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verifica… |
+| `L2` | No mindless repetition | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verifica… |
 | `L3` | A learning student’s work improves over a term (as written: the last month’s mean at or over the first’s) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-… |
 
 ## Criteria: Mastery Through Play
@@ -810,11 +811,11 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `S1` | A genre’s conventions are recognizable across very different scenes | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `S2` | Contrasting genres differ and related ones overlap (revised) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `S3` | Contrasting genres change outcomes on the same scene (revised), on all four samples | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `S4` | No two briefs of different genres identical in every number a take reads (G2) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.m… |
+| `S1` | A genre’s conventions are recognizable across very different scenes | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `S2` | Contrasting genres differ and related ones overlap (revised) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `S3` | Contrasting genres change outcomes on the same scene (revised), on all four samples | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `S4` | No two briefs of different genres identical in every number a take reads (G2) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.m… |
 
 ## Integration
 
@@ -902,7 +903,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (70)
+### Implemented, Verification Incomplete (110)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -920,6 +921,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`pro.headshots`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.set_name`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.update_resume`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
+- **`school.choose_showcase`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision
 - **`banking.2.cancel_new`** (Brief 09 Area: banking): owner decision (its last unfinished item implemented: banking.1.pro-rata)
 - **`banking.2.switch`** (Brief 09 Area: banking): owner decision
@@ -928,52 +930,91 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
-- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`advice.F2A10-f`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`advice.F2A10-h`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`advice.heldout`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`F2-A`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
+- **`genres.7-measured`** (Brief 09 Area: genres): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`advice.F2`** (Brief 10 Area: advice): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`advice.F2A10-f`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`advice.F2A10-h`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`advice.heldout`** (Brief 10 Area: advice): It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`L3-R.b`** (Brief 10 Area: judge): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`judge.together`** (Brief 10 Area: judge): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST1`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST2`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST4`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST5`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST7`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST8`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`ST9`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`Stage F1`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`Stage F2`** (Criteria: The Stage): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`I1`** (Criteria: Interpretation): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`I2`** (Criteria: Interpretation): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`I3`** (Criteria: Interpretation): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`I4`** (Criteria: Interpretation): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`I5`** (Criteria: Interpretation): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`A1`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`A2`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`A3`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`T2`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`T3`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`G3`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`G4`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`G5`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`M1`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`M3`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`O1`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`O2`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`H2`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`H5`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`H7`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`L2`** (Criteria: Long-Term Continuity): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`S1`** (Criteria: The Genres): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`S2`** (Criteria: The Genres): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`S3`** (Criteria: The Genres): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`S4`** (Criteria: The Genres): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
+- **`Genre Audit`** (Criteria: The Genres): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again
 - **`INT-skipped`** (Integration): It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
 - **`INT-navigation`** (Integration): It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
 - **`INT-gate`** (Integration): It was measured on 3fe960df, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
 - **`B13-UI.normal`** (Brief 13 Area: interface): It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
 - **`B13-UI.setback`** (Brief 13 Area: interface): It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
 - **`B13-UI.specialist`** (Brief 13 Area: interface): It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
 - **`B13-UI.walkthrough`** (Brief 13 Area: interface): It was measured on ecd961cc, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
-- **`journeys.4-complete-journeys`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-profiles`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-expected-first`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-neglect`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-recovery`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-1`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-2`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-3`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-4`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-5`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-6`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-7`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-8`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-9`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-check-10`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.4-focused`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-completed-stay`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-once`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-advice-acknowledges`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-feedback-current`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-variety`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-words-alone`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-repetition-record`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.6-defects-fixed`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-mastery`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-attributes`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-genres`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-specialists`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-advice-forecasts`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-stamina`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-ledger`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
-- **`journeys.7-save`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again
+- **`journeys.4-complete-journeys`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-profiles`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-expected-first`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-neglect`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-recovery`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-1`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-2`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-3`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-4`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-5`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-6`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-7`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-8`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-9`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-check-10`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.4-focused`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-completed-stay`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-once`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-advice-acknowledges`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-feedback-current`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-variety`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-words-alone`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-repetition-record`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.6-defects-fixed`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-mastery`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-attributes`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-genres`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-specialists`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-advice-forecasts`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-stamina`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-ledger`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
+- **`journeys.7-save`** (Brief 13 Area: journeys): It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again
 
 ### Partially Implemented (0)
 

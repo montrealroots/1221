@@ -138,10 +138,10 @@
   "reason": "The templates’ titles, notes, steps and reasons: short, specific and true to the step they gate; the judge reads this file, so words only, and these needed none."
  },
  "src/engine/content/coursework.ts#SHOWCASE_SCENE": {
-  "status": "Reviewed And Retained",
-  "hash": "f8e0dfaf6e56",
-  "on": "2026-10-17",
-  "reason": "The templates’ titles, notes, steps and reasons: short, specific and true to the step they gate; the judge reads this file, so words only, and these needed none."
+  "status": "Rewritten And Verified",
+  "hash": "3098fbef83aa",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts plays the showcase's scenes on their cards: the deliverable and the notes say the showcase as the Bulletin does, no longer in front of agents"
  },
  "src/engine/content/coursework.ts#TEMPLATES [alexander-practice]": {
   "status": "Reviewed And Retained",
