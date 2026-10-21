@@ -15,19 +15,31 @@
  * kept fed and rested and the coursework prepared each midnight, as tests/pro-showcase.test.ts makes its `finalTerm`
  * (two and a half years can't be played by the hour here). From that morning on nothing is set by hand.
  *
- * The seeds, found by playing (the record's `seeds.txt` lists every seed played and how it went):
- * - **v1-12** is the first of v1-0 to v1-39 whose played life the School's follow-up brings a request to meet from his
- *   office, the meeting an offer, and his breakdowns a SAG-AFTRA role booked and paid before the year is out. Why: its
- *   showcase and the filmed monologues its reel was cut from came out Working, as nearly every seed's did, so the work
- *   stood near the bar; but five of the seven factors stood at it or beyond (four are needed), and his list's assumed
- *   room was beyond the bar, which lifts the follow-up's chance a quarter, to 0.1875. Its draw, 0.053, fell under that,
- *   and at the decision (0.4375) the offer's, 0.042, did too. Earlier seeds' follow-ups brought no request, their draws
- *   over their chances (v1-0, v1-2, v1-3, v1-4, v1-6, v1-7, v1-9, v1-10, v1-11); v1-8's meeting ended in a pass; v1-1
- *   was dismissed before its last term; and v1-5 was represented with no booking at all that year.
- * - **SEED_B** (below), v1-5, is the first of v1-0 on whose played life, with the reel cut only after the follow-up,
+ * The seeds, found by playing (the record's `seeds.txt` lists every seed played and how it went), on a43b4f8f, with
+ * the fictional agent of 59da1351, the parts written for an actor, an actress or either (9c3b7ee8), and two commitments
+ * whose trips meet no longer both gone to (a43b4f8f):
+ * - **v1-21** is the first of v1-0 on whose played life the School's follow-up brings a request to meet from his office,
+ *   the meeting an offer, and his breakdowns a SAG-AFTRA role booked and paid before the year is out. Why: its showcase
+ *   and the filmed monologues its reel was cut from came out Working, as nearly every seed's did, so the work stood near
+ *   the bar; but five of the seven factors stood at it or beyond (four are needed), and his list's assumed room was beyond
+ *   the bar, which lifts the follow-up's chance a quarter, to 0.1875. Its draw, 0.058, fell under that, and at the
+ *   decision (0.4375) the offer's, 0.276, did too. His breakdowns brought Desk Clerk in The Calloway Files three times:
+ *   the June and August self-tapes came out Working and Kettering Casting cast another actor; the third, posted on
+ *   12 November, came out Strong and was offered, so the shoot fell on 17 and 18 December and the pay came on the 26th.
+ *   Earlier seeds' follow-ups brought no request, their draws over their chances (v1-0, v1-2 to v1-6, v1-9 to v1-13,
+ *   v1-15 to v1-20); v1-8's meeting ended in a pass; v1-7 and v1-14 were represented and booked no SAG-AFTRA principal
+ *   role through him that year (v1-7 Nell in A House On Calder Street, an Equity part; v1-14 nothing); and v1-1 was
+ *   dismissed before its last term.
+ * - **SEED_B** (below), v1-7, is the first of v1-0 on whose played life, with the reel cut only after the follow-up,
  *   the follow-up brings no request to meet, and an approach after the degree brings a request for more, a meeting and
- *   an offer, which that player declines. v1-0's send went unanswered, v1-2 to v1-4's were passed on at the reply, and
- *   v1-1 was dismissed before its last term.
+ *   an offer, which that player declines. v1-3's send went unanswered, v1-0, v1-2 and v1-4 to v1-6's were passed on at
+ *   the reply, and v1-1 was dismissed before its last term.
+ *
+ * Until 2026-10-21 the seeds were v1-12 and v1-5, found the same way with the real agent: his draws are keyed by his
+ * id, so the fictional one's fell otherwise (59da1351), and an actress is no longer posted the parts written for an
+ * actor (9c3b7ee8); the trips that meet (a43b4f8f) changed neither search. v1-12's life met Desk Clerk once, in June,
+ * shot it on 30 and 31 July 2029 and came to its first billing as a SAG-AFTRA member on 1 November; v1-21's comes to it
+ * on 1 May 2030.
  */
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { createSave, loadSave } from '@/engine';
@@ -68,8 +80,13 @@ vi.mock('@/app/game-context', () => {
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
 const AGENT = AGENTS[0]!;
-const SEED_A = 'v1-12';
-const SEED_B = 'v1-5';
+const SEED_A = 'v1-21';
+const SEED_B = 'v1-7';
+/**
+ * Desk Clerk in The Calloway Files as his breakdowns brought it the third time, on Monday 12 November 2029: the one
+ * booked, where until 2026-10-21 v1-12's first, posted in June, was.
+ */
+const deskClerk = (sim: Simulation) => sim.player.pro!.opportunities.find((o) => o.projectId === 'calloway-files' && o.via === 'agent' && o.postedAt >= at(2029, 11, 12, 0));
 
 /**
  * TEST SETUP: the life to the first morning of its last term, Monday 8 January 2029 at seven, before the School's term
@@ -266,7 +283,7 @@ beforeAll(() => {
   };
   const pro = () => sim.player.pro!;
   const rel = () => relationOf(sim.player, AGENT.id);
-  const calloway = () => pro().opportunities.find((o) => o.projectId === 'calloway-files' && o.via === 'agent' && o.rounds?.length);
+  const calloway = () => deskClerk(sim);
   const booked = () => pro().engagements.find((e) => e.projectId === 'calloway-files');
 
   keep('term');
@@ -281,15 +298,17 @@ beforeAll(() => {
   until('met', at(2029, 6, 2), () => rel()?.meeting?.status === 'kept');
   until('offered', at(2029, 6, 8), () => pro().agreements.length > 0);
   until('signed', at(2029, 6, 8), () => pro().agreements[0]!.status === 'accepted');
-  until('audition', at(2029, 9, 1), () => calloway()?.rounds?.[0]?.status === 'set');
-  until('offer', at(2029, 9, 30), () => calloway()?.status === 'offered' || calloway()?.status === 'passed');
-  until('booked', at(2029, 9, 30), () => booked() !== undefined);
-  until('sag-joined', at(2029, 10, 30), () => pro().sag?.memberSince !== undefined);
-  until('wrapped', at(2029, 10, 30), () => booked()!.status === 'finished');
-  until('in-trust', at(2029, 11, 15), () => booked()!.pay.every((p) => p.inTrust !== undefined));
-  until('paid-on', at(2029, 11, 15), () => booked()!.pay.every((p) => p.received !== undefined));
-  until('resume', at(2029, 11, 20), () => (currentOf(pro(), 'resume')?.keys ?? []).includes(`pro:${booked()!.creditId}`));
-  until('november', at(2029, 11, 2), () => (pro().unionBills ?? []).some((b) => b.key === 'sag-aftra:dues:2029-11' && b.settled));
+  until('audition', at(2029, 11, 15), () => calloway()?.rounds?.[0]?.status === 'set');
+  until('offer', at(2029, 11, 30), () => calloway()?.status === 'offered' || calloway()?.status === 'passed');
+  until('booked', at(2029, 11, 30), () => booked() !== undefined);
+  until('sag-joined', at(2029, 12, 31), () => pro().sag?.memberSince !== undefined);
+  until('wrapped', at(2029, 12, 31), () => booked()!.status === 'finished');
+  until('in-trust', at(2029, 12, 31), () => booked()!.pay.every((p) => p.inTrust !== undefined));
+  until('paid-on', at(2029, 12, 31), () => booked()!.pay.every((p) => p.received !== undefined));
+  until('resume', at(2029, 12, 31), () => (currentOf(pro(), 'resume')?.keys ?? []).includes(`pro:${booked()!.creditId}`));
+  // The first billing after she joined SAG-AFTRA: May's, 2030 (until 2026-10-21 v1-12's was 1 November 2029, the
+  // transition named for it).
+  until('may', at(2030, 5, 2), () => (pro().unionBills ?? []).some((b) => b.key === 'sag-aftra:dues:2030-05' && b.settled));
   // Representation ended by agreement, with the command its panel sends: End It By Agreement.
   expect(sim.execute({ kind: 'pro.end_agreement', payload: { how: 'agreement' } }).ok).toBe(true);
   readNotices(sim, t);
@@ -311,9 +330,9 @@ const NY_OFFICE = 'us-ny-newyork';
 const money = (cents: number) => formatMoney(cents, 'USD');
 const BAND_RANK = { unready: 0, working: 1, strong: 2, exceptional: 3 } as const;
 
-describe('V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12)', () => {
+describe('V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-21)', () => {
   it('saves and opens the life at each of its 22 transitions, in the order a player meets them, every law of the world holding at each', () => {
-    expect(A.order).toEqual(['term', 'chosen', 'portfolio', 'showcase', 'follow-up', 'sent', 'meeting-set', 'degree', 'moved', 'met', 'offered', 'signed', 'audition', 'offer', 'booked', 'sag-joined', 'wrapped', 'in-trust', 'paid-on', 'resume', 'november', 'ended']);
+    expect(A.order).toEqual(['term', 'chosen', 'portfolio', 'showcase', 'follow-up', 'sent', 'meeting-set', 'degree', 'moved', 'met', 'offered', 'signed', 'audition', 'offer', 'booked', 'sag-joined', 'wrapped', 'in-trust', 'paid-on', 'resume', 'may', 'ended']);
     for (const name of A.order) { const s = opened(name); expect(breaches(s.universe, s.now), name).toEqual([]); }
   });
 
@@ -353,7 +372,8 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(fu.player.pro!.showcase!.followUp).toEqual({ at: at(2029, 5, 11, 10), agents: [AGENT.id] });
     expect(rel.via).toEqual({ route: 'showcase', at: at(2029, 5, 11, 10), by: 'the School' });
     // Why: five of the seven factors at the bar or beyond (four needed), the work Working at best (the showcase and the
-    // reel alike), and his list's assumed room for two leads her age: 0.15 times 1.25. The approach's draw fell under it.
+    // reel alike), and his list's assumed room for two leads her age: 0.15 times 1.25. The approach's draw fell under it
+    // (0.058 on v1-21, as 0.053 had on v1-12 with the real agent, whose reading here was the same).
     expect(rel.why!.factors.map((f) => [f.id, f.level])).toEqual([['work', 'near'], ['relevance', 'at'], ['training', 'near'], ['fit', 'at'], ['availability', 'at'], ['roster', 'beyond'], ['reliability', 'at']]);
     expect([rel.why!.step, rel.why!.outcome, rel.why!.atOrBeyond, rel.why!.needed, rel.why!.chance]).toEqual(['follow-up', 'asked', 5, 4, 0.15 * 1.25]);
     expect(drawOf(fu, fu.player, AGENT, 1, 'interest')).toBeLessThan(rel.why!.chance!);
@@ -401,10 +421,14 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
 
   it('through him: his breakdowns and his submissions with her portfolio, the network co-star’s self-tape taped, its offer at scale plus ten accepted from What Needs You, the two shoot days played, the pay into Halberd Talent’s client trust account and on to her less $280.40 commission, and the credit on her résumé', () => {
     const au = opened('audition');
-    const o = au.player.pro!.opportunities.find((x) => x.projectId === 'calloway-files' && x.rounds?.length)!;
+    const o = deskClerk(au)!;
     const agreementId = au.player.pro!.agreements[0]!.id;
     expect([o.via, o.agentId, o.agreementId, o.status, o.rounds![0]!.form]).toEqual(['agent', AGENT.id, agreementId, 'audition', 'self-tape']);
     expect(o.sent!.map((x) => x.kind)).toEqual(['headshot', 'resume', 'reel']);
+    // The third time his breakdowns brought the part: the first two self-tapes were judged Working, and casting passed.
+    expect(au.player.pro!.opportunities.filter((x) => x.projectId === 'calloway-files' && x.via === 'agent').map((x) => [formatDate(x.postedAt, zone), x.status, x.rounds?.[0]?.band ?? null])).toEqual([
+      ['June 11, 2029', 'passed', 'working'], ['August 27, 2029', 'passed', 'working'], ['November 12, 2029', 'audition', null],
+    ]);
     // The offer: SAG-AFTRA's Day Performer minimum for work from July 1, 2029, $1,402.00 (work.md S30), plus ten percent.
     const of = opened('offer');
     const offered = of.player.pro!.opportunities.find((x) => x.id === o.id)!;
@@ -417,8 +441,8 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const bk = opened('booked');
     const e = bk.player.pro!.engagements.find((x) => x.opportunityId === o.id)!;
     expect([e.agreementId, e.agentId, e.status]).toEqual([agreementId, AGENT.id, 'booked']);
-    expect(e.days.map((d) => formatDate(d.from, zone))).toEqual(['July 30, 2029', 'July 31, 2029']);
-    expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * 1_542_20, 'August 2, 2029', null, null]]);
+    expect(e.days.map((d) => formatDate(d.from, zone))).toEqual(['December 17, 2029', 'December 18, 2029']);
+    expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * 1_542_20, 'December 20, 2029', null, null]]);
     expect(bk.universe.scheduled.filter((i) => i.kind === WORK_DAY_KIND && i.refId === e.id).map((i) => [i.requiresPlayer, i.travelMinutes])).toEqual([[true, 120], [true, 120]]);
     // Worked and judged, the credit shot; and, the J6 rule, each day is work in the project's genres: a day's practice
     // shared between police procedural and crime, 100 x 0.1 x a half of what's left, twice (content/engagement.ts).
@@ -438,14 +462,15 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect((1_542_20 - 1_402_00) * 2).toBe(280_40);
     expect(Math.round(3_084_40 * UNIONS.sagAftra.workingDues)).toBe(48_58);
     expect(tr.inTrust!.held).toBe(3_084_40 - tr.inTrust!.withheld - 48_58);
-    expect(formatDate(tr.inTrust!.releaseAt, zone)).toBe('August 7, 2029');
-    // Passed on three business days later, less the commission, into her checking: what was held, less $280.40.
+    expect(formatDate(tr.inTrust!.releaseAt, zone)).toBe('December 26, 2029');
+    // Passed on three business days later (Christmas Day not among them), less the commission, into her checking: what
+    // was held, less $280.40.
     const po = opened('paid-on');
     const r = po.player.pro!.engagements.find((x) => x.id === e.id)!.pay[0]!.received!;
     expect(r).toMatchObject({ via: 'trust', gross: 3_084_40, commission: 280_40, dues: 48_58, net: tr.inTrust!.held - 280_40 });
     const passed = po.universe.transactions.find((x) => x.id === r.txnId)!;
     expect(passed.postings.some((x) => x.amount === r.net && po.universe.accounts[x.accountId]?.ownerId === po.player.id)).toBe(true);
-    expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 2)).toEqual(['August 2, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'August 7, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent']);
+    expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 2)).toEqual(['December 20, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'December 26, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent']);
     const paidOn = notice(A.lines, 'Paid On From Halberd Talent')!;
     expect(paidOn).toContain('$280.40');
     expect(paidOn).toContain(`${money(r.net)} went into your`);
@@ -453,11 +478,13 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(currentOf(opened('resume').player.pro, 'resume')!.contains).toContain('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029 (not yet released)');
   });
 
-  it('Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s', () => {
+  // Until 2026-10-21 this said "at the November billing": v1-12's first billing as a member was 1 November 2029, and
+  // v1-21's, who joined in December, is 1 May 2030.
+  it('Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the May billing beside Equity’s', () => {
     const bk = opened('booked');
     expect(joinSagRefusal(bk, bk.player)).toBe('You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role: a TV, theatrical or Low Budget film part. Ultra Low Budget and student films don’t count toward it.');
     const sj = opened('sag-joined');
-    expect(formatDate(sj.player.pro!.sag!.eligibleSince!, zone)).toBe('July 30, 2029');
+    expect(formatDate(sj.player.pro!.sag!.eligibleSince!, zone)).toBe('December 17, 2029');
     expect(sj.player.pro!.sag!.memberSince).toBeGreaterThanOrEqual(sj.player.pro!.sag!.eligibleSince!);
     // SAG-AFTRA's initiation fee and half a year's base dues, from its pages as a search engine copied them (work.md S20).
     const fee = sj.universe.transactions.filter((x) => x.memo === 'SAG-AFTRA: initiation fee and half a year’s base dues');
@@ -465,35 +492,37 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(3_121_00 + Math.round(246_14 / 2)).toBe(3_244_07);
     const own = Object.values(sj.universe.accounts).filter((x) => x.ownerId === sj.player.id).map((x) => x.id);
     expect(fee[0]!.postings.filter((x) => own.includes(x.accountId)).map((x) => x.amount)).toEqual([-3_244_07]);
-    expect(sj.player.pro!.unionBills!.find((b) => b.key === 'sag-aftra:dues:2029-11')).toMatchObject({ amount: 123_07, due: at(2029, 11, 1) });
+    expect(sj.player.pro!.unionBills!.find((b) => b.key === 'sag-aftra:dues:2030-05')).toMatchObject({ amount: 123_07, due: at(2030, 5, 1) });
     expect(opened('in-trust').player.pro!.engagements[0]!.pay[0]!.inTrust!.dues).toBe(48_58);
-    const nov = opened('november');
-    expect(nov.player.pro!.unionBills!.filter((b) => b.due === at(2029, 11, 1)).map((b) => [b.key, b.amount, b.settled?.how])).toEqual([['equity:dues:2029-11', 88_00, 'paid'], ['sag-aftra:dues:2029-11', 123_07, 'paid']]);
-    expect(nov.universe.transactions.filter((x) => x.memo === 'SAG-AFTRA: initiation fee and half a year’s base dues')).toHaveLength(1);
+    const may = opened('may');
+    expect(may.player.pro!.unionBills!.filter((b) => b.due === at(2030, 5, 1)).map((b) => [b.key, b.amount, b.settled?.how])).toEqual([['equity:dues:2030-05', 88_00, 'paid'], ['sag-aftra:dues:2030-05', 123_07, 'paid']]);
+    expect(may.universe.transactions.filter((x) => x.memo === 'SAG-AFTRA: initiation fee and half a year’s base dues')).toHaveLength(1);
     // A member's résumé says so, made by Update Your Résumé after she joined (from 2026-10-21, the audit's second reading:
     // with the line taken out of `resumeNow`, every test still passed).
     const made = currentOf(opened('resume').player.pro, 'resume')!.contains;
     expect(made).toContain('SAG-AFTRA');
     expect(made).not.toContain('SAG-AFTRA Eligible');
+    // Equity's November dues came before the job, billed alone; May's were both unions'.
     expect(met(A.lines, /^(NOTICE \| (You Can Join|SAG-AFTRA:|Actors’ Equity Association: \$88)|PRESS \| Join)/)).toEqual([
-      'July 30, 2029 at 7:00 AM | NOTICE: You Can Join SAG-AFTRA', 'July 30, 2029 at 6:00 PM | PRESS: Join SAG-AFTRA',
-      'November 1, 2029 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid', 'November 1, 2029 at 9:00 AM | NOTICE: SAG-AFTRA: $123.07 Paid',
+      'November 1, 2029 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid',
+      'December 17, 2029 at 7:00 AM | NOTICE: You Can Join SAG-AFTRA', 'December 17, 2029 at 6:00 PM | PRESS: Join SAG-AFTRA',
+      'May 1, 2030 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid', 'May 1, 2030 at 9:00 AM | NOTICE: SAG-AFTRA: $123.07 Paid',
     ]);
   });
 
   it('End It By Agreement ends the agreement that day, says what it leaves owed, and his breakdowns stop coming', () => {
-    const before = opened('november');
+    const before = opened('may');
     expect(endRefusal(before, before.player, AGENT, 'agreement')).toBeUndefined();
     const sim = opened('ended');
     const a = sim.player.pro!.agreements[0]!;
-    expect([a.status, a.endedHow, formatDate(a.endedAt!, zone)]).toEqual(['ended', 'agreement', 'November 1, 2029']);
+    expect([a.status, a.endedHow, formatDate(a.endedAt!, zone)]).toEqual(['ended', 'agreement', 'May 1, 2030']);
     expect(relationOf(sim.player, AGENT.id)!.stage).toBe('ended');
     expect(activeAgreement(sim.player, sim.now)).toBeUndefined();
     const ended = sim.universe.notifications.filter((n) => shape(n.title) === 'Your Agreement Ended');
     expect(ended).toHaveLength(1);
-    expect(ended[0]!.body).toBe(`Your agreement with ${AGENT.name} at Halberd Talent ended on November 1, 2029, by agreement. ${stillOwed(sim.player, a)}`);
+    expect(ended[0]!.body).toBe(`Your agreement with ${AGENT.name} at Halberd Talent ended on May 1, 2030, by agreement. ${stillOwed(sim.player, a)}`);
     // His breakdowns no longer reach her: each project comes openly where it takes actors' own submissions, or not at all.
-    const monday = at(2029, 11, 5);
+    const monday = at(2030, 5, 6);
     expect(postingsAt(sim, sim.player, monday).some((x) => x.via === 'agent')).toBe(false);
     expect(reachOf(projectById('calloway-files')!, activeAgreement(sim.player, monday))).toBeUndefined();
     expect(reachOf(projectById('calloway-files')!, before.player.pro!.agreements[0])).toBe('agent');
@@ -532,7 +561,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     sim = cross(sim);
     const t = transcriptFrom(sim);
     const paidAll = (s: Simulation) => s.player.pro!.engagements.find((e) => e.id === job.id)!.pay.every((x) => x.received !== undefined);
-    playTo(sim, at(2029, 8, 15), { career: graduatingActor({ joinSag: true }), transcript: t }, paidAll);
+    playTo(sim, at(2029, 12, 31), { career: graduatingActor({ joinSag: true }), transcript: t }, paidAll);
     expect(paidAll(sim)).toBe(true);
     // The same figures as the life that kept him: the agreement's end didn't take the commission off what it was owed on.
     const twin = opened('paid-on').player.pro!.engagements.find((e) => e.id === job.id)!;
@@ -584,7 +613,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
   it('the same SAG-AFTRA self-tape: its sides prepared to ready with Break It Down, Learn The Lines and Rehearse It On Your Feet, against taped cold, comes out higher, and a band higher', () => {
     const tape = (sides: boolean) => {
       const sim = opened('audition');
-      const o = () => sim.player.pro!.opportunities.find((x) => x.projectId === 'calloway-files' && x.rounds?.length)!;
+      const o = () => deskClerk(sim)!;
       playTo(sim, sim.now + 6 * MS_DAY, { career: graduatingActor({ joinSag: true, sides }) }, () => o().rounds![0]!.status !== 'set');
       return { prep: o().prep, round: o().rounds![0]! };
     };
@@ -600,12 +629,13 @@ describe('preparation, played as twins from the same moment of life A (the falsi
   it('J6, health and readiness: the same self-tape, its sides prepared alike, taped at ten in the morning after a night’s sleep against after a night awake, comes out lower tired, and says the day’s condition held it back', () => {
     const tape = (sleeps: boolean) => {
       const sim = opened('audition');
-      const o = () => sim.player.pro!.opportunities.find((x) => x.projectId === 'calloway-files' && x.rounds?.length)!;
+      const o = () => deskClerk(sim)!;
       const player: Player = { career: graduatingActor({ joinSag: true, tape: false }) };
-      playTo(sim, at(2029, 6, 29, 22), player);
+      // The tape is due on Sunday 18 November at six; taped the morning before (until 2026-10-21, v1-12's on 30 June).
+      playTo(sim, at(2029, 11, 16, 22), player);
       // The night before: slept as the Sleep dialog suggests, or stayed up, the clock moved through it by the hour.
-      if (sleeps) playTo(sim, at(2029, 6, 30, 10), player);
-      else for (let h = sim.now; h < at(2029, 6, 30, 10); h += MS_HOUR) go(sim, Math.min(at(2029, 6, 30, 10), h + MS_HOUR));
+      if (sleeps) playTo(sim, at(2029, 11, 17, 10), player);
+      else for (let h = sim.now; h < at(2029, 11, 17, 10); h += MS_HOUR) go(sim, Math.min(at(2029, 11, 17, 10), h + MS_HOUR));
       expect(sim.execute({ kind: 'pro.tape_audition', payload: { opportunityId: o().id } }).ok).toBe(true);
       const work = sim.player.work!.at(-1)!;
       expect(work.what).toBe('Desk Clerk, The Calloway Files: Audition, Taped');
@@ -625,7 +655,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
     const shoot = (part: boolean) => {
       const sim = opened('offer');
       const e = () => sim.player.pro!.engagements.find((x) => x.projectId === 'calloway-files');
-      playTo(sim, at(2029, 8, 1), { career: graduatingActor({ joinSag: true, part }) }, () => e()?.status === 'finished');
+      playTo(sim, at(2029, 12, 19), { career: graduatingActor({ joinSag: true, part }) }, () => e()?.status === 'finished');
       return e()!;
     };
     const prepared = shoot(true);
@@ -644,7 +674,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
 // Life B: a second graduate, whose follow-up brings no request to meet
 // ---------------------------------------------------------------------------------------------------------------------
 
-describe('a second graduate (life B, seed v1-5), who cuts her reel only once the School’s follow-up has come', () => {
+describe('a second graduate (life B, seed v1-7), who cuts her reel only once the School’s follow-up has come', () => {
   const B = { saves: new Map<string, string>(), lines: [] as string[] };
   beforeAll(() => {
     let sim = lastTermMorning(SEED_B);
