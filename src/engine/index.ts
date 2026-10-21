@@ -97,6 +97,7 @@ import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/
 import { beginPro, buildOnOpening, registerPro } from './systems/pro';
 import { beginOnOpening, registerShowcase } from './systems/proshowcase';
 import { registerProAgent } from './systems/proagent';
+import { equityOnOpening, registerProPay } from './systems/propay';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -168,6 +169,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerShowcase(sim);
   // The agent's relationship, interest and agreement, on the professional record (brief 19, from 2026-10-21).
   registerProAgent(sim);
+  registerProPay(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -291,7 +293,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -476,6 +478,13 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('showcase.begun')) {
     beginOnOpening(sim);
     opened.push('showcase.begun');
+  }
+  // A graduate's Equity membership from a save before the union's fees were charged (2026-10-21, brief 19's pay): told
+  // what's owed, each part already past billed at the next billing day, never charged for a past date
+  // (`equityOnOpening`, `systems/propay.ts`). Once; a save made since bills it at the degree.
+  if (!opened.includes('pro.unions')) {
+    equityOnOpening(sim);
+    opened.push('pro.unions');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

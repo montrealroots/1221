@@ -389,12 +389,15 @@ const inHand = (accounts: readonly Account[]): boolean => accounts.some((a) => a
 
 /**
  * What the money an escrow account holds is doing, by the account’s category, in the net-worth sentence: money sent
- * between the holder’s banks (`systems/bankmoves.ts`) and SNAP on the EBT card (`systems/assistance.ts`). Any other is
- * held for later, as the account’s own kind is called.
+ * between the holder’s banks (`systems/bankmoves.ts`), SNAP on the EBT card (`systems/assistance.ts`) and pay held in an
+ * agency’s trust account (`systems/propay.ts`). Any other is held for later, as the account’s own kind is called.
  */
 const HELD_AS: Readonly<Record<string, string>> = {
   in_transit: 'on its way between your banks',
   ebt: 'in SNAP on your EBT card',
+  // Pay a production paid into an agency’s client trust account, passed on less commission (from 2026-10-21, brief 19,
+  // `systems/propay.ts`).
+  trust: 'held for you in your agency’s client trust account',
 };
 
 /** Both sides of it, spoken. */

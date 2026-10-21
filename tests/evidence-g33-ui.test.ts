@@ -790,7 +790,7 @@ describe('n-decision-us-status', () => {
     kept.advanceTo(at(2027, 6, 30, 12, 2));
     expect(optPermits(kept)).toHaveLength(1);
     expect(optPermits(kept)[0]).toMatchObject({ status: 'valid', issuedAt: at(2027, 6, 30, 12, 1), expiresAt: at(2028, 6, 30, 12, 1) });
-    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 30, 2027 to June 30, 2028, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
+    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 30, 2027 to June 30, 2028. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
     expect(memoed(kept, 'Form I-765, (c)(3)(B), OPT')).toHaveLength(1);
     expect(statusDecision(kept)).toHaveLength(1);
   });

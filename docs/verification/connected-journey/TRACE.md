@@ -1,13 +1,13 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 37 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 40 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
 were written, and the career's by the tests that drive each of its commands.
 
 **Unconsumed** (a row nothing reads): none.
-**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`.
+**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`, `career.pay`, `career.commission`.
 **Untested** (a command no test drives): none.
 
 ## Getting Started
@@ -1066,6 +1066,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Consumer (what reads it):**
   - The Career Screen, immediate: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.
   - The Nights, history: A School production’s part goes on your résumé once its run has closed.
+  - Your Unions reads it, history: Your résumé lists your unions once you’re a member.
 - **Feedback (how to read what comes back):**
   - Up To Date means it has everything on your record. Behind names what it’s missing.
 - **History (kept in the record):**
@@ -1197,3 +1198,80 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
 - **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+
+### Your Work And Its Pay (`career.pay`)
+
+- **Action:** , at Career, Work, Your Engagements (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. The Work tab lists work once you’ve booked some.
+- **Preconditions:**
+  - Work you’ve booked. A student film’s pay is deferred, so it’s listed and never paid.
+  - Permission To Work first: Each engagement’s dates are read against your permission to work when you book it.
+- **Costs:**
+  - Tax: Withheld from each payment as a paycheck’s is: federal income tax, Social Security and Medicare, and the tax of the state the work is in
+  - When It’s Paid: The Thursday after each week’s work, as SAG-AFTRA’s rules give it, for all professional work (an estimate)
+  - Through Your Agency: Within three business days of the payday, as SAG-AFTRA’s rules give it for TV and film, for stage work too (an estimate)
+- **State (what changes at once):**
+  - Accepting work puts each payment on the Work tab as promised. Your accounts don’t change yet.
+- **Consumer (what reads it):**
+  - Your Accounts, scheduled: Each payment lands in your account on its payday, or from your agency’s trust account a few business days later.
+  - Your Tax Return, evaluation: Your tax return reads each payment’s wages, withholding, commission, dues and the town the work was done in.
+- **Feedback (how to read what comes back):**
+  - Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.
+  - Deferred pay is shown and never paid.
+  - On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - On its payday, unrepresented, the pay less tax and dues goes into your account, and a notice says so.
+  - Represented, it goes into your agency’s client trust account, shown in what you’re worth as held for you, and three business days later comes on to your account less commission.
+  - Each payment counts on your tax return as wages, with what was withheld, the commission and the dues.
+- **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
+
+### Commission (`career.commission`)
+
+- **Action:** , at Career, Work, each payment’s Commission (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. Commission is owed only on work you contracted while represented.
+- **Preconditions:**
+  - An agreement in force when you made the contract, or an offer your agency passed on in its term that you accepted within 60 days after it ended.
+- **Costs:**
+  - Covered Work: 10% of the gross, the most New York lets an agency take for an engagement
+  - Equity: 5% on a weekly salary of $525.00 or less, 10% above it
+  - SAG-AFTRA: Only what’s over scale, up to 10%: at scale plus ten percent you keep scale and your agency takes the ten
+- **State (what changes at once):**
+  - Accepting work shows the commission it will carry, as expected, under each payment.
+- **Consumer (what reads it):**
+  - Your Work And Its Pay, immediate: Commission comes off your pay as it passes through your agency’s trust account.
+  - Your Tax Return, evaluation: The year’s commission counts toward the performing artist’s deduction the return works out.
+- **Feedback (how to read what comes back):**
+  - No commission: you weren’t represented when you made the contract, or the work isn’t covered, or it pays SAG-AFTRA scale and nothing over it.
+  - Commission is part of what your tax return counts as the cost of your work.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - When the pay passes through the trust account, the commission comes off it and your account gets the rest, three business days after the payday.
+  - After your agreement ends, a contract you made while it ran still carries commission, whoever represents you then.
+- **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
+
+### Your Unions (`career.unions`)
+
+- **Action:** `pro.join_sag`, at Career, Work, Your Unions (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. Join SAG-AFTRA opens once you’ve worked a SAG-AFTRA principal role.
+- **Preconditions:**
+  - For Equity: the degree.
+  - For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank.
+- **Costs:**
+  - Equity’s Initiation Fee: $1,800.00 within three years: $600.00 at the degree, then two parts a year apart. The two parts’ dates are estimated
+  - Equity’s Dues: $88.00 each May and November, and 2.5% of Equity pay, taken from it. Taking it from the pay is estimated
+  - Joining SAG-AFTRA: About $3,244.07: the initiation fee and half a year’s base dues, then half a year’s dues each May and November, and 1.575% of SAG-AFTRA pay. Read from a search engine’s copy of its pages (an estimate)
+- **State (what changes at once):**
+  - Join SAG-AFTRA takes its fee from your bank and makes you a member today. Your next SAG-AFTRA work takes its working dues.
+- **Consumer (what reads it):**
+  - Your Accounts, scheduled: Each union bill comes out of your bank on its day.
+  - Your Résumé, history: Your résumé lists your unions once you’re a member.
+  - Your Tax Return, evaluation: Dues count toward the cost of your work on the year’s return.
+- **Feedback (how to read what comes back):**
+  - A bill marked owed is a debt: it’s paid off when money comes in.
+  - Ultra Low Budget films and student films don’t count toward SAG-AFTRA eligibility in the game.
+- **History (kept in the record):**
+  - Your Résumé: Your résumé lists your unions once you’re a member.
+- **Later consequence:**
+  - Each union bill is taken from your bank on its day. If the bank can’t cover it, it’s owed under Bills Owed and paid off the first day there’s money.
+  - Union pay has its working dues taken before it reaches you.
+- **Tested by:** `pro.join_sag`: `tests/propay-screen.test.ts`, `tests/propay.test.ts`

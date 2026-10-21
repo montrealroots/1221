@@ -7,18 +7,18 @@
   "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
-  "status": "Retained",
-  "hash": "6e719027cf15",
-  "on": "2026-10-19",
-  "reason": "Residence Abroad's entry says first that the game grants none of these papers and why, then Mexico's rule for reference, with an example that changes nothing.",
+  "status": "Rewritten",
+  "hash": "b3fb5a838f31",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten",
-  "hash": "bde4d5c6fe44",
-  "on": "2026-10-20",
-  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
-  "first": "Pending"
+  "hash": "74b7e2e395c4",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
   "status": "Rewritten",
@@ -2281,6 +2281,13 @@
   "reason": "A time zone name the code passes to the calendar, America/New_York, which no screen shows as words.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/permission.ts#daysWorkedIn": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/permission.ts#optRefusal": {
   "status": "Retained",
   "hash": "30ddfc830ba5",
@@ -2289,10 +2296,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/permission.ts#registerPermission": {
-  "status": "Retained",
-  "hash": "a7ec4ef2a3ad",
-  "on": "2026-10-19",
-  "reason": "The OPT and status notices: what happened, then what it means in the game (can't work, visa canceled, Visa Waiver closed) said as the game's rule, and the next step where there is one.",
+  "status": "Rewritten",
+  "hash": "df3051625747",
+  "on": "2026-10-21",
+  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/permission.ts#registerPermission [permit]": {
@@ -2345,10 +2352,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/residence.ts#routeRefusal": {
-  "status": "Retained",
-  "hash": "e26c01aa4250",
-  "on": "2026-10-19",
-  "reason": "Each country's own answer in a sentence of its own (Canada's paused program, Ireland's employer's offer, the professional record), plain and specific.",
+  "status": "Rewritten",
+  "hash": "6f53a8548bbb",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's Papers, Residence Abroad, in docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt; tests/naturalize.test.ts holds the green card's reason",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/residence.ts#settleRefusal": {
@@ -3081,10 +3088,10 @@
  },
  "src/ui/papers/Documents.tsx#ResidencePanel": {
   "status": "Rewritten",
-  "hash": "c8b7551d25c6",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'Naturalize, on a green card held five years as an older save holds one, says what was applied for and what it cost' presses it",
-  "first": "Pending"
+  "hash": "adc7f43b0e1d",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt",
+  "first": "Rewritten And Verified"
  },
  "src/ui/papers/Documents.tsx#ResidencePanel <documents.naturalize>": {
   "status": "Retained",
@@ -3130,16 +3137,23 @@
  },
  "src/ui/papers/Documents.tsx#WorkPane": {
   "status": "Rewritten",
-  "hash": "457ddd817003",
-  "on": "2026-10-20",
-  "evidence": "brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts",
-  "first": "Pending"
+  "hash": "05f7b08de5e2",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt",
+  "first": "Rewritten And Verified"
  },
  "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
   "status": "Retained",
   "hash": "1570df1f36c0",
   "on": "2026-10-19",
   "reason": "The two openings of the OPT toast, Applied for OPT and Applied for OPT with premium processing, each naming exactly which application was made before its fee and decision date.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/papers/Documents.tsx#WorkReadPanel": {
+  "status": "Rewritten",
+  "hash": "d58a8568ec14",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt",
   "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {

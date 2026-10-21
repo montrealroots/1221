@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 527 of 650 rows in scope Implemented And Verified (81.0%); 119 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 527 of 651 rows in scope Implemented And Verified (80.9%); 120 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -29,7 +29,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
 | School | 79 | 79 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
-| Commands Traced Outside The Audit | 14 |  | 14 |  |  |  |  |  |
+| Commands Traced Outside The Audit | 15 |  | 15 |  |  |  |  |  |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
@@ -56,7 +56,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 |  | 4 |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 1 | 32 |  |  |  |  |  |
-| **All** | **690** | **527** | **119** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **691** | **527** | **120** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -435,6 +435,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `pro.decline_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented, Verification Incomplete | capability Implemented | `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`; `pro.… |
 | `pro.end_agreement` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented, Verification Incomplete | capability Implemented | `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`; `pro.… |
 | `pro.headshots` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-scre… |
+| `pro.join_sag` | Be paid for professional work: each payment promised when the work is accepted and paid once on its day, through the agency’s client trust … | Implemented, Verification Incomplete | capability Implemented | `pro.join_sag`: `tests/propay-screen.test.ts`, `tests/propay.test.ts` / 2 test files |
 | `pro.send_materials` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented, Verification Incomplete | capability Implemented | `pro.agent_notice`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/journey-agen… |
 | `pro.set_name` | Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where… | Implemented, Verification Incomplete | capability Implemented | `pro.set_name`: `tests/pro-core.test.ts` / 1 test files |
 | `pro.supply_material` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented, Verification Incomplete | capability Implemented | `pro.supply_material`: `tests/journey-agent.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts` / 1 test file… |
@@ -912,7 +913,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (119)
+### Implemented, Verification Incomplete (120)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -935,6 +936,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`pro.decline_agreement`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.end_agreement`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.headshots`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
+- **`pro.join_sag`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.send_materials`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.set_name`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.supply_material`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks

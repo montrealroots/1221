@@ -627,14 +627,14 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     // from 2026-10-17 a seventh, `writtenUnplayed`, brief 13's journeys' (until then it ended at `briefsMastered`), and from
     // 2026-10-20 an eighth, `nameTheCover`, brief 19's D6, and a ninth, `pro.begun`, brief 19's professional record (until
     // then it ended at `writtenUnplayed`), and from 2026-10-21 a tenth, `showcase.begun`, brief 19's Actor Showcase (until
-    // then it ended at `pro.begun`).
-    expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun']);
+    // then it ended at `pro.begun`), and an eleventh, `pro.unions`, brief 19's pay.
+    expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions']);
     const current = loadSave(JSON.parse(JSON.stringify(older)) as never);
     expect(appointmentsOf(current.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), FAIR_HAVEN]]);
     delete older.opened;
     const opened = loadSave(older as never);
     // The step taken, and named, so the next opening doesn't take it again; the banking area's beside it from 2026-10-16.
-    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun']);
+    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions']);
     quiet(opened);
     // Opened: had at Yale Health, its date kept, its entry renamed.
     expect(appointmentsOf(opened.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), YALE]]);

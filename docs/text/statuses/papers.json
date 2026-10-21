@@ -7,15 +7,15 @@
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
   "status": "Rewritten And Verified",
-  "hash": "6e719027cf15",
-  "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+  "hash": "b3fb5a838f31",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten And Verified",
-  "hash": "563079504316",
-  "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+  "hash": "74b7e2e395c4",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
   "status": "Rewritten And Verified",
@@ -1931,6 +1931,12 @@
   "on": "2026-10-17",
   "reason": "A time zone id the code reads; never shown."
  },
+ "src/engine/systems/permission.ts#daysWorkedIn": {
+  "status": "Rewritten And Verified",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-21",
+  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words"
+ },
  "src/engine/systems/permission.ts#optRefusal": {
   "status": "Rewritten And Verified",
   "hash": "30ddfc830ba5",
@@ -1939,9 +1945,9 @@
  },
  "src/engine/systems/permission.ts#registerPermission": {
   "status": "Rewritten And Verified",
-  "hash": "a7ec4ef2a3ad",
-  "on": "2026-10-17",
-  "evidence": "tests/permission.test.ts, tests/evidence2-b12.test.ts (J16: the status ending and out of status), tests/evidence-g15-papers.test.ts"
+  "hash": "df3051625747",
+  "on": "2026-10-21",
+  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words"
  },
  "src/engine/systems/permission.ts#registerPermission [permit]": {
   "status": "Reviewed And Retained",
@@ -1987,9 +1993,9 @@
  },
  "src/engine/systems/residence.ts#routeRefusal": {
   "status": "Rewritten And Verified",
-  "hash": "e26c01aa4250",
-  "on": "2026-10-17",
-  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+  "hash": "6f53a8548bbb",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's Papers, Residence Abroad, in docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt; tests/naturalize.test.ts holds the green card's reason"
  },
  "src/engine/systems/residence.ts#settleRefusal": {
   "status": "Rewritten And Verified",
@@ -2611,9 +2617,9 @@
  },
  "src/ui/papers/Documents.tsx#ResidencePanel": {
   "status": "Rewritten And Verified",
-  "hash": "5e324abf0031",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+  "hash": "adc7f43b0e1d",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt"
  },
  "src/ui/papers/Documents.tsx#ResidencePanel <documents.naturalize>": {
   "status": "Reviewed And Retained",
@@ -2653,15 +2659,21 @@
  },
  "src/ui/papers/Documents.tsx#WorkPane": {
   "status": "Rewritten And Verified",
-  "hash": "85839bad8038",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+  "hash": "05f7b08de5e2",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt"
  },
  "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
   "status": "Rewritten And Verified",
   "hash": "1570df1f36c0",
   "on": "2026-10-17",
   "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#WorkReadPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "d58a8568ec14",
+  "on": "2026-10-21",
+  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {
   "status": "Rewritten And Verified",

@@ -251,7 +251,40 @@ export interface ProPayment {
   due: Instant;
   /** Deferred pay is shown as deferred and never posted. */
   deferred?: true;
-  received?: { at: Instant; gross: Money; withheld: Money; commission: Money; net: Money; via: 'trust' | 'direct'; txnId?: string };
+  /** `dues`: the union's working dues taken from it, where it's union work and they're a member (`systems/propay.ts`). */
+  received?: { at: Instant; gross: Money; withheld: Money; commission: Money; net: Money; via: 'trust' | 'direct'; txnId?: string; dues?: Money };
+  /**
+   * Paid by the production into the agency's client trust account (`systems/propay.ts`, from 2026-10-21): when, by which
+   * agency, its transaction, the day it's passed on, and its figures: what the account holds of it is the gross less
+   * what was withheld and the dues, and the commission comes off that when it's passed on. Kept once it's received.
+   */
+  inTrust?: { at: Instant; agency: string; txnId: string; releaseAt: Instant; gross: Money; withheld: Money; dues: Money; commission: Money; held: Money };
+}
+
+/**
+ * What permission to work read for an engagement's dates when it was booked (`systems/propay.ts`, `schedulePay`, from
+ * 2026-10-21): kept, so Papers says what was read then, not what holds now.
+ */
+export interface EligibilityRead {
+  at: Instant;
+  authorized: boolean;
+  basis: 'citizen' | 'green-card' | 'opt' | 'student' | 'none';
+  words: string;
+  /** The first of its dates permission didn't cover, where one wasn't. */
+  refusedFrom?: Instant;
+}
+
+/** A union's bill: keyed, so it's charged once, and kept with how it was settled (`systems/propay.ts`, from 2026-10-21). */
+export interface UnionBill {
+  key: string;
+  union: 'equity' | 'sag-aftra';
+  /** What it's for, as the Work tab lists it. */
+  what: string;
+  /** In the save's currency. */
+  amount: Money;
+  due: Instant;
+  /** Paid from the bank, or, where the bank couldn't cover it, owed in Bills Owed: either way posted once. */
+  settled?: { at: Instant; how: 'paid' | 'owed'; txnId?: string };
 }
 
 /** Work booked: its days on the calendar, its pay, and the credit it leaves. */
@@ -267,6 +300,8 @@ export interface Engagement extends HasHistory {
   pay: ProPayment[];
   creditId?: ProId;
   finishedAt?: Instant;
+  /** What permission to work read for its dates when it was booked (`EligibilityRead`). */
+  eligibility?: EligibilityRead;
 }
 
 /**
@@ -330,6 +365,8 @@ export interface ProRecord {
   /** Equity membership: since when, and how it came. */
   equity?: { since: Instant; how: 'degree' | 'contract' | 'open-access' };
   sag?: { eligibleSince?: Instant; memberSince?: Instant };
+  /** The unions' bills, each charged once (`systems/propay.ts`): the unsettled, and the last `BILLS_KEPT` settled. */
+  unionBills?: UnionBill[];
   /** How many resolved opportunities and finished engagements were trimmed. */
   trimmed?: { opportunities: number; engagements: number };
 }

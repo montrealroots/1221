@@ -106,9 +106,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "bf575370ac54",
+  "hash": "e8c0e949cd89",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md: the Representation chapter teaches the agent’s panel in the screen’s own labels, read in tests/tutorial.test.ts, tests/pro-representation-screen.test.ts and tests/journey-agent.test.ts, with tools/voice-check.mjs and tools/tics.mjs passing; the Your Career chapter’s last line sends the player to it",
+  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the pay's merge, 2026-10-21, against docs/STYLE.md: the agent's and the pay's lines, each read by its builder, joined with no word changed",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {

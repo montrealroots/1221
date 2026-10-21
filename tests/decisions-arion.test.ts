@@ -491,8 +491,9 @@ function asOlderBuild(sim: Simulation): Record<string, unknown> {
   // From 2026-10-20 `nameTheCover` (brief 19's D6, the understudy's part) follows, and comes off too, and `pro.begun`
   // (brief 19's professional record) after it, and comes off too: until then the list ended at `nameTheCover`. From
   // 2026-10-21 `showcase.begun` (brief 19's Actor Showcase) follows, and comes off too: until then it ended at `pro.begun`.
-  expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun']);
-  older.opened = older.opened!.filter((x) => x !== 'cardYears' && x !== 'timeTheCalls' && x !== 'briefsMastered' && x !== 'writtenUnplayed' && x !== 'nameTheCover' && x !== 'pro.begun' && x !== 'showcase.begun');
+  // Then `pro.unions` (brief 19's pay, an older graduate's Equity bills), which comes off too.
+  expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions']);
+  older.opened = older.opened!.filter((x) => x !== 'cardYears' && x !== 'timeTheCalls' && x !== 'briefsMastered' && x !== 'writtenUnplayed' && x !== 'nameTheCover' && x !== 'pro.begun' && x !== 'showcase.begun' && x !== 'pro.unions');
   for (const a of Object.values(older.accounts)) {
     if (a.bankId !== 'is-arion') continue;
     delete a.cardYearRule;
@@ -512,7 +513,7 @@ describe('arion.AR7: a save from before brief 10 opens with its card year as it 
     const balances = Object.fromEntries(Object.values(written.accounts).map((a) => [a.id, [a.balance, a.held]]));
     const count = written.transactions.length;
     const older = loadSave(written as never);
-    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun']);
+    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions']);
     expect(older.universe.transactions).toHaveLength(count);
     expect(Object.fromEntries(Object.values(older.universe.accounts).filter((a) => a.id in balances).map((a) => [a.id, [a.balance, a.held]]))).toEqual(balances);
     const a = older.universe.accounts[arion.id]!;
@@ -522,7 +523,7 @@ describe('arion.AR7: a save from before brief 10 opens with its card year as it 
     expect(closeVeltu(older).ok).toBe(true);
     expect(cardPosts(older, arion.id).at(-1)).toEqual([older.now, 'Debit card yearly fee refunded: Veltureikningur', 5_92, 817_00]);
     const again = reload(older);
-    expect(again.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun']);
+    expect(again.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun', 'pro.unions']);
     expect(again.universe.transactions).toHaveLength(older.universe.transactions.length);
   }, 300_000);
 

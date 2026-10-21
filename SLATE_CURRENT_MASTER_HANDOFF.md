@@ -5,7 +5,10 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 527 of 650 rows in scope Implemented And Verified (81.0%); 119 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 527 of 651 rows in scope Implemented And Verified (80.9%); 120 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The pay, merged 2026-10-21 after the agent: until it this said 527 of 650. Its command is a row of its own,
+  Implemented, Verification Incomplete until an audit row reads it.)
 
   (The agent, merged 2026-10-21 after the showcase: until it this said 527 of 641. Its nine commands are rows of their
   own, Implemented, Verification Incomplete until an audit row reads them.)
@@ -17,7 +20,8 @@ none of it is in `main`, and nothing is deployed.
   (Brief 19's core, merged 2026-10-21: until it this said 566 of 636. Its four commands are rows of their own,
   Implemented, Verification Incomplete until an audit row reads them, and 46 measured rows read the engine's whole
   source, so the understudy's, the clock's and the core's changes leave them measured before what they read last
-  changed, until brief 19's final runs measure them again.)
+  changed, until brief 19's final runs measure them again. The pay's branch, `b19-pay`, adds `pro.join_sag`, a row of
+  its own the same way: 566 of 641 there, until then 566 of 640.)
 
 - **Read first:** `docs/verification/career-2026-10-20/criteria.md` (the items, each Open until the game does it and a
   test fails without it), `design.md` (binding: the agent's limits, the pathways, the record, the agreement, the work
@@ -26,9 +30,10 @@ none of it is in `main`, and nothing is deployed.
   `understudy/REPORT.md`); the clock (D1 to D5, brief 18's S1 to S5, `time/REPORT.md`); the core, the professional
   record, the agent's data, the work's data and the portfolio (`core/REPORT.md`); the Actor Showcase and no early degree
   (W1, W2, A5, `showcase/REPORT.md`); the agent's relationship, interest, agreement and the showcase's follow-up (G1 to
-  G8, W3, A2, `agent/REPORT.md`). Brief 18's criteria mark its five items done here.
-- **Still to build:** the work loop, its pay and commission, work eligibility and the tutorial's job guard (J1 to J6, D7
-  to D9, A3), each being built apart; then the playthroughs V1 to V18, the built app at both widths, and the gate.
+  G8, W3, A2, `agent/REPORT.md`); the pay, commission, wages, work eligibility and OPT, the unions and the Work tab (D7,
+  D8, `pay/REPORT.md`). Brief 18's criteria mark its five items done here.
+- **Still to build:** the work loop (J1 to J6, D9, A3), being built apart, and the calls that join it to the pay; then
+  the playthroughs V1 to V18, the built app at both widths, and the gate.
 - **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
   marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
   owner's call.

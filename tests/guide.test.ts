@@ -121,8 +121,9 @@ describe('the registry', () => {
   it('names no feature or label the game no longer has', () => {
     // Each was in the game once and isn't now: a guide that still says it sends the player looking for nothing.
     // "showcase" and "agent" came off it on 2026-10-21 (brief 19): the School's Actor Showcase (`systems/proshowcase.ts`)
-    // and the agent's relationship, interest and agreement (`systems/proagent.ts`) are in the game again, and their
-    // chapters and entries name them. A manager and the industry stay gone.
+    // and the agent's relationship, interest and agreement (`systems/proagent.ts`), with the commission his agency
+    // takes from pay (`systems/propay.ts`), are in the game again, and their chapters and entries name them. A manager
+    // and the industry stay gone.
     const gone = [/wheelchair/i, /Pay What’s Owed/, /\baudition(s|’s)? (booking|roll)/i, /\bmanager\b/i, /\bthe industry\b/i, /\bPress \/ anywhere to find one/];
     const hits: string[] = [];
     for (const e of GUIDE) {

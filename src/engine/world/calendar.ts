@@ -37,7 +37,9 @@ export interface CalendarLegendEntry {
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Your own plans, and your birthday, appointments and tax dates.' },
   { category: 'school', label: 'School', colour: '#6b8ca8', description: 'Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s review, the showcase and Commencement.' },
-  { category: 'home', label: 'Money', colour: '#8ca86b', description: 'The card’s statement and payment, a new card’s arrival, and a savings account’s notice.' },
+  // From 2026-10-21 (brief 19's pay) a professional payday, pay passed on from an agency and a union's bill are Money's
+  // too (`systems/propay.ts`).
+  { category: 'home', label: 'Money', colour: '#8ca86b', description: 'The card’s statement and payment, a new card’s arrival, a savings account’s notice, paydays for professional work, pay passed on by your agency, and union bills.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];

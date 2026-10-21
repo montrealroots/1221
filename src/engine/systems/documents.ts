@@ -85,6 +85,8 @@ export interface PersonDocument {
   /** A permission to work tied to one job, and days without work counted against it (`systems/permission.ts`). */
   bookingId?: string;
   idleDays?: number;
+  /** OPT's days of professional work counted so far, from the engagements' days (`daysWorkedIn`, from 2026-10-21). */
+  workedDays?: number;
   /** When a permission was ended early for a violation, which leaves no grace after it (from 2026-10-01). */
   endedAt?: number;
   /** A route to residence it was granted on (`systems/residence.ts`, from 2026-09-30). */

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-172 commands; 172 named by a test, 0 not.
+173 commands; 173 named by a test, 0 not.
 
 ## bank
 
@@ -101,7 +101,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `documents.apply_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` `papers.tsx` | `commands-kept.test.ts` `defects-g24-1.test.ts` `defects-g27-1.test.ts` `defects-r3d-1.test.ts` `defects-r7-1.test.ts` `defects3-50-70.test.ts` `editorial-papers.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `guide-examples-papers.test.ts` `journeys14-idcard-reason.test.ts` `papers-transitions.test.ts` `remaining-09-journeys.test.ts` `remaining-papers.test.ts` | Passports And ID |
-| `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `defects-g24-1.test.ts` `defects-r3d-1.test.ts` `defects-r7-1.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g33-ui.test.ts` `evidence2-b12.test.ts` `guide-examples-papers.test.ts` `permission.test.ts` | Passports And ID |
+| `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `defects-g24-1.test.ts` `defects-r3d-1.test.ts` `defects-r7-1.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g33-ui.test.ts` `evidence2-b12.test.ts` `guide-examples-papers.test.ts` `permission.test.ts` `propay-screen.test.ts` `propay.test.ts` | Passports And ID |
 | `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `defects-g25-1.test.ts` `documents.test.ts` `editorial-papers.test.ts` `editorial17-papers.test.ts` `journey-life.test.ts` `journeys14-idcard-reason.test.ts` `language-dynamic.test.ts` `remaining-banking.test.ts` `remaining-papers.test.ts` `scope-money.test.ts` | Passports And ID |
 | `documents.apply_ssn` | `src/engine/systems/taxid.ts` | `Documents.tsx` | `defects-g24-1.test.ts` `defects-r3d-1.test.ts` `defects-r7-1.test.ts` `defects3-50-70.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g17-papers.test.ts` `evidence2-b06.test.ts` `evidence3-lifepapers.test.ts` `language-dynamic.test.ts` `papers-complete.test.ts` `papers-transitions.test.ts` `remaining-papers.test.ts` `remaining-tax.test.ts` `scope-taxpapers.test.ts` | Passports And ID |
 | `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `commands-kept.test.ts` `editorial-papers.test.ts` `remaining-09-journeys.test.ts` | Passports And ID |
@@ -191,6 +191,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `pro.decline_agreement` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` | Representation |
 | `pro.end_agreement` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.headshots` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-core.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` | Your Career |
+| `pro.join_sag` | `src/engine/systems/propay.ts` | `WorkPane.tsx` | `propay-screen.test.ts` `propay.test.ts` | Your Career |
 | `pro.send_materials` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.set_name` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `pro-core.test.ts` | Your Career |
 | `pro.supply_material` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` | Representation |
@@ -259,7 +260,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `tutorial.read` | `src/engine/world/tutorial.ts` | `Guide.tsx` | `defects-g1-1.test.ts` `defects-g3-1.test.ts` `defects-r8-1.test.ts` `evidence-g02-life.test.ts` `evidence-g29-ui.test.ts` `evidence-g31-ui.test.ts` `evidence-g32-ui.test.ts` `evidence-g33-ui.test.ts` `guide-examples-craft.test.ts` `guide-examples-papers.test.ts` `guide-examples-start-day-body.test.ts` `help-mechanics.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `trace-commands.test.ts` `tutorial.test.ts` `whynot-papers.test.ts` | — |
+| `tutorial.read` | `src/engine/world/tutorial.ts` | `Guide.tsx` | `defects-g1-1.test.ts` `defects-g3-1.test.ts` `defects-r8-1.test.ts` `evidence-g02-life.test.ts` `evidence-g29-ui.test.ts` `evidence-g31-ui.test.ts` `evidence-g32-ui.test.ts` `evidence-g33-ui.test.ts` `guide-examples-craft.test.ts` `guide-examples-papers.test.ts` `guide-examples-start-day-body.test.ts` `help-mechanics.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `propay-screen.test.ts` `trace-commands.test.ts` `tutorial.test.ts` `whynot-papers.test.ts` | — |
 
 ## work
 

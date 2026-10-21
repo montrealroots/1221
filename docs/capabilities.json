@@ -3079,6 +3079,53 @@
         "verified": "Implemented"
       },
       "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. The finished engagements a referral comes from, the offers the 90 days read and the covered days the 151 and 91 days count are the work loop's, built apart: their tests put that data in by hand as TEST SETUP, and so are the showcase's performances the School's follow-up reads. Each journey's seed is chosen by reading the game's own draw for its first approach"
+    },
+    {
+      "id": "career-pay",
+      "goal": "Be paid for professional work: each payment promised when the work is accepted and paid once on its day, through the agency’s client trust account less commission where it’s owed and straight to you where not, as wages your tax return reads with where the work was done; permission to work read for each engagement’s dates; and the unions’ membership, fees and dues",
+      "entry": "Career, under Your Work: Work (Your Engagements, each payment promised, in trust or received with its commission on its own line; Still Owed After An Agreement Ended; Finished Engagements; Your Unions and Join SAG-AFTRA); Papers, Permission To Work: Your Work And Your Permission, and OPT’s days counted; Money: each payment’s line on the account’s statement",
+      "entities": [
+        "ProPayment",
+        "Engagement",
+        "EligibilityRead",
+        "UnionBill",
+        "Commission"
+      ],
+      "state": "src/engine/systems/propay.ts",
+      "preconditions": "An engagement with promised pay, written by the work system on accepting an offer, and schedulePay called then; a payment not deferred, not received and not in trust; for Join SAG-AFTRA, eligibility from a first SAG-AFTRA principal role, not yet a member, and the bank covering the fee (joinSagRefusal)",
+      "commands": [
+        "pro.join_sag"
+      ],
+      "effects": "On a payday, the gross less tax withheld and union working dues into the agency’s client trust account (an account of the player’s held by the agency) where commission is owed, or into the payee account; three business days later, from the trust account to the payee account less commission. Each through sim.post, category salary, and recordWages with the employer, the withholding by authority, the commission, the dues and the work’s town. Equity’s $600 down at the degree, its two later parts and basic dues each May and November; joining SAG-AFTRA’s initiation fee and half a year’s base dues, then base dues each May and November",
+      "persists": "Person.pro: engagements[].pay[].received and inTrust, engagements[].eligibility, unionBills, sag.eligibleSince and memberSince; the OPT document’s workedDays and idleDays; earnings’ years (acting, withheldBy, commission, dues, employers, elsewhere)",
+      "readers": [
+        "the tax return (figuresFor): New York taxes a nonresident’s New York work, Connecticut credits it, New York City only its residents",
+        "OPT’s weekly count (daysWorkedIn): each engagement’s days are days worked",
+        "Papers’ Your US Status (optRunsOut): when OPT’s days without work run out, by the work booked",
+        "unemployment’s base period and the month’s income tests, through recordWages and the salary transactions",
+        "the Work tab, Papers’ Your Work And Your Permission, Money’s statements and net worth’s held money"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career",
+        "/workspace/papers",
+        "/workspace/bank"
+      ],
+      "saveLoad": "tests/propay.test.ts",
+      "provenance": "docs/research/career-2026-10-20/representation.md (S1, S3, S5, S28, S29, S30, GBL §185(8)) and work.md (S1, S5, S6, S14, S20, S22, S24, S27, S46 to S48); the Thursday payday for all work, the trust account’s three days for stage work, Equity’s later parts, the billing day and working dues taken from the pay are the game’s estimates, said so on the screen",
+      "tests": [
+        "tests/propay.test.ts",
+        "tests/propay-screen.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Implemented"
+      },
+      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it, so it isn’t called Verified. Engagements come from the work system, built apart: the tests write them as it does (TEST SETUP) until integration calls schedulePay at an offer’s acceptance. Providence, the regional theater’s town, isn’t in the gazetteer, so its pay is counted where the player lives and its state’s tax isn’t worked out. Equity’s rehearsal-period rate at minimum, per diem and renewals have nothing in the game to read"
     }
   ]
 }

@@ -1,8 +1,9 @@
 /**
  * SLATE — the Career screen (from 2026-10-20, the owner's brief 19): where an actor stands as a professional, and the
  * portfolio a submission or an approach sends (`systems/pro.ts`). It had two tabs, Overview and Portfolio, until
- * 2026-10-21, when the agent's Representation came with its system (`ui/career/RepresentationPane.tsx`); the
- * opportunities' and the work's tabs come with theirs, and none is shown before it's playable (`ui/shell/sections.ts`).
+ * 2026-10-21, when the agent's Representation came with its system (`ui/career/RepresentationPane.tsx`) and Work, the
+ * engagements' pay and the unions, with the pay's (`ui/career/WorkPane.tsx`); the opportunities' tab comes with its
+ * system, and none is shown before it's playable (`ui/shell/sections.ts`).
  *
  * Every line is read from the record where the engine keeps it, worked out as it's drawn (`profileOf`,
  * `materialsCheck`, `reelSources`), and every control runs a command through `run`, behind its guide chapter
@@ -20,26 +21,30 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { plural } from '@/engine/core/text';
 import { countWords } from '@/engine/systems/school';
+import { WorkPane } from '@/ui/career/WorkPane';
 import {
   HEADSHOTS, NAME_MOST, REEL, RESUME, SKILL_LISTED_AT, currentOf, headshotCost, headshotRefusal, materialsCheck, nameRefusal,
   pathwayOf, pieceWords, proCreditWords, profileOf, reelCost, reelRefusal, reelSources, resumeBehind, resumeRefusal,
   schoolCreditWords, type MaterialProblem,
 } from '@/engine/systems/pro';
 
-type CareerTab = 'overview' | 'portfolio' | 'representation';
+type CareerTab = 'overview' | 'portfolio' | 'representation' | 'work';
 
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`). */
 const CAREER_TABS = SECTIONS['/workspace/career'] as readonly { id: CareerTab; label: string }[];
 
 export function CareerWorkspace() {
   const [tab, setTab] = useKept<CareerTab>(tabKey('/workspace/career'), 'overview');
-  const panes: Record<CareerTab, JSX.Element> = { overview: <OverviewPane toPortfolio={() => setTab('portfolio')} />, portfolio: <PortfolioPane />, representation: <RepresentationPane /> };
+  const panes: Record<CareerTab, JSX.Element> = {
+    overview: <OverviewPane toPortfolio={() => setTab('portfolio')} />, portfolio: <PortfolioPane />,
+    representation: <RepresentationPane />, work: <WorkPane />,
+  };
   return (
     <>
       <div className="page-head">
         <div className="eyebrow">Your Work</div>
         <h1>Career</h1>
-        <p className="muted">Where you stand as a professional actor, and your portfolio: your profile, headshots, résumé and reel.</p>
+        <p className="muted">Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.</p>
       </div>
       <div className="tabs" role="tablist" aria-label="Career">
         {CAREER_TABS.map((one, i) => (

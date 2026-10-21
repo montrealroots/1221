@@ -20,8 +20,8 @@ school's way into them, and this brief is the owner's word to build a new beginn
 | D4 | S4, the Sleep dialog holds the clock | A dialog open while an appointment comes due must not let it pass | Fixed And Verified (`time/REPORT.md`) |
 | D5 | S5, One Week asks On The Way first | A week's jump must name the career appointments it would pass | Fixed And Verified (`time/REPORT.md`) |
 | D6 | U1, the understudy's part | A credit must be the part actually played; an understudy "in the company" would carry no part into the résumé | Fixed And Verified (`understudy/REPORT.md`) |
-| D7 | (new) payment and commission accounting | Pay into the right account and currency; promised money apart from money received; commission taken only when owed; no payment twice through a reload or a jump; wages reported as wages, with what was withheld, the commission and where the work was done | Open |
-| D8 | (new) work eligibility | `usWorkAuthorized` read for every paid engagement; OPT's weeks counted as weeks worked when they are; the OPT notice's "no work after the degree" and the tests pinning it made true; signing with an agent changing nothing of permission to work | Open |
+| D7 | (new) payment and commission accounting | Pay into the right account and currency; promised money apart from money received; commission taken only when owed; no payment twice through a reload or a jump; wages reported as wages, with what was withheld, the commission and where the work was done | Open: the pay's side verified on engagements written by TEST SETUP (`pay/REPORT.md`); it closes when an accepted offer schedules its pay |
+| D8 | (new) work eligibility | `usWorkAuthorized` read for every paid engagement; OPT's weeks counted as weeks worked when they are; the OPT notice's "no work after the degree" and the tests pinning it made true; signing with an agent changing nothing of permission to work | Open: the rule, OPT's days and the words made true, verified (`pay/REPORT.md`); it closes when the work's acceptance reads it for every date |
 | D9 | (new) the tutorial's guard against offering a job | It guarded a game with no work. It's rewritten to guard what's true now, offering only work the game has, never weakened | Open |
 
 Every other brief 18 item stays paused (its `criteria.md`).
@@ -112,11 +112,11 @@ Each is a played run with its notices and records read, and a test:
 | V8 | An offer accepted, and one declined | Fixed And Verified (`agent/REPORT.md`) |
 | V9 | Representation ending by its terms | Fixed And Verified (`agent/REPORT.md`) |
 | V10 | An unsigned opportunity | Open |
-| V11 | An audition, a callback, a booking, the work and the payment | Open |
+| V11 | An audition, a callback, a booking, the work and the payment | Open: the payment half verified (`pay/REPORT.md`); the audition, callback, booking and work are the work loop's |
 | V12 | A scheduling conflict | Open |
-| V13 | A work-authorization restriction | Open |
-| V14 | Commission accounting | Open |
-| V15 | Save and reload at each transition | Open: the agent's and the showcase's saves and loads at each transition verified; the work's and the pay's to come |
+| V13 | A work-authorization restriction | Open: the restriction's rule and words verified (`pay/REPORT.md`); it closes played through the work loop's acceptance |
+| V14 | Commission accounting | Open: commission to the cent against the postings verified (`pay/REPORT.md`); it closes played from an offer through him |
+| V15 | Save and reload at each transition | Open: the agent's, the showcase's and the pay's saves and loads at each transition verified; the work loop's to come |
 | V16 | An existing graduate's save migrated | Open |
 | V17 | Desktop, mobile, keyboard, labels and the tutorials' accuracy on the built app | Open |
 | V18 | The full gate on the final candidate | Open |

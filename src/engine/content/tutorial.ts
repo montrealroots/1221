@@ -52,9 +52,10 @@ import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA }
 import { EARLY_DEGREE } from '../systems/proshowcase';
 import { AGENTS, agencyOf } from './agents';
 import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND, TEN as PRO_TEN } from '../systems/proagent';
-import { AGREEMENT as PRO_AGREEMENT } from './careerwork';
 import { BAND_LABEL } from '../systems/coursework';
 import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
+import { PAY as PRO_PAY, sagJoinUsd } from '../systems/propay';
+import { AGREEMENT as PRO_AGREEMENT, UNIONS as PRO_UNIONS } from './careerwork';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
 import { BRIEF } from '../systems/briefs';
 import { ESTIMATE } from '../systems/school';
@@ -441,7 +442,7 @@ export const CHAPTERS: readonly Chapter[] = [
   {
     id: 'career',
     title: 'Your Career',
-    lead: 'Your professional profile, and the headshots, résumé and reel a submission sends.',
+    lead: 'Your professional profile, the headshots, résumé and reel a submission sends, and your work’s pay and unions.',
     body: [
       'Career, in the menu under Your Work, shows where you stand as a professional actor. Its Overview says what training you have, when you’re free for work, whether you can work in the US, and what your portfolio is missing.',
       'The Portfolio tab holds what a submission sends: your profile, headshots, a résumé and a reel. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.',
@@ -451,6 +452,11 @@ export const CHAPTERS: readonly Chapter[] = [
       'Once something new is on your record, such as a part played or a skill grown, your résumé reads as behind. Press Update Your Résumé to bring it up to date.',
       `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
       'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
+      // From 2026-10-21 (brief 19's pay): the Work tab, its pay, commission, permission to work and the unions
+      // (`systems/propay.ts`), opening Join SAG-AFTRA.
+      `The Work tab lists work you’ve booked: its dates, its calls on your calendar and its pay. Pay is promised when you accept the work, and paid the Thursday after each week of it with tax withheld. If you’re represented, it goes through your agency, which takes its commission and passes the rest on within ${word(PRO_PAY.trustBusinessDays)} business days. Each payment says what was taken and what reached you, and Money shows it land.`,
+      'Your permission to work is read for each date of the work when you book it, and signing with an agency changes none of it. On an F-1 while you’re a student, outside acting work isn’t open to you. On OPT after your degree, each day of work counts as a day worked.',
+      `Your degree makes you a member of Actors’ Equity, and ${formatMoney(PRO_UNIONS.equity.down, 'USD')} of its initiation fee is taken then. A SAG-AFTRA role on a TV show or a theatrical or Low Budget film lets you join SAG-AFTRA. From the ${PRO_UNIONS.sagAftra.joinWithinDays}th day after that work began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA on the Work tab first.`,
       'If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.',
       // Until 2026-10-21 this sent the player to Papers' chapter; “Representation” comes between them from then (brief 19).
       'Read “Representation” next. It opens the agent’s panel on the Career screen: how to reach him, and the agreement.',
@@ -459,9 +465,11 @@ export const CHAPTERS: readonly Chapter[] = [
       `A technique goes on your résumé as a special skill once it reaches ${PRO_SKILL_AT}: ${andList(PRO_SKILLS.map((s) => SKILL_WORDS[s]))}. Once it’s mastered, the résumé says so.`,
       'When you graduate, the degree makes you a member of Actors’ Equity, as the School’s Bulletin says, and your profile and résumé show it from that day.',
       `Your record keeps the last ${word(PRO_MATERIALS_KEPT)} of each kind of material you make, and every credit for good.`,
+      `Commission is taken only on work you contracted while represented: ${pct(PRO_AGREEMENT.commission)} at most, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, and on SAG-AFTRA work only what’s paid over scale. A contract made while an agreement ran still carries it after the agreement ends.`,
+      `Equity’s initiation fee is ${formatMoney(PRO_UNIONS.equity.initiation, 'USD')}, paid within three years, and its basic dues ${formatMoney(PRO_UNIONS.equity.yearlyDues / 2, 'USD')} each May and November. Joining SAG-AFTRA costs about ${formatMoney(sagJoinUsd(), 'USD')}, read from a search engine’s copy of its pages. Each union takes working dues from union pay.`,
     ],
-    names: ['Career', 'Overview', 'Portfolio', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel'],
-    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel'],
+    names: ['Career', 'Overview', 'Portfolio', 'Work', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel', 'Join SAG-AFTRA'],
+    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel', 'pro.join_sag'],
   },
   // From 2026-10-21 (the owner's brief 19): the agent's relationship, his office's interest and the agreement
   // (`systems/proagent.ts`), after the portfolio an approach sends. The agent is named from `AGENTS`.

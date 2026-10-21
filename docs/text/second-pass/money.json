@@ -1715,11 +1715,11 @@
   "first": "Pending"
  },
  "src/ui/looks/money.tsx#HELD_AS": {
-  "status": "Retained",
-  "hash": "34e6c4ec54b5",
-  "on": "2026-10-19",
-  "reason": "What money held apart is, on its way between your banks or SNAP on an EBT card, inside the worth sentence",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "e82875d47009",
+  "on": "2026-10-21",
+  "evidence": "tests/propay.test.ts reads what you're worth while pay is held in the agency's trust account",
+  "first": "Rewritten And Verified"
  },
  "src/ui/looks/money.tsx#heldFor": {
   "status": "Retained",

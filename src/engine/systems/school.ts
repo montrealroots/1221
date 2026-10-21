@@ -1992,7 +1992,12 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
   if (schoolEnded(to)) school.endedAt = sim.now;
   // Equity at the degree: "those students who are not members of Actors' Equity will attain membership to the union upon
   // graduation" (Bulletin 2026–27 p.24; docs/research/career-2026-10-20/yale.md), dated then (from 2026-10-20, brief 19).
-  if (to === 'graduated' && person.pro) person.pro.equity ??= { since: sim.now, how: 'degree' };
+  // From 2026-10-21 (brief 19's pay) the School says so, and Equity's initiation fee is billed then (`EQUITY_JOINED`,
+  // `systems/propay.ts`).
+  if (to === 'graduated' && person.pro && !person.pro.equity) {
+    person.pro.equity = { since: sim.now, how: 'degree' };
+    sim.emit('pro.equity_joined', { personId: person.id });
+  }
   if (to !== 'good' && to !== 'withdrawn') feel(person, to === 'withheld' ? 'dismissed' : to);
   // "No student on academic warning ... may participate" in the Cabaret (Bulletin 2026–27 p.148): a warning, or the end
   // of school, during a show takes them out of what's still to come (from 2026-10-10: until then it was checked only at
