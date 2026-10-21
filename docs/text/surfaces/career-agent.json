@@ -139,6 +139,7 @@
   "where": "Career, the Representation tab, Why It Went This Way, Show The Reasons",
   "sources": [
    "src/ui/career/RepresentationPane.tsx#WhyPanel",
+   "src/ui/career/RepresentationPane.tsx#ofSeven",
    "src/engine/systems/proagent.ts#interestOf",
    "src/engine/systems/proagent.ts#LEVEL_LABEL",
    "src/engine/systems/proagent.ts#FACTOR_LABEL",

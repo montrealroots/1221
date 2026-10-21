@@ -169,9 +169,9 @@ describe('the Representation tab', () => {
     expect(open.html).toContain('aria-expanded="true"');
     expect(open.shown).toContain('At The Last Decision');
     expect(open.shown).toContain('As Things Stand Now');
-    for (const label of ['Your Work', 'Stage And Screen', 'Training And Experience', 'Fit With His Department', 'Availability', 'Room On His List (Assumed)', 'Reliability']) expect(open.html).toContain(`<th scope="row" style="text-align:left;font-weight:600">${label}</th>`);
+    for (const label of ['Your Work', 'Stage And Screen', 'Training And Experience', 'Fit With His Department', 'Availability', 'Room On His List (Assumed)', 'Reliability']) expect(open.html).toContain(`<h4 class="small strong" style="margin:0">${label}</h4>`);
     expect(open.shown).toContain('Reliability Beyond The Bar You kept one meeting with his office.');
-    expect(open.shown).toMatch(/(Four|Five|Six|Seven) of the seven were at the bar or beyond, and an approach needs four\. Against the year’s other actors, the game gave an offer about a \d+% chance\./);
+    expect(open.shown).toMatch(/(Four of the seven|Five of the seven|Six of the seven|All seven) were at the bar or beyond, and an approach needs four\. Against the year’s other actors, the game gave an offer about a \d+% chance\./);
     // The agreement, every term, each with its basis.
     expect(open.shown).toContain('The Agreement How This Works He offered it on September 28, 2026, and the offer stands until October 12, 2026. Read every term before you answer.');
     for (const t of AGREEMENT_TERMS) expect(open.shown).toContain(`${t.heading} (${t.basis === 'verified' ? 'A Published Rule' : 'The Game’s Own Term'}) ${t.words}`);

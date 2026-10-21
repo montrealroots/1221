@@ -143,7 +143,7 @@ profile          621 sources   3756 strings   55956 words   176 engine-speak; se
 school           666 sources   6718 strings   70374 words     7 engine-speak; second pass: Rewritten 188 Retained 478 Pending 0 Blocked 0; first: RV 125 RR 353 P 188 B 0
 money            764 sources   6634 strings  151915 words    13 engine-speak; second pass: Rewritten 265 Retained 499 Pending 0 Blocked 0; first: RV 118 RR 377 P 269 B 0
 papers           473 sources   4587 strings   56842 words     3 engine-speak; second pass: Rewritten 101 Retained 372 Pending 0 Blocked 0; first: RV 145 RR 225 P 103 B 0
-career           165 sources   1001 strings    8840 words     0 engine-speak; second pass: Rewritten 140 Retained 25 Pending 0 Blocked 0; first: RV 140 RR 25 P 0 B 0
+career           166 sources   1001 strings    8838 words     0 engine-speak; second pass: Rewritten 141 Retained 25 Pending 0 Blocked 0; first: RV 141 RR 25 P 0 B 0
 health           106 sources    805 strings    8275 words     0 engine-speak; second pass: Rewritten 34 Retained 72 Pending 0 Blocked 0; first: RV 30 RR 40 P 36 B 0
 calendar          83 sources   2549 strings   14798 words     0 engine-speak; second pass: Rewritten 16 Retained 67 Pending 0 Blocked 0; first: RV 29 RR 37 P 17 B 0
 notifications     31 sources    196 strings    1107 words     0 engine-speak; second pass: Rewritten 3 Retained 28 Pending 0 Blocked 0; first: RV 18 RR 12 P 1 B 0
@@ -151,7 +151,7 @@ controls          44 sources    193 strings     756 words     0 engine-speak; se
 material         993 sources   9168 strings  153700 words   109 engine-speak; second pass: Rewritten 216 Retained 777 Pending 0 Blocked 0; first: RV 30 RR 747 P 216 B 0
 world             72 sources    189 strings   30497 words     1 engine-speak; second pass: Rewritten 4 Retained 68 Pending 0 Blocked 0; first: RV 0 RR 66 P 6 B 0
 area career        112 sources    6167 words; Rewritten 87 Retained 25 Pending 0 Blocked 0
-area career-agent    53 sources    2673 words; Rewritten 53 Retained 0 Pending 0 Blocked 0
+area career-agent    54 sources    2671 words; Rewritten 54 Retained 0 Pending 0 Blocked 0
 area frame         502 sources   33362 words; Rewritten 96 Retained 406 Pending 0 Blocked 0
 area health        178 sources   38772 words; Rewritten 38 Retained 140 Pending 0 Blocked 0
 area material-a    507 sources   80107 words; Rewritten 95 Retained 412 Pending 0 Blocked 0
@@ -162,8 +162,8 @@ area papers        473 sources   56842 words; Rewritten 101 Retained 372 Pending
 area profile       621 sources   55956 words; Rewritten 179 Retained 442 Pending 0 Blocked 0
 area school        638 sources   67356 words; Rewritten 184 Retained 454 Pending 0 Blocked 0
 area tutorial       50 sources   13896 words; Rewritten 30 Retained 20 Pending 0 Blocked 0
-all: 4412 sources, 37821 strings, 583657 words, 316 engine-speak hits; second pass: Rewritten 1253, Retained 3159, Pending 0, Blocked 0; first pass: Rewritten And Verified 827, Reviewed And Retained 2418, Pending 1167, Blocked 0
+all: 4413 sources, 37821 strings, 583655 words, 316 engine-speak hits; second pass: Rewritten 1254, Retained 3159, Pending 0, Blocked 0; first pass: Rewritten And Verified 828, Reviewed And Retained 2418, Pending 1167, Blocked 0
 The text inventory holds.
 578 quoted sentences in the guide; 578 the game says (4 of them held by the test that plays the example), 0 it no longer says.
-290 surfaces; 4412 of 4412 sources claimed; 0 problems.
+290 surfaces; 4413 of 4413 sources claimed; 0 problems.
 The completion matrix holds: 689 rows. Completion, by the matrix: 566 of 649 rows in scope Implemented And Verified (87.2%); 79 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.

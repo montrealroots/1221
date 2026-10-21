@@ -196,19 +196,20 @@ function WhyPanel({ agent }: { agent: Agent }) {
   const [open, setOpen] = useKept<boolean>(`reasons:${agent.id}`, false);
   const now = interestOf(sim, person, agent, sim.now);
   const why = rel?.why;
+  // A block a factor, its name and level on one line and the reason under it: a three-column table clipped its reasons
+  // inside the panel at 390 on the built app (the walk of 2026-10-21), and this reads at any width.
   const rows = (factors: readonly { id: string; label: string; level: string; words: string }[]) => (
-    <table className="small" style={{ width: '100%' }}>
-      <thead><tr><th scope="col">Factor</th><th scope="col">Against The Bar</th><th scope="col">Why</th></tr></thead>
-      <tbody>
-        {factors.map((f) => (
-          <tr key={f.id}>
-            <th scope="row" style={{ textAlign: 'left', fontWeight: 600 }}>{f.label}</th>
-            <td className="nowrap"><span className={LEVEL_TONE[f.level as Level]}>{LEVEL_LABEL[f.level as Level]}</span></td>
-            <td>{f.words}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <ul className="col gap-3" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+      {factors.map((f) => (
+        <li key={f.id} className="col gap-1">
+          <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'baseline' }}>
+            <h4 className="small strong" style={{ margin: 0 }}>{f.label}</h4>
+            <span className={LEVEL_TONE[f.level as Level]}>{LEVEL_LABEL[f.level as Level]}</span>
+          </div>
+          <p className="small" style={{ margin: 0 }}>{f.words}</p>
+        </li>
+      ))}
+    </ul>
   );
   return (
     <Panel title="Why It Went This Way" help="career.reasons">
@@ -221,13 +222,13 @@ function WhyPanel({ agent }: { agent: Agent }) {
               <div className="col gap-2">
                 <h3 className="eyebrow" style={{ margin: 0 }}>At The Last Decision</h3>
                 {rows(why.factors)}
-                <p className="small" style={{ margin: 0 }}>{`${capital(countWords(why.atOrBeyond))} of the seven were at the bar or beyond, and an approach needs ${countWords(why.needed)}.${why.chance !== undefined ? ` Against the year’s other actors, the game gave ${why.step === 'decision' ? 'an offer' : 'it'} about a ${Math.round(why.chance * 100)}% chance.` : ''}`}</p>
+                <p className="small" style={{ margin: 0 }}>{`${ofSeven(why.atOrBeyond)} were at the bar or beyond, and an approach needs ${countWords(why.needed)}.${why.chance !== undefined ? ` Against the year’s other actors, the game gave ${why.step === 'decision' ? 'an offer' : 'it'} about a ${Math.round(why.chance * 100)}% chance.` : ''}`}</p>
               </div>
             )}
             <div className="col gap-2">
               <h3 className="eyebrow" style={{ margin: 0 }}>As Things Stand Now</h3>
               {rows(now.factors)}
-              <p className="small" style={{ margin: 0 }}>{`${capital(countWords(now.atOrBeyond))} of the seven are at the bar or beyond, and an approach needs ${countWords(now.needed)}.${now.gate ? ` Against the year’s other actors, the game would give it about a ${Math.round(now.chance * 100)}% chance.` : ''}`}</p>
+              <p className="small" style={{ margin: 0 }}>{`${ofSeven(now.atOrBeyond)} are at the bar or beyond, and an approach needs ${countWords(now.needed)}.${now.gate ? ` Against the year’s other actors, the game would give it about a ${Math.round(now.chance * 100)}% chance.` : ''}`}</p>
             </div>
           </div>
         )}
@@ -305,3 +306,5 @@ function HistoryPanel({ agent }: { agent: Agent }) {
 }
 
 const capital = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+/** How many of the seven factors, as a sentence opens on it: "None of the seven", "Four of the seven", "All seven". */
+const ofSeven = (n: number): string => (n >= 7 ? 'All seven' : n === 0 ? 'None of the seven' : `${capital(countWords(n))} of the seven`);

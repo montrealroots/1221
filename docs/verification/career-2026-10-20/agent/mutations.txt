@@ -1,0 +1,242 @@
+Brief 19, the agent's part: mutations, each applied alone to the code at fe7fa0bf, the tests that hold its claim run
+(npx vitest run <file> --maxWorkers=1 --minWorkers=1), and the file restored from the commit. 45 run, 45 killed,
+none survived.
+
+Before the run, the materials check inside sendRefusal and referralRefusal was found redundant (a send and a referral
+each need a passed check on record, and nothing takes headshots or a résumé away again), so its mutation could only
+survive; it was taken out in fe7fa0bf and is no claim here.
+
+M1  KILLED  G1, the limits: every message of his carries the fictional line
+     src/engine/systems/proagent.ts: “  sim.notify({ category: 'career', title, body: `${body} ${agent.fictional}`,” → “  sim.notify({ category: 'career', title, body: `${body}`,”
+     run: tests/journey-agent.test.ts
+     failed: G3: his office’s answers > PLAYER JOURNEY: no answer: waiting once the usual two weeks go by, and a no once six weeks have, said then and held six months 194ms
+     failed: G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had 90ms
+
+M2  KILLED  G2: an unsolicited send is refused in the agency's words
+     src/engine/systems/proagent.ts: “  if (!rel.via) {⏎ ” → “  if (false) {⏎ ”
+     run: tests/journey-agent.test.ts
+     failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s
+
+M3  KILLED  V5: the check refuses an incomplete submission
+     src/engine/systems/proagent.ts: “  if (done) return `Your materials passed the check on ${formatDate(done.at, sim.zone)}.`;⏎   return blocking(person, sim.now);” → “  if (done) return `Your materials passed the check on ${formatDate(done.at, sim.zone)}.`;⏎   return undefined;”
+     run: tests/journey-agent.test.ts
+     failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s
+
+M4  KILLED  G2: a referral needs work judged Strong or better
+     src/engine/systems/proagent.ts: “        : BAND_RANK[band] < BAND_RANK[REFERRAL_BAND] ?” → “        : false ?”
+     run: tests/pro-agent.test.ts
+     failed: G2: a referral’s rules > offers a referral only from a finished job judged well enough, saying why for each one it can’t 147ms
+
+M5  KILLED  G2: a job refers once
+     src/engine/systems/proagent.ts: “    const why = used ? `${capital(used.by)} referred you” → “    const why = false ? `${capital(used!.by)} referred you”
+     run: tests/journey-agent.test.ts
+     failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s
+
+M6  KILLED  G4: the cooling-off time after a pass holds
+     src/engine/systems/proagent.ts: “  if (!c || sim.now >= c.until) return undefined;” → “  if (true) return undefined;”
+     run: tests/journey-agent.test.ts
+     failed: G3: his office’s answers > PLAYER JOURNEY: no answer: waiting once the usual two weeks go by, and a no once six weeks have, said then and held six months 209ms
+     failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through 85ms
+
+M7  KILLED  G4: a new approach needs something new
+     src/engine/systems/proagent.ts: “  if (!rel.considered || newSince(person, rel).length) return undefined;” → “  return undefined;”
+     run: tests/journey-agent.test.ts
+     failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through 522ms
+
+M8  KILLED  G4: a new credit is something new
+     src/engine/systems/proagent.ts: “  const keys = (pro?.credits ?? []).map((c) => `credit:${c.id}`);” → “  const keys: string[] = [];”
+     run: tests/journey-agent.test.ts
+     failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through 426ms
+
+M9  KILLED  G6: an approach needs enough factors at the bar
+     src/engine/systems/proagent.ts: “  if (interest.gate && u < interest.chance) return o.requestable.length” → “  if (u < interest.chance) return o.requestable.length”
+     run: tests/pro-agent.test.ts
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > high skill raises the chance and never makes it certain: over seeds at the top band both answers come; and a better band moves the chance 32ms
+
+M10  KILLED  G6: a better band moves the chance
+     src/engine/systems/proagent.ts: “Math.min(CHANCE.most, CHANCE.interest[band] * CHANCE.room[room])” → “Math.min(CHANCE.most, CHANCE.interest.strong * CHANCE.room[room])”
+     run: tests/pro-agent.test.ts
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > high skill raises the chance and never makes it certain: over seeds at the top band both answers come; and a better band moves the chance 17ms
+     failed: W3: the School’s follow-up after the showcase > asks from the factors, the showcase’s band among them, never for certain: a weaker showcase in the same life is no request, and a performance never made is no follow-up 299ms
+
+M11  KILLED  G6: high skill is never certain
+     src/engine/systems/proagent.ts: “  return { chance: Math.min(CHANCE.most,” → “  return { chance: 1, offerChance: 1 }; return { chance: Math.min(CHANCE.most,”
+     run: tests/pro-agent.test.ts
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > works out each factor apart, with its level and its words, and keeps the last decision’s reasons for the drill-down 114ms
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > high skill raises the chance and never makes it certain: over seeds at the top band both answers come; and a better band moves the chance 1ms
+
+M12  KILLED  G4: each approach draws its own
+     src/engine/systems/proagent.ts: “sim.rng('pro.agent', person.id, agent.id, `approach-${approach}`, step)” → “sim.rng('pro.agent', person.id, agent.id, 'approach-1', step)”
+     run: tests/journey-agent.test.ts
+     failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through 641ms
+
+M13  KILLED  G5: each step is keyed, so it is noted once
+     src/engine/systems/proagent.ts: “  noteEvent(sim, rel, { kind, key, words,” → “  noteEvent(sim, rel, { kind, words,”
+     run: tests/journey-agent.test.ts
+     failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s
+     failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through 604ms
+
+M14  KILLED  V7: a meeting slept through is missed
+     src/engine/systems/proagent.ts: “    if (present(person, item.at)) {” → “    if (true) {”
+     run: tests/journey-agent.test.ts
+     failed: V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept 111ms
+
+M15  KILLED  V7: a meeting moves once
+     src/engine/systems/proagent.ts: “  if (found.meeting.moved >= AGENT_TIMES.movesAllowed) return” → “  if (false) return”
+     run: tests/journey-agent.test.ts
+     failed: V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept 211ms
+
+M16  KILLED  V7: Ask To Move at the stop carries the jump on
+     src/engine/systems/proagent.ts: “  then: 'carry-on',⏎   does: `asks his office” → “  then: 'stay',⏎   does: `asks his office”
+     run: tests/journey-agent.test.ts
+     failed: V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept 228ms
+
+M17  KILLED  G7: accepting sets the term's end
+     src/engine/systems/proagent.ts: “    a.endsAt = addDays(s.now, AGREEMENT.termDays, officeZone(agent));” → “”
+     run: tests/journey-agent.test.ts
+     failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let la
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by its term, a year on, on its own and said, with nothing more owed 98ms
+
+M18  KILLED  G4, V8: a declined offer holds six months
+     src/engine/systems/proagent.ts: “    closeApproach(s, person, rel, 'declined', 'declined');⏎     note(s, rel, 'declined'” → “    closeApproach(s, person, rel, 'declined', undefined);⏎     note(s, rel, 'declined'”
+     run: tests/journey-agent.test.ts
+     failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let la
+
+M19  KILLED  G7: an unanswered offer lapses after fourteen days
+     src/engine/systems/proagent.ts: “    if (!person || !agent || !rel || !a || a.status !== 'offered') return;” → “    return;”
+     run: tests/journey-agent.test.ts
+     failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let la
+
+M20  KILLED  G8: the term runs out on its own
+     src/engine/systems/proagent.ts: “    if (!person || !agent || !rel || !a || a.status !== 'accepted') return;⏎     endAgreement(s, person, agent, rel, a, 'term');” → “    return;”
+     run: tests/journey-agent.test.ts
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by its term, a year on, on its own and said, with nothing more owed 429ms
+     failed: G5 and V15: history with stable ids, nothing noted twice > GUARD: replaying the same days across a reload at each step and a long jump notes each event once, with the same ids 692ms
+
+M21  KILLED  G8: an offer through him starts Equity's 90 days again
+     src/engine/systems/proagent.ts: “    const since = last ?? a.signedAt!;” → “    const since = a.signedAt!;”
+     run: tests/journey-agent.test.ts
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and w
+
+M22  KILLED  G8: covered days counted by every date a span touches
+     src/engine/systems/proagent.ts: “{ const k = key(t); days.add(k); if (k === last || t > end) break; }” → “{ const k = key(t); if (k === last || t > end) break; days.add(k); }”
+     run: tests/journey-agent.test.ts
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and w
+
+M23  KILLED  G8: SAG-AFTRA's 151 days before ending for too little work
+     src/engine/systems/proagent.ts: “    if (sim.now < from) return `SAG-AFTRA’s rule lets you end it this way only after” → “    if (false) return `SAG-AFTRA’s rule lets you end it this way only after”
+     run: tests/journey-agent.test.ts
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and w
+
+M24  KILLED  W3: whether his office asks turns on the showcase's band
+     src/engine/systems/proagent.ts: “export const followUpAsks = (interest: Interest, u: number): boolean => interest.gate && u < interest.chance;” → “export const followUpAsks = (interest: Interest, u: number): boolean => interest.gate && u < 0.5;”
+     run: tests/pro-agent.test.ts
+     failed: W3: the School’s follow-up after the showcase > asks from the factors, the showcase’s band among them, never for certain: a weaker showcase in the same life is no request, and a performance never made is no follow-up 106ms
+
+M25  KILLED  W3: the follow-up never claims he was there
+     src/engine/systems/proagent.ts: “, and the game doesn’t say he was there.” → “.”
+     run: tests/pro-agent.test.ts
+     failed: W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting 73ms
+
+M26  KILLED  W3: the follow-up is put on once
+     src/engine/systems/proagent.ts: “  if (sim.universe.scheduled.some((i) => i.kind === FOLLOW_UP_KIND && i.status === 'pending' && i.payload.personId === person.id)) return undefined;” → “”
+     run: tests/pro-agent.test.ts
+     failed: W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting 55ms
+
+M27  KILLED  G6: availability reads school, permission and place
+     src/engine/systems/proagent.ts: “  add('availability', availability,” → “  add('availability', 'near',”
+     run: tests/pro-agent.test.ts
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > works out each factor apart, with its level and its words, and keeps the last decision’s reasons for the drill-down 74ms
+
+M28  KILLED  G6: the roster is drawn for each year
+     src/engine/systems/proagent.ts: “  const rng = sim.rng('pro.agent', agent.id, 'roster', year);” → “  const rng = sim.rng('pro.agent', agent.id, 'roster', 2026);”
+     run: tests/pro-agent.test.ts
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > draws the room on his list for each year, one to three openings among the assumed types, the same for a year however often it’s asked 13ms
+
+M29  KILLED  A2: signing changes nothing at the School
+     src/engine/systems/proagent.ts: “    a.status = 'accepted';⏎ ” → “    a.status = 'accepted';⏎     if (person.school) person.school.standing = 'withdrawn';⏎ ”
+     run: tests/journey-agent.test.ts
+     failed: A2: representation while enrolled > PLAYER JOURNEY: a first-year introduced, met and signed is still enrolled in good standing, and permission to work says exactly what it said before 186ms
+
+M30  KILLED  G1: the notice stands above all until read, then behind Read The Notice Again
+     src/ui/career/RepresentationPane.tsx: “        {read ? (” → “        {false ? (”
+     run: tests/pro-representation-screen.test.ts
+     failed: the Representation tab > PLAYER JOURNEY: G1: where he first appears, the notice stands above all else with the fictional line, and once read it stays one press away 62ms
+
+M31  KILLED  G6: Why It Went This Way opens its table
+     src/ui/career/RepresentationPane.tsx: “        {open && (” → “        {false && (”
+     run: tests/pro-representation-screen.test.ts
+     failed: the Representation tab > PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline 328ms
+
+M32  KILLED  G5: the history newest first, one moment's steps too
+     src/engine/systems/proagent.ts: “].reverse().sort((a, b) => b.at - a.at);” → “].sort((a, b) => b.at - a.at);”
+     run: tests/pro-representation-screen.test.ts
+     failed: the Representation tab > PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline 284ms
+
+M33  KILLED  G6: the offer's decision keeps the offer's chance
+     src/engine/systems/proagent.ts: “chance: step === 'decision' ? interest.offerChance : interest.chance” → “chance: interest.chance”
+     run: tests/journey-agent.test.ts
+     failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let la
+
+M34  KILLED  G3: a missing reel is asked for
+     src/engine/systems/proagent.ts: “(p.kind === 'reel' && p.problem === 'missing') ||” → “false ||”
+     run: tests/journey-agent.test.ts
+     failed: G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had 86ms
+
+M35  KILLED  G3, G5: material not sent when asked is a problem on record
+     src/engine/systems/proagent.ts: “    note(s, rel, 'problem', `request-missed:${r.id}`,” → “    if (false) note(s, rel, 'problem', `request-missed:${r.id}`,”
+     run: tests/journey-agent.test.ts
+     failed: G3: his office’s answers > PLAYER JOURNEY: a request for more: what, by when, supplied in time, and the answer it brings; and in another life not supplied, decided on what it had 265ms
+
+M36  KILLED  the limits: nothing from him arrives unasked
+     src/engine/systems/proagent.ts: “    setStage(s, rel, 'sent');⏎     const sent = spokenList” → “    setStage(s, rel, 'sent');⏎     tell(s, person, agent, 'Materials Received', 'His office has your materials.');⏎     const sent = spokenList”
+     run: tests/journey-agent.test.ts
+     failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s
+     failed: G3: his office’s answers > PLAYER JOURNEY: no answer: waiting once the usual two weeks go by, and a no once six weeks have, said then and held six months 68ms
+
+M37  KILLED  G3: no answer in six weeks counts as no
+     src/engine/systems/proagent.ts: “    closeApproach(s, person, rel, 'unanswered', 'silence');” → “    return;”
+     run: tests/journey-agent.test.ts
+     failed: G3: his office’s answers > PLAYER JOURNEY: no answer: waiting once the usual two weeks go by, and a no once six weeks have, said then and held six months 104ms
+
+M38  KILLED  G6: a missed meeting counts against reliability
+     src/engine/systems/proagent.ts: “  const against = missed + late + onJobs;” → “  const against = late + onJobs;”
+     run: tests/journey-agent.test.ts
+     failed: V7: a meeting missed, and one moved and kept > PLAYER JOURNEY: slept through, the meeting is missed and the approach closed; in another life Ask To Move at the stop moves it a week, once, and it’s kept 108ms
+
+M39  KILLED  G2: a send needs a passed check
+     src/engine/systems/proagent.ts: “  if (!countOf(rel, 'checked')) return 'Check your materials first: Check Your Materials says” → “  if (false) return 'Check your materials first: Check Your Materials says”
+     run: tests/pro-agent.test.ts
+     failed: W3: the School’s follow-up after the showcase > PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting 57ms
+
+M40  KILLED  G6: the gate needs four at the bar
+     src/engine/systems/proagent.ts: “  return { factors, atOrBeyond, needed: GATE, gate: atOrBeyond >= GATE,” → “  return { factors, atOrBeyond, needed: GATE, gate: true,”
+     run: tests/pro-agent.test.ts
+     failed: G4 and G6: the factors, the draw, and a reload that can’t redraw > works out each factor apart, with its level and its words, and keeps the last decision’s reasons for the drill-down 70ms
+
+M41  KILLED  G1: every step waits for the notice
+     src/engine/systems/proagent.ts: “  if (rel?.noticeShownAt === undefined) return mustRead(agent);⏎   const busy = underWay(sim, agent, rel);⏎   if (busy) return busy;⏎   const done” → “  if (rel === undefined) return undefined;⏎   const busy = underWay(sim, agent, rel);⏎   if (busy) return busy;⏎   const done”
+     run: tests/pro-agent.test.ts
+     failed: G1: the notice where he first appears > PLAYER JOURNEY: his panel holds the notice until it’s read, notes it once, and keeps it to read again 51ms
+
+M42  KILLED  G2: introduced by a referral, the stage moves
+     src/engine/systems/proagent.ts: “    rel.via = { route: 'referral', at: s.now, by: job.by };⏎     setStage(s, rel, 'introduced');” → “    rel.via = { route: 'referral', at: s.now, by: job.by };”
+     run: tests/journey-agent.test.ts
+     failed: G2 and V5: the stages and the routes, an incomplete submission and its remedy > PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s
+
+M43  KILLED  G7: accepting sets the relation represented, and the agreement in force
+     src/engine/systems/proagent.ts: “    rel.agreementId = a.id;⏎     setStage(s, rel, 'represented');” → “    rel.agreementId = a.id;”
+     run: tests/journey-agent.test.ts
+     failed: V8 and G7: the agreement, shown in full, accepted in one life and declined in another > PLAYER JOURNEY: offered with every term and its basis; accepted, it sets the agreement and the relation; declined, it holds six months; let la
+     failed: A2: representation while enrolled > PLAYER JOURNEY: a first-year introduced, met and signed is still enrolled in good standing, and permission to work says exactly what it said before 161ms
+
+M44  KILLED  G8: ending sets endedAt, and the agreement is no longer in force
+     src/engine/systems/proagent.ts: “  a.endedAt = how === 'term' ? a.endsAt! : sim.now;” → “  a.endedAt = how === 'term' ? a.endsAt! : a.endsAt!;”
+     run: tests/journey-agent.test.ts
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by agreement, at any time; it says what commission stays owed on a contract made while it ran 95ms
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and w
+
+M45  KILLED  G8: ending says what stays owed
+     src/engine/systems/proagent.ts: “  const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => !p.received && !p.deferred));” → “  const live: typeof person.pro.engagements = [];”
+     run: tests/journey-agent.test.ts
+     failed: V9 and G8: representation ends by its terms, with what it leaves owed > PLAYER JOURNEY: by agreement, at any time; it says what commission stays owed on a contract made while it ran 92ms

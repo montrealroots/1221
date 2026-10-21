@@ -2,12 +2,12 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**290 surfaces; 4412 of 4412 sources claimed; 152 revised, 138 kept.**
+**290 surfaces; 4413 of 4413 sources claimed; 152 revised, 138 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
 | career | 112 | 112 |
-| career-agent | 53 | 53 |
+| career-agent | 54 | 54 |
 | frame | 502 | 502 |
 | health | 178 | 178 |
 | material-a | 507 | 507 |
