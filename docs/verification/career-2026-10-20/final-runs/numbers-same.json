@@ -1,0 +1,566 @@
+{
+ "final": {
+  "before": "docs/verification/continuity-2026-10-20/final",
+  "after": "docs/verification/career-2026-10-20/final-runs/final",
+  "held": true,
+  "files": 35,
+  "same": 35,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "runs": {
+  "before": "docs/verification/continuity-2026-10-20/runs",
+  "after": "docs/verification/career-2026-10-20/final-runs/runs",
+  "held": false,
+  "files": 17,
+  "same": 9,
+  "explained": {},
+  "unexplained": {
+   "lives.jsonl": {
+    "differences": 683,
+    "first": [
+     "[0].abilities.composure: 53 before, 54 after",
+     "[0].abilities.physical: 68 before, 67 after",
+     "[0].bank: 74153 before, 73455 after",
+     "[0].journey.total: 367 before, 358 after",
+     "[0].monthly[30].condition: 91.1 before, 91 after",
+     "[0].monthly[31].condition: 91.1 before, 91 after"
+    ]
+   },
+   "plan-musical-m-0.json": {
+    "differences": 144,
+    "first": [
+     ".hours: 36264 before, 36144 after",
+     ".masteredOn: '2030-10-08' before, '2030-10-03' after",
+     ".payoff[0].date: '2030-10-10' before, '2030-10-05' after",
+     ".payoff[0].readiness: 82 before, 96 after",
+     ".payoff[1].date: '2030-10-11' before, '2030-10-06' after",
+     ".payoff[1].readiness: 82 before, 96 after"
+    ]
+   },
+   "plan-nordic_noir-m-0.json": {
+    "differences": 100,
+    "first": [
+     ".hours: 28369 before, 28249 after",
+     ".masteredOn: '2029-11-15' before, '2029-11-10' after",
+     ".payoff[0].date: '2029-11-15' before, '2029-11-10' after",
+     ".payoff[0].readiness: 71 before, 84 after",
+     ".payoff[1].date: '2029-11-16' before, '2029-11-11' after",
+     ".payoff[1].readiness: 82 before, 90 after"
+    ]
+   },
+   "plan-nordic_noir-m-1.json": {
+    "differences": 102,
+    "first": [
+     ".hours: 28657 before, 28585 after",
+     ".masteredOn: '2029-11-27' before, '2029-11-24' after",
+     ".payoff[0].date: '2029-11-27' before, '2029-11-24' after",
+     ".payoff[0].readiness: 75 before, 94 after",
+     ".payoff[1].date: '2029-11-28' before, '2029-11-25' after",
+     ".payoff[1].readiness: 79 before, 96 after"
+    ]
+   },
+   "plan-slapstick-m-0.json": {
+    "differences": 160,
+    "first": [
+     ".hours: 38185 before, 38017 after",
+     ".masteredOn: '2030-12-29' before, '2030-12-22' after",
+     ".payoff[0].date: '2030-12-29' before, '2030-12-22' after",
+     ".payoff[0].readiness: 94 before, 76 after",
+     ".payoff[1].date: '2030-12-30' before, '2030-12-23' after",
+     ".payoff[1].readiness: 79 before, 82 after"
+    ]
+   },
+   "plan-social_realism-m-0.json": {
+    "differences": 100,
+    "first": [
+     ".hours: 28369 before, 28249 after",
+     ".masteredOn: '2029-11-15' before, '2029-11-10' after",
+     ".payoff[0].date: '2029-11-15' before, '2029-11-10' after",
+     ".payoff[0].readiness: 71 before, 84 after",
+     ".payoff[1].date: '2029-11-16' before, '2029-11-11' after",
+     ".payoff[1].readiness: 82 before, 90 after"
+    ]
+   },
+   "plan-social_realism-m-1.json": {
+    "differences": 101,
+    "first": [
+     ".hours: 28657 before, 28585 after",
+     ".masteredOn: '2029-11-27' before, '2029-11-24' after",
+     ".payoff[0].date: '2029-11-27' before, '2029-11-24' after",
+     ".payoff[0].readiness: 75 before, 94 after",
+     ".payoff[1].date: '2029-11-28' before, '2029-11-25' after",
+     ".payoff[1].readiness: 79 before, 96 after"
+    ]
+   },
+   "variety-v-0.json": {
+    "differences": 8,
+    "first": [
+     ".choices.weeksWithNoWorkDecision: 72 before, 70 after",
+     ".coursework.metAgain: 17 before, 11 after",
+     ".coursework.metAgainAskingSomethingNew: 17 before, 9 after",
+     ".coursework.set: 275 before, 269 after",
+     ".coursework.withScene: 81 before, 75 after",
+     ".practice.distinctFeedback: 2116 before, 2127 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "advice": {
+  "before": "docs/verification/continuity-2026-10-20/advice",
+  "after": "docs/verification/career-2026-10-20/final-runs/advice",
+  "held": false,
+  "files": 31,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 61
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "journeys-final": {
+  "before": "docs/verification/continuity-2026-10-20/journeys-final",
+  "after": "docs/verification/career-2026-10-20/final-runs/journeys-final",
+  "held": false,
+  "files": 102,
+  "same": 7,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 182,
+   "a count of notices: a rewrite changes which merge; the events are compared apart": 2128,
+   "a measure of words: the journeys’ continuity counts text": 89
+  },
+  "unexplained": {
+   "F1-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 367 before, 358 after"
+    ]
+   },
+   "F1-p4.json": {
+    "differences": 436,
+    "first": [
+     ".advice[59][3]: 1.01 before, 1.02 after",
+     ".advice[60][3]: 0.81 before, 0.82 after",
+     ".advice[63][2]: 57.88 before, 57.89 after",
+     ".advice[67][2]: 58.28 before, 58.29 after",
+     ".advice[68][2]: 58.28 before, 58.29 after",
+     ".advice[69][2]: 58.28 before, 58.29 after"
+    ]
+   },
+   "F2-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 367 before, 358 after"
+    ]
+   },
+   "F2-p4.json": {
+    "differences": 413,
+    "first": [
+     ".advice[126][3]: 0.79 before, 0.72 after",
+     ".advice[127][1]: 'composure' before, 'vocal' after",
+     ".advice[127][2]: 52.73 before, 65.38 after",
+     ".advice[127][3]: 0.75 before, 0.7 after",
+     ".advice[128][3]: 0.85 before, 0.98 after",
+     ".advice[129][3]: 0.7 before, 0.74 after"
+    ]
+   },
+   "J01-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J01-p4.json": {
+    "differences": 553,
+    "first": [
+     ".advice[59][3]: 0.99 before, 1.01 after",
+     ".advice[60][3]: 0.74 before, 0.75 after",
+     ".advice[61][2]: 61.2 before, 61.22 after",
+     ".advice[61][3]: 0.61 before, 0.66 after",
+     ".advice[62][2]: 60.79 before, 60.77 after",
+     ".advice[62][3]: 0.56 before, 0.61 after"
+    ]
+   },
+   "J02-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 273 before, 268 after",
+     ".work: 360 before, 352 after"
+    ]
+   },
+   "J02-p4.json": {
+    "differences": 433,
+    "first": [
+     ".advice[126][3]: 0.91 before, 0.87 after",
+     ".advice[127][2]: 60.16 before, 60.17 after",
+     ".advice[127][3]: 0.9 before, 0.94 after",
+     ".advice[128][3]: 0.95 before, 1.01 after",
+     ".advice[129][2]: 60.34 before, 60.35 after",
+     ".advice[129][3]: 0.88 before, 0.94 after"
+    ]
+   },
+   "J03-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 274 before, 268 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J03-p4.json": {
+    "differences": 483,
+    "first": [
+     ".advice[59][3]: 0.69 before, 0.7 after",
+     ".advice[63][2]: 59.47 before, 59.48 after",
+     ".advice[126][1]: 'adaptability' before, 'emotionalDepth' after",
+     ".advice[126][2]: 68.03 before, 74.48 after",
+     ".advice[126][3]: 0.18 before, 0.15 after",
+     ".advice[127][1]: 'composure' before, 'imagination' after"
+    ]
+   },
+   "J04-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 274 before, 268 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J04-p4.json": {
+    "differences": 494,
+    "first": [
+     ".advice[59][3]: 0.68 before, 0.69 after",
+     ".advice[62][2]: 57.42 before, 57.43 after",
+     ".advice[69][2]: 63.11 before, 63.12 after",
+     ".advice[76][2]: 65.31 before, 65.32 after",
+     ".advice[97][2]: 75.78 before, 75.79 after",
+     ".advice[106][2]: 87.44 before, 87.45 after"
+    ]
+   },
+   "J05-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 274 before, 268 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J05-p4.json": {
+    "differences": 444,
+    "first": [
+     ".advice[61][2]: 56.95 before, 56.96 after",
+     ".advice[125][2]: 64.27 before, 64.28 after",
+     ".advice[126][1]: 'adaptability' before, 'vocal' after",
+     ".advice[126][2]: 56.69 before, 64.35 after",
+     ".advice[126][3]: 0.41 before, 0.38 after",
+     ".advice[127][3]: 0.42 before, 0.47 after"
+    ]
+   },
+   "J06-p3.json": {
+    "differences": 3,
+    "first": [
+     ".reloads: 34 before, 35 after",
+     ".showings: 275 before, 269 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J06-p4.json": {
+    "differences": 483,
+    "first": [
+     ".advice[126][3]: 0.25 before, 0.26 after",
+     ".advice[127][1]: 'composure' before, 'presence' after",
+     ".advice[127][2]: 61.41 before, 65.16 after",
+     ".advice[127][3]: 0.24 before, 0.2 after",
+     ".advice[128][3]: 0.37 before, 0.34 after",
+     ".advice[129][1]: 'emotionalDepth' before, 'composure' after"
+    ]
+   },
+   "J07-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J07-p4.json": {
+    "differences": 483,
+    "first": [
+     ".advice[126][2]: 63.98 before, 63.96 after",
+     ".advice[126][3]: 0.31 before, 0.25 after",
+     ".advice[127][1]: 'composure' before, 'vocal' after",
+     ".advice[127][2]: 53.34 before, 90.88 after",
+     ".advice[127][3]: 0.29 before, 0.23 after",
+     ".advice[128][1]: 'composure' before, 'emotionalDepth' after"
+    ]
+   },
+   "J08-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J08-p4.json": {
+    "differences": 420,
+    "first": [
+     ".advice[125][2]: 66.26 before, 66.27 after",
+     ".advice[126][1]: 'focus' before, 'vocal' after",
+     ".advice[126][2]: 59.12 before, 66.34 after",
+     ".advice[126][3]: 0.3 before, 0.27 after",
+     ".advice[129][2]: 66.62 before, 66.64 after",
+     ".advice[129][3]: 0.42 before, 0.38 after"
+    ]
+   },
+   "J09-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 364 before, 355 after"
+    ]
+   },
+   "J09-p4.json": {
+    "differences": 484,
+    "first": [
+     ".advice[125][1]: 'listening' before, 'emotionalDepth' after",
+     ".advice[125][2]: 85.03 before, 75.31 after",
+     ".advice[125][3]: 0.12 before, 0.13 after",
+     ".advice[126][1]: 'adaptability' before, 'emotionalDepth' after",
+     ".advice[126][2]: 70.86 before, 75.32 after",
+     ".advice[126][3]: 0.15 before, 0.12 after"
+    ]
+   },
+   "J10-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 368 before, 359 after"
+    ]
+   },
+   "J10-p4.json": {
+    "differences": 459,
+    "first": [
+     ".advice[69][2]: 74.47 before, 74.48 after",
+     ".advice[71][2]: 76.56 before, 76.57 after",
+     ".advice[89][2]: 81.83 before, 81.84 after",
+     ".advice[90][2]: 83.33 before, 83.34 after",
+     ".advice[91][2]: 84.83 before, 84.84 after",
+     ".advice[92][2]: 86.33 before, 86.34 after"
+    ]
+   },
+   "J11-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 364 before, 355 after"
+    ]
+   },
+   "J11-p4.json": {
+    "differences": 432,
+    "first": [
+     ".acts: 51 items before, 46 after",
+     ".advice[126][1]: 'adaptability' before, 'listening' after",
+     ".advice[126][2]: 67.2 before, 79.6 after",
+     ".advice[126][3]: 0.21 before, 0.13 after",
+     ".advice[127][1]: 'adaptability' before, 'vocal' after",
+     ".advice[127][2]: 67.23 before, 98.92 after"
+    ]
+   },
+   "J12-p3.json": {
+    "differences": 3,
+    "first": [
+     ".reloads: 34 before, 35 after",
+     ".showings: 275 before, 269 after",
+     ".work: 368 before, 359 after"
+    ]
+   },
+   "J12-p4.json": {
+    "differences": 524,
+    "first": [
+     ".acts: 57 items before, 53 after",
+     ".advice[66][2]: 72.83 before, 72.84 after",
+     ".advice[97][2]: 82.62 before, 82.63 after",
+     ".advice[98][2]: 85.59 before, 85.6 after",
+     ".advice[99][2]: 86.91 before, 86.95 after",
+     ".advice[100][2]: 88.28 before, 88.29 after"
+    ]
+   },
+   "J13-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 377 before, 368 after"
+    ]
+   },
+   "J13-p4.json": {
+    "differences": 239,
+    "first": [
+     ".acts: 28 items before, 25 after",
+     ".checks.2 classes to showings.fails: 0 items before, 2 after",
+     ".checks.2 classes to showings.pass: True before, False after",
+     ".commands.life.look_after: only in after",
+     ".commands.life.sleep: 1076 before, 1075 after",
+     ".commands.life.sleep refused: 1 before, 6 after"
+    ]
+   },
+   "J14-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 379 before, 370 after"
+    ]
+   },
+   "J14-p4.json": {
+    "differences": 219,
+    "first": [
+     ".acts: 27 items before, 24 after",
+     ".checks.2 classes to showings.fails: 0 items before, 2 after",
+     ".checks.2 classes to showings.pass: True before, False after",
+     ".commands.life.look_after: only in after",
+     ".commands.life.sleep: 1076 before, 1075 after",
+     ".commands.life.sleep refused: only in after"
+    ]
+   },
+   "J17-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 366 before, 357 after"
+    ]
+   },
+   "J17-p4.json": {
+    "differences": 404,
+    "first": [
+     ".advice[126][3]: 0.71 before, 0.73 after",
+     ".advice[127][1]: 'composure' before, 'vocal' after",
+     ".advice[127][2]: 52.64 before, 65.65 after",
+     ".advice[127][3]: 0.77 before, 0.75 after",
+     ".advice[128][3]: 1.02 before, 0.93 after",
+     ".advice[129][3]: 0.75 before, 0.78 after"
+    ]
+   },
+   "J18-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 275 before, 269 after",
+     ".work: 364 before, 355 after"
+    ]
+   },
+   "J18-p4.json": {
+    "differences": 415,
+    "first": [
+     ".advice[126][3]: 0.73 before, 0.8 after",
+     ".advice[127][1]: 'composure' before, 'vocal' after",
+     ".advice[127][2]: 52.1 before, 65.68 after",
+     ".advice[127][3]: 0.75 before, 0.77 after",
+     ".advice[128][3]: 0.85 before, 1.02 after",
+     ".advice[129][1]: 'vocal' before, 'composure' after"
+    ]
+   },
+   "J19-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 274 before, 268 after",
+     ".work: 365 before, 356 after"
+    ]
+   },
+   "J19-p4.json": {
+    "differences": 400,
+    "first": [
+     ".advice[126][3]: 0.71 before, 0.72 after",
+     ".advice[127][3]: 0.78 before, 0.81 after",
+     ".advice[128][3]: 0.83 before, 1.01 after",
+     ".advice[129][3]: 0.69 before, 0.77 after",
+     ".advice[130][3]: 0.74 before, 0.77 after",
+     ".advice[131][3]: 0.94 before, 0.87 after"
+    ]
+   },
+   "J20-p4.json": {
+    "differences": 418,
+    "first": [
+     ".advice[178][3]: 0.87 before, 0.79 after",
+     ".advice[179][3]: 0.79 before, 0.74 after",
+     ".advice[180][3]: 0.9 before, 1 after",
+     ".advice[181][3]: 0.73 before, 0.78 after",
+     ".advice[182][3]: 0.59 before, 0.78 after",
+     ".advice[183][3]: 0.84 before, 0.81 after"
+    ]
+   },
+   "J22-p4.json": {
+    "differences": 384,
+    "first": [
+     ".advice[178][3]: 0.85 before, 0.78 after",
+     ".advice[179][3]: 0.71 before, 0.79 after",
+     ".advice[180][3]: 0.93 before, 0.94 after",
+     ".advice[181][3]: 0.76 before, 0.78 after",
+     ".advice[182][3]: 0.87 before, 0.78 after",
+     ".advice[183][3]: 0.92 before, 0.83 after"
+    ]
+   },
+   "J23-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 246 before, 241 after",
+     ".work: 323 before, 315 after"
+    ]
+   },
+   "J23-p4.json": {
+    "differences": 428,
+    "first": [
+     ".acts: 80 items before, 78 after",
+     ".advice[125][2]: 63.87 before, 63.88 after",
+     ".advice[126][1]: 'composure' before, 'vocal' after",
+     ".advice[126][2]: 51.23 before, 63.96 after",
+     ".advice[126][3]: 0.74 before, 0.67 after",
+     ".advice[127][2]: 64.03 before, 64.04 after"
+    ]
+   },
+   "compare.json": {
+    "differences": 264,
+    "first": [
+     ".J03 J04 J05.byInput.adaptability.follows: 16.4 before, 27.5 after",
+     ".J03 J04 J05.byInput.adaptability.ignores: 5.1 before, 5 after",
+     ".J03 J04 J05.byInput.adaptability.partly: 11.6 before, 22.8 after",
+     ".J03 J04 J05.byInput.composure.follows: 21.7 before, 26.4 after",
+     ".J03 J04 J05.byInput.composure.ignores: 9.2 before, 10 after",
+     ".J03 J04 J05.byInput.composure.partly: 22.1 before, 15.5 after"
+    ]
+   },
+   "summary.json": {
+    "differences": 22,
+    "first": [
+     "[0].checks.2 classes to showings: 'pass' before, 'FAIL: assignment_00006q: 2 records at its showing / assignme' after",
+     "[1].checks.2 classes to showings: 'pass' before, 'FAIL: assignment_00006p: 2 records at its showing / assignme' after",
+     "[2].checks.2 classes to showings: 'pass' before, 'FAIL: assignment_00006p: 2 records at its showing / assignme' after",
+     "[3].checks.2 classes to showings: 'pass' before, 'FAIL: assignment_00006p: 2 records at its showing / assignme' after",
+     "[4].checks.2 classes to showings: 'pass' before, 'FAIL: assignment_00006p: 2 records at its showing / assignme' after",
+     "[5].checks.2 classes to showings: 'pass' before, 'FAIL: assignment_00006q: 2 records at its showing / assignme' after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "interface-final": {
+  "before": "docs/verification/continuity-2026-10-20/interface-final",
+  "after": "docs/verification/career-2026-10-20/final-runs/interface-final",
+  "held": false,
+  "files": 1,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": [
+   "summary.json"
+  ]
+ },
+ "journeys14-final": {
+  "before": "docs/verification/continuity-2026-10-20/journeys14-final",
+  "after": "docs/verification/career-2026-10-20/final-runs/journeys14-final",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ }
+}

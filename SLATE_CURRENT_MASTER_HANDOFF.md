@@ -5,7 +5,12 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 549 of 658 rows in scope Implemented And Verified (83.4%); 105 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 593 of 658 rows in scope Implemented And Verified (90.1%); 61 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 19's final runs, 2026-10-21, on `728b4972`, folded by `criteria.py`: until them this said 549 of 658. The judge's
+  rows and the long runs' moved on figures brief 17's in every number or said beside them
+  (`docs/verification/career-2026-10-20/final-runs/`). The journeys' rows, the interface's and the advice's wait on the
+  journeys played again with the tool's check 2 corrected, and the gate's on the gate.)
 
   (The audit's fourth reading, 2026-10-21, against `9c3e6fa5`: until it this said 548 of 658. `pro.cut_reel` is verified
   on the test written for its gap, so all 22 of brief 19's rows are verified. The two refusals the third reading recorded

@@ -1,0 +1,492 @@
+{
+ "playthrough": "setback",
+ "width": 390,
+ "base": "http://localhost:4217",
+ "commit": "728b4972",
+ "uncommitted": 0,
+ "startedAt": "2026-10-21T12:34:49.292Z",
+ "startingPoint": {
+  "kind": "save",
+  "file": "workload.json",
+  "bytes": 1070615,
+  "sha256": "27d9b9c4247140b0ee85d218c9097d4c9b517cea4aee4b5690f6c4ac554de42e",
+  "seed": "sc-0",
+  "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
+ },
+ "steps": [
+  {
+   "n": 1,
+   "name": "[save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day",
+   "exercises": [
+    "notification",
+    "save-continue"
+   ],
+   "pressed": [
+    "Continue",
+    "Menu",
+    "Home"
+   ],
+   "said": [
+    "notice “A Word On Your Coursework”: So far this term, 3 of the 6 pieces you’ve shown were Unready. This is a warning. The term review is on December 10, 2027. If half or more of the term’s pieces are Unready or not shown by then, the review would give you a notice of academic concern. The part most often left unfinished was “With Your Partner”, on 2 of the 3 you showed Unready. To work on it: ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader. 10 pieces are set and still to be shown. On the Coursework tab, each open piece’s Shown Today line says what’s holding it back."
+   ],
+   "ok": true,
+   "date": "September 22, 2027",
+   "clock": "9:30 AM"
+  },
+  {
+   "n": 2,
+   "name": "the warning opened in place: its look, who sent it and when, and Close",
+   "exercises": [
+    "drill-down"
+   ],
+   "pressed": [
+    "A Word On Your Coursework",
+    "Close A Word On Your Coursework"
+   ],
+   "said": [
+    "look “A Word On Your Coursework” (NOTICE): It came in 30 minutes ago. It’s fourth of your 333 unread notices.",
+    "its figures: IMPORTANCE 75 Out of 100. It sets the order | ARRIVED September 22, 2027 30 minutes ago | ABOUT School | STATUS Unread 4 of 333 unread | WHAT IT’S ABOUT Not named This notice doesn’t name one | KEPT Latest 500 Older ones are dropped"
+   ],
+   "ok": true,
+   "date": "September 22, 2027",
+   "clock": "9:30 AM"
+  },
+  {
+   "n": 3,
+   "name": "Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready",
+   "exercises": [
+    "navigation"
+   ],
+   "pressed": [
+    "Go There",
+    "Coursework (tab)"
+   ],
+   "said": [
+    "Due Soonest: Speech And Accents II: Sound Changes And A Text, due September 28, 2027. Shown today, it would come to about 49.3 of 100 (Unready). Still to finish: Drills (Drill The Sounds). | Advanced Principles Of Acting Stage Combat: A Choreographed Sequence, due September 30, 2027. Shown today, it would come to about 22.8 of 100 (Unready). Still to finish: The Choreography Learned (Learn The Choreography); Drilled With Your Partner (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader); Alone (Run It Alone, At Half Speed). | Voice II: A Voice Sequence, due September 30, 2027. Shown today, it would come to about 28.5 of 100 (Unready). Stil",
+    "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence: Shown Today: if you showed it today, on a good day, it would come to about 22.8 of 100 (Unready). “Alone” isn’t complete, and that costs your execution 42 points out of 100. Still to finish: The Choreography Learned (Learn The Choreography); Drilled With Your Partner (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader); Alone (Run It Alone, At Half Speed).",
+    "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence, DRAM 405a/b · Due September 30, 2027 · Skills: Stage Combat, Intimacy: 22.8 (Unready)"
+   ],
+   "ok": true,
+   "date": "September 22, 2027",
+   "clock": "9:30 AM"
+  },
+  {
+   "n": 4,
+   "name": "the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were",
+   "exercises": [
+    "drill-down"
+   ],
+   "pressed": [
+    "How This Works: Preparing Coursework",
+    "How It Connects",
+    "Orientation Week",
+    "Back",
+    "Escape"
+   ],
+   "said": [
+    "Preparing Coursework → Orientation Week → Back; trail “Contents › Preparing Coursework › Orientation Week”; Coursework and September 22, 2027 9:30 AM kept"
+   ],
+   "ok": true,
+   "date": "September 22, 2027",
+   "clock": "9:30 AM"
+  },
+  {
+   "n": 5,
+   "name": "Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card",
+   "exercises": [
+    "unavailable"
+   ],
+   "pressed": [
+    "Run It With A Reader (grayed, forced)",
+    "Advance",
+    "This Evening",
+    "On The Way: Advance",
+    "Yale Rep’s October Production: Understudy Rehearsal: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Run It With A Reader (grayed, forced)"
+   ],
+   "said": [
+    "refused first: Not now: You’re at Classes until 3:00 PM.; then the evening",
+    "Run It With A Reader: 60 minutes, Drilled With Your Partner up 25%.",
+    "6:00 PM → 7:00 PM; Shown Today 22.8 → 27; then refused: Run It With A Reader: You’ve done this today. It builds over several days, not in one long session."
+   ],
+   "ok": true,
+   "date": "September 22, 2027",
+   "clock": "7:00 PM"
+  },
+  {
+   "n": 6,
+   "name": "the next morning, Tomorrow Morning asked: On The Way lists the day’s classes and calls, Cancel leaves the clock",
+   "exercises": [
+    "confirmation"
+   ],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "Advance",
+    "Tomorrow Morning",
+    "Cancel"
+   ],
+   "said": [
+    "On The Way: ✕ Moving the clock to Tomorrow Morning (September 24, 2027 at 7:00 AM) passes two commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. Classes — September 23, 2027 at 9:00 AM Directors’ Thesis Production I: Rehearsal — September 23, 2027 at 3:00 PM Cancel Advance"
+   ],
+   "ok": true,
+   "date": "September 23, 2027",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 7,
+   "name": "the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve",
+   "exercises": [
+    "confirmation"
+   ],
+   "pressed": [
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Learn The Choreography",
+    "Learn The Choreography",
+    "Run It Alone, At Half Speed",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Directors’ Thesis Production I: Rehearsal: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Say Yes",
+    "Learn The Choreography",
+    "Run It Alone, At Half Speed",
+    "Run It Alone, At Half Speed",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Yale Rep’s October Production: Understudy Rehearsal: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It Alone, At Half Speed",
+    "Run It Alone, At Half Speed",
+    "Run It Alone, At Half Speed",
+    "Run It Alone, At Half Speed",
+    "Run It Alone, At Half Speed",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "Rehearsal With Sofia: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It Alone, At Half Speed",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Directors’ Thesis Production I: Rehearsal: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Yale Rep’s October Production: Understudy Rehearsal: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Directors’ Thesis Production I: Rehearsal: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)"
+   ],
+   "said": [
+    "September 23, 2027 8:50 AM: 27 → 36.4 (Unready); Learn The Choreography, Learn The Choreography, Run It Alone, At Half Speed; The Choreography Learned 96%, Drilled With Your Partner 25%, Alone 35%",
+    "September 24, 2027 8:40 AM: 36.5 → 43.7 (Unready); answered yes, Learn The Choreography, Run It Alone, At Half Speed, Run It Alone, At Half Speed; The Choreography Learned 98%, Drilled With Your Partner 25%, Alone 73%",
+    "September 25, 2027 9:30 AM: 43.7 → 46.9 (Unready); Run It Alone, At Half Speed, Run It Alone, At Half Speed, Run It Alone, At Half Speed, Run It Alone, At Half Speed, Run It Alone, At Half Speed; The Choreography Learned 98%, Drilled With Your Partner 25%, Alone 97%",
+    "September 26, 2027 8:30 AM: 46.9 → 53.5 (Working); Run It Alone, At Half Speed, Run It With A Reader; The Choreography Learned 98%, Drilled With Your Partner 48%, Alone 98%",
+    "September 27, 2027 8:00 AM: 53.5 → 58.1 (Working); Run It With A Reader; The Choreography Learned 98%, Drilled With Your Partner 64%, Alone 98%",
+    "September 28, 2027 8:00 AM: 58.1 → 61.2 (Working); Run It With A Reader; The Choreography Learned 98%, Drilled With Your Partner 76%, Alone 98%",
+    "September 29, 2027 8:00 AM: 61.3 → 63.4 (Working); Run It With A Reader; The Choreography Learned 98%, Drilled With Your Partner 83%, Alone 98%",
+    "September 30, 2027 8:00 AM: 63.5 → 64.9 (Working); Run It With A Reader; The Choreography Learned 98%, Drilled With Your Partner 89%, Alone 98%",
+    "8 days; Shown Today 22.8 → 64.9"
+   ],
+   "ok": true,
+   "date": "October 1, 2027",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 8,
+   "name": "the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded",
+   "exercises": [
+    "notification"
+   ],
+   "pressed": [
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Menu",
+    "Home",
+    "Show All 352"
+   ],
+   "said": [
+    "These six are the most important. 346 more are unread. Show All 352",
+    "notice “Shown: A Choreographed Sequence, Strong”: You took the earlier note on Drilled With Your Partner. Simulated note from Advanced Principles Of Acting Stage Combat: Strong, and all of it prepared. Good. Next time: Move from your partner: take your next move from what their body gives you, not from the count you planned.",
+    "other pieces shown on the way: Shown: A Movement Score, Working You took the earlier note on Rehearsed In The B | Shown: Sound Changes And A Text, Unready Simulated note from Speech And Accents | Shown: A Movement Score, Strong Simulated note from Movement Invention II: Stron | Shown: A Clown Turn, Working Simulated note from Clown: The preparation was ther | Shown: Table Work, Strong Simulated note from Text Analysis II: Strong, with not | Shown: A Voice Sequence, Strong Simulated note from Voice II: Strong, and every | Shown: Sound Changes And A Text, Strong Simulated note from Speech And Accents I | Shown: A Voice Sequence, Strong You took the earlier note on Daily Practice. Sim | Shown: ",
+    "Shown: A Choreographed Sequence, Strong: You took the earlier note on Drilled With Your Partner. Simulated note from Advanced Principles Of Acting Stage Combat: Strong, and all of it prepared. Good. Next time: Move from your partner: take yo"
+   ],
+   "ok": true,
+   "date": "October 1, 2027",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 9,
+   "name": "Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were",
+   "exercises": [
+    "save-continue"
+   ],
+   "pressed": [
+    "Menu",
+    "Home",
+    "Show The Six Most Important",
+    "Menu",
+    "Home",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Save & Exit",
+    "Continue",
+    "Menu",
+    "Home",
+    "Menu",
+    "Home",
+    "Menu",
+    "School",
+    "Coursework (tab)"
+   ],
+   "said": [
+    "October 1, 2027 7:00 AM"
+   ],
+   "ok": true,
+   "date": "October 1, 2027",
+   "clock": "7:00 AM"
+  }
+ ],
+ "milestones": [
+  {
+   "file": "01-warning-on-home.jpg",
+   "step": 1,
+   "at": "September 22, 2027 9:30 AM"
+  },
+  {
+   "file": "02-scene-before-the-remedy.jpg",
+   "step": 3,
+   "at": "September 22, 2027 9:30 AM"
+  },
+  {
+   "file": "03-reader-refused-today.jpg",
+   "step": 5,
+   "at": "September 22, 2027 7:00 PM"
+  },
+  {
+   "file": "04-scene-shown.jpg",
+   "step": 8,
+   "at": "October 1, 2027 7:00 AM"
+  }
+ ],
+ "dialogs": [
+  {
+   "step": 5,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 22, 2027 3:00 PM"
+  },
+  {
+   "step": 5,
+   "title": "Yale Rep’s October Production: Understudy Rehearsal",
+   "pressed": "Go",
+   "after": "September 22, 2027 6:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 23, 2027 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 23, 2027 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Directors’ Thesis Production I: Rehearsal",
+   "pressed": "Go",
+   "after": "September 24, 2027 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 24, 2027 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 24, 2027 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Yale Rep’s October Production: Understudy Rehearsal",
+   "pressed": "Go",
+   "after": "September 25, 2027 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 25, 2027 10:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 25, 2027 7:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Rehearsal With Sofia",
+   "pressed": "Go",
+   "after": "September 26, 2027 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 27, 2027 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 28, 2027 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 28, 2027 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 28, 2027 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Directors’ Thesis Production I: Rehearsal",
+   "pressed": "Go",
+   "after": "September 29, 2027 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 29, 2027 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 29, 2027 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Yale Rep’s October Production: Understudy Rehearsal",
+   "pressed": "Go",
+   "after": "September 30, 2027 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 30, 2027 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 30, 2027 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Directors’ Thesis Production I: Rehearsal",
+   "pressed": "Go",
+   "after": "October 1, 2027 7:00 AM"
+  }
+ ],
+ "errors": [],
+ "overflows": [],
+ "exercised": {
+  "navigation": [
+   3
+  ],
+  "drill-down": [
+   2,
+   4
+  ],
+  "unavailable": [
+   5
+  ],
+  "confirmation": [
+   6,
+   7
+  ],
+  "notification": [
+   1,
+   8
+  ],
+  "save-continue": [
+   1,
+   9
+  ]
+ },
+ "summary": {
+  "steps": 9,
+  "passed": 9,
+  "failed": 0,
+  "sixMissing": [],
+  "errors": 0,
+  "overflows": 0
+ },
+ "finishedAt": "2026-10-21T12:37:04.713Z"
+}

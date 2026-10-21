@@ -11,6 +11,7 @@ for L in A ADVF ADVR B C D J UI JR1 JR2 JR3 JRC M1 M2 M3 M4 MF; do
 done
 mkdir -p "$B/final" "$B/journeys-final"
 cp -r "$S/f19-final/." "$B/final/"
-cp -r "$S/f19-journeys/." "$B/journeys-final/"
+# The journeys as played again by journeys-again19.sh (the first play's record is in journeys-first-play/).
+cp -r "$S/f19-journeys-2/." "$B/journeys-final/"
 cat $(ls "$S"/f19-B-work/life-*.json "$S"/f19-C-work/life-*.json | sort -V) > "$B/runs/lives.jsonl"
 echo "collected $(date -u +%T)"
