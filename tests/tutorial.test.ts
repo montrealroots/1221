@@ -18,6 +18,7 @@ import '@/ui/looks/all';
 import { lookKinds } from '@/ui/looks/registry';
 import { CHAPTERS } from '@/engine/content/tutorial';
 import { READ_KIND, guideFinished, isOpen, nextChapter } from '@/engine/world/tutorial';
+import { stopCommands } from '@/engine/world/clock';
 
 const UI = fileURLToPath(new URL('../src/ui/', import.meta.url));
 
@@ -37,6 +38,10 @@ function featuresOnScreen(): Set<string> {
     for (const m of text.matchAll(/useFeature\('([^']+)'\)/g)) found.add(m[1]!);
     // A destination's screen is gated by its feature, on the rail and in WorkspaceRouter (from 2026-10-12).
     if (file.endsWith('destinations.ts')) for (const m of text.matchAll(/feature: '([^']+)'/g)) found.add(m[1]!);
+    // A stop's choices beyond Go and Stand Here are its kind's own (`stopChoices`, `world/clock.ts`, from 2026-10-20, brief
+    // 19's D1), and the stop draws each as a button gated by its command (`DueNow`): Skip It was `feature="calendar.skip"`
+    // there until then. Counted only while the stop draws them that way.
+    if (file.endsWith('TimeControls.tsx') && text.includes('<Gated key={choice.command} feature={choice.command}')) for (const c of stopCommands()) found.add(c);
   }
   return found;
 }

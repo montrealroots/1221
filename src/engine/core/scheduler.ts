@@ -42,6 +42,12 @@ export interface ScheduledItem {
   locationId?: string;
   /** Minutes the commitment occupies, for conflict detection. */
   durationMinutes?: number;
+  /**
+   * Minutes it takes to get there before `at`, where that's more than a trip across town (from 2026-10-20, the owner's
+   * brief 19, D3): an audition in another city. The Sleep dialog's suggestion keeps it back before the commitment
+   * (`travelMinutesOf`, `world/calendar.ts`); left out, it's half an hour, as it was for everything until then.
+   */
+  travelMinutes?: number;
   createdAt: Instant;
   resolvedAt?: Instant;
 }

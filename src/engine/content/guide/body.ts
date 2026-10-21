@@ -22,6 +22,14 @@
  * its line says. A trait on the Player Profile didn't open until that day either, and the entry said so. Until later
  * that day the entry said a meal could be had at a commitment, where `lookAfterRefusal` lets Eat A Meal alone through
  * and Order In waits with the rest.
+ *
+ * Read again on 2026-10-20 (the owner's brief 19, D3 and D4), after the suggestion came to read the hour and the dialog
+ * to hold the clock. Sleep said the suggestion came from when you're next needed and the sleep you owe, and kept an hour
+ * and a half before a commitment; it reads whether you've slept since midnight too (`napNow`, `systems/life.ts`), whose
+ * line, `SPENT`, is imported, and keeps an hour to get up and the commitment's own trip (`travelMinutesOf`,
+ * `world/calendar.ts`). Its summary said anything on the calendar in the hours happens without you, where a commitment
+ * slept through is missed, as the dialog's foot has said since brief 17. And it didn't say the clock waits while the
+ * dialog is open, which it does from that day (`useHeld`, `ui/shell/TimeControls.tsx`).
  */
 
 import { CHAPTER_BY_ID } from '../tutorial';
@@ -173,13 +181,13 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['How long should I sleep?', 'What happens if I sleep through a class?', 'Why is the Sleep button gray?', 'Does a short night hurt?', 'What does sleep debt do?'],
     where: { route: '/home', label: 'The Top Bar’s Sleep Button' },
     available: `It opens with ${chapter('sleep')}.`,
-    short: `Sleep, in the top bar, asks how many hours, from ${hoursWords(SHORTEST_SLEEP)} to ${hoursWords(LONGEST_NIGHT)}, and suggests a number from when you’re next needed and how much sleep you owe. Then the clock runs straight through to when you wake.\n\nAnything on the calendar in those hours happens without you. A night eases stress, pays back sleep debt and brings back your energy, less of it when you owe sleep.`,
+    short: `Sleep, in the top bar, asks how many hours, from ${hoursWords(SHORTEST_SLEEP)} to ${hoursWords(LONGEST_NIGHT)}, and suggests a number from how much sleep you owe, whether you’ve already slept since midnight and when you’re next needed. The clock waits while the dialog is open. Then the clock runs straight through to when you wake.\n\nA commitment in those hours is missed. A night eases stress, pays back sleep debt and brings back your energy, less of it when you owe sleep.`,
     steps: [
       'Press Sleep in the top bar.',
       'Read the suggestion at the top: how many hours it suggests, and why.',
       'Set Hours with the slider, in half hours. You’d Wake At, beside Now, changes with it.',
       'Read the warnings under it: your next commitment, “This would count as tonight’s sleep.” when it would, and any commitments you’d sleep through.',
-      'Press Sleep and the hours, such as Sleep 8 Hours, or Sleep 1 Hour at one hour, or Not Yet to close it.',
+      'Press Sleep and the hours, such as Sleep 8 Hours, or Sleep 1 Hour at one hour, or Not Yet to close it and leave the clock where it was.',
     ],
     needs: [
       `It opens with ${chapter('sleep')}.`,
@@ -195,7 +203,7 @@ export const BODY: readonly GuideEntry[] = [
       { label: 'What You Owe', value: `Sleep debt. A full debt holds back up to ${Math.round(DEBT_HOLDS * 100)}% of the energy a night puts back.` },
       { label: 'Your Age', value: 'A night puts back less at sixty than at twenty' },
       { label: 'Condition And Fitness', value: 'A worn-down body gets up to a fifth less back, and rest mends condition only as far as your fitness allows' },
-      { label: 'The Suggestion', value: 'The hours a normal night’s rest takes for you, or the time left before your next commitment, keeping an hour and a half to get up and get there' },
+      { label: 'The Suggestion', value: `The hours a normal night’s rest takes for you. If you’ve already slept since midnight, it’s five in the morning or later and you owe no real sleep, it’s a nap: none while your energy is at ${SPENT} or more, and below that the hours that bring it back to full. Either is cut short to end in time for your next commitment, keeping an hour to get up and the trip there, half an hour across town` },
     ],
     now: [
       'The clock goes straight to when you wake, and everything due in those hours happens on the way, without you.',
@@ -211,9 +219,9 @@ export const BODY: readonly GuideEntry[] = [
       'A short sleep that ends in the small hours counts as the whole night. You’re up from when it ends, and the dialog warns you first.',
     ],
     interpret: [
-      'The suggestion says why it chose that number: a normal night, a clear calendar so you can sleep as long as you need, or the one thing that changes tonight, such as sleep owed, stress, being a light sleeper or a late hour. If a commitment is too soon for a full night, it says how far off it is. If the clock is at a commitment now, it says so, and that any sleep goes through it.',
+      'The suggestion says why it chose that number: a normal night, a clear calendar so you can sleep as long as you need, or the one thing that changes tonight, such as sleep owed, stress, being a light sleeper or a late hour. If you’ve already slept since midnight, it says so, and whether your energy needs more. If a commitment is too soon, it says how far off it is. If the clock is at a commitment now, it says so, and that any sleep goes through it.',
       '“This would count as tonight’s sleep.” means you won’t sleep the rest of the night: the game won’t put you back to bed after it.',
-      `With a commitment less than two and a half hours off, or one you’re at now, it suggests the shortest sleep there is: ${SHORTEST_SLEEP} hours on the figure, the slider and the button, and the button sleeps just that.`,
+      `With a commitment in town less than two and a half hours off, or one you’re at now, or from five in the morning when you’ve slept since midnight and your energy is at ${SPENT} or more, it suggests the shortest sleep there is: ${SHORTEST_SLEEP} hours on the figure, the slider and the button, and the button sleeps just that.`,
       'The morning after, Energy and Readiness on How You Are show what the night gave back.',
     ],
     unavailable: [
@@ -221,7 +229,7 @@ export const BODY: readonly GuideEntry[] = [
       'Sleep is gray while you’re in the middle of a commitment you went to, and it says where you are and until when.',
     ],
     mistakes: [
-      'Taking the suggestion before an early call can mean a short night. It keeps an hour and a half to get there, and a sleep under six hours adds sleep debt. Go to bed earlier instead.',
+      'Taking the suggestion before an early call can mean a short night. It keeps an hour to get up and the trip there, and a sleep under six hours adds sleep debt. Go to bed earlier instead.',
       'Sleeping through a class because the hours ran over it. The dialog lists what you’d sleep through, so shorten the hours until the list is empty.',
       'A nap under six hours that ends in the small hours, before you’ve slept that night, counts as the whole night, and you’re up from when it ends.',
     ],

@@ -65,8 +65,8 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `brief.prepare` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also prepareRefusal) | — | — | — | 28 | — |
 | `brief.reader` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also readerRefusal) | — | — | — | 6 | — |
 | `calendar.cancel` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | — | 8 | journey-life.test.ts |
-| `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 25 | journey-life.test.ts |
-| `calendar.skip` | Implemented But Unverified | What’s Coming | TimeControls.tsx | `world/plans.ts` | — | status; resolvedAt | — | — | 3 | — |
+| `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 27 | journey-life.test.ts |
+| `calendar.skip` | Implemented But Unverified | What’s Coming | TimeControls.tsx | `world/plans.ts` | — | status; resolvedAt | — | — | 4 | — |
 | `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal) | — | — | card.arrives | 16 | — |
 | `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 8 | — |
 | `card.dispute` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | — (also disputeRefusal) | — | — | bank.fraud_refund | 6 | — |
@@ -117,7 +117,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `health.therapy` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/therapy.ts` | — (also therapyRefusal) | therapy; status | Yes | — | 7 | — |
 | `health.treat` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You don’t have that condition. | — | — | — | 6 | — |
 | `life.look_after` | Verified (journey) | Looking After Yourself | TimeControls.tsx | `systems/life.ts` | That isn’t something you can do for yourself here.; The payment didn’t go through. (also lookAfterRefusal) | — | Yes | — | 42 | journey-life.test.ts |
-| `life.sleep` | Verified (journey) | Sleep | TimeControls.tsx | `systems/life.ts` | Say how long to sleep.; Say when to sleep.; You can’t go to sleep in the past.; A night can be planned a day ahead at most.; and 1 more | lastSleptAt; awakeSince; wokeWithDebt | — | — | 44 | journey-life.test.ts; journey-school-year.test.ts |
+| `life.sleep` | Verified (journey) | Sleep | TimeControls.tsx | `systems/life.ts` | Say how long to sleep.; Say when to sleep.; You can’t go to sleep in the past.; A night can be planned a day ahead at most.; and 1 more | lastSleptAt; awakeSince; wokeWithDebt | — | — | 45 | journey-life.test.ts; journey-school-year.test.ts |
 | `pension.bienestar` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/homepensions.ts` | — (also bienestarRefusal) | bienestarFrom | Yes | pension.bienestar_payment | 1 | — |
 | `pension.ie_state` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/homepensions.ts` | — (also irishPensionRefusal) | irishPension | Yes | pension.ie_week | 1 | — |
 | `pension.imss` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/imss.ts` | — (also imssRefusal) | — | Yes | pension.imss_month | 1 | — |
@@ -127,7 +127,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `plays.research` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also researchRefusal) | — | — | — | 3 | — |
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 26 | — |
 | `practice.self_tape` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 32 | — |
-| `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 6 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 7 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |
 | `school.approach` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a way to work on it. (also approachRefusal) | — | — | — | 8 | journey-three-students.test.ts |
 | `school.ask_partner` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | — | — | — | 16 | — |
@@ -136,7 +136,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx day.tsx | `systems/school.ts` | — (also cabaretRefusal) | status | — | school.cabaret; cabaret | 15 | — |
 | `school.call_in_sick` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also sickRefusal) | — | — | — | 20 | journey-life.test.ts |
 | `school.cancel_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | The dean imposed this leave, so it isn’t yours to call off${!l.mandatory.appeal && s.now <; Calling it off keeps you at the School as you are. Confirm to go ahead. | — | — | — | 3 | — |
-| `school.cancel_rehearsal` | Implemented But Unverified | Drama School | CourseworkPane.tsx TimeControls.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 4 | — |
+| `school.cancel_rehearsal` | Implemented But Unverified | Drama School | CourseworkPane.tsx TimeControls.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 5 | — |
 | `school.cancel_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You haven’t asked to repeat the year.; … Confirm to go ahead. | — | — | school.term | 2 | — |
 | `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this piece asks.; That isn’t one of the answers.; That’s your answer already. (also tableWorkRefusal, startRefusal) | — | — | — | 10 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.choose_part_playing` | Implemented But Unverified | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also partPlayingRefusal) | — | — | — | 6 | — |
@@ -181,7 +181,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `work.try` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also tryRefusal) | — | — | — | 6 | — |
 | `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | You’ve already dismissed that question. | — | — | — | 7 | — |
 | `world.mark_read` | Verified (journey) | What Needs You | Home.tsx attention.tsx | `world/world.ts` | — | — | — | — | 9 | journey-life.test.ts |
-| `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | That isn’t a setting the game has.; The clock can only be set to Play or Pause. | — | — | — | 10 | — |
+| `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | That isn’t a setting the game has.; The clock can only be set to Play or Pause. | — | — | — | 11 | — |
 | `world.take_decision_action` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | That question is already settled: it was answered, or its date passed.; You dismissed that question, so it can’t be answered from What Needs You.; That isn’t one of this question’s answers. | — | — | — | 12 | — |
 
 ## Scheduled kinds
@@ -229,7 +229,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `health.work_decided` | `systems/health.ts` | systems/health.ts | — | Yes | — | 6 |
 | `injury.comp` | `systems/injury.ts` | systems/injury.ts | — | — | injury.comp | 7 |
 | `life.birthday` | `systems/birthdays.ts` | systems/birthdays.ts | — | — | — | 8 |
-| `life.commitment` | `world/plans.ts` | world/plans.ts | status; resolvedAt | — | life.commitment | 16 |
+| `life.commitment` | `world/plans.ts` | world/plans.ts | status; resolvedAt | — | life.commitment | 18 |
 | `life.day_rollover` | `systems/life.ts` | index.ts; systems/life.ts | lastSleptAt; awakeSince; wokeWithDebt | Yes | life.day_rollover | 2 |
 | `life.end` | `systems/mortality.ts` | systems/mortality.ts | — | — | — | 20 |
 | `pension.bienestar_payment` | `systems/homepensions.ts` | systems/homepensions.ts | — | Yes | pension.bienestar_payment | 0 |
@@ -241,7 +241,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 27 |
 | `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 66 |
-| `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 29 |
+| `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 30 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | — | 11 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 8 |
 | `school.conferral` | `systems/school.ts` | systems/school.ts | — | — | school.cabaret | 6 |
@@ -257,7 +257,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.moment` | `systems/classmates.ts` | systems/classmates.ts | — | — | — | 10 |
 | `school.orientation` | `systems/coursework.ts` | systems/coursework.ts | status | — | — | 14 |
 | `school.partner_ask` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 2 |
-| `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 5 |
+| `school.partner_rehearsal` | `systems/coursework.ts` | systems/coursework.ts | — | — | — | 7 |
 | `school.payday` | `systems/school.ts` | systems/leave.ts; systems/school.ts | — | Yes | run | 6 |
 | `school.recess` | `systems/school.ts` | systems/school.ts | — | — | — | 2 |
 | `school.repeat_decide` | `systems/leave.ts` | systems/leave.ts | — | — | school.term | 6 |

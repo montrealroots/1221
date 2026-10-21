@@ -253,23 +253,23 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.advance]": {
   "status": "Rewritten",
-  "hash": "9cc3f15c9e6f",
+  "hash": "14d190b44247",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area, the frame editor's finding: the last step says what Go and Stand Here do to a jump, read against onGo and clearStandingAt (ui/shell/TimeControls.tsx) and halt (app/game-context.tsx); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on') presses each on the real provider; read word for word on the built app (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt)",
+  "evidence": "Each line gives its day, Tomorrow Morning after midnight is that morning's, On The Way lists what isn't on the calendar yet; held by tests/time-controls.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "b59c185628a6",
+  "hash": "84b6a52ea373",
   "on": "2026-10-20",
-  "evidence": "Read on the built app by tools/screen-text.mjs, How This Works opened from the Calendar panel (brief 16): the summary of 4 sentences became 1 and 2 in two paragraphs, naming Skip It and Call It Off; Stand Here now says the commitment starts when the clock next moves (tools/voices.ts --guide, vague 4 to 2).",
+  "evidence": "Skip It and Call It Off carry the jump on and a refusal changes nothing, held beside the behavior by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten",
-  "hash": "1db03f32ae6f",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Clock: Play And Pause",
+  "hash": "22fcdfe5d205",
+  "on": "2026-10-20",
+  "evidence": "The three dialogs that move the clock hold it, held beside the behavior by tests/time-controls.test.ts on the real provider",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
@@ -2190,6 +2190,13 @@
   "reason": "Names the commitment and its time and says there isn’t the time before it; several guides quote it word for word.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/life.ts#hoursSaid": {
+  "status": "Rewritten",
+  "hash": "adf2dbf53e7b",
+  "on": "2026-10-20",
+  "evidence": "Hours at the start of a sentence, Half an hour to Fourteen hours, in the nap's reasons; tests/time-stops.test.ts holds one and a half and seven and a half",
+  "first": "Pending"
+ },
  "src/engine/systems/life.ts#lookAfterRefusal": {
   "status": "Rewritten",
   "hash": "d80e2a8e5c36",
@@ -2203,6 +2210,13 @@
   "on": "2026-10-19",
   "reason": "The Look After Yourself menu’s five actions, each a plain verb for what the hour is: Eat A Meal, Order In, Shower, Work Out, Unwind.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#napNow": {
+  "status": "Rewritten",
+  "hash": "6678f53b5886",
+  "on": "2026-10-20",
+  "evidence": "The nap's two reasons, rested and low, read at 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-390.txt) and held word for word by tests/time-stops.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#registerLife [life.day_rollover]": {
   "status": "Retained",
@@ -2240,11 +2254,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/life.ts#suggestedSleep": {
-  "status": "Retained",
-  "hash": "05516ff8b442",
-  "on": "2026-10-19",
-  "reason": "Says why the Sleep dialog suggests its hours: a clear calendar, a commitment you are standing at, or one too soon for a full night.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ce738338892d",
+  "on": "2026-10-20",
+  "evidence": "The Sleep dialog's reasons with a commitment and its trip, read at 11 PM and 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-1440.txt) and held by tests/time-stops.test.ts, a trip inside the call's hours among them",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#wellbeingSummary": {
   "status": "Rewritten",
@@ -2343,6 +2357,27 @@
   "on": "2026-10-19",
   "reason": "Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/world/clock.ts#defineStop": {
+  "status": "Retained",
+  "hash": "2ff2f915a89e",
+  "on": "2026-10-20",
+  "reason": "A developer's error, thrown when a system declares one kind's stop twice, at startup; no player ever reaches it, and it names the kind to fix.",
+  "first": "Pending"
+ },
+ "src/engine/world/clock.ts#refusalOf": {
+  "status": "Rewritten",
+  "hash": "30a12bfb9806",
+  "on": "2026-10-20",
+  "evidence": "The fallback refusal a stop's choice says when its command gives no reason, the same words run() says; tests/time-stops.test.ts reads refusals",
+  "first": "Pending"
+ },
+ "src/engine/world/clock.ts#top": {
+  "status": "Rewritten",
+  "hash": "8755674025df",
+  "on": "2026-10-20",
+  "evidence": "Skip It's and Call It Off's words at the stop and on On The Way, and Call It Off's toast; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts",
+  "first": "Pending"
  },
  "src/engine/world/place.ts#placeKindLabel": {
   "status": "Retained",
@@ -3282,6 +3317,13 @@
   "reason": "Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing.",
   "first": "Rewritten And Verified"
  },
+ "src/ui/shell/TimeControls.tsx#choicesAhead": {
+  "status": "Rewritten",
+  "hash": "85d932042752",
+  "on": "2026-10-20",
+  "evidence": "On The Way's sentence of the choices on the way and what the clock does after them; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts",
+  "first": "Pending"
+ },
  "src/ui/shell/TimeControls.tsx#DIAL_LABEL": {
   "status": "Retained",
   "hash": "61e8509e7a0b",
@@ -3291,9 +3333,9 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten",
-  "hash": "0430d7e9f47e",
+  "hash": "c8ccf8a954ee",
   "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Next Event: the stop); held by tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer'",
+  "evidence": "The stop says what Skip It, Call It Off and Stand Here each do to the jump before the press; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
@@ -3311,11 +3353,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/shell/TimeControls.tsx#SkipDialog": {
-  "status": "Retained",
-  "hash": "60a6ec4e51e0",
-  "on": "2026-10-19",
-  "reason": "Lists what the clock will stop at on the way and what else happens in order, and says why Skip is gray, with the event named on its button.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "e6ceef215740",
+  "on": "2026-10-20",
+  "evidence": "Skip To Event lists a foreseen stop as not on your calendar yet; held by tests/time-controls.test.ts on the real provider",
+  "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#SleepDialog": {
   "status": "Rewritten",
@@ -3326,9 +3368,9 @@
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {
   "status": "Rewritten",
-  "hash": "b7a1bc0b5e35",
+  "hash": "9ab4e6233515",
   "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (On The Way); held by tests/language-frame-ui.test.ts, 'On The Way says how many commitments…', and what Go and Stand Here do by 'PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on…'",
+  "evidence": "On The Way names only the choices of what it lists and marks what isn't on the calendar yet; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {

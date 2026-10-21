@@ -41,6 +41,15 @@
  * Until 2026-10-20 (brief 17, the frame editor's finding) Moving Time On's last step named a stop's answers without
  * saying what each does to the jump: Go carries it on to where it was headed, and Stand Here ends it there with the
  * clock paused (`onGo` and `clearStandingAt`, `ui/shell/TimeControls.tsx`; `halt`, `app/game-context.tsx`).
+ *
+ * Read again later on 2026-10-20 (the owner's brief 19, D1 to D5, brief 18's S1 to S5), after the stop's choices became
+ * its kinds' own (`stopChoices`, `world/clock.ts`). The Calendar said Call It Off left the clock paused where it stopped;
+ * it carries the jump on now, as Skip It always did, and a refused one leaves the stop open. The Clock said a dialog you
+ * read, the Sleep dialog among them, doesn't stop the clock; the dialogs that move it, Sleep, On The Way and Skip To
+ * Event, hold it now (`useHeld`). Moving Time On said Tomorrow Morning after midnight went to the next date's seven, a
+ * whole day on, and listed that among the mistakes; it goes to the next seven now (`nextAtHour`), and each line gives its
+ * day. And On The Way lists the stops the jump makes that aren't on the calendar yet (`onTheWay`, `foresight.ts`), next
+ * week's classes among them, where until then it listed the calendar's alone and a week from a Friday asked nothing.
  */
 
 import { CHAPTER_BY_ID } from '../tutorial';
@@ -84,12 +93,12 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
     where: { route: '/home', label: 'Home, The Calendar Panel, Open Calendar' },
     available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. Play, which moves the clock to a commitment, opens with ${chapter('clock')}.`,
-    short: 'The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it.\n\nWhen the clock reaches a commitment, it stops and asks what to do: press Go to be there, or Stand Here to wait. A plan of your own also offers Skip It, and a rehearsal with a classmate Call It Off.',
+    short: 'The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it.\n\nWhen the clock reaches a commitment, it stops and asks what to do: press Go to be there, or Stand Here to wait. A plan of your own also offers Skip It, and a rehearsal with a classmate Call It Off, and after either the clock carries on to where it was headed.',
     steps: [
       'Read the Calendar panel on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, such as a card statement or a birthday.',
       'Press an entry’s name or its time to open it under the panel: what it is, when, how long it runs, and what missing it costs.',
       'When the clock stops at something, a dialog named for it says the time and how long going takes. Press Go to be there.',
-      'For a plan of your own, you can press Skip It instead, and for a rehearsal with a classmate, Call It Off. Stand Here closes the dialog and leaves the clock paused at the commitment.',
+      'For a plan of your own, you can press Skip It instead, and for a rehearsal with a classmate, Call It Off. The dialog says what each does before you press it. Stand Here closes the dialog and leaves the clock paused at the commitment.',
     ],
     needs: [
       `The panel, Go, Skip It and the entries open with ${chapter('calendar')}.`,
@@ -103,12 +112,13 @@ export const DAY: readonly GuideEntry[] = [
     reads: [
       { label: 'What Needs You There', value: 'Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, and your own plans' },
       { label: 'Whether You’re There', value: 'When it runs, the game checks that you’re awake, out of hospital and in its town. In hospital, you were at nothing but Yale Health’s assessment. Asleep, you weren’t there' },
-      { label: 'Where The Clock Was Headed', value: 'Go carries on the move the stop broke off, so a jump to the morning still ends in the morning' },
+      { label: 'Where The Clock Was Headed', value: 'Go, Skip It and Call It Off carry on the move the stop broke off, so a jump to the morning still ends in the morning' },
     ],
     now: [
       'Go: the commitment runs at once, with you there unless a hospital bed or an injury keeps you from it, and the clock moves through its hours, on to where it was headed if that’s later.',
-      'Skip It: your plan is marked missed, a notice says you didn’t go, and the clock carries on to where it was headed.',
-      'Call It Off, on a rehearsal with a classmate: it’s called off at short notice, which costs their trust and stays with them, and the clock stays paused where it stopped.',
+      'Skip It: your plan is marked missed, a notice says you didn’t go, and the clock carries on to where it was headed, stopping at the next commitment on the way.',
+      'Call It Off, on a rehearsal with a classmate: it’s called off at short notice, which costs their trust and stays with them, and the clock carries on to where it was headed, stopping at the next commitment on the way.',
+      'If Skip It or Call It Off can’t be done, nothing changes: the dialog stays open, the clock where it stopped, and a message says why.',
       'Stand Here: the dialog closes and the clock stays paused at the commitment, which stays at the top of the Calendar panel, marked now. The commitment starts the next time the clock moves, and you’re there if you’re awake, in its town, and not kept away by a hospital bed or an injury.',
       'Any stop pauses the clock, so press Play again afterwards.',
     ],
@@ -164,7 +174,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['How fast does time pass?', 'Does time pass while I’m away?', 'Does reading the guide cost time?', 'Why did the clock pause by itself?', 'What happens if I leave it running overnight?'],
     where: { route: '/home', label: 'The Top Bar’s Play Or Pause Button' },
     available: `From ${chapter('clock')}.`,
-    short: 'Press Play at the top of the screen to start the clock, and Pause to stop it. While it runs, a minute passes in the game for every real minute: you get tired and hungry, what’s on your calendar happens, and the clock pauses itself at each commitment. It waits while the guide or this help is open.',
+    short: 'Press Play at the top of the screen to start the clock, and Pause to stop it. While it runs, a minute passes in the game for every real minute: you get tired and hungry, what’s on your calendar happens, and the clock pauses itself at each commitment. It waits while the guide, this help, or the Sleep, On The Way or Skip To Event dialog is open.',
     steps: [
       'Press Play in the top bar. The button then reads Pause.',
       'Leave it running, and the day goes on around you a second at a time.',
@@ -184,6 +194,7 @@ export const DAY: readonly GuideEntry[] = [
       { label: 'Time Owed', value: `Time that passed while the tab was hidden or the device slept, paid out in steps of up to ${plural(STEP_MINUTES, 'minute')}` },
       { label: 'What Needs You There', value: 'Anything on the calendar you need to be at: the live clock stops there and pauses' },
       { label: 'Open Help', value: 'While the guide or this help is open, the clock waits, and the minutes you spend reading are never counted' },
+      { label: 'Open Dialogs', value: 'While the Sleep, On The Way or Skip To Event dialog is open, the clock waits too. Closed without moving the clock, it goes on from where it was' },
     ],
     now: [
       'Play: the clock runs from now, one to one. Pause: it stops where it is.',
@@ -205,7 +216,7 @@ export const DAY: readonly GuideEntry[] = [
     ],
     mistakes: [
       'Leaving Play running overnight keeps your character up all night: energy keeps falling and no night is slept. Press Sleep before bed, or Pause.',
-      'A dialog you’re reading, such as the Sleep dialog or a plan’s form, doesn’t stop the clock. Only the guide and this help do, so press Pause first if you want time to think.',
+      'A plan’s form, or any screen, doesn’t stop the clock. Only the guide, this help and the dialogs that move the clock do, so press Pause first if you want time to think.',
       'Pausing doesn’t put a commitment off. It waits at its moment, however long the clock is stopped.',
     ],
     next: [
@@ -236,10 +247,10 @@ export const DAY: readonly GuideEntry[] = [
     available: `From ${chapter('advance')}.`,
     short: 'Press Advance in the top bar to move the clock ahead when you don’t want to wait: an hour, to this evening or tomorrow morning, to the next event, a week on, or to an event you choose. Everything on the way happens in order, and the clock stops at each commitment to ask what you want to do. A jump of more than an hour through the night means your character sleeps that night on their own.',
     steps: [
-      'Press Advance in the top bar and pick a line: One Hour, This Evening (6:00 PM), Tonight (10:00 PM), Tomorrow Morning (7:00 AM), Next Event, Next Monday (9:00 AM) or One Week. Each says where it lands.',
-      'If the move passes a commitment, On The Way lists it first: press Advance to go on, or Cancel.',
+      'Press Advance in the top bar and pick a line: One Hour, This Evening (6:00 PM), Tonight (10:00 PM), Tomorrow Morning (7:00 AM), Next Event, Next Monday (9:00 AM) or One Week. Each says the day and the time it lands.',
+      'If the move passes a commitment, On The Way lists it first: press Advance to go on, or Cancel. It lists the ones not on your calendar yet too, such as next week’s classes before the School puts them on it.',
       'Or pick Choose An Event… for the next fourteen things on the calendar. Skip To Event shows what each jump crosses; press Skip To and the event’s name.',
-      'At each stop, answer the dialog: Go to be there and carry the jump on, or Stand Here to end the jump there, with the clock paused. A plan of yours also offers Skip It, and a rehearsal with a classmate Call It Off.',
+      'At each stop, answer the dialog: Go to be there and carry the jump on, or Stand Here to end the jump there, with the clock paused. A plan of yours also offers Skip It, and a rehearsal with a classmate Call It Off, and both carry the jump on.',
     ],
     needs: [
       `Advance and Choose An Event… open with ${chapter('advance')}.`,
@@ -251,7 +262,7 @@ export const DAY: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Where It Lands', value: 'The line’s time, on your town’s clock' },
-      { label: 'What’s On The Way', value: 'Everything on the calendar between now and then, run in order at its moment' },
+      { label: 'What’s On The Way', value: 'Everything on the calendar between now and then, and what goes on it on the way, such as next week’s classes, run in order at its moment' },
       { label: 'How Far You Jump', value: 'More than an hour through the night, and your character sleeps from midnight on their own. An hour or less, and they stay up with you' },
     ],
     now: [
@@ -263,7 +274,9 @@ export const DAY: readonly GuideEntry[] = [
       'A jump stopped by a commitment in the first hour of the night and carried on with Go is still the same jump, and the night comes as it would have.',
     ],
     interpret: [
-      'The gray detail on each line is where it lands; on Next Event, it names the thing.',
+      'The gray detail on each line is the day and the time it lands; on Next Event, it names the thing.',
+      'After midnight, Tomorrow Morning is that same date’s 7:00 AM, the next seven to come.',
+      'On The Way marks a commitment not on your calendar yet: it goes on as the clock moves, before it comes.',
       'In Skip To Event, “3 on the way” means the clock will stop three times before it gets there.',
       'The count of things on your calendar on the way includes ones that don’t need you, such as a card statement.',
     ],
@@ -273,7 +286,7 @@ export const DAY: readonly GuideEntry[] = [
       'A life that has ended doesn’t move.',
     ],
     mistakes: [
-      'After midnight, Tomorrow Morning means seven on the next date, a whole day on. For this morning, use Next Event or One Hour.',
+      'Stand Here doesn’t carry the jump on: it ends at the stop with the clock paused, so press Advance again to go on.',
       'One Hour at a time through the night keeps your character up: an hour is short enough to count as you being there. Sleep, or a longer jump, gives the night.',
       'A jump never runs over a commitment. If it stops early, that’s the thing you need to be at; go on from it with Go.',
     ],

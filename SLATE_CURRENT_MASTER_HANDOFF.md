@@ -5,7 +5,7 @@
 it before any fix: "Actually save and put a pause on all of this. I want to move on to something else." (2026-10-20,
 22:28 UTC). Nothing in the game changed. The rest of the state is brief 17's, in its section below.
 
-**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 566 of 636 rows in scope Implemented And Verified (88.9%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 - **The repository:** `main` is at `469f8448` (#47). The working branch, `claude/peaceful-hamilton-59zdbb`, was
   fast-forwarded to it and carries brief 18's records on top: the brief, its criteria and its plan. None of them changes

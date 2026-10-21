@@ -55,11 +55,18 @@ const quoted = (kind) => new RegExp(`['"\`]${kind.replace(/\./g, '\\.')}['"\`]`)
 const constOf = (kind) => [...named].filter(([, v]) => v === kind).map(([c]) => new RegExp(`\\b${c}\\b`));
 const usedIn = (files, kind) => files.filter((f) => { const s = read(f); return quoted(kind).test(s) || constOf(kind).some((re) => re.test(s)); }).map((f) => f.split('/').pop()).sort();
 
+// A stop's choices (from 2026-10-20, brief 19's D1) are declared with their kind (`defineStop`, `world/clock.ts`, or a
+// system's own module) and drawn by the screen that draws the stop, each gated by its command: a command a declaration
+// names is on the screens that draw choices that way. Until then Skip It was `feature="calendar.skip"` in the stop.
+const stopScreens = ui.filter((f) => read(f).includes('feature={choice.command}')).map((f) => f.split('/').pop());
+const stopCommands = new Set(engine.flatMap((f) => [...read(f).matchAll(/defineStop\(([\s\S]*?)\]\);/g)].flatMap((m) => [...m[1].matchAll(/command: '([a-z0-9_]+\.[a-z0-9_]+)'/g)].map((c) => c[1]))));
+const screensOf = (kind) => [...new Set([...usedIn(ui, kind), ...(stopCommands.has(kind) ? stopScreens : [])])].sort();
+
 const groups = new Map();
 for (const [kind, file] of [...commands.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
   const prefix = kind.split('.')[0];
   if (!groups.has(prefix)) groups.set(prefix, []);
-  groups.get(prefix).push({ kind, file, screens: usedIn(ui, kind), tests: usedIn(tests, kind), chapter: chapterOf.get(kind) ?? null });
+  groups.get(prefix).push({ kind, file, screens: screensOf(kind), tests: usedIn(tests, kind), chapter: chapterOf.get(kind) ?? null });
 }
 
 const all = [...groups.values()].flat();

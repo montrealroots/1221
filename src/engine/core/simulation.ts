@@ -343,6 +343,7 @@ export class Simulation {
     stopsClock?: boolean;
     locationId?: string;
     durationMinutes?: number;
+    travelMinutes?: number;
   }): ScheduledItem {
     if (!this.scheduleHandlers.has(spec.kind)) {
       throw new Error(
@@ -366,6 +367,8 @@ export class Simulation {
       ...(spec.stopsClock ? { stopsClock: true } : {}),
       locationId: spec.locationId,
       durationMinutes: spec.durationMinutes,
+      // Only where it's given (brief 19, D3), so an item without it saves as it did.
+      ...(spec.travelMinutes !== undefined ? { travelMinutes: spec.travelMinutes } : {}),
       createdAt: this.now,
     };
     return this.timeline.add(item);

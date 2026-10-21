@@ -20,6 +20,7 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { unreadNotifications } from '@/engine/world/world';
+import { stopChoices } from '@/engine/world/clock';
 import {
   FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, PLAN_KIND, checkPlan,
 } from '@/engine/world/plans';
@@ -254,7 +255,10 @@ describe('the form and the engine agree about what a plan has', () => {
     expect(sim.universe.preferences.timeSpeed, 'the clock could not be stopped through a command')
       .toBe('paused');
     expect(CONTROLS, 'the halt never reaches a screen').toContain('standingAt');
-    expect(CONTROLS, 'not going never reaches the engine').toContain("'calendar.skip'");
+    // Not going is a stop's choice from 2026-10-20 (brief 19's D1): a plan's kind declares Skip It and its command
+    // (`stopChoices`, `world/clock.ts`), and the stop runs the command of the choice pressed.
+    expect(stopChoices(PLAN_KIND).map((c) => c.command), 'not going never reaches the engine').toEqual(['calendar.skip']);
+    expect(CONTROLS, 'the stop never runs a choice’s command').toContain('run(choice.command, choice.payload(item)');
   });
 
   it('stops the live clock too, not only the ones a person presses', () => {

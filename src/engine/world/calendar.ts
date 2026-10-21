@@ -205,6 +205,18 @@ export function nextCommitmentItem(sim: Simulation): ScheduledItem | undefined {
   return sim.timeline.next(sim.now - 1, (i) => i.requiresPlayer === true);
 }
 
+/**
+ * How long getting up and getting to a commitment takes, which the Sleep dialog's suggestion keeps back before it
+ * (`suggestedSleep`, `systems/life.ts`). Until 2026-10-20 it kept an hour and a half for everything, getting there across
+ * town among it. From then (the owner's brief 19, D3) it's an hour to get up and the commitment's own trip, which is half
+ * an hour across town unless the item says it's longer (`travelMinutes`): an audition in New York from New Haven. Both
+ * figures are SLATE's estimates; the hour and a half they make in town is the one the game always kept.
+ */
+export const GETTING_UP_MINUTES = 60;
+export const IN_TOWN_MINUTES = 30;
+/** The trip to a commitment, in minutes: its own, or half an hour across town. */
+export const travelMinutesOf = (item: Pick<ScheduledItem, 'travelMinutes'>): number => item.travelMinutes ?? IN_TOWN_MINUTES;
+
 /** The single next thing, for HOME. */
 export function nextCommitment(sim: Simulation): CalendarEntry | undefined {
   const next = nextCommitmentItem(sim);

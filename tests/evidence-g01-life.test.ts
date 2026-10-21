@@ -253,7 +253,11 @@ describe('life.sleep', () => {
     const { id } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Gym', at: NH(9, 30), durationMinutes: 60 } });
     // TEST SETUP: the bar with Sleep open (its first state), the slider at 8 hours (the dialog's own state).
     const { text, buttons } = bar(sim, [true, false, null, false, false, 8]);
-    expect(text).toContain('“Gym” is in 2 hours. Getting up and there takes an hour and a half, so there isn’t time for a full night.');
+    // Up from the night at 7:30 AM, the suggestion is a nap's (from 2026-10-20, brief 19's D3): until then it was a night
+    // cut short by the Gym, "“Gym” is in 2 hours. Getting up and there takes an hour and a half, so there isn’t time for a
+    // full night.", at an hour the night was already behind. The Gym is still named beside it.
+    expect(text).toContain(`You’ve already slept since midnight, and with your energy at ${Math.round(sim.player.wellbeing.energy)} you don’t need more sleep yet. A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.`);
+    expect(text).toContain('Your next commitment is in 2 hours.');
     expect(text).toContain('You’d Wake At 3:30 PM, August 24, 2026');
     expect(text).toContain('You’d sleep through one commitment: Gym — 9:30 AM');
     buttons.find((b) => b.text === 'Sleep 8 Hours')!.onClick!();

@@ -71,9 +71,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [advance]": {
   "status": "Rewritten",
-  "hash": "8333e49d710a",
+  "hash": "749bdcd509c5",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area, the frame editor's finding: the chapter says what Go and Stand Here do to a jump (onGo, clearStandingAt, halt); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on'); read word for word in the guide's dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt, docs/verification/continuity-2026-10-20/tutorial/after/follow-390/log.txt)",
+  "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
@@ -92,16 +92,16 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
   "status": "Rewritten",
-  "hash": "7dc10e070a02",
+  "hash": "3d1f286ba2a9",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
+  "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten",
-  "hash": "2d62b9ae285a",
-  "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter clock, and follow-1440/chapter-03-clock.txt; Play, a minute of real time, Pause",
+  "hash": "87b9eb435a84",
+  "on": "2026-10-20",
+  "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [documents]": {
@@ -169,9 +169,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
   "status": "Rewritten",
-  "hash": "09e203d8671d",
+  "hash": "cc2e37408214",
   "on": "2026-10-20",
-  "evidence": "Sleep {n} Hours and Not Yet traced to SleepDialog in src/ui/shell/TimeControls.tsx; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [weather]": {
