@@ -4044,5 +4044,54 @@
   ],
   "weakTests": [],
   "todo": "An independent reading at integration, against the integrated commit."
+ },
+ {
+  "on": "2026-10-21",
+  "against": "33cfa2ca",
+  "id": "career-pay",
+  "claim": "Brief 19's pay: schedulePay puts each promised payment of an engagement on the clock, and each is paid once at its due, into the agency's client trust account and on three business days later less commission where commission is owed, or straight to the player; commission only when owed (Equity's 5% at $525 a week or less, 10% above; SAG-AFTRA's only over scale; New York's 10%; continuing after the agreement ends; Equity's 60-day tail); wages through sim.post and recordWages with the employer, the withholding by authority, the commission, the dues and the work's town; permission to work read for each engagement's dates and kept; OPT's days worked read from the engagements; Equity billed at the degree and an older graduate told what's owed; SAG-AFTRA eligibility from a first principal role, membership from its 30th day, and pro.join_sag. Read by the tax return (figuresFor), OPT's weekly count, Papers' Your US Status, the Work tab, Papers' Your Work And Your Permission and Money's statements.",
+  "implementation": "src/engine/systems/propay.ts (schedulePay, payDue, release, owedAgreement, commissionOn, withholdingOn, eligibilityRead, workEligibilityRefusal, equityJoined, equityOnOpening, sagWorkRefusal, joinSagRefusal, registerProPay: pro.join_sag); src/engine/systems/permission.ts (daysWorkedIn, optRunsOut, the OPT week handler); src/engine/systems/school.ts (setStanding emits pro.equity_joined); src/engine/index.ts (pro.unions); src/ui/career/WorkPane.tsx; src/ui/papers/Documents.tsx (WorkReadPanel).",
+  "consumers": "The ledger (salary transactions into the trust escrow and the payee account, the Agent’s Commission and Union Dues lines); the year's earnings and the return (acting, withheldBy, commission, dues, employers, elsewhere); OPT's idle and worked days; the Work tab; Papers' Permission To Work; net worth's held money.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/propay-screen.test.ts renders the Work tab over real saves (promised, in trust and received, the commission on its own line, still owed after an agreement ended, the unions with Join SAG-AFTRA grayed and why) and Papers' Permission To Work over an OPT holder with work booked; the built app at 1440 and 390 in docs/verification/career-2026-10-20/pay/screens/."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/propay.test.ts 'GUARD: no payment twice, across a reload mid-week, a jump past several due dates, and the payday fired twice'",
+    "asserts": "Three weeks paid once each, the transactions those the payments name, the year's wages counted once, nothing more after a second reload.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads; the engagement is written by hand as the work system writes one (TEST SETUP)."
+   },
+   {
+    "kind": "command",
+    "where": "tests/propay.test.ts 'PLAYER JOURNEY: represented SAG-AFTRA scale work, offered at scale plus ten, pays the agent the ten: into the trust account on Thursday, on to checking three business days later less exactly $256.60'",
+    "asserts": "The trust account's balance, the release date, $256.60 commission to the cent in the postings, the net into checking, the trust back to zero, the year's commission, and once only across a second pass-on item and a reload.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the agreement is written by hand as the agent's system writes one (TEST SETUP)."
+   },
+   {
+    "kind": "command",
+    "where": "tests/propay.test.ts 'PLAYER JOURNEY: a first SAG-AFTRA principal job makes the actor eligible on its first day; SAG-AFTRA work from the 30th day after needs membership; Join SAG-AFTRA charges its fees once and lifts it'",
+    "asserts": "pro.join_sag refused before eligibility in its words, $3,244.07 from the bank once eligible, the 30th day's refusal lifted, refused once a member.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard: this entry is the builder's own reading, made on 2026-10-21.",
+   "The engagements come from the work system, built apart; until integration calls schedulePay at an offer's acceptance, the tests write them by hand."
+  ],
+  "weakTests": [],
+  "todo": "An independent reading at integration, against the integrated commit, with the work system booking the engagements."
  }
 ]
