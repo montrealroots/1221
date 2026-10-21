@@ -15,21 +15,21 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6634 | 151915 | 13 | 265 | 499 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 4587 | 56842 | 3 | 101 | 372 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 125 | 662 | 6142 | 0 | 100 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 126 | 663 | 6142 | 0 | 101 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 196 | 1107 | 0 | 3 | 28 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 43 | 192 | 755 | 0 | 11 | 32 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4368 | 37455 | 580418 | 316 | 1210 | 3158 | 0 | 0 |
+| **All** | 4369 | 37456 | 580418 | 316 | 1211 | 3158 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
 | career | 104 | 4382 | 79 | 25 | 0 | 0 |
-| career-showcase | 21 | 1760 | 21 | 0 | 0 | 0 |
+| career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | frame | 499 | 33278 | 93 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
@@ -52,14 +52,14 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 126 | 352 | 188 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 118 | 377 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 145 | 225 | 103 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 125 | 100 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 126 | 101 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 29 | 37 | 17 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 43 | 9 | 28 | 6 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4368 | 786 | 2417 | 1165 | 0 |
+| **All** | 4369 | 787 | 2417 | 1165 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -3121,7 +3121,8 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/pro.ts#registerPro [reel]` | 1 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proshowcase.ts#SHOWCASE_COURSE` | 1 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
 | `src/engine/systems/proshowcase.ts#SHOWCASE` | 6 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
-| `src/engine/systems/proshowcase.ts#EARLY_DEGREE` | 3 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
+| `src/engine/systems/proshowcase.ts#EARLY_RULE` | 1 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads the rule on the School's Terms And Award and in the Career's The Way You're On, the Career's line saying when the degree comes once; the built app walked on 2026-10-21 read both; read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
+| `src/engine/systems/proshowcase.ts#EARLY_DEGREE` | 3 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads the rule on the School's Terms And Award and in the Career's The Way You're On, the Career's line saying when the degree comes once; the built app walked on 2026-10-21 read both; read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
 | `src/engine/systems/proshowcase.ts#showcaseCalendar` | 1 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
 | `src/engine/systems/proshowcase.ts#showcaseOptions` | 7 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |
 | `src/engine/systems/proshowcase.ts#beginShowcase` | 6 | 0 | Rewritten | career-showcase | tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md | Rewritten And Verified |

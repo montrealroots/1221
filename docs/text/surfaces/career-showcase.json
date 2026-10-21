@@ -47,12 +47,13 @@
   "where": "School, the Terms And Award tab, while the student is enrolled; Career, Overview, The Way You’re On, for a candidate",
   "sources": [
    "src/ui/career/SchoolShowcase.tsx#EarlyDegree",
+   "src/engine/systems/proshowcase.ts#EARLY_RULE",
    "src/engine/systems/proshowcase.ts#EARLY_DEGREE"
   ],
   "states": ["ordinary", "unavailable", "explanation", "details"],
   "outcome": "Revised",
   "why": "New with brief 19's A5: the Bulletin lets the faculty shorten the residency only on rare occasions and publishes no way to ask, and the game said so only in the guide.",
-  "changes": "Written new: that graduating early isn't a route the game offers, the Bulletin's sentence quoted whole, and that the MFA comes after the sixth term, with its source line.",
+  "changes": "Written new: that graduating early isn't a route the game offers, the Bulletin's sentence quoted whole, and that the MFA comes after the sixth term, with its source line. The Career's line says the rule without its last sentence, since the line says when the degree comes already: the built app's walk read it twice in one paragraph.",
   "evidence": [
    { "kind": "test", "ref": "tests/pro-showcase.test.ts: 'says the Bulletin’s sentence, and that the game offers no early degree'" }
   ]

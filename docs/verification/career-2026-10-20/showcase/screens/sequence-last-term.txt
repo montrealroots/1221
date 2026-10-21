@@ -1,0 +1,142 @@
+A played last term, seed showcase-final: Ada Cole, class of 2029, choosing on the term's first day and going to every commitment (Go at each stop), the coursework prepared each midnight as tests/school.test.ts plays a student. The notices of the showcase, the term and the degree, in the order she reads them.
+
+January 8, 2029 at 9:00 AM  Spring Term 2029 Begins
+  Classes run from January 15 to April 27, 2029, when the faculty review the term. Tuition, $21,708.28 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $2,199.23, was paid from your bank, and living costs are yours.
+
+January 8, 2029 at 9:00 AM  The Actor Showcase
+  Your last term ends with the Actor Showcase: two scenes you choose and rehearse, which the Bulletin says are presented to agents, managers and casting directors. You play them in New York on April 30 and May 1, and in Los Angeles on May 8. Choose your two scenes by Friday, February 2, 2029, under The Actor Showcase on the School’s Coursework tab. To take part, you need every Incomplete made up by then.
+
+January 17, 2029 at 9:00 AM  Imani Asks To Rehearse
+  Imani asks to rehearse Office Hours on January 20, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Imani on the Coursework tab. Saying no costs nothing.
+
+February 2, 2029 at 5:00 PM  You’re In The Actor Showcase
+  No course was incomplete at the end of the term’s fourth week, so you take part in the Actor Showcase. Your scenes: The Father in Office Hours and Lorraine in Bed Fourteen. Prepare them on the Coursework tab: they’re due in New York on April 30. The course’s rehearsal calls begin on April 17.
+
+February 7, 2029 at 9:00 AM  Imani Asks To Rehearse
+  Imani asks to rehearse Office Hours on February 10, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Imani on the Coursework tab. Saying no costs nothing.
+
+April 18, 2029 at 9:00 AM  Imani Asks To Rehearse
+  Imani asks to rehearse Office Hours on April 21, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Imani on the Coursework tab. Saying no costs nothing.
+
+April 25, 2029 at 9:00 AM  Imani Asks To Rehearse
+  Imani asks to rehearse Office Hours on April 28, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Imani on the Coursework tab. Saying no costs nothing.
+
+April 27, 2029 at 5:00 PM  In Good Standing
+  The acting faculty find you in good standing. You came to 100% of the classes, calls and shifts asked of you. Your craft grew 0.9 points this term, and the middle student in your class grew 0.9. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 23 of 38 pieces were Strong or better.
+
+April 30, 2029 at 1:00 PM  The Actor Showcase In New York
+  You played your two scenes at the showcase in New York. The Father in Office Hours: Working, 62 of 100. Lorraine in Bed Fourteen: Working, 61 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
+
+May 1, 2029 at 9:00 AM  The Actor Showcase In New York
+  You played your two scenes at the showcase in New York. The Father in Office Hours: Working, 62 of 100. Lorraine in Bed Fourteen: Working, 62 of 100. You play them again in Los Angeles on May 8.
+
+May 8, 2029 at 9:00 AM  The Actor Showcase In Los Angeles
+  You played your two scenes at the showcase in Los Angeles. The Father in Office Hours: Working, 62 of 100. Lorraine in Bed Fourteen: Working, 62 of 100. You passed Actor Showcase.
+
+May 21, 2029 at 10:00 AM  Your MFA Is Conferred
+  You graduate from the David Geffen School of Drama at Yale University with an MFA in Acting, class of 2029.
+
+The record the morning after Commencement:
+{
+ "term": 5,
+ "scenes": [
+  {
+   "id": "orig-office-hours",
+   "role": 0,
+   "chosenAt": 1862586000000,
+   "assignmentId": "assignment_00006e",
+   "by": "you",
+   "prep": 0.985
+  },
+  {
+   "id": "orig-bed-fourteen",
+   "role": 1,
+   "chosenAt": 1862586000000,
+   "assignmentId": "assignment_00006f",
+   "by": "you",
+   "prep": 0.985
+  }
+ ],
+ "performed": [
+  {
+   "city": "us-ny-newyork",
+   "at": 1872262800000,
+   "band": "working",
+   "overall": 62.3,
+   "scene": "orig-office-hours"
+  },
+  {
+   "city": "us-ny-newyork",
+   "at": 1872262800000,
+   "band": "working",
+   "overall": 61.2,
+   "scene": "orig-bed-fourteen"
+  },
+  {
+   "city": "us-ny-newyork",
+   "at": 1872334800000,
+   "band": "working",
+   "overall": 61.7,
+   "scene": "orig-office-hours"
+  },
+  {
+   "city": "us-ny-newyork",
+   "at": 1872334800000,
+   "band": "working",
+   "overall": 62,
+   "scene": "orig-bed-fourteen"
+  },
+  {
+   "city": "us-ca-losangeles",
+   "at": 1872939600000,
+   "band": "working",
+   "overall": 62.3,
+   "scene": "orig-office-hours"
+  },
+  {
+   "city": "us-ca-losangeles",
+   "at": 1872939600000,
+   "band": "working",
+   "overall": 61.5,
+   "scene": "orig-bed-fourteen"
+  }
+ ],
+ "options": [
+  {
+   "scene": "orig-office-hours",
+   "role": 0
+  },
+  {
+   "scene": "orig-office-hours",
+   "role": 1
+  },
+  {
+   "scene": "orig-bed-fourteen",
+   "role": 1
+  },
+  {
+   "scene": "orig-bed-fourteen",
+   "role": 0
+  },
+  {
+   "scene": "vanya-2",
+   "role": 1
+  },
+  {
+   "scene": "vanya-2",
+   "role": 0
+  },
+  {
+   "scene": "hedda-2",
+   "role": 0
+  },
+  {
+   "scene": "hedda-2",
+   "role": 1
+  }
+ ],
+ "eligible": true
+}
+
+Actor Showcase's course record: {"term":5,"academic":5,"code":"DRAM 793b","name":"Actor Showcase","meetings":51,"attended":49,"excused":2,"result":"pass"}
+Equity: {"since":1874066400000,"how":"degree"}

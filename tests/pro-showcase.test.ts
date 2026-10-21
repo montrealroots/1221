@@ -30,8 +30,8 @@ import { courseworkOf, questionsFor, type Assignment } from '@/engine/systems/co
 import { journeyOf } from '@/engine/systems/evaluation';
 import { pathwayOf } from '@/engine/systems/pro';
 import {
-  EARLY_DEGREE, LOS_ANGELES, NEW_YORK, SHOWCASE, SHOWCASE_CHECK_KIND, SHOWCASE_COURSE, SHOWCASE_KIND, choiceRefusal, showcaseCalendar, showcaseOptions,
-  showcasePieces,
+  EARLY_DEGREE, LOS_ANGELES, NEW_YORK, SHOWCASE, SHOWCASE_CHECK_KIND, SHOWCASE_COURSE, SHOWCASE_KIND, choiceRefusal, sceneForecast, showcaseCalendar,
+  showcaseOptions, showcasePieces,
 } from '@/engine/systems/proshowcase';
 
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation, tab: 'overview' }));
@@ -142,7 +142,7 @@ describe('the Actor Showcase, on the calendar', () => {
     expect(days.map((i) => [i.label, i.at, i.durationMinutes])).toEqual([
       ['The Actor Showcase In New York', at(2029, 4, 30, 13), 600],
       ['The Actor Showcase In New York', at(2029, 5, 1, 9), 480],
-      ['The Actor Showcase In Los Angeles', at(2029, 5, 8, 7), 1440],
+      ['The Actor Showcase In Los Angeles', at(2029, 5, 8, 9), 1440],
     ]);
     expect(days.map((i) => i.payload.city)).toEqual([NEW_YORK, NEW_YORK, LOS_ANGELES]);
     for (const i of calls) {
@@ -170,7 +170,7 @@ describe('the Actor Showcase, on the calendar', () => {
     expect(pending(sim, SHOWCASE_CHECK_KIND).map((i) => i.at)).toEqual([at(2030, 2, 1, 17)]);
     const calls = pending(sim, SHOWCASE_KIND);
     expect(calls.filter((i) => i.payload.call === 'rehearsal').map((i) => i.at)).toEqual([16, 17, 18, 19, 23, 24, 25, 26].map((d) => at(2030, 4, d, 15)));
-    expect(calls.filter((i) => i.payload.call === 'showcase').map((i) => i.at)).toEqual([at(2030, 4, 29, 13), at(2030, 4, 30, 9), at(2030, 5, 7, 7)]);
+    expect(calls.filter((i) => i.payload.call === 'showcase').map((i) => i.at)).toEqual([at(2030, 4, 29, 13), at(2030, 4, 30, 9), at(2030, 5, 7, 9)]);
     // The rule is the calendar's, not a year's: 2029's and 2030's from the same terms.
     expect(showcaseCalendar(5).days.map((d) => d.key)).toEqual(['2029-04-30', '2029-05-01', '2029-05-08']);
     expect(showcaseCalendar(7).days.map((d) => d.key)).toEqual(['2030-04-29', '2030-04-30', '2030-05-07']);
@@ -178,7 +178,7 @@ describe('the Actor Showcase, on the calendar', () => {
     expect(school.standing).toBe('graduated');
     // After the last class (April 26) and before Commencement (May 20).
     expect(school.endedAt).toBe(at(2030, 5, 20, 10));
-    expect(sim.player.pro!.showcase!.performed.map((p) => p.at)).toEqual([at(2030, 4, 29, 13), at(2030, 4, 29, 13), at(2030, 4, 30, 9), at(2030, 4, 30, 9), at(2030, 5, 7, 7), at(2030, 5, 7, 7)]);
+    expect(sim.player.pro!.showcase!.performed.map((p) => p.at)).toEqual([at(2030, 4, 29, 13), at(2030, 4, 29, 13), at(2030, 4, 30, 9), at(2030, 4, 30, 9), at(2030, 5, 7, 9), at(2030, 5, 7, 9)]);
   }, 120_000);
 });
 
@@ -208,6 +208,10 @@ describe('taking part', () => {
     // Kept out, the course is settled at the term review with the rest, not held for a showcase she isn't in.
     play(out, at(2029, 4, 28, 9));
     expect(course793(out).result).toBe('pass');
+    // Kept out, the course's classes set their work as they always had: its scenes drawn in class from the fourth week.
+    const classWork = (s: Simulation) => (courseworkOf(s, s.player)!.assignments as Assignment[]).filter((a) => a.course === SHOWCASE_COURSE && a.term === s.player.pro!.showcase!.term);
+    expect(classWork(out).length).toBeGreaterThan(0);
+    expect(classWork(out).every((a) => a.template === 'showcase-scene' && a.setOn > '2029-02-02')).toBe(true);
 
     // In: the same student makes it up, two sessions with its teachers, before the end of the fourth week.
     play(inn, at(2029, 1, 21, 10));
@@ -218,6 +222,8 @@ describe('taking part', () => {
     expect(sc2.scenes.map((s) => [s.id, s.role, s.by])).toEqual(sc2.options!.filter((o, i, all) => all.findIndex((x) => x.scene === o.scene) === i).slice(0, 2).map((o) => [o.scene, o.role, 'faculty']));
     expect(pending(inn, SHOWCASE_KIND)).toHaveLength(11);
     const pieces = showcasePieces(inn, inn.player);
+    // In, the course's classes set no scene of their own before the faculty chose, nor after: its work is the two scenes.
+    expect(classWork(inn).map((a) => a.id)).toEqual(pieces.map((a) => a.id));
     expect(notice(inn, 'You’re In The Actor Showcase')!.body).toBe(`No course was incomplete at the end of the term’s fourth week, so you take part in the Actor Showcase. You hadn’t chosen your scenes, so the faculty chose the two their notes put first. Your scenes: ${pieces.map((a) => `${sceneById(a.sceneId!)!.roles[a.role!].name} in ${sceneById(a.sceneId!)!.play}`).join(' and ')}. Prepare them on the Coursework tab: they’re due in New York on April 30. The course’s rehearsal calls begin on April 17.`);
   }, 120_000);
 });
@@ -265,7 +271,7 @@ describe('choosing the scenes', () => {
     const text = shown(sim, '/workspace/school', 'coursework');
     expect(text).toContain('The Actor Showcase');
     expect(text).toContain('Monday, April 30, 2029, from 1 PM to 11 PM, for the showings at 5 PM and 7:30 PM; and Tuesday, May 1, 2029, from 9 AM to 5 PM, for the showing at 1 PM.');
-    expect(text).toContain('Tuesday, May 8, 2029, from 7 AM to the next morning, for the showings at 1 PM, 4:30 PM and 7 PM Pacific time.');
+    expect(text).toContain('Tuesday, May 8, 2029, from 9 AM to the next morning, for the showings at 1 PM, 4:30 PM and 7 PM Pacific time.');
     expect(text).toContain('Tuesday to Friday from 3 PM for three hours, April 17 to April 27, 2029.');
     for (const o of showcaseOptions(sim, sim.player)) {
       expect(text).toContain(o.sceneNote);
@@ -290,12 +296,38 @@ describe('choosing the scenes', () => {
     expect(comedies(knows).length).toBeGreaterThan(0);
     expect(comedies(knows)[0]!.sceneNote).toMatch(/is a comedy, a genre you know well\. Fully prepared, it would come to about \d+ of 100 for you, (Unready|Working|Strong|Exceptional)\./);
   }, 120_000);
+
+  it('GUARD: a scene shown Strong or better before moves onto the shortlist, the part it was shown in listed first; a written analysis of a scene counts as no part played', () => {
+    // TEST SETUP: the same life the morning before its last term began, once as played and once with one class scene it
+    // played, off the shortlist, shown Strong as a better showing would have left it.
+    const sim = working(life('showcase-final'));
+    play(sim, at(2029, 1, 8, 8));
+    const strong = reload(sim);
+    play(sim, at(2029, 1, 8, 12));
+    const listed = new Set(sim.player.pro!.showcase!.options!.map((o) => o.scene));
+    // The class scene off the shortlist that the forecast puts highest, of those it showed in its second part, so the
+    // order the options list its parts in is the record's, not the scene's own.
+    const candidates = (courseworkOf(strong, strong.player)!.assignments as Assignment[]).filter((a) => a.shown && a.sceneId && a.role === 1 && a.template !== 'table-work' && !listed.has(a.sceneId) && sceneById(a.sceneId)?.language === 'prose' && !sceneById(a.sceneId)?.tradition);
+    const piece = candidates.sort((x, y) => sceneForecast(strong, strong.player, y.sceneId!) - sceneForecast(strong, strong.player, x.sceneId!))[0]!;
+    piece.shown!.band = 'strong';
+    delete piece.revision;
+    play(strong, at(2029, 1, 8, 12));
+    const options = strong.player.pro!.showcase!.options!;
+    expect(options.filter((o) => o.scene === piece.sceneId).map((o) => o.role)).toEqual([1, 0]);
+    const first = showcaseOptions(strong, strong.player).find((o) => o.scene.id === piece.sceneId)!;
+    expect(first.partNote).toMatch(/^You played .+ in it for .+ on .+, and it came out Strong\.$/);
+    // A written analysis of a scene (Table Work's own course) plays no part in it, so no option says it was played.
+    const written = (courseworkOf(sim, sim.player)!.assignments as Assignment[]).filter((a) => a.shown && a.template === 'table-work' && listed.has(a.sceneId!));
+    expect(written.length).toBeGreaterThan(0);
+    for (const a of written) for (const o of showcaseOptions(sim, sim.player).filter((x) => x.scene.id === a.sceneId)) expect(o.partNote ?? '').not.toContain('Text Analysis');
+  }, 120_000);
 });
 
 describe('the showcase, played', () => {
   // One life's last term, its two scenes chosen on its first day, each read and its table work answered, played by the
   // clock to the evening before New York: prepared by those steps and the rehearsal calls alone.
   let EVE = '';
+  let PRE = '';
   beforeAll(() => {
     const sim = finalTerm();
     const options = sim.player.pro!.showcase!.options!;
@@ -306,10 +338,47 @@ describe('the showcase, played', () => {
       expect(read.ok, read.error).toBe(true);
       answer(sim, a);
     }
+    jump(sim, at(2029, 4, 16, 20));
+    PRE = serialise(sim.universe);
     jump(sim, at(2029, 4, 29, 20));
     EVE = serialise(sim.universe);
   }, 120_000);
   const eve = (showcase = false) => working(loadSave(deserialise(EVE) as never), showcase);
+  const pre = () => working(loadSave(deserialise(PRE) as never));
+
+  it('PLAYER JOURNEY: the course’s rehearsal calls work both scenes on their feet with their partners: what they add, and what missing one costs', () => {
+    const went = pre();
+    const before = showcasePieces(went, went.player).map((a) => [a.prep.rehearsal, a.prep.partner]);
+    // Nothing else on either part between them (no partner's evening was answered): the calls alone move them.
+    expect(before.every(([r, p]) => r === 0 && p === 0)).toBe(true);
+    jump(went, at(2029, 4, 27, 19));
+    for (const a of showcasePieces(went, went.player)) {
+      expect(a.prep.rehearsal).toBeGreaterThan(0.6);
+      expect(a.prep.partner).toBeGreaterThan(0.7);
+    }
+    // One missed (TEST SETUP: in New York at the call's hour): a missed call, a missed class of the course, and said.
+    const away = pre();
+    const tally = { ...away.player.school!.tally };
+    const meetings = { ...course793(away) };
+    play(away, at(2029, 4, 17, 14));
+    away.player.currentLocationId = NEW_YORK;
+    play(away, at(2029, 4, 17, 16));
+    away.player.currentLocationId = YALE_DRAMA.cityId;
+    expect(notice(away, 'You Missed A Showcase Rehearsal')!.body).toBe('You missed today’s Actor Showcase rehearsal call. It counts as a missed call and a missed class of Actor Showcase, and your scenes went without the rehearsal.');
+    expect(away.player.school!.tally.calls - away.player.school!.tally.answered).toBe(tally.calls - tally.answered + 1);
+    expect(course793(away).meetings - course793(away).attended).toBe(meetings.meetings - meetings.attended + 1);
+    expect(showcasePieces(away, away.player).map((a) => a.prep.rehearsal)).toEqual(before.map(([r]) => r));
+  }, 120_000);
+
+  it('PLAYER JOURNEY: leaving the School between the term review and New York settles Actor Showcase on what it had, and takes the showcase off the calendar', () => {
+    const sim = eve();
+    expect(course793(sim).result).toBeUndefined();
+    const w = sim.execute({ kind: 'school.withdraw', payload: { confirm: true } });
+    expect(w.ok, w.error).toBe(true);
+    expect(course793(sim).result).toBe('pass');
+    expect(pending(sim, SHOWCASE_KIND)).toEqual([]);
+    expect(showcasePieces(sim, sim.player).map((a) => a.status)).toEqual(['lapsed', 'lapsed']);
+  }, 120_000);
 
   it('PLAYER JOURNEY: from the last term’s first day to the morning after Commencement: chosen, in, rehearsed, held past the term review, judged in New York and Los Angeles, passed, conferred, every record carried', () => {
     const sim = finalTerm(true);
@@ -336,7 +405,7 @@ describe('the showcase, played', () => {
     expect(sc.performed.map((p) => [p.scene, p.city, p.at])).toEqual([
       [pieces[0]!.sceneId, NEW_YORK, at(2029, 4, 30, 13)], [pieces[1]!.sceneId, NEW_YORK, at(2029, 4, 30, 13)],
       [pieces[0]!.sceneId, NEW_YORK, at(2029, 5, 1, 9)], [pieces[1]!.sceneId, NEW_YORK, at(2029, 5, 1, 9)],
-      [pieces[0]!.sceneId, LOS_ANGELES, at(2029, 5, 8, 7)], [pieces[1]!.sceneId, LOS_ANGELES, at(2029, 5, 8, 7)],
+      [pieces[0]!.sceneId, LOS_ANGELES, at(2029, 5, 8, 9)], [pieces[1]!.sceneId, LOS_ANGELES, at(2029, 5, 8, 9)],
     ]);
     const keys = sim.player.work!.slice(-6).map((w) => w.inputs.key);
     for (const a of pieces) {
@@ -404,7 +473,7 @@ describe('the showcase, played', () => {
     expect(course793(one).attended).toBe(meetings.attended);
     jump(one, at(2029, 5, 9, 12));
     const sc = one.player.pro!.showcase!;
-    expect(sc.performed.map((p) => p.at)).toEqual([at(2029, 5, 1, 9), at(2029, 5, 1, 9), at(2029, 5, 8, 7), at(2029, 5, 8, 7)]);
+    expect(sc.performed.map((p) => p.at)).toEqual([at(2029, 5, 1, 9), at(2029, 5, 1, 9), at(2029, 5, 8, 9), at(2029, 5, 8, 9)]);
     for (const a of showcasePieces(one, one.player)) expect([a.shown!.at, a.revision!.dueOn, a.status]).toEqual([at(2029, 5, 1, 9), '2029-05-08', 'done']);
     expect(course793(one).result).toBe('pass');
 
@@ -492,6 +561,14 @@ describe('an older save', () => {
     play(after, at(2029, 5, 9, 12));
     expect(after.player.pro!.showcase!.performed).toHaveLength(6);
     expect(breaches(after.universe)).toEqual([]);
+
+    // Opened after Los Angeles and before Commencement, there's no showcase left to begin.
+    const over = finalTerm();
+    play(over, at(2029, 5, 10, 12));
+    const reopened = loadSave(older(over));
+    expect(reopened.universe.opened).toContain('showcase.begun');
+    expect(reopened.player.pro!.showcase).toBeUndefined();
+    expect(reopened.universe.scheduled.filter((i) => i.kind === SHOWCASE_KIND && i.status === 'pending')).toEqual([]);
   }, 120_000);
 });
 
@@ -502,11 +579,14 @@ describe('graduating early', () => {
     const terms = shown(sim, '/workspace/school', 'terms');
     const career = shown(sim, '/workspace/career', 'overview');
     for (const text of [terms, career]) {
-      expect(text).toContain(EARLY_DEGREE.words);
+      expect(text).toContain(EARLY_DEGREE.rule);
       expect(text).toContain(`“${EARLY_DEGREE.quote.replace(/\.$/, '')},”`);
     }
     expect(terms).toContain('Finishing Early');
-    expect(pathwayOf(sim.player).words).toBe(`Year one of the MFA: the degree comes at Commencement after your sixth term, and everything on your record goes on with you. ${EARLY_DEGREE.words}`);
+    expect(terms).toContain(EARLY_DEGREE.words);
+    // The Career's line says when the degree comes once: its own words, then the rule (from the built app's walk, 2026-10-21).
+    expect(pathwayOf(sim.player).words).toBe(`Year one of the MFA: the degree comes at Commencement after your sixth term, and everything on your record goes on with you. ${EARLY_DEGREE.rule}`);
+    expect(career.match(/after your sixth term/g)).toHaveLength(1);
     // The degree is the sixth term's: none before it.
     const final = finalTerm();
     expect(final.player.school!.standing).toBe('good');

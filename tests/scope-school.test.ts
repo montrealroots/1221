@@ -475,13 +475,19 @@ describe('school.request_repeat', () => {
     expect(fall29.map(([, r]) => r.code).sort()).toEqual(fall28);
     expect(spring30.map(([, r]) => r.code).sort()).toEqual(spring29);
     expect(fall29.every(([, r]) => r.academic === 4 && r.result === 'pass')).toBe(true);
-    expect(spring30.every(([, r]) => r.academic === 5 && r.result === 'pass')).toBe(true);
+    // Every course of the spring passed at its review but Actor Showcase, which from 2026-10-21 (brief 19) waits for its
+    // showcase's last day, in Los Angeles on Tuesday 7 May 2030, and is passed there (`systems/proshowcase.ts`): until
+    // then it was settled here with the rest, and the spring ended in nothing after its classes.
+    expect(spring30.filter(([, r]) => r.code !== 'DRAM 793b').every(([, r]) => r.academic === 5 && r.result === 'pass')).toBe(true);
+    expect(school().courses!['7:DRAM 793b']).toMatchObject({ academic: 5 });
+    expect(school().courses!['7:DRAM 793b']!.result).toBeUndefined();
     // The attempts kept: the Fail of Fall Term 2028 beside the pass of Fall Term 2029.
     expect(school().courses![`4:${MOVEMENT_III}`]).toMatchObject({ result: 'fail', academic: 4 });
     expect(school().courses![`6:${MOVEMENT_III}`]).toMatchObject({ result: 'pass', academic: 4 });
     expect(school().standing).toBe('good');
-    // Commencement, Monday 20 May 2030 at ten: the degree, once, through a save.
+    // Commencement, Monday 20 May 2030 at ten: the degree, once, through a save; Actor Showcase passed after Los Angeles.
     tend(sim, at(2030, 5, 20, 14));
+    expect(school().courses!['7:DRAM 793b']).toMatchObject({ result: 'pass', academic: 5 });
     expect(school().standing).toBe('graduated');
     expect(titled(sim, 'Your MFA Is Conferred')).toHaveLength(1);
     sim = reload(sim);

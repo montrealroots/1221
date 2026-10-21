@@ -22,7 +22,10 @@
  * - The dates are worked out from the final term's own class calendar (`classPeriod`), never written down for a year:
  *   New York on the Monday and Tuesday after its classes end, Los Angeles the Tuesday after (`showcaseCalendar`).
  * - ASSUMPTION: each showcase day is one School call from New Haven with the trip inside its hours (`travelMinutes: 0`,
- *   `SHOWCASE.days`). The showings' hours are SC26's; the trips' are the game's.
+ *   `SHOWCASE.days`). The showings' hours are SC26's; the trips' are the game's. Los Angeles's ran from seven in the
+ *   morning on the first day it was written (2026-10-21) and was moved to nine the same day, the hour the School's other
+ *   early calls keep: a life played on without the clock stopping for it (a journey, a scenario) is often still asleep
+ *   at seven, and a nine o'clock flight still lands for the 1 PM Pacific showing.
  * - ASSUMPTION: the course's rehearsals are School rehearsal calls at the School's rehearsal hours (Tuesday to Friday
  *   from three, `SCHOOL_SEASON`), three hours each, over the last two weeks of classes.
  * - Eligibility: enrolled in the final term (begun there, not on leave, not an additional term) and no course still
@@ -107,18 +110,24 @@ export const SHOWCASE = {
   days: [
     { city: NEW_YORK, weekday: 'Monday', week: 0, hour: 13, minutes: 600, showings: '5 PM and 7:30 PM' },
     { city: NEW_YORK, weekday: 'Tuesday', week: 0, hour: 9, minutes: 480, showings: '1 PM' },
-    { city: LOS_ANGELES, weekday: 'Tuesday', week: 1, hour: 7, minutes: 1440, showings: '1 PM, 4:30 PM and 7 PM Pacific time' },
+    { city: LOS_ANGELES, weekday: 'Tuesday', week: 1, hour: 9, minutes: 1440, showings: '1 PM, 4:30 PM and 7 PM Pacific time' },
   ],
   source: 'Source: the Yale Bulletin, David Geffen School of Drama 2026–2027, pp.26 and 33, and the School’s 2026 showcase page. Each year’s dates follow the 2026 showcase’s pattern; the calls’ hours, the rehearsals and the faculty’s shortlist are estimated.',
 } as const;
 
+/** The rule on early graduation, the Bulletin's sentence quoted in it. */
+const EARLY_RULE = 'Graduating early isn’t a route the game offers. The Bulletin says that “on rare occasions the faculty of David Geffen School of Drama may reduce the residency requirement, but in no case below a minimum of two years,” and publishes no criteria for it and no way to ask.';
+
 /**
  * Early graduation (brief 19's A5): the Bulletin's sentence, and what the game makes of it, said word for word on the
- * School's Terms And Award tab and in the candidate's line of the Career's The Way You're On (`pathwayOf`).
+ * School's Terms And Award tab (`words`) and in the candidate's line of the Career's The Way You're On (`rule`, `pathwayOf`).
+ * The Career's line said the whole of `words` when it was first written (2026-10-21); the built app's walk the same day
+ * read when the degree comes twice in its one paragraph, since the line already says it, and from then it says the rule.
  */
 export const EARLY_DEGREE = {
   quote: 'on rare occasions the faculty of David Geffen School of Drama may reduce the residency requirement, but in no case below a minimum of two years.',
-  words: 'Graduating early isn’t a route the game offers. The Bulletin says that “on rare occasions the faculty of David Geffen School of Drama may reduce the residency requirement, but in no case below a minimum of two years,” and publishes no criteria for it and no way to ask. So the MFA comes at Commencement after your sixth term.',
+  rule: EARLY_RULE,
+  words: `${EARLY_RULE} So the MFA comes at Commencement after your sixth term.`,
   source: 'Source: the Yale Bulletin, David Geffen School of Drama 2026–2027, p.21.',
 } as const;
 
@@ -188,7 +197,7 @@ export function showcaseHolds(person: Person, term: number, at: Instant): boolea
 
 const performedOn = (sc: ShowcaseRecord, key: string): boolean => sc.performed.some((p) => dayKeyAt(p.at) === key);
 
-/** How well the term is going, as Incompletes stand: the courses still incomplete. */
+/** The courses still Incomplete now, as the course records have them. */
 const outstandingOf = (person: Person): CourseRecord[] => Object.values(coursesOf(person.school!)).filter((r) => r.result === 'incomplete');
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -307,15 +316,19 @@ function facultyChoice(sc: ShowcaseRecord): { scene: string; role: 0 | 1 }[] {
 /**
  * The showcase begun with the final term (the School's term handler, `systems/school.ts`, or an older save's first
  * opening, `beginOnOpening`): the course's options fixed, the fourth week's check, the rehearsal calls and the three days
- * on the calendar from now, and a notice. Only for a student in the program's last term, enrolled in it: not on leave,
- * not in an additional term. Returns the record, or nothing.
+ * on the calendar from now, and a notice. Only for a student in the program's last term, enrolled in it. The program's
+ * term alone settles that: a leave adds its terms to the offset as it begins (`startLeave`, `systems/leave.ts`), so the
+ * term it's taken in never reads as the sixth, and an additional term comes after the sixth. Guards for a leave and an
+ * additional term were written here on 2026-10-21 and taken out the same day, when mutating each left every test passing
+ * and the offset was found to settle both; so was one for a second beginning of the same term, which neither the term
+ * handler (a term is begun once) nor the opening step (once, by `ONCE_ON_OPENING`) can reach, and one for a student
+ * with no craft, which enrolling gives every student with the School's record (`enroll`, `systems/school.ts`). Returns
+ * the record, or nothing.
  */
 export function beginShowcase(sim: Simulation, person: Person, term: number): ShowcaseRecord | undefined {
   const school = person.school;
-  if (!school || schoolEnded(school.standing) || !person.craft) return undefined;
-  if (academicTerm(school, term) !== YALE_DRAMA.terms - 1 || school.extra?.term === term || school.leave?.status === 'on') return undefined;
+  if (!school || schoolEnded(school.standing) || academicTerm(school, term) !== YALE_DRAMA.terms - 1) return undefined;
   const pro = ensurePro(sim, person);
-  if (pro.showcase?.term === term) return pro.showcase;
   const cal = showcaseCalendar(term);
   const last = cal.days.at(-1)!;
   if (last.at <= sim.now) return undefined;
@@ -485,7 +498,9 @@ function perform(sim: Simulation, person: Person, sc: ShowcaseRecord, a: Assignm
   const overall = Math.round(((person.work ?? []).find((w) => w.inputs.key === key)?.overall ?? 0) * 10) / 10;
   const entry = sc.scenes.find((s) => s.assignmentId === a.id);
   if (entry) entry.prep = prepShare(person, a, day.key);
-  if (!sc.performed.some((p) => p.scene === a.sceneId && dayKeyAt(p.at) === day.key)) sc.performed.push({ city: day.city, at: when, band, overall, scene: a.sceneId! });
+  // Once a day each: the day's call runs once, its item done before its handler (`advanceTo`), so a reload can't run it
+  // again. A check for a performance already kept was written here and taken out on 2026-10-21, unreachable.
+  sc.performed.push({ city: day.city, at: when, band, overall, scene: a.sceneId! });
   return { band, overall, noted };
 }
 

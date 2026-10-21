@@ -71,9 +71,16 @@
  },
  "src/engine/systems/proshowcase.ts#EARLY_DEGREE": {
   "status": "Rewritten",
-  "hash": "47ebf52e34bb",
+  "hash": "837b9e041830",
   "on": "2026-10-21",
-  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "evidence": "tests/pro-showcase.test.ts reads the rule on the School's Terms And Award and in the Career's The Way You're On, the Career's line saying when the degree comes once; the built app walked on 2026-10-21 read both; read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#EARLY_RULE": {
+  "status": "Rewritten",
+  "hash": "2be5c4eca7d0",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads the rule on the School's Terms And Award and in the Career's The Way You're On, the Career's line saying when the degree comes once; the built app walked on 2026-10-21 read both; read against docs/STYLE.md and docs/GLOSSARY.md",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proshowcase.ts#registerShowcase": {
