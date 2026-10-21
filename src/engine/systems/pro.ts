@@ -163,7 +163,10 @@ export interface Material {
 /** Where a relationship with an agent stands (the design's The Relationship). */
 export type RelationStage =
   | 'discovered' | 'checked' | 'introduced' | 'sent' | 'waiting' | 'requested' | 'meeting' | 'deciding' | 'offered'
-  | 'represented' | 'passed' | 'declined' | 'ended';
+  | 'represented' | 'passed' | 'declined' | 'ended'
+  // From 2026-10-21 (the agent's builder, `systems/proagent.ts`): an approach his office never answered, once the stated
+  // time has gone by. Until then a silence had no stage of its own, and only 'passed' could hold it, which says he passed.
+  | 'unanswered';
 
 export interface AgentRelation extends HasHistory {
   agentId: AgentId;
@@ -184,6 +187,16 @@ export interface AgentRelation extends HasHistory {
   /** A meeting: when, where, how many times it moved, and how it went. */
   meeting?: { id: ProId; at: Instant; where: 'office' | 'video'; moved: number; status: 'set' | 'kept' | 'missed' };
   agreementId?: ProId;
+  /**
+   * The referrals made to this agent, one for each finished engagement it came from (`pro.ask_referral`, from
+   * 2026-10-21): kept whole, so a job can refer the player only once however long the history runs.
+   */
+  referrals?: { engagementId: ProId; by: string; job: string; at: Instant; band?: Band }[];
+  /**
+   * The reasons for the last decision, as Why It Went This Way shows them (`systems/proagent.ts`, from 2026-10-21): copied
+   * in when it's made, so they read as they were after the record has moved on.
+   */
+  why?: { at: Instant; step: string; outcome: string; factors: { id: string; label: string; level: string; words: string }[]; atOrBeyond: number; needed: number; chance?: number };
 }
 
 export type AgreementStatus = 'offered' | 'accepted' | 'declined' | 'lapsed' | 'ended';
@@ -261,6 +274,10 @@ export interface ShowcaseRecord {
   eligible?: boolean;
   scenes: { id: string; chosenAt?: Instant; prep?: number }[];
   performed: { city: string; at: Instant; band?: Band; overall?: number }[];
+  /**
+   * The School's follow-up in the week after the last performance (`scheduleShowcaseFollowUp`, `systems/proagent.ts`):
+   * when it came, and the agents whose offices asked the School to pass on a request to meet (from 2026-10-21).
+   */
   followUp?: { at: Instant; agents: AgentId[] };
 }
 
