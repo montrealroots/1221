@@ -286,7 +286,18 @@ describe('every command is reachable by hand', () => {
       .flatMap((one) => [...readFileSync(`src/engine/${one}`, 'utf8')
         .matchAll(/onCommand<[^(]*\(\s*'([a-z_]+\.[a-z_]+)'/g)].map((m) => m[1]!));
     expect(engine.length, 'no commands were found at all').toBeGreaterThan(5);
+    // From 2026-10-20 a stop's choices beyond Go and Stand Here are declared with their kind in the engine (`defineStop`,
+    // `world/clock.ts`, brief 19's D1), and the stop's dialog draws whatever a kind declares (`stopChoices`), so a command
+    // a stop names is reached there rather than by its id in the interface: `calendar.skip` moved there on the clock's
+    // merge, and this failed on it until 2026-10-21. It counts only while the interface draws a stop's choices at all.
+    const stops = new Set(readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
+      .filter((one) => one.endsWith('.ts'))
+      .flatMap((one) => [...readFileSync(`src/engine/${one}`, 'utf8').matchAll(/defineStop\(([\s\S]*?)\]\);/g)]
+        .flatMap((m) => [...m[1]!.matchAll(/command: '([a-z0-9_]+\.[a-z0-9_]+)'/g)].map((c) => c[1]!))));
+    expect(stops.size, 'no stop offers a choice of its own').toBeGreaterThan(0);
+    expect(everywhere, 'the interface draws no stop’s choices').toContain('stopChoices(');
     for (const kind of new Set(engine)) {
+      if (stops.has(kind)) continue;
       expect(everywhere, `${kind} is registered and nothing in the interface runs it`)
         .toContain(`'${kind}'`);
     }
