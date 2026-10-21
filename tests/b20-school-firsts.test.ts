@@ -55,6 +55,17 @@ describe('first-time events come once, played straight through and saved and ope
   });
 });
 
+describe('orientation’s sessions on the calendar (seed b20-school-firsts)', () => {
+  it('each session is on the calendar wanting the player, and the clock moved as the screen moves it stops at the first', () => {
+    const sim = student(SEED, { wealth: 'modest' });
+    const sessions = sim.universe.scheduled.filter((i) => i.kind === ORIENTATION_KIND && i.payload.personId === sim.player.id);
+    expect(sessions.map((i) => [i.label, i.requiresPlayer])).toEqual(ORIENTATION.map((o) => [o.label, true]));
+    const r = sim.advanceTo(at(2026, 8, 24, 14), { stopOnPlayerRequired: true });
+    expect(r.interruptedBy?.kind).toBe(ORIENTATION_KIND);
+    expect(r.interruptedBy?.at).toBe(at(2026, 8, 24, 10));
+  });
+});
+
 describe('orientation’s registration, slept through (seed b20-school-firsts)', () => {
   /** To bed at eight on the first morning for four hours, through Registration And Your Account at ten. */
   const sleepThroughRegistration = (sim: Simulation): boolean => sim.now === at(2026, 8, 24, 7, 30) && sim.execute({ kind: 'life.sleep', payload: { hours: 4, startAt: at(2026, 8, 24, 8) } }).ok;
@@ -89,6 +100,9 @@ describe('orientation’s registration, slept through (seed b20-school-firsts)',
     const shift = missed.universe.scheduled.find((i) => i.kind === SHIFT_KIND && i.payload.personId === missed.player.id && i.status !== 'pending')!;
     expect(shift.status).toBe('missed');
     expect(titled(missed, 'A Shift You Couldn’t Work')).toHaveLength(1);
+    // Missed for want of the I-9, not ill: no hours to convert.
+    expect(missed.player.school!.excusedHours).toBeUndefined();
+    expect(missed.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('There are no hours to convert at January’s processing. Only assigned hours you missed while ill or hurt count then.');
     // The student who registered: the same days, each attended, the shift worked.
     expect(tallyOf(kept)).toMatchObject({ classDays: days.length, attended: days.length });
     expect(tallyOf(kept).worked).toBe(tallyOf(kept).shifts);

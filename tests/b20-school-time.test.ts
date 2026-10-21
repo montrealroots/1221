@@ -95,6 +95,29 @@ describe('a week and a month moved at once: each School obligation falls due onc
     }, 60_000);
   }
 
+  it('how rested the student comes sets how much a class grows them: a class day with nothing due, after a night’s sleep against none', () => {
+    // Tuesday 15 September: classes, and no piece due at them, so each meeting's growth is an ordinary class's, weighed
+    // by nothing but the focus the student brings (`focusAt`); Monday is lived alike in both.
+    const tuesday = keyOf({ year: 2026, month: 9, day: 15 });
+    const base = open(S.raw);
+    base.advanceTo(at(2026, 9, 14, 23));
+    expect(courseworkOf(base, base.player)!.assignments.filter((a) => (a.status === 'open' || a.status === 'revising') && (a.status === 'revising' ? a.revision!.dueOn : a.dueOn) === tuesday)).toEqual([]);
+    const raw = serialise(base.universe);
+    const rested = open(raw);
+    rested.must({ kind: 'life.sleep', payload: { hours: 8 } });
+    // Up all night: the clock moved to Tuesday morning with no sleep.
+    const tired = open(raw);
+    tired.advanceTo(at(2026, 9, 15, 8));
+    const craftBefore = { ...tired.player.craft! };
+    const grown = (sim: Simulation) => { sim.advanceTo(at(2026, 9, 15, 16)); return Object.entries(sim.player.craft!).reduce((n, [k, v]) => n + (v - craftBefore[k as keyof typeof craftBefore]), 0); };
+    const a = grown(rested);
+    const b = grown(tired);
+    // Both were in class, and counted alike.
+    expect(tallyOf(tired)).toEqual(tallyOf(rested));
+    expect(a).toBeGreaterThan(0);
+    expect(b).toBeLessThan(a * 0.9);
+  });
+
   it('a Monday slept through is missed and counted as missed, once, and said; the week’s other days are kept', () => {
     const sim = open(S.raw);
     const monday = at(2026, 9, 14);

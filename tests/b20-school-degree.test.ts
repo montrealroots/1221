@@ -145,6 +145,20 @@ describe('B1/B3: the degree at Commencement, and the students who don’t meet i
     expect(titled(S.g5, 'Your MFA Is Conferred')).toHaveLength(0);
   });
 
+  it('a day called in sick is left out of the attendance the review counts: March ill isn’t short, March slept through is', () => {
+    const review = (sim: Simulation) => sim.player.school!.history.find((h) => h.term === 5)!;
+    const ill = S.g5.player.school!;
+    expect(ill.tally.excused).toBeGreaterThanOrEqual(15);
+    expect(review(S.g5).attendance).toBeGreaterThanOrEqual(0.9);
+    expect(review(S.g5).reason).not.toMatch(/under the 90%/);
+    expect(review(S.g2).attendance).toBeLessThan(0.9);
+    expect(review(S.g2).reason).toMatch(/That’s under the 90% the program asks\./);
+    // Excused meetings are kept on each course’s record as excused, and make it Incomplete, not failed.
+    const courses = Object.values(ill.courses!).filter((r) => r.term === 5);
+    expect(courses.some((r) => r.excused > 0 && r.result === 'permanent')).toBe(true);
+    expect(courses.every((r) => r.result !== 'fail')).toBe(true);
+  });
+
   it('no leak: up to Commencement, the money of the student who kept every class and the student ill through March are the same', () => {
     // Read at Commencement's eve: the ill student's paths part after it (sessions made up, or not).
     const g1 = weeks(open(), COMMENCEMENT - MS_DAY);

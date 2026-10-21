@@ -20,28 +20,35 @@ import { earningsOf } from '@/engine/systems/earnings';
 import { healthOf } from '@/engine/systems/health';
 import { CONVERT_KIND, SHIFT_KIND } from '@/engine/systems/school';
 import { WORK_STUDY } from '@/engine/content/school';
-import { at, balances, partsOf, pendingOf, play, student, tallyOf, titled } from './setup/b20-school';
+import { at, balances, partsOf, pendingOf, play, reload, student, tallyOf, titled } from './setup/b20-school';
+
+/** A copy of a life to play on, leaving the one the other tests read as it was. */
+const reopen = (sim: Simulation) => reload(sim);
 
 const SEED = 'b20-school-shifts';
 const END = at(2026, 11, 1);
+const REVIEWED = at(2026, 12, 12);
 const HOURLY = WORK_STUDY.hourly;
 /** The wages paid into the bank: each payday's posting into an account of the player's. */
 const wagesPaid = (sim: Simulation) => sim.universe.transactions.filter((t) => t.category === 'salary').map((t) => t.postings.find((p) => p.amount > 0 && sim.universe.accounts[p.accountId]?.ownerId === sim.player.id)!.amount);
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 
 describe('B1/B3: work-study shifts worked, slept through and excused ill (seed b20-school-shifts)', () => {
-  const S = {} as { a: Simulation; b: Simulation; c: Simulation; slept: number[]; asked?: { at: number; hours: number }; refusedB?: string };
+  const S = {} as { a: Simulation; b: Simulation; c: Simulation; slept: number[]; asked?: { at: number; hours: number }; refusedB?: string; reviewA: number; reviewB: number };
   beforeAll(() => {
     S.a = play(student(SEED, { wealth: 'modest' }), END);
     S.slept = [];
     S.b = play(student(SEED, { wealth: 'modest' }), END, (sim) => {
       const p = partsOf(sim);
-      if (p.weekday !== 6 || p.hour !== 9 || sim.now < at(2026, 9, 19)) return false;
+      if (p.weekday !== 6 || p.hour !== 9 || sim.now < at(2026, 9, 19) || sim.now > END) return false;
       if (!sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok) return false;
       S.slept.push(at(p.year, p.month, p.day, 10));
       return true;
     });
     S.refusedB = S.b.execute({ kind: 'school.request_conversion', payload: {} }).error;
+    // Both played on to the fall's review, the same way, for what the review makes of the shifts.
+    S.reviewA = play(student(SEED, { wealth: 'modest' }), REVIEWED).player.school!.history[0]!.attendance;
+    S.reviewB = play(reopen(S.b), REVIEWED).player.school!.history[0]!.attendance;
     S.c = play(student(SEED, { wealth: 'modest' }), at(2026, 9, 18, 20));
     // TEST SETUP: down with the flu from Friday evening, as `careFor` gives one; the call in sick is the player's.
     healthOf(S.c.player).fluUntil = S.c.now + 40 * MS_HOUR;
@@ -75,6 +82,11 @@ describe('B1/B3: work-study shifts worked, slept through and excused ill (seed b
     // The hours not worked are owed nothing: none waits for a payday.
     expect(S.b.player.school!.workStudy.owedHours).toBe(0);
     expect(S.a.player.school!.workStudy.owedHours).toBe(6);
+  });
+
+  it('later: the shifts slept through are counted against attendance at the fall’s review', () => {
+    expect(S.reviewA).toBe(1);
+    expect(S.reviewB).toBeLessThan(S.reviewA);
   });
 
   it('no leak: the classes are the same, and the bank differs by the wages and by nothing else', () => {
