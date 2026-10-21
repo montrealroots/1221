@@ -19,7 +19,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
-import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';

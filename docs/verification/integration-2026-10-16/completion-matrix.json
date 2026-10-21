@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 527 of 641 rows in scope Implemented And Verified (82.2%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -7607,6 +7607,29 @@
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
   },
   {
+   "id": "school.choose_showcase",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (The Actor Showcase (`coursework.showcase`))",
+   "goal": "Take part in the School's Actor Showcase in the last term: choose two scenes from the faculty's options, prepare them as the course's coursework, and play them in New York and Los Angeles, each judged and kept | The Actor Showcase (`coursework.showcase`)",
+   "entry": "`school.choose_showcase`, at School, Coursework, The Actor Showcase (`/workspace/school?tab=coursework`). Opens: In your last spring term, from its first day, once you’ve read the guide’s chapter “Drama School”. | guide: Drama School | SchoolShowcase.tsx",
+   "preconditions": "To be in your last spring term, enrolled in it: not on leave, and not in an additional term.; Every Incomplete made up by the end of the term’s fourth week, its Friday at five. One still open then keeps you out.; Two different scenes from the options, each in one of its parts.; Repeating, Extra Terms And Incompletes first: An Incomplete still open at the end of the term’s fourth week keeps you out of the showcase. | In the program's last term, enrolled in it: not on leave, not an additional term (beginShowcase); two different scenes among the course's options, before the scenes are chosen (choiceRefusal); to take part, no course Incomplete at the end of the term's fourth week (decide) | refused where: — (also choiceRefusal)",
+   "reads": "src/engine/systems/proshowcase.ts",
+   "decisions": "chooses: options, assignments",
+   "validation": "refusals: — (also choiceRefusal) | Time: None to choose. Each rehearsal call takes three hours; New York’s days ten hours and eight hours, and Los Angeles’s a day and a night, each with its trip (an estimate); Money: None: the School takes you | costs: The two scenes set as DRAM 793b's pieces of coursework, due at the first showcase day, each with a partner from the class; at the fourth week's end, eligibility decided and, with none chosen, the faculty's first two set; each rehearsal call kept moves both scenes' rehearsal and partner preparation; each showcase day judges each scene with judgeWork into person.work, the journey and pro.showcase.performed; a day missed is a missed call and a missed meeting of the course; DRAM 793b is settled after Los Angeles",
+   "changes": "Your two scenes become pieces of Actor Showcase’s coursework, due in New York, each with a partner from your class.",
+   "later": "At the end of the term’s fourth week, the School reads your Incompletes. With none, you’re in, and the faculty choose two scenes for you if you haven’t.; At the first showcase day, each scene is shown and gets the faculty’s note. It’s played again the next day, and in Los Angeles it’s shown again with the note taken.; Actor Showcase is settled after Los Angeles, not at the term review. A course with half its pieces not shown isn’t passed, and the degree needs every course passed.",
+   "systems": "Preparing Coursework, immediate: Your two scenes become pieces of coursework, each prepared with its own steps.; Feedback And Your Notes, evaluation: Each scene’s note comes at its first showcase day, and Los Angeles shows whether you took it.; The Career Screen, history: How each scene went at each showcase day stays on your professional record. | the School's Coursework tab, The Actor Showcase; settleCourses: DRAM 793b's pass, after the showcase's last day; the Commencement handler: degreeShortfall, which withholds the degree on a course not passed; the Player Profile's reliability: the School's call tally; the agent's follow-up after the showcase (brief 19's W3), wired at integration",
+   "sees": "A forecast is what a scene would come to fully prepared on a good day. It’s a forecast, not a result.; Each day’s band is how that scene came out that day: Unready, Working, Strong or Exceptional, with its score of 100.; A showcase day missed counts as a missed call and an unexcused absence from Actor Showcase, and your scenes aren’t seen there. Ill, you’re excused.",
+   "saveLoad": "The Career Screen: How each scene went at each showcase day stays on your professional record. | Person.pro.showcase: term, eligible, options, scenes (id, role, chosenAt, assignmentId, by, prep), performed (city, at, band, overall, scene), missed, outstanding; the pieces in school.coursework; DRAM 793b's course record",
+   "failure": "refusals said in the player's words: — (also choiceRefusal) | Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its command is traced in docs/verification/connected-journey/TRACE.md. The School’s follow-up after the showcase is the agent’s system’s, wired at integration",
+   "implementation": "`systems/proshowcase.ts` | SchoolShowcase.tsx",
+   "evidence": "`school.choose_showcase`: `tests/pro-showcase.test.ts` ## Productions And Casting Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read. | 1 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
    "id": "banking.1",
    "group": "Remaining Area: banking",
    "kind": "area item",
@@ -10339,13 +10362,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/signature-fresh.json ‘npx vite-node tools/genre-signature.ts -- --fresh --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/signature-validate.json ‘npx vite-node tools/genre-signature.ts -- --validate --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/genre-identity.json ‘npx vite-node tools/genre-identity.ts -- --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/genre-audit.md ‘npx vite-node tools/genre-audit.ts -- --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/ag-criteria.txt ‘node tools/ag-criteria.mjs …/ag-baseline.json’ (static); docs/verification/integration-2026-10-16/genres-09/after/interpretation.json ‘npx vite-node tools/interpretation.ts -- --fresh --stage --out …’ (static)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The same commands and seeds on the tested commit, 81eadac9, through measure.sh (genres-a, genres-b, stage, ag): every output byte for byte brief 10’s final, so each genre criterion holds where it held and fails where it failed: S1 designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); S2 designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; S3 designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); S4 0 briefs of different genres identical in every number; Genre Audit helps its own brief in 149 of 149, moves another genre’s in 0; G3 Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; G4 Meets: 2 briefs, 4 readings at least; 4 reader behaviors; G5 Meets: 50.66 at 30 known, 53.1 at 100",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "id": "genres.8-docs",
@@ -11140,13 +11164,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2-ag-baseline.json’ (measurement (no draw))",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): tools/ag-baseline.ts and tools/ag-criteria.mjs on the tested commit, 81eadac9 (measure.sh ag): F2 as written fails as before, named 2.43 against 1.14 (2.13×), unread 0, the largest gain in 308 of 447 (68.9%), reported beside F2-A10 and not counted for the advice; the output is byte for byte brief 10’s",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "id": "advice.F2A10-a",
@@ -11222,7 +11247,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11297,7 +11322,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11349,7 +11374,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11425,7 +11450,7 @@
     "commit": "a683f9ea",
     "watch": "engine"
    },
-   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on a683f9ea, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -12272,13 +12297,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): measure.sh journeys-a, journeys-b and l3r on the tested commit, 81eadac9, seeds bj-0 and bj-1, all four profiles: l3r.json byte for byte brief 10’s, met: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) growth 1.253 at least, 0 falls unexplained; L3-R met: True",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "id": "L3-R.c",
@@ -12418,13 +12444,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <after> <part>’ (measurement)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): Every part of measure.sh but the two mutation runs on the tested commit, 81eadac9: every output byte for byte brief 10’s final but for the fields this pass added to two tools, so every criterion that held holds and those that failed (ST6-R (a), (c), (e), (g); F2, ST3, ST6, H4 and L3 as written) fail as they did; L1 as written fails as it did and holds as clarified (final/README.md)",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "id": "judge.tests",
@@ -12888,14 +12915,15 @@
    "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94; on brief 10's tested commit (567d27dd): restrained 50, expansive 44 of 96; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "restrained 50, expansive 33 of 85",
    "after": "restrained 49, expansive 37 of 89",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12916,14 +12944,15 @@
    "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material; on brief 10's tested commit (567d27dd): 82 of 82, no house signal on any material; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12969,14 +12998,15 @@
    "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 10's tested commit (567d27dd): drama {\"r\": 25, \"e\": 7, \"n\": 32}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "drama 25 / 0",
    "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12997,14 +13027,15 @@
    "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100; on brief 10's tested commit (567d27dd): 2,574 of 2,574 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "2,277 of 2,277",
    "after": "2,385 of 2,385",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13050,14 +13081,15 @@
    "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95; on brief 10's tested commit (567d27dd): 97 of 97; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "84 of 86",
    "after": "88 of 90",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13078,14 +13110,15 @@
    "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80; on brief 10's tested commit (567d27dd): 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13106,14 +13139,15 @@
    "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say; on brief 10's tested commit (567d27dd): I1 to I5, S1 to S4 and G2 as their rows say; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "held",
    "after": "see I1 to I5, S1 to S4 and G2",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13134,14 +13168,15 @@
    "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 10's tested commit (567d27dd): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13162,14 +13197,15 @@
    "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80; on brief 10's tested commit (567d27dd): 40: ST1 50 / 45 of 96, ST8 82 of 82; 75: ST1 52 / 42 of 96, ST8 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13190,14 +13226,15 @@
    "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520; on brief 10's tested commit (567d27dd): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,574 of 2,574; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "8,010 and 9,117 at 100",
    "after": "8,010, 9,117 and 2,385 at 100",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13218,14 +13255,15 @@
    "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%; on brief 10's tested commit (567d27dd): pace 26.8%, scale 23.5%, structure 35.6%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
    "after": "the same",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13246,14 +13284,15 @@
    "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%; on brief 10's tested commit (567d27dd): designed sd 1.26, restrained ahead 69.6%, expansive 28.4%, heldOut sd 1.14, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.38, restrained ahead 52.1%, expansive 45.8%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
    "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13274,14 +13313,15 @@
    "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}; on brief 10's tested commit (567d27dd): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 44.3, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 82, \"evenActorFollowsSuitability\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "100%",
    "after": "100% on every sample",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13302,14 +13342,15 @@
    "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 10's tested commit (567d27dd): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 98}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "≥ 98.7%",
    "after": "99.3%, 98.0%, 97.8%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13330,14 +13371,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work; on brief 10's tested commit (567d27dd): Meets: every ability at 0.5 or more on a kind of work; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13358,14 +13400,15 @@
    "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina); on brief 10's tested commit (567d27dd): Meets: highest 0.444 (presence, listening); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "highest 0.536",
    "after": "highest 0.527",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13386,14 +13429,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43; on brief 10's tested commit (567d27dd): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, adaptability cv 0.39, composure cv 0.41; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13414,14 +13458,15 @@
    "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4; on brief 10's tested commit (567d27dd): Meets: 1.875 sessions' worth against 4; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "1.875 of 4",
    "after": "1.875 of 4",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13442,14 +13487,15 @@
    "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 10's tested commit (567d27dd): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "36%",
    "after": "36%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13470,14 +13516,15 @@
    "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more; on brief 10's tested commit (567d27dd): Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "53 of 149; 8 actors",
    "after": "53 of 149; 8 actors",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13498,14 +13545,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 10's tested commit (567d27dd): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13526,14 +13574,15 @@
    "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100; on brief 10's tested commit (567d27dd): Meets: 50.66 at 30 known, 53.1 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "51.23 → 53.86",
    "after": "51.22 → 53.86",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13554,14 +13603,15 @@
    "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 10's tested commit (567d27dd): Meets: briefs 4560 of 4560; scenes 67 of 67; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13582,14 +13632,15 @@
    "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming; on brief 10's tested commit (567d27dd): Meets: own 100 to 100 on 67 scenes, the partner never coming; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
    "after": "own 100 on 60 scenes",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13610,14 +13661,15 @@
    "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 10's tested commit (567d27dd): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "sd 0",
    "after": "sd 0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13638,14 +13690,15 @@
    "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100; on brief 10's tested commit (567d27dd): Meets: together 93.05, 86.1, 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "93.1, 86.1, 100",
    "after": "93.1, 86.1, 100",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13666,14 +13719,15 @@
    "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30; on brief 10's tested commit (567d27dd): Meets: brief: emotionalDepth specialist 93 of 298; scene: listening specialist 17 of 67; night: discipline specialist 7 of 30; casting: emotionalDepth specialist 6 of 30; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "briefs 96 of 298; scenes 20 of 56",
    "after": "briefs 96 of 298; scenes 20 of 60",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13694,14 +13748,15 @@
    "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%); on brief 10's tested commit (567d27dd): Meets: ahead of half on 438 of 438; within a point of the best on 131 (29.9%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "427 of 427; 26.5%",
    "after": "431 of 431; 26.9%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13722,14 +13777,15 @@
    "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62; on brief 10's tested commit (567d27dd): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.58; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0%; 2.61",
    "after": "0%; 2.62",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13808,7 +13864,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14022,14 +14078,15 @@
    "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0; on brief 10's tested commit (567d27dd): specialist 0, beginner 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14227,7 +14284,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14272,14 +14329,15 @@
    "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786); on brief 10's tested commit (567d27dd): designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0.90, 0.88, 0.90, 0.87",
    "after": "0.901, 0.883, 0.904, 0.880",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14300,14 +14358,15 @@
    "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×; on brief 10's tested commit (567d27dd): designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
    "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14328,14 +14387,15 @@
    "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%); on brief 10's tested commit (567d27dd): designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
    "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14356,14 +14416,15 @@
    "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number; on brief 10's tested commit (567d27dd): 0 briefs of different genres identical in every number; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14384,14 +14445,15 @@
    "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 10's tested commit (567d27dd): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "149 of 149; 0; 56 to weigh",
    "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
    "sourceStatus": "Met",
    "measured": {
     "commit": "ecd961cc",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/coursework.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14582,7 +14644,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15000,7 +15062,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15027,7 +15089,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15054,7 +15116,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15081,7 +15143,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15108,7 +15170,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15135,7 +15197,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15162,7 +15224,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15189,7 +15251,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15216,7 +15278,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15243,7 +15305,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15270,7 +15332,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15297,7 +15359,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15324,7 +15386,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15351,7 +15413,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15378,7 +15440,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15405,7 +15467,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15432,7 +15494,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15459,7 +15521,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15486,7 +15548,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15513,7 +15575,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15540,7 +15602,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15567,7 +15629,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15594,7 +15656,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15621,7 +15683,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15670,7 +15732,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15697,7 +15759,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15724,7 +15786,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15751,7 +15813,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15778,7 +15840,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15805,7 +15867,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15832,7 +15894,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15859,7 +15921,7 @@
     "commit": "ecd961cc",
     "watch": "engine"
    },
-   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
+   "missing": "It was measured on ecd961cc, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/coursework.ts, …): measure it again"
   }
  ]
 }

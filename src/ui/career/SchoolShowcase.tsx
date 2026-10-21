@@ -48,11 +48,11 @@ export function ShowcasePanel() {
   return (
     <Panel title="The Actor Showcase" subtitle="DRAM 793b, your last term" help="school.choose_showcase">
       <div className="col gap-4">
-        <p className="small" style={{ margin: 0 }}>Two scenes you choose and rehearse, which the Bulletin says are presented to agents, managers and casting directors in New York and Los Angeles. Each scene is judged at each showcase day on how prepared it is, how you are that day and what the scene asks.</p>
+        <p className="small" style={{ margin: 0 }}>Two scenes you choose and rehearse, which the Bulletin says are presented to agents, managers and casting directors in New York and Los Angeles. How each scene goes at each showcase day depends on how prepared it is, how you are that day and what the scene asks.</p>
         <dl className="col gap-2 small" style={{ margin: 0 }}>
           <div><dt className="strong">New York</dt><dd style={{ margin: 0 }}>{callWords(ny1!)}; and {callWords(ny2!)}.</dd></div>
           <div><dt className="strong">Los Angeles</dt><dd style={{ margin: 0 }}>{callWords(la!)}.</dd></div>
-          {first && lastCall && <div><dt className="strong">Rehearsal Calls</dt><dd style={{ margin: 0 }}>{`Tuesday to Friday from 3 PM for three hours, ${formatDate(first, zone).replace(/, \d{4}$/, '')} to ${formatDate(lastCall, zone)}. Each works both scenes on their feet with your partners.`}</dd></div>}
+          {first && lastCall && <div><dt className="strong">Rehearsal Calls</dt><dd style={{ margin: 0 }}>{`Tuesday to Friday from 3 PM for three hours, ${formatDate(first, zone).replace(/, \d{4}$/, '')} to ${formatDate(lastCall, zone)}. Each call works both scenes on their feet with your partners.`}</dd></div>}
           <div><dt className="strong">Taking Part</dt><dd style={{ margin: 0 }}>{taking}</dd></div>
         </dl>
         {sc.eligible !== false && (sc.scenes.length ? <YourScenes /> : <Options />)}
@@ -109,6 +109,7 @@ function Options() {
   const person = useWorld((s) => s.player);
   const [chosen, setChosen] = useState<string[]>([]);
   const options = showcaseOptions(sim, person);
+  const by = showcaseCalendar(showcaseOf(person)!.term).checkBy;
   const no = choiceRefusal(sim, person, chosen);
   const byScene = new Map<string, ShowcaseOption[]>();
   for (const o of options) byScene.set(o.scene.id, [...(byScene.get(o.scene.id) ?? []), o]);
@@ -116,7 +117,7 @@ function Options() {
   return (
     <fieldset className="col gap-3" style={{ border: 0, padding: 0, margin: 0 }}>
       <legend className="small strong">The Faculty’s Options</legend>
-      <p className="xs dim" style={{ margin: 0 }}>Choose two scenes, each in one of its parts. Each scene’s forecast is the scene fully prepared, on a good day: a forecast, not a result. If you haven’t chosen by the end of the term’s fourth week, the faculty choose their first two.</p>
+      <p className="xs dim" style={{ margin: 0 }}>{`Choose two scenes, each in one of its parts. Each scene’s forecast is the scene fully prepared, on a good day: a forecast, not a result. If you haven’t chosen by ${formatWeekdayDate(by, sim.zone)}, the faculty choose their first two.`}</p>
       {[...byScene.values()].map((parts) => (
         <div key={parts[0]!.scene.id} className="col gap-1">
           <p className="small" style={{ margin: 0 }}><strong>{parts[0]!.scene.play}</strong>{`, ${byWords(parts[0]!.scene)} (${parts[0]!.scene.year}). ${parts[0]!.sceneNote}`}</p>

@@ -1,0 +1,149 @@
+{
+ "src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [coursework.showcase]": {
+  "status": "Rewritten",
+  "hash": "ac433a3a0adf",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [evaluation]": {
+  "status": "Rewritten",
+  "hash": "b135365bcce5",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [history]": {
+  "status": "Rewritten",
+  "hash": "60fe3835f07a",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [immediate]": {
+  "status": "Rewritten",
+  "hash": "362402ffd817",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "d2d73a0b0f01",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/showcase.ts#TERM_WEEK": {
+  "status": "Rewritten",
+  "hash": "c71b956df4eb",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#beginShowcase": {
+  "status": "Rewritten",
+  "hash": "bf2cab54e114",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#callWords": {
+  "status": "Rewritten",
+  "hash": "248d1f017c77",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#choiceRefusal": {
+  "status": "Rewritten",
+  "hash": "095e41528364",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#decide": {
+  "status": "Rewritten",
+  "hash": "5f623ab9e315",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#EARLY_DEGREE": {
+  "status": "Rewritten",
+  "hash": "47ebf52e34bb",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#registerShowcase": {
+  "status": "Rewritten",
+  "hash": "c8e043c644a4",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#settleShowcaseCourse": {
+  "status": "Rewritten",
+  "hash": "96af876a8efe",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#SHOWCASE": {
+  "status": "Rewritten",
+  "hash": "6ac51bd73eec",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#SHOWCASE_COURSE": {
+  "status": "Rewritten",
+  "hash": "d6016e71c8bc",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#showcaseCalendar": {
+  "status": "Rewritten",
+  "hash": "4d992ceead2c",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/proshowcase.ts#showcaseOptions": {
+  "status": "Rewritten",
+  "hash": "8ccaaf92e768",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/SchoolShowcase.tsx#EarlyDegree": {
+  "status": "Rewritten",
+  "hash": "47354255a547",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/SchoolShowcase.tsx#Options": {
+  "status": "Rewritten",
+  "hash": "b644befe2134",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/SchoolShowcase.tsx#ShowcasePanel": {
+  "status": "Rewritten",
+  "hash": "392cafd58ab0",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/career/SchoolShowcase.tsx#YourScenes": {
+  "status": "Rewritten",
+  "hash": "0fe884fc2890",
+  "on": "2026-10-21",
+  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
+  "first": "Rewritten And Verified"
+ }
+}

@@ -568,10 +568,10 @@
  },
  "src/engine/systems/pro.ts#pathwayOf": {
   "status": "Rewritten",
-  "hash": "37551d4c4b8d",
+  "hash": "41ddd87be735",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "tests/pro-showcase.test.ts 'graduating early' reads the candidate's line on the Career screen's Overview, the Bulletin's sentence added (brief 19's A5)",
+  "first": "Rewritten And Verified"
  },
  "src/engine/systems/pro.ts#placeOf": {
   "status": "Rewritten",

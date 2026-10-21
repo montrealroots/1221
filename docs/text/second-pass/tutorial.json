@@ -15,10 +15,10 @@
  },
  "src/engine/content/guide/index.ts#GOALS [coursework]": {
   "status": "Rewritten",
-  "hash": "85c798692df4",
-  "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the contents with every group's lead; read on the built app's How This Works contents, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
-  "first": "Pending"
+  "hash": "48e5359fa28b",
+  "on": "2026-10-21",
+  "evidence": "tests/guide.test.ts holds the contents and its entries' order; the lead names the Actor Showcase entry, last in Coursework And Partners",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/index.ts#GOALS [craft]": {
   "status": "Rewritten",
@@ -176,10 +176,10 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten",
-  "hash": "6da36150687d",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
-  "first": "Pending"
+  "hash": "1885e64d7f7f",
+  "on": "2026-10-21",
+  "evidence": "tests/tutorial.test.ts and tests/guide.test.ts hold the chapter's opens and words; the Actor Showcase paragraph names the controls tests/pro-showcase.test.ts renders",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
   "status": "Rewritten",

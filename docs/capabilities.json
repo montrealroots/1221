@@ -2983,6 +2983,49 @@
         "verified": "Implemented"
       },
       "limits": "Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck"
+    },
+    {
+      "id": "school-showcase",
+      "goal": "Take part in the School's Actor Showcase in the last term: choose two scenes from the faculty's options, prepare them as the course's coursework, and play them in New York and Los Angeles, each judged and kept",
+      "entry": "School, Coursework, The Actor Showcase: the days and rehearsal calls, Taking Part, the faculty's options and Choose These Scenes, then the scenes and how each day went; the scenes' own cards below it; the showcase's calls on the calendar; School, Terms And Award, Finishing Early",
+      "entities": [
+        "ShowcaseRecord",
+        "Assignment",
+        "CourseRecord"
+      ],
+      "state": "src/engine/systems/proshowcase.ts",
+      "preconditions": "In the program's last term, enrolled in it: not on leave, not an additional term (beginShowcase); two different scenes among the course's options, before the scenes are chosen (choiceRefusal); to take part, no course Incomplete at the end of the term's fourth week (decide)",
+      "commands": [
+        "school.choose_showcase"
+      ],
+      "effects": "The two scenes set as DRAM 793b's pieces of coursework, due at the first showcase day, each with a partner from the class; at the fourth week's end, eligibility decided and, with none chosen, the faculty's first two set; each rehearsal call kept moves both scenes' rehearsal and partner preparation; each showcase day judges each scene with judgeWork into person.work, the journey and pro.showcase.performed; a day missed is a missed call and a missed meeting of the course; DRAM 793b is settled after Los Angeles",
+      "persists": "Person.pro.showcase: term, eligible, options, scenes (id, role, chosenAt, assignmentId, by, prep), performed (city, at, band, overall, scene), missed, outstanding; the pieces in school.coursework; DRAM 793b's course record",
+      "readers": [
+        "the School's Coursework tab, The Actor Showcase",
+        "settleCourses: DRAM 793b's pass, after the showcase's last day",
+        "the Commencement handler: degreeShortfall, which withholds the degree on a course not passed",
+        "the Player Profile's reliability: the School's call tally",
+        "the agent's follow-up after the showcase (brief 19's W3), wired at integration"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/school",
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/pro-showcase.test.ts",
+      "provenance": "docs/research/career-2026-10-20/yale.md (B27 pp.21, 26 and 33; B26 p.6; SC25 and SC26); the calls' hours, the rehearsal calls and the faculty's shortlist are the game's estimates, said so on the screen",
+      "tests": [
+        "tests/pro-showcase.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Implemented"
+      },
+      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its command is traced in docs/verification/connected-journey/TRACE.md. The School’s follow-up after the showcase is the agent’s system’s, wired at integration"
     }
   ]
 }

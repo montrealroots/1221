@@ -16,9 +16,12 @@ const CHAPTER = CHAPTER_FOR['school.choose_showcase']!.title;
 const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const word = (n: number): string => WORDS[n] ?? String(n);
 const hours = (minutes: number): string => `${word(minutes / 60)} hours`;
-/** The week the Incompletes are read in, as prose says it: the fourth. */
-const WEEK = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'][SHOWCASE.checkWeek - 1] ?? `${SHOWCASE.checkWeek}th`;
+/** The week the Incompletes are read in, as prose says it: the term's fourth week. */
+const TERM_WEEK = ['term’s first week', 'term’s second week', 'term’s third week', 'term’s fourth week', 'term’s fifth week', 'term’s sixth week'][SHOWCASE.checkWeek - 1]!;
 const [NY1, NY2] = SHOWCASE.days;
+const ROUTE = '/workspace/school';
+/** The School screen's section the showcase is on: a constant, as `tools/title-case.mjs` reads a `tab` literal as a label. */
+const COURSEWORK_TAB = 'coursework';
 
 export const SHOWCASE_GUIDE: readonly GuideEntry[] = [
   {
@@ -28,7 +31,7 @@ export const SHOWCASE_GUIDE: readonly GuideEntry[] = [
     covers: ['school.choose_showcase'],
     synonyms: ['showcase', 'DRAM 793b', 'showcase scenes', 'New York showcase', 'Los Angeles showcase', 'choose my scenes', 'last term'],
     questions: ['When is the showcase?', 'How do I choose my showcase scenes?', 'Can an Incomplete keep me out of the showcase?', 'What happens if I miss a showcase day?'],
-    where: { route: '/workspace/school', tab: 'coursework', label: 'School, Coursework, The Actor Showcase' },
+    where: { route: ROUTE, tab: COURSEWORK_TAB, label: 'School, Coursework, The Actor Showcase' },
     available: `In your last spring term, from its first day, once you’ve read the guide’s chapter “${CHAPTER}”.`,
     short: `Your last term ends with the Actor Showcase (DRAM 793b): ${word(SHOWCASE.scenes)} scenes you choose, played in New York on the Monday and Tuesday after classes end, and in Los Angeles the Tuesday after. The Bulletin says the showcase is presented to agents, managers and casting directors.\n\nYou choose your scenes from the faculty’s options, prepare them as you prepare any piece, and play them at each showcase day. Each day judges both scenes, and the record keeps how each one went.`,
     steps: [
@@ -40,7 +43,7 @@ export const SHOWCASE_GUIDE: readonly GuideEntry[] = [
     ],
     needs: [
       'To be in your last spring term, enrolled in it: not on leave, and not in an additional term.',
-      `Every Incomplete made up by the end of the term’s ${WEEK} week, its Friday at five. One still open then keeps you out.`,
+      `Every Incomplete made up by the end of the ${TERM_WEEK}, its Friday at five. One still open then keeps you out.`,
       `${word(SHOWCASE.scenes).replace(/^\w/, (c) => c.toUpperCase())} different scenes from the options, each in one of its parts.`,
     ],
     costs: [
@@ -50,11 +53,11 @@ export const SHOWCASE_GUIDE: readonly GuideEntry[] = [
     reads: [
       { label: 'The Faculty’s Options', value: `${word(SHOWCASE.offered).replace(/^\w/, (c) => c.toUpperCase())} scenes, each in either part, ranked by how each would come out for you fully prepared, then by the genres you know and the scenes you’ve done well with`, estimate: true },
       { label: 'Each Showcase Day', value: 'Each scene’s preparation, how you are that day, and what the scene asks' },
-      { label: 'Taking Part', value: `Your course records: any course still Incomplete at the end of the term’s ${WEEK} week` },
+      { label: 'Taking Part', value: `Your course records: any course still Incomplete at the end of the ${TERM_WEEK}` },
     ],
     now: ['Your two scenes become pieces of Actor Showcase’s coursework, due in New York, each with a partner from your class.'],
     later: [
-      `At the end of the term’s ${WEEK} week, the School reads your Incompletes. With none, you’re in, and the faculty choose two scenes for you if you haven’t.`,
+      `At the end of the ${TERM_WEEK}, the School reads your Incompletes. With none, you’re in, and the faculty choose two scenes for you if you haven’t.`,
       'At the first showcase day, each scene is shown and gets the faculty’s note. It’s played again the next day, and in Los Angeles it’s shown again with the note taken.',
       'Actor Showcase is settled after Los Angeles, not at the term review. A course with half its pieces not shown isn’t passed, and the degree needs every course passed.',
     ],
@@ -65,20 +68,20 @@ export const SHOWCASE_GUIDE: readonly GuideEntry[] = [
     ],
     unavailable: [
       'The Actor Showcase is in your last spring term.',
-      `You can’t take part in the Actor Showcase while a course you were given an Incomplete in was still incomplete at the end of the term’s ${WEEK} week.`,
+      `You can’t take part in the Actor Showcase while a course you were given an Incomplete in was still incomplete at the end of the ${TERM_WEEK}.`,
       'Choose two scenes, and two different ones.',
       'Your scenes are already chosen.',
     ],
     mistakes: [
       'Choosing without reading the notes. A scene whose forecast is low for you stays low, however well you prepare it.',
-      `Leaving an Incomplete for later. Make it up by the end of the term’s ${WEEK} week, or you’re out of the showcase.`,
+      `Leaving an Incomplete for later. Make it up by the end of the ${TERM_WEEK}, or you’re out of the showcase.`,
     ],
     next: ['Prepare both scenes on their cards, and answer your partners when they ask to rehearse.'],
     related: ['coursework.prepare', 'coursework.feedback', 'school.repeat', 'career.overview'],
     connections: [
       { to: 'coursework.prepare', kind: 'immediate', why: 'Your two scenes become pieces of coursework, each prepared with its own steps.' },
       { to: 'coursework.feedback', kind: 'evaluation', why: 'Each scene’s note comes at its first showcase day, and Los Angeles shows whether you took it.' },
-      { to: 'school.repeat', kind: 'prerequisite', why: `An Incomplete still open at the end of the term’s ${WEEK} week keeps you out of the showcase.` },
+      { to: 'school.repeat', kind: 'prerequisite', why: `An Incomplete still open at the end of the ${TERM_WEEK} keeps you out of the showcase.` },
       { to: 'career.overview', kind: 'history', why: 'How each scene went at each showcase day stays on your professional record.' },
     ],
     example: {
