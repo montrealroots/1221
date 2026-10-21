@@ -1,10 +1,13 @@
 /**
- * The stops at two auditions set for the same hour (brief 19, the app part's walk on `a43b4f8f`, 2026-10-21): from
- * `audition.json`, where Hester Vane in Hudson and Ivy in Brooklyn are both at 11 AM on June 5, 2029, the keyboard
- * presses Advance and This Evening, Advance on On The Way, and Go at the first stop, then reads what comes next and the
- * Opportunities tab. It presses Go, which commits, so it runs on a page of its own and writes nothing but its output.
- * Until `a43b4f8f` she was judged at both; since, the one gone to first stands and the other is missed with where she
- * was, and this reads whether the clock stops at the second, as On The Way says it will.
+ * The stops at two auditions set for the same hour (brief 19, the app part's walk, 2026-10-21): from `audition.json`,
+ * where Hester Vane in Hudson and Ivy in Brooklyn are both at 11 AM on June 5, 2029, the keyboard presses Advance and
+ * This Evening, Advance on On The Way, and Go at the first stop, then reads what comes next and the Opportunities tab.
+ * It presses Go, which commits, so it runs on a page of its own and writes nothing but its output. Until `a43b4f8f` she
+ * was judged at both; from it, the one gone to first stands and the other is missed with where she was. Run on
+ * `a43b4f8f`, it found On The Way saying the clock stops at each one, the first stop saying nothing of Ivy's, and the
+ * clock running past Ivy's with no stop after Go. From `40eab86a` the stop names the clash and says Ivy's is missed and
+ * the clock won't stop at it, and On The Way names the pair; run on `63fe7391`, the clock did as they say, though On
+ * The Way still opened by saying it stops at each one.
  *
  *   node docs/verification/career-2026-10-20/app/clash-stop.mjs BASE SAVEDIR > OUT.txt
  */
