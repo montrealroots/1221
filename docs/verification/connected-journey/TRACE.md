@@ -407,7 +407,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - At the end of the term’s fourth week, the School reads your Incompletes. With none, you’re in, and the faculty choose two scenes for you if you haven’t.
   - At the first showcase day, each scene is shown and gets the faculty’s note. It’s played again the next day, and in Los Angeles it’s shown again with the note taken.
   - Actor Showcase is settled after Los Angeles, not at the term review. A course with half its pieces not shown isn’t passed, and the degree needs every course passed.
-- **Tested by:** `school.choose_showcase`: `tests/pro-app.test.ts`, `tests/pro-showcase.test.ts`
+- **Tested by:** `school.choose_showcase`: `tests/journey-career.test.ts`, `tests/pro-app.test.ts`, `tests/pro-showcase.test.ts`
 
 ## Productions And Casting
 
@@ -1050,7 +1050,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1074,7 +1074,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1099,7 +1099,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - New recorded work after it shows under What’s Missing as worth adding.
-- **Tested by:** `pro.cut_reel`: `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.cut_reel`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### The Agent And How To Reach Him (`career.agent`)
 
@@ -1128,7 +1128,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - His office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
   - After a pass, his office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
-- **Tested by:** `pro.agent_notice`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.agent_notice`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### His Office’s Answers And The Meeting (`career.agent-answers`)
 
@@ -1152,7 +1152,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - After a meeting you keep, his office tells you its decision five days later: an offer or a pass.
   - A meeting you miss closes the approach, since a meeting comes before an offer in the game.
-- **Tested by:** `pro.supply_material`: `tests/journey-agent.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.supply_material`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### Why It Went This Way (`career.reasons`)
 
@@ -1198,7 +1198,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
-- **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### Your Work And Its Pay (`career.pay`)
 
@@ -1275,7 +1275,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - Each union bill is taken from your bank on its day. If the bank can’t cover it, it’s owed under Bills Owed and paid off the first day there’s money.
   - Union pay has its working dues taken before it reaches you.
-- **Tested by:** `pro.join_sag`: `tests/propay-screen.test.ts`, `tests/propay.test.ts`
+- **Tested by:** `pro.join_sag`: `tests/journey-career.test.ts`, `tests/propay-screen.test.ts`, `tests/propay.test.ts`
 
 ### Finding Work And Submitting (`career.opportunities`)
 
@@ -1323,7 +1323,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
-- **Tested by:** `pro.prepare`: `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.prepare`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
 
 ### Offers And Booked Work (`career.offers`)
 

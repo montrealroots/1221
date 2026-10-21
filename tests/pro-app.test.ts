@@ -169,7 +169,9 @@ describe('T1: the Career screen’s own words, read on the built app', () => {
 describe('T1: the Calendar’s help says what the career’s commitments ask', () => {
   it('says an audition, a meeting at an agent’s office and a day of work take the trip as made, as their handlers do (held in play by tests/pro-work.test.ts, an audition in Brooklyn gone to from New Haven)', () => {
     const entry = GUIDE_BY_ID['day.calendar']!;
-    expect(entry.needs).toContain('An audition, a meeting at an agent’s office and a day of booked work are different: the game takes the trip there as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.');
-    expect(entry.reads.find((r) => r.label === 'What Needs You There')!.value).toMatch(/the career’s auditions, meetings and work days$/);
+    // Joined at the playthroughs' merge (2026-10-21) with their own sentence for the same rule: the trip taken as made,
+    // the town not asked, the clock not moved by the trip, and an audition not gone to from a day of booked work.
+    expect(entry.needs).toContain('A meeting with an agent’s office, an audition in person and a day of work you’ve booked take their trip with them: the game takes the trip as made, so the town isn’t asked, and the trip each way, which its dialog gives, doesn’t move the clock. You need to be awake, out of hospital and not laid up, and an audition can’t be gone to from a day of booked work.');
+    expect(entry.reads.find((r) => r.label === 'What Needs You There')!.value).toMatch(/a meeting with an agent’s office, an audition or a callback in person, and a day of work you’ve booked$/);
   });
 });

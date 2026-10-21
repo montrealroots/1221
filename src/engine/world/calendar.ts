@@ -37,7 +37,8 @@ export interface CalendarLegendEntry {
  * Career came back with brief 19's professional career (2026-10-21): the agent's meeting and dates, the auditions,
  * casting's steps, the offers and the work days are filed under it (`systems/proagent.ts`, `systems/projobs.ts`). They
  * were drawn with no color and called "Career" only by the category's own name until the app walk of that day gave them
- * this row. The pay's paydays and union bills stay Money's.
+ * this row (the playthroughs found it the same day and gave one too; the two met at their merge, and this one stayed).
+ * The pay's paydays and union bills stay Money's.
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Your own plans, and your birthday, appointments and tax dates.' },

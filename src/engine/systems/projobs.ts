@@ -42,9 +42,10 @@
  * those days. An F-1 student is refused at acceptance by `usWorkAuthorized`, and the request says why: CPT is processed
  * only for training every student in the program must do (yale.md §6), and Acting has none.
  *
- * **Away at work.** An audition in person or a work day takes the actor out of town for its hours and the trip each way
- * (`awayAt`), and the School counts them absent from what falls inside it: a class missed, a call missed with the
- * School's own consequences. Approved work's class days are excused, as the approval arranged them.
+ * **Away at work.** An audition in person, a work day or a meeting at an agent's office takes the actor out of town for
+ * its hours and the trip each way (`awayAt`), and the School counts them absent from what falls inside it: a class
+ * missed, a call missed with the School's own consequences. Approved work's class days are excused, as the approval
+ * arranged them.
  *
  * **Every number here is the game's estimate unless it cites a source**: the timings of a casting office, the chances,
  * the trips and the lead time are ASSUMPTIONS, said so on the screen. The rates are the unions' (`RATES`). Every
@@ -63,7 +64,7 @@ import { MASTERED, TECHNIQUE_LABEL } from '../content/abilities';
 import { TASK_PROFILES } from '../content/tasks';
 import { ENGAGEMENT } from '../content/engagement';
 import type { Skill } from '../content/school';
-import { PROJECTS, RATES, SAG_DAY_BY_YEAR, projectById, type ProjectKind, type ProjectTemplate, type Rate } from '../content/careerwork';
+import { PROJECTS, RATES, minimumOn, projectById, type ProjectKind, type ProjectTemplate, type Rate } from '../content/careerwork';
 import { agencyOf, agentById, type AgentField } from '../content/agents';
 import { IN_TOWN_MINUTES } from '../world/calendar';
 import {
@@ -79,13 +80,14 @@ import { repeatsToday, stepSpeed } from './attributes';
 import { exerts } from './body';
 import { trainingRefusal } from './injury';
 import { SPENT, startRefusal } from './life';
-import { SELF_TAPE } from './engagement';
+import { SELF_TAPE, practiceGenres } from './engagement';
 import {
   CALL_KIND, classPeriod, conditionAt, countWords, coursesFor, focusAt, keyOf, offSick, ordinary, recessStart, schoolEnded, setStanding,
   termOf, termStart,
 } from './school';
 import { f1Of, usWorkAuthorized } from './permission';
 import { negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
+import { AGENT_TIMES, TRAVEL_MINUTES } from './proagent';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -268,12 +270,8 @@ export function dayKindOf(t: ProjectTemplate, index: number): WorkDay['kind'] {
   return index < t.schedule.rehearsalWeeks * 5 ? 'rehearsal' : 'performance';
 }
 
-/** A rate's minimum on a day: the SAG-AFTRA day performer's by its contract year (S30), every other as `RATES` has it. */
-export function rateOn(rate: Rate, on: Instant): number | undefined {
-  if (rate.id !== 'sag-tv-day') return rate.amount;
-  const key = dateKey(on, NY);
-  return [...SAG_DAY_BY_YEAR].reverse().find((r) => r.from <= key)?.amount ?? rate.amount;
-}
+/** A rate's minimum on a day, on New York's calendar: the SAG-AFTRA day performer's by its contract year (S30), every other as `RATES` has it (`minimumOn`). */
+export const rateOn = (rate: Rate, on: Instant): number | undefined => minimumOn(rate, dateKey(on, NY));
 
 /** The offer's terms as they'd stand at a moment: the rate, a day's or a week's pay at scale, and how many. */
 export interface PayTerms { rate: Rate; per: 'day' | 'week'; units: number; each?: Money; deferred: boolean }
@@ -472,9 +470,10 @@ export function classDaysIn(person: Person, days: readonly WorkDay[], cityId: st
 }
 
 /**
- * Whether the actor is away at professional work or an audition in person at a moment, and whether the dean approved
- * it: the work day's or the audition's hours, with the trip each way, and not missed. The School reads it for who's
- * present (`present`, `systems/school.ts`), and excuses a class missed for approved work.
+ * Whether the actor is away at professional work, an audition in person or a meeting with an agent's office at a
+ * moment, and whether the dean approved it: the work day's, the audition's or the meeting's hours, with the trip each
+ * way, and not missed. The School reads it for who's present (`present`, `systems/school.ts`), and excuses a class
+ * missed for approved work; nothing approves a meeting, as nothing approves an audition.
  */
 export function awayAt(person: Person, when: Instant): { label: string; approved: boolean } | undefined {
   const pro = person.pro;
@@ -498,6 +497,38 @@ export function awayAt(person: Person, when: Instant): { label: string; approved
       if (r.form !== 'in-person' || r.status === 'missed' || (r.status === 'set' && o.status !== 'audition' && o.status !== 'callback')) continue;
       const away = tripMinutes(person.currentLocationId, t.place.cityId) * MIN;
       if (when >= r.at - away && when <= r.at + (WORK.auditionMinutes * MIN) + away) return { label: `${r.round === 'callback' ? 'Callback' : 'Audition'}: ${t.role.part}`, approved: false };
+    }
+  }
+  // A meeting with an agent's office, its hour and the trip each way as `scheduleMeeting` puts them on the calendar; by
+  // video, its hour alone. From 2026-10-21 (brief 19's J6, found by the built-app walk): until then a student at a
+  // meeting in New York at eleven was counted at a New Haven class the same hour.
+  for (const [agentId, rel] of Object.entries(pro.relations)) {
+    const m = rel.meeting;
+    if (!m || m.status === 'missed') continue;
+    const away = (m.where === 'office' ? TRAVEL_MINUTES[person.currentLocationId] ?? 0 : 0) * MIN;
+    if (when >= m.at - away && when <= m.at + AGENT_TIMES.meetingMinutes * MIN + away) {
+      const agent = agentById(agentId);
+      return { label: `Meeting At ${agent ? agencyOf(agent).name : 'An Agent’s Office'}`, approved: false };
+    }
+  }
+  return undefined;
+}
+
+/**
+ * The booked work day whose own hours an audition in person at a moment would fall in: a live engagement's day, not
+ * already missed, overlapping the round's half hour. The actor is at work then, so the round can't be gone to (from
+ * 2026-10-21, brief 19's playthroughs: a callback set inside a shoot day's hours was gone to and judged as if the actor
+ * had left the set for it, though the notice that set it had said it clashed with the shoot). A day missed is no longer
+ * where the actor is, as `awayAt` reads it for the School: a stage actor who slept through a rehearsal's start can go
+ * to an audition in its hours (a screen day missed replaces the actor, and the engagement's days go with it).
+ */
+export function workDayAt(person: Person, at: Instant): { label: string; from: Instant } | undefined {
+  const end = at + WORK.auditionMinutes * MIN;
+  for (const e of person.pro?.engagements ?? []) {
+    if (!live(e)) continue;
+    for (let i = 0; i < e.days.length; i += 1) {
+      const d = e.days[i]!;
+      if (d.from < end && d.to > at && e.log?.find((l) => l.day === i)?.status !== 'missed') return { label: d.label, from: d.from };
     }
   }
   return undefined;
@@ -1194,7 +1225,8 @@ export function registerProJobs(sim: Simulation): void {
     const idx = Number(item.payload.round);
     const r = at?.o.rounds?.[idx];
     if (!at || !r || r.status !== 'set' || r.form !== 'in-person' || r.at !== item.at) return;
-    if (!there(at.person, item.at)) { missRound(s, at.person, at.o, r); return; }
+    // Asleep, ill or at a booked day's work (`workDayAt`), the round is missed.
+    if (!there(at.person, item.at) || workDayAt(at.person, item.at)) { missRound(s, at.person, at.o, r); return; }
     finishRound(s, at.person, at.o, r, idx, evaluate(s, at.person, auditionContext(s, at.person, at.o, r, idx)));
   });
 
@@ -1261,6 +1293,13 @@ export function registerProJobs(sim: Simulation): void {
       const band = bandOfQuality(ev.overall);
       recordWork(s, person, ev, { at: item.at, what: `${t.role.part}, ${t.project}: ${kind === 'performance' ? 'Performance' : `Shoot Day ${i + 1}`}`, band });
       (e.log ??= []).push({ day: i, at: item.at, status: 'worked', band, overall: ev.overall });
+      // A night or a shoot day is work done in the project's genres, so it's practice in them, one day's worth shared
+      // among them, as a School night and a taped brief are (`practiceGenres`; content/engagement.ts: "work done in it
+      // ... is practice"). From 2026-10-21 (brief 19's J6, found by the playthroughs): until then a professional run
+      // left no experience of its genres on the record, while the School's nights and the briefs' tapes did. The
+      // project's genres, never the player's own loves (`fitOf`; tests/cohesion.test.ts).
+      const { genres: projectGenres } = t;
+      practiceGenres(s, person, projectGenres);
       // A stage credit is the part performed, from its first night (`ProCredit`'s 'performed').
       if (kind === 'performance' && !e.creditId) {
         const c = addCredit(s, person, { kind: 'stage', project: t.project, role: t.role.part, company: t.company, year: zonedParts(item.at, NY).year, medium: 'stage', status: 'performed', ...(t.union !== 'none' ? { union: t.union } : {}), engagementId: e.id, at: item.at, band });

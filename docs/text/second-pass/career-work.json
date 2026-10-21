@@ -22,9 +22,9 @@
  },
  "src/engine/systems/projobs.ts#awayAt": {
   "status": "Rewritten",
-  "hash": "20ab6ac24787",
+  "hash": "52de3160222a",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "evidence": "tests/pro-work.test.ts, V12's GUARD: a student at a meeting with an agent's office in term is away, labelled as the meeting's calendar entry is (Meeting At Stewart Talent), from nine to two, and the School counts the day's classes missed; read on 2026-10-21 by brief 19's playthroughs",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/projobs.ts#chanceWords": {

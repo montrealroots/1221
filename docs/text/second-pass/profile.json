@@ -3529,10 +3529,10 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten",
-  "hash": "74770398b7c9",
-  "on": "2026-10-19",
-  "evidence": "The Genres entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: Study It said with where it is and what it costs, and the example quoting the genre look's new summary",
-  "first": "Pending"
+  "hash": "5f2816d034b8",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten",
@@ -4222,10 +4222,10 @@
  },
  "src/ui/looks/actor.tsx#top": {
   "status": "Rewritten",
-  "hash": "b9828c5e60cb",
-  "on": "2026-10-19",
-  "evidence": "tests/guide-examples-craft.test.ts (the genre summary and the piece's foot line) and tests/decisions-stamina.test.ts (the old ruleset's line, exactly); every ability, genre and work look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
-  "first": "Pending"
+  "hash": "e0b0b3c7da9e",
+  "on": "2026-10-21",
+  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing",
+  "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel": {
   "status": "Rewritten",

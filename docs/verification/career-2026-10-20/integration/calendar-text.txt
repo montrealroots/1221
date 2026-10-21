@@ -1,0 +1,27 @@
+Personal: Your own plans, and your birthday, appointments and tax dates.
+School: Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s review, the showcase and Commencement.
+Career: Auditions and self-tapes, casting’s answers and decisions, the last day of an offer, your work days, when screen work of yours is released, a meeting at an agent’s office and what it asked for, the School’s showcase follow-up, the dean’s answer on outside work, and when an agreement ends.
+Money: The card’s statement and payment, a new card’s arrival, a savings account’s notice, paydays for professional work, pay passed on by your agency, and union bills.
+Holiday: Public holidays and observances.
+World: Background world processing.
+{
+ "interpret": [
+  "The time above the next commitment’s name counts down from now: “in 2h 30m” is two and a half hours away.",
+  "An entry, opened, says A Commitment or Happens Without You. The second, a card statement or the start of a term, runs whether you’re there or not.",
+  "A stop dialog with none of Skip It, Call It Off or Ask To Move is one you can go to or wait at, but not walk away from."
+ ],
+ "reads": [
+  {
+   "label": "What Needs You There",
+   "value": "Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, your own plans, a meeting with an agent’s office, an audition or a callback in person, and a day of work you’ve booked"
+  },
+  {
+   "label": "Whether You’re There",
+   "value": "When it runs, the game checks that you’re awake, out of hospital and in its town, or for the career’s, awake and not laid up, the trip taken as made. In hospital, you were at nothing but Yale Health’s assessment. Asleep, you weren’t there"
+  },
+  {
+   "label": "Where The Clock Was Headed",
+   "value": "Go, Skip It, Call It Off and Ask To Move carry on the move the stop broke off, so a jump to the morning still ends in the morning"
+  }
+ ]
+}

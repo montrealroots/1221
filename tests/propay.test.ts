@@ -165,6 +165,22 @@ describe('commission, only when owed, checked to the cent against the postings',
     expect(commissionOn(sim, sim.player, over, over.pay[0]!, 3_000_00)).toMatchObject({ amount: 300_00, rule: 'sag', rate: 0.1 });
   }, 90_000);
 
+  it('GUARD: on SAG-AFTRA day work in a later contract year, a scale-plus-ten offer’s commission is only what’s over that year’s scale: $280.40 on two days in October 2029 at $1,542.20, where $1,402.00 is scale (found by brief 19’s playthroughs, 2026-10-21)', () => {
+    const sim = graduate('pay-sag-2029');
+    // TEST SETUP: an agreement signed in 2029, and its engagement on two days in October 2029, written as the work system
+    // writes them. The Day Performer minimum from July 1, 2029 is $1,402.00 (work.md S30); scale plus ten, $1,542.20.
+    const a = signed(sim, at(2029, 9, 1));
+    const day = negotiatedAmount(1_402_00, 'sag-aftra', true);
+    expect(day).toBe(1_542_20);
+    const e = booked(sim, { project: 'calloway-files', days: [at(2029, 10, 8), at(2029, 10, 9)], amount: day, per: 'day', via: 'agent', agreementId: a.id });
+    const c = commissionOn(sim, sim.player, e, e.pay[0]!, 2 * day, at(2029, 10, 11, 12));
+    // Until the fix the scale read RATES' 2026–27 $1,283.00, so what's over it, $518.40, was more than ten percent, and the
+    // commission came to $308.44, leaving her under scale.
+    expect(c).toMatchObject({ amount: 280_40, rule: 'sag-scale' });
+    // Without its amount first since the built-app walk's wording (merged 2026-10-21): the line beside it gives it.
+    expect(c.words).toBe('What’s paid over scale ($2,804.00), so you keep scale.');
+  }, 90_000);
+
   it('PLAYER JOURNEY: Equity work at both sides of $525 a week: 10% of $1,051.00 is $105.10; 5% of a $500.00 salary is $25.00, each to the cent in the postings', () => {
     const sim = graduate('pay-equity');
     const a = signed(sim, at(2026, 9, 8));
