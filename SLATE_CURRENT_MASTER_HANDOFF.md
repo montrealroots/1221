@@ -5,7 +5,12 @@
 it before any fix: "Actually save and put a pause on all of this. I want to move on to something else." (2026-10-20,
 22:28 UTC). Nothing in the game changed. The rest of the state is brief 17's, in its section below.
 
-**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 566 of 640 rows in scope Implemented And Verified (88.4%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (On the branch `b19-core`, brief 19's core: until it this said 612 of 636. Its four commands are rows of their own,
+  Implemented, Verification Incomplete until an audit row reads them, and 46 measured rows read the engine's whole
+  source, so the core's new files leave them measured before what they read last changed, until brief 19's final runs
+  measure them again. Integration states the line again from the matrix.)
 
 - **The repository:** `main` is at `469f8448` (#47). The working branch, `claude/peaceful-hamilton-59zdbb`, was
   fast-forwarded to it and carries brief 18's records on top: the brief, its criteria and its plan. None of them changes

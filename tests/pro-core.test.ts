@@ -117,7 +117,7 @@ describe('the record, begun and built', () => {
     expect(profile.schoolCredits.map((c) => [c.role, c.production, c.venue, c.year])).toEqual([['Viola', 'Shakespeare Repertory Project I', 'David Geffen School of Drama at Yale University', 2029]]);
     expect(profile.proCredits).toEqual([]);
     expect(profile.training.words).toBe('You completed the MFA in Acting at the David Geffen School of Drama at Yale University in 2026.');
-    expect(profile.unions.words).toBe('You’re a member of Actors’ Equity Association since September 3, 2026, through the degree.');
+    expect(profile.unions.words).toBe('You joined Actors’ Equity Association with the degree on September 3, 2026.');
     // Nothing the save held moved: identity, abilities, craft, genres, standing, coursework, the parts played, money,
     // documents, health, wellbeing and the calendar.
     expect(carried(opened)).toBe(before);
@@ -163,7 +163,7 @@ describe('the profile, read from the record', () => {
     expect(t).toEqual({ status: 'left', words: 'You studied acting in the MFA program at the David Geffen School of Drama at Yale University for one term, 2026, and didn’t complete the degree.', short: 'Acting, David Geffen School of Drama at Yale University, 2026 (one term, no degree)' });
     const elsewhere = createSave(1, 'pro-no-school', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', school: undefined as never });
     expect(elsewhere.player.school).toBeUndefined();
-    expect(profileOf(elsewhere.player, elsewhere.now).training.words).toBe('You haven’t trained at a drama school.');
+    expect(profileOf(elsewhere.player, elsewhere.now).training.words).toBe('No drama school training is on your record.');
   });
 
   it('keeps a practice brief’s self-tape off every list of credits, and offers it as recorded work for a reel', () => {
@@ -188,11 +188,17 @@ describe('the profile, read from the record', () => {
     expect(profileOf(uk.player, uk.now).eligibility).toEqual({ authorized: false, words: 'Your F-1 lets you work only on campus while you’re a student, so you can’t work for an employer outside the School.' });
   });
 
-  it('says availability and where they’re based: at the School until the degree, in New Haven', () => {
+  it('says availability and where they’re based: at the School until the degree, in New Haven, and the days booked for work', () => {
     const sim = student('pro-where');
     const p = profileOf(sim.player, sim.now);
     expect(p.availability.words).toBe('You’re at the School until the degree, expected in May 2029.');
     expect(p.location.city).toBe('New Haven');
+    // TEST SETUP: an engagement booked as the work system books one, its two shoot days in June 2027; and one finished.
+    const booked: Engagement = { id: 'e1', opportunityId: 'o1', projectId: 'calloway-files', role: 'Desk Clerk', status: 'booked', days: [{ from: at(2027, 6, 14, 7), to: at(2027, 6, 15, 19), label: 'The Calloway Files' }], pay: [], history: [], counts: {} };
+    const done: Engagement = { ...booked, id: 'e0', status: 'finished', days: [{ from: at(2027, 6, 1, 7), to: at(2027, 6, 1, 19), label: 'Paper Moons' }] };
+    sim.player.pro!.engagements.push(booked, done);
+    expect(profileOf(sim.player, sim.now).availability).toMatchObject({ booked: booked.days, words: 'You’re at the School until the degree, expected in May 2029. You’re booked: The Calloway Files, June 14, 2027 to June 15, 2027.' });
+    expect(profileOf(sim.player, at(2027, 6, 16)).availability.booked).toEqual([]);
   });
 });
 

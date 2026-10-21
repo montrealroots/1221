@@ -45,14 +45,14 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Under What’s Missing, read what your portfolio needs. Needed For Any Submission comes first, then Worth Doing.',
       'Press Go To Portfolio to make or update what’s missing.',
     ],
-    needs: ['Nothing: the screen is open once its chapter is read.'],
+    needs: ['Its chapter in the guide, read: the screen opens with it.'],
     costs: [{ label: 'Time', value: 'None: reading it moves no clock' }, { label: 'Money', value: 'None' }],
     reads: [
       { label: 'Training', value: 'Your School record: the degree completed and its year, your year as a candidate, or the terms you studied and left' },
-      { label: 'Permission To Work', value: 'The papers you hold, as Papers’ Permission To Work reads them' },
+      { label: 'Permission To Work', value: 'The papers you hold, the same ones Papers shows under Permission To Work' },
       { label: 'What’s Missing', value: 'Your headshots, résumé and reel, measured against your record now' },
     ],
-    now: ['Nothing changes: the screen shows your record and doesn’t move it.'],
+    now: ['The screen shows your record and doesn’t move it.'],
     later: ['What’s Missing changes as you make materials, and as your record moves on past them: a new credit, a new skill or new recorded work.'],
     interpret: [
       'Needed For Any Submission is what a submission can’t go without: headshots and a résumé.',

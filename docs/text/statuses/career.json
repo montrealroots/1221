@@ -1,0 +1,626 @@
+{
+ "src/engine/content/agents.ts#AGENCIES [stewart-talent]": {
+  "status": "Rewritten And Verified",
+  "hash": "081de53b0aed",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/agents.ts#AGENTS [jordan-parente]": {
+  "status": "Rewritten And Verified",
+  "hash": "2a203747ca7f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/agents.ts#DEADLINE": {
+  "status": "Reviewed And Retained",
+  "hash": "ae31bb994079",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#FIELD_LABEL": {
+  "status": "Rewritten And Verified",
+  "hash": "d32eede28438",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/agents.ts#FIELDS_QUOTED": {
+  "status": "Reviewed And Retained",
+  "hash": "bfa5a632a368",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#HOME": {
+  "status": "Reviewed And Retained",
+  "hash": "795b433bd2fd",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#LISTING": {
+  "status": "Reviewed And Retained",
+  "hash": "662a7f1ddeb1",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#POLICY": {
+  "status": "Reviewed And Retained",
+  "hash": "b329549631f2",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#SCOUTING": {
+  "status": "Reviewed And Retained",
+  "hash": "59b163016f10",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#STAFF": {
+  "status": "Reviewed And Retained",
+  "hash": "4db1508e041e",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/agents.ts#WARNING": {
+  "status": "Reviewed And Retained",
+  "hash": "10e6c58a4550",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#AGENT_ROLE": {
+  "status": "Reviewed And Retained",
+  "hash": "578ab55062dd",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [actor]": {
+  "status": "Rewritten And Verified",
+  "hash": "613780e74c4e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [commission]": {
+  "status": "Rewritten And Verified",
+  "hash": "f8e24ae4aebd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [continuing]": {
+  "status": "Rewritten And Verified",
+  "hash": "c19075cc485b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [duration]": {
+  "status": "Rewritten And Verified",
+  "hash": "f796cb71bb75",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [excluded]": {
+  "status": "Rewritten And Verified",
+  "hash": "7bbabe64f957",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [exclusivity]": {
+  "status": "Rewritten And Verified",
+  "hash": "40ebb48ee939",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [offer]": {
+  "status": "Rewritten And Verified",
+  "hash": "c83b9c948a43",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [payment]": {
+  "status": "Rewritten And Verified",
+  "hash": "3e15e26adac3",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [responsibilities]": {
+  "status": "Rewritten And Verified",
+  "hash": "bb84fc9025f7",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [scale-plus-ten]": {
+  "status": "Rewritten And Verified",
+  "hash": "ac6d207f9483",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [scope]": {
+  "status": "Rewritten And Verified",
+  "hash": "33cbcb938215",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [termination]": {
+  "status": "Rewritten And Verified",
+  "hash": "d13dbb48c694",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#AGREEMENT_TERMS [territory]": {
+  "status": "Rewritten And Verified",
+  "hash": "fc6cf27bbb30",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_COMMISSION": {
+  "status": "Reviewed And Retained",
+  "hash": "e18ebaef8939",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_ENDS": {
+  "status": "Reviewed And Retained",
+  "hash": "d500561d2dc6",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_FORM": {
+  "status": "Reviewed And Retained",
+  "hash": "716e14533551",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_ONGOING": {
+  "status": "Reviewed And Retained",
+  "hash": "afc892da0b0e",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_PER_DIEM": {
+  "status": "Reviewed And Retained",
+  "hash": "5491def65b6b",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_TAIL": {
+  "status": "Reviewed And Retained",
+  "hash": "a632402e03d9",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#EQUITY_TERM": {
+  "status": "Reviewed And Retained",
+  "hash": "20c87a712e8b",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#NY_CAP": {
+  "status": "Reviewed And Retained",
+  "hash": "32116832dca5",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [calder-street]": {
+  "status": "Rewritten And Verified",
+  "hash": "28e0b0aa235d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [calloway-files]": {
+  "status": "Rewritten And Verified",
+  "hash": "13104f541646",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [camera]": {
+  "status": "Rewritten And Verified",
+  "hash": "82e987eddb94",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [eastview]": {
+  "status": "Rewritten And Verified",
+  "hash": "b62c30ae4255",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [gull-season]": {
+  "status": "Rewritten And Verified",
+  "hash": "ecd839d334f4",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [paper-moons]": {
+  "status": "Rewritten And Verified",
+  "hash": "1ea6c461efbe",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [performance]": {
+  "status": "Rewritten And Verified",
+  "hash": "e31ee110522b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [route-nine]": {
+  "status": "Rewritten And Verified",
+  "hash": "1b56c69418be",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [winter-ledger]": {
+  "status": "Rewritten And Verified",
+  "hash": "56842366f2f4",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [lort-b]": {
+  "status": "Rewritten And Verified",
+  "hash": "239fcbc6ab61",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [lort-c]": {
+  "status": "Rewritten And Verified",
+  "hash": "9517fac360b3",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [lort-d]": {
+  "status": "Rewritten And Verified",
+  "hash": "3f42542e4c1f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [low-budget-day]": {
+  "status": "Rewritten And Verified",
+  "hash": "e329a863201d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [low-budget-week]": {
+  "status": "Rewritten And Verified",
+  "hash": "522e5ef0b260",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [non-union-day]": {
+  "status": "Rewritten And Verified",
+  "hash": "2d64218b4115",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [off-broadway]": {
+  "status": "Rewritten And Verified",
+  "hash": "b65991dfac4f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [sag-tv-day]": {
+  "status": "Rewritten And Verified",
+  "hash": "3046916cb096",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [sag-tv-week]": {
+  "status": "Rewritten And Verified",
+  "hash": "6f48c7d1d9f8",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [student-film]": {
+  "status": "Rewritten And Verified",
+  "hash": "7a3239032895",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#RATES [ultra-low-budget-day]": {
+  "status": "Rewritten And Verified",
+  "hash": "2038514fb9c3",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/careerwork.ts#S30": {
+  "status": "Reviewed And Retained",
+  "hash": "fdac6e8eb683",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#S32": {
+  "status": "Reviewed And Retained",
+  "hash": "d489237905c5",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#S33": {
+  "status": "Reviewed And Retained",
+  "hash": "9d0030830f5b",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#S36": {
+  "status": "Reviewed And Retained",
+  "hash": "f6d0d4388ae6",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#SAG_COMMISSION": {
+  "status": "Reviewed And Retained",
+  "hash": "cf99d6f2942d",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#SAG_ENDS": {
+  "status": "Reviewed And Retained",
+  "hash": "9c21800928b0",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#SAG_TERM": {
+  "status": "Reviewed And Retained",
+  "hash": "e7c0c2a9e39a",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#TRUST": {
+  "status": "Reviewed And Retained",
+  "hash": "517bde23285f",
+  "on": "2026-10-21",
+  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s"
+ },
+ "src/engine/content/careerwork.ts#UNIONS": {
+  "status": "Rewritten And Verified",
+  "hash": "9f64297d429a",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.headshots]": {
+  "status": "Rewritten And Verified",
+  "hash": "461c859c90b3",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.overview]": {
+  "status": "Rewritten And Verified",
+  "hash": "3d0424546cc0",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]": {
+  "status": "Rewritten And Verified",
+  "hash": "423e4236f048",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reel]": {
+  "status": "Rewritten And Verified",
+  "hash": "e3ea0f2c7283",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.resume]": {
+  "status": "Rewritten And Verified",
+  "hash": "f9b64d7d18c3",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
+  "status": "Rewritten And Verified",
+  "hash": "722498d129cd",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
+  "status": "Rewritten And Verified",
+  "hash": "fc29027fdb6f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
+  "status": "Rewritten And Verified",
+  "hash": "48cfcd14898c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
+  "status": "Rewritten And Verified",
+  "hash": "cf1d361bd2f1",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/content/guide/career.ts#hours": {
+  "status": "Rewritten And Verified",
+  "hash": "90335b649ade",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#availabilityOf": {
+  "status": "Rewritten And Verified",
+  "hash": "4b1f014bd10b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#eligibilityOf": {
+  "status": "Rewritten And Verified",
+  "hash": "e4509320e234",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#headshotRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "d990bccbedc6",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#materialsCheck [headshot]": {
+  "status": "Rewritten And Verified",
+  "hash": "ce6f072549b5",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#materialsCheck [reel]": {
+  "status": "Rewritten And Verified",
+  "hash": "c2015926a5a9",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#materialsCheck [resume]": {
+  "status": "Rewritten And Verified",
+  "hash": "ede526339b4c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#moneyRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "05b3df4ed3d2",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#MONOLOGUES_COURSE": {
+  "status": "Rewritten And Verified",
+  "hash": "1a8d26a52792",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#nameRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c0bbf6394236",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#pathwayOf": {
+  "status": "Rewritten And Verified",
+  "hash": "37551d4c4b8d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#placeOf": {
+  "status": "Rewritten And Verified",
+  "hash": "397951c6e236",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#proCreditWords": {
+  "status": "Rewritten And Verified",
+  "hash": "da836180a8bc",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#reelRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c02c605c8a0b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#reelSources": {
+  "status": "Rewritten And Verified",
+  "hash": "d8be3bd43635",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#registerPro [headshot]": {
+  "status": "Rewritten And Verified",
+  "hash": "e52cc92e859c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#registerPro [reel]": {
+  "status": "Rewritten And Verified",
+  "hash": "876bccc746ab",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#registerPro [resume]": {
+  "status": "Rewritten And Verified",
+  "hash": "63e089d2a120",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#registerPro <pro.cut_reel>": {
+  "status": "Rewritten And Verified",
+  "hash": "c9a912236529",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#registerPro <pro.headshots>": {
+  "status": "Rewritten And Verified",
+  "hash": "a11f3e69ca6c",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#resumeNow": {
+  "status": "Rewritten And Verified",
+  "hash": "219447dca6d1",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#resumeRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "eb6865eae180",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#schoolCreditWords": {
+  "status": "Rewritten And Verified",
+  "hash": "6e7a1ea64ad7",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#SESSION_HOURS": {
+  "status": "Rewritten And Verified",
+  "hash": "38d2b2f197a5",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#trainingOf": {
+  "status": "Rewritten And Verified",
+  "hash": "8a3aac17ee83",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#unionsOf": {
+  "status": "Rewritten And Verified",
+  "hash": "306d90dc7a10",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/pro.ts#VENUE": {
+  "status": "Rewritten And Verified",
+  "hash": "8f06b2903e3f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#CareerWorkspace": {
+  "status": "Rewritten And Verified",
+  "hash": "0a66c81d56a4",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#HeadshotsPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "5c85f033ad15",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#OverviewPane": {
+  "status": "Rewritten And Verified",
+  "hash": "4e8f6527217a",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel": {
+  "status": "Rewritten And Verified",
+  "hash": "2fa73c43bb1f",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#ReelPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "797f24aca670",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#ResumePanel": {
+  "status": "Rewritten And Verified",
+  "hash": "1cf77c0cab8b",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ }
+}

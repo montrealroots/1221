@@ -107,8 +107,8 @@ export const UNIONS = {
     initiation: 1_800_00, down: 600_00, yearlyDues: 176_00, workingDues: 0.025, basis: 'verified' as Basis,
     source: { file: W, id: 'S27', url: 'https://www.actorsequity.org/join/dues', quote: '$1,800 paid within a maximum three-year period. Basic dues : $176 annually, billed at $88 twice a year each May and November. Working dues : 2.5% of gross earnings under Equity contract' } as WorkSource,
     // Verified: "Through work at Yale Repertory Theatre, those students who are not members of Actors' Equity will attain
-    // membership to the union upon graduation" (yale.md, B27 p.24).
-    atDegree: { file: 'yale.md', id: 'B27 p.24', url: 'https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf', quote: 'those students who are not members of Actors’ Equity will attain membership to the union upon graduation' } as WorkSource,
+    // membership to the union upon graduation" (yale.md, B27 p.24), quoted from its second half.
+    atDegree: { file: 'yale.md', id: 'B27 p.24', url: 'https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf', quote: '… will attain membership to the union upon graduation' } as WorkSource,
   },
   sagAftra: {
     name: 'SAG-AFTRA',
@@ -163,7 +163,7 @@ export interface ProjectTemplate {
     /** Techniques the part needs at a level, where it needs any. */
     skills?: Partial<Record<Skill, number>>;
     /** What a submission sends: a headshot and a résumé always; a reel where screen casting asks for one. */
-    materials: readonly ('headshot' | 'resume' | 'reel')[];
+    sends: readonly ('headshot' | 'resume' | 'reel')[];
   };
   /** The stages it uses: how it's auditioned, and whether there's a callback. */
   stages: { audition: 'self-tape' | 'in-person'; callback: boolean };
@@ -186,7 +186,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a 199-seat theater in Manhattan' },
     role: { part: 'Nell', size: 'supporting', about: 'The younger sister, home for the first time in six years, who says what the family won’t.', task: 'performance', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
     union: 'equity', contract: 'Equity Off-Broadway',
-    requirements: { ages: [22, 32], materials: ['headshot', 'resume'] },
+    requirements: { ages: [22, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
     schedule: { kind: 'run', rehearsalWeeks: 4, performanceWeeks: 6 },
     access: { agent: true, open: false }, pay: 'off-broadway',
@@ -198,7 +198,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'Providence', cityId: 'us-ri-providence', venue: 'the company’s main stage' },
     role: { part: 'Tobias Marsh', size: 'lead', about: 'A young clerk who keeps two sets of books and two fiancées, and loses track of both in one night.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
     union: 'equity', contract: 'Equity LORT C',
-    requirements: { ages: [22, 30], materials: ['headshot', 'resume'] },
+    requirements: { ages: [22, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
     schedule: { kind: 'run', rehearsalWeeks: 4, performanceWeeks: 5 },
     access: { agent: true, open: 'equity-members' }, pay: 'lort-c',
@@ -210,7 +210,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a studio in Queens' },
     role: { part: 'Desk Clerk', size: 'co-star', about: 'A night clerk at a hotel who saw the victim leave and lies about when.', task: 'camera', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
-    requirements: { ages: [22, 35], materials: ['headshot', 'resume', 'reel'] },
+    requirements: { ages: [22, 35], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'shoot', days: 2 },
     access: { agent: true, open: false }, pay: 'sag-tv-day',
@@ -222,7 +222,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'locations on Long Island' },
     role: { part: 'Wren', size: 'supporting', about: 'A ferry deckhand who befriends the new arrival and knows more about the drowning than she says.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Low Budget Theatrical',
-    requirements: { ages: [22, 34], materials: ['headshot', 'resume', 'reel'] },
+    requirements: { ages: [22, 34], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
     schedule: { kind: 'shoot', days: 6 },
     access: { agent: true, open: false }, pay: 'low-budget-day',
@@ -234,7 +234,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a motel upstate' },
     role: { part: 'Jess', size: 'lead', about: 'One of two night-shift radio hosts who start hearing their own voices call in.', task: 'camera', families: ['horror'], techniques: { screen: 2, emotion: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Ultra Low Budget',
-    requirements: { ages: [21, 32], materials: ['headshot', 'resume'] },
+    requirements: { ages: [21, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'shoot', days: 4 },
     access: { agent: true, open: 'anyone' }, pay: 'ultra-low-budget-day',
@@ -246,7 +246,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an apartment in Brooklyn' },
     role: { part: 'Theo', size: 'lead', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Student Film',
-    requirements: { ages: [21, 30], materials: ['headshot', 'resume'] },
+    requirements: { ages: [21, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: false },
     schedule: { kind: 'shoot', days: 3 },
     access: { agent: false, open: 'anyone' }, pay: 'student-film',
@@ -258,7 +258,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a bus depot in the Bronx' },
     role: { part: 'Sam', size: 'lead', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', task: 'camera', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
     union: 'none', contract: 'Non-Union',
-    requirements: { ages: [21, 35], materials: ['headshot', 'resume'] },
+    requirements: { ages: [21, 35], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'shoot', days: 2 },
     access: { agent: false, open: 'anyone' }, pay: 'non-union-day',
@@ -324,7 +324,7 @@ export const AGREEMENT_TERMS: readonly AgreementTerm[] = [
   { id: 'territory', heading: 'Where', words: 'Work anywhere in the United States.', basis: 'simulation' },
   { id: 'excluded', heading: 'What It Leaves Out', words: 'Commercials and voice-over work aren’t covered. An agency usually handles them in another department.', basis: 'simulation' },
   { id: 'exclusivity', heading: 'Exclusive', words: 'The agent is your only agent for covered work. Equity’s standard form is written the same way for theater.', basis: 'simulation', sources: [EQUITY_FORM] },
-  { id: 'commission', heading: 'Commission', words: 'Ten percent of your gross pay for covered work, and five percent on an Equity contract paying $525 a week or less. Nothing is taken from the Equity minimum part of per diem or expense money.', basis: 'verified', sources: [SAG_COMMISSION, NY_CAP, EQUITY_COMMISSION, EQUITY_PER_DIEM] },
+  { id: 'commission', heading: 'Commission', words: 'Ten percent of your gross pay for covered work, and five percent on an Equity contract paying $525 a week or less. The Equity minimum part of per diem or expense money carries no commission.', basis: 'verified', sources: [SAG_COMMISSION, NY_CAP, EQUITY_COMMISSION, EQUITY_PER_DIEM] },
   { id: 'scale-plus-ten', heading: 'Scale Plus Ten', words: 'On SAG-AFTRA work at the minimum, the agent asks for scale plus ten percent, so the commission comes out of the extra ten.', basis: 'verified', sources: [SAG_COMMISSION] },
   { id: 'duration', heading: 'How Long', words: 'One year from the day you sign it.', basis: 'simulation', sources: [EQUITY_TERM, SAG_TERM] },
   { id: 'responsibilities', heading: 'What The Agent Does', words: 'Looks for and submits you for covered work, passes on every offer in writing, negotiates your terms, and collects your pay into the agency’s client trust account.', basis: 'verified', sources: [AGENT_ROLE, EQUITY_FORM] },

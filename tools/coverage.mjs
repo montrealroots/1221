@@ -481,7 +481,7 @@ function reviewSection() {
     '',
     '### The Capabilities, Reviewed',
     '',
-    `The ${caps.length} live capabilities of \`docs/capabilities.json\`, read the same day against the same standard (\`${CAP_REVIEW}\`). The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, ${all} of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. ${bothName} commands are named by both; a command only a capability names is traced in \`docs/verification/connected-journey/TRACE.md\`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.`,
+    `The ${caps.length} live capabilities of \`docs/capabilities.json\`, read the same day against the same standard (\`${CAP_REVIEW}\`), but ${caps.filter((c) => c.on !== '2026-10-13').map((c) => `${c.id}, read on ${c.on} by its builder`).join(', ') || 'none later'}. The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, ${all} of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. ${bothName} commands are named by both; a command only a capability names is traced in \`docs/verification/connected-journey/TRACE.md\`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.`,
     '',
     '| Capability | Status In The Registry | The Review Found | Disposition | Gaps |',
     '|---|---|---|---|---|',

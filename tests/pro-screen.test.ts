@@ -122,7 +122,7 @@ describe('the Career screen', () => {
     const opened = loadSave(u);
     const { html, shown } = drawn(opened, 'portfolio');
     expect(html).toContain('<li>Viola, Shakespeare Repertory Project I, David Geffen School of Drama at Yale University, 2029</li>');
-    expect(shown).toContain('Unions You’re a member of Actors’ Equity Association since September 1, 2026, through the degree.');
+    expect(shown).toContain('Unions You joined Actors’ Equity Association with the degree on September 1, 2026.');
     expect(shown).toContain('Training You completed the MFA in Acting at the David Geffen School of Drama at Yale University in 2026.');
     expect(drawn(opened, 'overview').shown).toContain('The Way You’re On A Graduate');
   });

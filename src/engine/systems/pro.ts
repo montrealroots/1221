@@ -479,7 +479,7 @@ const SCHOOL_NAME = YALE_DRAMA.name;
  */
 export function trainingOf(person: Person): Training {
   const school = person.school;
-  if (!school) return { status: 'none', words: 'You haven’t trained at a drama school.', short: 'No drama school training' };
+  if (!school) return { status: 'none', words: 'No drama school training is on your record.', short: 'No drama school training' };
   const zone = placeOf(person).zone;
   if (school.standing === 'graduated') {
     const year = school.endedAt !== undefined ? zonedParts(school.endedAt, zone).year : school.classOf;
@@ -551,11 +551,11 @@ export function unionsOf(person: Person, zone: string): { equity?: Instant; sagE
   const equity = pro?.equity?.since;
   const sagMember = pro?.sag?.memberSince;
   const sagEligible = pro?.sag?.eligibleSince;
-  const parts = [
-    equity !== undefined ? `a member of ${UNIONS.equity.name} since ${formatDate(equity, zone)}${pro?.equity?.how === 'degree' ? ', through the degree' : ''}` : '',
-    sagMember !== undefined ? `a member of SAG-AFTRA since ${formatDate(sagMember, zone)}` : sagEligible !== undefined ? `eligible to join SAG-AFTRA since ${formatDate(sagEligible, zone)}` : '',
+  const said = [
+    equity !== undefined ? `You joined ${UNIONS.equity.name}${pro?.equity?.how === 'degree' ? ' with the degree' : ''} on ${formatDate(equity, zone)}.` : '',
+    sagMember !== undefined ? `You joined SAG-AFTRA on ${formatDate(sagMember, zone)}.` : sagEligible !== undefined ? `You’ve been eligible to join SAG-AFTRA since ${formatDate(sagEligible, zone)}.` : '',
   ].filter(Boolean);
-  return { equity, sagEligible, sagMember, words: parts.length ? `You’re ${spokenList(parts)}.` : 'You aren’t a member of an actors’ union.' };
+  return { equity, sagEligible, sagMember, words: said.length ? said.join(' ') : 'Neither actors’ union counts you as a member yet.' };
 }
 
 /** Whether they may work in the US for an employer now, and why, in a sentence (`usWorkAuthorized`, `systems/permission.ts`). */
@@ -569,7 +569,7 @@ export function eligibilityOf(person: Person, at: Instant): { authorized: boolea
   }
   const studying = person.school !== undefined && !schoolEnded(person.school.standing);
   if (f1Of(person) && studying) return { authorized, words: 'Your F-1 lets you work only on campus while you’re a student, so you can’t work for an employer outside the School.' };
-  return { authorized, words: 'You don’t hold permission to work in the US. Papers, under Permission To Work, shows what you hold.' };
+  return { authorized, words: 'There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold.' };
 }
 
 /** Whether they're at school now, and until when, and the days booked for work. */
@@ -584,7 +584,7 @@ export function availabilityOf(person: Person, at: Instant): { inSchool: boolean
     const year = school.classOf + Math.ceil((school.offset ?? 0) / 2);
     return { inSchool, words: `You’re at the School until the degree, expected in May ${year}.${bookedWords}`, booked };
   }
-  return { inSchool, words: booked.length ? bookedWords.trim() : 'You’re free for work.', booked };
+  return { inSchool, words: booked.length ? bookedWords.trim() : 'Free for work, with nothing booked.', booked };
 }
 
 /**
@@ -594,10 +594,10 @@ export function availabilityOf(person: Person, at: Instant): { inSchool: boolean
  */
 export function pathwayOf(person: Person): { id: 'degree' | 'graduate' | 'left' | 'none'; heading: string; words: string } {
   const t = trainingOf(person);
-  if (t.status === 'candidate') return { id: 'degree', heading: 'Completing The Degree', words: `You’re in year ${countWords(yearOfStudy(person))} of the ${YALE_DRAMA.degree}. The degree comes at Commencement after your sixth term, and everything on your record goes on with you.` };
+  if (t.status === 'candidate') return { id: 'degree', heading: 'Completing The Degree', words: `Year ${countWords(yearOfStudy(person))} of the ${YALE_DRAMA.degree}: the degree comes at Commencement after your sixth term, and everything on your record goes on with you.` };
   if (t.status === 'completed') return { id: 'graduate', heading: 'A Graduate', words: `You’ve completed the ${YALE_DRAMA.degree}. Your training, the parts you played at the School and the portfolio you make go on with you.` };
-  if (t.status === 'left') return { id: 'left', heading: 'Left Without The Degree', words: 'You left the School without the degree. Your training stays on your record as it was, and so do the parts you played there.' };
-  return { id: 'none', heading: 'Without A Drama School', words: 'You didn’t begin at a drama school. Your portfolio is built from what you do from here.' };
+  if (t.status === 'left') return { id: 'left', heading: 'Left Without The Degree', words: 'Leaving without the degree keeps what you did: your training stays on your record as it was, and so do the parts you played there.' };
+  return { id: 'none', heading: 'Without A Drama School', words: 'Without a drama school behind you, your portfolio is built from what you do from here.' };
 }
 
 export interface ProProfile {

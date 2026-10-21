@@ -5,6 +5,12 @@
   "on": "2026-10-17",
   "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
  },
+ "src/engine/content/guide/index.ts#GOALS [career]": {
+  "status": "Rewritten And Verified",
+  "hash": "c778cc4493d3",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts"
+ },
  "src/engine/content/guide/index.ts#GOALS [coursework]": {
   "status": "Rewritten And Verified",
   "hash": "8aa56f945953",
@@ -83,6 +89,12 @@
   "on": "2026-10-17",
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [career]": {
+  "status": "Rewritten And Verified",
+  "hash": "36dd5bc77aaf",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts"
+ },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten And Verified",
   "hash": "1accfd292823",
@@ -133,9 +145,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
   "status": "Rewritten And Verified",
-  "hash": "86e90700425f",
-  "on": "2026-10-17",
-  "evidence": "tests/help-mechanics.test.ts, ‘PLAYER JOURNEY: a new life’s guide opens at its first chapter…’, draws every paragraph, detail and name of the chapter on its page; the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar), each chapter’s page holding its words; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/tutorial.test.ts"
+  "hash": "321f2c5d89d7",
+  "on": "2026-10-21",
+  "evidence": "Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten And Verified",

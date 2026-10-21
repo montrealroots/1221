@@ -189,7 +189,7 @@ export const AGENTS: readonly Agent[] = [
       ],
       // ASSUMPTION: a list takes on one to three new actors a year.
       openingsPerYear: [1, 3],
-      words: 'How many new actors his list takes on in a year, and of which types, is assumed in the game. Nothing about his real list is known or used.',
+      words: 'How many new actors his list takes on in a year, and of which types, is assumed in the game. The game knows nothing of his real list and uses none of it.',
     },
     sources: [STAFF, DEADLINE, LISTING, SCOUTING, HOME],
   },

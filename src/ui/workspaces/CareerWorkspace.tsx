@@ -294,7 +294,7 @@ function ReelPanel() {
               ))}
             </ul>
           </fieldset>
-        ) : <p className="small" style={{ margin: 0 }}>Nothing recorded yet. Tape a practice brief on the Player Profile, and it’s here to cut from.</p>}
+        ) : <p className="small" style={{ margin: 0 }}>No recorded work yet. Tape a practice brief on the Player Profile, and it’s here to cut from.</p>}
         {unusable.length > 0 && (
           <details className="small">
             <summary>{`Recorded, But Not For A Reel (${unusable.length})`}</summary>

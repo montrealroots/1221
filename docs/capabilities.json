@@ -2937,6 +2937,52 @@
         "verified": "Partial"
       },
       "limits": "Connecticut’s lien and its release are within a student’s reach. What the tests drive through the commands (tests/liens-and-arrangements.test.ts), each on a return put on by hand: Connecticut’s lien, filed by the calendar, paid, then released only on request and only once (tax.lien_release), and Hawaii’s release with its $25 fee; a withdrawal as filed in error (tax.lien_dispute) on California’s lien alone, its assessment, the lien and the taxpayer’s own return each set by calling the engine’s functions, withdrawn with its $10 fee back and refused where the lien secured tax owed; the IRS’s lien on a New Yorker given $150,000 of wages by hand, filed at the LT11, refused before its release, paid, released and withdrawn on Form 12277 (tax.federal_lien_withdraw); and Oregon’s waiver at one of its three rates, 25% after an assessment, the assessments and the three-year penalty set by calling the engine’s functions (tax.request_waiver). No test withdraws Connecticut’s lien as filed in error, which until 2026-10-12 this said was tested, nor has the IRS release one filed in error, nor waives 70% or 50%. The IRS files its notice only where $10,000 or more is unpaid at the final notice (FEDERAL_LIEN.threshold), past anything work-study and a stipend leave owing, though not past what the Inherited family’s interest leaves a student who files nothing (from 2026-10-16, brief 09: tests/remaining-09-coverage.test.ts plays her lien to its withdrawal on Form 12277); the three-year penalty and its waiver are Oregon’s, and every life files in Connecticut. docs/GAMEPLAY-COVERAGE.md calls tax.lien_dispute and tax.request_waiver unresolved, reached only by a fixture, and called tax.federal_lien_withdraw so too until 2026-10-16, when it was played and verified. Reaching the two needs income after the degree or a life lived outside the school, each of which the owner’s brief of 2026-10-09 held back (the career, travel and moving are not to come back); they stay as written until the owner says otherwise. The review of 2026-10-13 and its evidence pass found: tax.lien_release unresolved (Reachable only through a fixture in a New Haven student's life. A Connecticut lien needs a Connecticut balance, which a student never has…); tax.lien_dispute unresolved (It can't be reached for Connecticut, the only state a student's return can owe, even with a fixture W-2. For a non-filer, SLATE's…); tax.federal_lien_withdraw unresolved (Reachable only through a fixture in a New Haven student's life. The notice is filed only where $10,000 or more is unpaid at the LT11…); tax.request_waiver unresolved (Reachable only through a fixture. Only Oregon charges the three-year penalty, and every new life files in Connecticut (no threeYear rule)…). tax.lien_release was verified on the current scope’s evidence of 2026-10-15, and tax.federal_lien_withdraw on a played journey on 2026-10-16."
+    },
+    {
+      "id": "career-portfolio",
+      "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where it came from, when it was made and what’s in it",
+      "entry": "Career, under Your Work: Overview (Where You Stand, The Way You’re On, What’s Missing, What’s Next); Portfolio: Professional Name and Use This Name, Book A Headshot Session, Make Your Résumé or Update Your Résumé, Recorded Work To Cut From and Cut A Reel",
+      "entities": [
+        "ProRecord",
+        "Material",
+        "ProCredit",
+        "MaterialPiece"
+      ],
+      "state": "src/engine/systems/pro.ts",
+      "preconditions": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal)",
+      "commands": [
+        "pro.set_name",
+        "pro.headshots",
+        "pro.update_resume",
+        "pro.cut_reel"
+      ],
+      "effects": "A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
+      "persists": "Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+      "readers": [
+        "materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions",
+        "resumeBehind: the résumé’s standing",
+        "reelSources: what a reel can be cut from",
+        "profileOf: the profile on both tabs"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/pro-core.test.ts",
+      "provenance": "docs/research/career-2026-10-20/ (yale.md B27 pp.24 and 33 for Equity at the degree and the filmed monologues; agent.md for the agent’s data); the materials’ prices and times are the game’s estimates, said so on the screen",
+      "tests": [
+        "tests/pro-core.test.ts",
+        "tests/pro-screen.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Implemented"
+      },
+      "limits": "Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck"
     }
   ]
 }

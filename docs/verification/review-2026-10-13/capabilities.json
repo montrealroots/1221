@@ -3987,5 +3987,62 @@
     "problem": "Runs on an Icelandic bank, where the row says every life banks with an American one."
    }
   ]
+ },
+ {
+  "on": "2026-10-20",
+  "against": "d0b1fe65",
+  "id": "career-portfolio",
+  "claim": "Brief 19's portfolio: pro.set_name sets the professional name the résumé reads, or goes back to the display name; pro.headshots takes four hours on the clock and $700 through spend (both estimated) and adds headshots with their provenance, out of date after two years; pro.update_resume takes an hour and makes a résumé from the record, which reads as behind once the record has anything it doesn't; pro.cut_reel takes two hours and $250 (both estimated) and cuts a reel from one to four pieces of recorded work only. Read by materialsCheck (the Career screen's What's Missing, and the agent's and the work's systems once they're built), resumeBehind, reelSources and profileOf.",
+  "implementation": "src/engine/systems/pro.ts (registerPro: pro.set_name, pro.headshots, pro.update_resume, pro.cut_reel; nameRefusal, headshotRefusal, resumeRefusal, reelRefusal; materialsCheck, resumeNow, resumeBehind, reelSources, profileOf; buildOnOpening for an older save, src/engine/index.ts loadSave's pro.begun block); src/ui/workspaces/CareerWorkspace.tsx.",
+  "consumers": "The Career screen's Overview (What's Missing, What's Next) and Portfolio (each material's standing); the ledger and the bank (spend, category career, the Work Costs line); the clock (each command moves it by its time).",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/pro-screen.test.ts renders Overview and Portfolio over real saves: each control with its command's refusal under it, each material's provenance once made, a graduate's credit and Equity, and the screen Locked until its chapter."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a headshot session takes its four hours and its $700.00 from the bank, and leaves headshots with their provenance'",
+    "asserts": "The clock moves four hours, the bank falls by exactly $700.00, the material carries its source and contents, and two years and a day on it reads out of date.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date'",
+    "asserts": "An hour on the clock; the résumé's lines from the record; behind on a School credit and a new name, said in words; version 2 after the update.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder; the School credit is set by hand as a closed run files it."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-core.test.ts 'PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it'",
+    "asserts": "Refused with nothing recorded, for a voice tape and an unknown piece; two hours and $250.00 for a tape; tapes only and newer work said in words.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "command",
+    "where": "tests/pro-core.test.ts 'sets the professional name, refuses one that isn’t a name, and goes back to the display name'",
+    "asserts": "Each refusal in its words; the name trimmed and kept; blank goes back to the display name.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard, as the review of 2026-10-13 read every capability: until one does, this entry is the builder's own reading, made on 2026-10-20."
+  ],
+  "weakTests": [],
+  "todo": "An independent reading at integration, against the integrated commit."
  }
 ]
