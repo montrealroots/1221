@@ -4369,7 +4369,7 @@
    {
     "kind": "command",
     "where": "tests/pro-work.test.ts ‘PLAYER JOURNEY (V11, V15): an Equity open call with a callback...’",
-    "asserts": "Booked through pro.accept_offer; each of nine weeks paid once by the clock with its hours in the memo.",
+    "asserts": "Booked through pro.accept_offer; each of nine weeks received by the clock, two weeks’ memos read for their hours.",
     "reachesAction": true,
     "checksConsequence": true,
     "independent": true
