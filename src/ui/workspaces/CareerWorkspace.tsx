@@ -1,8 +1,8 @@
 /**
  * SLATE — the Career screen (from 2026-10-20, the owner's brief 19): where an actor stands as a professional, and the
- * portfolio a submission or an approach sends (`systems/pro.ts`). Two tabs for now, Overview and Portfolio
+ * portfolio a submission or an approach sends (`systems/pro.ts`). Two tabs at first, Overview and Portfolio
  * (`ui/shell/sections.ts`); the agent's, the opportunities' and the work's tabs come with those systems, and none is
- * shown before it's playable.
+ * shown before it's playable. Work, the engagements' pay and the unions, from 2026-10-21 (`ui/career/WorkPane.tsx`).
  *
  * Every line is read from the record where the engine keeps it, worked out as it's drawn (`profileOf`,
  * `materialsCheck`, `reelSources`), and every control runs a command through `run`, behind its guide chapter
@@ -19,20 +19,24 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { plural } from '@/engine/core/text';
 import { countWords } from '@/engine/systems/school';
+import { WorkPane } from '@/ui/career/WorkPane';
 import {
   HEADSHOTS, NAME_MOST, REEL, RESUME, SKILL_LISTED_AT, currentOf, headshotCost, headshotRefusal, materialsCheck, nameRefusal,
   pathwayOf, pieceWords, proCreditWords, profileOf, reelCost, reelRefusal, reelSources, resumeBehind, resumeRefusal,
   schoolCreditWords, type MaterialProblem,
 } from '@/engine/systems/pro';
 
-type CareerTab = 'overview' | 'portfolio';
+type CareerTab = 'overview' | 'portfolio' | 'work';
 
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`). */
 const CAREER_TABS = SECTIONS['/workspace/career'] as readonly { id: CareerTab; label: string }[];
 
 export function CareerWorkspace() {
   const [tab, setTab] = useKept<CareerTab>(tabKey('/workspace/career'), 'overview');
-  const panes: Record<CareerTab, JSX.Element> = { overview: <OverviewPane toPortfolio={() => setTab('portfolio')} />, portfolio: <PortfolioPane /> };
+  const panes: Record<CareerTab, JSX.Element> = {
+    overview: <OverviewPane toPortfolio={() => setTab('portfolio')} />, portfolio: <PortfolioPane />,
+    work: <WorkPane />,
+  };
   return (
     <>
       <div className="page-head">
