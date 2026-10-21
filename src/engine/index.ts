@@ -95,6 +95,7 @@ import { armCollection, armTaxes, registerTaxReturn } from './systems/taxreturn'
 import { registerDocuments, startingDocuments } from './systems/documents';
 import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/permission';
 import { beginPro, buildOnOpening, registerPro } from './systems/pro';
+import { beginOnOpening, registerShowcase } from './systems/proshowcase';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -163,6 +164,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPermission(sim);
   registerPaperVisits(sim);
   registerPro(sim);
+  registerShowcase(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -286,7 +288,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed', 'nameTheCover', 'pro.begun', 'showcase.begun'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -465,6 +467,12 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('pro.begun')) {
     buildOnOpening(sim);
     opened.push('pro.begun');
+  }
+  // A save from before 2026-10-21 in its final term with the Actor Showcase still ahead, its showcase begun from now as
+  // the term would have begun it (`beginOnOpening`, `systems/proshowcase.ts`, brief 19's W1), once.
+  if (!opened.includes('showcase.begun')) {
+    beginOnOpening(sim);
+    opened.push('showcase.begun');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

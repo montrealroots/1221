@@ -63,6 +63,7 @@ import { spend, spendRefusal } from './spending';
 import { inSaveMoney } from './banking';
 import { f1Of, usWorkAuthorized } from './permission';
 import { citizenOf, documentsOf, inForce } from './documents';
+import { EARLY_DEGREE } from './proshowcase';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The record's types: the contract every part of the career builds on
@@ -255,13 +256,25 @@ export interface Engagement extends HasHistory {
   finishedAt?: Instant;
 }
 
-/** The School's Actor Showcase (DRAM 793b) in the final term: its scenes, the performances, and the follow-up. */
+/**
+ * The School's Actor Showcase (DRAM 793b) in the final term: its scenes, the performances, and the follow-up. Filled by
+ * `systems/proshowcase.ts` as it happens (from 2026-10-21): `eligible` once the term's fourth week has ended; a scene's
+ * `id` is its class scene's (`content/coursework.ts`), with the part played and the piece of coursework that prepares it;
+ * `prep` is how prepared it was at its latest performance, 0 to 1; `performed` holds one entry for each scene at each
+ * showcase day it was played, its `city` a city's id (`content/geography.ts`, `us-ny-newyork`).
+ */
 export interface ShowcaseRecord {
   term: number;
   eligible?: boolean;
-  scenes: { id: string; chosenAt?: Instant; prep?: number }[];
-  performed: { city: string; at: Instant; band?: Band; overall?: number }[];
+  scenes: { id: string; chosenAt?: Instant; prep?: number; role?: 0 | 1; assignmentId?: string; by?: 'you' | 'faculty' }[];
+  performed: { city: string; at: Instant; band?: Band; overall?: number; scene?: string }[];
   followUp?: { at: Instant; agents: AgentId[] };
+  /** The course's options, a scene and a part each, fixed when the showcase began, so a choice is made from what was offered. */
+  options?: { scene: string; role: 0 | 1 }[];
+  /** The courses still incomplete at the end of the term's fourth week, where they kept the student out. */
+  outstanding?: string[];
+  /** A showcase day missed: where, when, and whether it was excused. */
+  missed?: { city: string; at: Instant; excused: boolean }[];
 }
 
 /** A request to the School for outside work in session (the Bulletin's written proposal), and its decision. */
@@ -601,11 +614,12 @@ export function availabilityOf(person: Person, at: Instant): { inSchool: boolean
 /**
  * The way the life is on, from the School's record, as the Career screen's Overview says it. Early graduation isn't one:
  * the Bulletin lets the faculty reduce residency "on rare occasions", never below two years, and publishes no way to ask
- * (yale.md §2).
+ * (yale.md §2). From 2026-10-21 (brief 19's A5) a candidate's line says so in the Bulletin's own sentence, the same words
+ * the School's Terms And Award tab shows (`EARLY_DEGREE`, `systems/proshowcase.ts`); until then only the guide did.
  */
 export function pathwayOf(person: Person): { id: 'degree' | 'graduate' | 'left' | 'none'; heading: string; words: string } {
   const t = trainingOf(person);
-  if (t.status === 'candidate') return { id: 'degree', heading: 'Completing The Degree', words: `Year ${countWords(yearOfStudy(person))} of the ${YALE_DRAMA.degree}: the degree comes at Commencement after your sixth term, and everything on your record goes on with you.` };
+  if (t.status === 'candidate') return { id: 'degree', heading: 'Completing The Degree', words: `Year ${countWords(yearOfStudy(person))} of the ${YALE_DRAMA.degree}: the degree comes at Commencement after your sixth term, and everything on your record goes on with you. ${EARLY_DEGREE.words}` };
   if (t.status === 'completed') return { id: 'graduate', heading: 'A Graduate', words: `You’ve completed the ${YALE_DRAMA.degree}. Your training, the parts you played at the School and the portfolio you make go on with you.` };
   if (t.status === 'left') return { id: 'left', heading: 'Left Without The Degree', words: 'Leaving without the degree keeps what you did: your training stays on your record as it was, and so do the parts you played there.' };
   return { id: 'none', heading: 'Without A Drama School', words: 'Without a drama school behind you, your portfolio is built from what you do from here.' };

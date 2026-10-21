@@ -39,6 +39,7 @@ import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
+import { EarlyDegree, ShowcasePanel } from '@/ui/career/SchoolShowcase';
 import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
 import { ClassesPanel, LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
 import { enrolledTerms, yaleAccount } from '@/engine/systems/leave';
@@ -71,7 +72,7 @@ export function SchoolWorkspace() {
   const panes: Record<SchoolTab, JSX.Element> = {
     standing: <StandingPane />,
     classes: <ClassesPane />,
-    coursework: <><CourseworkPane /><PlaysToRead /></>,
+    coursework: <><ShowcasePanel /><CourseworkPane /><PlaysToRead /></>,
     casting: <CastingPane />,
     work: <WorkPane />,
     terms: <TermsPane />,
@@ -892,6 +893,8 @@ function TermsPane() {
           <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, estimated until they’re published. Source: {COST_2026_27.source}.</Fine>
         </div>
       </Panel>
+      {/* The Bulletin's word on finishing early, where a student looks at their terms (from 2026-10-21, brief 19's A5). */}
+      <EarlyDegree />
     </div>
   );
 }

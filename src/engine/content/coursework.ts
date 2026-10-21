@@ -888,14 +888,20 @@ const revise: Activity = { id: 'revise', label: 'Work On The Note', minutes: 60,
 /**
  * The Actor Showcase's scene (DRAM 793b): the Bulletin's "students choose and
  * rehearse scenes, which are presented to agents, managers, casting directors,
- * and other members of the industry in New York and Los Angeles". Shown in
- * class and again with the note taken. How it last went was read at the
- * showcase (`showcaseSceneSeen` in `systems/career.ts`) until the showcase and
- * the career went on 2026-10-09; this said until 2026-10-10 that it still was. The scenes are SLATE's
- * public-domain ones: which scenes a class chooses isn't published.
+ * and other members of the industry in New York and Los Angeles". How it last
+ * went was read at the showcase (`showcaseSceneSeen` in `systems/career.ts`)
+ * until the showcase and the career went on 2026-10-09; this said until
+ * 2026-10-10 that it still was. From then it was shown in class and again with
+ * the note taken, and nothing came after it. From 2026-10-21 (brief 19) the two
+ * scenes the student chooses are its pieces, shown at the showcase's first day
+ * and again with the note taken in Los Angeles (`systems/proshowcase.ts`); a
+ * class keeps setting it only for a student an Incomplete kept out. The scenes
+ * are SLATE's public-domain ones: which scenes a class chooses isn't published.
+ * Its notes said "in front of agents" and "shown to the industry" until then,
+ * which the showcase now says only as the Bulletin does.
  */
 const SHOWCASE_SCENE: Template = {
-  id: 'showcase-scene', courses: ['DRAM 793b'], title: 'Your Showcase Scene', deliverable: 'A scene rehearsed for the industry showcase, shown in class, then again with the note taken',
+  id: 'showcase-scene', courses: ['DRAM 793b'], title: 'Your Showcase Scene', deliverable: 'A scene rehearsed for the Actor Showcase, shown, then shown again with the note taken',
   material: 'scene', paired: true,
   dims: {
     familiarity: { label: 'Knows The Scene', weight: 0.1 }, memorization: { label: 'Lines', weight: 0.2 }, interpretation: { label: 'Table Work', weight: 0.2 },
@@ -905,9 +911,9 @@ const SHOWCASE_SCENE: Template = {
   reads: { scene: 2, audition: 1, character: 1 }, dueAfter: 4, revised: true, par: 62,
   notes: {
     familiarity: 'The scene isn’t known well enough yet to be lived in, and the room will see it.',
-    memorization: 'The lines weren’t secure; in front of agents there’s no second take.',
+    memorization: 'The lines weren’t secure, and at a showcase there’s no second take.',
     interpretation: 'The choices weren’t specific enough to show who you are in three minutes.',
-    rehearsal: 'It needed more time on its feet before it’s shown to the industry.',
+    rehearsal: 'It needed more time on its feet before the showcase.',
     partner: 'The two of you weren’t playing the same scene yet.',
   },
 };
