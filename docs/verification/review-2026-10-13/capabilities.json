@@ -3990,7 +3990,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "a483247d",
+  "against": "c01e06f4",
   "by": "a reader who wrote none of it",
   "id": "career-portfolio",
   "claim": "Brief 19’s portfolio: pro.set_name sets the professional name the profile shows and a résumé is made under; pro.headshots, pro.update_resume and pro.cut_reel each take their time and, for headshots and a reel, their money through spend (estimates said), and add a material with where it came from, when and what’s in it. Read by materialsCheck (the Career screen’s What’s Missing, the agent’s check, a submission and the agent’s breakdowns), resumeBehind, reelSources and profileOf.",
@@ -4065,11 +4065,12 @@
   "verdict": "partial",
   "partialClass": "missing-evidence",
   "gaps": [
+   "pro.cut_reel: a better reel counted as something new after a decision is read by no test (mutation R8 survived).",
    "A released credit’s footage is a reel source only by calling reelSources on state set by hand; no test cuts a reel from it.",
-   "An office’s request for new headshots is never played.",
+   "No played life is asked for new headshots: the request is reached on headshots dated back by hand.",
    "No Portfolio button is pressed on the rendered screen."
   ],
-  "todo": "A journey that cuts a reel from a released credit’s footage, and an office’s request for headshots played through.",
+  "todo": "A test that reads a better reel as something new after a pass; a journey that cuts a reel from a released credit’s footage.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
@@ -4255,7 +4256,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "a483247d",
+  "against": "c01e06f4",
   "by": "a reader who wrote none of it",
   "id": "career-representation",
   "claim": "Brief 19’s agent: pro.agent_notice before anything else; pro.agent_check refusing an incomplete approach in materialsCheck’s words; pro.ask_referral from a finished job judged Strong or better; pro.send_materials refused unsolicited in the agency’s published words, too soon or with nothing new, else his office’s answer on the clock; pro.supply_material; pro.ask_to_move, once, also at the meeting’s stop; pro.accept_agreement, pro.decline_agreement, and pro.end_agreement by agreement, Equity’s 90 days or SAG-AFTRA’s 151 and 91. Read by interestOf’s seven factors and the pro.agent and pro.roster draws, by activeAgreement for the work and the pay, and by the Representation tab.",
@@ -4266,6 +4267,33 @@
    "have": "tests/pro-representation-screen.test.ts renders the tab at each stage over saves the commands made: the notice, each control grayed with its refusal, Why It Went This Way, every term with its basis, the meeting and Ask To Move, the endings with their dates, and the controls Locked until the chapter; no button is pressed on the rendered screen, and every stage past the check rests on a finished job written by hand."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through’",
+    "asserts": "A referral counted as the one thing new a year after a pass; the next approach taken.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "On an introduction written by hand; a second job finished by hand (TEST SETUP)."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands...’",
+    "asserts": "Each refusal read in its words, then both remade and sent.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "TEST SETUP: headshots dated back three years and a second job finished; on an introduction written by hand."
+   },
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes’",
+    "asserts": "Ended through the command before the pay; the commission still owed said, then taken through the trust account.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "A twin of the played life from its save the day the shoot wrapped."
+   },
    {
     "kind": "command",
     "where": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’",
@@ -4348,16 +4376,14 @@
     "problem": "The agreement is written by hand, not accepted through the command."
    }
   ],
-  "verdict": "partial",
-  "partialClass": "missing-evidence",
+  "verdict": "verified",
+  "partialClass": "none",
   "gaps": [
-   "pro.ask_referral: caseKeys’ count of a referral as something new after a decision is read by no test (mutation Q15 survived).",
-   "pro.supply_material: the refusals for a résumé still behind and for headshots older than the request are read by no test; a request for headshots is never played.",
-   "pro.end_agreement: continuing commission after an ending is checked only on an agreement ended by hand; the Equity and SAG-AFTRA endings read an offer and covered days written by hand.",
+   "Two refusals are read by no test: a referral while an approach is under way or held (R10), and Equity’s ending while covered work is going on (R9).",
    "A pass, no answer, a meeting missed, an offer let lapse and the term’s end are played only after an introduction written by hand.",
-   "No button is pressed on the rendered screen."
+   "No button is pressed on the rendered screen.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
   ],
-  "todo": "A played approach that ends in a pass and comes again on a referral; a request for headshots; a contract made under the agreement and paid after the agreement is ended through the command.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {
@@ -4438,7 +4464,7 @@
  },
  {
   "on": "2026-10-21",
-  "against": "a483247d",
+  "against": "c01e06f4",
   "by": "a reader who wrote none of it",
   "id": "career-pay",
   "claim": "Brief 19’s pay: each promised payment put on the clock at acceptance (schedulePay) and paid once on its day, into the agency’s client trust account and on three business days later less commission where owed, or straight to the player; commission only when owed (Equity’s tiers, SAG-AFTRA over scale, New York’s 10%, continuing, Equity’s tail); wages through sim.post and recordWages with the withholding and the work’s town; permission to work read per date; OPT’s days worked; Equity billed at the degree; SAG-AFTRA eligibility, membership from the 30th day, and pro.join_sag.",
@@ -4449,6 +4475,15 @@
    "have": "tests/propay-screen.test.ts renders the Work tab (promised, in trust, received with the commission on its own line, still owed after an agreement ended, the unions with Join SAG-AFTRA grayed and why) and Papers’ permission over an OPT holder; each on engagements written by hand. No test renders the Work tab after joining SAG-AFTRA."
   },
   "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/journey-career.test.ts ‘End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes’",
+    "asserts": "Commission still owed after the player ends the agreement, taken from the pay through the trust account.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": true,
+    "problem": "A twin of the played life from its save the day the shoot wrapped."
+   },
    {
     "kind": "command",
     "where": "tests/journey-career.test.ts ‘through him: his breakdowns and his submissions with her portfolio...’",
@@ -4503,14 +4538,14 @@
     "problem": "The engagement written by hand; nothing joining changes afterward is read."
    }
   ],
-  "verdict": "partial",
-  "partialClass": "missing-evidence",
+  "verdict": "verified",
+  "partialClass": "none",
   "gaps": [
-   "pro.join_sag: the résumé’s SAG-AFTRA line for a member is read by no test (mutation Q14 survived); the 30th day’s refusal is lifted only by calling sagWorkRefusal after the command.",
-   "Most of the pay’s rules are checked on engagements written by hand with schedulePay called by the test; a played life covers the unsigned pay, the represented pay over scale and the working dues.",
-   "No test renders the Work tab after joining SAG-AFTRA."
+   "pro.join_sag: the 30th day’s refusal is lifted only by calling sagWorkRefusal after the command.",
+   "Most of the pay’s rules are checked on engagements written by hand with schedulePay called by the test; a played life covers the unsigned pay, the represented pay over scale, the working dues and the commission owed after an ending.",
+   "No test renders the Work tab after joining SAG-AFTRA.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
   ],
-  "todo": "The résumé read after joining; a contract made under an agreement and paid after it ends.",
   "rows": "The audit’s rows for its commands, added the same day, read each against the same standard (docs/verification/audit/school.json; docs/verification/career-2026-10-20/audit/REPORT.md).",
   "weakTests": [],
   "builder": {

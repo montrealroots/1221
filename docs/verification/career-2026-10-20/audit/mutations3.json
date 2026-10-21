@@ -1,0 +1,198 @@
+[
+ {
+  "id": "R1",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/pro.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Join SAG-AFTRA after her first",
+  "expect": "killed by the résumé read after joining",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 262,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s 402ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s"
+  ]
+ },
+ {
+  "id": "R2",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a year on, a referral alone",
+  "expect": "killed by the referral as something new",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 16,
+  "summary": "Tests  1 failed | 13 skipped (14)",
+  "failed": [
+   "V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through 1934ms",
+   "tests/journey-agent.test.ts > V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through"
+  ]
+ },
+ {
+  "id": "R3",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a request for headshots more than two years old",
+  "expect": "killed by the résumé refusal read",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 16,
+  "summary": "Tests  1 failed | 13 skipped (14)",
+  "failed": [
+   "G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new 712ms",
+   "tests/journey-agent.test.ts > G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new"
+  ]
+ },
+ {
+  "id": "R4",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "filter": "a request for headshots more than two years old",
+  "expect": "killed by the headshots refusal read",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 16,
+  "summary": "Tests  1 failed | 13 skipped (14)",
+  "failed": [
+   "G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new 576ms",
+   "tests/journey-agent.test.ts > G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new"
+  ]
+ },
+ {
+  "id": "R5",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "End It By Agreement before",
+  "expect": "killed: no commission once the agreement has ended",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 273,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes 1522ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes"
+  ]
+ },
+ {
+  "id": "R6",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "End It By Agreement before",
+  "expect": "killed: the notice says nothing is owed with pay to come",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 276,
+  "summary": "Tests  1 failed | 11 skipped (12)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes 98ms",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes"
+  ]
+ },
+ {
+  "id": "R7",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads the reel in his office’s Your Work",
+  "applied": true,
+  "killed": true,
+  "status": 1,
+  "seconds": 428,
+  "summary": "Tests  3 failed | 44 passed | 1 skipped (48)",
+  "failed": [
+   "V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials; the meeting set, its calendar entry saying the trip goes with it and what missing it costs, moved a week with Ask To Move at its stop, and kept; the agreement offered with every term, and accepted with Accept The Agreement 59ms",
+   "the Representation tab > PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline 278ms",
+   "the Representation tab > PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why 210ms",
+   "tests/journey-career.test.ts > a second graduate (life B, seed v1-5), who cuts her reel only once the School’s follow-up has come",
+   "tests/journey-career.test.ts > V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials; the meeting set, its calendar entry saying the trip goes with it and what missing it costs, moved a week with Ask To Move at its stop, and kept; the agreement offered with every term, and accepted with Accept The Agreement",
+   "tests/pro-representation-screen.test.ts > the Representation tab > PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline",
+   "tests/pro-representation-screen.test.ts > the Representation tab > PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why"
+  ]
+ },
+ {
+  "id": "R8",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads a better reel as something new",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 446,
+  "summary": "Tests  48 passed (48)",
+  "failed": []
+ },
+ {
+  "id": "R9",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads Equity’s refusal while working",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 243,
+  "summary": "Tests  40 passed (40)",
+  "failed": []
+ },
+ {
+  "id": "R10",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts"
+  ],
+  "expect": "survives if no test reads a referral refused while an approach is under way or held",
+  "applied": true,
+  "killed": false,
+  "status": 0,
+  "seconds": 124,
+  "summary": "Tests  36 passed (36)",
+  "failed": []
+ }
+]

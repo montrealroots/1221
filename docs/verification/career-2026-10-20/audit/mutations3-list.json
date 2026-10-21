@@ -1,0 +1,136 @@
+[
+ {
+  "id": "R1",
+  "row": "pro.join_sag",
+  "file": "src/engine/systems/pro.ts",
+  "find": "  if (p.unions.sagMember !== undefined) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');\n",
+  "replace": "  if (false) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "killed by the résumé read after joining",
+  "of": "Q14",
+  "filter": "Join SAG-AFTRA after her first"
+ },
+ {
+  "id": "R2",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  for (const r of rel?.referrals ?? []) keys.push(`referral:${r.engagementId}`);\n",
+  "replace": "",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "expect": "killed by the referral as something new",
+  "of": "Q15",
+  "filter": "a year on, a referral alone"
+ },
+ {
+  "id": "R3",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(",
+  "replace": "    if (false && kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "expect": "killed by the résumé refusal read",
+  "of": "Q16",
+  "filter": "a request for headshots more than two years old"
+ },
+ {
+  "id": "R4",
+  "row": "pro.supply_material",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(",
+  "replace": "    if (false && kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "expect": "killed by the headshots refusal read",
+  "of": "Q17",
+  "filter": "a request for headshots more than two years old"
+ },
+ {
+  "id": "R5",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/propay.ts",
+  "find": "  if (own) return { agreement: own, how: 'term' };\n",
+  "replace": "  if (own) return own.endedAt !== undefined ? undefined : { agreement: own, how: 'term' };\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "End It By Agreement before",
+  "expect": "killed: no commission once the agreement has ended"
+ },
+ {
+  "id": "R6",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => !p.received && !p.deferred));\n",
+  "replace": "  const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => false && !p.received && !p.deferred));\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "End It By Agreement before",
+  "expect": "killed: the notice says nothing is owed with pay to come"
+ },
+ {
+  "id": "R7",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (reel?.pieces?.length) out.push({ what: 'your reel', band: bestBand(reel.pieces.map((p) => p.band)), medium: 'screen' });\n",
+  "replace": "  if (false && reel?.pieces?.length) out.push({ what: 'your reel', band: bestBand(reel.pieces.map((p) => p.band)), medium: 'screen' });\n",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads the reel in his office’s Your Work"
+ },
+ {
+  "id": "R8",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);\n",
+  "replace": "  if (false && reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);\n",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads a better reel as something new"
+ },
+ {
+  "id": "R9",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';\n",
+  "replace": "    if (false && workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';\n",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "survives if no test reads Equity’s refusal while working"
+ },
+ {
+  "id": "R10",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (busy) return busy;\n  const soon = tooSoon(sim, rel);\n  if (soon) return soon;\n  const job = referrersOf(",
+  "replace": "  const job = referrersOf(",
+  "tests": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career-older.test.ts"
+  ],
+  "expect": "survives if no test reads a referral refused while an approach is under way or held"
+ }
+]

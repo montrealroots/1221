@@ -5,12 +5,19 @@
 verbatim) after pausing brief 18. It's being built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed.
 
-**Completion, by the matrix:** 545 of 658 rows in scope Implemented And Verified (82.8%); 109 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 548 of 658 rows in scope Implemented And Verified (83.2%); 106 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The audit's third reading, 2026-10-21, against `c01e06f4`, once tests had been written for what the second reading
+  found missing: until it this said 545 of 658. The four rows it had kept partial are verified: `pro.ask_referral`,
+  `pro.supply_material`, `pro.end_agreement` and `pro.join_sag`. Going through the thirteen the first reading verified
+  reader by reader, it found `pro.cut_reel`'s count of a better reel as something new read by no test, so that row is
+  partial now. Two refusals no test reads are recorded in their rows: a referral while an approach is under way or held,
+  and Equity's ending while covered work goes on. `audit/REPORT.md`, The Third Reading.)
 
   (The audit's second reading, 2026-10-21, against `a483247d`, once V1's journeys had landed: until it this said 540 of
-  658. Five of the nine partial rows are verified on the played journeys: `pro.send_materials`, `pro.ask_to_move`,
-  `pro.accept_agreement`, `pro.decline_agreement` and `pro.prepare`. Four stay partial, each saying what's still
-  missing: `pro.ask_referral` and `pro.join_sag` for a reader no test reads (a referral counted as something new, the
+  658. Five of the nine partial rows were verified on the played journeys: `pro.send_materials`, `pro.ask_to_move`,
+  `pro.accept_agreement`, `pro.decline_agreement` and `pro.prepare`. Four stayed partial then, each saying what was still
+  missing: `pro.ask_referral` and `pro.join_sag` for a reader no test read (a referral counted as something new, the
   résumé's SAG-AFTRA line), `pro.supply_material` for its refusals of a résumé and of headshots, and `pro.end_agreement`
   for continuing commission after the command. `audit/REPORT.md`, The Second Reading.)
 
@@ -52,7 +59,8 @@ none of it is in `main`, and nothing is deployed.
   its five items done here.
 - **Audited:** the 22 commands and their five capabilities, read against the standard by a reader who wrote none of
   them (`docs/verification/career-2026-10-20/audit/REPORT.md`, 2026-10-21); this said that was still to do until then.
-  Read again the same day against `a483247d`, once V1's journeys had landed: 18 of the 22 verified, 4 partial.
+  Read again the same day against `a483247d`, once V1's journeys had landed (18 of the 22 verified, 4 partial then),
+  and a third time against `c01e06f4`: 21 verified, `pro.cut_reel` partial.
 - **Still to do:** the playthroughs V1 to V18 on the joined game (V1's journeys, which the audit's nine partial rows waited
   on, landed on 2026-10-21: five of those rows moved on them, and the four left partial each say what's still missing), its built app at both
   widths, the final runs, and the gate.

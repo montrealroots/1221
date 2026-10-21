@@ -9,11 +9,84 @@ commits `74e7c17e` (the mutations), `2d999179` (the rows) and `abd1aef7` (a corr
 unchanged in substance.) Nothing in `src/` or `tests/` changed.
 
 Read again the same day against `a483247d`, once V1's journeys had landed (The Second Reading, below): five of the nine
-rows the first reading left partial are verified on the played journeys, and four stay partial, two for the gaps their
-first reviews named, only partly closed, and two for readers this reading found no test reading. The sections after it
-are the first reading's, at `7bbab80f`, kept as they were but for the words it falsified.
+rows the first reading left partial were verified on the played journeys, and four stayed partial, two for the gaps their
+first reviews named, only partly closed, and two for readers that reading found no test reading. Read a third time
+against `c01e06f4`, once tests had been written for those four (The Third Reading, below): the four are verified, and
+`pro.cut_reel`, verified by the first reading, is partial for a reader no test reads. The sections after the third are
+the earlier readings', kept as they were but for the words a later one falsified.
+
+## The Third Reading, Against `c01e06f4`
+
+The coordinator merged the second reading (`3ee267a1`), and `c01e06f4` added tests for what it found missing. Nothing
+under `src/` changed. The clone was brought to `c01e06f4` by a merge (it fast-forwarded). The same reader read each new
+test, assertion by assertion, and ran the second round's survivors again on them rather than trusting the record of
+them (`../integration/mutations.txt`, I16 to I21). Then, as the second reading had recommended, the thirteen rows the
+first reading verified were read again through their Downstream, reader by reader, with a mutation wherever reading
+found no test (`mutations.txt`, Round Three; `mutations3-list.json`, `mutations3.json`). Seven of ten were killed.
+
+| Command | At `a483247d` | At `c01e06f4` | What Holds It Now, Or What's Still Missing | Mutations |
+|---|---|---|---|---|
+| `pro.ask_referral` | partial | verified | A year after a pass, the same record is refused as nothing new; a referral asked through the command from a job his office had already considered is the one thing new, and the next approach is taken (`journey-agent`). Recorded, not deciding: its refusals while an approach is under way or held are read by no test | R2 (Q15 again) killed; R10 survived |
+| `pro.supply_material` | partial | verified | His office asks on the clock for new headshots and an up-to-date résumé; the send is refused in each one's words while it stands, then taken once both are remade through their commands (`journey-agent`) | R3, R4 (Q16, Q17 again) killed |
+| `pro.end_agreement` | partial | verified | A twin of life A, from its played save the day the shoot wrapped, ends the agreement through the command before the pay, the notice saying the commission is still owed, and is played on to the pay: $280.40 through the trust account, as in the life that kept him. Recorded, not deciding: Equity's refusal while covered work goes on is read by no test | R5, R6 killed; R9 survived |
+| `pro.join_sag` | partial | verified | Life A's résumé, made after she joined, reads SAG-AFTRA and not SAG-AFTRA Eligible | R1 (Q14 again) killed |
+| `pro.cut_reel` | verified | partial | His office's Your Work reads the reel's best band (R7 killed in both lives and two screen tests). Missing: a better reel counted as something new after a decision, which the pass's notice promises, is read by no test | R7 killed; R8 survived |
+
+**What the new tests set by hand, and why it doesn't decide.** Each `journey-agent` test starts from that file's
+introduction written by hand: a referral from a finished Off-Broadway job. These rows' journeys are played elsewhere
+(`journey-career-older` asks for a referral from a played job; life B plays a request supplied), so the stand-in only
+sets a reader up, as the second reading counted it for `pro.send_materials`' pass and no answer. The second job finished
+by hand is The Winter Ledger, a run V11's journey books from an open call. The headshots dated three years back are
+time, which only waiting reaches; this audit counts that as setup, as it counts Commencement brought forward. So the
+request for headshots is the engine's own, made on the clock from that record, though no played life keeps its headshots
+two years, and the row says so. The ending's twin opens a played save and plays on, and nothing in it is set by hand.
+
+**Two refusals recorded, not deciding.** R9 and R10 took out refusals the rows' claims name, and every test passed. This
+audit decides a row on what reads the command's change, as the first reading did, and a refusal is what the command
+reads. So each is a named gap in a verified row, as an unpressed button is, and not a reason for partial. The second
+reading kept `pro.supply_material` partial for refusals because its first review had named them as its gap. If the owner
+wants every refusal a claim names read by a test, these two rows go back to partial, and the thirteen should be swept for
+refusals too, which this reading didn't do.
+
+**The thirteen, reader by reader.** Twelve hold.
+- `school.choose_showcase`: the rehearsal calls move both scenes' preparation, each day judges each chosen scene into
+  the records, the course is settled and the degree reads it, and the follow-up is put on the clock.
+- `pro.set_name`: the profile reads the name after the command, and a résumé is made under it and reads behind on it (M1).
+- `pro.headshots` and `pro.update_resume`: `materialsCheck`'s refusals of the check and of a submission, his holding a
+  submission while headshots are missing (J3), and now a request for each.
+- `pro.agent_notice` and `pro.agent_check`: M5 and M6; the check's words are read in its history.
+- `pro.submit`, `pro.tape_audition` and `pro.move_audition`: the reply, the rounds and casting, played. A self-tape not in
+  by its time lapses (`pro-work`).
+- `pro.accept_offer`: the work days, the pay, the School's `present()` and the warning.
+- `pro.request_outside_work`: the dean approves and refuses, each said.
+- `pro.decline_offer` holds with a note. Equity's 90 days count an offer through him that was declined (`lastOffer`), and
+  that's read only on an offer declined by hand (`journey-agent`), in the shape the command leaves. No test declines an
+  offer through him with the command.
+
+`pro.cut_reel` doesn't hold: `caseKeys` counts a better reel as something new (`proagent.ts:466`), and nothing reads it.
+Its review is new, against `c01e06f4`, and it's partial.
+
+**Tallies.**
+
+- Coverage: 318 verified and 4 partial before; 321 verified and 1 partial after. Unresolved 12, deferred 16, legacy 3
+  and informational 8, unchanged.
+- The completion matrix: 545 of 658 (82.8%), 109 Implemented, Verification Incomplete before; 548 of 658 (83.2%), 106
+  after.
+- The registry: 69 capabilities, Partial 11, Implemented 36, Verified 3, unchanged. `career-representation` and
+  `career-pay` are verified in this reading and stay Implemented in the registry for the reason `school-showcase` does.
+  `career-portfolio` names `pro.cut_reel` partial.
+
+**Defects:** none in the game's code.
+
+**Checks run for it** (each exit read from a file):
+
+- The twelve test files the rows cite, at `c01e06f4` with one worker: 155 of 155 passed in 348 seconds, exit 0.
+- `tests/audit-pipeline.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b13.test.ts`: 26 of 26, exit 0.
+- The gate's chain without the suite (21 checks), on the tree as committed: exit 0. No TypeScript changed.
 
 ## The Second Reading, Against `a483247d`
+
+As it stood at `a483247d`; the third reading, above, settled the four rows it left partial.
 
 V1's journeys landed on the working branch (`074f079d`, the playthroughs' merge; `a483247d`, the defects they recorded,
 settled), and the same reader read the nine rows the first reading had left partial again the same day, against the tests

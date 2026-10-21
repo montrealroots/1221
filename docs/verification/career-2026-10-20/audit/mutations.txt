@@ -236,3 +236,60 @@ Q17  pro.supply_material  SURVIVED  (Tests  45 passed (45), 301 s)
     ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
 
 Totals: 15 of 19 killed; Q14, Q15, Q16, Q17 survived.
+
+Round Three, 2026-10-21, against c01e06f4, once tests had been written for what the second reading found missing
+(tests/journey-agent.test.ts and tests/journey-career.test.ts). The second round’s survivors run again on those tests
+(R1 to R4 name the one they repeat), two on the commission owed after the player ends the agreement (R5, R6), and four
+of readers and refusals this reading found by going through the rows again: the reel’s two readers in his office’s
+decisions (R7, R8), Equity’s refusal while covered work goes on (R9) and the referral’s refusals while an approach is
+under way or held (R10). Each in a copy of the tree, with one worker, by the same runner (mutate.cjs,
+mutations3-list.json, mutations3.json).
+
+R1   pro.join_sag  KILLED  (Tests  1 failed | 11 skipped (12), 262 s)
+    src/engine/systems/pro.ts: "if (p.unions.sagMember !== undefined) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');" -> "if (false) add('union:sag', 'SAG-AFTRA', 'your SAG-AFTRA membership');" (Q14 again)
+    ran: tests/journey-career.test.ts -t "Join SAG-AFTRA after her first"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s
+
+R2   pro.ask_referral  KILLED  (Tests  1 failed | 13 skipped (14), 16 s)
+    src/engine/systems/proagent.ts: "for (const r of rel?.referrals ?? []) keys.push(`referral:${r.engagementId}`);" -> "" (Q15 again)
+    ran: tests/journey-agent.test.ts -t "a year on, a referral alone"
+    failed: V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one > PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through
+
+R3   pro.supply_material  KILLED  (Tests  1 failed | 13 skipped (14), 16 s)
+    src/engine/systems/proagent.ts: "if (kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(" -> "if (false && kind === 'resume' && materialsCheck(person, 'representation', sim.now).some((p) => p.kind === 'resume')) short.push(" (Q16 again)
+    ran: tests/journey-agent.test.ts -t "a request for headshots more than two years old"
+    failed: G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new
+
+R4   pro.supply_material  KILLED  (Tests  1 failed | 13 skipped (14), 16 s)
+    src/engine/systems/proagent.ts: "if (kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(" -> "if (false && kind === 'headshot' && (currentOf(pro, 'headshot')?.made ?? 0) < r.at) short.push(" (Q17 again)
+    ran: tests/journey-agent.test.ts -t "a request for headshots more than two years old"
+    failed: G3: what a request for more refuses until it’s made > PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new
+
+R5   pro.end_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 273 s)
+    src/engine/systems/propay.ts: "if (own) return { agreement: own, how: 'term' };" -> "if (own) return own.endedAt !== undefined ? undefined : { agreement: own, how: 'term' };"
+    ran: tests/journey-career.test.ts -t "End It By Agreement before"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes
+
+R6   pro.end_agreement  KILLED  (Tests  1 failed | 11 skipped (12), 276 s)
+    src/engine/systems/proagent.ts: "const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => !p.received && !p.deferred));" -> "const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => false && !p.received && !p.deferred));"
+    ran: tests/journey-career.test.ts -t "End It By Agreement before"
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes
+
+R7   pro.cut_reel  KILLED  (Tests  3 failed | 44 passed | 1 skipped (48), 428 s)
+    src/engine/systems/proagent.ts: "if (reel?.pieces?.length) out.push({ what: 'your reel', band: bestBand(reel.pieces.map((p) => p.band)), medium: 'screen' });" -> "if (false && reel?.pieces?.length) out.push({ what: 'your reel', band: bestBand(reel.pieces.map((p) => p.band)), medium: 'screen' });"
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
+    failed: V1 and A1: a graduating student carried into the career, played whole (life A, seed v1-12) > the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials; the meeting set, its calendar entry saying the trip goes with it and what missing it costs, moved a week with Ask To Move at its stop, and kept; the agreement offered with every term, and accepted with Accept The Agreement | the Representation tab > PLAYER JOURNEY: G6 and G7: Why It Went This Way opens its seven factors, and the agreement shows every term with its basis before Accept and Decline | the Representation tab > PLAYER JOURNEY: a meeting set shows when and where, with Ask To Move open until it’s used, then grayed with why
+
+R8   pro.cut_reel  SURVIVED  (Tests  48 passed (48), 446 s)
+    src/engine/systems/proagent.ts: "if (reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);" -> "if (false && reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);"
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts tests/journey-career.test.ts
+
+R9   pro.end_agreement  SURVIVED  (Tests  40 passed (40), 243 s)
+    src/engine/systems/proagent.ts: "if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';" -> "if (false && workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';"
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career.test.ts
+
+R10  pro.ask_referral  SURVIVED  (Tests  36 passed (36), 124 s)
+    src/engine/systems/proagent.ts: "if (busy) return busy; const soon = tooSoon(sim, rel); if (soon) return soon; const job = referrersOf(" -> "const job = referrersOf("
+    ran: tests/journey-agent.test.ts tests/pro-agent.test.ts tests/pro-representation-screen.test.ts tests/journey-career-older.test.ts
+
+Totals: 7 of 10 killed; R8, R9, R10 survived.
