@@ -44,7 +44,7 @@ import { CommandError } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
 import type { Person } from '../domain/model';
 import { MS_DAY, addDays, formatDate, formatDateTime, formatTime, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
-import { plural, spokenList } from '../core/text';
+import { spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA } from '../content/school';
 import { BRIEF_BY_ID } from '../content/briefs';
@@ -60,7 +60,7 @@ import {
   activeAgreement, availabilityOf, countOf, currentOf, eligibilityOf, ensurePro, finished, materialsCheck, noteEvent, trainingOf,
   type Agreement, type AgentRelation, type EndedHow, type MaterialKind, type ProEvent, type ProEventKind, type ProId, type RelationStage,
 } from './pro';
-import { yearOfStudy } from './school';
+import { countWords, yearOfStudy } from './school';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: kinds, times, bars and chances (every one an ASSUMPTION, said where a player reads it)
@@ -93,7 +93,7 @@ export const AGENT_TIMES = {
 
 /** ASSUMPTION: after a pass, a year before his office looks again; after no answer or a declined offer, six months. */
 export const COOLDOWN_DAYS = { pass: 365, silence: 182, declined: 182 } as const;
-const COOLDOWN_WORDS = { pass: 'a year', silence: 'six months', declined: 'six months' } as const;
+export const COOLDOWN_WORDS = { pass: 'a year', silence: 'six months', declined: 'six months' } as const;
 
 /** ASSUMPTION: the trip to his office for a meeting, in minutes, from where the player's based; a video call from elsewhere. */
 export const TRAVEL_MINUTES: Readonly<Record<string, number>> = { [YALE_DRAMA.cityId]: 120, 'us-ny-newyork': 30 };
@@ -119,6 +119,9 @@ export const CHANCE = {
 
 const BAND_RANK: Readonly<Record<Band, number>> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
 const BANDS: readonly Band[] = ['unready', 'working', 'strong', 'exceptional'];
+/** A count with its noun, the number in words under ten as prose has it: one meeting, two credits, 12 days. */
+const counted = (n: number, one: string, many = `${one}s`): string => `${countWords(n)} ${n === 1 ? one : many}`;
+
 const bestBand = (bands: readonly (Band | undefined)[]): Band | undefined =>
   bands.filter((b): b is Band => b !== undefined).sort((a, b) => BAND_RANK[b] - BAND_RANK[a])[0];
 
@@ -220,7 +223,7 @@ function workSeen(person: Person, rel: AgentRelation | undefined, reelId?: ProId
   for (const r of rel?.referrals ?? []) {
     const e = pro?.engagements.find((x) => x.id === r.engagementId);
     const medium = e ? projectById(e.projectId)?.medium : undefined;
-    out.push({ what: `${r.job}, which ${r.by} referred you from`, band: r.band, medium: medium === 'stage' ? 'stage' : 'screen' });
+    out.push({ what: `your work as ${r.job}, which ${r.by} referred you from`, band: r.band, medium: medium === 'stage' ? 'stage' : 'screen' });
   }
   return out;
 }
@@ -289,9 +292,10 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   // 1. The work his office has to go on, by its best band.
   const seen = workSeen(person, rel, reelId);
   const band = bestBand(seen.map((s) => s.band));
-  add('work', ofBand(band), seen.length
-    ? `His office has ${spokenList(seen.map((s) => `${s.what}${s.band ? `, at best ${BAND_LABEL[s.band]}` : ', not judged'}`))}.`
-    : 'His office has none of your work to go on yet. A reel, the School’s follow-up after the showcase or a referral would give it some.');
+  const said = seen.map((s) => `${s.what}${s.band ? `, at best ${BAND_LABEL[s.band]}` : ', not judged'}`);
+  add('work', ofBand(band), seen.length === 1 ? `His office has ${said[0]}.`
+    : seen.length ? `His office has ${countWords(seen.length)} things to go on: ${said.slice(0, -1).join('; ')}; and ${said.at(-1)}.`
+      : 'His office has none of your work to go on yet. A reel, the School’s follow-up after the showcase or a referral would give it some.');
 
   // 2. Stage and screen: how much of his department's two sides the record shows.
   const credits = pro?.credits ?? [];
@@ -307,7 +311,7 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   // 3. Training and experience: the degree as the record has it, raised a level for each professional credit.
   const training = trainingOf(person);
   const base: Level = training.status === 'completed' ? 'at' : training.status === 'candidate' ? (yearOfStudy(person) >= 3 ? 'near' : 'short') : training.status === 'left' ? 'near' : 'short';
-  add('training', raised(base, Math.min(2, professional.length)), `${training.words} ${professional.length ? `You have ${plural(professional.length, 'professional credit')}.` : 'You have no professional credits yet.'}`);
+  add('training', raised(base, Math.min(2, professional.length)), `${training.words} ${professional.length ? `You have ${counted(professional.length, 'professional credit')}.` : 'You have no professional credits yet.'}`);
 
   // 4. Fit with his department's published fields: a professional credit in them, or training as an actor for them.
   const fields = agency.department.fields;
@@ -354,12 +358,12 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const onJobs = (pro?.engagements ?? []).reduce((n, e) => n + countOf(e, 'problem'), 0);
   const against = missed + late + onJobs;
   const reliability: Level = against >= 2 ? 'short' : against === 1 ? 'near' : kept + supplied > 0 ? 'beyond' : 'at';
-  const said = [
-    kept ? `kept ${plural(kept, 'meeting')} with his office` : '', missed ? `missed ${plural(missed, 'meeting')}` : '',
-    supplied ? `sent what it asked for ${supplied === 1 ? 'once' : `${plural(supplied, 'time')}`}, on time` : '', late ? `didn’t send what it asked for ${late === 1 ? 'once' : `${plural(late, 'time')}`}` : '',
-    onJobs ? `had ${plural(onJobs, 'problem')} on a job` : '',
+  const events = [
+    kept ? `kept ${counted(kept, 'meeting')} with his office` : '', missed ? `missed ${counted(missed, 'meeting')}` : '',
+    supplied ? `sent what it asked for ${supplied === 1 ? 'once' : counted(supplied, 'time')}, on time` : '', late ? `didn’t send what it asked for ${late === 1 ? 'once' : counted(late, 'time')}` : '',
+    onJobs ? `had ${counted(onJobs, 'problem')} on a job` : '',
   ].filter(Boolean);
-  add('reliability', reliability, said.length ? `You ${spokenList(said)}.` : 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.');
+  add('reliability', reliability, events.length ? `You ${spokenList(events)}.` : 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.');
 
   const atOrBeyond = factors.filter((f) => LEVEL_RANK[f.level] >= LEVEL_RANK.at).length;
   return { factors, atOrBeyond, needed: GATE, gate: atOrBeyond >= GATE, ...(band ? { band } : {}), ...chancesFor(band, roster) };
@@ -414,7 +418,8 @@ function keepWhy(sim: Simulation, rel: AgentRelation, step: string, outcome: str
   rel.why = {
     at: sim.now, step, outcome,
     factors: interest.factors.map((f) => ({ id: f.id, label: f.label, level: f.level, words: f.words })),
-    atOrBeyond: interest.atOrBeyond, needed: interest.needed, ...(interest.gate ? { chance: interest.chance } : {}),
+    // The chance the step drew against: an offer's after a meeting, being taken further before one.
+    atOrBeyond: interest.atOrBeyond, needed: interest.needed, ...(interest.gate ? { chance: step === 'decision' ? interest.offerChance : interest.chance } : {}),
   };
 }
 
@@ -673,7 +678,7 @@ export function endRefusal(sim: Simulation, person: Person, agent: Agent, how: E
     const from = addDays(a.signedAt!, AGREEMENT.sag.waitDays, zone);
     if (sim.now < from) return `SAG-AFTRA’s rule lets you end it this way only after ${AGREEMENT.sag.waitDays} days, from ${formatDate(from, z)}.`;
     const n = coveredDays(person, a, sim.now - AGREEMENT.sag.windowDays * MS_DAY, sim.now, zone);
-    if (n >= AGREEMENT.sag.fewerThanDays) return `You’ve had ${plural(n, 'day')} of covered work in the last ${AGREEMENT.sag.windowDays}, and SAG-AFTRA’s rule needs fewer than ten.`;
+    if (n >= AGREEMENT.sag.fewerThanDays) return `You’ve had ${counted(n, 'day')} of covered work in the last ${AGREEMENT.sag.windowDays}, and SAG-AFTRA’s rule needs fewer than ten.`;
   }
   return undefined;
 }
@@ -743,7 +748,7 @@ export function nextStep(sim: Simulation, person: Person, agent: Agent): string 
 }
 
 /** The history, newest first. */
-export const historyOf = (person: Person, agent: Agent): ProEvent[] => [...(relationOf(person, agent.id)?.history ?? [])].sort((a, b) => b.at - a.at);
+export const historyOf = (person: Person, agent: Agent): ProEvent[] => [...(relationOf(person, agent.id)?.history ?? [])].reverse().sort((a, b) => b.at - a.at);
 
 // ---------------------------------------------------------------------------------------------------------------------
 // What happens: the steps the commands and the handlers share

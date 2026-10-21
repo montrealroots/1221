@@ -447,9 +447,9 @@ describe('G4 and G6: the factors, the draw, and a reload that can’t redraw', (
     const i = interestOf(sim, sim.player, AGENT, sim.now);
     expect(i.factors.map((f) => f.id)).toEqual(['work', 'relevance', 'training', 'fit', 'availability', 'roster', 'reliability']);
     const f = Object.fromEntries(i.factors.map((x) => [x.id, x]));
-    expect(f.work).toMatchObject({ level: 'at', words: 'His office has Nell in A House On Calder Street, which Pennick Casting referred you from, at best Strong.' });
+    expect(f.work).toMatchObject({ level: 'at', words: 'His office has your work as Nell in A House On Calder Street, which Pennick Casting referred you from, at best Strong.' });
     expect(f.relevance).toMatchObject({ level: 'near', words: 'Your record shows stage work so far. Recorded screen work on a reel would show the other side of his department.' });
-    expect(f.training).toMatchObject({ level: 'beyond', words: 'You completed the MFA in Acting at the David Geffen School of Drama at Yale University in 2026. You have 1 professional credit.' });
+    expect(f.training).toMatchObject({ level: 'beyond', words: 'You completed the MFA in Acting at the David Geffen School of Drama at Yale University in 2026. You have one professional credit.' });
     expect(f.fit).toMatchObject({ level: 'beyond', words: 'You have professional work in his department’s fields (Television, Film, Broadway, Off-Broadway, National Tours and Regional Theater).' });
     expect(f.availability).toMatchObject({ level: 'beyond', words: 'Free for work, with nothing booked. You’re a US citizen, so you can work for any employer in the US. You’re based in New Haven, within reach of his office in New York.' });
     expect(f.reliability).toMatchObject({ level: 'at', words: 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.' });
