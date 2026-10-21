@@ -3015,7 +3015,8 @@
         "usWorkAuthorized: every day of an offer, at acceptance",
         "awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused",
         "setStanding: work in term without approval",
-        "activeAgreement: the agent's breakdowns, scale plus ten, and the engagement's agreementId for the pay",
+        "activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules",
+        "the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (wired at integration)",
         "the pay's schedulePay: the promised entries (wired at integration)"
       ],
       "looks": [],

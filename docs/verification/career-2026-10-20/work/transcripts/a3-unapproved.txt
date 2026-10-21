@@ -1,0 +1,13 @@
+A3 (seed work-unapproved-0): work taken in term without the School's approval
+
+AT THE OFFER: This work falls in term, and the School hasn’t approved it. You’d miss two class days. Working in term without approval brings an academic warning the first time and dismissal the second, as the game reads the Bulletin’s “may lead to academic warning or dismissal”.
+
+AFTER THE FIRST DAY: standing warning, unapproved 1, engagement reported
+
+NOTICES, IN THE ORDER THE PLAYER READ THEM
+August 26, 2026 at 10:00 AM  An Audition For Theo
+    The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Monday, August 31, 2026 at 11:00 AM. Getting there takes about two hours each way. It clashes with your classes, from 9:00 AM. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once. Prepare the sides on the Career screen’s Opportunities tab before you go.
+September 28, 2026 at 7:00 AM  Academic Warning
+    You’ve been placed on academic warning at a formal meeting with the chair of Acting and an associate dean, as the Bulletin sets out. You took outside work in term without the School’s approval: Theo in Paper Moons. The Bulletin treats it as a conflict of interest, which may lead to academic warning or dismissal. If your next term review finds you short, you’ll be dismissed from the School. While you’re on warning, you can’t take part in the Yale Cabaret.
+September 28, 2026 at 9:00 AM  You Missed Classes
+    You missed Acting I, Speech And Accents I and Alexander Technique I today, unexcused. The faculty count it at the term review. If you’re unwell, press Call In Sick on the School’s Classes tab before classes start at nine.

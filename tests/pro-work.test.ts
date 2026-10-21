@@ -30,7 +30,7 @@ import { AGENTS } from '@/engine/content/agents';
 import { type Agreement, type Opportunity, activeAgreement } from '@/engine/systems/pro';
 import {
   AUDITION_KIND, CASTING, POSTING, WORK, WORK_DAY_KIND, acceptRefusal, acceptWarning, awayAt, castingDraw, chanceOf, conditionsFor, datesOf,
-  classDaysIn, clashesAt, fitOf, inSessionAt, moveRefusal, payGroups, payTermsOf, postingTimes, postingsAt, projectOf, requestRefusal, roundToCome, submitRefusal, tapeRefusal,
+  classDaysIn, clashesAt, fitOf, inSessionAt, moveRefusal, payGroups, payTermsOf, payWords, postingTimes, postingsAt, projectOf, reachOf, requestRefusal, roundToCome, submitRefusal, tapeRefusal,
 } from '@/engine/systems/projobs';
 
 const zone = 'America/New_York';
@@ -197,10 +197,16 @@ describe('J1: fictional roles, posted on a schedule', () => {
     expect(old.outcome).toMatch(/^Submissions for .+ closed on /);
     // The pay is the rate's: deferred for the student film, the union minimum or the estimate otherwise.
     for (const t of PROJECTS.filter((x) => x.access.open)) {
-      const terms = payTermsOf(sim.player, { projectId: t.id, postedAt: at(2026, 9, 7) }, sim.now);
+      const terms = payTermsOf({ projectId: t.id, postedAt: at(2026, 9, 7) });
       expect(terms.deferred).toBe(t.kind === 'student-film');
       if (!terms.deferred) expect(terms.each).toBe(RATES[t.pay].amount);
     }
+    // The rule itself, apart from the week's chances (which hold none for an agent-only kind either, so the postings
+    // alone can't show it): an agent-only role reaches nobody unrepresented, an open one reaches anyone, and an
+    // agreement brings an agent-only role only where his department's fields take it.
+    for (const t of PROJECTS) expect(reachOf(t, undefined)).toBe(t.access.open ? 'open' : undefined);
+    const outside = { id: 'test-a', agentId: 'test-agent-of-nothing' } as Agreement;
+    for (const t of PROJECTS) expect(reachOf(t, outside)).toBe(t.access.open ? 'open' : undefined);
   });
 
   it('brings agent-only roles only through the agent while an agreement is in force, with his id and the agreement’s on each', () => {
@@ -254,6 +260,12 @@ describe('F4 and J4: what a submission reads, and who can submit for what', () =
     expect(submitRefusal(sim, sim.player, eq)).toBeUndefined();
     delete sim.player.pro!.equity;
     expect(submitRefusal(sim, sim.player, eq)).toBe('It’s an open call for Equity members, and you aren’t one yet. The degree makes you a member, and so does a contract with an Equity company.');
+    // Outside the role's playing ages, by more than the three years either side an actor plays: refused in words.
+    const film = PROJECTS.find((t) => t.kind === 'student-film')!;
+    const young: Opportunity = { ...o, id: 'test-age', projectId: film.id };
+    expect(submitRefusal(sim, sim.player, young)).toBeUndefined();
+    sim.player.birthInstant -= 20 * 365.25 * MS_DAY; // TEST SETUP: an actor twenty years older
+    expect(submitRefusal(sim, sim.player, young)).toMatch(new RegExp(`^Casting wants actors who play ${film.requirements.ages[0]} to ${film.requirements.ages[1]}, and at \\d+ you’re outside that\\.$`));
   });
 });
 
@@ -270,8 +282,9 @@ describe('J5: casting decided apart from quality', () => {
     expect(chanceOf('strong', 0.9, 'network-drama', 'final')).toBeLessThan(chanceOf('strong', 0.9, 'student-film', 'final'));
     expect(yes(film.id, 'unready', 0.8)).toBeLessThan(yes(film.id, 'working', 0.8));
     expect(yes(film.id, 'working', 0.8)).toBeLessThan(yes(film.id, 'exceptional', 0.8));
-    // The best audition, fitting perfectly, still loses some: never certain.
+    // The best audition, fitting perfectly, still loses some: never certain, a callback's cut held at the most too.
     expect(chanceOf('exceptional', 1, 'student-film', 'final')).toBeLessThanOrEqual(CASTING.most);
+    expect(chanceOf('exceptional', 1, 'student-film', 'callback')).toBe(CASTING.most);
     expect(yes(network.id, 'exceptional', 1)).toBeLessThan(ids.length);
     expect(yes(film.id, 'exceptional', 1)).toBeLessThan(ids.length);
     // A developing actor, working band, in a role that suits them, books some.
@@ -347,7 +360,7 @@ describe('the whole loop, played', () => {
     expect(Object.values(sim.universe.decisions).find((d) => d.refId === o.id)!.resolvedAt).toBe(sim.now);
     let e = sim.player.pro!.engagements.find((x) => x.id === a.engagementId)!;
     // The pay is promised, a week's entry keyed by the engagement and the week, deferred, and nothing posted.
-    expect(e.pay).toEqual([{ id: expect.any(String), key: `${e.id}:0`, promised: 0, currency: 'USD', promisedAt: sim.now, due: expect.any(Number), deferred: true }]);
+    expect(e.pay).toEqual([{ id: expect.any(String), key: `${e.id}:1`, promised: 0, currency: 'USD', promisedAt: sim.now, due: expect.any(Number), deferred: true }]);
     expect(zonedParts(e.pay[0]!.due, zone).weekday).toBe(4);
     expect(sim.universe.transactions.length).toBe(txns);
     // Three shoot days on the calendar, each wanting the player, with the trip to New York.
@@ -423,7 +436,7 @@ describe('a callback, a run and its nights', () => {
     const a = s.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: id } });
     const e = s.player.pro!.engagements.find((x) => x.id === a.engagementId)!;
     // Nine weeks promised at the LORT C minimum, each due the Thursday after its week, none received.
-    expect(e.pay.map((p) => [p.key, p.promised, p.currency, zonedParts(p.due, zone).weekday, p.received])).toEqual(Array.from({ length: 9 }, (_, w) => [`${e.id}:${w}`, RATES['lort-c'].amount, 'USD', 4, undefined]));
+    expect(e.pay.map((p) => [p.key, p.promised, p.currency, zonedParts(p.due, zone).weekday, p.received])).toEqual(Array.from({ length: 9 }, (_, w) => [`${e.id}:${w + 1}`, RATES['lort-c'].amount, 'USD', 4, undefined]));
     expect(payGroups(e, t).map((g) => g.length)).toEqual([5, 5, 5, 5, 6, 6, 6, 6, 6]);
     for (const [w, g] of payGroups(e, t).entries()) expect(e.pay[w]!.due).toBeGreaterThan(e.days[g.at(-1)!]!.to);
     // The days in Providence, with the trip from New Haven.
@@ -438,7 +451,7 @@ describe('a callback, a run and its nights', () => {
     // The first night: judged as a night on stage, and the credit is the part performed.
     const night = s.player.work!.find((w) => w.what === 'Tobias Marsh, The Winter Ledger: Performance')!;
     expect(night.task).toBe('performance');
-    expect(s.player.pro!.credits.find((c) => c.engagementId === e.id)).toMatchObject({ kind: 'stage', status: 'performed', union: 'equity', company: 'Harrow Point Repertory Theater' });
+    expect(s.player.pro!.credits.find((c) => c.engagementId === e.id)).toMatchObject({ kind: 'stage', status: 'performed', union: 'equity', company: 'Harrow Point Repertory Theater', band: e.log!.find((l) => l.band)!.band });
     played(s, e.days.at(-1)!.to + MS_DAY);
     expect(e.status).toBe('finished');
     expect(e.log!.filter((l) => l.status === 'worked')).toHaveLength(50);
@@ -449,7 +462,7 @@ describe('a callback, a run and its nights', () => {
 });
 
 describe('J3: the agent’s part, while an agreement is in force', () => {
-  it('PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at scale plus ten, and the booking carries his id and the agreement’s', () => {
+  it('PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at the rate’s scale, and the booking carries his id and the agreement’s', () => {
     const agent = AGENTS[0]!;
     let found: { sim: Simulation; o: Opportunity; a: Agreement } | undefined;
     for (const seed of Array.from({ length: 30 }, (_, n) => `work-agent-${n}`)) {
@@ -478,18 +491,24 @@ describe('J3: the agent’s part, while an agreement is in force', () => {
     }
     expect(found).toBeDefined();
     const { sim, o, a } = found!;
-    // He conveys the offer, at scale plus ten on SAG-AFTRA work at the minimum, the agreement's term.
-    const each = Math.round(RATES['ultra-low-budget-day'].amount! * 1.1);
+    // He conveys the offer, at the rate's scale: the agreement's scale plus ten is the pay's `negotiatedAmount`, applied
+    // at the offer when the two parts are integrated (until 2026-10-21 this part priced it, at $282.70).
+    const each = RATES['ultra-low-budget-day'].amount!;
     expect(o.offer).toMatchObject({ amount: each, per: 'day', units: 4 });
+    // Priced above the scale, as the pay's negotiatedAmount will price it, the words say the amount and the minimum it's above.
+    expect(payWords(payTermsOf(o), Math.round(each * 1.1))).toBe('It pays $282.70 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00.');
+    // The moment it was made, which the agreement's rules read.
+    expect(o.offer!.at).toBe(o.history.find((h) => h.kind === 'offer')!.at);
     const d = Object.values(sim.universe.decisions).find((x) => x.refId === o.id)!;
-    expect(d.detail).toContain(`${agent.name} passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $282.70 a day for four days, scale plus ten, as your agent asks on SAG-AFTRA work at the minimum.`);
+    expect(d.detail).toContain(`${agent.name} passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $257.00 a day for four days, the SAG-AFTRA Ultra Low Budget Day Performer minimum.`);
     expect(d.detail.endsWith(agent.fictional)).toBe(true);
     const r = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
     const e = sim.player.pro!.engagements.find((x) => x.id === r.engagementId)!;
     expect([o.agentId, o.agreementId, e.agentId, e.agreementId]).toEqual([agent.id, a.id, agent.id, a.id]);
     expect(activeAgreement(sim.player, sim.now)?.id).toBe(a.id);
-    // The promised pay is the offer's: four days at scale plus ten, in the weeks they fall in.
+    // The promised pay is the offer's: four days at its amount, in the weeks they fall in, keyed from week 1.
     expect(e.pay.reduce((n, p) => n + p.promised, 0)).toBe(each * 4);
+    expect(e.pay.map((p) => p.key)).toEqual(e.pay.map((_, w) => `${e.id}:${w + 1}`));
     // The relationship's history holds what he handled, each once, keyed by the opportunity.
     const rel = sim.player.pro!.relations[agent.id]!;
     expect(rel.history.filter((x) => x.ref === o.id).map((x) => x.kind)).toEqual(['opportunity', 'problem', 'submitted', 'audition', 'audition', 'offer', 'booked']);
@@ -808,5 +827,56 @@ describe('what missing a step costs', () => {
     expect(twin.player.pro!.engagements).toEqual([]);
     expect(twin.universe.scheduled.filter((i) => i.refId === o2.id && i.status === 'pending')).toEqual([]);
     expect(twin.execute({ kind: 'pro.decline_offer', payload: { opportunityId: o2.id } }).error).toBe('There’s no offer to decline.');
+  });
+});
+
+describe('availability and the School’s calls, checked and never drawn', () => {
+  /** TEST SETUP: an offer standing for a role posted on a Monday, as casting's draw would make it. */
+  const offered = (sim: Simulation, projectId: string, posted: number, id = sim.nextId('pro')): Opportunity => {
+    const terms = payTermsOf({ projectId, postedAt: posted });
+    const o: Opportunity = { id, projectId, via: 'open', status: 'offered', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, offer: { at: sim.now, until: sim.now + 3 * MS_DAY, rate: projectById(projectId)!.pay, ...(terms.each !== undefined ? { amount: terms.each } : {}), per: terms.per, units: terms.units } };
+    sim.player.pro!.opportunities.push(o);
+    return o;
+  };
+
+  it('keeps the summer the student’s own, with no warning, unless the School holds them for one of its calls on those days', () => {
+    const sim = student('work-summer');
+    const t = PROJECTS.find((x) => x.kind === 'non-union-short')!;
+    // A posting whose shoot falls in the first summer, after the summer recess begins.
+    const posted = at(2027, 6, 7);
+    const o = offered(sim, t.id, posted);
+    expect(datesOf(o).every((d) => !inSessionAt(sim.player, d.from))).toBe(true);
+    expect(acceptRefusal(sim, sim.player, o)).toBeUndefined();
+    expect(acceptWarning(sim, sim.player, o)).toBeUndefined();
+    // TEST SETUP: a School call on the first shoot day, as the Summer Cabaret's would be.
+    const day = datesOf(o)[0]!;
+    sim.schedule({ at: day.from + 2 * MS_HOUR, kind: 'school.call', label: 'Summer Cabaret: Rehearsal', category: 'school', priority: 32, requiresPlayer: true, durationMinutes: 240, payload: { personId: sim.player.id, call: 'rehearsal' } });
+    expect(acceptRefusal(sim, sim.player, o)).toMatch(/^The School holds you for Summer Cabaret: Rehearsal on \w+ \d+, 2027, so you can’t take work then\.$/);
+  });
+
+  it('casts another actor where the actor has been booked on the same days since the audition, and says so', () => {
+    const sim = graduate('work-availability');
+    const t = PROJECTS.find((x) => x.kind === 'student-film')!;
+    const posted = postingTimes(sim.now, sim.now + 8 * MS_DAY)[0]!;
+    // TEST SETUP: an audition done for one role, and another role on the same days booked through its own offer.
+    const o: Opportunity = { id: 'test-avail', projectId: t.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'in-person', at: sim.now, status: 'done', band: 'exceptional', overall: 95 }] };
+    sim.player.pro!.opportunities.push(o);
+    const other = offered(sim, t.id, posted, 'test-other');
+    sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: other.id } });
+    sim.schedule({ at: sim.now + MS_HOUR, kind: 'pro.casting_decision', label: 'Casting Decides: Theo', category: 'career', priority: 40, payload: { personId: sim.player.id, opportunityId: o.id, round: 0 } });
+    played(sim, sim.now + 2 * MS_HOUR);
+    expect(o.status).toBe('passed');
+    expect(o.rounds![0]!.casting).toMatchObject({ chance: 0, yes: false });
+    expect(o.outcome).toMatch(/^You’re booked for Paper Moons: Shoot Day 1 on \w+ \d+, 2026, so the film’s director cast another actor as Theo\.$/);
+  });
+
+  it('refuses a self-tape with less than its hour before it’s due, said with the time', () => {
+    const sim = graduate('work-tape-late');
+    const t = PROJECTS.find((x) => x.stages.audition === 'self-tape' && x.access.open === 'anyone')!;
+    const due = sim.now + 30 * 60_000;
+    // TEST SETUP: a self-tape asked for, due in half an hour.
+    const o: Opportunity = { id: 'test-late', projectId: t.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'self-tape', at: due, status: 'set' }] };
+    sim.player.pro!.opportunities.push(o);
+    expect(tapeRefusal(sim, sim.player, o)).toMatch(/^It’s due at \d+:\d\d [AP]M, and there’s less than the hour a self-tape takes before then\.$/);
   });
 });

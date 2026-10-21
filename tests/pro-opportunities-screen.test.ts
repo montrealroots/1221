@@ -18,6 +18,8 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { CHAPTERS } from '@/engine/content/tutorial';
 import { READ_KIND } from '@/engine/world/tutorial';
 import { PROJECTS } from '@/engine/content/careerwork';
+import { TECHNIQUE_LABEL } from '@/engine/content/abilities';
+import type { Skill } from '@/engine/content/school';
 import type { Opportunity } from '@/engine/systems/pro';
 import { payTermsOf } from '@/engine/systems/projobs';
 
@@ -72,7 +74,7 @@ const button = (html: string, label: string) => [...html.matchAll(/<button([^>]*
 
 /** TEST SETUP: an offer standing for a role posted on a Monday, as casting's draw would make it. */
 function offered(sim: Simulation, projectId: string, posted: number): Opportunity {
-  const terms = payTermsOf(sim.player, { projectId, postedAt: posted }, sim.now);
+  const terms = payTermsOf({ projectId, postedAt: posted });
   const o: Opportunity = {
     id: sim.nextId('pro'), projectId, via: 'open', status: 'offered', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {},
     offer: { at: sim.now, until: sim.now + 3 * MS_DAY, rate: PROJECTS.find((t) => t.id === projectId)!.pay, ...(terms.each !== undefined ? { amount: terms.each } : {}), per: terms.per, units: terms.units },
@@ -94,6 +96,10 @@ describe('the Opportunities tab', () => {
     expect(shown).toContain(`${t.role.part}, ${t.project}`);
     expect(shown).toContain(`The Project ${t.project}, a fictional`);
     expect(shown).toContain(`The Part ${t.role.part}: ${t.role.about}`);
+    // What the part asks: its two techniques named once, then the actor's own levels, read from the record.
+    const [a, b] = Object.keys(t.role.techniques) as Skill[];
+    const level = (k: Skill) => Math.round(sim.player.craft?.[k] ?? 0);
+    expect(shown).toContain(`The part asks for ${TECHNIQUE_LABEL[a!]} and ${TECHNIQUE_LABEL[b!]}, where 90 is mastered. Your ${TECHNIQUE_LABEL[a!]} is at ${level(a!)} and your ${TECHNIQUE_LABEL[b!]} at ${level(b!)}.`);
     expect(button(html, 'Submit Yourself')).toContainEqual({ disabled: true, title: 'You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.', locked: false });
     expect(shown).toContain('Not now: You have no headshots, and every submission starts with one.');
     // In term: what the dean looks at, each condition said, and the way to ask.
@@ -143,6 +149,13 @@ describe('the Opportunities tab', () => {
     expect(button(open.html, 'Accept The Offer')[0]!.disabled).toBe(false);
     expect(open.shown).toMatch(/This work falls in term, and the School hasn’t approved it\. You’d miss (one class day|two class days)\. Working in term without approval brings an academic warning the first time and dismissal the second/);
     expect(open.shown).toContain('Missing a day: a shoot can’t wait, so the production replaces you.');
+    // An offer priced above the scale, as the pay's negotiatedAmount prices a represented actor's SAG-AFTRA offer (TEST
+    // SETUP: the amount raised by its ten percent): the card says the offer's amount and the minimum it's above.
+    const rep = student('opps-negotiated');
+    tended(rep, at(2026, 9, 14, 12));
+    const above = offered(rep, 'route-nine', at(2026, 9, 14));
+    above.offer!.amount = Math.round(above.offer!.amount! * 1.1);
+    expect(drawn(rep).shown).toContain('Pay It pays $282.70 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00.');
   });
 
   it('PLAYER JOURNEY: accepted, the work shows under Booked Work with its days, the part’s preparation and the pay promised, not yet paid', () => {
@@ -152,10 +165,14 @@ describe('the Opportunities tab', () => {
     const o = offered(sim, t.id, at(2026, 12, 14));
     sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
     const { html, shown } = drawn(sim);
-    expect(shown).toMatch(/Booked Work .*Sam, Last Bus To Eastview two days to come, the next \w+day, \w+ \d+, 2027 at 7:00 AM, in New York\. Each stops the clock: press Go to be there\./);
+    expect(shown).toMatch(/Booked Work .*Sam, Last Bus To Eastview Two days to come, the next \w+day, \w+ \d+, 2027 at 7:00 AM, in New York\. Each stops the clock: press Go to be there\./);
     expect(shown).toContain('Promised: $250.00 over one week, each week due the Thursday after it. It’s promised, not yet paid.');
     expect(button(html, 'Break It Down (60 Minutes)')).toHaveLength(1);
     expect(shown).toContain('No offer stands now.');
+    // A day behind it: TEST SETUP, the day logged as the work day's handler logs it. The count opens its sentence.
+    const e = sim.player.pro!.engagements[0]!;
+    (e.log ??= []).push({ day: 0, at: e.days[0]!.from, status: 'worked', band: 'strong', overall: 71 });
+    expect(drawn(sim).shown).toContain('One day worked, the best Strong.');
   });
 
   it('PLAYER JOURNEY: in a guided life, the tab’s controls stay Locked until “Finding Work” is read', () => {

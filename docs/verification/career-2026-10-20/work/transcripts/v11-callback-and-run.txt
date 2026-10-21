@@ -1,0 +1,49 @@
+V11 (seed work-run-0): an audition, a callback, a booking, the run's rehearsals and nights judged, the credit
+
+ROUNDS
+    audition in-person September 24, 2026 at 11:00 AM: done, exceptional 94.8; casting {"at":1790370000000,"chance":0.765,"fit":1,"yes":true}; held back most: Your emotional depth held back your believability by 6 points out of 100
+    callback in-person September 29, 2026 at 2:00 PM: done, exceptional 95; casting {"at":1790974800000,"chance":0.493,"fit":1,"yes":true}; held back most: Your emotional depth held back your believability by 5 points out of 100
+
+PAY PROMISED
+    pro_00000h:1: $1114.00 due October 29, 2026 at 12:00 PM
+    pro_00000h:2: $1114.00 due November 5, 2026 at 12:00 PM
+    pro_00000h:3: $1114.00 due November 12, 2026 at 12:00 PM
+    pro_00000h:4: $1114.00 due November 19, 2026 at 12:00 PM
+    pro_00000h:5: $1114.00 due November 26, 2026 at 12:00 PM
+    pro_00000h:6: $1114.00 due December 3, 2026 at 12:00 PM
+    pro_00000h:7: $1114.00 due December 10, 2026 at 12:00 PM
+    pro_00000h:8: $1114.00 due December 17, 2026 at 12:00 PM
+    pro_00000h:9: $1114.00 due December 24, 2026 at 12:00 PM
+
+THE PART’S PREPARATION AT THE END
+    {"interpretation":0.96,"memorization":0.96,"rehearsal":0.999}
+
+NIGHTS JUDGED
+    day 21: exceptional 92.3
+    day 22: exceptional 92.5
+    day 23: exceptional 92.4
+    day 24: exceptional 92
+    day 25: exceptional 91.8
+    day 26: exceptional 92.3
+    …
+
+THE CREDIT
+    {"id":"pro_00000w","kind":"stage","project":"The Winter Ledger","role":"Tobias Marsh","company":"Harrow Point Repertory Theater","year":2026,"medium":"stage","status":"performed","union":"equity","engagementId":"pro_00000h","at":1794963600000,"band":"exceptional"}
+
+HISTORY
+    September 14, 2026 at 9:00 AM  [opportunity] Ostrander Vale Casting posted Tobias Marsh in The Winter Ledger.
+    September 18, 2026 at 3:15 PM  [submitted] You submitted yourself for Tobias Marsh in The Winter Ledger, sending your headshots from September 4, 2026 and your résumé from September 4, 2026.
+    September 20, 2026 at 10:00 AM  [audition] Ostrander Vale Casting wants to see you for Tobias Marsh in The Winter Ledger: the company’s main stage in Providence, Thursday, September 24, 2026 at 11:00 AM. Getting there takes about two hours each way.
+    September 24, 2026 at 11:00 AM  [audition] Your audition for Tobias Marsh was Exceptional.
+    September 25, 2026 at 5:00 PM  [callback] Ostrander Vale Casting wants to see you again for Tobias Marsh in The Winter Ledger: the company’s main stage in Providence, Tuesday, September 29, 2026 at 2:00 PM. Getting there takes about two hours each way.
+    September 29, 2026 at 2:00 PM  [callback] Your callback for Tobias Marsh was Exceptional.
+    October 2, 2026 at 5:00 PM  [offer] Ostrander Vale Casting offers you Tobias Marsh in The Winter Ledger, a fictional play in a regional theater’s season. It pays $1,114.00 a week for nine weeks, the Equity LORT C Actor Minimum. The work is from October 20, 2026 to December 20, 2026, in Providence. The offer stands until October 5, 2026 at 5:00 PM.
+    October 3, 2026 at 6:45 AM  [booked] You accepted Tobias Marsh in The Winter Ledger: 50 work days, from October 20, 2026.
+
+NOTICES, IN THE ORDER THE PLAYER READ THEM
+September 20, 2026 at 10:00 AM  An Audition For Tobias Marsh
+    Ostrander Vale Casting wants to see you for Tobias Marsh in The Winter Ledger: the company’s main stage in Providence, Thursday, September 24, 2026 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+September 25, 2026 at 5:00 PM  A Callback For Tobias Marsh
+    Ostrander Vale Casting wants to see you again for Tobias Marsh in The Winter Ledger: the company’s main stage in Providence, Tuesday, September 29, 2026 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+December 20, 2026 at 8:00 PM  The Winter Ledger Closed
+    The run of The Winter Ledger is over, and Tobias Marsh is on your professional credits. Update your résumé on the Portfolio tab to add it.

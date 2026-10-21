@@ -249,7 +249,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pension.ss_month` | `systems/socialsecurity.ts` | systems/socialsecurity.ts | — | Yes | pension.ss_month | 2 |
 | `pension.state_payment` | `systems/statepension.ts` | systems/statepension.ts | — | Yes | pension.state_payment | 0 |
 | `pro.audition` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 2 |
-| `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 0 |
+| `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 1 |
 | `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 0 |
 | `pro.release` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 0 |
 | `pro.reply` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 0 |
@@ -259,7 +259,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.account_due` | `systems/leave.ts` | systems/leave.ts | — | — | — | 12 |
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 27 |
-| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 66 |
+| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 67 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 30 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | — | 15 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 8 |

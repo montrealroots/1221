@@ -109,9 +109,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten And Verified",
-  "hash": "58d5031298da",
+  "hash": "c79cfd51ea93",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Read again on 2026-10-21: \"as you would a practice brief\" became \"the way you prepare a practice brief\", the uncontracted form voice-check counts gone; read in tests/guide.test.ts and tests/tutorial.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {
   "status": "Rewritten And Verified",

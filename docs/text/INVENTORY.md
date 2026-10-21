@@ -9,27 +9,27 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 325 | 1325 | 15771 | 7 | 56 | 269 | 0 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 50 | 511 | 13954 | 0 | 30 | 20 | 0 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 50 | 511 | 13955 | 0 | 30 | 20 | 0 | 0 |
 | Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55956 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70374 | 7 | 188 | 478 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6634 | 151915 | 13 | 265 | 499 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 4587 | 56842 | 3 | 101 | 372 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 174 | 967 | 8352 | 0 | 149 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 174 | 967 | 8340 | 0 | 149 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 196 | 1107 | 0 | 3 | 28 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 44 | 193 | 756 | 0 | 12 | 32 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4421 | 37785 | 583193 | 316 | 1260 | 3161 | 0 | 0 |
+| **All** | 4421 | 37785 | 583182 | 316 | 1260 | 3161 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 110 | 6402 | 85 | 25 | 0 | 0 |
-| career-work | 64 | 1950 | 64 | 0 | 0 | 0 |
+| career | 110 | 6403 | 85 | 25 | 0 | 0 |
+| career-work | 64 | 1937 | 64 | 0 | 0 | 0 |
 | frame | 502 | 33328 | 94 | 408 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
@@ -39,7 +39,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | papers | 473 | 56842 | 101 | 372 | 0 | 0 |
 | profile | 621 | 55956 | 179 | 442 | 0 | 0 |
 | school | 638 | 67356 | 184 | 454 | 0 | 0 |
-| tutorial | 50 | 13954 | 30 | 20 | 0 | 0 |
+| tutorial | 50 | 13955 | 30 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
 
@@ -420,7 +420,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/tutorial.ts#CHAPTERS [school]` | 52 | 0 | Rewritten | tutorial | Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [profile]` | 36 | 0 | Rewritten | tutorial | Brief 19 added the chapter Your Career after You As An Actor, and the guide goal Your Career; read in tests/tutorial.test.ts and tests/guide.test.ts, which hold what each opens and covers, and tests/evidence-g02-life.test.ts | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [career]` | 22 | 0 | Rewritten | tutorial | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/tutorial.ts#CHAPTERS [finding-work]` | 25 | 0 | Rewritten | tutorial | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/tutorial.ts#CHAPTERS [finding-work]` | 25 | 0 | Rewritten | tutorial | Read again on 2026-10-21: "as you would a practice brief" became "the way you prepare a practice brief", the uncontracted form voice-check counts gone; read in tests/guide.test.ts and tests/tutorial.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#CHAPTERS [papers]` | 39 | 0 | Rewritten | tutorial | Your Doctor, Call It Off, Book An Appointment beside a visit owed, The Marketplace's Enroll and File It traced to src/ui/workspaces/PapersWorkspace.tsx; tests/guide-chapter-facts.test.ts holds the Book An Appointment sentence and passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [documents]` | 23 | 0 | Rewritten | tutorial | Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [money]` | 11 | 0 | Rewritten | tutorial | split where one paragraph held what the score decides and how it moves; tests/defects-g12-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
@@ -3092,7 +3092,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.reel]` | 37 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]` | 3 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 41 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 41 | 0 | Rewritten | career | Read again on 2026-10-21: "as you would a practice brief" became "the way you prepare a practice brief", the uncontracted form voice-check counts gone; read in tests/guide.test.ts and tests/tutorial.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]` | 1 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3126,9 +3126,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/projobs.ts#FIELD_WORDS` | 7 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#KIND_WORDS` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#datesOf [shoot]` | 1 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/projobs.ts#payWords` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/projobs.ts#payWords` | 4 | 0 | Rewritten | career-work | Read again on 2026-10-21: the offer is left at the rate's scale, the agreement's scale plus ten passing to the pay's negotiatedAmount, and an amount above the scale is said with the minimum it's above; read where the player meets it in tests/pro-work.test.ts (J3's offer, V11's) and tests/pro-opportunities-screen.test.ts (Pay, and an offer above the scale), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#fitWords` | 4 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/projobs.ts#demandsWords` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/projobs.ts#demandsWords` | 2 | 0 | Rewritten | career-work | Rewritten on 2026-10-21 after the built app's walk read each technique with its level in a clause, four things for two; read where the player meets it in tests/pro-opportunities-screen.test.ts (What It Asks), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#chanceWords` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#awayAt` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#conditionsFor [standing]` | 2 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |

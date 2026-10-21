@@ -145,6 +145,8 @@ describe('what the chapters offer', () => {
     expect(promise('Between jobs, you can rest.')).toHaveLength(1);
     expect(promise('Find a job to pay the rent.')).toHaveLength(1);
     expect(promise('Take a job at the café.')).toHaveLength(1);
+    // "A job" is never the game's word, even beside work it has: the game offers roles, not jobs.
+    expect(promise('Land a job in a student film.')).toHaveLength(1);
     // Kinds of work the game has none of.
     expect(promise('Book a commercial on the Opportunities tab.')).toHaveLength(1);
     expect(promise('An agent can get you a series regular role.')).toHaveLength(1);

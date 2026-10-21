@@ -1,0 +1,56 @@
+ ✓ tests/remaining-school.test.ts (33 tests) 43350ms
+ ✓ tests/evidence-g32-ui.test.ts (45 tests) 12961ms
+ ✓ tests/guide-examples-papers.test.ts (15 tests) 13670ms
+ ✓ tests/pro-work.test.ts (27 tests) 14403ms
+ ✓ tests/evidence-g02-life.test.ts (23 tests) 5162ms
+ ✓ tests/evidence-g33-ui.test.ts (36 tests) 11859ms
+ ✓ tests/evidence-g29-ui.test.ts (27 tests) 3496ms
+ ✓ tests/evidence-g31-ui.test.ts (21 tests) 3908ms
+ ✓ tests/evidence2-b13.test.ts (7 tests) 3045ms
+ ✓ tests/school.test.ts (54 tests) 20123ms
+ ✓ tests/evidence-g34-ui.test.ts (15 tests) 7442ms
+ ✓ tests/guide-examples-start-day-body.test.ts (14 tests) 2881ms
+ ✓ tests/help-mechanics.test.ts (15 tests) 840ms
+ ✓ tests/guide-examples-craft.test.ts (10 tests) 1350ms
+ ✓ tests/pro-core.test.ts (21 tests) 819ms
+ ✓ tests/time-stops.test.ts (19 tests) 589ms
+ ✓ tests/time-controls.test.ts (4 tests) 931ms
+ ✓ tests/defects-r8-1.test.ts (10 tests) 3422ms
+ ✓ tests/school-paths.test.ts (11 tests) 133227ms
+ ✓ tests/language-data-dates.test.ts (12 tests) 356ms
+ ✓ tests/plans.test.ts (21 tests) 88ms
+ ✓ tests/guide-chapter-facts.test.ts (13 tests) 278ms
+ ✓ tests/tutorial.test.ts (18 tests) 182ms
+ ✓ tests/cohesion.test.ts (19 tests) 517ms
+ ❯ tests/interface.test.ts (10 tests | 1 failed) 505ms
+   × every command is reachable by hand > leaves no engine command that a person cannot reach 126ms
+ ✓ tests/pro-opportunities-screen.test.ts (5 tests) 1033ms
+ ✓ tests/defects-g3-1.test.ts (7 tests) 366ms
+ ✓ tests/persistence.test.ts (14 tests) 1521ms
+ ✓ tests/guide.test.ts (14 tests) 1924ms
+ ✓ tests/pro-screen.test.ts (5 tests) 186ms
+ ✓ tests/defects-g27-1.test.ts (4 tests) 409ms
+ ✓ tests/trace-commands.test.ts (3 tests) 1058ms
+ ✓ tests/defects-g22-1.test.ts (6 tests) 43ms
+ ✓ tests/defects-g1-1.test.ts (2 tests) 28ms
+ ✓ tests/defects-g12-1.test.ts (3 tests) 4ms
+ ✓ tests/deciders.test.ts (86 tests) 17878ms
++   addDays, dateKey, daysBetween, formatDate, formatDuration, formatTime,
++   (entry.durationMinutes ? formatDuration(entry.durationMinutes * MS_MINUTE) : undefined);
++ import { addDays, formatDurationWords, formatTime, MS_MINUTE, zoneAbbreviation, zonedParts } from '@/engine/core/time';
++   return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDurationWords(sun.daylightMinutes * MS_MINUTE)} of daylight`;
++           : `Daylight runs from ${formatTime(today.sunrise ?? 0, city.timeZone)} to ${formatTime(today.sunset ?? 0, city.timeZone)} today, ${formatDurationWords(today.daylightMinutes * MS_MINUTE)}, and ${swingLine(swing)}.`,
++   addDays, formatDate, formatDateTime, formatDuration, formatDurationWords, formatTime, formatWeekdayDate, MS_DAY, MS_HOUR, MS_MINUTE,
++           {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDurationWords(untilNext * MS_HOUR)}.`}
++         {' '}Going takes {formatDurationWords(runs * 60_000)}
++                   {formatDuration(o.minutes * 60_000)}{o.cost > 0 ? ` · ${formatMoney(o.cost, cur)}` : ''} · {refused ?? o.why}
++ import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
++                       {entry.durationMinutes ? ` · ${formatDuration(entry.durationMinutes * MS_MINUTE)}` : ''}
++         <Stat label="Length" value={entry.durationMinutes ? formatDuration(entry.durationMinutes * MS_MINUTE) : '—'} />
+ ❯ tests/interface.test.ts:291:10
+ Test Files  1 failed | 35 passed (36)
+      Tests  1 failed | 648 passed (649)
+   Duration  356.31s (transform 7.08s, setup 920ms, collect 35.84s, tests 309.85s, environment 7ms, prepare 2.07s)
+
+The one failure, first lines (it was failing before this part: no UI file runs calendar.skip since the time area's commits):
+159:AssertionError: calendar.skip is registered and nothing in the interface runs it: expected '/**\n * SLATE — what a screen keeps w…' to contain '\'calendar.skip\''

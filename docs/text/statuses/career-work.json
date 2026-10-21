@@ -79,9 +79,9 @@
  },
  "src/engine/systems/projobs.ts#demandsWords": {
   "status": "Rewritten And Verified",
-  "hash": "9939d1eb136d",
+  "hash": "726cb274e87a",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Rewritten on 2026-10-21 after the built app's walk read each technique with its level in a clause, four things for two; read where the player meets it in tests/pro-opportunities-screen.test.ts (What It Asks), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/systems/projobs.ts#eligibilityProblems": {
   "status": "Rewritten And Verified",
@@ -181,9 +181,9 @@
  },
  "src/engine/systems/projobs.ts#payWords": {
   "status": "Rewritten And Verified",
-  "hash": "f17876f630d9",
+  "hash": "7270e2b11cd5",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Read again on 2026-10-21: the offer is left at the rate's scale, the agreement's scale plus ten passing to the pay's negotiatedAmount, and an amount above the scale is said with the minimum it's above; read where the player meets it in tests/pro-work.test.ts (J3's offer, V11's) and tests/pro-opportunities-screen.test.ts (Pay, and an offer above the scale), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/systems/projobs.ts#post [opportunity]": {
   "status": "Rewritten And Verified",

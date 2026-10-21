@@ -17,8 +17,9 @@
  * directly. A role a casting office releases to agents only reaches an actor through an agent: while an agreement is in
  * force (`activeAgreement`, the one rule for it), the agent's breakdowns bring those, within his department's published
  * fields, and he submits where the role suits and the materials pass (`materialsCheck`), and says what's missing where
- * they don't. He conveys the answers and the offers; on SAG-AFTRA work at the minimum he asks for scale plus ten, as the
- * agreement says. Representation changes what reaches the actor and how an offer comes, not whether they can submit to
+ * they don't. He conveys the answers and the offers; on SAG-AFTRA work at the minimum the agreement has him ask for scale
+ * plus ten, which the pay's `negotiatedAmount` prices at the offer (this file priced it itself until 2026-10-21).
+ * Representation changes what reaches the actor and how an offer comes, not whether they can submit to
  * an open call themselves.
  *
  * **Casting is decided apart from quality (J5).** What casting reads, in order: the audition's band (how good it was),
@@ -269,31 +270,34 @@ export function rateOn(rate: Rate, on: Instant): number | undefined {
   return [...SAG_DAY_BY_YEAR].reverse().find((r) => r.from <= key)?.amount ?? rate.amount;
 }
 
-/** The offer's terms as they'd stand at a moment: the rate, a day's or a week's pay, how many, and scale plus ten. */
-export interface PayTerms { rate: Rate; per: 'day' | 'week'; units: number; each?: Money; plusTen: boolean; deferred: boolean }
+/** The offer's terms as they'd stand at a moment: the rate, a day's or a week's pay at scale, and how many. */
+export interface PayTerms { rate: Rate; per: 'day' | 'week'; units: number; each?: Money; deferred: boolean }
 
 /**
  * What the work pays: the minimum on its first day, by the day or the week, for its days or weeks; deferred for a
- * student film (SAGindie's Student Film Agreement, S32). Represented, on SAG-AFTRA work at the minimum, the agent asks
- * for scale plus ten, so the commission comes out of the ten (`AGREEMENT_TERMS`' Scale Plus Ten, representation.md S3).
+ * student film (SAGindie's Student Film Agreement, S32). Until 2026-10-21 this priced a represented actor's SAG-AFTRA work
+ * at scale plus ten itself (`AGREEMENT_TERMS`' Scale Plus Ten, representation.md S3); the pay's `negotiatedAmount` prices
+ * it now, at the offer (`makeOffer`), so the terms here are the rate's scale.
  */
-export function payTermsOf(person: Person, o: Pick<Opportunity, 'projectId' | 'postedAt'>, at: Instant): PayTerms {
+export function payTermsOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): PayTerms {
   const t = projectOf(o);
   const days = datesOf(o);
   const rate = RATES[t.pay];
   const amount = rateOn(rate, days[0]!.from);
   const deferred = rate.deferred === true || amount === undefined;
-  const plusTen = !deferred && t.union === 'sag-aftra' && activeAgreement(person, at) !== undefined;
   const weeks = t.schedule.kind === 'run' ? t.schedule.rehearsalWeeks + t.schedule.performanceWeeks : Math.ceil(days.length / 5);
-  return { rate, per: rate.per, units: rate.per === 'day' ? days.length : weeks, ...(amount !== undefined ? { each: Math.round(amount * (plusTen ? 1.1 : 1)) } : {}), plusTen, deferred };
+  return { rate, per: rate.per, units: rate.per === 'day' ? days.length : weeks, ...(amount !== undefined ? { each: Math.round(amount) } : {}), deferred };
 }
 
-/** The pay in a sentence: "It pays $1,283.00 a day for two days, the SAG-AFTRA Day Performer minimum." */
-export function payWords(terms: PayTerms): string {
+/**
+ * The pay in a sentence: "It pays $1,283.00 a day for two days, the SAG-AFTRA Day Performer minimum." An offer's own
+ * amount, where it's more than the scale (the pay's `negotiatedAmount`, at the offer), is said with the scale it's above.
+ */
+export function payWords(terms: PayTerms, amount: Money | undefined = terms.each): string {
   if (terms.deferred) return `The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its ${counted(terms.units, terms.per)} of work.`;
-  const each = formatMoney(terms.each!, 'USD');
-  const basis = terms.plusTen ? 'scale plus ten, as your agent asks on SAG-AFTRA work at the minimum' : terms.rate.basis === 'verified' ? `the ${/Minimum$/.test(terms.rate.label) ? terms.rate.label : `${terms.rate.label} minimum`}` : 'an estimate';
-  return `It pays ${each} a ${terms.per} for ${counted(terms.units, terms.per)}, ${basis}.`;
+  const basis = terms.rate.basis === 'verified' ? `the ${/Minimum$/.test(terms.rate.label) ? terms.rate.label : `${terms.rate.label} minimum`}` : 'an estimate';
+  const over = amount !== undefined && terms.each !== undefined && amount > terms.each;
+  return `It pays ${formatMoney((amount ?? terms.each)!, 'USD')} a ${terms.per} for ${counted(terms.units, terms.per)}, ${over ? `above ${basis} of ${formatMoney(terms.each!, 'USD')}` : basis}.`;
 }
 
 /** The department field a project falls in, by the agent's published list (`content/agents.ts`). */
@@ -336,10 +340,15 @@ export function fitOf(person: Person, t: ProjectTemplate): Fit {
 /** A fit as a phrase. */
 export const fitWords = (f: number): string => (f >= 0.75 ? 'a close fit' : f >= 0.5 ? 'a fair fit' : f >= 0.25 ? 'a loose fit' : 'a poor fit');
 
-/** The role's techniques, as a player reads them: "The part asks for On Camera, yours at 54, and Comedy, yours at 52, where 90 is mastered." */
+/**
+ * The role's techniques, as a player reads them: "The part asks for On Camera and Comedy, where 90 is mastered. Your On
+ * Camera is at 54 and your Comedy at 52." Until 2026-10-21's walk of the built app each skill carried its level in a
+ * clause ("On Camera, yours at 92 and Scene Study, yours at 92"), which read as four things, not two.
+ */
 export function demandsWords(person: Person, t: ProjectTemplate): string {
-  const asks = (Object.keys(t.role.techniques) as Skill[]).map((s) => `${TECHNIQUE_LABEL[s]}, yours at ${Math.round(person.craft?.[s] ?? 0)}`);
-  return `The part asks for ${spokenList(asks)}, where ${MASTERED} is mastered.`;
+  const skills = Object.keys(t.role.techniques) as Skill[];
+  const yours = skills.map((s, i) => `${i === 0 ? 'Your' : 'your'} ${TECHNIQUE_LABEL[s]} ${i === 0 ? 'is ' : ''}at ${Math.round(person.craft?.[s] ?? 0)}`);
+  return `The part asks for ${spokenList(skills.map((s) => TECHNIQUE_LABEL[s]))}, where ${MASTERED} is mastered. ${spokenList(yours)}.`;
 }
 
 /** Casting's chance for a band and a fit in a kind of work, for a callback's cut or the final decision (`CASTING`). */
@@ -912,16 +921,17 @@ function pass(sim: Simulation, person: Person, o: Opportunity, why: string): voi
 /** An offer made, on the terms the work pays: standing three days, conveyed by the agent where one represents the actor. */
 function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   const t = projectOf(o);
-  const terms = payTermsOf(person, o, sim.now);
+  const terms = payTermsOf(o);
   const until = dayAt(addDays(sim.now, WORK.offerDays, NY), WORK.offerHour);
   o.offer = { at: sim.now, until, rate: t.pay, ...(terms.each !== undefined ? { amount: terms.each } : {}), per: terms.per, units: terms.units };
+  // Integration (brief 19, D7): a represented actor's SAG-AFTRA offer is priced here by the pay's negotiatedAmount, scale plus 10%.
   o.status = 'offered';
   // He handles the offer where an agreement's in force, the actor's own submission too: covered work is his (the
   // agreement's Exclusive and What The Agent Does, `AGREEMENT_TERMS`).
   const agreement = activeAgreement(person, sim.now);
   if (agreement && !o.agreementId) { o.agentId = agreement.agentId; o.agreementId = agreement.id; }
   const days = datesOf(o);
-  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms)} The work is ${days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`}, in ${t.place.city}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.`;
+  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work is ${days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`}, in ${t.place.city}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.`;
   note(sim, person, o, { kind: 'offer', key: 'offer', words });
   sim.schedule({ at: until, kind: OFFER_KIND, label: `The Offer For ${t.role.part} Lapses`, category: 'career', priority: 40, refType: 'pro.offer', refId: o.id, payload: { personId: person.id, opportunityId: o.id } });
   if (person.id !== sim.universe.playerId) return;
@@ -941,7 +951,9 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
  * The promised pay, one entry for each week of work: a run's by its weeks, a shoot's by the calendar week (Sunday to
  * Saturday), each due the Thursday after the week's last day of work, at noon (ASSUMPTION, after SAG-AFTRA's "Payment is
  * due on Thursday… for work performed through the previous Saturday", representation.md S5, for every kind of work).
- * Promised only: nothing's posted and nothing's received here. A student film's is deferred.
+ * Promised only: nothing's posted and nothing's received here. A student film's is deferred. Each is keyed
+ * `<engagement>:<week>`, the week counted from 1 (counted from 0 until 2026-10-21, when the pay's part said it reads
+ * from 1), `promisedAt` the moment the offer was accepted, the contract date its commission reads.
  */
 export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity): ProPayment[] {
   const offer = o.offer!;
@@ -951,7 +963,7 @@ export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity): Pro
     const last = e.days[g[g.length - 1]!]!.from;
     const due = addDays(dayAt(last, 12), (4 - weekdayOf(last) + 7) % 7 || 7, NY);
     const promised = offer.amount === undefined ? 0 : offer.per === 'week' ? offer.amount : offer.amount * g.length;
-    return { id: sim.nextId('pro'), key: `${e.id}:${w}`, promised, currency: 'USD', promisedAt: sim.now, due, ...(offer.amount === undefined ? { deferred: true as const } : {}) };
+    return { id: sim.nextId('pro'), key: `${e.id}:${w + 1}`, promised, currency: 'USD', promisedAt: sim.now, due, ...(offer.amount === undefined ? { deferred: true as const } : {}) };
   });
 }
 
@@ -1049,10 +1061,10 @@ function replace(sim: Simulation, person: Person, e: Engagement, t: ProjectTempl
   const worked = new Set((e.log ?? []).filter((l) => l.status === 'worked').map((l) => l.day));
   const groups = payGroups(e, t);
   // Promised, not received: a week with nothing worked is owed nothing, a day rate's week only its days worked. Pay the
-  // pay system holds as received stays as it was.
-  e.pay = e.pay.filter((p, w) => {
+  // pay system holds as received stays as it was. The week is read from the key, not the entry's place in the list.
+  e.pay = e.pay.filter((p) => {
     if (p.received) return true;
-    const days = groups[w] ?? [];
+    const days = groups[Number(p.key.slice(p.key.lastIndexOf(':') + 1)) - 1] ?? [];
     const done = days.filter((d) => worked.has(d)).length;
     if (!done) return false;
     if (t.schedule.kind === 'shoot' && days.length) p.promised = Math.round((p.promised / days.length) * done);
