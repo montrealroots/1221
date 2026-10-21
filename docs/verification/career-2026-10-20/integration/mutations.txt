@@ -54,3 +54,9 @@ I42 the audition's handler not reading where she was (as until this fix) | src/e
 I43 the meeting's handler not reading where she was | src/engine/systems/proagent.ts (MEETING_KIND) | tests/pro-work.test.ts 'a meeting at the agent’s office and an audition in person at its hour can’t both be gone to…' | KILLED
 I44 the rounds' windows without their trips | src/engine/systems/projobs.ts (attendedAcross) | the two auditions' test (the one three hours on) | KILLED
 I45 the film's part named Theo again | src/engine/content/careerwork.ts | tests/pro-core.test.ts 'names no part as the School names a classmate…' | KILLED
+
+Mutations at the fix for what the app's fourth walk found (2026-10-21, on a43b4f8f): the stop at the first of two auditions at one hour said nothing of the second, which was missed with no stop, and On The Way said the clock stops at each. Run by `mut-parts.py` with ONLY=I46,I47,I48,I49.
+I46 no career commitment found to clash | src/engine/systems/projobs.ts (careerClashes) | tests/language-frame-ui.test.ts 'two auditions in person at one hour, their trips meeting…' | KILLED
+I47 the stop's clash paragraph taken out (as until this fix) | src/ui/shell/TimeControls.tsx (DueNow) | the same test | KILLED
+I48 On The Way's pairs read both ways, so each said twice and the later named as stopped at | src/ui/shell/TimeControls.tsx (On The Way) | the same test | KILLED
+I49 the windows without their trips | src/engine/systems/projobs.ts (windowOf) | the same test (the audition three hours on) | KILLED

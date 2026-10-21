@@ -449,9 +449,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
   "status": "Rewritten",
-  "hash": "91c75515e62d",
+  "hash": "bb8f1b1b6f61",
   "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, and who a part is written for (the app's walks, the owner's word on parts), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
+  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
@@ -477,9 +477,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]": {
   "status": "Rewritten",
-  "hash": "f4bc76b0d931",
+  "hash": "c52ff6a7dff4",
   "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, and who a part is written for (the app's walks, the owner's word on parts), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
+  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]": {

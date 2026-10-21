@@ -5,7 +5,7 @@
  * world processes everything that comes due either way.
  */
 
-import { titleCaseLabel } from '@/engine/core/text';
+import { spokenList, titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal, WhyNot, dialogOpen } from '@/ui/components/primitives';
@@ -16,6 +16,7 @@ import {
 import { skipTargets, type SkipTarget } from '@/engine/world/calendar';
 import { ADVANCE_HOURS, carryOnTo, nextAtHour, nextMondayAt, refusalOf, stopChoices, type Stop, type StopChoice } from '@/engine/world/clock';
 import { onTheWay, type OnTheWay } from '@/engine/foresight';
+import { careerClashes } from '@/engine/systems/projobs';
 import {
   addDays, formatDate, formatDateTime, formatDuration, formatDurationWords, formatTime, formatWeekdayDate, MS_DAY, MS_HOUR, MS_MINUTE,
   type Instant,
@@ -189,6 +190,13 @@ export function TimeControls() {
             {said(confirm.missed.length, 'commitment')}. The clock stops at {confirm.missed.length === 1 ? 'it' : 'each one'} so
             you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.{choicesAhead(confirm.missed)}
           </p>
+          {/* Two career commitments whose trips meet (`careerClashes`, from 2026-10-21, the app's fourth walk): the clock
+              stops only at the first, and the other is missed, which "stops at each one" alone didn't say. */}
+          {confirm.missed.flatMap(({ item }, n) => careerClashes(sim, item, confirm.missed.slice(n + 1).map((w) => w.item)).map((later) => (
+            <p key={`${item.id}-${later.id}`} className="small">
+              {`${titleCaseLabel(item.label)} and ${titleCaseLabel(later.label)} clash: each trip is from home and back, so you can be at only one. The clock stops only at ${titleCaseLabel(item.label)}, and ${titleCaseLabel(later.label)} is missed.`}
+            </p>
+          )))}
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map(({ item, foreseen }) => (
               <li key={`${item.id}${foreseen ? ' ahead' : ''}`}>{titleCaseLabel(item.label)} — {formatDateTime(item.at, sim.zone)}{foreseen ? ', not on your calendar yet' : ''}</li>
@@ -335,6 +343,7 @@ function DueNow({ stop, onGo, onClose }: {
   // in `systems/proagent.ts`), and the trip each way (`travelMinutes`) doesn't move the clock. Until 2026-10-21 the stop
   // said "in its town" of them too, and nothing of the trip (brief 19's app walk).
   const career = item.category === 'career';
+  const clashes = careerClashes(sim, item);
   const trip = item.travelMinutes ?? 0;
   const runs = item.durationMinutes ?? 0;
   const name = titleCaseLabel(item.label);
@@ -379,6 +388,13 @@ function DueNow({ stop, onGo, onClose }: {
         {`, and the clock moves on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
         {trip > 0 ? ` Getting there and back, about ${formatDurationWords(trip * 60_000)} each way, doesn’t move the clock.` : ''}
       </p>
+      {/* What going here gives up (`careerClashes`, from 2026-10-21, the app's fourth walk): until then the stop at the
+          first of two auditions at one hour said nothing of the second, which was missed with no stop of its own. */}
+      {clashes.length > 0 && (
+        <p className="small">
+          {`It clashes with ${spokenList(clashes.map((c) => `${titleCaseLabel(c.label)} at ${formatTime(c.at, zone)}`))}. Each trip is from home and back, so you can be at only one, and it’s this one, the first the clock reaches: ${clashes.length === 1 ? 'that one is' : 'those are'} missed, and the clock won’t stop at ${clashes.length === 1 ? 'it' : 'them'}.`}
+        </p>
+      )}
       {choices.length === 0 && (
         <p className="small muted">
           {/* What starts and who's there, said (from 2026-10-20, brief 16, section 8): until then "It happens the next time

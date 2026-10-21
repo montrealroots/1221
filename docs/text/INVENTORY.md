@@ -15,25 +15,25 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 291 | 1936 | 17741 | 0 | 274 | 17 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 291 | 1936 | 17737 | 0 | 274 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2564 | 15122 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 197 | 779 | 0 | 14 | 31 | 0 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 201 | 841 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4544 | 38823 | 594294 | 316 | 1398 | 3146 | 0 | 0 |
+| **All** | 4544 | 38827 | 594352 | 316 | 1398 | 3146 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 115 | 10063 | 98 | 17 | 0 | 0 |
+| career | 115 | 10059 | 98 | 17 | 0 | 0 |
 | career-agent | 56 | 2678 | 56 | 0 | 0 | 0 |
 | career-pay | 30 | 1221 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 68 | 2019 | 68 | 0 | 0 | 0 |
-| frame | 505 | 33832 | 99 | 406 | 0 | 0 |
+| frame | 505 | 33894 | 99 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
@@ -59,10 +59,10 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 33 | 37 | 13 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 13 | 27 | 5 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 14 | 27 | 4 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4544 | 981 | 2409 | 1154 | 0 |
+| **All** | 4544 | 982 | 2409 | 1153 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -3102,12 +3102,12 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]` | 6 | 0 | Rewritten | career | Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.reasons]` | 33 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]` | 37 | 0 | Rewritten | career | Read again on 2026-10-21: the agreement's needs say the days employed on covered work aren't counted toward Equity's 90, as endRefusal now counts them; read in tests/guide.test.ts and against tests/journey-agent.test.ts's refusal, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]` | 47 | 0 | Rewritten | career | Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, and who a part is written for (the app's walks, the owner's word on parts), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]` | 47 | 0 | Rewritten | career | Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]` | 38 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]` | 44 | 0 | Rewritten | career | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days) | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]` | 40 | 0 | Rewritten | career | Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, and who a part is written for (the app's walks, the owner's word on parts), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 41 | 0 | Rewritten | career | Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 40 | 0 | Rewritten | career | Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, and who a part is written for (the app's walks, the owner's word on parts), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 40 | 0 | Rewritten | career | Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/showcase.ts#TERM_WEEK` | 6 | 0 | Rewritten | career-showcase | tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md | Rewritten And Verified |
 | `src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [coursework.showcase]` | 51 | 0 | Rewritten | career-showcase | tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md | Rewritten And Verified |
@@ -3573,9 +3573,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/shell/TimeControls.tsx#MENU_FOOT` | 1 | 0 | Retained | frame | Layout values for the foot of a top-bar menu, padding and a border, which no player reads as words. | Reviewed And Retained |
 | `src/ui/shell/TimeControls.tsx#DIAL_LABEL` | 8 | 0 | Retained | frame | The eight wellbeing measures by the names How You Are gives them, so the menu’s figures match the panel’s. | Reviewed And Retained |
 | `src/ui/shell/TimeControls.tsx#choicesAhead` | 5 | 0 | Rewritten | frame | On The Way's sentence of the choices on the way and what the clock does after them; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts | Rewritten And Verified |
-| `src/ui/shell/TimeControls.tsx#TimeControls` | 21 | 0 | Rewritten | frame | On The Way names only the choices of what it lists and marks what isn't on the calendar yet; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
+| `src/ui/shell/TimeControls.tsx#TimeControls` | 22 | 0 | Rewritten | frame | Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…') | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#SleepDialog` | 13 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Sleep dialog); the claim it makes, a commitment slept through is missed, held by tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through…' | Pending |
-| `src/ui/shell/TimeControls.tsx#DueNow` | 18 | 0 | Rewritten | frame | Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts | Rewritten And Verified |
+| `src/ui/shell/TimeControls.tsx#DueNow` | 21 | 0 | Rewritten | frame | Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…') | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#SkipDialog` | 17 | 0 | Rewritten | frame | Skip To Event lists a foreseen stop as not on your calendar yet; held by tests/time-controls.test.ts on the real provider | Pending |
 | `src/ui/shell/TimeControls.tsx#AdvanceMenu` | 14 | 0 | Retained | frame | Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing. | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#LookAfterMenu` | 6 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu); Readiness held by tests/evidence-g30-ui.test.ts, 'PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower…' | Rewritten And Verified |

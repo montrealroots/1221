@@ -267,6 +267,40 @@ describe('the top bar’s dialogs', () => {
     expect(said).not.toContain('in its town');
   });
 
+  it('PLAYER JOURNEY: two auditions in person at one hour, their trips meeting: On The Way says the clock stops only at the first and the other is missed, and the stop at the first says so; one a day later clashes with nothing (the app’s fourth walk, 2026-10-21)', () => {
+    // TEST SETUP: the audition's kind, as the work loop puts it on the calendar, with no opportunity behind it, which its
+    // handler passes by: Hudson's and Brooklyn's at eleven, each with its trip from New Haven, and one the next day.
+    const sim = quickSave({}, 'frame-two-towns');
+    for (const i of sim.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) sim.timeline.cancel(i.id, sim.now);
+    const eleven = sim.now + 3 * MS_HOUR;
+    const call = (label: string, at: number, cityId: string, trip: number) => sim.schedule({ at, kind: AUDITION_KIND, label, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: 30, travelMinutes: trip, locationId: cityId, payload: {} });
+    call('Audition: Hester Vane, The Winter Ledger', eleven, 'us-ny-hudson', 120);
+    call('Audition: Ivy, Paper Moons', eleven, 'us-ny-newyork', 120);
+    // Three hours on: its own half hour clear of eleven's, but its trip from New Haven meets Hudson's way home.
+    call('Audition: Sam, Last Bus To Eastview', eleven + 3 * MS_HOUR, 'us-ny-newyork', 120);
+    call('Audition: Jess, Static On Route 9', eleven + MS_DAY, 'us-ny-newyork', 120);
+    h.given = new Map();
+    drawn(sim, TimeControls);
+    press(button('Advance ▾'));
+    drawn(sim, TimeControls);
+    press(button(/^One Week/));
+    const ahead = dialog(drawn(sim, TimeControls).html, 'On The Way');
+    expect(ahead).toContain('passes four commitments.');
+    expect(ahead).toContain('Audition: Hester Vane, The Winter Ledger and Audition: Ivy, Paper Moons clash: each trip is from home and back, so you can be at only one. The clock stops only at Audition: Hester Vane, The Winter Ledger, and Audition: Ivy, Paper Moons is missed.');
+    expect(ahead).toContain('Audition: Hester Vane, The Winter Ledger and Audition: Sam, Last Bus To Eastview clash:');
+    // Each pair said once, the first the clock reaches named as the one it stops at.
+    expect(ahead).not.toContain('The clock stops only at Audition: Ivy, Paper Moons, and Audition: Hester Vane');
+    expect(ahead).not.toMatch(/Jess, Static On Route 9 clash|and Audition: Jess, Static On Route 9 clash/);
+    h.given = new Map();
+    const { game } = drawn(sim, TimeControls);
+    h.sets = [];
+    game.advanceTo(eleven + MS_HOUR);
+    for (const one of h.sets) h.given.set(one.at, one.value);
+    const stop = dialog(drawn(sim, TimeControls).html, 'Audition: Hester Vane, The Winter Ledger');
+    expect(stop).toContain(`It clashes with Audition: Ivy, Paper Moons at ${formatTime(eleven, sim.zone)} and Audition: Sam, Last Bus To Eastview at ${formatTime(eleven + 3 * MS_HOUR, sim.zone)}. Each trip is from home and back, so you can be at only one, and it’s this one, the first the clock reaches: those are missed, and the clock won’t stop at them.`);
+    expect(stop).not.toContain('Jess');
+  });
+
   it('Skip To Event says what the clock stops at on the way and what else happens, for none, one and several', () => {
     const { sim } = withPlan('frame-skip', 'Dinner', 30);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 50 * MS_HOUR, durationMinutes: 60 } });

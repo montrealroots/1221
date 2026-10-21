@@ -3389,9 +3389,9 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten",
-  "hash": "37286faba60a",
+  "hash": "3c0024579911",
   "on": "2026-10-21",
-  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts",
+  "evidence": "Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
   "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
@@ -3424,10 +3424,10 @@
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {
   "status": "Rewritten",
-  "hash": "9ab4e6233515",
-  "on": "2026-10-20",
-  "evidence": "On The Way names only the choices of what it lists and marks what isn't on the calendar yet; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts",
-  "first": "Pending"
+  "hash": "a641b404baf5",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
+  "first": "Rewritten And Verified"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Retained",

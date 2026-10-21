@@ -87,7 +87,7 @@ import {
 } from './school';
 import { f1Of, usWorkAuthorized } from './permission';
 import { negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
-import { AGENT_TIMES, TRAVEL_MINUTES } from './proagent';
+import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -569,6 +569,28 @@ export function attendedAcross(person: Person, from: Instant, to: Instant, excep
     }
   }
   return undefined;
+}
+
+/** The career's commitments on the calendar that can't both be gone to: an audition in person and a meeting. */
+const CAREER_STOPS = new Set([AUDITION_KIND, MEETING_KIND]);
+/** A commitment's window, its trip each way included, as the calendar puts it (`travelMinutes`, `durationMinutes`). */
+const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at - (i.travelMinutes ?? 0) * MIN, i.at + ((i.durationMinutes ?? 0) + (i.travelMinutes ?? 0)) * MIN];
+
+/**
+ * The career commitments at or after one on the calendar whose windows meet its own, so that going to it misses them
+ * (`attendedAcross`): an audition in person or a meeting, the same person's, among the calendar's pending items or a
+ * list given (On The Way's, whose foreseen items aren't on it yet). From 2026-10-21 (the app's fourth walk): until then
+ * the stop at the first of two auditions at 11 AM said nothing of the second, and On The Way said the clock stops at
+ * each, where the second was missed with no stop and only Settled said so.
+ */
+export function careerClashes(sim: Simulation, item: ScheduledItem, among?: readonly ScheduledItem[]): ScheduledItem[] {
+  if (!CAREER_STOPS.has(item.kind)) return [];
+  const [from, to] = windowOf(item);
+  return (among ?? sim.universe.scheduled.filter((i) => i.status === 'pending')).filter((i) => {
+    if (i.id === item.id || !CAREER_STOPS.has(i.kind) || i.payload.personId !== item.payload.personId || i.at < item.at) return false;
+    const [a, b] = windowOf(i);
+    return a < to && b > from;
+  });
 }
 
 /**
