@@ -239,6 +239,12 @@ export interface Person {
   experience?: import('../systems/experience').Experience;
   /** Practice briefs prepared, chosen and taped, each with its takes and any callback (`systems/briefs.ts`, from 2026-10-12). */
   briefs?: Record<string, import('../systems/briefs').BriefRecord>;
+  /**
+   * The professional record (`systems/pro.ts`, from 2026-10-20, brief 19): credits, the portfolio's materials, agents,
+   * agreements, opportunities, engagements and the unions. Optional: a save from before has it built once on opening
+   * (`pro.begun`). Not `career`, which `migrate` deletes.
+   */
+  pro?: import('../systems/pro').ProRecord;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
   /** Health cover after school: the unions' plans and the marketplace (`systems/health.ts`). */

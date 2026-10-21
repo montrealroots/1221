@@ -7,7 +7,9 @@
  *
  * The career's, the industry's and the homes' went with them in the scope
  * reset of 2026-10-09, and so did Papers' Driving with the cars; Papers'
- * Passport And Travel is Passport And ID, the journeys gone.
+ * Passport And Travel is Passport And ID, the journeys gone. The Career came
+ * back on 2026-10-20 (brief 19) with two tabs, Overview and Portfolio; its
+ * others come with the systems they show, never before.
  */
 
 export interface Section { id: string; label: string }
@@ -20,6 +22,9 @@ export const SECTIONS: Readonly<Record<string, readonly Section[]>> = {
   '/workspace/bank': [
     { id: 'accounts', label: 'Accounts' }, { id: 'cards', label: 'Cards' }, { id: 'payments', label: 'Payments And Cash' },
     { id: 'borrowing', label: 'Borrowing' }, { id: 'statements', label: 'Statements' },
+  ],
+  '/workspace/career': [
+    { id: 'overview', label: 'Overview' }, { id: 'portfolio', label: 'Portfolio' },
   ],
   '/workspace/papers': [
     { id: 'returns', label: 'Tax Returns' }, { id: 'health', label: 'Health Cover' }, { id: 'benefits', label: 'Unemployment' },

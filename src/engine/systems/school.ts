@@ -1929,12 +1929,17 @@ function bookPayday(sim: Simulation, person: Person, worked: Instant): void {
 /**
  * The actor's standing moved: a notice, and on dismissal or the degree the school's hold on the calendar let go.
  * Until the scope reset of 2026-10-09 the degree or a dismissal began the career (`systems/career.ts`) and the class
- * was known for life after it (`systems/people.ts`); both went, and a life now ends its school at the results.
+ * was known for life after it (`systems/people.ts`); both went, and a life ended its school at the results. From
+ * 2026-10-20 (brief 19) the professional record (`systems/pro.ts`) runs from the life's start through and past the
+ * school, and the degree gives it Equity membership.
  */
 export function setStanding(sim: Simulation, person: Person, to: Standing, reason: string): void {
   const school = person.school!;
   school.standing = to;
   if (schoolEnded(to)) school.endedAt = sim.now;
+  // Equity at the degree: "those students who are not members of Actors' Equity will attain membership to the union upon
+  // graduation" (Bulletin 2026–27 p.24; docs/research/career-2026-10-20/yale.md), dated then (from 2026-10-20, brief 19).
+  if (to === 'graduated' && person.pro) person.pro.equity ??= { since: sim.now, how: 'degree' };
   if (to !== 'good' && to !== 'withdrawn') feel(person, to === 'withheld' ? 'dismissed' : to);
   // "No student on academic warning ... may participate" in the Cabaret (Bulletin 2026–27 p.148): a warning, or the end
   // of school, during a show takes them out of what's still to come (from 2026-10-10: until then it was checked only at
