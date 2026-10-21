@@ -2980,9 +2980,9 @@
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
-        "verified": "Implemented"
+        "verified": "Partial"
       },
-      "limits": "Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck"
+      "limits": "Built on 2026-10-20 for brief 19, and read on 2026-10-21 against 7bbab80f by a reader who wrote none of it (docs/verification/career-2026-10-20/audit/REPORT.md); docs/GAMEPLAY-COVERAGE.md calls each of its four commands verified. Driven through the commands and checked: a name set, read by the profile and by a résumé behind on it (tests/pro-core.test.ts); headshots, a résumé and a reel each made on the clock and paid through spend, with their provenance, and read by materialsCheck, which refuses the agent’s check and a submission without headshots or a résumé, played through those commands (tests/journey-agent.test.ts, tests/pro-work.test.ts), and says out of date, behind, tapes only and newer work, read by calling it after the commands. What isn’t: the School’s filmed monologues and a released credit’s footage are reel sources only by calling reelSources on state set by hand, and no test cuts a reel from either; an office’s request for new headshots or an up-to-date résumé is never played, every request in a test being for a reel; and no test sends a reel with a submission, or presses a Portfolio button on the rendered screen. Until 2026-10-21 these limits said the materials were read by the Career screen alone until the agent’s and the work’s systems called materialsCheck; both call it since the parts were merged that day. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13, and its rows were added on 2026-10-21, as brief 09’s capabilities stand. The materials’ prices and times are the game’s estimates, said so on the screen"
     },
     {
       "id": "school-showcase",
@@ -3005,7 +3005,7 @@
         "settleCourses: DRAM 793b's pass, after the showcase's last day",
         "the Commencement handler: degreeShortfall, which withholds the degree on a course not passed",
         "the Player Profile's reliability: the School's call tally",
-        "the agent's follow-up after the showcase (brief 19's W3), wired at integration"
+        "the agent’s follow-up after the showcase (brief 19’s W3), put on the calendar by the showcase’s end (endShowcase) since the parts were merged on 2026-10-21"
       ],
       "looks": [],
       "routes": [
@@ -3023,9 +3023,9 @@
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
-        "verified": "Implemented"
+        "verified": "Partial"
       },
-      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its command is traced in docs/verification/connected-journey/TRACE.md. The School’s follow-up after the showcase is the agent’s system’s, wired at integration"
+      "limits": "Built on 2026-10-21 for brief 19 and read the same day against 7bbab80f by a reader who wrote none of it (docs/verification/career-2026-10-20/audit/REPORT.md); docs/GAMEPLAY-COVERAGE.md calls school.choose_showcase verified. Driven by the clock and the command and checked (tests/pro-showcase.test.ts): the showcase begun with the last term on its calendar at each year’s own dates; an Incomplete open at the fourth week’s end keeping the student out; two scenes chosen, or the faculty’s first two, made the course’s pieces; the rehearsal calls working them; each scene judged at each day into the work record, the journey and the professional record, a day missed counted and one ill excused; the course settled after Los Angeles and the degree withheld where it fails; the School’s follow-up on the calendar and come; and a save from before opened onto it. What isn’t: Choose These Scenes pressed on the rendered screen, and his office’s answer to a follow-up the showcase itself brought, which the agent’s tests reach only on performances set by hand (career-representation). Until 2026-10-21 these limits said the School’s follow-up was the agent’s system’s, to be wired at integration; the showcase’s end puts it on the calendar since the parts were merged that day (endShowcase). It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13, and its row was added on 2026-10-21, as brief 09’s capabilities stand. The calls’ hours, the rehearsal calls and the faculty’s shortlist are the game’s estimates, said so on the screen"
     },
     {
       "id": "career-representation",
@@ -3076,9 +3076,9 @@
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
-        "verified": "Implemented"
+        "verified": "Partial"
       },
-      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. The finished engagements a referral comes from, the offers the 90 days read and the covered days the 151 and 91 days count are the work loop's, built apart: their tests put that data in by hand as TEST SETUP, and so are the showcase's performances the School's follow-up reads. Each journey's seed is chosen by reading the game's own draw for its first approach"
+      "limits": "Built on 2026-10-21 for brief 19 and read the same day against 7bbab80f by a reader who wrote none of it (docs/verification/career-2026-10-20/audit/REPORT.md). docs/GAMEPLAY-COVERAGE.md calls pro.agent_notice and pro.agent_check verified: the notice read before anything else, and the check refusing an incomplete approach in materialsCheck’s words, each played through its command (tests/pro-agent.test.ts, tests/journey-agent.test.ts). It calls pro.ask_referral, pro.send_materials, pro.supply_material, pro.ask_to_move, pro.accept_agreement, pro.decline_agreement and pro.end_agreement partial, for one gap they share: every approach in a gate test starts from an introduction the game didn’t make in that test, a referral from a finished job written by hand (an Off-Broadway part whose casting office takes submissions only from agents, which the unrepresented actor of those journeys couldn’t have been seen for) or the School’s follow-up on performances set by hand, put on the calendar by calling scheduleShowcaseFollowUp. On that footing each runs through its command and the clock and is checked: his office’s answers and their notices, the cooling-off times and something new, the factors and the draw across a reload, the meeting missed, moved at its stop and kept, and the agreement offered with every term, accepted, declined, let lapse and ended each way (tests/journey-agent.test.ts). The showcase’s full journey brings the follow-up by the clock (tests/pro-showcase.test.ts) and the work loop’s journeys finish jobs of the shape a referral reads (tests/pro-work.test.ts), and no gate test goes on from either to him. Each of three is partial for a gap of its own besides: pro.accept_agreement, since what accepting changes in later opportunities and pay is checked only on agreements written by hand (career-work, career-pay); pro.end_agreement, since the offers and covered days its rules read are written by hand and the pay’s continuing commission is checked on an agreement ended by hand; and pro.supply_material, since every request in a test is for a reel. Until 2026-10-21 these limits said the work loop was built apart; it was merged that day, and the agent’s tests still put its data in by hand. Every time, the bar, the cooling-off times and the chances are the game’s assumptions; his words and decisions are fictional, said so on every notice and on his panel"
     },
     {
       "id": "career-pay",
@@ -3123,9 +3123,9 @@
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
-        "verified": "Implemented"
+        "verified": "Partial"
       },
-      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it, so it isn’t called Verified. Engagements come from the work system, built apart: the tests write them as it does (TEST SETUP) until integration calls schedulePay at an offer’s acceptance. Providence, the regional theater’s town, isn’t in the gazetteer, so its pay is counted where the player lives and its state’s tax isn’t worked out. Equity’s rehearsal-period rate at minimum, per diem and renewals have nothing in the game to read"
+      "limits": "Built on 2026-10-21 for brief 19 and read the same day against 7bbab80f by a reader who wrote none of it (docs/verification/career-2026-10-20/audit/REPORT.md). Driven by the clock since the work loop was merged that day, and checked: an unsigned graduate’s run in Hudson booked through pro.accept_offer, each of its nine weeks paid once on its Thursday with its hours; and a represented ultra-low-budget part paid into the trust account and on to the player less $102.80 commission, only what’s over scale, on an agreement written by hand (tests/pro-work.test.ts). The pay’s own tests run on engagements written by hand, their pay put on the clock by calling schedulePay (tests/fakes/career-work.ts): paid once across reloads, jumps and a payday fired twice; commission to the cent under Equity’s tiers, SAG-AFTRA’s over-scale rule, New York’s 10%, after an agreement ends and in Equity’s 60-day tail; the withholding and the return’s New York and Connecticut figures; permission to work read for each date; OPT’s days worked; and Equity billed at the degree and on an older save’s opening (tests/propay.test.ts, tests/propay-screen.test.ts). docs/GAMEPLAY-COVERAGE.md calls pro.join_sag partial: its eligibility comes only from an engagement written by hand, since SAG-AFTRA’s qualifying work takes submissions only from agents and no test plays representation into it, and what joining changes afterward is read by no test, a member’s working dues (mutation P3) and base dues (P4) each surviving every test. Until 2026-10-21 these limits said Providence, the regional theater’s town, wasn’t in the gazetteer, so its pay was counted where the player lived; the company moved to Hudson, New York, that day, and every project’s town is one the return reads. Equity’s rehearsal-period rate at minimum, per diem and renewals have nothing in the game to read"
     },
     {
       "id": "career-work",
@@ -3159,8 +3159,8 @@
         "awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused",
         "setStanding: work in term without approval",
         "activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules",
-        "the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (wired at integration)",
-        "the pay's schedulePay: the promised entries (wired at integration)"
+        "the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21)",
+        "the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)"
       ],
       "looks": [],
       "routes": [
@@ -3179,9 +3179,9 @@
         "schema": "Implemented",
         "content": "Implemented",
         "interaction": "Implemented",
-        "verified": "Implemented"
+        "verified": "Partial"
       },
-      "limits": "Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The promised pay is posted by the pay's system, wired at integration; the agent's relationship and agreement are the agent's system's"
+      "limits": "Built on 2026-10-21 for brief 19 and read the same day against 7bbab80f by a reader who wrote none of it (docs/verification/career-2026-10-20/audit/REPORT.md). docs/GAMEPLAY-COVERAGE.md calls pro.submit, pro.tape_audition, pro.move_audition, pro.accept_offer, pro.decline_offer and pro.request_outside_work verified, each played through its command and the clock on an unsigned life (tests/pro-work.test.ts): roles posted each Monday, a submission refused in materialsCheck’s words and then answered with an audition, a self-tape judged and casting deciding on it, an audition moved clear of a plan, an offer accepted to its work days, each judged, its credit and, since the merge with the pay that day, its pay received, an offer declined and one let lapse, and the dean’s approval read at acceptance with the class days excused, unapproved work bringing the warning and then dismissal. It calls pro.prepare partial: the sides and the part are moved through the command, and no test compares a prepared audition or work day with an unprepared one; a work day reading none of the part’s preparation (mutation P2) survived every test, and an audition reading none of the sides’ (P1) failed only through the outcomes its journeys found over lists of seeds. The agent’s part (his breakdowns, his holding a submission, the offers he conveys at scale plus ten) is played on an agreement written by hand (career-representation). Until 2026-10-21 these limits said the promised pay would be posted by the pay’s system once wired at integration; pro.accept_offer puts it on the clock through schedulePay since the merge that day. The projects are fictional, and a casting office’s timings, the chances, the trips, the lead time and the School rule’s figures are the game’s estimates, said so"
     }
   ]
 }
