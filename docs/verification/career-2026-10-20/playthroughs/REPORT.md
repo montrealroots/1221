@@ -260,7 +260,8 @@ longer posted Theo or Tobias Marsh. The searches were made again (`seeds.txt`):
   was judged Strong: …". The audit's citations and their glosses follow (`../../audit/school.json` and the pipeline's
   `inputs/added-rows.json`, the capabilities and their review), `inputs/renames.json` records the two `it` titles, and the
   generated pages were written again.
-- Not run again: the 24 mutations of `mutations.txt` were run on the v1-12 tests.
+- The 24 mutations of `mutations.txt` were run on the v1-12 tests, and not again when the seeds moved; on 9485a309
+  they were rebuilt from their lines and run again on the v1-21 tests (`mutate.py`): all 24 killed, none survived.
 
 **Seen, not a defect:** on consecutive shoot days in New York, a 7 AM call two hours from New Haven, the attentive
 player's energy fell to 0 and readiness to 37 and 24 (Ivy), then 29, 22 and 20 (Jess), each day's record naming fatigue,
