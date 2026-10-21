@@ -30,6 +30,7 @@ import { CALENDAR_LEGEND, LEGEND_BY_CATEGORY, entriesBetween } from '@/engine/wo
 import { stopChoices } from '@/engine/world/clock';
 import { MEETING_KIND } from '@/engine/systems/proagent';
 import { REPLY_KIND, projectOf } from '@/engine/systems/projobs';
+import { materialsCheck } from '@/engine/systems/pro';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { PREP_DIMS } from '@/engine/content/coursework';
 
@@ -134,5 +135,26 @@ describe('4. each How You’ll Play It chooser has radio groups of its own', () 
     for (const names of tables) expect(names.map((n) => n.replace(/^.*axis-/, '')).sort()).toEqual(['pace', 'scale', 'structure']);
     const all = tables.flat();
     expect(new Set(all).size).toBe(all.length);
+  });
+});
+
+describe('T1: the Career screen’s own words, read on the built app', () => {
+  it('PLAYER JOURNEY: a grayed Use This Name says why under it with the field empty, and What’s Next says what the Portfolio’s buttons say', () => {
+    const sim = createSave(1, 'app-career-words', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    tended(sim, at(2026, 8, 29, 10));
+    // The guide's Your Career: "If a button is grayed out, the line under it says why".
+    expect(drawn(sim, '/workspace/career', 'portfolio')).toContain('Not now: You’re already working under your own name.');
+    expect(drawn(sim, '/workspace/career', 'overview')).toContain('Start with your headshots, on the Portfolio tab. Each button there says what it takes before you press it.');
+  });
+
+  it('PLAYER JOURNEY: a résumé behind a special skill newly on the record names it as a special skill', () => {
+    const sim = createSave(1, 'app-career-skill', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    tended(sim, at(2026, 8, 29, 10));
+    sim.must({ kind: 'pro.headshots', payload: {} });
+    sim.must({ kind: 'pro.update_resume', payload: {} });
+    // TEST SETUP: singing grown past the résumé's line for a special skill, as a year of voice classes might leave it.
+    sim.player.craft!.singing = 61;
+    const behind = materialsCheck(sim.player, 'stage', sim.now).find((p) => p.kind === 'resume')!;
+    expect(behind.words).toMatch(/doesn’t have Singing as a special skill\. Press Update Your Résumé/);
   });
 });

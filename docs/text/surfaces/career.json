@@ -15,15 +15,40 @@
    "src/engine/systems/pro.ts#materialsCheck [resume]",
    "src/engine/systems/pro.ts#materialsCheck [reel]"
   ],
-  "states": ["first use", "ordinary", "empty", "recommendation", "warning", "locked", "returning", "assembled"],
+  "states": [
+   "first use",
+   "ordinary",
+   "empty",
+   "recommendation",
+   "warning",
+   "locked",
+   "returning",
+   "assembled"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: the Career screen came back under Your Work, built on the professional record, and nothing on it said anything before.",
-  "changes": "Written new to docs/STYLE.md: each line read from the record in a sentence (“You’re an MFA candidate in Acting at the David Geffen School of Drama at Yale University, in year one of three.”; “You’re a US citizen, so you can work for any employer in the US.”), what’s missing split into Needed For Any Submission and Worth Doing, each problem with its next step in the screen’s labels, and What’s Next naming where to start.",
+  "changes": "Written new to docs/STYLE.md: each line read from the record in a sentence (“You’re an MFA candidate in Acting at the David Geffen School of Drama at Yale University, in year one of three.”; “You’re a US citizen, so you can work for any employer in the US.”), what’s missing split into Needed For Any Submission and Worth Doing, each problem with its next step in the screen’s labels, and What’s Next naming where to start. From 2026-10-21 (brief 19's app walk): What's Next says each button there says what it takes, where Each stood for nothing and said a cost the résumé hasn't.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: a first-year’s Overview says where they stand and what the portfolio is missing, each in a sentence'" },
-   { "kind": "test", "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: in a guided life, Career stays Locked until “Your Career” is read, and opens with its controls then'" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/core/screens/overview-1440.txt" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/core/screens/overview-390.txt" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: a first-year’s Overview says where they stand and what the portfolio is missing, each in a sentence'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: in a guided life, Career stays Locked until “Your Career” is read, and opens with its controls then'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/career-2026-10-20/core/screens/overview-1440.txt"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/career-2026-10-20/core/screens/overview-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-app.test.ts: 'PLAYER JOURNEY: a grayed Use This Name says why under it with the field empty, and What’s Next says what the Portfolio’s buttons say'"
+   }
   ]
  },
  {
@@ -37,14 +62,35 @@
    "src/engine/systems/pro.ts#VENUE",
    "src/engine/systems/pro.ts#MONOLOGUES_COURSE"
   ],
-  "states": ["first use", "ordinary", "empty", "unavailable", "confirmation", "history", "assembled"],
+  "states": [
+   "first use",
+   "ordinary",
+   "empty",
+   "unavailable",
+   "confirmation",
+   "history",
+   "assembled"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: the profile a submission sends, read from the record.",
-  "changes": "Written new: the name you work under said with what reads it (“Your résumé uses it.”), a labeled field and Use This Name with each refusal under it, School Credits and Professional Credits as two lists with their empty states (“None yet. Practice, practice briefs and self-tapes don’t count as credits.”), and Special Skills with the level they’re listed from.",
+  "changes": "Written new: the name you work under said with what reads it (“Your résumé uses it.”), a labeled field and Use This Name with each refusal under it, School Credits and Professional Credits as two lists with their empty states (“None yet. Practice, practice briefs and self-tapes don’t count as credits.”), and Special Skills with the level they’re listed from. From 2026-10-21 (brief 19's app walk): a grayed Use This Name says why under it with the field empty too, as the guide's Your Career says a grayed button's line does.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: Portfolio draws the profile, each material and its control, grayed with the command’s own reason under it'" },
-   { "kind": "test", "ref": "tests/pro-core.test.ts: 'sets the professional name, refuses one that isn’t a name, and goes back to the display name'" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/core/screens/portfolio-1440.txt" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: Portfolio draws the profile, each material and its control, grayed with the command’s own reason under it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'sets the professional name, refuses one that isn’t a name, and goes back to the display name'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/career-2026-10-20/core/screens/portfolio-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-app.test.ts: 'PLAYER JOURNEY: a grayed Use This Name says why under it with the field empty, and What’s Next says what the Portfolio’s buttons say'"
+   }
   ]
  },
  {
@@ -58,14 +104,32 @@
    "src/engine/systems/pro.ts#registerPro <pro.headshots>",
    "src/engine/systems/pro.ts#registerPro [headshot]"
   ],
-  "states": ["first use", "ordinary", "unavailable", "error", "confirmation", "success", "details", "forecast"],
+  "states": [
+   "first use",
+   "ordinary",
+   "unavailable",
+   "error",
+   "confirmation",
+   "success",
+   "details",
+   "forecast"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: headshots as a material with provenance, made by a command that says its time and cost first.",
   "changes": "Written new: the button says its hours and price before it’s pressed; a refusal in the player’s words (“Photographers work by day: a session starts between 9 AM and 4 PM.”, “Your bank can’t cover the $700.00 session.”, and once pressed “Your bank can’t cover $700.00, so nothing was charged.”); where they came from and what’s in them; out of date after two years, said with what to do; and the estimates said in the fine print.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-core.test.ts: 'refuses a session out of a photographer’s hours, while busy, and with the bank short, in words, charging nothing'" },
-   { "kind": "test", "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: once made, each material shows where it came from, when, and what’s in it, and the résumé opens line by line'" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/core/screens/made-portfolio-1440.txt" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'refuses a session out of a photographer’s hours, while busy, and with the bank short, in words, charging nothing'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-screen.test.ts: 'PLAYER JOURNEY: once made, each material shows where it came from, when, and what’s in it, and the résumé opens line by line'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/career-2026-10-20/core/screens/made-portfolio-1440.txt"
+   }
   ]
  },
  {
@@ -77,13 +141,31 @@
    "src/engine/systems/pro.ts#resumeNow",
    "src/engine/systems/pro.ts#registerPro [resume]"
   ],
-  "states": ["first use", "ordinary", "repeated", "unavailable", "warning", "details", "assembled"],
+  "states": [
+   "first use",
+   "ordinary",
+   "repeated",
+   "unavailable",
+   "warning",
+   "details",
+   "assembled"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: a résumé made from the record, which says when it’s behind.",
-  "changes": "Written new: its lines built from the record (name, unions, training, credits, special skills); its standing (“Up to date with your record.” or “Behind: it doesn’t have …”, the missing parts named); What It Says behind a disclosure; refused while up to date in its own words.",
+  "changes": "Written new: its lines built from the record (name, unions, training, credits, special skills); its standing (“Up to date with your record.” or “Behind: it doesn’t have …”, the missing parts named); What It Says behind a disclosure; refused while up to date in its own words. From 2026-10-21 (brief 19's app walk): a résumé behind names a new special skill as one, where it named the skill bare among the parts it lacked.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-core.test.ts: 'PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date'" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/core/screens/made-portfolio-1440.txt" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'PLAYER JOURNEY: a résumé made from the record takes an hour, reads behind once a part is played and the name changes, and is refused while up to date'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/career-2026-10-20/core/screens/made-portfolio-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-app.test.ts: 'PLAYER JOURNEY: a résumé behind a special skill newly on the record names it as a special skill'"
+   }
   ]
  },
  {
@@ -96,13 +178,27 @@
    "src/engine/systems/pro.ts#registerPro <pro.cut_reel>",
    "src/engine/systems/pro.ts#registerPro [reel]"
   ],
-  "states": ["first use", "empty", "ordinary", "unavailable", "warning", "details", "success"],
+  "states": [
+   "first use",
+   "empty",
+   "ordinary",
+   "unavailable",
+   "warning",
+   "details",
+   "success"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: a reel cut only from recorded work, with what can’t go on one said and why.",
   "changes": "Written new: the recorded pieces as labeled checkboxes, each with its band and date; a voice tape listed apart with its reason (“It’s a voice recording with no picture, so it can’t go on a reel.”); the reel’s pieces a line each; tapes only and newer work said in words; the estimates in the fine print.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-core.test.ts: 'PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it'" },
-   { "kind": "screen", "ref": "docs/verification/career-2026-10-20/core/screens/portfolio-390.txt" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'PLAYER JOURNEY: a reel is cut only from recorded work, two hours and $250.00, and says what it holds and what came after it'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/career-2026-10-20/core/screens/portfolio-390.txt"
+   }
   ]
  },
  {
@@ -111,13 +207,24 @@
   "sources": [
    "src/engine/content/guide/career.ts#*"
   ],
-  "states": ["explanation", "details", "unavailable", "recommendation"],
+  "states": [
+   "explanation",
+   "details",
+   "unavailable",
+   "recommendation"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: one entry for each feature the career’s core adds.",
   "changes": "Written new in the guide’s order (what it’s for, where, what to press, what’s needed, what happens, what it affects, what next, what if you can’t), each figure from the rule it states and each estimate said as one.",
   "evidence": [
-   { "kind": "test", "ref": "tests/guide.test.ts: 'covers every feature id exactly once'" },
-   { "kind": "test", "ref": "tests/guide.test.ts: 'puts every gated control’s entry one press away on its own screen'" }
+   {
+    "kind": "test",
+    "ref": "tests/guide.test.ts: 'covers every feature id exactly once'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/guide.test.ts: 'puts every gated control’s entry one press away on its own screen'"
+   }
   ]
  },
  {
@@ -127,13 +234,23 @@
    "src/engine/content/tutorial.ts#CHAPTERS [career]",
    "src/engine/content/guide/index.ts#GOALS [career]"
   ],
-  "states": ["first use", "explanation", "locked"],
+  "states": [
+   "first use",
+   "explanation",
+   "locked"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: the chapter that opens the Career screen and its four commands.",
   "changes": "Written new: where Career is, what each tab and button does with its time and cost, what isn’t a credit and what can’t go on a reel, what a grayed button means, and the next chapter; The Details for the special skills, Equity at the degree and the versions kept.",
   "evidence": [
-   { "kind": "test", "ref": "tests/tutorial.test.ts: 'is the table the coverage matrix prints, row for row'" },
-   { "kind": "test", "ref": "tests/guide.test.ts: 'names no feature or label the game no longer has'" }
+   {
+    "kind": "test",
+    "ref": "tests/tutorial.test.ts: 'is the table the coverage matrix prints, row for row'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/guide.test.ts: 'names no feature or label the game no longer has'"
+   }
   ]
  },
  {
@@ -142,12 +259,19 @@
   "sources": [
    "src/engine/content/agents.ts#*"
   ],
-  "states": ["details", "explanation", "first use"],
+  "states": [
+   "details",
+   "explanation",
+   "first use"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: one real agent, held to what is published about his role, with the notice the research asks for.",
   "changes": "Written new: the notice in the player’s words (“Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: …”), the line every panel of his carries, the fields as the game names them, and the roster’s assumption said as the game’s; the agency’s policy, its warning and each source’s words kept as published.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-core.test.ts: 'holds one real agent with only what’s published, the policy quoted, the routes it allows and the fictional notice'" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'holds one real agent with only what’s published, the policy quoted, the routes it allows and the fictional notice'"
+   }
   ]
  },
  {
@@ -156,12 +280,19 @@
   "sources": [
    "src/engine/content/careerwork.ts#*"
   ],
-  "states": ["details", "explanation", "forecast"],
+  "states": [
+   "details",
+   "explanation",
+   "forecast"
+  ],
   "outcome": "Revised",
   "why": "New with brief 19: fictional projects, verified and assumed rates, and the agreement’s terms each marked verified or simulation.",
   "changes": "Written new: each project, company and casting office fictional; each rate’s label, with an assumed one’s words saying it’s estimated; each agreement term’s heading and words in the player’s language; each source’s words kept as published.",
   "evidence": [
-   { "kind": "test", "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'" }
+   {
+    "kind": "test",
+    "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'"
+   }
   ]
  }
 ]

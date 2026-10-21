@@ -15,20 +15,20 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6718 | 70370 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6635 | 151924 | 13 | 266 | 498 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1903 | 17598 | 0 | 267 | 25 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1903 | 17601 | 0 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2549 | 14798 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 195 | 758 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38771 | 593768 | 316 | 1391 | 3154 | 0 | 0 |
+| **All** | 4545 | 38771 | 593771 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 119 | 9950 | 94 | 25 | 0 | 0 |
+| career | 119 | 9953 | 94 | 25 | 0 | 0 |
 | career-agent | 56 | 2695 | 56 | 0 | 0 | 0 |
 | career-pay | 30 | 1221 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
@@ -3130,7 +3130,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/pro.ts#eligibilityOf` | 5 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#availabilityOf` | 4 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#pathwayOf` | 8 | 0 | Rewritten | career | tests/pro-showcase.test.ts 'graduating early' reads the candidate's line on the Career screen's Overview, the Bulletin's sentence added (brief 19's A5) | Rewritten And Verified |
-| `src/engine/systems/pro.ts#resumeNow` | 9 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/pro.ts#resumeNow` | 9 | 0 | Rewritten | career | Read on the built app's Career Overview, Portfolio and Representation at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/): a résumé behind a new special skill named it bare (and Singing), now as a special skill; What's Next said Each with nothing for it to stand for, now each button there, and what it takes, since the résumé's has no cost. Held by tests/pro-app.test.ts | Rewritten And Verified |
 | `src/engine/systems/pro.ts#reelSources` | 3 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#materialsCheck [headshot]` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/pro.ts#materialsCheck [resume]` | 2 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3313,7 +3313,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/career/WorkPane.tsx#UnionsPanel` | 12 | 0 | Rewritten | career-pay | Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts | Rewritten And Verified |
 | `src/ui/career/WorkPane.tsx#WorkPane` | 9 | 0 | Rewritten | career-pay | Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt | Rewritten And Verified |
 | `src/ui/workspaces/CareerWorkspace.tsx#CareerWorkspace` | 6 | 0 | Rewritten | career | Read on the built app's Career screen at 1440 and 390, docs/verification/career-2026-10-20/pay/screens/work-paid-1440.png and work-paid-390.png | Rewritten And Verified |
-| `src/ui/workspaces/CareerWorkspace.tsx#OverviewPane` | 18 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/ui/workspaces/CareerWorkspace.tsx#OverviewPane` | 18 | 0 | Rewritten | career | Read on the built app's Career Overview, Portfolio and Representation at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/): a résumé behind a new special skill named it bare (and Singing), now as a special skill; What's Next said Each with nothing for it to stand for, now each button there, and what it takes, since the résumé's has no cost. Held by tests/pro-app.test.ts | Rewritten And Verified |
 | `src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel` | 20 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/workspaces/CareerWorkspace.tsx#HeadshotsPanel` | 10 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/ui/workspaces/CareerWorkspace.tsx#ResumePanel` | 15 | 0 | Rewritten | career | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |

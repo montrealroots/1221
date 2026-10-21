@@ -125,7 +125,7 @@ function OverviewPane({ toPortfolio }: { toPortfolio: () => void }) {
         <div className="col gap-2">
           <p className="small" style={{ margin: 0 }}>
             {problems.length
-              ? `Start with ${problems[0]!.kind === 'headshot' ? 'your headshots' : problems[0]!.kind === 'resume' ? 'your résumé' : 'your reel'}, on the Portfolio tab. Each says its time and cost before you press it.`
+              ? `Start with ${problems[0]!.kind === 'headshot' ? 'your headshots' : problems[0]!.kind === 'resume' ? 'your résumé' : 'your reel'}, on the Portfolio tab. Each button there says what it takes before you press it.`
               : 'Keep your portfolio current. A new credit makes your résumé fall behind, and new recorded work is worth adding to your reel. The Portfolio tab says when.'}
           </p>
           <div><button type="button" className="btn btn-sm" onClick={toPortfolio}>Go To Portfolio</button></div>
@@ -165,7 +165,9 @@ function ProfilePanel() {
             </div>
             <Gated feature="pro.set_name" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ name: string; set: boolean }>('pro.set_name', { name }); if (r.ok) { toast(r.value!.set ? `You’ll work as ${r.value!.name}.` : `You’ll work under your own name, ${r.value!.name}.`, 'positive'); setName(''); } }}>Use This Name</Gated>
           </div>
-          {name.trim() !== '' && <WhyNot reasons={[['Use This Name', no]]} />}
+          {/* Said whether or not anything is typed (from 2026-10-21): until then a grayed Use This Name, with the field empty,
+              said nothing under it, where the guide's Your Career says a grayed button's line says why (brief 19's app walk). */}
+          <WhyNot reasons={[['Use This Name', no]]} />
           <p className="xs dim" style={{ margin: 0 }}>Leave it blank, or type your own name, to go back to your own name.</p>
         </div>
         <dl className="col gap-2 small" style={{ margin: 0 }}>
