@@ -16,3 +16,11 @@ I12 a missed audition he set up not counted against reliability | src/engine/sys
 I13 Low Budget's day rate left at its 2026–27 figure | src/engine/content/careerwork.ts (SHARE_OF_SAG_DAY) | tests/pro-core.test.ts 'prices each SAG-AFTRA day rate by its contract year' | KILLED
 I14 an understudy's School credit back to "went on 1 time" | src/engine/systems/pro.ts (schoolCreditWords) | tests/pro-core.test.ts 'says how often an understudy went on in words' | KILLED
 I15 a share rounded down rather than to the dollar | src/engine/content/careerwork.ts (minimumOn) | tests/pro-core.test.ts 'prices each SAG-AFTRA day rate by its contract year' ($834, the sheet's figure) | KILLED
+
+Mutations at the tests written for the four rows the audit's second reading kept partial (2026-10-21), its own mutations run again against them, and two more on the ending's commission.
+I16 (the audit's Q15) a referral not counted as something new | src/engine/systems/proagent.ts (caseKeys) | tests/journey-agent.test.ts 'a year on, a referral alone is something new for his office' | KILLED (it survived the audit's reading)
+I17 (Q16) the request's refusal for a résumé still behind taken out | src/engine/systems/proagent.ts (supplyRefusal) | tests/journey-agent.test.ts 'a request for headshots more than two years old and an up-to-date résumé' | KILLED (it survived)
+I18 (Q17) the request's refusal for headshots older than the request taken out | src/engine/systems/proagent.ts (supplyRefusal) | the same test | KILLED (it survived)
+I19 (Q14) a member's résumé without SAG-AFTRA | src/engine/systems/pro.ts (resumeNow) | tests/journey-career.test.ts 'Join SAG-AFTRA after her first SAG-AFTRA principal job began' (the résumé made after she joined) | KILLED (it survived)
+I20 commission owed only while an agreement is in force, not on a contract made under one | src/engine/systems/propay.ts (owedAgreement) | tests/journey-career.test.ts 'End It By Agreement before a job’s pay comes leaves his commission owed on it' | KILLED
+I21 the ending's notice saying nothing is owed with pay still to come | src/engine/systems/proagent.ts (stillOwed) | the same test | KILLED

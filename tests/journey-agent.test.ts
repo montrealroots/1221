@@ -22,7 +22,7 @@
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate, instantFromZoned } from '@/engine/core/time';
 import { rngFor } from '@/engine/core/rng';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
@@ -34,8 +34,8 @@ import { BRIEFS } from '@/engine/content/briefs';
 import { AGENTS, agencyOf } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, projectById } from '@/engine/content/careerwork';
 import type { Band } from '@/engine/systems/coursework';
-import { HISTORY_KEPT, activeAgreement, addCredit, eligibilityOf, type Engagement, type Opportunity } from '@/engine/systems/pro';
-import { MEETING_KIND, interestOf, nextStep, referrersOf, relationOf, sendRefusal, stillOwed } from '@/engine/systems/proagent';
+import { HISTORY_KEPT, activeAgreement, addCredit, currentOf, eligibilityOf, type Engagement, type Opportunity } from '@/engine/systems/pro';
+import { MEETING_KIND, interestOf, newSince, nextStep, referrersOf, relationOf, sendRefusal, stillOwed, supplyRefusal } from '@/engine/systems/proagent';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -251,6 +251,37 @@ describe('G3: his office’s answers', () => {
   });
 });
 
+describe('G3: what a request for more refuses until it’s made', () => {
+  it('PLAYER JOURNEY: a request for headshots more than two years old and an up-to-date résumé: Send What His Office Asked For refused for each while it stands, in words, and taken once both are new', () => {
+    // From the audit's second reading (2026-10-21): with either refusal taken out, every test still passed, and no life
+    // was asked for headshots. TEST SETUP: the headshots dated three years back, as if taken then; a second job finished
+    // after the résumé, so the résumé is behind; a reel, so the reel isn't what's asked for.
+    const seed = seedWhere('agent-request', (d) => d(1, 'interest') < SURE.meet);
+    let { sim } = referredGraduate(seed);
+    reel(sim);
+    const shots = currentOf(sim.player.pro, 'headshot')!;
+    shots.made -= 3 * 365 * MS_DAY;
+    finishedJob(sim, 'strong', 'winter-ledger');
+    sim.must({ kind: 'pro.send_materials', payload: {} });
+    tended(sim, at(2026, 9, 21, 12));
+    sim = cross(sim);
+    expect(rel(sim).stage).toBe('requested');
+    expect([...rel(sim).request!.what].sort()).toEqual(['headshot', 'resume']);
+    const old = formatDate(shots.made, zone);
+    const headshotsWords = `Your headshots are still the ones from ${old}. Book A Headshot Session on the Portfolio tab for new ones.`;
+    const resumeWords = 'Your résumé is still behind your record. Update Your Résumé is on the Portfolio tab.';
+    const refused = run(sim, 'pro.supply_material').error!;
+    expect(refused).toContain(headshotsWords);
+    expect(refused).toContain(resumeWords);
+    sim.must({ kind: 'pro.update_resume', payload: {} });
+    expect(run(sim, 'pro.supply_material').error).toBe(headshotsWords);
+    sim.must({ kind: 'pro.headshots', payload: {} });
+    expect(supplyRefusal(sim, sim.player, AGENT)).toBeUndefined();
+    sim.must({ kind: 'pro.supply_material', payload: {} });
+    expect(rel(sim).counts.supplied).toBe(1);
+  });
+});
+
 describe('V6 and G4: a pass, an approach refused too soon or with nothing new, and a valid later one', () => {
   it('PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through', () => {
     const seed = seedWhere('agent-v6', (d) => passes(d(1, 'interest')) && d(2, 'interest') < SURE.meet);
@@ -279,6 +310,28 @@ describe('V6 and G4: a pass, an approach refused too soon or with nothing new, a
     sim = cross(sim);
     expect(rel(sim).stage).toBe('meeting');
     expect(keys(sim).filter((k) => k!.startsWith('sent:'))).toEqual(['sent:1', 'sent:2']);
+  });
+
+  it('PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through', () => {
+    // From the audit's second reading (2026-10-21): with the referral taken out of `caseKeys` every test still passed,
+    // though the pass's notice tells the player a referral counts. TEST SETUP: a second job finished before the first
+    // approach, so its credit is one his office has already considered, and only its referral is new.
+    const seed = seedWhere('agent-v6', (d) => passes(d(1, 'interest')) && d(2, 'interest') < SURE.meet);
+    let { sim } = referredGraduate(seed);
+    const second = finishedJob(sim, 'strong', 'winter-ledger');
+    sim.must({ kind: 'pro.update_resume', payload: {} });
+    reel(sim);
+    sim.must({ kind: 'pro.send_materials', payload: {} });
+    tended(sim, at(2026, 10, 1, 12));
+    sim = cross(sim);
+    expect(rel(sim).stage).toBe('passed');
+    tended(sim, at(2027, 10, 2, 12));
+    sim = cross(sim);
+    expect(sendRefusal(sim, sim.player, AGENT)).toMatch(/^His office already looked at everything on your record, on September \d+, 2026\. In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral\.$/);
+    sim.must({ kind: 'pro.ask_referral', payload: { engagementId: second.id } });
+    expect(newSince(sim.player, rel(sim))).toEqual([`referral:${second.id}`]);
+    expect(sendRefusal(sim, sim.player, AGENT)).toBeUndefined();
+    expect(sim.must<{ approach: number }>({ kind: 'pro.send_materials', payload: {} }).approach).toBe(2);
   });
 });
 

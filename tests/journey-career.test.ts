@@ -470,6 +470,11 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const nov = opened('november');
     expect(nov.player.pro!.unionBills!.filter((b) => b.due === at(2029, 11, 1)).map((b) => [b.key, b.amount, b.settled?.how])).toEqual([['equity:dues:2029-11', 88_00, 'paid'], ['sag-aftra:dues:2029-11', 123_07, 'paid']]);
     expect(nov.universe.transactions.filter((x) => x.memo === 'SAG-AFTRA: initiation fee and half a year’s base dues')).toHaveLength(1);
+    // A member's résumé says so, made by Update Your Résumé after she joined (from 2026-10-21, the audit's second reading:
+    // with the line taken out of `resumeNow`, every test still passed).
+    const made = currentOf(opened('resume').player.pro, 'resume')!.contains;
+    expect(made).toContain('SAG-AFTRA');
+    expect(made).not.toContain('SAG-AFTRA Eligible');
     expect(met(A.lines, /^(NOTICE \| (You Can Join|SAG-AFTRA:|Actors’ Equity Association: \$88)|PRESS \| Join)/)).toEqual([
       'July 30, 2029 at 7:00 AM | NOTICE: You Can Join SAG-AFTRA', 'July 30, 2029 at 6:00 PM | PRESS: Join SAG-AFTRA',
       'November 1, 2029 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid', 'November 1, 2029 at 9:00 AM | NOTICE: SAG-AFTRA: $123.07 Paid',
@@ -492,6 +497,31 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(postingsAt(sim, sim.player, monday).some((x) => x.via === 'agent')).toBe(false);
     expect(reachOf(projectById('calloway-files')!, activeAgreement(sim.player, monday))).toBeUndefined();
     expect(reachOf(projectById('calloway-files')!, before.player.pro!.agreements[0])).toBe('agent');
+  });
+
+  it('End It By Agreement before a job’s pay comes leaves his commission owed on it: said when it ends, and taken from that pay when it comes', () => {
+    // From the audit's second reading (2026-10-21): the commission still owed after an ending was read only on agreements
+    // ended by hand, and life A's played ending left nothing to pay. A twin of life A from its save the day the shoot
+    // wrapped, before the pay: the same command, then played on to the pay.
+    let sim = opened('wrapped');
+    const job = sim.player.pro!.engagements.find((e) => e.projectId === 'calloway-files')!;
+    expect(job.pay.every((x) => x.received === undefined)).toBe(true);
+    expect(sim.execute({ kind: 'pro.end_agreement', payload: { how: 'agreement' } }).ok).toBe(true);
+    const a = sim.player.pro!.agreements[0]!;
+    expect([a.status, a.endedHow]).toEqual(['ended', 'agreement']);
+    const owed = 'Commission stays owed on the pay still to come from contracts you made while it ran: Desk Clerk in The Calloway Files. It comes out of that pay when it’s paid.';
+    expect(stillOwed(sim.player, a)).toContain(owed);
+    expect(sim.universe.notifications.filter((n) => shape(n.title) === 'Your Agreement Ended').at(-1)!.body).toContain(owed);
+    sim = cross(sim);
+    const t = transcriptFrom(sim);
+    const paidAll = (s: Simulation) => s.player.pro!.engagements.find((e) => e.id === job.id)!.pay.every((x) => x.received !== undefined);
+    playTo(sim, at(2029, 8, 15), { career: graduatingActor({ joinSag: true }), transcript: t }, paidAll);
+    expect(paidAll(sim)).toBe(true);
+    // The same figures as the life that kept him: the agreement's end didn't take the commission off what it was owed on.
+    const twin = opened('paid-on').player.pro!.engagements.find((e) => e.id === job.id)!;
+    const here = sim.player.pro!.engagements.find((e) => e.id === job.id)!;
+    expect(here.pay.map((x) => [x.received!.commission, x.received!.via])).toEqual(twin.pay.map((x) => [x.received!.commission, x.received!.via]));
+    expect(here.pay.reduce((n, x) => n + x.received!.commission, 0)).toBe(280_40);
   });
 
   it('L1: each career command and each of the career’s steps on the clock wrote nothing outside the professional record but its own, and from the last term’s first morning to the end nothing was reset: who she is, the School’s record, the work and its journey, her abilities and genres, her papers and her money', () => {
