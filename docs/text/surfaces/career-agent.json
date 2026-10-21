@@ -76,7 +76,8 @@
    "src/engine/systems/proagent.ts#KIND_WORDS",
    "src/engine/systems/proagent.ts#registerProAgent <pro.agent_check>",
    "src/engine/systems/proagent.ts#registerProAgent <pro.send_materials>",
-   "src/engine/systems/proagent.ts#registerProAgent <pro.supply_material>"
+   "src/engine/systems/proagent.ts#registerProAgent <pro.supply_material>",
+   "src/engine/systems/proagent.ts#FOUND"
   ],
   "states": [
    "ordinary",
@@ -90,7 +91,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19’s agent: nothing on this surface said anything before.",
-  "changes": "Written new: the materials check in its practical words with each next step, the unsolicited send refused in the agency’s own words, the cooling-off time with its date, nothing new said with what would be new, what his office asked for and by when, and the assumed times in Sources And Estimates.",
+  "changes": "Written new: the materials check in its practical words with each next step, the unsolicited send refused in the agency’s own words, the cooling-off time with its date, nothing new said with what would be new, what his office asked for and by when, and the assumed times in Sources And Estimates. From 2026-10-21 (brief 19's app walk, read with the life make-saves.ts plays): the check's history line says what it found, in the past, where it had copied the check's own instructions, which read as still to do after they were done; and Check your materials first ends in a full stop, not a second colon after its button's name.",
   "evidence": [
    {
     "kind": "test",
@@ -99,6 +100,14 @@
    {
     "kind": "test",
     "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through'"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/app/make-saves.log"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made, an unsolicited approach is refused in the agency’s own words, and a referral opens the way'"
    }
   ]
  },
@@ -193,7 +202,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19’s agent: nothing on this surface said anything before.",
-  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed.",
+  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed. From 2026-10-21 (brief 19's app walk): accepting, declining and a lapse are said in History With His Office without the date their line already gives, and the meeting kept names Stewart Talent's office once, not his office and its office.",
   "evidence": [
    {
     "kind": "test",
@@ -202,6 +211,10 @@
    {
     "kind": "test",
     "ref": "tests/journey-agent.test.ts: 'PLAYER JOURNEY: by the player under Equity’s 90 days with no offer, refused before them with the date, and refused under SAG-AFTRA’s rule until 151 days and while ten days were worked'"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/app/make-saves.log"
    }
   ]
  },
@@ -237,7 +250,8 @@
    "src/engine/systems/proagent.ts#COOLDOWN_WORDS",
    "src/engine/systems/proagent.ts#weeksWords",
    "src/engine/systems/proagent.ts#agentIn",
-   "src/engine/systems/proagent.ts#officeZone"
+   "src/engine/systems/proagent.ts#officeZone",
+   "src/engine/systems/proagent.ts#whose"
   ],
   "states": [
    "notification",
@@ -249,7 +263,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19’s agent: nothing on this surface said anything before.",
-  "changes": "Written new: what happened first, then the date and what it means, then the next step in the screen’s labels; each of his ends on the fictional line; the follow-up comes from the School and says the game doesn’t say he was there; the assumed times said as the game’s.",
+  "changes": "Written new: what happened first, then the date and what it means, then the next step in the screen’s labels; each of his ends on the fictional line; the follow-up comes from the School and says the game doesn’t say he was there; the assumed times said as the game’s. From 2026-10-21 (brief 19's app walk, with docs/verification/career-2026-10-20/app/jordan.ts): each title names whose office, Jordan Parente's, or the agency, where eight said His Office or He, which in What Needs You named nobody among the School's notices, a classmate called Jordan among them.",
   "evidence": [
    {
     "kind": "test",
@@ -258,6 +272,10 @@
    {
     "kind": "test",
     "ref": "tests/pro-agent.test.ts: 'PLAYER JOURNEY: put on once, it comes through the School, never claims he was there, and a request it passes on leads straight to a meeting'"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/career-2026-10-20/app/make-saves.log"
    }
   ]
  },

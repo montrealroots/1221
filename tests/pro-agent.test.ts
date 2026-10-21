@@ -151,7 +151,7 @@ describe('G2: a referral’s rules', () => {
     const unjudged = finishedJob(sim, null, 'eastview');
     const live = finishedJob(sim, 'exceptional', 'winter-ledger');
     live.status = 'working';
-    expect(run(sim, 'pro.ask_referral', { engagementId: working.id }).error).toBe('Check your materials first: a referral passes them on.');
+    expect(run(sim, 'pro.ask_referral', { engagementId: working.id }).error).toBe('Check your materials first. A referral passes them on.');
     sim.must({ kind: 'pro.update_resume', payload: {} });
     sim.must({ kind: 'pro.agent_check', payload: {} });
     expect(run(sim, 'pro.ask_referral', { engagementId: working.id }).error).toBe('A referral needs work judged Strong or better in the game, and your work as Nell was Working.');
@@ -264,13 +264,13 @@ describe('W3: the School’s follow-up after the showcase', () => {
     // The showcase is among the work his office has to go on, by its judged band.
     expect(rel(sim).why!.factors[0]).toMatchObject({ id: 'work', level: 'at', words: 'His office has your showcase scenes, as the School recorded them, at best Strong.' });
     // Introduced, but not sent until the materials are checked.
-    expect(run(sim, 'pro.send_materials').error).toBe('Check your materials first: Check Your Materials says whether an approach has what it needs.');
+    expect(run(sim, 'pro.send_materials').error).toBe('Check your materials first. Check Your Materials says whether an approach has what it needs.');
     sim.must({ kind: 'pro.agent_check', payload: {} });
     sim.must({ kind: 'pro.send_materials', payload: {} });
     expect(rel(sim).history.at(-1)!.words).toBe('You sent your headshots and your résumé to his office, after the School’s follow-up, answering its request to meet.');
     tended(sim, at(2026, 9, 13, 12));
     expect(rel(sim).stage).toBe('meeting');
-    expect(notices(sim).at(-1)).toMatch(/^A Meeting Is Set: Jordan Parente’s office at Stewart Talent has set the meeting it asked the School to pass on: /);
+    expect(notices(sim).at(-1)).toMatch(/^A Meeting Is Set At Stewart Talent: Jordan Parente’s office at Stewart Talent has set the meeting it asked the School to pass on: /);
   });
 
   it('asks from the factors, the showcase’s band among them, never for certain: a weaker showcase in the same life is no request, and a performance never made is no follow-up', () => {
