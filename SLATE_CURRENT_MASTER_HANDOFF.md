@@ -68,12 +68,24 @@ none of it is in `main`, and nothing is deployed.
   Read again the same day against `a483247d`, once V1's journeys had landed (18 of the 22 verified, 4 partial then),
   a third time against `c01e06f4` (21 verified, `pro.cut_reel` partial then), and a fourth against `9c3e6fa5`: all 22
   verified.
-- **Still to do:** the playthroughs V1 to V18 on the joined game (V1's journeys, which the audit's nine partial rows waited
-  on, landed on 2026-10-21: five of those rows moved on them, and the four left partial each say what's still missing), its built app at both
-  widths, the final runs, and the gate.
+- **Played and walked (2026-10-21):** the joined career played whole as a player plays it, two lives and an older
+  graduate's save (V1, A1, L1, V16, J6, `playthroughs/REPORT.md`, its transcripts played again on `a483247d`); the
+  career's 52 surfaces walked on the built app at 1440 and 390 from the keyboard (V17's automated half, T1,
+  `app/REPORT.md`); the owner's route by hand (`PLAYTEST.md`, its setup checked on a build). Defects the playthroughs
+  and the audit's readings found were fixed on the working branch, each with its test and mutations
+  (`integration/mutations.txt`, I9 to I27): reliability counting a missed day twice, a role posted again after it was
+  booked, Low Budget pay held at 2026–27's figure, "went on 1 time", Equity's ending while employed (S27) and its 90
+  days extended by employment (S29).
+- **Still to do (until this says otherwise):** brief 19's final runs, on `728b4972`, started 10:00 UTC (the runs begun
+  on `a483247d` and `9c3e6fa5` were stopped when `src/engine` changed under them); the matrix folded from them; the full
+  gate in a clean clone; the receipt (`docs/verification/career-2026-10-20/README.md`). V17's person's look is the
+  owner's.
 - **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
   marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
   owner's call.
+- **Found outside the career, for the owner, not changed:** every played life's credit card limit rose 20% every six
+  months with no ceiling (life A's to $194,736, `credit.ts`'s six-month review), which belongs to banking and paused
+  brief 18 (`playthroughs/REPORT.md`, Played Again On The Settled Branch).
 
 # Earlier: Brief 18, Close The Remaining Writing And Gameplay Gaps, Paused, 2026-10-20
 
