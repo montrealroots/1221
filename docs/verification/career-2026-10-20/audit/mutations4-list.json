@@ -1,0 +1,53 @@
+[
+ {
+  "id": "S1",
+  "row": "pro.cut_reel",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);\n",
+  "replace": "  if (false && reel) for (const b of BANDS.slice(0, BAND_RANK[reel] + 1)) keys.push(`reel:${b}`);\n",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "expect": "killed by a better reel as something new",
+  "of": "R8",
+  "filter": "a better reel alone"
+ },
+ {
+  "id": "S2",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    if (workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';\n",
+  "replace": "    if (false && workingNow(person, a, sim.now)) return 'You’re doing covered work now, and Equity’s rule doesn’t let you end it while you are.';\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "expect": "killed by the refusal while employed",
+  "of": "R9",
+  "filter": "Equity’s ending with no offer is refused"
+ },
+ {
+  "id": "S3",
+  "row": "pro.ask_referral",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (busy) return busy;\n  const soon = tooSoon(sim, rel);\n  if (soon) return soon;\n  const job = referrersOf(",
+  "replace": "  const job = referrersOf(",
+  "tests": [
+   "tests/journey-agent.test.ts"
+  ],
+  "expect": "killed by the referral refused while held and under way",
+  "of": "R10",
+  "filter": "a referral alone is something new"
+ },
+ {
+  "id": "S4",
+  "row": "pro.end_agreement",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "(person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && (e.days[0]?.from ?? Infinity) <= at);\n",
+  "replace": "(person.pro?.engagements ?? []).some((e) => e.agreementId === agreement.id && !finished(e) && e.days.some((d) => d.from <= at && at <= d.to));\n",
+  "tests": [
+   "tests/journey-career.test.ts"
+  ],
+  "filter": "Equity’s ending with no offer is refused",
+  "expect": "killed: the check as it was until 9c3e6fa5, a work day’s own hours"
+ }
+]
