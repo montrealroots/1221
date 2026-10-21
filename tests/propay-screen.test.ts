@@ -60,9 +60,14 @@ describe('the Work tab', () => {
     expect(html).toContain('aria-selected="true" aria-controls="career-pane-work"');
     expect(shown).toContain('No work booked. Work you accept appears here with its dates, its calls, its pay and any commission.');
     expect(shown).toContain('You joined Actors’ Equity Association with the degree on September 3, 2026.');
-    expect(shown).toContain('Initiation fee, $600.00 down of $1,800.00: $600.00, paid September 3, 2026.');
+    // Each bill's name says which part it is, and its line the amount, once (from 2026-10-21, brief 19's app walk: until
+    // then the down payment read "Initiation fee, $600.00 down of $1,800.00: $600.00").
+    expect(shown).toContain('Initiation fee, part 1 of 3, the down payment: $600.00, paid September 3, 2026.');
     expect(shown).toContain('Initiation fee, part 2 of 3: $600.00, due September 3, 2027.');
     expect(shown).toContain('Basic dues, half a year: $88.00, due November 1, 2026.');
+    // Where you stand, then what it takes under the button, each said once (from 2026-10-21: until then the panel's line
+    // and the reason under the button said the same sentence one after the other).
+    expect(shown).toContain('SAG-AFTRA You aren’t eligible to join SAG-AFTRA yet.');
     const why = 'You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role: a TV, theatrical or Low Budget film part. Ultra Low Budget and student films don’t count toward it.';
     expect(button(html, 'Join SAG-AFTRA ($3,244.07)')).toEqual([{ disabled: true, title: why, locked: false }]);
     expect(shown).toContain(`Not now: ${why}`);
@@ -78,8 +83,11 @@ describe('the Work tab', () => {
     expect(promised).toContain('Desk Clerk, The Calloway Files');
     expect(promised).toContain('Who Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.');
     expect(promised).toContain('Permission To Work Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
+    // The count in words, as the Opportunities tab says the same days (from 2026-10-21, brief 19's app walk: "2 days").
+    expect(promised).toContain('Dates September 21, 2026 to September 22, 2026, two days of work.');
     expect(promised).toContain('The week of September 20, 2026: $2,822.60 promised by Bright Harbor Television, due October 1, 2026. It isn’t paid until then, so it isn’t in your accounts yet.');
-    expect(promised).toContain('Commission expected: $256.60. $256.60, what’s paid over scale ($2,566.00), so you keep scale.');
+    // The amount said once (from 2026-10-21: until then "$256.60. $256.60, what’s paid over scale").
+    expect(promised).toContain('Commission expected: $256.60. What’s paid over scale ($2,566.00), so you keep scale.');
     tended(sim, at(2026, 10, 2));
     const held = drawn(sim).shown;
     expect(held).toContain('Paid into Stewart Talent’s client trust account on October 1, 2026, and passed on to you by October 6, 2026.');

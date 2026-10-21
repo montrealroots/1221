@@ -1,0 +1,26 @@
+Mutations of the app part (brief 19, 2026-10-21). Each was applied alone to the tree it names, from a copy of the file kept beside it and put back after (never git's stash), the test that holds its claim run at one worker, and recorded as the run's last "Tests" line. A run in which no test ran counts as invalid, never as survived: M5's first form broke the file's syntax, was recorded so, and was run again in a form that parses.
+
+M1  a dialog's footer doesn't wrap | src/styles/app.css (.modal-foot's flex-wrap: wrap taken out) | tests/pro-app.test.ts 'lets the stop’s buttons go to a second line …' | KILLED (1 failed)
+M2  no legend row for the career | src/engine/world/calendar.ts (the career row commented out) | tests/pro-app.test.ts the two legend tests | KILLED (2 failed)
+M3  every chooser names its radio groups alike | src/ui/components/PlayingChooser.tsx (name back to axis-${axis}) | tests/pro-app.test.ts 'PLAYER JOURNEY: the last term’s showcase scenes, chosen, draw two choosers …' | KILLED (1 failed)
+M4  a round's history line in the notice's present tense | src/engine/systems/projobs.ts (setRound notes `words`) | tests/pro-work.test.ts 'PLAYER JOURNEY (V10, V15, J2, J4) …' | KILLED (1 failed)
+M5  the offer's history line in the present tense | src/engine/systems/projobs.ts (makeOffer notes `words`) | the same | first form INVALID (no tests ran: a syntax error), then KILLED (1 failed)
+M6  one week's pay said as "over one week, each week due" | src/ui/career/OpportunitiesPane.tsx (BookedCard) | tests/pro-opportunities-screen.test.ts 'PLAYER JOURNEY: accepted, the work shows under Booked Work …' | KILLED (1 failed)
+M7  Settled names the role before an outcome that names it | src/ui/career/OpportunitiesPane.tsx (Settled) | the same | KILLED (1 failed)
+M8  commission over scale opens on its amount again | src/engine/systems/propay.ts (commissionOn) | tests/propay-screen.test.ts 'PLAYER JOURNEY: represented SAG-AFTRA work reads promised …' | KILLED (1 failed)
+M9  the Equity down payment named with its amounts | src/engine/systems/propay.ts (equityParts) | tests/propay-screen.test.ts 'PLAYER JOURNEY: a graduate with no work booked …' | KILLED (1 failed)
+M10 an engagement's days counted in figures ("2 days") | src/ui/career/WorkPane.tsx (datesWords back to plural) | tests/propay-screen.test.ts 'PLAYER JOURNEY: represented SAG-AFTRA work reads promised …' | KILLED (1 failed)
+M11 SAG-AFTRA's line says what the reason under the button says | src/ui/career/WorkPane.tsx (UnionsPanel) | tests/propay-screen.test.ts 'PLAYER JOURNEY: a graduate with no work booked …' | KILLED (1 failed)
+M12 Use This Name's reason said only once something is typed | src/ui/workspaces/CareerWorkspace.tsx (ProfilePanel) | tests/pro-app.test.ts 'PLAYER JOURNEY: a grayed Use This Name says why under it …' | KILLED (1 failed)
+M13 What's Next back to "Each says its time and cost" | src/ui/workspaces/CareerWorkspace.tsx (OverviewPane) | the same | KILLED (1 failed)
+M14 a résumé behind names a new skill bare | src/engine/systems/pro.ts (resumeNow's label) | tests/pro-app.test.ts 'PLAYER JOURNEY: a résumé behind a special skill …' | KILLED (1 failed)
+M15 the stop says "in its town" of the career's commitments | src/ui/shell/TimeControls.tsx (DueNow, career's words off) | tests/language-frame-ui.test.ts 'the stop says it needs you now …' | KILLED (1 failed)
+M16 the stop says nothing of a commitment's trip | src/ui/shell/TimeControls.tsx (DueNow, trip sentence off) | the same | KILLED (1 failed)
+M17 the Calendar's help without the career's rule | src/engine/content/guide/day.ts (day.calendar's needs line taken out) | tests/pro-app.test.ts 'says an audition, a meeting … take the trip as made …' | KILLED (1 failed)
+M18 New York's second day opens as its first | src/engine/systems/proshowcase.ts (no "again") | tests/pro-showcase.test.ts 'PLAYER JOURNEY: from the last term’s first day …' | KILLED (1 failed)
+M19 Play It This Way grayed with no line under it | src/ui/components/PlayingChooser.tsx (WhyNot taken out) | tests/pro-app.test.ts 'PLAYER JOURNEY: the last term’s showcase scenes, chosen …' | KILLED (1 failed)
+M20 Play It This Way grayed with no title | src/ui/components/PlayingChooser.tsx (title undefined) | the same | KILLED (1 failed)
+
+The agent's words (commit 3f7e51eb) are held by the tests that pinned them, brought to the new words in the same commit: tests/journey-agent.test.ts (nine titles and the check's history line) and tests/pro-agent.test.ts (two refusals and a title). Each of those expectations fails on the old words, the words being the claim.
+
+20 run, 20 killed (one after its first form was invalid).

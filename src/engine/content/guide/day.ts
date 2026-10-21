@@ -104,14 +104,15 @@ export const DAY: readonly GuideEntry[] = [
       `The panel, Go, Skip It and the entries open with ${chapter('calendar')}.`,
       `Only a plan you made offers Skip It. A rehearsal with a classmate offers Call It Off, which opens with ${chapter('school')}. Anything else, such as a class or an appointment, has only Go and Stand Here.`,
       'To count as there, you need to be awake, out of hospital and in the commitment’s town when it runs. Yale Health’s assessment is the only commitment you can be at from a hospital bed. An injury that lays you up keeps you from everything else except the doctor, therapy, orientation and your own plans. The game never moves you to another town, and a plan is in the town where you made it.',
+      'An audition, a meeting at an agent’s office and a day of booked work are different: the game takes the trip there as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.',
     ],
     costs: [
       { label: 'Time', value: 'Reading the panel and opening entries doesn’t move the clock. Go spends the commitment’s own length, the figure its dialog gives.' },
       { label: 'Money', value: 'None' },
     ],
     reads: [
-      { label: 'What Needs You There', value: 'Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, and your own plans' },
-      { label: 'Whether You’re There', value: 'When it runs, the game checks that you’re awake, out of hospital and in its town. In hospital, you were at nothing but Yale Health’s assessment. Asleep, you weren’t there' },
+      { label: 'What Needs You There', value: 'Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, your own plans, and the career’s auditions, meetings and work days' },
+      { label: 'Whether You’re There', value: 'When it runs, the game checks that you’re awake, out of hospital and in its town, or for the career’s, awake and not laid up, the trip taken as made. In hospital, you were at nothing but Yale Health’s assessment. Asleep, you weren’t there' },
       { label: 'Where The Clock Was Headed', value: 'Go, Skip It and Call It Off carry on the move the stop broke off, so a jump to the morning still ends in the morning' },
     ],
     now: [

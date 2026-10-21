@@ -260,10 +260,10 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "84b6a52ea373",
-  "on": "2026-10-20",
-  "evidence": "Skip It and Call It Off carry the jump on and a refusal changes nothing, held beside the behavior by tests/time-controls.test.ts and tests/time-stops.test.ts",
-  "first": "Pending"
+  "hash": "e9a73d426975",
+  "on": "2026-10-21",
+  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the Calendar's help said every commitment asks you to be in its town; it says now that the career's auditions, meetings and work days take the trip as made and ask only that you're awake and not laid up, the trip not moving the clock. Held by tests/pro-app.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten",
@@ -1959,6 +1959,20 @@
   "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/decided.ts#top [pro.casting]": {
+  "status": "Retained",
+  "hash": "463e16217581",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.posting]": {
+  "status": "Retained",
+  "hash": "9f5280e59f15",
+  "on": "2026-10-21",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/decided.ts#top [pro.roster]": {
   "status": "Rewritten",
   "hash": "d02a5a6b6572",
@@ -2360,9 +2374,9 @@
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
   "status": "Rewritten",
-  "hash": "219b4e15ae29",
+  "hash": "48f0fa35225c",
   "on": "2026-10-21",
-  "evidence": "The Calendar's legend as tests/calendar.test.ts draws it; paydays and union bills shown under Money in tests/propay.test.ts's played weeks",
+  "evidence": "The Calendar's legend on the built app with the career's items on it, the meeting at Stewart Talent and a shoot day drawn in Career's color and opened as Kind Career, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the calendar surfaces); held by tests/pro-app.test.ts's legend tests",
   "first": "Rewritten And Verified"
  },
  "src/engine/world/calendar.ts#skipTargets": {
@@ -3275,6 +3289,13 @@
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
+  "status": "Rewritten",
+  "hash": "51b7a8a4c68a",
+  "on": "2026-10-21",
+  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/shell/sections.ts#SECTIONS [overview]": {
   "status": "Rewritten",
   "hash": "0efc2e6be4c2",
@@ -3368,10 +3389,10 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten",
-  "hash": "c8ccf8a954ee",
-  "on": "2026-10-20",
-  "evidence": "The stop says what Skip It, Call It Off and Stand Here each do to the jump before the press; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts",
-  "first": "Pending"
+  "hash": "37286faba60a",
+  "on": "2026-10-21",
+  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
   "status": "Rewritten",
@@ -3512,26 +3533,5 @@
   "on": "2026-10-19",
   "reason": "Says the address isn’t a screen in this game and offers Go Home, the one way back, in two lines.",
   "first": "Reviewed And Retained"
- },
- "src/engine/decided.ts#top [pro.casting]": {
-  "status": "Retained",
-  "hash": "463e16217581",
-  "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
-  "first": "Reviewed And Retained"
- },
- "src/engine/decided.ts#top [pro.posting]": {
-  "status": "Retained",
-  "hash": "9f5280e59f15",
-  "on": "2026-10-21",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
-  "first": "Reviewed And Retained"
- },
- "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
-  "status": "Rewritten",
-  "hash": "51b7a8a4c68a",
-  "on": "2026-10-21",
-  "evidence": "The Career screen's third tab, Opportunities, the work loop's: read on the screen in tests/pro-opportunities-screen.test.ts, with tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
  }
 }

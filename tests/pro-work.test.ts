@@ -345,6 +345,10 @@ describe('the whole loop, played', () => {
     // 2026-10-21), then the casting office's answer, then the offer to decide on.
     expect(notices(sim)).toEqual([expect.stringMatching(/^Your Equity Initiation Fee \| You’re a member of Actors’ Equity Association from your degree\./), expect.stringMatching(/^Actors’ Equity Association: \$600\.00 Paid \| /), expect.stringMatching(/^An Audition For Theo \| The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, \w+day, \w+ \d+, 2026 at 11:00 AM\. Getting there takes about two hours each way\. Prepare the sides on the Career screen’s Opportunities tab before you go\.$/)]);
     expect(o.history.map((e) => e.kind)).toEqual(['opportunity', 'submitted', 'audition', 'audition', 'offer']);
+    // The history says it in the past, as a history does, where the notice and the question say it as it comes (from
+    // 2026-10-21, brief 19's app walk: until then the history kept the notice's "wants to see you" and "offers you").
+    expect(o.history[2]!.words).toMatch(/^The film’s director asked to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, \w+day, \w+ \d+, 2026 at 11:00 AM\.$/);
+    expect(o.history[4]!.words).toMatch(/^The film’s director offered you Theo in Paper Moons, a fictional student film\. The pay is deferred: .+ The work was from \w+ \d+, 2026 to \w+ \d+, 2026, in New York, and the offer stood until .+ at 5:00 PM\.$/);
     const decision = Object.values(sim.universe.decisions).find((d) => d.refId === o.id && !d.resolvedAt)!;
     expect(decision.title).toBe('An Offer For Theo');
     expect(decision.detail).toMatch(/^The film’s director offers you Theo in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its three days of work\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);

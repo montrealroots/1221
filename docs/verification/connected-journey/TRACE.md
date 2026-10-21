@@ -407,7 +407,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - At the end of the term’s fourth week, the School reads your Incompletes. With none, you’re in, and the faculty choose two scenes for you if you haven’t.
   - At the first showcase day, each scene is shown and gets the faculty’s note. It’s played again the next day, and in Los Angeles it’s shown again with the note taken.
   - Actor Showcase is settled after Los Angeles, not at the term review. A course with half its pieces not shown isn’t passed, and the degree needs every course passed.
-- **Tested by:** `school.choose_showcase`: `tests/pro-showcase.test.ts`
+- **Tested by:** `school.choose_showcase`: `tests/pro-app.test.ts`, `tests/pro-showcase.test.ts`
 
 ## Productions And Casting
 
@@ -1050,7 +1050,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1074,7 +1074,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1299,7 +1299,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.
-- **Tested by:** `pro.submit`: `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.submit`: `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Auditions And Callbacks (`career.auditions`)
 

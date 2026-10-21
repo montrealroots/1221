@@ -637,9 +637,9 @@
  },
  "src/engine/systems/pro.ts#resumeNow": {
   "status": "Rewritten And Verified",
-  "hash": "219447dca6d1",
+  "hash": "69dc30de759a",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Read on the built app's Career Overview, Portfolio and Representation at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/): a résumé behind a new special skill named it bare (and Singing), now as a special skill; What's Next said Each with nothing for it to stand for, now each button there, and what it takes, since the résumé's has no cost. Held by tests/pro-app.test.ts"
  },
  "src/engine/systems/pro.ts#resumeRefusal": {
   "status": "Rewritten And Verified",
@@ -691,9 +691,9 @@
  },
  "src/ui/workspaces/CareerWorkspace.tsx#OverviewPane": {
   "status": "Rewritten And Verified",
-  "hash": "4e8f6527217a",
+  "hash": "4bbb27a083d6",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Read on the built app's Career Overview, Portfolio and Representation at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/): a résumé behind a new special skill named it bare (and Singing), now as a special skill; What's Next said Each with nothing for it to stand for, now each button there, and what it takes, since the résumé's has no cost. Held by tests/pro-app.test.ts"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel": {
   "status": "Rewritten And Verified",

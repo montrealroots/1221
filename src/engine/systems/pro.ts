@@ -771,7 +771,9 @@ export function resumeNow(person: Person, at: Instant): { name: string; lines: s
   add(`training:${p.training.status}:${p.training.short}`, `Training: ${p.training.short}`, `your training as it stands now (${p.training.short})`);
   for (const c of p.proCredits) add(`pro:${c.id}`, proCreditWords(c), `${c.role} in ${c.project} (${c.year})`);
   for (const c of p.schoolCredits) add(c.key, schoolCreditWords(c), `${c.role} in ${c.production} (${c.year})`);
-  for (const s of p.skills) add(`skill:${s.skill}${s.mastered ? ':mastered' : ''}`, `Special skill: ${s.label}${s.mastered ? ', mastered' : ''}`, `${s.label}${s.mastered ? ' at mastery' : ''}`);
+  // What a résumé behind lacks names a skill as one (from 2026-10-21): "doesn’t have … and Singing" read as a thing it
+  // was missing, not a special skill newly on the record (brief 19's app walk).
+  for (const s of p.skills) add(`skill:${s.skill}${s.mastered ? ':mastered' : ''}`, `Special skill: ${s.label}${s.mastered ? ', mastered' : ''}`, `${s.label} as a ${s.mastered ? 'mastered ' : ''}special skill`);
   return { name: p.name, lines, keys, labels };
 }
 

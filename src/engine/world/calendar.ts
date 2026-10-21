@@ -31,12 +31,18 @@ export interface CalendarLegendEntry {
  * the player. Those systems are gone, and a legend that names colors nothing
  * can ever be drawn in is a legend that lies about the game. Work, for the
  * day job's shifts, tips and paydays, went with the job engine on 2026-09-26, and its second meaning (auditions,
- * a job's days, residuals) with the career on 2026-10-09; from 2026-10-10 it isn't in the legend, nothing being
+ * a job's days, residuals) with the career on 2026-10-09; from 2026-10-10 it wasn't in the legend, nothing being
  * drawn in it. Home, which was rent and bills, is the money's since the home went.
+ *
+ * Career came back with brief 19's professional career (2026-10-21): the agent's meeting and dates, the auditions,
+ * casting's steps, the offers and the work days are filed under it (`systems/proagent.ts`, `systems/projobs.ts`). They
+ * were drawn with no color and called "Career" only by the category's own name until the app walk of that day gave them
+ * this row. The pay's paydays and union bills stay Money's.
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Your own plans, and your birthday, appointments and tax dates.' },
   { category: 'school', label: 'School', colour: '#6b8ca8', description: 'Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s review, the showcase and Commencement.' },
+  { category: 'career', label: 'Career', colour: '#b08850', description: 'Auditions and self-tapes, casting’s answers and decisions, the last day of an offer, your work days, when screen work of yours is released, a meeting at an agent’s office and what it asked for, the School’s showcase follow-up, the dean’s answer on outside work, and when an agreement ends.' },
   // From 2026-10-21 (brief 19's pay) a professional payday, pay passed on from an agency and a union's bill are Money's
   // too (`systems/propay.ts`).
   { category: 'home', label: 'Money', colour: '#8ca86b', description: 'The card’s statement and payment, a new card’s arrival, a savings account’s notice, paydays for professional work, pay passed on by your agency, and union bills.' },

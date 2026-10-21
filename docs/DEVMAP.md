@@ -192,17 +192,17 @@ Each command the player can run: the engine file that handles it, the screens th
 | `pro.decline_agreement` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` | Representation |
 | `pro.decline_offer` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-work.test.ts` | Finding Work |
 | `pro.end_agreement` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
-| `pro.headshots` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-core.test.ts` `pro-opportunities-screen.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `pro-work.test.ts` | Your Career |
+| `pro.headshots` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-app.test.ts` `pro-core.test.ts` `pro-opportunities-screen.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `pro-work.test.ts` | Your Career |
 | `pro.join_sag` | `src/engine/systems/propay.ts` | `WorkPane.tsx` | `propay-screen.test.ts` `propay.test.ts` | Your Career |
 | `pro.move_audition` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-work.test.ts` | Finding Work |
 | `pro.prepare` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-work.test.ts` | Finding Work |
 | `pro.request_outside_work` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-work.test.ts` | Finding Work |
 | `pro.send_materials` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.set_name` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `pro-core.test.ts` | Your Career |
-| `pro.submit` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-opportunities-screen.test.ts` `pro-work.test.ts` | Finding Work |
+| `pro.submit` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-app.test.ts` `pro-opportunities-screen.test.ts` `pro-work.test.ts` | Finding Work |
 | `pro.supply_material` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` | Representation |
 | `pro.tape_audition` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `pro-work.test.ts` | Finding Work |
-| `pro.update_resume` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-core.test.ts` `pro-opportunities-screen.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `pro-work.test.ts` | Your Career |
+| `pro.update_resume` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `journey-agent.test.ts` `pro-agent.test.ts` `pro-app.test.ts` `pro-core.test.ts` `pro-opportunities-screen.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `pro-work.test.ts` | Your Career |
 
 ## school
 
@@ -222,7 +222,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.choose` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `defects-g8-9.test.ts` `evidence-g18-school.test.ts` `evidence-g24-school.test.ts` `evidence2-b07.test.ts` `evidence2-b08.test.ts` `guide-examples-coursework.test.ts` `integration-mastery.test.ts` `journey-school-year.test.ts` `journey-three-students.test.ts` `pro-showcase.test.ts` `table-work-unread.test.ts` | Drama School |
 | `school.choose_part_playing` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `defects-g8-11.test.ts` `defects-g8-12.test.ts` `defects-g8-15.test.ts` `guide-examples-productions.test.ts` `remaining-09-coverage.test.ts` `trace-commands.test.ts` | Drama School |
 | `school.choose_playing` | `src/engine/systems/coursework.ts` | `CourseworkPane.tsx` | `defects-g8-10.test.ts` `defects-g8-15.test.ts` `guide-examples-coursework.test.ts` `remaining-09-coverage.test.ts` `remaining-school.test.ts` `stage-interpretation.test.ts` `trace-commands.test.ts` | Drama School |
-| `school.choose_showcase` | `src/engine/systems/proshowcase.ts` | `SchoolShowcase.tsx` | `pro-showcase.test.ts` | Drama School |
+| `school.choose_showcase` | `src/engine/systems/proshowcase.ts` | `SchoolShowcase.tsx` | `pro-app.test.ts` `pro-showcase.test.ts` | Drama School |
 | `school.extend_incomplete` | `src/engine/systems/courserecord.ts` | `SchoolWorkspace.tsx` | `evidence-g25-school.test.ts` `evidence-g26-school.test.ts` `evidence2-b09.test.ts` `remaining-school.test.ts` `student-experience.test.ts` | Drama School |
 | `school.learn_part` | `src/engine/systems/production.ts` | `RehearsalProcess.tsx` | `attributes-phase-2b.test.ts` `defects-g8-11.test.ts` `defects-g8-13.test.ts` `defects-r8-1.test.ts` `direction-mastery.test.ts` `direction.test.ts` `evidence-g07-life.test.ts` `evidence-g19-school.test.ts` `evidence-g20-school.test.ts` `evidence-g23-school.test.ts` `guide-examples-productions.test.ts` `journey-school-production.test.ts` `rehearsal-notes-history.test.ts` | Drama School |
 | `school.make_amends` | `src/engine/systems/classmates.ts` | `CourseworkPane.tsx` | `commands-kept.test.ts` `defects-g8-10.test.ts` `evidence-g18-school.test.ts` `evidence-g24-school.test.ts` `evidence2-b07.test.ts` `guide-examples-coursework.test.ts` | Drama School |

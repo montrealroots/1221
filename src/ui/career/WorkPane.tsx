@@ -21,6 +21,7 @@ import type { Person } from '@/engine/domain/model';
 import { UNIONS } from '@/engine/content/careerwork';
 import { finished, type Engagement, type ProPayment, type UnionBill } from '@/engine/systems/pro';
 import { inSaveMoney } from '@/engine/systems/banking';
+import { counted } from '@/engine/systems/projobs';
 import {
   commissionOn, joinSagRefusal, owedAfterEnding, placeKnown, projectOf, sagJoinUsd, sagMembershipFrom, weekWords, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, DUES_KIND,
 } from '@/engine/systems/propay';
@@ -40,7 +41,8 @@ function datesWords(e: Engagement, zone: string): string {
   if (!e.days.length) return 'No dates yet.';
   const first = e.days[0]!.from;
   const last = e.days[e.days.length - 1]!.to;
-  return `${formatDate(first, zone)} to ${formatDate(last, zone)}, ${plural(e.days.length, 'day')} of work.`;
+  // A count under ten in words, as the Opportunities tab says the same days ("Four shoot days"): until 2026-10-21, "4 days".
+  return `${formatDate(first, zone)} to ${formatDate(last, zone)}, ${counted(e.days.length, 'day')} of work.`;
 }
 
 /** A payment, said as the Work tab lists it: what's promised and when, where it stands, and its commission. */
@@ -148,7 +150,9 @@ function UnionsPanel() {
     ? `You’re a member of SAG-AFTRA, since ${formatDate(person.pro.sag.memberSince, zone)}.`
     : from !== undefined
       ? `You’ve been able to join SAG-AFTRA since ${formatDate(person.pro!.sag!.eligibleSince!, zone)}. SAG-AFTRA work from ${formatDate(from, zone)} needs you to be a member.`
-      : 'A SAG-AFTRA principal role, a TV, theatrical or Low Budget film part, makes you eligible to join. Ultra Low Budget and student films don’t count toward it.';
+      // Where you stand, and the line under Join SAG-AFTRA says what it takes: until 2026-10-21 this said it too, and the
+      // two read the same sentence one after the other (brief 19's app walk).
+      : 'You aren’t eligible to join SAG-AFTRA yet.';
   return (
     <Panel title="Your Unions" help="career.unions">
       <div className="col gap-3">

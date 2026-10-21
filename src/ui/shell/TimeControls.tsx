@@ -330,6 +330,12 @@ function DueNow({ stop, onGo, onClose }: {
   // Your own care asks only that you're awake and out of hospital (`presentForCare`); anything else, that you're in its
   // town and not laid up by an injury too (`present`).
   const care = item.kind === APPOINTMENT_KIND || item.kind === THERAPY_SESSION_KIND;
+  // The career's commitments, an audition, a meeting at an agent's office and a day of booked work, take the trip as made:
+  // their handlers ask only that you're awake and not in hospital or laid up (`there` in `systems/projobs.ts`, `present`
+  // in `systems/proagent.ts`), and the trip each way (`travelMinutes`) doesn't move the clock. Until 2026-10-21 the stop
+  // said "in its town" of them too, and nothing of the trip (brief 19's app walk).
+  const career = item.category === 'career';
+  const trip = item.travelMinutes ?? 0;
   const runs = item.durationMinutes ?? 0;
   const name = titleCaseLabel(item.label);
   // Where the clock goes after a choice, in words: a stop the live clock made is a second from where it was headed.
@@ -371,6 +377,7 @@ function DueNow({ stop, onGo, onClose }: {
         It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this needs you now.
         {' '}Going takes {formatDurationWords(runs * 60_000)}
         {`, and the clock moves on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
+        {trip > 0 ? ` Getting there and back, about ${formatDurationWords(trip * 60_000)} each way, doesn’t move the clock.` : ''}
       </p>
       {choices.length === 0 && (
         <p className="small muted">
@@ -380,7 +387,7 @@ function DueNow({ stop, onGo, onClose }: {
               the same day): until then the paragraph opened on the button that isn't there, and "Stand Here to wait"
               didn't say the clock waits paused, as the stop pauses it (`halt` in `game-context.tsx`). */}
           Press Go, or Stand Here to wait with the clock paused.
-          {` ${name} starts the next time the clock moves, and you’re there if you’re awake${care ? ' and out of hospital' : ', in its town, and not in hospital or laid up with an injury'}.`}
+          {` ${name} starts the next time the clock moves, and you’re there if you’re awake${care ? ' and out of hospital' : career ? ' and not in hospital or laid up with an injury' : ', in its town, and not in hospital or laid up with an injury'}.`}
           {' '}Only a plan of your own can be skipped, so there’s no Skip It button here.
         </p>
       )}

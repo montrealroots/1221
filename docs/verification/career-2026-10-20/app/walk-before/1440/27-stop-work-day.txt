@@ -1,0 +1,28 @@
+stop-work-day (work-day.json, 1440 wide)
+
+ON THE WAY
+On The Way
+✕
+
+Moving the clock to This Evening (July 2, 2029 at 6:00 PM) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.
+
+Static On Route 9: Shoot Day 1 — July 2, 2029 at 7:00 AM
+Cancel
+Advance
+
+THE STOP
+Static On Route 9: Shoot Day 1
+✕
+
+It’s 7:00 AM on July 2, 2029, and this needs you now. Going takes 11 hours, and the clock moves on to July 2, 2029 at 6:00 PM.
+
+Press Go, or Stand Here to wait with the clock paused. Static On Route 9: Shoot Day 1 starts the next time the clock moves, and you’re there if you’re awake, in its town, and not in hospital or laid up with an injury. Only a plan of your own can be skipped, so there’s no Skip It button here.
+
+How This Works
+Stand Here
+Go
+
+MEASURED: buttons ["How This Works: The Calendar","Stand Here","Go"]; as built, 1 row, the last button's right edge -25px from the dialog's (negative is inside); without the footer's wrapping, 1 row, -25px
+
+----- 4 controls; Tab reached 4 of the 4 it can; 0 grayed
+Nothing found.

@@ -4180,10 +4180,10 @@
  },
  "src/ui/components/PlayingChooser.tsx#PlayingChooser": {
   "status": "Rewritten",
-  "hash": "c99580d0d31e",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): playing it this way would come to 54.9, the same as with nothing chosen (the casting tab's How You’ll Play It)",
-  "first": "Pending"
+  "hash": "dee61843babd",
+  "on": "2026-10-21",
+  "evidence": "Read on the built app's School Coursework tab after New York's showcase days, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the coursework surface): Play It This Way, grayed until a way is picked, said nothing in its title or under it; it gives its reason in both now. Held by tests/pro-app.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/ui/components/RehearsalProcess.tsx#DRESS_WORD": {
   "status": "Retained",

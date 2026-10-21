@@ -1560,7 +1560,8 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     const [ex, re] = [await band('Expansive'), await band('Restrained')];
     must(ex && re, 'no The Scene column');
     must(ex === 'suits' && re !== 'suits', `Melodrama’s scene: expansive ${ex}, restrained ${re}`);
-    await briefPane().locator('input[type=radio][name="axis-scale"]').nth(1).check(); await wait(300);
+    // The group's name ends with its axis (each chooser's own from 2026-10-21, `PlayingChooser`; it was `axis-scale` itself).
+    await briefPane().locator('input[type=radio][name$="axis-scale"]').nth(1).check(); await wait(300);
     const mark = (await briefPane().innerText()).match(/This choice is complete once it’s rehearsed to (\d+)%: ([^.]+)/);
     must(mark && Number(mark[1]) < 90 && /it suits the scene, so it asks less/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
     await briefButton(/^Play It This Way$/);

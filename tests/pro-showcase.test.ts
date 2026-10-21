@@ -436,7 +436,9 @@ describe('the showcase, played', () => {
     expect(said).toEqual(['Spring Term 2029 Begins', 'The Actor Showcase', 'You’re In The Actor Showcase', 'In Good Standing', 'The Actor Showcase In New York', 'The Actor Showcase In New York', 'The Actor Showcase In Los Angeles', 'Your MFA Is Conferred']);
     const ny = sim.universe.notifications.filter((n) => n.title === 'The Actor Showcase In New York');
     expect(ny[0]!.body).toMatch(/^You played your two scenes at the showcase in New York\. .+: (Unready|Working|Strong|Exceptional), \d+ of 100\. .+: (Unready|Working|Strong|Exceptional), \d+ of 100\. The faculty’s notes are on each scene’s card on the Coursework tab\. Work on them before Los Angeles, where they’re shown again with the note taken\. You play them again in New York on May 1\.$/);
-    expect(ny[1]!.body).toMatch(/You play them again in Los Angeles on May 8\.$/);
+    // The second day says it's the scenes again (from 2026-10-21, brief 19's app walk: until then it opened as the first).
+    expect(ny[1]!.body).toMatch(/^You played your two scenes again at the showcase in New York\. .+You play them again in Los Angeles on May 8\.$/);
+    expect(notice(sim, 'The Actor Showcase In Los Angeles')!.body).toMatch(/^You played your two scenes at the showcase in Los Angeles\./);
     expect(notice(sim, 'The Actor Showcase In Los Angeles')!.body).toMatch(/ You passed Actor Showcase\.$/);
     // The degree, and what carries on with it: nothing of the showcase or the School's record reset.
     expect(sim.player.school!.standing).toBe('graduated');
