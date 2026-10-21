@@ -81,15 +81,15 @@ Found outside the career, not changed: every played life's credit card limit ros
 - **The long runs:** 24 lives, 20 graduated and the autopilot control's 4 dismissed, as before, breaches 0; the mastery
   plans 6 of 6 at 100, each a few days sooner. Most differences start in the last term brief 19 changed; two lives'
   monthly records first differ earlier, in November 2027 and June 2028 (`final-runs/runs/README.md`).
-- **The journeys:** JOURNEYS
+- **The journeys:** played again from 13:01 UTC with the tool's check 2 corrected; said here once that play is done.
 
 ## The Gate
 
-GATE
+To run in a clean clone once the journeys are folded; said here once it has.
 
 ## Completion
 
-COMPLETION
+The handoff's top section states the matrix's line as it stands.
 
 ## What's Left, And Whose It Is
 
