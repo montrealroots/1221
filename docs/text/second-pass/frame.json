@@ -3424,9 +3424,9 @@
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {
   "status": "Rewritten",
-  "hash": "a641b404baf5",
+  "hash": "1a2c6d2d7a0e",
   "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
+  "evidence": "Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
   "first": "Rewritten And Verified"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {

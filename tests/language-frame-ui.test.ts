@@ -267,7 +267,7 @@ describe('the top bar’s dialogs', () => {
     expect(said).not.toContain('in its town');
   });
 
-  it('PLAYER JOURNEY: two auditions in person at one hour, their trips meeting: On The Way says the clock stops only at the first and the other is missed, and the stop at the first says so; one a day later clashes with nothing (the app’s fourth walk, 2026-10-21)', () => {
+  it('PLAYER JOURNEY: two auditions in person at one hour, their trips meeting: On The Way says the clock stops only at the first and the other is missed, and counts only the stops it makes, and the stop at the first says so; one a day later clashes with nothing (the app’s fourth and sixth walks, 2026-10-21)', () => {
     // TEST SETUP: the audition's kind, as the work loop puts it on the calendar, with no opportunity behind it, which its
     // handler passes by: Hudson's and Brooklyn's at eleven, each with its trip from New Haven, and one the next day.
     const sim = quickSave({}, 'frame-two-towns');
@@ -285,7 +285,9 @@ describe('the top bar’s dialogs', () => {
     drawn(sim, TimeControls);
     press(button(/^One Week/));
     const ahead = dialog(drawn(sim, TimeControls).html, 'On The Way');
-    expect(ahead).toContain('passes four commitments.');
+    // It stops at two of the four, not each one: the two the first's trips meet are passed (from the app's sixth walk,
+    // the same day: until then it said "The clock stops at each one" above the line saying it stops only at the first).
+    expect(ahead).toContain('passes four commitments. The clock stops at two of them so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.');
     expect(ahead).toContain('Audition: Hester Vane, The Winter Ledger and Audition: Ivy, Paper Moons clash: each trip is from home and back, so you can be at only one. The clock stops only at Audition: Hester Vane, The Winter Ledger, and Audition: Ivy, Paper Moons is missed.');
     expect(ahead).toContain('Audition: Hester Vane, The Winter Ledger and Audition: Sam, Last Bus To Eastview clash:');
     // Each pair said once, the first the clock reaches named as the one it stops at.

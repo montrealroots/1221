@@ -20,9 +20,10 @@ M = [
  ('I45', 'src/engine/content/careerwork.ts', "part: 'Felix', size: 'lead'", "part: 'Theo', size: 'lead'", 'tests/pro-core.test.ts', 'names no part as the School names a classmate'),
  ('I46', 'src/engine/systems/projobs.ts', "  if (!careerStop(item.kind)) return [];\n", "  return [];\n", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
  ('I47', 'src/ui/shell/TimeControls.tsx', "      {clashes.length > 0 && (\n        <p className=\"small\">", "      {false && clashes.length > 0 && (\n        <p className=\"small\">", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
- ('I48', 'src/ui/shell/TimeControls.tsx', "confirm.missed.slice(n + 1).map((w) => w.item)", "confirm.missed.map((w) => w.item)", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
+ ('I48', 'src/ui/shell/TimeControls.tsx', "    if (passed.has(item.id)) return;\n", "", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
  ('I49', 'src/engine/systems/projobs.ts', "const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at - (i.travelMinutes ?? 0) * MIN, i.at + ((i.durationMinutes ?? 0) + (i.travelMinutes ?? 0)) * MIN];", "const windowOf = (i: ScheduledItem): readonly [Instant, Instant] => [i.at, i.at + (i.durationMinutes ?? 0) * MIN];", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
  ('I50', 'src/engine/systems/projobs.ts', "const careerStop = (kind: string): boolean => kind === AUDITION_KIND || kind === MEETING_KIND;", "const CAREER_STOPS = new Set([AUDITION_KIND, MEETING_KIND]);\nconst careerStop = (kind: string): boolean => CAREER_STOPS.has(kind);", 'tests/module-load-order.test.ts', 'load in the bundle'),
+ ('I51', 'src/ui/shell/TimeControls.tsx', "  const stopsAhead = confirm ? confirm.missed.length - clashing.length : 0;", "  const stopsAhead = confirm ? confirm.missed.length : 0;", 'tests/language-frame-ui.test.ts', 'two auditions in person at one hour'),
 ]
 import os
 ONLY = os.environ.get('ONLY', '').split(',') if os.environ.get('ONLY') else None

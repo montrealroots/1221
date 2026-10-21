@@ -5,7 +5,8 @@
  * world processes everything that comes due either way.
  */
 
-import { spokenList, titleCaseLabel } from '@/engine/core/text';
+import { countWords, spokenList, titleCaseLabel } from '@/engine/core/text';
+import type { ScheduledItem } from '@/engine/core/scheduler';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal, WhyNot, dialogOpen } from '@/ui/components/primitives';
@@ -80,6 +81,28 @@ function choicesAhead(missed: readonly OnTheWay[]): string {
   ].join('');
 }
 
+/**
+ * The career commitments on the way the clock passes without stopping, each with the one before it gone to that its
+ * trips meet (`careerClashes`): one missed is gone to by nothing, so it misses nothing later. From 2026-10-21 (the app's
+ * sixth walk): until then On The Way said the clock stops at each commitment and, under it, that it stops only at the
+ * first of a clashing pair.
+ */
+function clashesAhead(sim: Parameters<typeof careerClashes>[0], missed: readonly OnTheWay[]): { first: ScheduledItem; later: ScheduledItem }[] {
+  const out: { first: ScheduledItem; later: ScheduledItem }[] = [];
+  const passed = new Set<string>();
+  // Each pair once: a later commitment, once passed, is no one's first. Until the sixth walk's fix each was read against
+  // the ones after it in the list alone; the set made that a guard nothing reached (the test passed with it taken out),
+  // and it went.
+  const ahead = missed.map((w) => w.item);
+  missed.forEach(({ item }) => {
+    if (passed.has(item.id)) return;
+    for (const later of careerClashes(sim, item, ahead)) {
+      if (!passed.has(later.id)) { passed.add(later.id); out.push({ first: item, later }); }
+    }
+  });
+  return out;
+}
+
 export function TimeControls() {
   // Why sleep can't start now, as the command has it: in the middle of a commitment.
   const sleepBusy = useWorld((s) => { const busy = occupiedAt(s, s.now); return busy ? `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.` : undefined; });
@@ -109,6 +132,10 @@ export function TimeControls() {
     run('world.set_preferences', { timeSpeed: next }, { silent: true });
     refresh();
   };
+
+  // What On The Way says of the career commitments the clock passes without stopping (`clashesAhead`).
+  const clashing = confirm ? clashesAhead(sim, confirm.missed) : [];
+  const stopsAhead = confirm ? confirm.missed.length - clashing.length : 0;
 
   return (
     <>
@@ -187,16 +214,16 @@ export function TimeControls() {
               went after either. */}
           <p className="small muted">
             Moving the clock to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
-            {said(confirm.missed.length, 'commitment')}. The clock stops at {confirm.missed.length === 1 ? 'it' : 'each one'} so
+            {said(confirm.missed.length, 'commitment')}. The clock stops at {stopsAhead === confirm.missed.length ? (confirm.missed.length === 1 ? 'it' : 'each one') : stopsAhead === 1 ? 'one of them' : `${countWords(stopsAhead)} of them`} so
             you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.{choicesAhead(confirm.missed)}
           </p>
           {/* Two career commitments whose trips meet (`careerClashes`, from 2026-10-21, the app's fourth walk): the clock
               stops only at the first, and the other is missed, which "stops at each one" alone didn't say. */}
-          {confirm.missed.flatMap(({ item }, n) => careerClashes(sim, item, confirm.missed.slice(n + 1).map((w) => w.item)).map((later) => (
-            <p key={`${item.id}-${later.id}`} className="small">
-              {`${titleCaseLabel(item.label)} and ${titleCaseLabel(later.label)} clash: each trip is from home and back, so you can be at only one. The clock stops only at ${titleCaseLabel(item.label)}, and ${titleCaseLabel(later.label)} is missed.`}
+          {clashing.map(({ first, later }) => (
+            <p key={`${first.id}-${later.id}`} className="small">
+              {`${titleCaseLabel(first.label)} and ${titleCaseLabel(later.label)} clash: each trip is from home and back, so you can be at only one. The clock stops only at ${titleCaseLabel(first.label)}, and ${titleCaseLabel(later.label)} is missed.`}
             </p>
-          )))}
+          ))}
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map(({ item, foreseen }) => (
               <li key={`${item.id}${foreseen ? ' ahead' : ''}`}>{titleCaseLabel(item.label)} — {formatDateTime(item.at, sim.zone)}{foreseen ? ', not on your calendar yet' : ''}</li>
