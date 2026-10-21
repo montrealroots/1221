@@ -166,4 +166,4 @@ all: 4413 sources, 37821 strings, 583655 words, 316 engine-speak hits; second pa
 The text inventory holds.
 578 quoted sentences in the guide; 578 the game says (4 of them held by the test that plays the example), 0 it no longer says.
 290 surfaces; 4413 of 4413 sources claimed; 0 problems.
-docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md or docs/verification/integration-2026-10-16/completion-matrix.json is behind its sources: run node tools/completion-matrix.mjs
+The completion matrix holds: 689 rows. Completion, by the matrix: 566 of 649 rows in scope Implemented And Verified (87.2%); 79 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
