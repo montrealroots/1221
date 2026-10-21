@@ -558,6 +558,42 @@ if FIG17R and FIG16R:
         r['failure'] = f"{r['failure']}; brief 17 ({r['measured']['commit']}): {'the same' if FIG17R[r['id']] == FIG16R.get(r['id']) else FIG17R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B17R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B17R}/figures.json'}] + ([{'file': f'{B17R}/gate.txt'}] if gate else [])
+# Brief 19's runs (career-2026-10-20/final-runs/, from 2026-10-21), as brief 17's: a pass that added the career and with
+# it changed the School's last term (the Actor Showcase's coursework), the clock's stops and the understudy's part, files
+# the measurements watch, so each measurement brief 17 held is made again on brief 19's tested commit, the same ways.
+B19F = 'docs/verification/career-2026-10-20/final-runs/final'
+SAME19 = False
+if os.path.exists(f'{B19F}/figures.json') and os.path.exists(f'{B17F}/figures.json'):
+    FIG19 = json.load(open(f'{B19F}/figures.json', encoding='utf-8'))
+    B19AT = re.search(r'^at (\w+)', open(f'{B19F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    NS19P = 'docs/verification/career-2026-10-20/final-runs/numbers-same.json'
+    NS19 = json.load(open(NS19P, encoding='utf-8')).get('final', {}) if os.path.exists(NS19P) else {}
+    SAME19 = bool(NS19) and NS19.get('same') == NS19.get('files') and not NS19.get('unexplained') and not NS19.get('missing') and not NS19.get('explained')
+    for r in rows:
+        if r.get('measured') == {'commit': B17AT, 'watch': 'judge'}:
+            assert r['id'] in FIG19, r['id']
+            r['measured'] = {'commit': B19AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 19's tested commit ({B19AT}): {'the same' if FIG19[r['id']] == FIG17.get(r['id']) else FIG19[r['id']]}"
+            r['evidence'] = f"{r['evidence']}; {B19F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B19F}/figures.json'}]
+B19R = 'docs/verification/career-2026-10-20/final-runs/runs'
+FIG19R = json.load(open(f'{B19R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B19R}/figures.json') else {}
+if FIG19R and FIG17R:
+    lane19 = lambda name: re.search(r'^at (\w+)', open(f'{B19R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R19 = {'app': lane19('A'), 'engine': lane19('B')}
+    GATE19 = re.search(r'^at (\w+)', open(f'{B19R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG19R and os.path.exists(f'{B19R}/gate.txt') else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG17R and (gate or m.get('commit') == R17.get(m.get('watch')))):
+            continue
+        if gate and not GATE19:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG19R, r['id']
+        r['measured'] = {'commit': GATE19, 'watch': 'app'} if gate else {'commit': R19[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 19 ({r['measured']['commit']}): {'the same' if FIG19R[r['id']] == FIG17R.get(r['id']) else FIG19R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B19R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B19R}/figures.json'}] + ([{'file': f'{B19R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -674,5 +710,11 @@ if SAME17:
         if o.get('measured') == {'commit': B16AT, 'watch': 'judge'}:
             o['measured'] = {'commit': B17AT, 'watch': 'judge'}
             o['citations'] = o.get('citations', []) + [{'file': f'{B17F}/README.md'}]
+# And brief 19's (from 2026-10-21), the same way.
+if SAME19:
+    for o in OVERRIDES:
+        if o.get('measured') == {'commit': B17AT, 'watch': 'judge'}:
+            o['measured'] = {'commit': B19AT, 'watch': 'judge'}
+            o['citations'] = o.get('citations', []) + [{'file': f'{B19F}/README.md'}]
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
