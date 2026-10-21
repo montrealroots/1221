@@ -42,9 +42,10 @@
  * those days. An F-1 student is refused at acceptance by `usWorkAuthorized`, and the request says why: CPT is processed
  * only for training every student in the program must do (yale.md §6), and Acting has none.
  *
- * **Away at work.** An audition in person or a work day takes the actor out of town for its hours and the trip each way
- * (`awayAt`), and the School counts them absent from what falls inside it: a class missed, a call missed with the
- * School's own consequences. Approved work's class days are excused, as the approval arranged them.
+ * **Away at work.** An audition in person, a work day or a meeting at an agent's office takes the actor out of town for
+ * its hours and the trip each way (`awayAt`), and the School counts them absent from what falls inside it: a class
+ * missed, a call missed with the School's own consequences. Approved work's class days are excused, as the approval
+ * arranged them.
  *
  * **Every number here is the game's estimate unless it cites a source**: the timings of a casting office, the chances,
  * the trips and the lead time are ASSUMPTIONS, said so on the screen. The rates are the unions' (`RATES`). Every
@@ -86,6 +87,7 @@ import {
 } from './school';
 import { f1Of, usWorkAuthorized } from './permission';
 import { negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
+import { AGENT_TIMES, TRAVEL_MINUTES } from './proagent';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -468,9 +470,10 @@ export function classDaysIn(person: Person, days: readonly WorkDay[], cityId: st
 }
 
 /**
- * Whether the actor is away at professional work or an audition in person at a moment, and whether the dean approved
- * it: the work day's or the audition's hours, with the trip each way, and not missed. The School reads it for who's
- * present (`present`, `systems/school.ts`), and excuses a class missed for approved work.
+ * Whether the actor is away at professional work, an audition in person or a meeting with an agent's office at a
+ * moment, and whether the dean approved it: the work day's, the audition's or the meeting's hours, with the trip each
+ * way, and not missed. The School reads it for who's present (`present`, `systems/school.ts`), and excuses a class
+ * missed for approved work; nothing approves a meeting, as nothing approves an audition.
  */
 export function awayAt(person: Person, when: Instant): { label: string; approved: boolean } | undefined {
   const pro = person.pro;
@@ -496,16 +499,28 @@ export function awayAt(person: Person, when: Instant): { label: string; approved
       if (when >= r.at - away && when <= r.at + (WORK.auditionMinutes * MIN) + away) return { label: `${r.round === 'callback' ? 'Callback' : 'Audition'}: ${t.role.part}`, approved: false };
     }
   }
+  // A meeting with an agent's office, its hour and the trip each way as `scheduleMeeting` puts them on the calendar; by
+  // video, its hour alone. From 2026-10-21 (brief 19's J6, found by the built-app walk): until then a student at a
+  // meeting in New York at eleven was counted at a New Haven class the same hour.
+  for (const [agentId, rel] of Object.entries(pro.relations)) {
+    const m = rel.meeting;
+    if (!m || m.status === 'missed') continue;
+    const away = (m.where === 'office' ? TRAVEL_MINUTES[person.currentLocationId] ?? 0 : 0) * MIN;
+    if (when >= m.at - away && when <= m.at + AGENT_TIMES.meetingMinutes * MIN + away) {
+      const agent = agentById(agentId);
+      return { label: `Meeting At ${agent ? agencyOf(agent).name : 'An Agent’s Office'}`, approved: false };
+    }
+  }
   return undefined;
 }
 
 /**
- * The booked work day whose own hours an audition in person at a moment would fall in: a live engagement's day
- * overlapping the round's half hour. The actor is due at work then, so the round can't be gone to (from 2026-10-21,
- * brief 19's playthroughs: a callback set inside a shoot day's hours was gone to and judged as if the actor had left
- * the set for it, though the notice that set it had said it clashed with the shoot). A day already missed counts as
- * well: its first version let a stage actor who'd slept through a performance go to an audition in its hours, which
- * no test reached and the guide doesn't say, and it went the same day.
+ * The booked work day whose own hours an audition in person at a moment would fall in: a live engagement's day, not
+ * already missed, overlapping the round's half hour. The actor is at work then, so the round can't be gone to (from
+ * 2026-10-21, brief 19's playthroughs: a callback set inside a shoot day's hours was gone to and judged as if the actor
+ * had left the set for it, though the notice that set it had said it clashed with the shoot). A day missed is no longer
+ * where the actor is, as `awayAt` reads it for the School: a stage actor who slept through a rehearsal's start can go
+ * to an audition in its hours (a screen day missed replaces the actor, and the engagement's days go with it).
  */
 export function workDayAt(person: Person, at: Instant): { label: string; from: Instant } | undefined {
   const end = at + WORK.auditionMinutes * MIN;
@@ -513,7 +528,7 @@ export function workDayAt(person: Person, at: Instant): { label: string; from: I
     if (!live(e)) continue;
     for (let i = 0; i < e.days.length; i += 1) {
       const d = e.days[i]!;
-      if (d.from < end && d.to > at) return { label: d.label, from: d.from };
+      if (d.from < end && d.to > at && e.log?.find((l) => l.day === i)?.status !== 'missed') return { label: d.label, from: d.from };
     }
   }
   return undefined;

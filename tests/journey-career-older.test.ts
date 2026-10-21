@@ -26,7 +26,7 @@ import { UNIONS, projectById } from '@/engine/content/careerwork';
 import { currentOf, profileOf, type Engagement } from '@/engine/systems/pro';
 import { SHOWCASE_COURSE, SHOWCASE_KIND } from '@/engine/systems/proshowcase';
 import { FOLLOW_UP_KIND, drawOf, referrersOf, relationOf } from '@/engine/systems/proagent';
-import { AGENTS } from '@/engine/content/agents';
+import { AGENTS, agencyOf } from '@/engine/content/agents';
 import { AUDITION_KIND, WORK_DAY_KIND } from '@/engine/systems/projobs';
 import { LEGEND_BY_CATEGORY, entriesBetween } from '@/engine/world/calendar';
 import { createElement } from 'react';
@@ -34,7 +34,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at as subject } from '@/ui/looks/subject';
-import { graduatingActor, playTo, press, readNotices, unsignedActor, type Player, type Transcript } from '../tools/career-player';
+import { graduatingActor, playTo, press, readNotices, titleShape, unsignedActor, type Player, type Transcript } from '../tools/career-player';
 
 // TEST SETUP: the looks' links read the game's context, which a page's provider holds; here it's the life the J6 test
 // plays (as tests/evidence2-b08.test.ts does it, without the original, which imports the looks back).
@@ -147,10 +147,13 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     ]);
     // Played to the billing: taken on its day, once each, and not before.
     const nov = opened('november');
-    const taken = nov.universe.transactions.filter((x) => x.memo.startsWith('Actors’ Equity Association:'));
-    expect(taken.map((x) => [x.memo, formatDate(x.at, zone)])).toEqual([
-      ['Actors’ Equity Association: Initiation fee, $600.00 down of $1,800.00', 'November 1, 2029'],
-      ['Actors’ Equity Association: Basic dues, half a year', 'November 1, 2029'],
+    // The union's money out of her own accounts, by its category, since the save opened: the $600.00 down and the
+    // first half-year's $88.00, both on November 1.
+    const own = Object.values(nov.universe.accounts).filter((x) => x.ownerId === nov.player.id).map((x) => x.id);
+    const taken = nov.universe.transactions.filter((x) => x.category === 'dues' && x.at > sim.now);
+    expect(taken.map((x) => [x.postings.filter((q) => own.includes(q.accountId)).reduce((n, q) => n + q.amount, 0), formatDate(x.at, zone)])).toEqual([
+      [-600_00, 'November 1, 2029'],
+      [-88_00, 'November 1, 2029'],
     ]);
     expect(breaches(nov.universe, nov.now)).toEqual([]);
   });
@@ -212,7 +215,8 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     expect([answered.stage, answered.request!.what]).toEqual(['requested', ['reel']]);
     expect([answered.why!.step, answered.why!.outcome, answered.why!.atOrBeyond]).toEqual(['reply', 'request', 7]);
     expect(drawOf(an, an.player, AGENT, 1, 'interest')).toBeLessThan(answered.why!.chance!);
-    const asked = G.lines.find((l) => l.includes('| NOTICE | His Office Asked For More |'))!;
+    // By the title's shape, his office however the build names it (`titleShape`).
+    const asked = G.lines.find((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && titleShape(x[2] ?? '', { name: AGENT.name, agency: agencyOf(AGENT).name }) === 'His Office Asked For More'; })!;
     expect(asked).toContain(`${AGENT.name}’s office at Stewart Talent has asked for a reel by November 8, 2029.`);
     expect(asked.endsWith(AGENT.fictional)).toBe(true);
     expect(breaches(an.universe, an.now)).toEqual([]);

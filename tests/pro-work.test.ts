@@ -27,6 +27,8 @@ import { attributesOf } from '@/engine/systems/attributes';
 import { genreState } from '@/engine/systems/engagement';
 import { PROJECTS, RATES, projectById } from '@/engine/content/careerwork';
 import { AGENTS } from '@/engine/content/agents';
+import { MEETING_KIND } from '@/engine/systems/proagent';
+import { CLASSES_KIND } from '@/engine/systems/school';
 import { type Agreement, type Opportunity, activeAgreement } from '@/engine/systems/pro';
 import {
   AUDITION_KIND, CASTING, POSTING, WORK, WORK_DAY_KIND, acceptRefusal, acceptWarning, awayAt, castingDraw, chanceOf, conditionsFor, datesOf,
@@ -765,6 +767,31 @@ describe('V12: a scheduling conflict, said and handled', () => {
     expect(twin.universe.notifications.filter((n) => n.title === 'You Missed Classes' && Math.abs(n.at - first) < 12 * MS_HOUR)).toHaveLength(1);
   });
 
+  it('GUARD: a student at a meeting with an agent’s office in New York in term is away from the day’s classes its hour and trip overlap, and the School counts them missed, as it does an audition; the same day without it, at class (found by the built-app walk, 2026-10-21)', () => {
+    const sim = firstYear('work-meeting-term', {}, false);
+    // Played to the evening before a day of classes, which the School puts on the calendar the day before.
+    const next = () => sim.universe.scheduled.find((i) => i.kind === CLASSES_KIND && i.status === 'pending' && i.at > sim.now + 6 * MS_HOUR);
+    for (let n = 0; n < 60 && !next(); n += 1) played(sim, sim.now + 12 * MS_HOUR);
+    const classes = next()!;
+    const p = zonedParts(classes.at, zone);
+    const meetAt = at(p.year, p.month, p.day, 11);
+    const twin = reload(sim);
+    // TEST SETUP: a meeting with his office at eleven that day, as `scheduleMeeting` sets one after a referral: on the
+    // relation, and on the calendar with its hour and the trip from New Haven.
+    const agent = AGENTS[0]!;
+    const meeting = { id: 'test-meeting', at: meetAt, where: 'office' as const, moved: 0, status: 'set' as const };
+    sim.player.pro!.relations[agent.id] = { agentId: agent.id, stage: 'meeting', since: sim.now, stageAt: sim.now, noticeShownAt: sim.now, via: { route: 'referral', at: sim.now, by: 'the film’s director' }, history: [], counts: {}, meeting };
+    sim.schedule({ at: meetAt, kind: MEETING_KIND, label: 'Meeting At Stewart Talent', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, travelMinutes: 120, locationId: 'us-ny-newyork', refType: 'pro-meeting', refId: meeting.id, payload: { personId: sim.player.id, agentId: agent.id, meetingId: meeting.id } });
+    // Away from nine, when the School counts the day's classes, to two in the afternoon: the trip, the hour, the trip.
+    expect(awayAt(sim.player, at(p.year, p.month, p.day, 9))).toEqual({ label: 'Meeting At Stewart Talent', approved: false });
+    expect(awayAt(sim.player, at(p.year, p.month, p.day, 14, 1))).toBeUndefined();
+    for (const s of [sim, twin]) played(s, at(p.year, p.month, p.day, 20));
+    expect(sim.player.pro!.relations[agent.id]!.meeting!.status).toBe('kept');
+    const missed = (s: Simulation) => s.universe.notifications.filter((n) => n.title === 'You Missed Classes' && Math.abs(n.at - meetAt) < 12 * MS_HOUR);
+    expect(missed(sim)).toHaveLength(1);
+    expect(missed(twin)).toEqual([]);
+  });
+
   it('refuses another booking on the same days, and says the School’s calls an offer in summer would take', () => {
     const sim = graduate('work-booked');
     const t = PROJECTS.find((x) => x.kind === 'student-film')!;
@@ -948,6 +975,25 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     expect([free.rounds![0]!.status, free.rounds![0]!.band !== undefined]).toEqual(['done', true]);
     expect([during.rounds![0]!.status, during.status]).toEqual(['missed', 'lapsed']);
     expect(during.outcome).toBe(`You missed the audition for ${film.role.part} on ${formatDate(shoot.from + 4 * MS_HOUR, zone)} at 11:00 AM, so ${film.casting} moved on without you.`);
+  });
+
+  it('GUARD: a stage day she slept through the start of is no longer where she is, as the School reads it (`awayAt`): an audition in person in its later hours is gone to and judged (found by brief 19’s playthroughs, 2026-10-21)', () => {
+    const { sim, o } = offerIn(Array.from({ length: 30 }, (_, n) => `work-run-${n}`), (seed) => { const s = graduate(seed); skilled(s); portfolio(s); return s; }, (x) => projectOf(x).kind === 'lort');
+    const r = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
+    const e = sim.player.pro!.engagements.find((x) => x.id === r.engagementId)!;
+    const day = e.days[0]!;
+    played(sim, day.from - 2 * MS_HOUR);
+    sim.must({ kind: 'life.sleep', payload: { hours: 4 } });
+    expect(e.log![0]!.status).toBe('missed');
+    const film = PROJECTS.find((x) => x.kind === 'student-film')!;
+    const when = day.from + 3 * MS_HOUR;
+    expect(when + WORK.auditionMinutes * 60_000).toBeLessThan(day.to);
+    // TEST SETUP: an audition in person for the student film in that day's later hours, as `setRound` sets one.
+    const a: Opportunity = { id: 'test-after', projectId: film.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, auditionAt: when, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
+    sim.player.pro!.opportunities.push(a);
+    sim.schedule({ at: when, kind: AUDITION_KIND, label: `Audition: ${film.role.part}, ${film.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: 120, locationId: film.place.cityId, refType: 'pro.opportunity', refId: a.id, payload: { personId: sim.player.id, opportunityId: a.id, round: 0 } });
+    played(sim, when + MS_HOUR);
+    expect([a.rounds![0]!.status, a.rounds![0]!.band !== undefined]).toEqual(['done', true]);
   });
 
   it('refuses a self-tape with less than its hour before it’s due, said with the time', () => {

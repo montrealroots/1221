@@ -65,6 +65,21 @@ export function readNotices(sim: Simulation, t: Transcript | undefined): void {
   }
 }
 
+/**
+ * A notice's title by its shape, whose office it names read as his: from 2026-10-21 the built-app walk's titles name the
+ * agent and his agency ("A Meeting Is Set At Stewart Talent"), where they had said "his office". The transcript keeps
+ * the words the player read; the tests compare shapes, so they hold whichever the build says.
+ */
+export function titleShape(title: string, agent: { name: string; agency: string }): string {
+  const office = new RegExp(`${agent.name}[’']s Office`, 'g');
+  return title
+    .replace(office, 'His Office')
+    .replace(new RegExp(`^${agent.name} Offered`), 'He Offered')
+    .replace(new RegExp(`^(A Meeting Is Set|You Missed The Meeting) At ${agent.agency}$`), '$1')
+    .replace(new RegExp(`^Your Agreement With ${agent.name} Ended$`), 'Your Agreement Ended')
+    .replace(/^No Answer From His Office$/, 'No Answer');
+}
+
 /** The career business in a free waking hour: true when it took the hour, or any of it. */
 export type CareerStep = (sim: Simulation, player: Player) => boolean;
 

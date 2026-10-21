@@ -40,7 +40,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
 import { stopChoices } from '@/engine/world/clock';
 import { PREP_DIMS } from '@/engine/content/coursework';
-import { AGENTS } from '@/engine/content/agents';
+import { AGENTS, agencyOf } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, UNIONS, projectById } from '@/engine/content/careerwork';
 import { ENGAGEMENT } from '@/engine/content/engagement';
 import { courseworkOf } from '@/engine/systems/coursework';
@@ -49,7 +49,7 @@ import { activeAgreement, currentOf } from '@/engine/systems/pro';
 import { DECISION_KIND, FOLLOW_UP_KIND, MEETING_KIND, REPLY_KIND as AGENT_REPLY_KIND, drawOf, endRefusal, relationOf, stillOwed } from '@/engine/systems/proagent';
 import { AUDITION_KIND, CASTING_KIND, REPLY_KIND, TAPE_DUE_KIND, WORK_DAY_KIND, postingsAt, reachOf } from '@/engine/systems/projobs';
 import { DUES_KIND, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, joinSagRefusal } from '@/engine/systems/propay';
-import { go, graduatingActor, playTo, readNotices, transcriptFrom, type Player, type Transcript } from '../tools/career-player';
+import { go, graduatingActor, playTo, readNotices, titleShape, transcriptFrom, type Player, type Transcript } from '../tools/career-player';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import '@/ui/looks/all';
@@ -298,8 +298,15 @@ beforeAll(() => {
   A.end = serialise(sim.universe);
 }, 900_000);
 
-/** The transcript's lines whose step and title match: what the player met, in the order they met it, with its moment. */
-const met = (lines: readonly string[], pick: RegExp) => lines.map((l) => l.split(' | ')).filter((x) => pick.test(`${x[1]} | ${x[2]}`)).map((x) => `${x[0]} | ${x[1]}: ${x[2]}${x[1] === 'STOP' ? ` | ${x[3]}` : ''}`);
+/** A title by its shape: his office, however the build names it (`titleShape`). */
+const shape = (title: string) => titleShape(title, { name: AGENT.name, agency: agencyOf(AGENT).name });
+/**
+ * The transcript's lines whose step and title match: what the player met, in the order they met it, with its moment.
+ * Titles are compared by their shape.
+ */
+const met = (lines: readonly string[], pick: RegExp) => lines.map((l) => l.split(' | ')).map((x) => [x[0], x[1], shape(x[2] ?? ''), ...x.slice(3)]).filter((x) => pick.test(`${x[1]} | ${x[2]}`)).map((x) => `${x[0]} | ${x[1]}: ${x[2]}${x[1] === 'STOP' ? ` | ${x[3]}` : ''}`);
+/** The first notice in a transcript whose title has this shape, as the player read it. */
+const notice = (lines: readonly string[], title: string) => lines.find((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && shape(x[2] ?? '') === title; });
 const NY_OFFICE = 'us-ny-newyork';
 const money = (cents: number) => formatMoney(cents, 'USD');
 const BAND_RANK = { unready: 0, working: 1, strong: 2, exceptional: 3 } as const;
@@ -387,7 +394,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
       'June 6, 2029 at 10:00 AM | NOTICE: He Offered You Representation', 'June 6, 2029 at 10:00 AM | PRESS: Accept The Agreement',
     ]);
     // Every notice of his carries the fictional line, and none came before her own send.
-    const his = A.lines.filter((l) => /\| NOTICE \| (A Meeting Is Set|You Met His Office|He Offered You Representation|Submitted For|Not Cast As|An Audition For|A Self-Tape For|A Callback For)/.test(l));
+    const his = A.lines.filter((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && /^(A Meeting Is Set|You Met His Office|He Offered You Representation|Submitted For|Not Cast As|An Audition For|A Self-Tape For|A Callback For)/.test(shape(x[2] ?? '')); });
     expect(his.length).toBeGreaterThan(5);
     for (const l of his) expect(l.endsWith(AGENT.fictional)).toBe(true);
   });
@@ -439,7 +446,9 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const passed = po.universe.transactions.find((x) => x.id === r.txnId)!;
     expect(passed.postings.some((x) => x.amount === r.net && po.universe.accounts[x.accountId]?.ownerId === po.player.id)).toBe(true);
     expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 2)).toEqual(['August 2, 2029 at 12:00 PM | NOTICE: Pay Held For You At Stewart Talent', 'August 7, 2029 at 12:00 PM | NOTICE: Paid On From Stewart Talent']);
-    expect(A.lines.find((l) => l.includes('| NOTICE | Paid On From Stewart Talent'))).toContain(`less $280.40 commission, so ${money(r.net)} went into your`);
+    const paidOn = notice(A.lines, 'Paid On From Stewart Talent')!;
+    expect(paidOn).toContain('$280.40');
+    expect(paidOn).toContain(`${money(r.net)} went into your`);
     // The credit on the résumé, made from the record by Update Your Résumé.
     expect(currentOf(opened('resume').player.pro, 'resume')!.contains).toContain('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029 (not yet released)');
   });
@@ -475,7 +484,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect([a.status, a.endedHow, formatDate(a.endedAt!, zone)]).toEqual(['ended', 'agreement', 'November 1, 2029']);
     expect(relationOf(sim.player, AGENT.id)!.stage).toBe('ended');
     expect(activeAgreement(sim.player, sim.now)).toBeUndefined();
-    const ended = sim.universe.notifications.filter((n) => n.title === 'Your Agreement Ended');
+    const ended = sim.universe.notifications.filter((n) => shape(n.title) === 'Your Agreement Ended');
     expect(ended).toHaveLength(1);
     expect(ended[0]!.body).toBe(`Your agreement with ${AGENT.name} at Stewart Talent ended on November 1, 2029, by agreement. ${stillOwed(sim.player, a)} ${AGENT.fictional}`);
     // His breakdowns no longer reach her: each project comes openly where it takes actors' own submissions, or not at all.
@@ -637,7 +646,7 @@ describe('a second graduate (life B, seed v1-5), who cuts her reel only once the
       expect.stringMatching(/ \| NOTICE: His Office Asked For More$/), expect.stringMatching(/ \| PRESS: Update Your Résumé \(asked for\)$/), expect.stringMatching(/ \| PRESS: Send What His Office Asked For$/),
       expect.stringMatching(/ \| NOTICE: His Office Asked To Meet You$/), expect.stringMatching(/ \| NOTICE: You Met His Office$/), expect.stringMatching(/ \| NOTICE: He Offered You Representation$/), expect.stringMatching(/ \| PRESS: Decline The Agreement$/),
     ]);
-    expect(B.lines.find((l) => l.includes('| NOTICE | His Office Asked For More'))).toContain('has asked for an up-to-date résumé by');
+    expect(notice(B.lines, 'His Office Asked For More')).toContain('has asked for an up-to-date résumé by');
     expect(breaches(dc.universe, dc.now)).toEqual([]);
   });
 });
