@@ -104,7 +104,7 @@ export const DAY: readonly GuideEntry[] = [
       `The panel, Go, Skip It and the entries open with ${chapter('calendar')}.`,
       `Only a plan you made offers Skip It. A rehearsal with a classmate offers Call It Off, which opens with ${chapter('school')}. Anything else, such as a class or an appointment, has only Go and Stand Here.`,
       'To count as there, you need to be awake, out of hospital and in the commitment’s town when it runs. Yale Health’s assessment is the only commitment you can be at from a hospital bed. An injury that lays you up keeps you from everything else except the doctor, therapy, orientation and your own plans. The game never moves you to another town, and a plan is in the town where you made it.',
-      'An audition, a meeting at an agent’s office and a day of booked work are different: the trip there is taken as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.',
+      'An audition, a meeting at an agent’s office and a day of booked work are different: the game takes the trip there as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.',
     ],
     costs: [
       { label: 'Time', value: 'Reading the panel and opening entries doesn’t move the clock. Go spends the commitment’s own length, the figure its dialog gives.' },

@@ -113,7 +113,8 @@ describe('2. the calendar’s legend has a row for the career', () => {
     const html = drawn(sim, '/workspace/calendar');
     expect(html).toContain(`title="${career.description}"`);
     expect(html).toMatch(new RegExp(`<span class="cal-swatch" style="background:${career.colour}"></span>Career</span>`));
-    expect(html).toContain(`--event-colour:${career.colour}`);
+    // The pill's color comes in through the stylesheet's variable for it (`--event-colou?r`, the name the CSS keeps).
+    expect(html).toMatch(new RegExp(`--event-colou?r:${career.colour}`));
   });
 });
 
@@ -168,7 +169,7 @@ describe('T1: the Career screen’s own words, read on the built app', () => {
 describe('T1: the Calendar’s help says what the career’s commitments ask', () => {
   it('says an audition, a meeting at an agent’s office and a day of work take the trip as made, as their handlers do (held in play by tests/pro-work.test.ts, an audition in Brooklyn gone to from New Haven)', () => {
     const entry = GUIDE_BY_ID['day.calendar']!;
-    expect(entry.needs).toContain('An audition, a meeting at an agent’s office and a day of booked work are different: the trip there is taken as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.');
+    expect(entry.needs).toContain('An audition, a meeting at an agent’s office and a day of booked work are different: the game takes the trip there as made, so each asks only that you’re awake and not in hospital or laid up. The trip each way, which its dialog gives, doesn’t move the clock.');
     expect(entry.reads.find((r) => r.label === 'What Needs You There')!.value).toMatch(/the career’s auditions, meetings and work days$/);
   });
 });

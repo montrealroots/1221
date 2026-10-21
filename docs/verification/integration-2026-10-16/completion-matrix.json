@@ -7762,7 +7762,7 @@
    "saveLoad": "(none) | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
    "failure": "refusals said in the player's words: Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",
    "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
-   "evidence": "`pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts` | 7 test files | journey-agent.test.ts",
+   "evidence": "`pro.headshots`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts` | 8 test files | journey-agent.test.ts",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
@@ -7923,7 +7923,7 @@
    "saveLoad": "(none) | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
    "failure": "refusals said in the player's words: — (also submitRefusal) | Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The promised pay is posted by the pay's system, wired at integration; the agent's relationship and agreement are the agent's system's",
    "implementation": "`systems/projobs.ts` | OpportunitiesPane.tsx",
-   "evidence": "`pro.submit`: `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts` | 2 test files",
+   "evidence": "`pro.submit`: `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts` | 3 test files",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
@@ -7992,7 +7992,7 @@
    "saveLoad": "The Nights: A School production’s part goes on your résumé once its run has closed. | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
    "failure": "refusals said in the player's words: — (also resumeRefusal) | Built on 2026-10-20 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its commands are traced in docs/verification/connected-journey/TRACE.md. The materials are read by the Career screen alone until the agent’s and the work’s systems call materialsCheck",
    "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
-   "evidence": "`pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts` | 7 test files | journey-agent.test.ts",
+   "evidence": "`pro.update_resume`: `tests/journey-agent.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts` | 8 test files | journey-agent.test.ts",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
@@ -8015,7 +8015,7 @@
    "saveLoad": "The Career Screen: How each scene went at each showcase day stays on your professional record. | Person.pro.showcase: term, eligible, options, scenes (id, role, chosenAt, assignmentId, by, prep), performed (city, at, band, overall, scene), missed, outstanding; the pieces in school.coursework; DRAM 793b's course record",
    "failure": "refusals said in the player's words: — (also choiceRefusal) | Built on 2026-10-21 for brief 19 and tested by its builder; no audit row in docs/verification/audit/ has read it against the standard of docs/GAMEPLAY-COVERAGE.md, so it isn’t called Verified. Its command is traced in docs/verification/connected-journey/TRACE.md. The School’s follow-up after the showcase is the agent’s system’s, wired at integration",
    "implementation": "`systems/proshowcase.ts` | SchoolShowcase.tsx",
-   "evidence": "`school.choose_showcase`: `tests/pro-showcase.test.ts` ## Productions And Casting Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read. | 1 test files",
+   "evidence": "`school.choose_showcase`: `tests/pro-showcase.test.ts` ## Productions And Casting Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read. | 2 test files",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"

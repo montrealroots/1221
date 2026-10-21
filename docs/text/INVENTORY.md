@@ -17,12 +17,12 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4593 | 56967 | 3 | 106 | 369 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 292 | 1903 | 17601 | 0 | 267 | 25 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2550 | 14868 | 0 | 16 | 67 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2550 | 14869 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 197 | 779 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38776 | 593883 | 316 | 1391 | 3154 | 0 | 0 |
+| **All** | 4545 | 38776 | 593884 | 316 | 1391 | 3154 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -33,7 +33,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-pay | 30 | 1221 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 65 | 1972 | 65 | 0 | 0 | 0 |
-| frame | 505 | 33568 | 99 | 406 | 0 | 0 |
+| frame | 505 | 33569 | 99 | 406 | 0 | 0 |
 | health | 178 | 38772 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
@@ -3438,7 +3438,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM` | 2 | 0 | Retained | frame | Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#RUN_COLD` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule. | Reviewed And Retained |
 | `src/engine/content/guide/day.ts#RUN_HOT` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule. | Reviewed And Retained |
-| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 59 | 0 | Rewritten | frame | Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts | Rewritten And Verified |
+| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 59 | 0 | Rewritten | frame | Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the Calendar's help said every commitment asks you to be in its town; it says now that the career's auditions, meetings and work days take the trip as made and ask only that you're awake and not laid up, the trip not moving the clock. Held by tests/pro-app.test.ts | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [prerequisite]` | 1 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First | Pending |
 | `src/engine/content/guide/day.ts#DAY [immediate]` | 11 | 0 | Retained | frame | Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [optional]` | 10 | 0 | Retained | frame | Lines under Worth Doing With It, each one plain sentence on why the two features go together. | Rewritten And Verified |

@@ -211,9 +211,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten And Verified",
-  "hash": "ac39fddd8fac",
+  "hash": "e9a73d426975",
   "on": "2026-10-21",
-  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the stop said you're there if you're in its town of the career's commitments, whose handlers ask only that you're awake and not laid up, and said nothing of the trip each way, which doesn't move the clock; the Calendar's help said the same of every commitment. Each now says the career's rule. Held by tests/language-frame-ui.test.ts and tests/pro-app.test.ts"
+  "evidence": "Read at the clock's stop on the built app at an audition, a work day and a meeting, at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/, the stop surfaces): the Calendar's help said every commitment asks you to be in its town; it says now that the career's auditions, meetings and work days take the trip as made and ask only that you're awake and not laid up, the trip not moving the clock. Held by tests/pro-app.test.ts"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten And Verified",
