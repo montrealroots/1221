@@ -4349,8 +4349,8 @@
    },
    {
     "kind": "command",
-    "where": "tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong...’",
-    "asserts": "A referral asked of a student film the work loop finished; his office’s answer on the clock.",
+    "where": "tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the casting office of the play her work in was judged Strong...’",
+    "asserts": "A referral asked of a play the work loop finished (a student film until 2026-10-21); his office’s answer on the clock.",
     "reachesAction": true,
     "checksConsequence": true,
     "independent": true,
@@ -4513,7 +4513,7 @@
    {
     "kind": "command",
     "where": "tests/journey-career.test.ts ‘Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once...’",
-    "asserts": "Eligible on that part’s first day; joined through the command, the fee once; working dues from that job’s pay; base dues taken at the November billing.",
+    "asserts": "Eligible on that part’s first day; joined through the command, the fee once; working dues from that job’s pay; base dues taken at the May 2030 billing (November 2029’s until 2026-10-21).",
     "reachesAction": true,
     "checksConsequence": true,
     "independent": true,

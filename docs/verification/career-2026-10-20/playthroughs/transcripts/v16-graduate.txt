@@ -1,80 +1,161 @@
 August 4, 2029 at 10:15 AM | PRESS | Book A Headshot Session | done
 August 4, 2029 at 2:15 PM | PRESS | Make Your Résumé | done
-August 20, 2029 at 9:15 AM | PRESS | Submit Yourself for paper-moons | done
-August 22, 2029 at 10:00 AM | NOTICE | An Audition For Theo | The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Monday, August 27, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
-August 22, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for paper-moons | done
-August 22, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for paper-moons | done
-August 22, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for paper-moons | done
-August 22, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for paper-moons | done
-August 22, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for paper-moons | done
-August 22, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 22, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 23, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-August 27, 2029 at 9:15 AM | PRESS | Submit Yourself for eastview | done
-August 27, 2029 at 11:00 AM | STOP | Audition: Theo, Paper Moons | Go
+August 6, 2029 at 9:15 AM | PRESS | Submit Yourself for paper-moons-ivy | done
+August 8, 2029 at 10:00 AM | NOTICE | An Audition For Ivy | The film’s director wants to see you for Ivy in Paper Moons: an apartment in Brooklyn in New York, Monday, August 13, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 8, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
+August 8, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
+August 8, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
+August 8, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
+August 8, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
+August 8, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 8, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 9, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 13, 2029 at 9:15 AM | PRESS | Submit Yourself for winter-ledger-hester | done
+August 13, 2029 at 11:00 AM | STOP | Audition: Ivy, Paper Moons | Go
+August 15, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, August 20, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 15, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+August 15, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+August 15, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+August 15, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+August 15, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+August 15, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 15, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 16, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 16, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Ivy | The film’s director offers you Ivy in Paper Moons, a fictional student film. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work. The work is from September 10, 2029 to September 12, 2029, in New York. The offer stands until August 19, 2029 at 5:00 PM. | Accept The Offer, Decline The Offer
+August 16, 2029 at 5:45 PM | PRESS | Accept The Offer for paper-moons-ivy | done
+August 16, 2029 at 5:45 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
+August 16, 2029 at 6:45 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
+August 16, 2029 at 7:45 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
+August 16, 2029 at 8:45 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
+August 16, 2029 at 9:45 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
+August 17, 2029 at 9:45 AM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
+August 17, 2029 at 10:45 AM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
+August 17, 2029 at 12:15 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
+August 17, 2029 at 1:45 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
+August 17, 2029 at 3:15 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
+August 20, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+August 21, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Ostrander Vale Casting didn’t call you back for Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 27, 2029 at 9:45 AM | PRESS | Submit Yourself for eastview | done
 August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Sam | The producers ask for a self-tape for Sam in Last Bus To Eastview, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-August 29, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for eastview | done
-August 29, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for eastview | done
-August 29, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for eastview | done
-August 29, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for eastview | done
-August 29, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for eastview | done
-August 29, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 29, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 30, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for eastview | done
-August 30, 2029 at 9:45 AM | PRESS | Tape It for eastview | done
-August 30, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Theo | The film’s director offers you Theo in Paper Moons, a fictional student film. The pay is deferred: a student film pays its actors only if it earns money later, so nothing is paid for its three days of work. The work is from September 24, 2029 to September 26, 2029, in New York. The offer stands until September 2, 2029 at 5:00 PM. | Accept The Offer, Decline The Offer
-August 30, 2029 at 5:45 PM | PRESS | Accept The Offer for paper-moons | done
-August 30, 2029 at 5:45 PM | PRESS | Prepare the part (read) for paper-moons | done
-August 30, 2029 at 6:45 PM | PRESS | Prepare the part (read) for paper-moons | done
-August 30, 2029 at 7:45 PM | PRESS | Prepare the part (read) for paper-moons | done
-August 30, 2029 at 8:45 PM | PRESS | Prepare the part (lines) for paper-moons | done
-August 30, 2029 at 9:45 PM | PRESS | Prepare the part (lines) for paper-moons | done
-August 31, 2029 at 9:45 AM | PRESS | Prepare the part (lines) for paper-moons | done
-August 31, 2029 at 10:45 AM | PRESS | Prepare the part (rehearse) for paper-moons | done
-August 31, 2029 at 12:15 PM | PRESS | Prepare the part (rehearse) for paper-moons | done
-August 31, 2029 at 1:45 PM | PRESS | Prepare the part (rehearse) for paper-moons | done
-August 31, 2029 at 3:15 PM | PRESS | Prepare the part (rehearse) for paper-moons | done
+August 29, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for eastview | done
+August 29, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for eastview | done
+August 29, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for eastview | done
+August 29, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for eastview | done
+August 29, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for eastview | done
+August 29, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 29, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 30, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+August 30, 2029 at 10:00 AM | PRESS | Tape It for eastview | done
 September 1, 2029 at 12:00 AM | NOTICE | Unclaimed Money | $413,168 left unused in Chase Savings for three years went to the state’s unclaimed-property office. It can be claimed back from that office.
-September 5, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Sam | The producers offer you Sam in Last Bus To Eastview, a fictional non-union short film. It pays $125.00 a day for two days, an estimate. The work is from October 1, 2029 to October 2, 2029, in New York. The offer stands until September 8, 2029 at 5:00 PM. | Accept The Offer, Decline The Offer
-September 5, 2029 at 5:45 PM | PRESS | Accept The Offer for eastview | done
-September 5, 2029 at 5:45 PM | PRESS | Prepare the part (read) for eastview | done
-September 5, 2029 at 6:45 PM | PRESS | Prepare the part (read) for eastview | done
-September 5, 2029 at 7:45 PM | PRESS | Prepare the part (read) for eastview | done
-September 5, 2029 at 8:45 PM | PRESS | Prepare the part (lines) for eastview | done
-September 5, 2029 at 9:45 PM | PRESS | Prepare the part (lines) for eastview | done
-September 6, 2029 at 9:45 AM | PRESS | Prepare the part (lines) for eastview | done
-September 6, 2029 at 10:45 AM | PRESS | Prepare the part (rehearse) for eastview | done
-September 6, 2029 at 12:15 PM | PRESS | Prepare the part (rehearse) for eastview | done
-September 6, 2029 at 1:45 PM | PRESS | Prepare the part (rehearse) for eastview | done
-September 6, 2029 at 3:15 PM | PRESS | Prepare the part (rehearse) for eastview | done
-September 24, 2029 at 7:00 AM | STOP | Paper Moons: Shoot Day 1 | Go
-September 25, 2029 at 7:00 AM | STOP | Paper Moons: Shoot Day 2 | Go
-September 26, 2029 at 7:00 AM | STOP | Paper Moons: Shoot Day 3 | Go
-September 26, 2029 at 7:00 AM | NOTICE | You Wrapped Paper Moons | Paper Moons wrapped, and Theo is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about six months on, estimated. Update your résumé on the Portfolio tab to add it.
-September 26, 2029 at 6:00 PM | PRESS | Update Your Résumé | done
-October 1, 2029 at 7:00 AM | STOP | Last Bus To Eastview: Shoot Day 1 | Go
-October 2, 2029 at 7:00 AM | STOP | Last Bus To Eastview: Shoot Day 2 | Go
-October 2, 2029 at 7:00 AM | NOTICE | You Wrapped Last Bus To Eastview | Last Bus To Eastview wrapped, and Sam is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about five months on, estimated. Update your résumé on the Portfolio tab to add it.
-October 2, 2029 at 6:00 PM | PRESS | Update Your Résumé | done
-October 4, 2029 at 12:00 PM | NOTICE | Paid For Last Bus To Eastview | Ferrous Pictures paid $250.00 for the week of October 1, 2029, less $19.13 withheld for tax, so $230.87 went into your Chase Total Checking.
+September 5, 2029 at 5:00 PM | NOTICE | Not Cast As Sam | The producers cast another actor as Sam. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+September 10, 2029 at 7:00 AM | STOP | Paper Moons: Shoot Day 1 | Go
+September 11, 2029 at 7:00 AM | STOP | Paper Moons: Shoot Day 2 | Go
+September 12, 2029 at 7:00 AM | STOP | Paper Moons: Shoot Day 3 | Go
+September 12, 2029 at 7:00 AM | NOTICE | You Wrapped Paper Moons | Paper Moons wrapped, and Ivy is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about six months on, estimated. Update your résumé on the Portfolio tab to add it.
+September 12, 2029 at 6:00 PM | PRESS | Update Your Résumé | done
+October 8, 2029 at 9:30 AM | PRESS | Submit Yourself for route-nine | done
+October 10, 2029 at 10:00 AM | NOTICE | A Self-Tape For Jess | Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Sunday, October 14, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+October 10, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for route-nine | done
+October 10, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for route-nine | done
+October 10, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for route-nine | done
+October 10, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
+October 10, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+October 10, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 11, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 11, 2029 at 9:45 AM | PRESS | Tape It for route-nine | done
+October 15, 2029 at 12:45 PM | PRESS | Update Your Résumé | done
+October 17, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Jess | Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $280.00 a day for four days, the SAG-AFTRA Ultra Low Budget Day Performer minimum. The work is from November 12, 2029 to November 15, 2029, in New York. The offer stands until October 20, 2029 at 5:00 PM. | Accept The Offer, Decline The Offer
+October 17, 2029 at 5:45 PM | PRESS | Accept The Offer for route-nine | done
+October 17, 2029 at 5:45 PM | PRESS | Prepare the part (read) for route-nine | done
+October 17, 2029 at 6:45 PM | PRESS | Prepare the part (read) for route-nine | done
+October 17, 2029 at 7:45 PM | PRESS | Prepare the part (read) for route-nine | done
+October 17, 2029 at 8:45 PM | PRESS | Prepare the part (lines) for route-nine | done
+October 17, 2029 at 9:45 PM | PRESS | Prepare the part (lines) for route-nine | done
+October 18, 2029 at 9:45 AM | PRESS | Prepare the part (lines) for route-nine | done
+October 18, 2029 at 10:45 AM | PRESS | Prepare the part (rehearse) for route-nine | done
+October 18, 2029 at 12:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+October 18, 2029 at 1:45 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+October 18, 2029 at 3:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+October 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $194,736 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+November 1, 2029 at 9:00 AM | NOTICE | Actors’ Equity Association: $600.00 Paid | Initiation fee, part 1 of 3, the down payment: $600.00 was taken from your bank.
+November 1, 2029 at 9:00 AM | NOTICE | Actors’ Equity Association: $88.00 Paid | Basic dues, half a year: $88.00 was taken from your bank.
+November 12, 2029 at 7:00 AM | STOP | Static On Route 9: Shoot Day 1 | Go
+November 13, 2029 at 7:00 AM | STOP | Static On Route 9: Shoot Day 2 | Go
+November 14, 2029 at 7:00 AM | STOP | Static On Route 9: Shoot Day 3 | Go
+November 15, 2029 at 7:00 AM | STOP | Static On Route 9: Shoot Day 4 | Go
+November 15, 2029 at 7:00 AM | NOTICE | You Wrapped Static On Route 9 | Static On Route 9 wrapped, and Jess is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about 10 months on, estimated. Update your résumé on the Portfolio tab to add it.
+November 15, 2029 at 6:00 PM | PRESS | Update Your Résumé | done
+November 19, 2029 at 9:00 AM | PRESS | Submit Yourself for eastview | done
+November 21, 2029 at 10:00 AM | NOTICE | A Self-Tape For Sam | The producers ask for a self-tape for Sam in Last Bus To Eastview, due Sunday, November 25, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+November 21, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for eastview | done
+November 21, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for eastview | done
+November 21, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for eastview | done
+November 21, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for eastview | done
+November 21, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 1:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 2:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 2:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 3:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 3:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 4:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 4:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 5:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 5:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 6:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 6:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 7:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 7:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 8:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 8:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 9:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 21, 2029 at 9:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 22, 2029 at 9:00 AM | PRESS | Prepare the sides (lines) for eastview | done
+November 22, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 22, 2029 at 10:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 22, 2029 at 11:00 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 22, 2029 at 11:45 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 22, 2029 at 12:00 PM | NOTICE | Paid For Static On Route 9 | Dead Air Films paid $1,120.00 for the week of November 12, 2029, less $85.68 withheld for tax, so $1,034.32 went into your Chase Total Checking.

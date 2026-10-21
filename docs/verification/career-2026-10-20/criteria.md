@@ -32,7 +32,7 @@ Every other brief 18 item stays paused (its `criteria.md`).
 
 | ID | Closed when | Status |
 |---|---|---|
-| A1 | A student completing the degree normally goes from the final term, the showcase and Commencement into a career that carries every record below forward | Fixed And Verified: the School's side in `showcase/REPORT.md`, the career's in `playthroughs/REPORT.md` (life A, seed v1-12, from the last term's first day through the showcase, the follow-up, Commencement, the meeting, the agreement and a paid job; `tests/journey-career.test.ts`). Until 2026-10-21 it read Open: the career's side waited on the follow-up and the work |
+| A1 | A student completing the degree normally goes from the final term, the showcase and Commencement into a career that carries every record below forward | Fixed And Verified: the School's side in `showcase/REPORT.md`, the career's in `playthroughs/REPORT.md` (life A, seed v1-21, v1-12 until the seeds were found again on 2026-10-21, from the last term's first day through the showcase, the follow-up, Commencement, the meeting, the agreement and a paid job; `tests/journey-career.test.ts`). Until 2026-10-21 it read Open: the career's side waited on the follow-up and the work |
 | A2 | Seeking representation while enrolled is allowed (Yale publishes no rule against it); it never withdraws the student, and signing is neither employment nor permission to work | Fixed And Verified (`agent/REPORT.md`) |
 | A3 | Professional work while enrolled follows the Bulletin: in session it needs good standing and a request the chair recommends and the dean decides, rarely given, and refused where it takes Yale Rep or class time; unapproved work brings the academic step the Bulletin names; summer work is open unless the School holds the student for recess work; an F-1 student needs authorization the game can't give in session (CPT isn't offered for Acting) | Fixed And Verified (`work/REPORT.md`) |
 | A4 | A student who leaves before the degree keeps their history, says truthfully what training they had, and can pursue the same career routes the record supports | Fixed And Verified (`work/REPORT.md`) |
@@ -102,7 +102,7 @@ Each is a played run with its notices and records read, and a test:
 
 | ID | Case | Status |
 |---|---|---|
-| V1 | A graduating student carrying their history into the career | Fixed And Verified (`playthroughs/REPORT.md`, life A, seed v1-12, and life B; `tests/journey-career.test.ts`) |
+| V1 | A graduating student carrying their history into the career | Fixed And Verified (`playthroughs/REPORT.md`, life A, seed v1-21, and life B, seed v1-7, v1-12 and v1-5 until the seeds were found again on 2026-10-21 for the fictional agent and the parts; `tests/journey-career.test.ts`) |
 | V2 | An enrolled student pursuing a permitted opportunity | Fixed And Verified (`work/REPORT.md`) |
 | V3 | A player leaving without a degree | Fixed And Verified (`work/REPORT.md`) |
 | V4 | Early graduation unavailable, said so, per the Bulletin | Fixed And Verified (`showcase/REPORT.md`) |

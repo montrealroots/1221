@@ -11,7 +11,9 @@
  *   npx vite-node docs/verification/career-2026-10-20/playthroughs/play.ts -- seeds-b FROM TO OUTDIR
  *
  * `lives` writes, to OUTDIR, the transcript of each life in the order the player met it (each notice and question as
- * it came, each stop and how it was answered, each command pressed): `life-a-v1-12.txt`, `life-b-v1-5.txt`,
+ * it came, each stop and how it was answered, each command pressed): `life-a-v1-21.txt`, `life-b-v1-7.txt` (the seeds
+ * the searches chose again on a43b4f8f, 2026-10-21, with the fictional agent, the parts written for an actor, an actress
+ * or either, and commitments whose trips meet no longer both gone to; v1-12 and v1-5 until then),
  * `v16-graduate.txt` (the J01 save from 8283f80c, 4 August 2029, played to its first paid job) and `v16-mid-term.txt`
  * (the same life's save from 1 March 2029, played to its degree). `seeds-a` and `seeds-b` append one JSON line a seed
  * to OUTDIR/seeds-a.jsonl or OUTDIR/seeds-b.jsonl, each saying where that seed's life went and why.
@@ -35,6 +37,8 @@ import { graduatingActor, playTo, readNotices, transcriptFrom, unsignedActor, ty
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour, minute: 0 }, zone);
 const AGENT = AGENTS[0]!;
+const SEED_A = 'v1-21';
+const SEED_B = 'v1-7';
 const cross = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 const fixture = (name: string): Simulation => loadSave(deserialise(gunzipSync(readFileSync(`tests/fixtures/${name}.json.gz`)).toString('utf8')) as never);
 
@@ -68,24 +72,26 @@ if (mode === 'lives') {
   mkdirSync(out, { recursive: true });
   const write = (name: string, lines: string[]) => { writeFileSync(`${out}/${name}`, `${lines.join('\n')}\n`); console.log(`${name}: ${lines.length} lines`); };
 
-  // Life A, v1-12: from the last term's first morning to its November billing, then End It By Agreement.
+  // Life A: from the last term's first morning to its first billing as a SAG-AFTRA member, then End It By Agreement
+  // (v1-21's billing is 1 May 2030; until 2026-10-21, v1-12's was 1 November 2029, and the play stopped there by name).
   {
-    let sim = lastTermMorning('v1-12');
+    let sim = lastTermMorning(SEED_A);
     const t = transcriptFrom(sim);
     const player = { ...lifeAPlayer(), transcript: t };
-    while (sim.now < at(2029, 11, 2)) {
-      playTo(sim, Math.min(at(2029, 11, 2), sim.now + 7 * MS_DAY), player, (s) => (s.player.pro!.unionBills ?? []).some((b) => b.key === 'sag-aftra:dues:2029-11' && b.settled));
-      if ((sim.player.pro!.unionBills ?? []).some((b) => b.key === 'sag-aftra:dues:2029-11' && b.settled)) break;
+    const billed = (s: Simulation) => (s.player.pro!.unionBills ?? []).some((b) => b.key.startsWith('sag-aftra:dues:') && b.settled);
+    while (sim.now < at(2030, 6, 1)) {
+      playTo(sim, Math.min(at(2030, 6, 1), sim.now + 7 * MS_DAY), player, billed);
+      if (billed(sim)) break;
       sim = cross(sim);
     }
     const r = sim.execute({ kind: 'pro.end_agreement', payload: { how: 'agreement' } });
     t.lines.push(`${formatDateTime(sim.now, zone)} | PRESS | End It By Agreement | ${r.ok ? 'done' : r.error}`);
     readNotices(sim, t);
-    write('life-a-v1-12.txt', t.lines);
+    write(`life-a-${SEED_A}.txt`, t.lines);
   }
-  // Life B, v1-5: the reel cut only once the follow-up has come, the résumé made when asked, the agreement declined.
+  // Life B: the reel cut only once the follow-up has come, the résumé made when asked, the agreement declined.
   {
-    let sim = lastTermMorning('v1-5');
+    let sim = lastTermMorning(SEED_B);
     const t = transcriptFrom(sim);
     const player: Player = { career: graduatingActor({ reel: 'after-follow-up', resume: 'when-asked', agreement: 'decline' }), transcript: t };
     while (sim.now < at(2029, 6, 30) && sim.player.pro!.agreements[0]?.status !== 'declined') {
@@ -93,7 +99,7 @@ if (mode === 'lives') {
       sim = cross(sim);
     }
     readNotices(sim, t);
-    write('life-b-v1-5.txt', t.lines);
+    write(`life-b-${SEED_B}.txt`, t.lines);
   }
   // V16: the graduate's save from before brief 19, unsigned, to her first job paid.
   {
