@@ -103,8 +103,8 @@ offered and what would have changed it.
 
 1. `audition.json`: Career, **Opportunities**. Read In Progress: each audition says where, when, and how prepared you
    are. The preparation buttons (Break It Down, Learn The Lines, Rehearse It On Your Feet) say their time. Two are set
-   for 11 AM that day, Hester Vane in Hudson and Ivy in Brooklyn, and their notices said they clash.
-2. Press Advance or Go. On The Way and the stop should say you can be at only one: the clock stops at Hester Vane's, and
+   for 11 AM that day, Hester Vane in Hudson and Ivy in Brooklyn, and Ivy's notice said it clashes with Hester Vane's.
+2. Press Advance, past eleven. On The Way and the stop should say you can be at only one: the clock stops at Hester Vane's, and
    Ivy's is missed. Go to it, then read Settled: Ivy's says where you were.
 3. `offer.json`: the offer's card under Offers. Read The Project, The Part, What It Asks, When And Where, and Pay against
    the minimum it names. Accept The Offer.
@@ -117,7 +117,8 @@ enough to decide on; and whether you saw the clash coming in time to Ask For Ano
 1. `work-day.json`: 5 AM on the first shoot day, Desk Clerk in The Calloway Files. Press Go; the clock stops at the
    call. Go to it. Read the **Work** tab: promised pay and the commission expected, on what's paid over scale.
 2. `paid.json`: Career, Work, Finished Engagements. The pay should show gross, tax withheld, what reached you, and the
-   commission on its own line ($280.40 of $3,084.40: what's paid over scale, so you keep scale).
+   commission on its own line ($280.40 of $3,084.40). The work day's promised line said why that much: what's paid over
+   scale, so you keep scale.
 3. Open **Money**, Statements: the pay passed on from the agency's client trust account.
 4. Open **Papers**, Permission To Work: what the game read when you accepted the work.
 5. Back on Career, Work, Your Unions: Equity's payments and when the next is due. The Desk Clerk days made you
