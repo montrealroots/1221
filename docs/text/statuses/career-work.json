@@ -11,6 +11,12 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/systems/projobs.ts#againWords": {
+  "status": "Rewritten And Verified",
+  "hash": "e2b1fddeb11e",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts"
+ },
  "src/engine/systems/projobs.ts#agentTries": {
   "status": "Rewritten And Verified",
   "hash": "30d2d975c81f",
@@ -143,6 +149,18 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/systems/projobs.ts#lastPostingOf": {
+  "status": "Rewritten And Verified",
+  "hash": "73591088734d",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts"
+ },
+ "src/engine/systems/projobs.ts#lastTimeWords": {
+  "status": "Rewritten And Verified",
+  "hash": "45af62a943bc",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts"
+ },
  "src/engine/systems/projobs.ts#makeOffer": {
   "status": "Rewritten And Verified",
   "hash": "cc63b4aca539",
@@ -203,11 +221,17 @@
   "on": "2026-10-21",
   "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing"
  },
+ "src/engine/systems/projobs.ts#post": {
+  "status": "Rewritten And Verified",
+  "hash": "a28720469422",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts"
+ },
  "src/engine/systems/projobs.ts#post [opportunity]": {
   "status": "Rewritten And Verified",
-  "hash": "f4ee76932215",
+  "hash": "07808f5bb0eb",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts"
  },
  "src/engine/systems/projobs.ts#prepareRefusal": {
   "status": "Rewritten And Verified",
@@ -313,9 +337,9 @@
  },
  "src/engine/systems/projobs.ts#submit": {
   "status": "Rewritten And Verified",
-  "hash": "ea3ff84e065d",
+  "hash": "6ecad909c353",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts"
  },
  "src/engine/systems/projobs.ts#submitRefusal": {
   "status": "Rewritten And Verified",

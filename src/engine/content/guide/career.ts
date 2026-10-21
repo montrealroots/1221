@@ -646,6 +646,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     interpret: [
       'Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.',
       'Each role says it’s fictional: no real production is casting.',
+      'A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.',
     ],
     unavailable: [
       'You have no headshots, and every submission starts with one.',

@@ -482,6 +482,10 @@ describe('the agent and the work, as data', () => {
   it('names no part as the School names a classmate, so an audition’s notice can’t read as a classmate’s (Theo, Felix since, and Owen, Callum since, until the app’s walks found them, 2026-10-21)', () => {
     const given = new Set([...GIVEN_ACTOR, ...GIVEN_ACTRESS]);
     expect(PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => given.has(first))).toEqual([]);
+    // Nor as the short form of one, or one as the short form of a part (from 2026-10-21, brief 20: Sam, Robin since, and
+    // the classmate Samuel, whose notices read "Samuel: A Request For Help" beside "A Self-Tape For Sam").
+    const near = PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => [...given].some((g) => g.startsWith(first) || first.startsWith(g)));
+    expect(near).toEqual([]);
   });
 
   it('says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him', () => {

@@ -218,7 +218,9 @@ export interface ProjectTemplate {
  * part in it is written for the other, its own person in the same story, not the first one renamed, and named as no
  * classmate can be (`school.ts`'s given names): Callum beside Nell, Hester Vane beside Tobias Marsh, Ferris beside Wren,
  * Ivy beside Felix. Until then there were seven parts, one a project; Felix was Theo, and Callum Owen, until the walk
- * found classmates given each name (Theo Patel among them).
+ * found classmates given each name (Theo Patel among them). Robin was Sam until brief 20 (2026-10-21), which found Sam
+ * the short form of a classmate's given name, Samuel: "A Self-Tape For Sam" beside "Samuel: A Request For Help" in What
+ * Needs You could be read as the classmate's.
  */
 export const PROJECTS: readonly ProjectTemplate[] = [
   {
@@ -348,7 +350,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'Last Bus To Eastview', company: 'Ferrous Pictures', casting: 'the producers',
     medium: 'film', genres: ['romantic_comedy'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a bus depot in the Bronx' },
-    role: { part: 'Sam', size: 'lead', for: 'either', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', task: 'camera', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
+    role: { part: 'Robin', size: 'lead', for: 'either', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', task: 'camera', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
     union: 'none', contract: 'Non-Union',
     requirements: { ages: [21, 35], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },

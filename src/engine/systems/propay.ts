@@ -115,7 +115,10 @@ export const RELEASE_KIND = 'pro.pay.release';
 export const DUES_KIND = 'pro.pay.dues';
 /** The first day of a first SAG-AFTRA principal job: eligible to join from it. */
 export const SAG_ELIGIBLE_KIND = 'pro.pay.sag_eligible';
-/** Said by the School when the degree makes the actor a member of Equity (`setStanding`), so its fee is charged then. */
+/**
+ * Said by the School when the degree makes the actor a member of Equity (`setStanding`), and by the work loop when an
+ * Equity contract's first day does (`unionsFrom`, `systems/projobs.ts`, from 2026-10-21), so its fee is charged then.
+ */
 export const EQUITY_JOINED = 'pro.equity_joined';
 
 /**
@@ -634,7 +637,11 @@ function equityParts(sim: Simulation, since: Instant): UnionBill[] {
   }));
 }
 
-/** The Equity bills a membership begun now sets up: the down payment taken at once, the rest and the dues on the clock. */
+/**
+ * The Equity bills a membership begun now sets up: the down payment taken at once, the rest and the dues on the clock.
+ * Said by the School at the degree (`setStanding`) and by the work loop at an Equity contract's first day (`unionsFrom`,
+ * from 2026-10-21, brief 20).
+ */
 export function equityJoined(sim: Simulation, person: Person): void {
   const pro = person.pro;
   if (!pro?.equity || billsOf(sim, person).some((b) => b.union === 'equity')) return;
@@ -643,7 +650,10 @@ export function equityJoined(sim: Simulation, person: Person): void {
   const firstDues = addBill(sim, person, duesBill(sim, 'equity', nextBilling(sim.now)));
   const cur = saveCurrency(sim.universe);
   const zone = sim.zone;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Your Equity Initiation Fee', body: `You’re a member of ${UNIONS.equity.name} from your degree. Its initiation fee is ${formatMoney(usdIn(sim, UNIONS.equity.initiation), cur)}, paid within three years: ${formatMoney(parts[0]!.amount, cur)} down is due now, then ${spokenList(parts.slice(1).map((b) => `${formatMoney(b.amount, cur)} on ${formatDate(b.due, zone)}`))}. Basic dues are ${formatMoney(firstDues.amount, cur)} each May and November, from ${formatDate(firstDues.due, zone)}.`, importance: 60, route: '/workspace/career?tab=work' });
+  // How the membership came, said (from 2026-10-21, brief 20): an Equity contract's first day brings it as the degree does
+  // (`unionsFrom`, `systems/projobs.ts`), and until then nothing billed that one.
+  const how = pro.equity.how === 'contract' ? `from your first day under an Equity contract, ${formatDate(pro.equity.since, sim.zone)}` : 'from your degree';
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Your Equity Initiation Fee', body: `You’re a member of ${UNIONS.equity.name} ${how}. Its initiation fee is ${formatMoney(usdIn(sim, UNIONS.equity.initiation), cur)}, paid within three years: ${formatMoney(parts[0]!.amount, cur)} down is due now, then ${spokenList(parts.slice(1).map((b) => `${formatMoney(b.amount, cur)} on ${formatDate(b.due, zone)}`))}. Basic dues are ${formatMoney(firstDues.amount, cur)} each May and November, from ${formatDate(firstDues.due, zone)}.`, importance: 60, route: '/workspace/career?tab=work' });
   settle(sim, person, parts[0]!);
 }
 

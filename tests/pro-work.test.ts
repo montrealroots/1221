@@ -219,7 +219,8 @@ describe('J1: fictional roles, posted on a schedule', () => {
       const days = datesOf(o);
       expect(days.length).toBe(t.schedule.kind === 'shoot' ? t.schedule.days : (t.schedule.rehearsalWeeks * 5 + t.schedule.performanceWeeks * 6));
       expect(Math.round((startOfDay(days[0]!.from, zone) - startOfDay(o.postedAt, zone)) / MS_DAY)).toBeGreaterThanOrEqual(WORK.leadDays);
-      expect(o.history[0]!.words).toBe(`${t.casting.charAt(0).toUpperCase()}${t.casting.slice(1)} posted ${t.role.part} in ${t.project}.`);
+      // A part posted before says it's posted again and what came of it the last time (from 2026-10-21, brief 20's D4).
+      expect(o.history[0]!.words).toBe(`${t.casting.charAt(0).toUpperCase()}${t.casting.slice(1)} posted ${t.role.part} in ${t.project}${o.again ? ` again, a new casting of the part. The last time it was posted to you, on ${formatDate(o.again.postedAt, zone)}: ${o.again.outcome}` : '.'}`);
       // A project casts once a cycle: no second posting of it within ten weeks.
       expect(opps.filter((x) => x.projectId === o.projectId && Math.abs(x.postedAt - o.postedAt) < POSTING.againDays * MS_DAY)).toHaveLength(1);
     }
@@ -626,7 +627,7 @@ describe('A3: work while enrolled, by the Bulletin', () => {
     expect(found).toBeDefined();
     const { sim, o } = found!;
     expect(sim.player.pro!.outsideWork![0]!.status).toBe('approved');
-    expect(notices(sim).find((n) => n.startsWith('The Dean Approves Your Outside Work'))).toMatch(/^The Dean Approves Your Outside Work \| The chair of Acting recommended your request, and the dean approved it in writing: Sam in Last Bus To Eastview, two working days\. You’re in good standing, as a request needs\. .+ It takes (one class day|two class days), within the two the game allows\. The class days it takes are excused\.$/);
+    expect(notices(sim).find((n) => n.startsWith('The Dean Approves Your Outside Work'))).toMatch(/^The Dean Approves Your Outside Work \| The chair of Acting recommended your request, and the dean approved it in writing: Robin in Last Bus To Eastview, two working days\. You’re in good standing, as a request needs\. .+ It takes (one class day|two class days), within the two the game allows\. The class days it takes are excused\.$/);
     expect(acceptWarning(sim, sim.player, o)).toBe('The dean approved this work in term, so its class days are excused.');
     const r = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
     const e = sim.player.pro!.engagements.find((x) => x.id === r.engagementId)!;
@@ -1017,7 +1018,7 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     const film = PROJECTS.find((x) => x.kind === 'student-film')!;
     // TEST SETUP: an audition in person set for the student film, as `setRound` sets one: the round and its item.
     const audition = (id: string, when: number): Opportunity => {
-      const o: Opportunity = { id, projectId: film.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, auditionAt: when, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
+      const o: Opportunity = { id, projectId: film.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
       sim.player.pro!.opportunities.push(o);
       sim.schedule({ at: when, kind: AUDITION_KIND, label: `Audition: ${film.role.part}, ${film.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: 120, locationId: film.place.cityId, refType: 'pro.opportunity', refId: id, payload: { personId: sim.player.id, opportunityId: id, round: 0 } });
       return o;
@@ -1038,7 +1039,7 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     const brooklyn = PROJECTS.find((x) => x.kind === 'student-film' && writtenFor(x, sim.player))!;
     // TEST SETUP: auditions in person, as `setRound` sets one: the round and its item, with the trip from home.
     const audition = (id: string, t: typeof hudson, when: number): Opportunity => {
-      const o: Opportunity = { id, projectId: t.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, auditionAt: when, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
+      const o: Opportunity = { id, projectId: t.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
       sim.player.pro!.opportunities.push(o);
       sim.schedule({ at: when, kind: AUDITION_KIND, label: `Audition: ${t.role.part}, ${t.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: tripMinutes(sim.player.currentLocationId, t.place.cityId), locationId: t.place.cityId, refType: 'pro.opportunity', refId: id, payload: { personId: sim.player.id, opportunityId: id, round: 0 } });
       return o;
@@ -1070,7 +1071,7 @@ describe('availability and the School’s calls, checked and never drawn', () =>
       sim.player.pro!.relations[agent.id] = { agentId: agent.id, stage: 'meeting', since: sim.now, stageAt: sim.now, noticeShownAt: sim.now, via: { route: 'referral', at: sim.now, by: 'the film’s director' }, history: [], counts: {}, meeting };
       sim.schedule({ at: meetAt, kind: MEETING_KIND, label: 'Meeting At Halberd Talent', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, travelMinutes: 120, locationId: 'us-ny-newyork', refType: 'pro-meeting', refId: meeting.id, payload: { personId: sim.player.id, agentId: agent.id, meetingId: meeting.id } });
       const t = film(sim);
-      const o: Opportunity = { id: 'test-audition', projectId: t.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, auditionAt, rounds: [{ round: 'audition', form: 'in-person', at: auditionAt, status: 'set' }] };
+      const o: Opportunity = { id: 'test-audition', projectId: t.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'in-person', at: auditionAt, status: 'set' }] };
       sim.player.pro!.opportunities.push(o);
       sim.schedule({ at: auditionAt, kind: AUDITION_KIND, label: `Audition: ${t.role.part}, ${t.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: 120, locationId: t.place.cityId, refType: 'pro.opportunity', refId: o.id, payload: { personId: sim.player.id, opportunityId: o.id, round: 0 } });
       played(sim, Math.max(meetAt, auditionAt) + MS_DAY);
@@ -1099,7 +1100,7 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     const when = day.from + 3 * MS_HOUR;
     expect(when + WORK.auditionMinutes * 60_000).toBeLessThan(day.to);
     // TEST SETUP: an audition in person for the student film in that day's later hours, as `setRound` sets one.
-    const a: Opportunity = { id: 'test-after', projectId: film.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, auditionAt: when, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
+    const a: Opportunity = { id: 'test-after', projectId: film.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
     sim.player.pro!.opportunities.push(a);
     sim.schedule({ at: when, kind: AUDITION_KIND, label: `Audition: ${film.role.part}, ${film.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: 120, locationId: film.place.cityId, refType: 'pro.opportunity', refId: a.id, payload: { personId: sim.player.id, opportunityId: a.id, round: 0 } });
     played(sim, when + MS_HOUR);

@@ -21,7 +21,7 @@ import { BAND_LABEL } from '@/engine/systems/coursework';
 import { BRIEF, type BriefStep } from '@/engine/systems/briefs';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, chanceWords, conditionsFor, counted, datesOf, decidesAt,
+  DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, chanceWords, conditionsFor, counted, datesOf, decidesAt,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes, writtenFor, writtenForWords,
 } from '@/engine/systems/projobs';
@@ -67,6 +67,8 @@ function OpenRole({ o }: { o: Opportunity }) {
   return (
     <article className="card card-tight col gap-3">
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
+      {/* A part posted before says so, with what came of it the last time (from 2026-10-21, brief 20's D4). */}
+      {o.again && <p className="small" style={{ margin: 0 }}>{againWords(o)}</p>}
       <RoleFacts t={t} o={o} />
       <p className="small" style={{ margin: 0 }}>{`Submissions close ${formatWeekdayDate(o.submitBy, NY)} at ${formatTime(o.submitBy, NY)}.`}</p>
       {problems.length > 0 && <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{problems.map((p) => <li key={p}>{p}</li>)}</ul>}
@@ -277,6 +279,7 @@ export function OpportunitiesPane() {
             return (
               <article key={o.id} className="card card-tight col gap-2">
                 <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
+                {o.again && <p className="small" style={{ margin: 0 }}>{againWords(o)}</p>}
                 <RoleFacts t={t} o={o} />
                 <History o={o} />
               </article>

@@ -234,8 +234,9 @@ export interface Opportunity extends HasHistory {
   status: OpportunityStatus;
   postedAt: Instant;
   submitBy: Instant;
-  auditionAt?: Instant;
-  callbackAt?: Instant;
+  // `auditionAt` and `callbackAt` went on 2026-10-21 (brief 20's D1, values written and never read): the work loop set
+  // them beside each round's own `at` (`rounds`), which everything reads, and nothing read them. A save that has them
+  // keeps them, unread.
   offer?: { at: Instant; until: Instant; rate: RateId; amount?: Money; per: 'day' | 'week'; units: number };
   /** When it was settled, booked or not, and why, in the player's words. */
   resolvedAt?: Instant;
@@ -248,6 +249,12 @@ export interface Opportunity extends HasHistory {
   agreementId?: ProId;
   /** What the submission sent, as each material stood then: its id and when it was made (F4). */
   sent?: { kind: MaterialKind; id: ProId; made: Instant }[];
+  /**
+   * The last time the part was posted to the actor, where it had been, and how that ended, copied in when it's posted
+   * again (from 2026-10-21, brief 20's D4, `systems/projobs.ts`'s `post`): until then a part passed on, declined or missed
+   * came round ten weeks on as if for the first time, and while the production that had cast it was still running.
+   */
+  again?: { postedAt: Instant; status: OpportunityStatus; outcome?: string };
   /** The sides' preparation for the audition, in a practice brief's three parts. */
   prep?: PartPrep;
   /** The audition and, where the project has one, the callback: each as it was set, how it went, and what casting made of it. */
@@ -415,6 +422,12 @@ export interface ProRecord {
   unionBills?: UnionBill[];
   /** How many resolved opportunities and finished engagements were trimmed. */
   trimmed?: { opportunities: number; engagements: number };
+  /**
+   * The last time each part was posted to the actor, by the project's id, and how it ended, kept whole past the bounds
+   * (`OPPORTUNITIES_KEPT`) so a part posted again a year on still says what came of it before (from 2026-10-21, brief 20's
+   * D4, `systems/projobs.ts`): eleven parts at most.
+   */
+  lastPosted?: Record<string, { id: ProId; postedAt: Instant; status: OpportunityStatus; outcome?: string }>;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

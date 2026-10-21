@@ -21,7 +21,11 @@
    "src/engine/systems/projobs.ts#post [opportunity]",
    "src/engine/systems/projobs.ts#datesOf [shoot]",
    "src/engine/systems/projobs.ts#submit",
-   "src/ui/shell/sections.ts#SECTIONS [opportunities]"
+   "src/ui/shell/sections.ts#SECTIONS [opportunities]",
+   "src/engine/systems/projobs.ts#lastPostingOf",
+   "src/engine/systems/projobs.ts#lastTimeWords",
+   "src/engine/systems/projobs.ts#againWords",
+   "src/engine/systems/projobs.ts#post"
   ],
   "states": [
    "first use",
@@ -30,11 +34,12 @@
    "unavailable",
    "details",
    "history",
-   "assembled"
+   "assembled",
+   "repeated"
   ],
   "outcome": "Revised",
   "why": "New with brief 19's work loop: the roles posted each Monday, each a fictional project's, said fictional at the tab's head and in its own facts.",
-  "changes": "Written new to docs/STYLE.md: each role's project, part, what it asks, when and where with the trip, its pay (“It pays $125.00 a day for two days, an estimate.”) and its audition, each refusal under Submit Yourself in its practical words (“You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.”), and the agent-only offices named with why a player can’t reach them alone. From 2026-10-21, at the owner's word, What It Asks says first who the part is written for (“Written for an actress.”), and only a part written for the player or for either is posted to them; the agent-only offices are named once a project. The same day a student film's pay said why it's never paid in one sentence (`DEFERRED_WHY`), which Booked Work and the Work tab say too.",
+  "changes": "Written new to docs/STYLE.md: each role's project, part, what it asks, when and where with the trip, its pay (“It pays $125.00 a day for two days, an estimate.”) and its audition, each refusal under Submit Yourself in its practical words (“You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.”), and the agent-only offices named with why a player can’t reach them alone. From 2026-10-21, at the owner's word, What It Asks says first who the part is written for (“Written for an actress.”), and only a part written for the player or for either is posted to them; the agent-only offices are named once a project. The same day a student film's pay said why it's never paid in one sentence (`DEFERRED_WHY`), which Booked Work and the Work tab say too. From 2026-10-21 (brief 20's D4) a part posted again says so, on its card (“It’s a new casting of the part. The last time it was posted to you, on …: …”), in its record’s first line and in his notice when he submits you for it, where until then it read as the first posting did.",
   "evidence": [
    {
     "kind": "test",
@@ -47,6 +52,14 @@
    {
     "kind": "test",
     "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b20-career-history.test.ts: 'PLAYER JOURNEY: over seventy weeks unsigned, each part posted again comes ten weeks on or more and after the last day of the work its last posting cast, saying how that one ended'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b20-career-history.test.ts: 'PLAYER JOURNEY: a part posted again through him says so in his notice when he submits you for it'"
    }
   ]
  },

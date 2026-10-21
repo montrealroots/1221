@@ -68,7 +68,7 @@ import { PROJECTS, RATES, minimumOn, projectById, type ProjectKind, type Project
 import { agencyOf, agentById, type AgentField } from '../content/agents';
 import { IN_TOWN_MINUTES } from '../world/calendar';
 import {
-  activeAgreement, addCredit, currentOf, eligibilityOf, ensurePro, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit,
+  activeAgreement, addCredit, currentOf, eligibilityOf, ensurePro, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit, resolved,
   type Agreement, type AuditionRound, type Engagement, type MaterialProblem, type Opportunity, type OutsideWorkRequest, type PartPrep,
   type ProEventKind, type ProPayment,
 } from './pro';
@@ -86,7 +86,7 @@ import {
   termOf, termStart,
 } from './school';
 import { f1Of, usWorkAuthorized } from './permission';
-import { negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
+import { EQUITY_JOINED, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
 import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -132,7 +132,12 @@ export const WORK = {
 export const POSTING = {
   open: { 'student-film': 0.3, 'non-union-short': 0.25, 'ultra-low-budget': 0.15, lort: 0.12 } as Readonly<Partial<Record<ProjectKind, number>>>,
   agent: 0.2,
-  /** A project casts its role once a cycle: posted again only ten weeks after its last posting to the actor. */
+  /**
+   * A project casts its role once a cycle: posted again only ten weeks after its last posting to the actor, and only once
+   * the work that posting cast is over, as a new casting of the part (`againWords`). The second half from 2026-10-21
+   * (brief 20's D4): until then a stage part came round at ten weeks while the run it had cast was still in its
+   * rehearsals or on, and said nothing of the first time.
+   */
   againDays: 70,
 } as const;
 
@@ -409,11 +414,47 @@ export const writtenFor = (t: ProjectTemplate, person: Person): boolean => t.rol
 export const writtenForWords = (t: ProjectTemplate): string => `Written for ${t.role.for === 'either' ? 'an actor or an actress' : `an ${t.role.for}`}.`;
 
 /**
+ * The last time a part was posted to the actor before a moment: the latest posting the record keeps of it, or, once
+ * that's been trimmed (`OPPORTUNITIES_KEPT`), what `lastPosted` kept of it (from 2026-10-21, brief 20's D4). A posting
+ * still open past its window, as a long jump leaves one until the jump's postings are done, is read as closed then.
+ */
+export function lastPostingOf(person: Person, t: ProjectTemplate, before: Instant): { postedAt: Instant; status: Opportunity['status']; outcome?: string; live: boolean } | undefined {
+  const kept = (person.pro?.opportunities ?? []).filter((o) => o.projectId === t.id && o.postedAt < before).sort((a, b) => b.postedAt - a.postedAt)[0];
+  if (kept) {
+    if (kept.status === 'open' && kept.submitBy <= before) return { postedAt: kept.postedAt, status: 'lapsed', outcome: `Submissions for ${t.role.part} closed on ${formatDate(kept.submitBy, NY)}.`, live: false };
+    return { postedAt: kept.postedAt, status: kept.status, ...(kept.outcome ? { outcome: kept.outcome } : {}), live: !resolved(kept) };
+  }
+  const past = person.pro?.lastPosted?.[t.id];
+  return past && past.postedAt < before ? { postedAt: past.postedAt, status: past.status, ...(past.outcome ? { outcome: past.outcome } : {}), live: false } : undefined;
+}
+
+/**
+ * Whether a part can be posted to the actor again at a moment: never posted, or its last posting ten weeks back or more
+ * (`POSTING.againDays`), settled, and the work it cast over, its last day passed (`datesOf`), so a new casting can't fall
+ * while the production that cast the part is still in rehearsal, running or shooting. The last two from 2026-10-21 (brief
+ * 20's D4): until then ten weeks alone held it, and a run's part came round in its fifth week of rehearsals.
+ */
+export function postedAgainBy(person: Person, t: ProjectTemplate, at: Instant): boolean {
+  const last = lastPostingOf(person, t, at);
+  if (!last) return true;
+  if (at - last.postedAt < POSTING.againDays * MS_DAY || last.live) return false;
+  return datesOf({ projectId: t.id, postedAt: last.postedAt }).at(-1)!.to <= at;
+}
+
+/** What came of a part the last time it was posted, as a sentence: "The last time it was posted to you, on March 2, 2030: …". */
+export function lastTimeWords(again: NonNullable<Opportunity['again']>): string {
+  return `The last time it was posted to you, on ${formatDate(again.postedAt, NY)}${again.outcome ? `: ${again.outcome}` : '.'}`;
+}
+
+/** A part posted again, as its card and the agent's notice say it (from 2026-10-21, brief 20's D4). */
+export const againWords = (o: Pick<Opportunity, 'again'>): string | undefined => (o.again ? `It’s a new casting of the part. ${lastTimeWords(o.again)}` : undefined);
+
+/**
  * What a week's postings bring the actor (the decider `pro.posting`): each project drawn at its chance, its own draw
- * by the week and the way it comes, and none posted again within `POSTING.againDays` of its last. Reads the
- * representation in force that Monday, who each part is written for (`writtenFor`) and the postings the record holds;
- * draws nothing else. A part written for someone else isn't drawn for, and each project's draw is its own, so leaving
- * one out moves no other's.
+ * by the week and the way it comes, and none posted again before `postedAgainBy` lets it. Reads the representation in
+ * force that Monday, who each part is written for (`writtenFor`) and the postings the record holds; draws nothing else.
+ * A part written for someone else isn't drawn for, and each project's draw is its own, so leaving one out moves no
+ * other's.
  */
 export function postingsAt(sim: Simulation, person: Person, at: Instant): { project: ProjectTemplate; via: 'agent' | 'open' }[] {
   const agreement = activeAgreement(person, at);
@@ -423,7 +464,7 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
     if (!writtenFor(t, person)) continue;
     const via = reachOf(t, agreement);
     if (!via) continue;
-    if (person.pro?.opportunities.some((o) => o.projectId === t.id && o.postedAt < at && at - o.postedAt < POSTING.againDays * MS_DAY)) continue;
+    if (!postedAgainBy(person, t, at)) continue;
     // A role the actor has been booked for isn't posted to them again: until 2026-10-21 it came round after its ten weeks
     // and could be booked and credited a second time (two Desk Clerks in The Calloway Files, found by the playthroughs).
     // Read from the engagements, live or kept, and from the credits, which are kept for good where finished engagements are
@@ -894,13 +935,19 @@ function post(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant, 
   const pro = ensurePro(sim, person);
   if (pro.opportunities.some((o) => o.projectId === t.id && o.postedAt === at)) return undefined;
   const agreement = via === 'agent' ? activeAgreement(person, at) : undefined;
+  // A part posted before is posted again as a new casting of it, with what came of it the last time (from 2026-10-21,
+  // brief 20's D4: until then its words were the first posting's, as if it had never come).
+  const last = lastPostingOf(person, t, at);
   const o: Opportunity = {
     id: sim.nextId('pro'), projectId: t.id, via, status: 'open', postedAt: at, submitBy: addDays(at, WORK.submitDays, NY), history: [], counts: {},
     ...(agreement ? { agentId: agreement.agentId, agreementId: agreement.id } : {}),
+    ...(last ? { again: { postedAt: last.postedAt, status: last.status, ...(last.outcome ? { outcome: last.outcome } : {}) } } : {}),
   };
   pro.opportunities.push(o);
+  (pro.lastPosted ??= {})[t.id] = { id: o.id, postedAt: at, status: 'open' };
   const agent = agentFor(o);
-  note(sim, person, o, { kind: 'opportunity', key: 'posted', words: agent ? `${castingAs(t)}’s breakdown for ${t.role.part} in ${t.project} came to ${agent.name}.` : `${castingAs(t)} posted ${t.role.part} in ${t.project}.` });
+  const again = o.again ? ` again, a new casting of the part. ${lastTimeWords(o.again)}` : '.';
+  note(sim, person, o, { kind: 'opportunity', key: 'posted', words: agent ? `${castingAs(t)}’s breakdown for ${t.role.part} in ${t.project} came to ${agent.name}${again}` : `${castingAs(t)} posted ${t.role.part} in ${t.project}${again}` });
   return o;
 }
 
@@ -914,7 +961,7 @@ function submit(sim: Simulation, person: Person, o: Opportunity): void {
   const agent = agentFor(o);
   const words = `${agent ? `${agent.name} submitted you` : 'You submitted yourself'} for ${t.role.part} in ${t.project}, sending ${spokenList(sent)}.`;
   note(sim, person, o, { kind: 'submitted', key: 'submitted', words });
-  if (agent) tell(sim, person, `Submitted For ${t.role.part}`, `${words} ${castingAs(t)} ${agrees(t, 'answers', 'answer')} on ${formatWeekdayDate(dayAt(addDays(sim.now, WORK.replyDays, NY), WORK.replyHour), NY)}.`, 60);
+  if (agent) tell(sim, person, `Submitted For ${t.role.part}`, `${words}${o.again ? ` ${againWords(o)}` : ''} ${castingAs(t)} ${agrees(t, 'answers', 'answer')} on ${formatWeekdayDate(dayAt(addDays(sim.now, WORK.replyDays, NY), WORK.replyHour), NY)}.`, 60);
   sim.schedule({
     at: dayAt(addDays(sim.now, WORK.replyDays, NY), WORK.replyHour), kind: REPLY_KIND, label: `Casting Answers: ${t.role.part}`, category: 'career', priority: 40,
     refType: 'pro.opportunity', refId: o.id, payload: { personId: person.id, opportunityId: o.id },
@@ -944,6 +991,8 @@ function settle(sim: Simulation, person: Person, o: Opportunity, status: Opportu
   o.status = status;
   o.resolvedAt = sim.now;
   o.outcome = outcome;
+  const last = person.pro?.lastPosted?.[o.projectId];
+  if (last?.id === o.id) Object.assign(last, { status, outcome });
   sim.resolveDecision('pro.offer', o.id, 'career');
   keepBounded(ensurePro(sim, person));
 }
@@ -963,7 +1012,6 @@ function setRound(sim: Simulation, person: Person, o: Opportunity, which: 'audit
   rounds.push(r);
   const idx = rounds.length - 1;
   o.status = which;
-  if (which === 'audition') o.auditionAt = at; else o.callbackAt = at;
   const trip = tripMinutes(person.currentLocationId, t.place.cityId);
   const name = which === 'callback' ? 'Callback' : 'Audition';
   let itemId: string | undefined;
@@ -1236,10 +1284,18 @@ function reportUnapproved(sim: Simulation, person: Person, e: Engagement, t: Pro
   setStanding(sim, person, to, `You took outside work in term without the School’s approval: ${t.role.part} in ${t.project}. The Bulletin treats it as a conflict of interest, which may lead to academic warning or dismissal.`);
 }
 
-/** The unions a first day brings: Equity by an Equity contract (S25), SAG-AFTRA eligibility by a principal role under TV/Theatrical or Low Budget (S20, S22). */
+/**
+ * The unions a first day brings: Equity by an Equity contract (S25), SAG-AFTRA eligibility by a principal role under
+ * TV/Theatrical or Low Budget (S20, S22). Equity by a contract is billed as Equity by the degree is, its initiation fee
+ * and dues from that day (`EQUITY_JOINED`, `systems/propay.ts`): until 2026-10-21 (brief 20) only the degree's membership
+ * said so, and a member by a contract paid Equity's working dues from the pay and never its fee or its basic dues.
+ */
 function unionsFrom(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant): void {
   const pro = ensurePro(sim, person);
-  if (t.union === 'equity' && !pro.equity) pro.equity = { since: at, how: 'contract' };
+  if (t.union === 'equity' && !pro.equity) {
+    pro.equity = { since: at, how: 'contract' };
+    sim.emit(EQUITY_JOINED, { personId: person.id });
+  }
   if (t.union === 'sag-aftra' && (t.kind === 'network-drama' || t.kind === 'low-budget') && !pro.sag?.eligibleSince && !pro.sag?.memberSince) pro.sag = { ...(pro.sag ?? {}), eligibleSince: at };
 }
 
@@ -1468,7 +1524,6 @@ export function registerProJobs(sim: Simulation): void {
     const was = r.at;
     r.at = to;
     r.moved = (r.moved ?? 0) + 1;
-    if (r.round === 'audition') o!.auditionAt = to; else o!.callbackAt = to;
     const t = projectOf(o!);
     note(s, person, o!, { kind: r.round, key: `${r.round}:moved`, words: `At your asking, ${t.casting} moved your ${r.round} for ${t.role.part} from ${formatDate(was, NY)} at ${formatTime(was, NY)} to ${formatWeekdayDate(to, NY)} at ${formatTime(to, NY)}.` });
     return { at: to };
