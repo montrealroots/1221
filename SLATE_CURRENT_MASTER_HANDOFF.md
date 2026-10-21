@@ -5,13 +5,17 @@
 verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed. There is no stash and one worktree.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 19's gate on the final game, 2026-10-21, in a clean clone of `4aac9a94`, exit 0 read from its file: 423 of 423
+  test files, 5,092 of 5,092 tests, none skipped, and all 21 checks (`final-runs/runs/gate.txt`). Its figure folded in,
+  this said 633 of 658 until then. The 20 left are earlier briefs' rows, as before: twelve commands no current life can
+  reach and eight banking decisions for the owner.)
 
   (Brief 19's final runs made again on the final game, 2026-10-21: the lanes that read the engine on `63fe7391`, the built
   app's on `ef2ab8b9`, which changed only `src/ui/shell/TimeControls.tsx` after it; 197 steps, every one exit 0, and every
   output the first run's but each run's own record and one dialog count (`final-runs/runs/README.md`, Made Again). Until
-  them this said 588 of 658. The row short of the 634 the first run's fold reached is the gate's, its figure from
-  `a6b82e07` until the gate runs on the commit that holds these runs.)
+  them this said 588 of 658, and 633 of 658 after them, the gate's row then reading `a6b82e07`'s figure.)
 
   (The owner's parts, 2026-10-21: "There should be gender neutral and different parts for each genders. We need
   versatility always." Each part is written for an actor, an actress or either, and only one written for the player or
@@ -100,9 +104,11 @@ none of it is in `main`, and nothing is deployed. There is no stash and one work
   (`integration/mutations.txt`, I9 to I27): reliability counting a missed day twice, a role posted again after it was
   booked, Low Budget pay held at 2026–27's figure, "went on 1 time", Equity's ending while employed (S27) and its 90
   days extended by employment (S29).
-- **Done (2026-10-21):** brief 19's final runs on `728b4972` (`docs/verification/career-2026-10-20/final-runs/`), the
-  matrix folded from them, the full gate in a clean clone (exit 0), and the receipt
-  (`docs/verification/career-2026-10-20/README.md`). Until then this listed them as still to do. Brief 19's criteria:
+- **Done (2026-10-21):** brief 19's final runs on `728b4972` (`docs/verification/career-2026-10-20/final-runs/`), and
+  again on the final game once the fictional agent, the parts and the walks' fixes had changed `src` (`63fe7391` for the
+  engine's lanes, `ef2ab8b9` for the built app's); the matrix folded from them; the full gate in a clean clone of
+  `4aac9a94` (exit 0); and the receipt (`docs/verification/career-2026-10-20/README.md`). Until then this listed them as
+  still to do. Brief 19's criteria:
   59 of 60 Fixed And Verified; V17's person's look at desktop and mobile is the owner's (`PLAYTEST.md` is the route).
 - **Nothing merged or deployed:** merging to `main` and any Base44 deployment wait on the owner.
 - **The agent is fictional** (2026-10-21, the owner's decision: "Let's go ahead and swap in a fictional agent."): Thomas

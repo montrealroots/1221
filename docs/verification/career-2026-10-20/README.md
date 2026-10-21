@@ -110,10 +110,11 @@ record and one dialog count (24 at 1440 in the normal interface playthrough, bri
 
 ## The Gate
 
-`npm run gate` in a clean clone of `a6b82e07`, the commit that holds every final run's record, its exit read from the
-file it wrote (`final-runs/runs/gate.txt`): **exit 0**. 421 of 421 test files and 5,080 of 5,080 tests passed, none
-skipped, then all 21 checks, the completion matrix last. After it came documents only: this receipt, the gate's own
-figure folded in, the criteria's V18 and the handoff.
+`npm run gate` in a clean clone of `4aac9a94`, the commit that holds every final run's record from the final game, its
+exit read from the file it wrote (`final-runs/runs/gate.txt`): **exit 0**. 423 of 423 test files and 5,092 of 5,092 tests
+passed, none skipped, then all 21 checks, the completion matrix last. After it came documents only: the gate's own figure
+folded in, this receipt, the criteria's V18 and the handoff. The first gate, on `a6b82e07` before the swap, passed too (421
+of 421 files, 5,080 of 5,080 tests); its file is `final-runs/runs/at-728b4972/gate-a6b82e07.txt`.
 
 ## Completion
 
@@ -122,7 +123,8 @@ figure folded in, the criteria's V18 and the handoff.
 - **The completion matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification
   Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly
   Deferred. The 20 are earlier briefs' rows: twelve commands no current life can reach and eight banking decisions for the
-  owner. It read 566 of 636 before brief 19's core merged; the parts' new rows, the audit's four readings and the final
+  owner. The fictional agent and what followed it took it to 588 of 658 until the runs were made again on the final game
+  and this gate folded in. It read 566 of 636 before brief 19's core merged; the parts' new rows, the audit's four readings and the final
   runs moved it (the handoff's top section has each step).
 
 Test counts aren't a claim that the career is finished or right: they say what was checked. What wasn't is said above
