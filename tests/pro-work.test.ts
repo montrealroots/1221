@@ -509,7 +509,7 @@ describe('J3: the agent’s part, while an agreement is in force', () => {
       if (!o) continue;
       // Held: no headshots, said in his procedural words, with the line that marks them invented.
       const held = notices(sim).find((n) => n.startsWith('Not Submitted For Jess'));
-      expect(held).toBe(`Not Submitted For Jess | ${agent.name} didn’t submit you for Jess in Static On Route 9. You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab. You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record. ${agent.name} can still submit you until ${new Intl.DateTimeFormat('en-US', { timeZone: zone, month: 'long', day: 'numeric', year: 'numeric' }).format(o.submitBy)}, once that’s put right. ${agent.fictional}`);
+      expect(held).toBe(`Not Submitted For Jess | ${agent.name} didn’t submit you for Jess in Static On Route 9. You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab. You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record. ${agent.name} can still submit you until ${new Intl.DateTimeFormat('en-US', { timeZone: zone, month: 'long', day: 'numeric', year: 'numeric' }).format(o.submitBy)}, once that’s put right.`);
       // The player can't submit for him.
       expect(submitRefusal(sim, sim.player, o)).toBe(`${agent.name} submits you for this one: Brisbane Hall Casting takes submissions only from agents.`);
       portfolio(sim);
@@ -517,9 +517,9 @@ describe('J3: the agent’s part, while an agreement is in force', () => {
       expect(o.status).toBe('submitted');
       // Said once: a problem put right brought no second message.
       expect(notices(sim).filter((n) => n.startsWith('Not Submitted For Jess'))).toHaveLength(1);
-      expect(notices(sim).find((n) => n.startsWith('Submitted For Jess'))).toMatch(new RegExp(`^Submitted For Jess \\| ${agent.name} submitted you for Jess in Static On Route 9, sending your headshots from .+ and your résumé from .+\\. Brisbane Hall Casting answers on .+\\. ${agent.fictional}$`));
+      expect(notices(sim).find((n) => n.startsWith('Submitted For Jess'))).toMatch(new RegExp(`^Submitted For Jess \\| ${agent.name} submitted you for Jess in Static On Route 9, sending your headshots from .+ and your résumé from .+\\. Brisbane Hall Casting answers on .+\\.$`));
       played(sim, sim.now + 3 * MS_DAY);
-      expect(notices(sim).find((n) => n.startsWith('A Self-Tape For Jess'))).toMatch(new RegExp(`^A Self-Tape For Jess \\| ${agent.name} passed this on: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due .+\\. ${agent.fictional}$`));
+      expect(notices(sim).find((n) => n.startsWith('A Self-Tape For Jess'))).toMatch(new RegExp(`^A Self-Tape For Jess \\| ${agent.name} passed this on: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due .+\\.$`));
       while (o.status === 'audition' || o.status === 'callback') playRound(sim, o);
       if (o.status === 'offered') { found = { sim, o, a }; break; }
     }
@@ -536,7 +536,7 @@ describe('J3: the agent’s part, while an agreement is in force', () => {
     expect(o.offer!.at).toBe(o.history.find((h) => h.kind === 'offer')!.at);
     const d = Object.values(sim.universe.decisions).find((x) => x.refId === o.id)!;
     expect(d.detail).toContain(`${agent.name} passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $282.70 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $257.00.`);
-    expect(d.detail.endsWith(agent.fictional)).toBe(true);
+    expect(d.detail).not.toMatch(/Fictional:/);
     const r = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
     const e = sim.player.pro!.engagements.find((x) => x.id === r.engagementId)!;
     expect([o.agentId, o.agreementId, e.agentId, e.agreementId]).toEqual([agent.id, a.id, agent.id, a.id]);
@@ -800,9 +800,9 @@ describe('V12: a scheduling conflict, said and handled', () => {
     const agent = AGENTS[0]!;
     const meeting = { id: 'test-meeting', at: meetAt, where: 'office' as const, moved: 0, status: 'set' as const };
     sim.player.pro!.relations[agent.id] = { agentId: agent.id, stage: 'meeting', since: sim.now, stageAt: sim.now, noticeShownAt: sim.now, via: { route: 'referral', at: sim.now, by: 'the film’s director' }, history: [], counts: {}, meeting };
-    sim.schedule({ at: meetAt, kind: MEETING_KIND, label: 'Meeting At Stewart Talent', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, travelMinutes: 120, locationId: 'us-ny-newyork', refType: 'pro-meeting', refId: meeting.id, payload: { personId: sim.player.id, agentId: agent.id, meetingId: meeting.id } });
+    sim.schedule({ at: meetAt, kind: MEETING_KIND, label: 'Meeting At Halberd Talent', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, travelMinutes: 120, locationId: 'us-ny-newyork', refType: 'pro-meeting', refId: meeting.id, payload: { personId: sim.player.id, agentId: agent.id, meetingId: meeting.id } });
     // Away from nine, when the School counts the day's classes, to two in the afternoon: the trip, the hour, the trip.
-    expect(awayAt(sim.player, at(p.year, p.month, p.day, 9))).toEqual({ label: 'Meeting At Stewart Talent', approved: false });
+    expect(awayAt(sim.player, at(p.year, p.month, p.day, 9))).toEqual({ label: 'Meeting At Halberd Talent', approved: false });
     expect(awayAt(sim.player, at(p.year, p.month, p.day, 14, 1))).toBeUndefined();
     for (const s of [sim, twin]) played(s, at(p.year, p.month, p.day, 20));
     expect(sim.player.pro!.relations[agent.id]!.meeting!.status).toBe('kept');

@@ -128,14 +128,14 @@ describe('G1: the notice where he first appears', () => {
     expect(relationOf(sim.player, AGENT.id)).toBeUndefined();
     expect(nextStep(sim, sim.player, AGENT)).toBe('Read the notice at the top of his panel, then press I’ve Read This.');
     // Every other step waits for it, said in words.
-    expect(run(sim, 'pro.agent_check').error).toBe('Read the notice about Jordan Parente first: it’s at the top of his panel.');
-    expect(run(sim, 'pro.send_materials').error).toBe('Read the notice about Jordan Parente first: it’s at the top of his panel.');
-    expect(AGENT.notice).toBe('Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: he hasn’t seen your work, and he isn’t involved with the game. Stewart Talent’s New York legit department doesn’t accept unsolicited submissions, so please don’t contact the agency about the game.');
+    expect(run(sim, 'pro.agent_check').error).toBe('Read the notice about Thomas Ashgrove first: it’s at the top of his panel.');
+    expect(run(sim, 'pro.send_materials').error).toBe('Read the notice about Thomas Ashgrove first: it’s at the top of his panel.');
+    expect(AGENT.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
     sim.must({ kind: 'pro.agent_notice', payload: {} });
     const r = rel(sim);
     expect(r.stage).toBe('discovered');
     expect(r.noticeShownAt).toBe(sim.now);
-    expect(r.history.map((e) => [e.kind, e.key, e.words])).toEqual([['discovered', 'discovered', 'You read the notice about him: a real agent, whose words and decisions in the game are invented.']]);
+    expect(r.history.map((e) => [e.kind, e.key, e.words])).toEqual([['discovered', 'discovered', 'You read the notice about him and Halberd Talent.']]);
     // Read once: a second press is refused, and says where to read it again.
     expect(run(sim, 'pro.agent_notice').error).toBe('You read it on August 24, 2026. Read The Notice Again shows it whenever you want it.');
     expect(reload(sim).player.pro!.relations[AGENT.id]!.history).toEqual(r.history);
@@ -174,7 +174,7 @@ describe('G4 and G6: the factors, the draw, and a reload that can’t redraw', (
     expect(f.fit).toMatchObject({ level: 'beyond', words: 'You have professional work in his department’s fields (Television, Film, Broadway, Off-Broadway, National Tours and Regional Theater).' });
     expect(f.availability).toMatchObject({ level: 'beyond', words: 'Free for work, with nothing booked. You’re a US citizen, so you can work for any employer in the US. You’re based in New Haven, within reach of his office in New York.' });
     expect(f.reliability).toMatchObject({ level: 'at', words: 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.' });
-    expect(f.roster!.words).toMatch(/^Assumed for 2026: room for .+\. Your record shows you as a lead, aged 24, so .+\. How many new actors his list takes on in a year, and of which types, is assumed in the game\. The game knows nothing of his real list and uses none of it\.$/);
+    expect(f.roster!.words).toMatch(/^Assumed for 2026: room for .+\. Your record shows you as a lead, aged 24, so .+\. How many new actors his list takes on in a year, and of which types, is assumed in the game\.$/);
     expect(i.gate).toBe(true);
     // A first-year with nothing his office could go on is short of the gate: four needed, fewer at the bar.
     const first = student('agent-first-year');
@@ -283,7 +283,7 @@ describe('W3: the School’s follow-up after the showcase', () => {
     expect(sim.player.pro!.showcase!.followUp).toEqual({ at: at(2026, 9, 6, 10), agents: [AGENT.id] });
     expect(rel(sim)).toMatchObject({ stage: 'introduced', via: { route: 'showcase', by: 'the School' }, noticeShownAt: at(2026, 9, 6, 10) });
     const said = notices(sim);
-    expect(said).toEqual([`The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with, and Jordan Parente’s office at Stewart Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by October 6, 2026, and his office sets a time. ${AGENT.notice} In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there. Fictional: his words and decisions here are invented.`]);
+    expect(said).toEqual([`The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with, and Thomas Ashgrove’s office at Halberd Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by October 6, 2026, and his office sets a time. ${AGENT.notice} In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there.`]);
     expect(said[0]).not.toMatch(/\b(attended|saw you|was at the showcase)\b/);
     // The showcase is among the work his office has to go on, by its judged band.
     expect(rel(sim).why!.factors[0]).toMatchObject({ id: 'work', level: 'at', words: 'His office has your showcase scenes, as the School recorded them, at best Strong.' });
@@ -294,7 +294,7 @@ describe('W3: the School’s follow-up after the showcase', () => {
     expect(rel(sim).history.at(-1)!.words).toBe('You sent your headshots and your résumé to his office, after the School’s follow-up, answering its request to meet.');
     tended(sim, at(2026, 9, 13, 12));
     expect(rel(sim).stage).toBe('meeting');
-    expect(notices(sim).at(-1)).toMatch(/^A Meeting Is Set At Stewart Talent: Jordan Parente’s office at Stewart Talent has set the meeting it asked the School to pass on: /);
+    expect(notices(sim).at(-1)).toMatch(/^A Meeting Is Set At Halberd Talent: Thomas Ashgrove’s office at Halberd Talent has set the meeting it asked the School to pass on: /);
   });
 
   it('asks from the factors, the showcase’s band among them, never for certain: a weaker showcase in the same life is no request, and a performance never made is no follow-up', () => {
@@ -315,7 +315,7 @@ describe('W3: the School’s follow-up after the showcase', () => {
     scheduleShowcaseFollowUp(working, working.player, working.now);
     tended(working, at(2026, 9, 6, 12));
     expect(working.player.pro!.showcase!.followUp!.agents).toEqual([]);
-    expect(notices(working)[0]).toMatch(/^The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with\. Jordan Parente’s office at Stewart Talent sent no request to meet, but the follow-up is an introduction: you can send it your materials from the Career screen’s Representation tab\./);
+    expect(notices(working)[0]).toMatch(/^The School’s Follow-Up After The Showcase: The School passed your showcase on to the agencies it follows up with\. Thomas Ashgrove’s office at Halberd Talent sent no request to meet, but the follow-up is an introduction: you can send it your materials from the Career screen’s Representation tab\./);
     expect(rel(working).stage).toBe('introduced');
     const none = graduate(seed);
     none.player.pro!.showcase = { term: 5, scenes: [], performed: [] };

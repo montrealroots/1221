@@ -123,22 +123,22 @@ describe('commission, only when owed, checked to the cent against the postings',
     schedulePay(sim, sim.player, e);
     tended(sim, at(2026, 10, 1, 13));
     const p = e.pay[0]!;
-    expect(p.inTrust).toMatchObject({ agency: 'Stewart Talent', gross: 2_822_60, commission: 256_60 });
+    expect(p.inTrust).toMatchObject({ agency: 'Halberd Talent', gross: 2_822_60, commission: 256_60 });
     expect(p.received).toBeUndefined();
     // Held for the player, in an account of theirs at the agency: the gross less what was withheld (no dues: not a member).
     const held = trust(sim)!;
     expect(held.balance).toBe(2_822_60 - p.inTrust!.withheld);
-    expect(titled(sim, 'Pay Held For You At Stewart Talent')[0]!.body).toContain('Stewart Talent passes it on to you by October 6, 2026, less $256.60 commission.');
+    expect(titled(sim, 'Pay Held For You At Halberd Talent')[0]!.body).toContain('Halberd Talent passes it on to you by October 6, 2026, less $256.60 commission.');
     // What you're worth says where it is while it's held, in whole dollars beside a worth of six figures.
     expect((resolveLook(sim, subject('networth', sim.player.id)) as Looked).summary).toContain(`${formatMoney(held.balance, 'USD', { cents: false })} held for you in your agency’s client trust account`);
     // Three business days from Thursday 1 October: Tuesday 6 October.
     expect(p.inTrust!.releaseAt).toBe(at(2026, 10, 6, 12));
     // TEST SETUP: a second pass-on item for the same payment, as one scheduled twice would leave; then saved and opened
     // while the pay is held.
-    sim.schedule({ at: p.inTrust!.releaseAt + 60_000, kind: RELEASE_KIND, label: 'Pay From Stewart Talent', category: 'home', payload: { personId: sim.player.id, engagementId: e.id, key: p.key } });
+    sim.schedule({ at: p.inTrust!.releaseAt + 60_000, kind: RELEASE_KIND, label: 'Pay From Halberd Talent', category: 'home', payload: { personId: sim.player.id, engagementId: e.id, key: p.key } });
     const kept = reload(sim);
     tended(kept, at(2026, 10, 7));
-    const passedOn = kept.universe.transactions.filter((t) => t.memo.includes('paid on from Stewart Talent’s client trust account'));
+    const passedOn = kept.universe.transactions.filter((t) => t.memo.includes('paid on from Halberd Talent’s client trust account'));
     expect(passedOn).toHaveLength(1);
     expect(trust(kept)!.balance).toBe(0);
     tended(sim, at(2026, 10, 6, 13));
@@ -152,7 +152,7 @@ describe('commission, only when owed, checked to the cent against the postings',
     expect(posted(sim, r.txnId!, held.id)).toBe(-(2_822_60 - r.withheld));
     expect(trust(sim)!.balance).toBe(0);
     expect(yearOf(sim.player, 2026).commission).toBe(256_60);
-    expect(titled(sim, 'Paid On From Stewart Talent')[0]!.body).toBe(`Stewart Talent passed on your pay for The Calloway Files, the week of September 20, 2026: $${((2_822_60 - r.withheld) / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} held for you, less $256.60 commission, so $${(r.net / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} went into your ${checking(sim).name}.`);
+    expect(titled(sim, 'Paid On From Halberd Talent')[0]!.body).toBe(`Halberd Talent passed on your pay for The Calloway Files, the week of September 20, 2026: $${((2_822_60 - r.withheld) / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} held for you, less $256.60 commission, so $${(r.net / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} went into your ${checking(sim).name}.`);
     expect(breaches(sim.universe, sim.now)).toEqual([]);
   }, 90_000);
 
@@ -234,7 +234,7 @@ describe('commission, only when owed, checked to the cent against the postings',
     expect(e.pay.map((p) => [p.received?.commission, p.received?.via])).toEqual([[105_10, 'trust'], [105_10, 'trust']]);
     const c = commissionOn(sim, sim.player, e, e.pay[1]!, 1_051_00);
     expect(c.how).toBe('continuing');
-    expect(c.words).toContain('It’s still owed after your agreement with Stewart Talent ended, because you made the contract while it ran.');
+    expect(c.words).toContain('It’s still owed after your agreement with Halberd Talent ended, because you made the contract while it ran.');
   }, 90_000);
 
   it('owes commission on Equity’s tail, an offer conveyed in the term and accepted within 60 days after it, and none on one accepted later, or on work the agreement doesn’t cover', () => {
@@ -253,7 +253,7 @@ describe('commission, only when owed, checked to the cent against the postings',
     (PROJECTS as ProjectTemplate[]).push(abroad);
     try {
       const away = booked(sim, { project: 'test-abroad', days: runDays(at(2026, 9, 21), 1), amount: 1_051_00, per: 'week', via: 'agent', agreementId: a.id });
-      expect(commissionOn(sim, sim.player, away, away.pay[0]!, 1_051_00)).toMatchObject({ how: 'uncovered', amount: 0, words: 'No commission: your agreement with Stewart Talent covers stage, film and television work in the US, and this isn’t that.' });
+      expect(commissionOn(sim, sim.player, away, away.pay[0]!, 1_051_00)).toMatchObject({ how: 'uncovered', amount: 0, words: 'No commission: your agreement with Halberd Talent covers stage, film and television work in the US, and this isn’t that.' });
     } finally {
       (PROJECTS as ProjectTemplate[]).pop();
     }

@@ -295,7 +295,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I get an agent?', 'Why was my submission refused?', 'How do I get a referral?'],
     where: on('representation', 'Career, Representation'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `The Representation tab holds the game’s one agent, ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department. He’s a real person, and everything he says and decides in the game is invented: his panel says so first, before anything else.\n\n${AGENCY.name}’s page for ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} submissions says “${AGENCY.policy.quote}”, and the game keeps to it. His office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+    short: `The Representation tab holds the game’s one agent, ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department. He and the agency are invented for the game: his panel says so first, before anything else.\n\n${AGENCY.policy.words} It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
     steps: [
       'Open Career, then the Representation tab.',
       'Read the notice at the top of his panel, then press I’ve Read This.',
@@ -325,7 +325,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'A referral comes from the casting office of a job you’ve finished, never from him, and he never writes to you first.',
     ],
     unavailable: [
-      `Stewart Talent’s page for New York legit submissions says: “${AGENCY.policy.quote}”`,
+      `${AGENCY.policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`,
       'Check your materials first: a referral passes them on.',
       `A referral needs work judged ${BAR} or better in the game.`,
       'In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral.',

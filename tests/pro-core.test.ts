@@ -356,7 +356,7 @@ describe('what’s missing, in practical words', () => {
 });
 
 describe('the history and the bounds', () => {
-  const relation = (): AgentRelation => ({ agentId: 'jordan-parente', stage: 'discovered', since: 0, stageAt: 0, history: [], counts: {} });
+  const relation = (): AgentRelation => ({ agentId: 'thomas-ashgrove', stage: 'discovered', since: 0, stageAt: 0, history: [], counts: {} });
 
   it('gives each event a stable id, keeps a keyed event once, and keeps the last eighty with every one counted', () => {
     const sim = student('pro-history');
@@ -410,21 +410,23 @@ describe('the history and the bounds', () => {
 });
 
 describe('the agent and the work, as data', () => {
-  it('holds one real agent with only what’s published, the policy quoted, the routes it allows and the fictional notice', () => {
+  it('holds one fictional agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented', () => {
+    // Until 2026-10-21 the agent was a real person, held only as published and quoted; the owner chose a fictional one.
     expect(AGENTS).toHaveLength(1);
-    const agent = agentById('jordan-parente')!;
+    const agent = agentById('thomas-ashgrove')!;
     const agency = agencyOf(agent);
-    expect([agent.name, agency.name, agency.office.city, agency.department.called]).toEqual(['Jordan Parente', 'Stewart Talent', 'New York', 'Legit']);
+    expect([agent.name, agency.name, agency.office.city, agency.department.called]).toEqual(['Thomas Ashgrove', 'Halberd Talent', 'New York', 'Legit']);
     expect(agency.department.fields).toEqual(['television', 'film', 'broadway', 'off-broadway', 'national-tour', 'regional']);
-    expect(agency.policy.quote).toBe('We do not accept unsolicited submissions at this time.');
+    expect(agency.policy.words).toBe('His office takes no submissions it hasn’t asked for.');
     expect(agency.policy.unsolicited).toBe('refused');
     expect(agent.routes).toEqual(['showcase', 'referral']);
-    expect(agent.notice).toBe('Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: he hasn’t seen your work, and he isn’t involved with the game. Stewart Talent’s New York legit department doesn’t accept unsolicited submissions, so please don’t contact the agency about the game.');
+    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
     expect(agent.roster.basis).toBe('assumption');
     // Nothing private: no contact detail of any kind in the agent's or the agency's data.
     const text = JSON.stringify([AGENTS, AGENCIES]);
     expect(text).not.toMatch(/@|\bphone\b|\(\d{3}\) ?\d{3}-\d{4}|\b\d{3}[-.]\d{3}[-.]\d{4}\b|\bStreet\b|\bAvenue\b|\bclients?\b/i);
-    for (const s of agent.sources) expect(s.read).toBe('2026-10-20');
+    // Nor the real agent's or agency's names, nor their pages (the research keeps them, as history).
+    expect(text).not.toMatch(/Parente|Stewart Talent|stewarttalent|https?:/);
   });
 
   it('prices each SAG-AFTRA day rate by its contract year, Low Budget at 65% and Ultra Low Budget at 20% of the day performer’s, and holds the rest at the figure on file', () => {
@@ -452,9 +454,9 @@ describe('the agent and the work, as data', () => {
     expect(line(9, false)).toBe('Thea Elvsted, Hedda Gabler, Yale Repertory Theatre, 2028');
   });
 
-  it('names no agent in the engine’s code: a second one, or a fictional one in his place, is another entry of data', () => {
+  it('names no agent in the engine’s code: a second one is another entry of data, as the fictional one put in the real one’s place on 2026-10-21 was', () => {
     const files = readdirSync('src/engine/systems').map((f) => `src/engine/systems/${f}`).concat(['src/engine/index.ts', 'src/ui/workspaces/CareerWorkspace.tsx']);
-    expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent/.test(readFileSync(f, 'utf8')))).toEqual([]);
+    expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent|Ashgrove|thomas-ashgrove|Halberd/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
   it('gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {

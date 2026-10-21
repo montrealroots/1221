@@ -1,23 +1,16 @@
 {
- "src/engine/content/agents.ts#AGENCIES [stewart-talent]": {
+ "src/engine/content/agents.ts#AGENCIES [halberd-talent]": {
   "status": "Rewritten",
-  "hash": "081de53b0aed",
+  "hash": "b500a190336d",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
+  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Rewritten And Verified"
  },
- "src/engine/content/agents.ts#AGENTS [jordan-parente]": {
+ "src/engine/content/agents.ts#AGENTS [thomas-ashgrove]": {
   "status": "Rewritten",
-  "hash": "2a203747ca7f",
+  "hash": "62b670800d33",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Pending"
- },
- "src/engine/content/agents.ts#DEADLINE": {
-  "status": "Retained",
-  "hash": "ae31bb994079",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
+  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/agents.ts#FIELD_LABEL": {
@@ -26,55 +19,6 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
- },
- "src/engine/content/agents.ts#FIELDS_QUOTED": {
-  "status": "Retained",
-  "hash": "bfa5a632a368",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/agents.ts#HOME": {
-  "status": "Retained",
-  "hash": "795b433bd2fd",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/agents.ts#LISTING": {
-  "status": "Retained",
-  "hash": "662a7f1ddeb1",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/agents.ts#POLICY": {
-  "status": "Retained",
-  "hash": "b329549631f2",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/agents.ts#SCOUTING": {
-  "status": "Retained",
-  "hash": "59b163016f10",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/agents.ts#STAFF": {
-  "status": "Retained",
-  "hash": "4db1508e041e",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/agents.ts#WARNING": {
-  "status": "Retained",
-  "hash": "10e6c58a4550",
-  "on": "2026-10-21",
-  "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
-  "first": "Rewritten And Verified"
  },
  "src/engine/content/careerwork.ts#AGENT_ROLE": {
   "status": "Retained",
@@ -442,9 +386,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent]": {
   "status": "Rewritten",
-  "hash": "c05806fb3ce0",
+  "hash": "cbe311f7afcf",
   "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing",
+  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]": {

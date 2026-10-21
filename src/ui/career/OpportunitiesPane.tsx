@@ -123,7 +123,7 @@ function InProgress({ o }: { o: Opportunity }) {
     <article className="card card-tight col gap-3">
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
       <p className="small" style={{ margin: 0 }}>{next}</p>
-      {agent && <p className="xs dim" style={{ margin: 0 }}>{`Through ${agent.name}. ${agent.fictional}`}</p>}
+      {agent && <p className="xs dim" style={{ margin: 0 }}>{`Through ${agent.name}.`}</p>}
       {r && <Prepare target={{ opportunityId: o.id }} prep={o.prep} what="the sides" />}
       {r && (
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -188,7 +188,7 @@ function OfferCard({ o }: { o: Opportunity }) {
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
       <RoleFacts t={t} o={o} />
       <p className="small" style={{ margin: 0 }}>{`The offer stands until ${formatWeekdayDate(o.offer!.until, NY)} at ${formatTime(o.offer!.until, NY)}.`}</p>
-      {agent && <p className="xs dim" style={{ margin: 0 }}>{`${agent.name} passed it on. ${agent.fictional}`}</p>}
+      {agent && <p className="xs dim" style={{ margin: 0 }}>{`${agent.name} passed it on.`}</p>}
       {warning && <p className="small" style={{ margin: 0 }}>{warning}</p>}
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -269,7 +269,7 @@ export function OpportunitiesPane() {
       <Panel title="Through An Agent" help="career.opportunities">
         <div className="col gap-3">
           {agent
-            ? <p className="small" style={{ margin: 0 }}>{`${agent.name} represents you, and submits you for the roles casting offices release to agents, where they suit you and your materials are ready. ${agent.fictional}`}</p>
+            ? <p className="small" style={{ margin: 0 }}>{`${agent.name} represents you, and submits you for the roles casting offices release to agents, where they suit you and your materials are ready.`}</p>
             : <p className="small" style={{ margin: 0 }}>{`Some casting offices release their roles to agents only, so without an agent you can’t be seen for them: ${agentOnly.map((t) => `${t.casting} for ${t.project}`).join(', ')}, all invented for the game.`}</p>}
           {through.map((o) => {
             const t = projectOf(o);

@@ -3,14 +3,14 @@
  * the showcase (from 2026-10-21, the owner's brief 19, G1 to G8, W3 and A2; `docs/verification/career-2026-10-20/
  * design.md`, The Agent, The Agent's Interest, The Relationship and The Agreement).
  *
- * **He's a real person.** The agent `AGENTS` holds is a real agent in a real agency's New York legit department, and the
- * game holds only what's published (`content/agents.ts`; `docs/research/career-2026-10-20/agent.md`). Every word and decision of
- * his here is fictional, and each message carries the agent's `fictional` line. He never seeks the player out: the
- * agency warns that people pose as its representatives to approach unrepresented actors (agent.md). So nothing from
- * him arrives unasked: the School's follow-up comes from the School, a referral from the person who made it, and his
- * office's answers come only to an approach the player made. An unsolicited submission is refused in the agency's own
- * published words, quoted from `agencyOf(agent).policy.quote` and never copied. No engine code names him: everything
- * here runs for whichever agents `AGENTS` holds.
+ * **He's invented** (`content/agents.ts`), as his agency is. Until 2026-10-21 he was a real agent in a real agency's New
+ * York legit department, the game holding only what was published (`docs/research/career-2026-10-20/agent.md`), each
+ * message carrying a line that his words and decisions were invented; the owner chose a fictional agent that day. He
+ * never seeks the player out, the game's rule, kept from the real agency's warning that people posing as its
+ * representatives approach unrepresented actors (agent.md): nothing from him arrives unasked. The School's follow-up comes from the School, a referral from the person who made it, and his
+ * office's answers come only to an approach the player made. An unsolicited submission is refused in the agency's rule,
+ * `agencyOf(agent).policy.words`, never copied. No engine code names him: everything here runs for whichever agents
+ * `AGENTS` holds.
  *
  * **The stages** (`RelationStage`, `systems/pro.ts`), each step an event with a stable key in the relation's history
  * (`noteEvent`), so a reload or a jump notes nothing twice: discovered (the notice read, `pro.agent_notice`) → checked
@@ -177,9 +177,11 @@ function onDayAt(at: Instant, days: number, hour: number, zone: string, weekday 
  */
 const whose = (agent: Agent): string => `${agent.name}’s Office`;
 const atAgency = (agent: Agent): string => agencyOf(agent).name;
+// Until 2026-10-21 each body ended with the agent's line that his words and decisions were invented, which a real agent
+// needed; a fictional one doesn't, as no other character the game invents carries one, and the notice says so once.
 function tell(sim: Simulation, person: Person, agent: Agent, title: string, body: string, importance = 60): void {
   if (person.id !== sim.universe.playerId) return;
-  sim.notify({ category: 'career', title, body: `${body} ${agent.fictional}`, importance, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id });
+  sim.notify({ category: 'career', title, body, importance, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id });
 }
 
 /** An event in the relation's history, keyed so it's noted once. */
@@ -586,7 +588,7 @@ export function askedToMeet(person: Person, agent: Agent, at: Instant): Instant 
   return at < until ? until : undefined;
 }
 
-/** Why materials can't be sent to his office now, or nothing. An unsolicited one is refused in the agency's own words. */
+/** Why materials can't be sent to his office now, or nothing. An unsolicited one is refused in the agency's rule. */
 export function sendRefusal(sim: Simulation, person: Person, agent: Agent): string | undefined {
   const rel = relationOf(person, agent.id);
   if (rel?.noticeShownAt === undefined) return mustRead(agent);
@@ -594,7 +596,7 @@ export function sendRefusal(sim: Simulation, person: Person, agent: Agent): stri
   if (busy) return busy;
   if (!rel.via) {
     const agency = agencyOf(agent);
-    return `${agency.name}’s page for ${agency.office.city} ${agency.department.called.toLowerCase()} submissions says: “${agency.policy.quote}” The game keeps to it: his office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
+    return `${agency.policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
   }
   if (!countOf(rel, 'checked')) return 'Check your materials first. Check Your Materials says whether an approach has what it needs.';
   // No materials check here either, for the referral's reason: a send needs a passed check, and nothing takes the
@@ -985,7 +987,7 @@ export function registerProAgent(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const rel = ensureRelation(s, person, agent, 'discovered');
     rel.noticeShownAt = s.now;
-    note(s, rel, 'discovered', 'discovered', 'You read the notice about him: a real agent, whose words and decisions in the game are invented.');
+    note(s, rel, 'discovered', 'discovered', `You read the notice about him and ${agencyOf(agent).name}.`);
     return { at: s.now };
   });
 
@@ -1017,7 +1019,7 @@ export function registerProAgent(sim: Simulation): void {
     rel.via = { route: 'referral', at: s.now, by: job.by };
     setStage(s, rel, 'introduced');
     note(s, rel, 'referred', `referral:${engagementId}`, `${capital(job.by)} referred you to his office, from your work as ${job.job}.`);
-    // From the person who made it, never from him (agent.md, the agency's warning).
+    // From the person who made it, never from him: he never seeks the player out (the module's note).
     if (person.id === s.universe.playerId) s.notify({ category: 'career', title: `${titled(job.by)} Referred You`, body: `${capital(job.by)} has referred you to ${officeOf(agent)}, from your work as ${job.job}. You can send your materials now, from the Career screen’s Representation tab.`, importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-referral', refId: engagementId });
     return { by: job.by };
   });

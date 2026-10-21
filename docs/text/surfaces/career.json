@@ -254,7 +254,7 @@
   ]
  },
  {
-  "surface": "The agent’s record and fictional notice, and his agency’s published policy",
+  "surface": "The agent’s record, the notice that he and his agency are invented, and the agency’s rule on submissions",
   "where": "Read by the agent’s panel and his messages, which the agent’s system draws; held as data here",
   "sources": [
    "src/engine/content/agents.ts#*"
@@ -265,12 +265,12 @@
    "first use"
   ],
   "outcome": "Revised",
-  "why": "New with brief 19: one real agent, held to what is published about his role, with the notice the research asks for.",
-  "changes": "Written new: the notice in the player’s words (“Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: …”), the line every panel of his carries, the fields as the game names them, and the roster’s assumption said as the game’s; the agency’s policy, its warning and each source’s words kept as published.",
+  "why": "New with brief 19: one real agent, held to what is published about his role, with the notice the research asked for; from 2026-10-21 a fictional agent in his place, at the owner’s word.",
+  "changes": "Written new: the notice in the player’s words (“Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: …”), the line every panel of his carries, the fields as the game names them, and the roster’s assumption said as the game’s; the agency’s policy, its warning and each source’s words kept as published. Rewritten on 2026-10-21 for the fictional agent: “Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. …”, the agency’s policy said as the game’s own rule, and the real agency’s warning, its sources and the line every panel of his carried taken out.",
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/pro-core.test.ts: 'holds one real agent with only what’s published, the policy quoted, the routes it allows and the fictional notice'"
+    "ref": "tests/pro-core.test.ts: 'holds one fictional agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented'"
    }
   ]
  },

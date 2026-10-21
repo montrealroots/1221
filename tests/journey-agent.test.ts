@@ -169,8 +169,7 @@ describe('G2 and V5: the stages and the routes, an incomplete submission and its
     expect(run(sim, 'pro.agent_check').error).toBe('Your materials passed the check on September 3, 2026.');
     // Unsolicited: refused in the agency's own published words, quoted from its data.
     const unsolicited = run(sim, 'pro.send_materials').error!;
-    expect(unsolicited).toBe(`Stewart Talent’s page for New York legit submissions says: “${agencyOf(AGENT).policy.quote}” The game keeps to it: his office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`);
-    expect(unsolicited).toContain('“We do not accept unsolicited submissions at this time.”');
+    expect(unsolicited).toBe(`${agencyOf(AGENT).policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`);
     expect(nextStep(sim, sim.player, AGENT)).toBe('His office takes materials only through the School’s follow-up after the showcase or a referral. Under How To Reach Him, ask someone you’ve worked with for a referral.');
     // A referral: from a finished job judged well enough, once, from the person who made it.
     const job = finishedJob(sim, 'strong');
@@ -178,7 +177,7 @@ describe('G2 and V5: the stages and the routes, an incomplete submission and its
     sim.must({ kind: 'pro.ask_referral', payload: { engagementId: job.id } });
     sim = cross(sim);
     expect(rel(sim)).toMatchObject({ stage: 'introduced', via: { route: 'referral', by: 'Pennick Casting' } });
-    expect(sim.universe.notifications.at(-1)).toMatchObject({ title: 'Pennick Casting Referred You', body: 'Pennick Casting has referred you to Jordan Parente’s office at Stewart Talent, from your work as Nell in A House On Calder Street. You can send your materials now, from the Career screen’s Representation tab.' });
+    expect(sim.universe.notifications.at(-1)).toMatchObject({ title: 'Pennick Casting Referred You', body: 'Pennick Casting has referred you to Thomas Ashgrove’s office at Halberd Talent, from your work as Nell in A House On Calder Street. You can send your materials now, from the Career screen’s Representation tab.' });
     expect(run(sim, 'pro.ask_referral', { engagementId: job.id }).error).toBe('Pennick Casting referred you on September 3, 2026.');
     // Sent: the materials go, the stage moves, and the answer is on the clock; no word comes from him on his own.
     sim.must({ kind: 'pro.update_resume', payload: {} });
@@ -211,7 +210,7 @@ describe('G3: his office’s answers', () => {
     expect(rel(sim).stage).toBe('unanswered');
     // Each title names whose office (from 2026-10-21, brief 19's app walk: until then "His Office", which in What Needs You
     // named nobody).
-    expect(notices(sim)).toEqual(['No Answer From Jordan Parente’s Office: Six weeks have gone by since you sent your materials to Jordan Parente’s office at Stewart Talent, with no answer. In the game no answer by then means no. A new approach can come from April 15, 2027, with something new for his office to consider. Fictional: his words and decisions here are invented.']);
+    expect(notices(sim)).toEqual(['No Answer From Thomas Ashgrove’s Office: Six weeks have gone by since you sent your materials to Thomas Ashgrove’s office at Halberd Talent, with no answer. In the game no answer by then means no. A new approach can come from April 15, 2027, with something new for his office to consider.']);
     expect(rel(sim).cooldown).toMatchObject({ why: 'silence', needsNew: true });
     expect(sendRefusal(sim, sim.player, AGENT)).toBe('His office didn’t answer your last approach, and the six weeks ran out on October 15, 2026. In the game his office looks again only after six months, from April 15, 2027, and then only at something new.');
   });
@@ -225,7 +224,7 @@ describe('G3: his office’s answers', () => {
     sim = cross(sim);
     expect(rel(sim).stage).toBe('requested');
     expect(rel(sim).request).toMatchObject({ what: ['reel'], by: at(2026, 10, 8, 17) });
-    expect(notices(sim)).toEqual(['Jordan Parente’s Office Asked For More: Jordan Parente’s office at Stewart Talent has asked for a reel by October 8, 2026. Make it on the Career screen’s Portfolio tab, then press Send What His Office Asked For on the Representation tab. If it doesn’t come by then, his office decides on what it has. Fictional: his words and decisions here are invented.']);
+    expect(notices(sim)).toEqual(['Thomas Ashgrove’s Office Asked For More: Thomas Ashgrove’s office at Halberd Talent has asked for a reel by October 8, 2026. Make it on the Career screen’s Portfolio tab, then press Send What His Office Asked For on the Representation tab. If it doesn’t come by then, his office decides on what it has.']);
     // Not yet there: said in its practical words, with the next step.
     expect(run(sim, 'pro.supply_material').error).toBe('You haven’t cut a reel yet. Cut A Reel is on the Portfolio tab.');
     reel(sim);
@@ -291,7 +290,7 @@ describe('V6 and G4: a pass, an approach refused too soon or with nothing new, a
     tended(sim, at(2026, 9, 17, 12));
     sim = cross(sim);
     expect(rel(sim).stage).toBe('passed');
-    expect(notices(sim)).toEqual(['Jordan Parente’s Office Passed: Jordan Parente’s office at Stewart Talent has passed on representing you, on September 17, 2026. In the game it looks again only after a year, from September 17, 2027, and then only at something new: a new credit, a better reel or a referral. Why It Went This Way, on the Representation tab, gives the game’s reasons. Fictional: his words and decisions here are invented.']);
+    expect(notices(sim)).toEqual(['Thomas Ashgrove’s Office Passed: Thomas Ashgrove’s office at Halberd Talent has passed on representing you, on September 17, 2026. In the game it looks again only after a year, from September 17, 2027, and then only at something new: a new credit, a better reel or a referral. Why It Went This Way, on the Representation tab, gives the game’s reasons.']);
     // Too soon: refused with the date it can come from.
     expect(run(sim, 'pro.send_materials').error).toBe('His office passed on September 17, 2026. In the game his office looks again only after a year, from September 17, 2027, and then only at something new.');
     // A year on, the same record: nothing new to consider.
@@ -379,15 +378,15 @@ describe('V7: a meeting missed, and one moved and kept', () => {
     const m = rel(sim).meeting!;
     expect(m).toMatchObject({ at: at(2026, 9, 25, 11), where: 'office', status: 'set' });
     const item = sim.universe.scheduled.find((i) => i.kind === MEETING_KIND && i.status === 'pending')!;
-    expect(item).toMatchObject({ requiresPlayer: true, travelMinutes: 120, durationMinutes: 60, locationId: 'us-ny-newyork', category: 'career', label: 'Meeting At Stewart Talent' });
-    expect(notices(sim).at(-1)).toBe('Jordan Parente’s Office Asked To Meet You: Jordan Parente’s office at Stewart Talent has asked to meet you: Friday, September 25, 2026 at 11:00 AM, at Stewart Talent’s New York office. It’s on your calendar with two hours to get there from New Haven, a time the game assumes. If you can’t make it, Ask To Move on the Representation tab moves it a week, once. Fictional: his words and decisions here are invented.');
+    expect(item).toMatchObject({ requiresPlayer: true, travelMinutes: 120, durationMinutes: 60, locationId: 'us-ny-newyork', category: 'career', label: 'Meeting At Halberd Talent' });
+    expect(notices(sim).at(-1)).toBe('Thomas Ashgrove’s Office Asked To Meet You: Thomas Ashgrove’s office at Halberd Talent has asked to meet you: Friday, September 25, 2026 at 11:00 AM, at Halberd Talent’s New York office. It’s on your calendar with two hours to get there from New Haven, a time the game assumes. If you can’t make it, Ask To Move on the Representation tab moves it a week, once.');
     // Missed: asleep through it, by the player's own sleep.
     tended(sim, at(2026, 9, 25, 2));
     sim.must({ kind: 'life.sleep', payload: { hours: 12 } });
     sim = cross(sim);
     expect(rel(sim).meeting!.status).toBe('missed');
     expect(rel(sim).stage).toBe('passed');
-    expect(notices(sim).at(-1)).toBe('You Missed The Meeting At Stewart Talent: You missed the meeting with Jordan Parente’s office at Stewart Talent at 11:00 AM on September 25, 2026. In the game a meeting comes before an offer, so his office closed your approach. It looks again only after a year, from September 25, 2027, and then only at something new. Fictional: his words and decisions here are invented.');
+    expect(notices(sim).at(-1)).toBe('You Missed The Meeting At Halberd Talent: You missed the meeting with Thomas Ashgrove’s office at Halberd Talent at 11:00 AM on September 25, 2026. In the game a meeting comes before an offer, so his office closed your approach. It looks again only after a year, from September 25, 2027, and then only at something new.');
     expect(keys(sim).slice(-2)).toEqual([`meeting:${m.id}:missed`, `decision:${m.id}:passed`]);
     // The miss counts against Reliability in the decision it closed.
     expect(rel(sim).why!.factors.find((f) => f.id === 'reliability')).toMatchObject({ level: 'near', words: 'You missed one meeting.' });
@@ -438,7 +437,7 @@ describe('V8 and G7: the agreement, shown in full, accepted in one life and decl
     // Every term, with its basis, copied in when offered.
     expect(a.terms.map((t) => [t.id, t.basis])).toEqual(AGREEMENT_TERMS.map((t) => [t.id, t.basis]));
     expect(a.terms.map((t) => t.id)).toEqual(['scope', 'territory', 'excluded', 'exclusivity', 'commission', 'scale-plus-ten', 'duration', 'responsibilities', 'actor', 'payment', 'termination', 'continuing', 'offer']);
-    expect(notices(sim).at(-1)).toBe('Jordan Parente Offered You Representation: Jordan Parente has offered to represent you at Stewart Talent: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until October 14, 2026. Fictional: his words and decisions here are invented.');
+    expect(notices(sim).at(-1)).toBe('Thomas Ashgrove Offered You Representation: Thomas Ashgrove has offered to represent you at Halberd Talent: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until October 14, 2026.');
     expect(activeAgreement(sim.player, sim.now)).toBeUndefined();
     // Why It Went This Way keeps the chance the offer was drawn against, an offer's, not a meeting's.
     expect(rel(sim).why).toMatchObject({ step: 'decision', outcome: 'offer' });
@@ -452,7 +451,7 @@ describe('V8 and G7: the agreement, shown in full, accepted in one life and decl
     expect(rel(back)).toMatchObject({ stage: 'represented', agreementId: signed.id });
     expect(activeAgreement(back.player, back.now)?.id).toBe(signed.id);
     expect(run(back, 'pro.accept_agreement').error).toBe('He hasn’t offered you an agreement.');
-    expect(run(back, 'pro.send_materials').error).toBe('Jordan Parente represents you already.');
+    expect(run(back, 'pro.send_materials').error).toBe('Thomas Ashgrove represents you already.');
     // The other life: declined, and held six months.
     let other = offered();
     other.must({ kind: 'pro.decline_agreement', payload: {} });
@@ -466,7 +465,7 @@ describe('V8 and G7: the agreement, shown in full, accepted in one life and decl
     tended(third, at(2026, 10, 14, 12));
     third = cross(third);
     expect(third.player.pro!.agreements[0]!.status).toBe('lapsed');
-    expect(notices(third).at(-1)).toBe('Jordan Parente’s Offer Lapsed: The agreement Jordan Parente offered stood until today, and it lapsed unanswered. In the game his office looks again only after six months, from April 14, 2027, and then only at something new. Fictional: his words and decisions here are invented.');
+    expect(notices(third).at(-1)).toBe('Thomas Ashgrove’s Offer Lapsed: The agreement Thomas Ashgrove offered stood until today, and it lapsed unanswered. In the game his office looks again only after six months, from April 14, 2027, and then only at something new.');
     expect(sendRefusal(third, third.player, AGENT)).toBe('You let his offer lapse on October 14, 2026. In the game his office looks again only after six months, from April 14, 2027, and then only at something new.');
   });
 });
@@ -492,7 +491,7 @@ describe('V9 and G8: representation ends by its terms, with what it leaves owed'
     expect(activeAgreement(sim.player, sim.now)).toBeUndefined();
     // Still the one in force for a date inside its term, as a payment's commission needs.
     expect(activeAgreement(sim.player, at(2027, 3, 1))?.id).toBe(agreement.id);
-    expect(notices(sim).at(-1)).toBe('Your Agreement With Jordan Parente Ended: Your agreement with Jordan Parente at Stewart Talent ended on September 30, 2027, at the end of its year. No pay is still to come from contracts you made while it ran, so no commission is still owed on them. An offer he passed on while it ran that you accept within 60 days after it ended owes commission too. Fictional: his words and decisions here are invented.');
+    expect(notices(sim).at(-1)).toBe('Your Agreement With Thomas Ashgrove Ended: Your agreement with Thomas Ashgrove at Halberd Talent ended on September 30, 2027, at the end of its year. No pay is still to come from contracts you made while it ran, so no commission is still owed on them. An offer he passed on while it ran that you accept within 60 days after it ended owes commission too.');
     expect(cross(sim).player.pro!.agreements[0]).toEqual(agreement);
   });
 
@@ -636,7 +635,8 @@ describe('nothing from him arrives unasked', () => {
     expect(his.length).toBeGreaterThan(1);
     for (const n of his) {
       expect(n.at).toBeGreaterThan(sentAt);
-      expect(n.body.endsWith(AGENT.fictional)).toBe(true);
+      // Until 2026-10-21 each ended with the real agent's line that his words were invented; a fictional agent's carries none.
+      expect(n.body).not.toMatch(/Fictional:/);
       expect(n.route).toBe('/workspace/career?tab=representation');
     }
     // No address, phone number, email or web link of his or the agency's in anything his system said.

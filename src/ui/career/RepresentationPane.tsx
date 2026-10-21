@@ -3,8 +3,9 @@
  * how to reach him, the materials an approach sends, the meeting, Why It Went This Way, the agreement and the history
  * (`systems/proagent.ts`).
  *
- * He's a real person, so the panel carries the agent's `fictional` line at its head, and the notice where he first
- * appears stands above everything until it's read, then stays one press away (Read The Notice Again). Every line is read
+ * The notice where he first appears, that he and his agency are invented and how his office takes submissions, stands
+ * above everything until it's read, then stays one press away (Read The Notice Again). Until 2026-10-21 he was a real
+ * agent, and the panel's head carried a line that his words and decisions were invented too. Every line is read
  * from the record as it's drawn; every control runs a command through `run`, behind its guide chapter (`<Gated>`), with
  * the command's own refusal said under it before it's pressed (`WhyNot`). Nothing here gives his contact details,
  * which the game doesn't hold.
@@ -14,7 +15,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { useKept } from '@/ui/kept';
-import { formatDate, formatDateKey, formatDateTime } from '@/engine/core/time';
+import { formatDate, formatDateTime } from '@/engine/core/time';
 import { AGREEMENT } from '@/engine/content/careerwork';
 import { AGENTS, FIELD_LABEL, agencyOf, type Agent } from '@/engine/content/agents';
 import { spokenList } from '@/engine/core/text';
@@ -57,7 +58,7 @@ function AgentPanels({ agent }: { agent: Agent }) {
   );
 }
 
-/** Who he is, as published, the fictional line and the notice, and where you stand with him. */
+/** Who he is, the notice, and where you stand with him. */
 function AgentPanel({ agent }: { agent: Agent }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -68,7 +69,6 @@ function AgentPanel({ agent }: { agent: Agent }) {
   return (
     <Panel title={agent.name} subtitle={`${agent.role}, ${agency.name}, ${agency.office.city}`} help="career.agent">
       <div className="col gap-3">
-        <p className="xs dim" style={{ margin: 0 }}>{agent.fictional}</p>
         {read ? (
           <details className="small">
             <summary>Read The Notice Again</summary>
@@ -82,11 +82,11 @@ function AgentPanel({ agent }: { agent: Agent }) {
         )}
         <dl className="col gap-2 small" style={{ margin: 0 }}>
           <div><dt className="strong">Department</dt><dd style={{ margin: 0 }}>{`${agency.department.called}, also called ${agency.department.alsoCalled}: ${spokenList(agency.department.fields.map((f) => FIELD_LABEL[f]))}`}</dd></div>
-          <div><dt className="strong">Submissions</dt><dd style={{ margin: 0 }}>{`${agency.name}’s page for ${agency.office.city} ${agency.department.called.toLowerCase()} submissions says: “${agency.policy.quote}”`}</dd></div>
+          <div><dt className="strong">Submissions</dt><dd style={{ margin: 0 }}>{agency.policy.words}</dd></div>
           <div><dt className="strong">Where You Stand With Him</dt><dd style={{ margin: 0 }}>{STAGE_LABEL[rel?.stage ?? 'none']}</dd></div>
           <div><dt className="strong">What’s Next</dt><dd style={{ margin: 0 }}>{nextStep(sim, person, agent)}</dd></div>
         </dl>
-        <Fine>{`His name, the agency, its ${agency.office.city} office, his department and the fields it covers are from the agency’s own pages and the trade press, read on ${formatDateKey(agent.sources[0]?.read ?? '2026-10-20')}, and so is the agency’s policy on submissions. Everything he says and decides here is invented, and the game holds no contact details for him or the agency.`}</Fine>
+        <Fine>{`${agent.name} and ${agency.name} are invented for the game. How his office takes submissions and reaches an actor is the game’s own rule, kept from how a real New York legit department publishes its own.`}</Fine>
       </div>
     </Panel>
   );

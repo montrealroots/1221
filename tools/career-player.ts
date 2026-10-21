@@ -67,7 +67,7 @@ export function readNotices(sim: Simulation, t: Transcript | undefined): void {
 
 /**
  * A notice's title by its shape, whose office it names read as his: from 2026-10-21 the built-app walk's titles name the
- * agent and his agency ("A Meeting Is Set At Stewart Talent"), where they had said "his office". The transcript keeps
+ * agent and his agency ("A Meeting Is Set At Halberd Talent"), where they had said "his office". The transcript keeps
  * the words the player read; the tests compare shapes, so they hold whichever the build says.
  */
 export function titleShape(title: string, agent: { name: string; agency: string }): string {

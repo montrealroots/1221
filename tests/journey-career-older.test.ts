@@ -204,10 +204,10 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     expect(rel.via).toEqual({ route: 'referral', at: rel.referrals![0]!.at, by: 'the film’s director' });
     expect(rel.referrals!.map((r) => [r.engagementId, r.by, r.job, r.band])).toEqual([[film.id, 'the film’s director', 'Theo in Paper Moons', 'strong']]);
     expect(rel.history.map((e) => e.kind)).toEqual(['discovered', 'checked', 'referred', 'sent']);
-    // Said by the director, never by him: no fictional line of his on it.
+    // Said by the director, never by him.
     const referred = G.lines.find((l) => l.includes('| NOTICE | The Film’s Director Referred You |'))!;
-    expect(referred).toContain(`The film’s director has referred you to ${AGENT.name}’s office at Stewart Talent, from your work as Theo in Paper Moons.`);
-    expect(referred.endsWith(AGENT.fictional)).toBe(false);
+    expect(referred).toContain(`The film’s director has referred you to ${AGENT.name}’s office at Halberd Talent, from your work as Theo in Paper Moons.`);
+    expect(referred).not.toMatch(/Fictional:/);
     // His office's answer, two weeks on: seven factors at the bar or beyond, the draw under the chance, and a reel asked
     // for, which she hasn't got.
     const an = opened('answered');
@@ -217,8 +217,8 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     expect(drawOf(an, an.player, AGENT, 1, 'interest')).toBeLessThan(answered.why!.chance!);
     // By the title's shape, his office however the build names it (`titleShape`).
     const asked = G.lines.find((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && titleShape(x[2] ?? '', { name: AGENT.name, agency: agencyOf(AGENT).name }) === 'His Office Asked For More'; })!;
-    expect(asked).toContain(`${AGENT.name}’s office at Stewart Talent has asked for a reel by November 8, 2029.`);
-    expect(asked.endsWith(AGENT.fictional)).toBe(true);
+    expect(asked).toContain(`${AGENT.name}’s office at Halberd Talent has asked for a reel by November 8, 2029.`);
+    expect(asked).not.toMatch(/Fictional:/);
     expect(breaches(an.universe, an.now)).toEqual([]);
   });
 });

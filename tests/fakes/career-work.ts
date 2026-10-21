@@ -52,7 +52,7 @@ export function graduate(seed: string): Simulation {
 
 /** An agreement as the agent's system writes one when it's signed, for its year. */
 export function signed(sim: Simulation, signedAt: number): Agreement {
-  const a: Agreement = { id: sim.nextId('pro'), agentId: 'jordan-parente', offeredAt: signedAt - 3 * MS_DAY, standsUntil: signedAt + 11 * MS_DAY, status: 'accepted', terms: [...AGREEMENT_TERMS], signedAt, endsAt: signedAt + AGREEMENT.termDays * MS_DAY };
+  const a: Agreement = { id: sim.nextId('pro'), agentId: 'thomas-ashgrove', offeredAt: signedAt - 3 * MS_DAY, standsUntil: signedAt + 11 * MS_DAY, status: 'accepted', terms: [...AGREEMENT_TERMS], signedAt, endsAt: signedAt + AGREEMENT.termDays * MS_DAY };
   ensurePro(sim, sim.player).agreements.push(a);
   return a;
 }
@@ -74,7 +74,7 @@ export function booked(sim: Simulation, o: { project: string; days: number[]; am
   const pay = [...weeks.entries()].map(([due, list], n) => ({
     id: sim.nextId('pro'), key: `${eId}:${n + 1}`, promised: deferred ? 0 : o.per === 'week' ? o.amount : o.amount * list.length, currency: 'USD', promisedAt: sim.now, due, ...(deferred ? { deferred: true as const } : {}),
   }));
-  const opp: Opportunity = { id: oppId, projectId: o.project, via: o.via ?? 'open', ...(o.via === 'agent' ? { agentId: 'jordan-parente' } : {}), status: 'booked', postedAt: sim.now - 10 * MS_DAY, submitBy: sim.now - 5 * MS_DAY, offer: { at: o.offerAt ?? sim.now - MS_DAY, until: sim.now + 6 * MS_DAY, rate: template.pay, amount: o.amount, per: o.per, units: o.per === 'week' ? pay.length : days.length }, resolvedAt: sim.now, engagementId: eId, history: [], counts: {} };
+  const opp: Opportunity = { id: oppId, projectId: o.project, via: o.via ?? 'open', ...(o.via === 'agent' ? { agentId: 'thomas-ashgrove' } : {}), status: 'booked', postedAt: sim.now - 10 * MS_DAY, submitBy: sim.now - 5 * MS_DAY, offer: { at: o.offerAt ?? sim.now - MS_DAY, until: sim.now + 6 * MS_DAY, rate: template.pay, amount: o.amount, per: o.per, units: o.per === 'week' ? pay.length : days.length }, resolvedAt: sim.now, engagementId: eId, history: [], counts: {} };
   const e: Engagement = { id: eId, opportunityId: oppId, projectId: o.project, role: template.role.part, status: 'booked', days, ...(o.agreementId ? { agreementId: o.agreementId } : {}), pay, history: [], counts: {} };
   pro.opportunities.push(opp);
   pro.engagements.push(e);

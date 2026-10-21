@@ -90,18 +90,18 @@ describe('the Work tab', () => {
     expect(promised).toContain('Commission expected: $256.60. What’s paid over scale ($2,566.00), so you keep scale.');
     tended(sim, at(2026, 10, 2));
     const held = drawn(sim).shown;
-    expect(held).toContain('Paid into Stewart Talent’s client trust account on October 1, 2026, and passed on to you by October 6, 2026.');
+    expect(held).toContain('Paid into Halberd Talent’s client trust account on October 1, 2026, and passed on to you by October 6, 2026.');
     expect(held).toContain('Commission: $256.60, taken when it’s passed on.');
     tended(sim, at(2026, 10, 7));
     const r = e.pay[0]!.received!;
     const done = drawn(sim).shown;
-    expect(done).toContain('Received October 6, 2026, passed on from Stewart Talent’s client trust account.');
+    expect(done).toContain('Received October 6, 2026, passed on from Halberd Talent’s client trust account.');
     expect(done).toContain(`Gross $2,822.60, withheld for tax $${(r.withheld / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}, to you $${(r.net / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
     expect(done).toContain('Commission: $256.60, taken before it reached you.');
     // In Money, the account's statement: the deposit's line names the commission taken from it.
     const account = sim.universe.accounts[sim.player.primaryAccountId!]!;
     const lines = activity(sim, account, at(2026, 10, 1), sim.now).lines.filter((l) => l.memo.includes('Calloway'));
-    expect(lines.map((l) => [l.memo, l.amount])).toEqual([['The Calloway Files, the week of September 20, 2026: paid on from Stewart Talent’s client trust account, less $256.60 commission', r.net]]);
+    expect(lines.map((l) => [l.memo, l.amount])).toEqual([['The Calloway Files, the week of September 20, 2026: paid on from Halberd Talent’s client trust account, less $256.60 commission', r.net]]);
   }, 90_000);
 
   it('PLAYER JOURNEY: once the agreement has ended, Still Owed After An Agreement Ended lists the payments still to come with the commission each carries', () => {
@@ -115,7 +115,7 @@ describe('the Work tab', () => {
     Object.assign(a, { status: 'ended', endedAt: sim.now, endedHow: 'agreement' });
     const shown = drawn(sim).shown;
     expect(shown).toContain('Still Owed After An Agreement Ended');
-    expect(shown).toContain('A House On Calder Street, the week of September 20, 2026: $1,051.00 due October 1, 2026, with $105.10 commission owed to Stewart Talent. 10% of $1,051.00 gross, Equity’s rate on a weekly salary of $1,051.00, over $525.00. It’s still owed after your agreement with Stewart Talent ended, because you made the contract while it ran.');
+    expect(shown).toContain('A House On Calder Street, the week of September 20, 2026: $1,051.00 due October 1, 2026, with $105.10 commission owed to Halberd Talent. 10% of $1,051.00 gross, Equity’s rate on a weekly salary of $1,051.00, over $525.00. It’s still owed after your agreement with Halberd Talent ended, because you made the contract while it ran.');
   }, 90_000);
 
   it('PLAYER JOURNEY: Papers lists each engagement with what permission to work said for its dates when it was booked', () => {

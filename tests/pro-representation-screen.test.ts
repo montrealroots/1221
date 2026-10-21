@@ -105,26 +105,27 @@ function ready(seed: string) {
 }
 
 describe('the Representation tab', () => {
-  it('PLAYER JOURNEY: G1: where he first appears, the notice stands above all else with the fictional line, and once read it stays one press away', () => {
+  it('PLAYER JOURNEY: G1: where he first appears, the notice that he and his agency are invented stands above all else, and once read it stays one press away', () => {
     const sim = student('rep-notice');
     const first = drawn(sim);
     expect(first.html).toContain('aria-controls="career-pane-representation"');
-    expect(first.shown).toContain('Jordan Parente Agent, Legit Department, Stewart Talent, New York');
-    expect(first.shown).toContain('Fictional: his words and decisions here are invented.');
-    expect(first.html).toMatch(/<div class="callout callout-accent small col gap-2" role="note"><p[^>]*>Jordan Parente is a real agent at Stewart Talent in New York\./);
+    expect(first.shown).toContain('Thomas Ashgrove Agent, Legit Department, Halberd Talent, New York');
+    // Until 2026-10-21 a line under his name said a real agent's words and decisions were invented.
+    expect(first.shown).not.toContain('Fictional:');
+    expect(first.html).toMatch(/<div class="callout callout-accent small col gap-2" role="note"><p[^>]*>Thomas Ashgrove and Halberd Talent are invented for the game,/);
+    expect(first.shown).toContain('Thomas Ashgrove and Halberd Talent are invented for the game. How his office takes submissions and reaches an actor is the game’s own rule');
     expect(button(first.html, 'I’ve Read This')).toEqual([{ disabled: false, title: undefined, locked: false }]);
     expect(first.shown).toContain('Where You Stand With Him Not In Touch');
     expect(first.shown).toContain('What’s Next Read the notice at the top of his panel, then press I’ve Read This.');
-    // The agency's published policy, quoted from its data.
-    expect(first.shown).toContain(`Submissions Stewart Talent’s page for New York legit submissions says: “${agencyOf(AGENT).policy.quote}”`);
+    // The agency's rule, from its data.
+    expect(first.shown).toContain(`Submissions ${agencyOf(AGENT).policy.words}`);
     // Nothing else is offered before it's read.
     expect(first.shown).not.toContain('How To Reach Him');
     expect(first.shown).not.toContain('Check Your Materials');
     sim.must({ kind: 'pro.agent_notice', payload: {} });
     const after = drawn(sim);
     expect(after.html).not.toContain('role="note"');
-    expect(after.html).toMatch(/<details class="small"><summary>Read The Notice Again<\/summary><p[^>]*>Jordan Parente is a real agent/);
-    expect(after.shown).toContain('Fictional: his words and decisions here are invented.');
+    expect(after.html).toMatch(/<details class="small"><summary>Read The Notice Again<\/summary><p[^>]*>Thomas Ashgrove and Halberd Talent are invented/);
     expect(after.shown).toContain('Where You Stand With Him Notice Read');
     // No contact detail of his or the agency's anywhere on the tab.
     expect(after.html).not.toMatch(/@|https?:\/\/|www\.|\(\d{3}\)|\d{3}-\d{4}/);
@@ -143,7 +144,7 @@ describe('the Representation tab', () => {
     sim.must({ kind: 'pro.update_resume', payload: {} });
     sim.must({ kind: 'pro.agent_check', payload: {} });
     const checked = drawn(sim);
-    const policy = `Stewart Talent’s page for New York legit submissions says: “${agencyOf(AGENT).policy.quote}” The game keeps to it: his office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
+    const policy = `${agencyOf(AGENT).policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
     expect(button(checked.html, 'Send Your Materials')).toEqual([{ disabled: true, title: policy, locked: false }]);
     expect(checked.shown).toContain(`Send Your Materials: ${policy}`);
     expect(checked.shown).toContain('Where You Stand With Him Materials Checked');
@@ -201,7 +202,7 @@ describe('the Representation tab', () => {
     sim.must({ kind: 'pro.send_materials', payload: {} });
     tended(sim, at(2026, 9, 14, 12));
     const set = drawn(sim);
-    expect(set.shown).toContain('The Meeting How This Works When September 21, 2026 at 11:00 AM Where At Stewart Talent’s New York office Moved Not yet: it can be moved once');
+    expect(set.shown).toContain('The Meeting How This Works When September 21, 2026 at 11:00 AM Where At Halberd Talent’s New York office Moved Not yet: it can be moved once');
     expect(button(set.html, 'Ask To Move')).toEqual([{ disabled: false, title: undefined, locked: false }]);
     sim.must({ kind: 'pro.ask_to_move', payload: { meetingId: sim.player.pro!.relations[AGENT.id]!.meeting!.id } });
     const moved = drawn(sim);

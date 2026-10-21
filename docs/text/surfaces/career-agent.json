@@ -1,6 +1,6 @@
 [
  {
-  "surface": "Career, Representation: his panel, the notice where he first appears, the fictional line and where you stand",
+  "surface": "Career, Representation: his panel, the notice where he first appears and where you stand",
   "where": "Career, under Your Work, the Representation tab, at the top",
   "sources": [
    "src/ui/career/RepresentationPane.tsx#AgentPanel",
@@ -20,11 +20,11 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19’s agent: nothing on this surface said anything before.",
-  "changes": "Written new to docs/STYLE.md: the agent’s published facts in plain lines, the agency’s policy quoted from its data and named as its page’s words, the fictional line at the head always, the notice standing above everything until I’ve Read This and then behind Read The Notice Again, and What’s Next in the screen’s labels for every stage.",
+  "changes": "Written new to docs/STYLE.md: the agent’s published facts in plain lines, the agency’s policy quoted from its data and named as its page’s words, the fictional line at the head always, the notice standing above everything until I’ve Read This and then behind Read The Notice Again, and What’s Next in the screen’s labels for every stage. On 2026-10-21, when the owner chose a fictional agent in the real one’s place, the panel came to say he and his agency are invented, the agency’s rule on submissions in its own words, and the line at its head that a real agent’s words were invented went.",
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: G1: where he first appears, the notice stands above all else with the fictional line, and once read it stays one press away'"
+    "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: G1: where he first appears, the notice that he and his agency are invented stands above all else, and once read it stays one press away'"
    },
    {
     "kind": "test",

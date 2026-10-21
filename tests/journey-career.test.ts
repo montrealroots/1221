@@ -389,17 +389,17 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(relationOf(sg.player, AGENT.id)!.stage).toBe('represented');
     expect(met(A.lines, /^(NOTICE \| (The School’s Follow-Up|A Meeting|You Met|He Offered)|PRESS \| (Check|Send Your|Accept The Agreement)|STOP \| Meeting)/)).toEqual([
       'May 11, 2029 at 10:00 AM | NOTICE: The School’s Follow-Up After The Showcase', 'May 11, 2029 at 10:00 AM | PRESS: Check Your Materials', 'May 11, 2029 at 10:00 AM | PRESS: Send Your Materials',
-      'May 18, 2029 at 10:00 AM | NOTICE: A Meeting Is Set', 'May 25, 2029 at 11:00 AM | STOP: Meeting At Stewart Talent | Ask To Move',
-      'June 1, 2029 at 11:00 AM | STOP: Meeting At Stewart Talent | Go', 'June 1, 2029 at 11:00 AM | NOTICE: You Met His Office',
+      'May 18, 2029 at 10:00 AM | NOTICE: A Meeting Is Set', 'May 25, 2029 at 11:00 AM | STOP: Meeting At Halberd Talent | Ask To Move',
+      'June 1, 2029 at 11:00 AM | STOP: Meeting At Halberd Talent | Go', 'June 1, 2029 at 11:00 AM | NOTICE: You Met His Office',
       'June 6, 2029 at 10:00 AM | NOTICE: He Offered You Representation', 'June 6, 2029 at 10:00 AM | PRESS: Accept The Agreement',
     ]);
-    // Every notice of his carries the fictional line, and none came before her own send.
+    // None came before her own send, and none carries the line a real agent's did until 2026-10-21.
     const his = A.lines.filter((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && /^(A Meeting Is Set|You Met His Office|He Offered You Representation|Submitted For|Not Cast As|An Audition For|A Self-Tape For|A Callback For)/.test(shape(x[2] ?? '')); });
     expect(his.length).toBeGreaterThan(5);
-    for (const l of his) expect(l.endsWith(AGENT.fictional)).toBe(true);
+    for (const l of his) expect(l).not.toMatch(/Fictional:/);
   });
 
-  it('through him: his breakdowns and his submissions with her portfolio, the network co-star’s self-tape taped, its offer at scale plus ten accepted from What Needs You, the two shoot days played, the pay into Stewart Talent’s client trust account and on to her less $280.40 commission, and the credit on her résumé', () => {
+  it('through him: his breakdowns and his submissions with her portfolio, the network co-star’s self-tape taped, its offer at scale plus ten accepted from What Needs You, the two shoot days played, the pay into Halberd Talent’s client trust account and on to her less $280.40 commission, and the credit on her résumé', () => {
     const au = opened('audition');
     const o = au.player.pro!.opportunities.find((x) => x.projectId === 'calloway-files' && x.rounds?.length)!;
     const agreementId = au.player.pro!.agreements[0]!.id;
@@ -434,7 +434,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     // The payday: into the trust account. Commission is only what's over scale, ($1,542.20 - $1,402.00) x 2 = $280.40
     // (representation.md S3), and, a member by then, SAG-AFTRA's working dues of 1.575% (work.md S20): $48.58.
     const tr = opened('in-trust').player.pro!.engagements.find((x) => x.id === e.id)!.pay[0]!;
-    expect(tr.inTrust).toMatchObject({ agency: 'Stewart Talent', gross: 3_084_40, commission: 280_40, dues: 48_58 });
+    expect(tr.inTrust).toMatchObject({ agency: 'Halberd Talent', gross: 3_084_40, commission: 280_40, dues: 48_58 });
     expect((1_542_20 - 1_402_00) * 2).toBe(280_40);
     expect(Math.round(3_084_40 * UNIONS.sagAftra.workingDues)).toBe(48_58);
     expect(tr.inTrust!.held).toBe(3_084_40 - tr.inTrust!.withheld - 48_58);
@@ -445,8 +445,8 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(r).toMatchObject({ via: 'trust', gross: 3_084_40, commission: 280_40, dues: 48_58, net: tr.inTrust!.held - 280_40 });
     const passed = po.universe.transactions.find((x) => x.id === r.txnId)!;
     expect(passed.postings.some((x) => x.amount === r.net && po.universe.accounts[x.accountId]?.ownerId === po.player.id)).toBe(true);
-    expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 2)).toEqual(['August 2, 2029 at 12:00 PM | NOTICE: Pay Held For You At Stewart Talent', 'August 7, 2029 at 12:00 PM | NOTICE: Paid On From Stewart Talent']);
-    const paidOn = notice(A.lines, 'Paid On From Stewart Talent')!;
+    expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 2)).toEqual(['August 2, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'August 7, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent']);
+    const paidOn = notice(A.lines, 'Paid On From Halberd Talent')!;
     expect(paidOn).toContain('$280.40');
     expect(paidOn).toContain(`${money(r.net)} went into your`);
     // The credit on the résumé, made from the record by Update Your Résumé.
@@ -491,7 +491,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(activeAgreement(sim.player, sim.now)).toBeUndefined();
     const ended = sim.universe.notifications.filter((n) => shape(n.title) === 'Your Agreement Ended');
     expect(ended).toHaveLength(1);
-    expect(ended[0]!.body).toBe(`Your agreement with ${AGENT.name} at Stewart Talent ended on November 1, 2029, by agreement. ${stillOwed(sim.player, a)} ${AGENT.fictional}`);
+    expect(ended[0]!.body).toBe(`Your agreement with ${AGENT.name} at Halberd Talent ended on November 1, 2029, by agreement. ${stillOwed(sim.player, a)}`);
     // His breakdowns no longer reach her: each project comes openly where it takes actors' own submissions, or not at all.
     const monday = at(2029, 11, 5);
     expect(postingsAt(sim, sim.player, monday).some((x) => x.via === 'agent')).toBe(false);

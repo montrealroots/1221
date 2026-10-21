@@ -5,7 +5,12 @@
 verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 none of it is in `main`, and nothing is deployed. There is no stash and one worktree.
 
-**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (The fictional agent, 2026-10-21, at the owner's word, "Let's go ahead and swap in a fictional agent.": Thomas
+  Ashgrove of Halberd Talent in the real agent's place. It changed `src/engine`, so the 46 rows brief 19's final runs had
+  measured on the engine's or the app's whole source read as measured before what they read last changed, until the runs
+  are made again on it; until then this said 634 of 658. The judge's rows stand: nothing the judge reads changed.)
 
   (Brief 19's gate, 2026-10-21, in a clean clone of `a6b82e07`, exit 0 read from its file: 421 of 421 test files, 5,080 of
   5,080 tests, none skipped, and all 21 checks (`docs/verification/career-2026-10-20/final-runs/runs/gate.txt`). Its
@@ -89,9 +94,12 @@ none of it is in `main`, and nothing is deployed. There is no stash and one work
   (`docs/verification/career-2026-10-20/README.md`). Until then this listed them as still to do. Brief 19's criteria:
   59 of 60 Fixed And Verified; V17's person's look at desktop and mobile is the owner's (`PLAYTEST.md` is the route).
 - **Nothing merged or deployed:** merging to `main` and any Base44 deployment wait on the owner.
-- **An owner decision this brief leaves open:** the agent is a real person, depicted only from what's published, and
-  marked fictional wherever he speaks. Written permission, or a fictional agent in his place (one data entry), is the
-  owner's call.
+- **The agent is fictional** (2026-10-21, the owner's decision: "Let's go ahead and swap in a fictional agent."): Thomas
+  Ashgrove of Halberd Talent, New York legit, neither found as a real agent or agency when checked. Until then he was a
+  real person, Jordan Parente of Stewart Talent, depicted only from what was published; the research on him stays in
+  `docs/research/career-2026-10-20/agent.md` as history. The agent's draws are keyed by his id, so the career journeys'
+  fixed seeds are being found again for the new one (`journey-career` and `journey-career-older` fail until then). No
+  save carrying the old id was shipped, so none is migrated.
 - **Found outside the career, for the owner, not changed:** every played life's credit card limit rose 20% every six
   months with no ceiling (life A's to $194,736, `credit.ts`'s six-month review), which belongs to banking and paused
   brief 18 (`playthroughs/REPORT.md`, Played Again On The Settled Branch).

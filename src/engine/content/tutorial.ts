@@ -481,8 +481,8 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Representation',
     lead: 'The agent, how to reach him, why his office decides as it does, and the agreement.',
     body: [
-      `Career’s Representation tab holds the game’s one agent, ${PRO_AGENT.name}, at ${PRO_AGENCY.name} in ${PRO_AGENCY.office.city}. He’s a real person, and everything he says and decides in the game is invented. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.`,
-      `His agency doesn’t take unsolicited submissions, and the game keeps to that. His office takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+      `Career’s Representation tab holds the game’s one agent, ${PRO_AGENT.name}, at ${PRO_AGENCY.name} in ${PRO_AGENCY.office.city}. He and the agency are invented for the game. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.`,
+      `His office takes no submissions it hasn’t asked for. It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
       'Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.',
       `For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged ${PRO_BAR} or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.`,
       `Then press Send Your Materials. His office answers in about ${counted(PRO_TIMES.replyDays / 7, 'week')}: it asks for more, asks to meet, passes, or doesn’t answer at all, which after ${counted(PRO_TIMES.silenceDays / 7, 'week')} counts as no. Each answer comes as a notice, and History With His Office keeps every step.`,

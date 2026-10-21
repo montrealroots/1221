@@ -785,11 +785,6 @@ export function requestRefusal(sim: Simulation, person: Person, o: Opportunity |
 /** The agent an opportunity came through, where one did. */
 const agentFor = (o: Pick<Opportunity, 'agentId'>) => (o.agentId ? agentById(o.agentId) : undefined);
 
-/** The agent's words as a message carries them: the line, and the short note that they're invented. */
-function asAgent(o: Pick<Opportunity, 'agentId'>, words: string): string {
-  const agent = agentFor(o);
-  return agent ? `${words} ${agent.fictional}` : words;
-}
 
 /** An event in the opportunity's history, and in the agent's where it came through him (the relationship's record, G5). */
 function note(sim: Simulation, person: Person, o: Opportunity, e: { kind: ProEventKind; words: string; key: string }): void {
@@ -839,7 +834,7 @@ function submit(sim: Simulation, person: Person, o: Opportunity): void {
   const agent = agentFor(o);
   const words = `${agent ? `${agent.name} submitted you` : 'You submitted yourself'} for ${t.role.part} in ${t.project}, sending ${spokenList(sent)}.`;
   note(sim, person, o, { kind: 'submitted', key: 'submitted', words });
-  if (agent) tell(sim, person, `Submitted For ${t.role.part}`, asAgent(o, `${words} ${castingAs(t)} ${agrees(t, 'answers', 'answer')} on ${formatWeekdayDate(dayAt(addDays(sim.now, WORK.replyDays, NY), WORK.replyHour), NY)}.`), 60);
+  if (agent) tell(sim, person, `Submitted For ${t.role.part}`, `${words} ${castingAs(t)} ${agrees(t, 'answers', 'answer')} on ${formatWeekdayDate(dayAt(addDays(sim.now, WORK.replyDays, NY), WORK.replyHour), NY)}.`, 60);
   sim.schedule({
     at: dayAt(addDays(sim.now, WORK.replyDays, NY), WORK.replyHour), kind: REPLY_KIND, label: `Casting Answers: ${t.role.part}`, category: 'career', priority: 40,
     refType: 'pro.opportunity', refId: o.id, payload: { personId: person.id, opportunityId: o.id },
@@ -861,7 +856,7 @@ function agentTries(sim: Simulation, person: Person, o: Opportunity): void {
   if (no.every((x) => o.history.some((h) => h.kind === 'problem' && h.words.includes(x)))) return;
   const words = `${agent.name} didn’t submit you for ${t.role.part} in ${t.project}. ${no.join(' ')}`;
   note(sim, person, o, { kind: 'problem', key: `held:${o.counts.problem ?? 0}`, words });
-  tell(sim, person, `Not Submitted For ${t.role.part}`, asAgent(o, `${words} ${agent.name} can still submit you until ${formatDate(o.submitBy, NY)}, once that’s put right.`), 70);
+  tell(sim, person, `Not Submitted For ${t.role.part}`, `${words} ${agent.name} can still submit you until ${formatDate(o.submitBy, NY)}, once that’s put right.`, 70);
 }
 
 /** An opportunity settled: its status, when, the outcome in words, and the record kept to its bounds. */
@@ -915,7 +910,7 @@ function setRound(sim: Simulation, person: Person, o: Opportunity, which: 'audit
   const next = form === 'in-person' ? 'Prepare the sides on the Career screen’s Opportunities tab before you go.' : 'Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.';
   const clashWords = clash.length ? ` It clashes with ${spokenList(clash)}. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.` : '';
   const agent = agentFor(o);
-  tell(sim, person, which === 'callback' ? `A Callback For ${t.role.part}` : form === 'in-person' ? `An Audition For ${t.role.part}` : `A Self-Tape For ${t.role.part}`, asAgent(o, `${agent ? `${agent.name} passed this on: ` : ''}${words}${clashWords} ${next}`), 80);
+  tell(sim, person, which === 'callback' ? `A Callback For ${t.role.part}` : form === 'in-person' ? `An Audition For ${t.role.part}` : `A Self-Tape For ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${words}${clashWords} ${next}`, 80);
   return r;
 }
 
@@ -968,7 +963,7 @@ function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionR
     : `You missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
   note(sim, person, o, { kind: 'problem', key: `${r.round}:missed`, words });
   settle(sim, person, o, 'lapsed', words);
-  tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${r.round === 'callback' ? 'Callback' : 'Audition'} For ${t.role.part}`, asAgent(o, words), 75);
+  tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${r.round === 'callback' ? 'Callback' : 'Audition'} For ${t.role.part}`, words, 75);
 }
 
 /** Casting passed: said, with where to see what went into it. */
@@ -977,7 +972,7 @@ function pass(sim: Simulation, person: Person, o: Opportunity, why: string): voi
   note(sim, person, o, { kind: 'passed', key: 'passed', words: why });
   settle(sim, person, o, 'passed', why);
   const agent = agentFor(o);
-  tell(sim, person, `Not Cast As ${t.role.part}`, asAgent(o, `${agent ? `${agent.name} passed this on: ` : ''}${why} Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.`), 65);
+  tell(sim, person, `Not Cast As ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${why} Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.`, 65);
 }
 
 /** An offer made, on the terms the work pays: standing three days, conveyed by the agent where one represents the actor. */
@@ -1005,7 +1000,7 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   const warning = acceptWarning(sim, person, o);
   sim.requireDecision({
     urgency: 80, category: 'career', title: `An Offer For ${t.role.part}`, dueAt: until, route: '/workspace/career', refType: 'pro.offer', refId: o.id,
-    detail: asAgent(o, `${agent ? `${agent.name} passed on an offer. ` : ''}${words}${warning ? ` ${warning}` : ''}`),
+    detail: `${agent ? `${agent.name} passed on an offer. ` : ''}${words}${warning ? ` ${warning}` : ''}`,
     actions: [
       { label: 'Accept The Offer', commandKind: 'pro.accept_offer', payload: { opportunityId: o.id } },
       { label: 'Decline The Offer', commandKind: 'pro.decline_offer', payload: { opportunityId: o.id } },
@@ -1214,7 +1209,7 @@ export function registerProJobs(sim: Simulation): void {
         const t = projectOf(o);
         const held = o.via === 'agent' && o.history.some((x) => x.kind === 'problem');
         settle(s, person, o, 'lapsed', `Submissions for ${t.role.part} closed on ${formatDate(o.submitBy, NY)}${o.via === 'agent' ? `, before ${agentFor(o)?.name ?? 'your agent'} could submit you` : ''}.`);
-        if (held) tell(s, person, `Submissions Closed For ${t.role.part}`, asAgent(o, `${castingAs(t)} closed submissions for ${t.role.part} on ${formatDate(o.submitBy, NY)}, before ${agentFor(o)!.name} could submit you.`), 50);
+        if (held) tell(s, person, `Submissions Closed For ${t.role.part}`, `${castingAs(t)} closed submissions for ${t.role.part} on ${formatDate(o.submitBy, NY)}, before ${agentFor(o)!.name} could submit you.`, 50);
       } else if (o.via === 'agent') agentTries(s, person, o);
     }
   });
@@ -1270,7 +1265,7 @@ export function registerProJobs(sim: Simulation): void {
     const words = `You didn’t answer the offer for ${t.role.part} by ${formatDate(at.o.offer.until, NY)} at ${formatTime(at.o.offer.until, NY)}, so it lapsed.`;
     note(s, at.person, at.o, { kind: 'lapsed', key: 'lapsed', words });
     settle(s, at.person, at.o, 'lapsed', words);
-    tell(s, at.person, `The Offer For ${t.role.part} Lapsed`, asAgent(at.o, words), 70);
+    tell(s, at.person, `The Offer For ${t.role.part} Lapsed`, words, 70);
   });
 
   sim.onSchedule(WORK_DAY_KIND, (item, s) => {
