@@ -14,3 +14,7 @@ I37 killed (src/engine/content/careerwork.ts: "part: 'Callum', size: 'supporting
 I39 killed (src/engine/decided.ts: 'agentId: AGENTS[0]!.id,' -> "agentId: 'jordan-parente',"; tests/deciders.test.ts -t 'pro.posting': Tests  1 failed | 4 passed | 91 skipped (96))
 I40 killed (src/engine/decided.ts: "sim.player.performerTitle = title === 1 ? 'actress' : 'actor" -> ''; tests/deciders.test.ts -t 'pro.posting': Tests  1 failed | 4 passed | 91 skipped (96))
 I41 killed (src/engine/systems/projobs.ts: 'if (!writtenFor(t, person)) continue;' -> ''; tests/deciders.test.ts -t 'pro.posting': Tests  1 failed | 4 passed | 91 skipped (96))
+I42 killed (src/engine/systems/projobs.ts: 'if (elsewhere) { missRound(s, at.person, at.o, r, elsewhere)' -> ''; tests/pro-work.test.ts -t 'two auditions in person whose trips meet': Tests  1 failed | 35 skipped (36))
+I43 killed (src/engine/systems/proagent.ts: 'if (present(person, item.at) && !elsewhere) {' -> 'if (present(person, item.at)) {'; tests/pro-work.test.ts -t 'a meeting at the agent’s office and an audition': Tests  1 failed | 35 skipped (36))
+I44 killed (src/engine/systems/projobs.ts: 'const away = tripMinutes(person.currentLocationId, t.place.c' -> 'const away = 0;\n    for (const r of o.ro'; tests/pro-work.test.ts -t 'two auditions in person whose trips meet': Tests  1 failed | 35 skipped (36))
+I45 killed (src/engine/content/careerwork.ts: "part: 'Felix', size: 'lead'" -> "part: 'Theo', size: 'lead'"; tests/pro-core.test.ts -t 'names no part as the School names a classmate': Tests  1 failed | 25 skipped (26))

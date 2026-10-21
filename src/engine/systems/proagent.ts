@@ -43,7 +43,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
 import type { Person } from '../domain/model';
-import { MS_DAY, addDays, formatDate, formatDateTime, formatTime, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, MS_MINUTE, addDays, formatDate, formatDateTime, formatTime, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { countWords, spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA } from '../content/school';
@@ -61,6 +61,7 @@ import {
   type Agreement, type AgentRelation, type EndedHow, type MaterialKind, type MaterialProblem, type ProEvent, type ProEventKind, type ProId, type RelationStage,
 } from './pro';
 import { yearOfStudy } from './school';
+import { attendedAcross } from './projobs';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: kinds, times, bars and chances (every one an ASSUMPTION, said where a player reads it)
@@ -1172,7 +1173,11 @@ export function registerProAgent(sim: Simulation): void {
     const m = rel?.meeting;
     if (!person || !agent || !rel || !m || m.id !== item.payload.meetingId || m.status !== 'set') return;
     const z = s.zone;
-    if (present(person, item.at)) {
+    // At an audition in person whose trip meets the meeting's (`attendedAcross`, from 2026-10-21), it's missed, as a
+    // round is missed for a meeting kept.
+    const trip = (item.travelMinutes ?? 0) * MS_MINUTE;
+    const elsewhere = present(person, item.at) ? attendedAcross(person, item.at - trip, item.at + AGENT_TIMES.meetingMinutes * MS_MINUTE + trip, m.id) : undefined;
+    if (present(person, item.at) && !elsewhere) {
       m.status = 'kept';
       setStage(s, rel, 'deciding');
       note(s, rel, 'meeting-kept', `meeting:${m.id}:kept`, `You kept the meeting with his office, ${m.where === 'office' ? `at ${agencyOf(agent).name}’s ${agencyOf(agent).office.city} office` : 'by video'}.`, m.id);
@@ -1182,12 +1187,12 @@ export function registerProAgent(sim: Simulation): void {
       return;
     }
     m.status = 'missed';
-    note(s, rel, 'meeting-missed', `meeting:${m.id}:missed`, `You missed the meeting with his office at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}.`, m.id);
+    note(s, rel, 'meeting-missed', `meeting:${m.id}:missed`, `${elsewhere ? `You were at ${elsewhere}, so you missed` : 'You missed'} the meeting with his office at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}.`, m.id);
     const interest = interestOf(s, person, agent, s.now);
     keepWhy(s, rel, 'meeting-missed', 'pass', interest);
     closeApproach(s, person, rel, 'passed', 'pass');
     note(s, rel, 'passed', `decision:${m.id}:passed`, 'His office closed your approach after the missed meeting.');
-    tell(s, person, agent, `You Missed The Meeting At ${atAgency(agent)}`, `You missed the meeting with ${officeOf(agent)} at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}. In the game a meeting comes before an offer, so his office closed your approach. It looks again only after a year, from ${formatDate(rel.cooldown!.until, z)}, and then only at something new.`, 70);
+    tell(s, person, agent, `You Missed The Meeting At ${atAgency(agent)}`, `${elsewhere ? `You were at ${elsewhere}, so you missed` : 'You missed'} the meeting with ${officeOf(agent)} at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}. In the game a meeting comes before an offer, so his office closed your approach. It looks again only after a year, from ${formatDate(rel.cooldown!.until, z)}, and then only at something new.`, 70);
   });
 
   sim.onSchedule(DECISION_KIND, (item, s) => {

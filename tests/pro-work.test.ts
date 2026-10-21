@@ -33,7 +33,7 @@ import { type Agreement, type Opportunity, activeAgreement } from '@/engine/syst
 import {
   AUDITION_KIND, CASTING, POSTING, WORK, WORK_DAY_KIND, acceptRefusal, acceptWarning, awayAt, castingDraw, chanceOf, conditionsFor, datesOf,
   classDaysIn, clashesAt, fitOf, inSessionAt, moveRefusal, payGroups, payTermsOf, payWords, postingTimes, postingsAt, projectOf, reachOf, requestRefusal, roundToCome, submitRefusal, tapeRefusal,
-  writtenFor,
+  tripMinutes, writtenFor,
 } from '@/engine/systems/projobs';
 
 const zone = 'America/New_York';
@@ -198,9 +198,9 @@ describe('J1: fictional roles, posted on a schedule', () => {
     // The same projects reach each, the parts in them their own.
     const projects = (x: typeof actor, via: 'open' | 'agent') => [...new Set([...x.open, ...x.through].filter((p) => p.via === via).map((p) => p.project.project))].sort();
     for (const via of ['open', 'agent'] as const) expect(projects(actor, via)).toEqual(projects(actress, via));
-    expect(actor.open.map((p) => p.project.role.part)).toContain('Theo');
+    expect(actor.open.map((p) => p.project.role.part)).toContain('Felix');
     expect(actress.open.map((p) => p.project.role.part)).toContain('Ivy');
-    expect(actress.open.map((p) => p.project.role.part)).not.toContain('Theo');
+    expect(actress.open.map((p) => p.project.role.part)).not.toContain('Felix');
   });
 
   it('PLAYER JOURNEY: posts open roles each Monday at nine for a week, each with its project, role, dates, place and pay, and never an agent-only role to an actor nobody represents', () => {
@@ -386,25 +386,25 @@ describe('the whole loop, played', () => {
   const seeds = Array.from({ length: 20 }, (_, n) => `work-loop-${n}`);
 
   it('PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice', () => {
-    // An actor, as Theo is written for one (from 2026-10-21, the owner's word: a part is written for an actor, an actress or
+    // An actor, as Felix is written for one (from 2026-10-21, the owner's word: a part is written for an actor, an actress or
     // either, and only one written for the player or either is posted to them).
     let { sim, o } = offerIn(seeds, (seed) => { const s = graduate(seed, { pronouns: 'he/him' }); skilled(s); portfolio(s); return s; }, (x) => projectById(x.projectId)!.kind === 'student-film');
     const t = projectOf(o);
     // What the player read, in order: the degree's Equity bill (the pay's, read here since the parts were merged on
     // 2026-10-21), then the casting office's answer, then the offer to decide on.
-    expect(notices(sim)).toEqual([expect.stringMatching(/^Your Equity Initiation Fee \| You’re a member of Actors’ Equity Association from your degree\./), expect.stringMatching(/^Actors’ Equity Association: \$600\.00 Paid \| /), expect.stringMatching(/^An Audition For Theo \| The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, \w+day, \w+ \d+, 2026 at 11:00 AM\. Getting there takes about two hours each way\. Prepare the sides on the Career screen’s Opportunities tab before you go\.$/)]);
+    expect(notices(sim)).toEqual([expect.stringMatching(/^Your Equity Initiation Fee \| You’re a member of Actors’ Equity Association from your degree\./), expect.stringMatching(/^Actors’ Equity Association: \$600\.00 Paid \| /), expect.stringMatching(/^An Audition For Felix \| The film’s director wants to see you for Felix in Paper Moons: an apartment in Brooklyn in New York, \w+day, \w+ \d+, 2026 at 11:00 AM\. Getting there takes about two hours each way\. Prepare the sides on the Career screen’s Opportunities tab before you go\.$/)]);
     expect(o.history.map((e) => e.kind)).toEqual(['opportunity', 'submitted', 'audition', 'audition', 'offer']);
     // The history says it in the past, as a history does, where the notice and the question say it as it comes (from
     // 2026-10-21, brief 19's app walk: until then the history kept the notice's "wants to see you" and "offers you").
-    expect(o.history[2]!.words).toMatch(/^The film’s director asked to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, \w+day, \w+ \d+, 2026 at 11:00 AM\.$/);
-    expect(o.history[4]!.words).toMatch(/^The film’s director offered you Theo in Paper Moons, a fictional student film\. The pay is deferred: .+ The work was from \w+ \d+, 2026 to \w+ \d+, 2026, in New York, and the offer stood until .+ at 5:00 PM\.$/);
+    expect(o.history[2]!.words).toMatch(/^The film’s director asked to see you for Felix in Paper Moons: an apartment in Brooklyn in New York, \w+day, \w+ \d+, 2026 at 11:00 AM\.$/);
+    expect(o.history[4]!.words).toMatch(/^The film’s director offered you Felix in Paper Moons, a fictional student film\. The pay is deferred: .+ The work was from \w+ \d+, 2026 to \w+ \d+, 2026, in New York, and the offer stood until .+ at 5:00 PM\.$/);
     const decision = Object.values(sim.universe.decisions).find((d) => d.refId === o.id && !d.resolvedAt)!;
-    expect(decision.title).toBe('An Offer For Theo');
-    expect(decision.detail).toMatch(/^The film’s director offers you Theo in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);
+    expect(decision.title).toBe('An Offer For Felix');
+    expect(decision.detail).toMatch(/^The film’s director offers you Felix in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);
     expect(decision.actions.map((a) => a.label)).toEqual(['Accept The Offer', 'Decline The Offer']);
     // The audition was judged by the evaluation, kept on the work record with its band, and casting read it apart from the fit and the field.
     const round = o.rounds![0]!;
-    expect(sim.player.work!.some((w) => w.what === 'Theo, Paper Moons: Audition' && w.band === round.band)).toBe(true);
+    expect(sim.player.work!.some((w) => w.what === 'Felix, Paper Moons: Audition' && w.band === round.band)).toBe(true);
     expect(round.casting).toEqual({ at: expect.any(Number), chance: chanceOf(round.band!, round.casting!.fit, 'student-film', 'final'), fit: fitOf(sim.player, t).fit, yes: true });
 
     sim = saved(sim); o = sim.player.pro!.opportunities.find((x) => x.id === o.id)!;
@@ -435,18 +435,18 @@ describe('the whole loop, played', () => {
     expect(e.status).toBe('finished');
     expect(e.log!.map((l) => l.status)).toEqual(['worked', 'worked', 'worked']);
     // Each day judged by the evaluation, on the work record.
-    expect(sim.player.work!.filter((w) => w.what.startsWith('Theo, Paper Moons: Shoot Day')).length).toBe(3);
+    expect(sim.player.work!.filter((w) => w.what.startsWith('Felix, Paper Moons: Shoot Day')).length).toBe(3);
     // The lasting credit: a student film, shot, the best band of its days, and the résumé behind on it.
     const credit = sim.player.pro!.credits.find((c) => c.engagementId === e.id)!;
-    expect(credit).toMatchObject({ kind: 'student-film', project: 'Paper Moons', role: 'Theo', status: 'shot', medium: 'film' });
+    expect(credit).toMatchObject({ kind: 'student-film', project: 'Paper Moons', role: 'Felix', status: 'shot', medium: 'film' });
     expect(credit.band).toBe((['exceptional', 'strong', 'working', 'unready'] as const).find((b) => e.log!.some((l) => l.band === b)));
     expect(sim.player.pro!.credits.filter((c) => c.engagementId === e.id)).toHaveLength(1);
-    expect(notices(sim).at(-1)).toBe('You Wrapped Paper Moons | Paper Moons wrapped, and Theo is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about six months on, estimated. Update your résumé on the Portfolio tab to add it.');
+    expect(notices(sim).at(-1)).toBe('You Wrapped Paper Moons | Paper Moons wrapped, and Felix is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about six months on, estimated. Update your résumé on the Portfolio tab to add it.');
     sim = saved(sim);
     played(sim, sim.now + 200 * MS_DAY);
     const released = sim.player.pro!.credits.find((c) => c.engagementId === e.id)!;
     expect(released.status).toBe('released');
-    expect(notices(sim)).toContain('Paper Moons Is Released | Paper Moons is out, so Theo shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.');
+    expect(notices(sim)).toContain('Paper Moons Is Released | Paper Moons is out, so Felix shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.');
     expect(breaches(sim.universe, sim.now)).toEqual([]);
     // Settled once: one engagement, one credit, one booked event, whatever the reloads.
     expect(sim.player.pro!.engagements.filter((x) => x.opportunityId === o.id)).toHaveLength(1);
@@ -792,16 +792,16 @@ describe('V12: a scheduling conflict, said and handled', () => {
   it('PLAYER JOURNEY: a student’s audition in person in term clashes with classes, said; Ask For Another Time finds a time clear of them or says casting has none, and going at the first time counts the day’s classes missed', () => {
     let found: { sim: Simulation; o: Opportunity } | undefined;
     for (const seed of Array.from({ length: 20 }, (_, n) => `work-class-clash-${n}`)) {
-      // An actor, as Theo is written for one (from 2026-10-21).
+      // An actor, as Felix is written for one (from 2026-10-21).
       const sim = firstYear(seed, { pronouns: 'he/him' }, false);
       const o = waitFor(sim, inTerm(sim, ['student-film']), 12);
       if (!o) continue;
       sim.must({ kind: 'pro.submit', payload: { opportunityId: o.id } });
       played(sim, sim.now + 3 * MS_DAY);
-      if (o.status === 'audition' && notices(sim).some((n) => n.startsWith('An Audition For Theo') && n.includes('It clashes with'))) { found = { sim, o }; break; }
+      if (o.status === 'audition' && notices(sim).some((n) => n.startsWith('An Audition For Felix') && n.includes('It clashes with'))) { found = { sim, o }; break; }
     }
     const { sim, o } = found!;
-    expect(notices(sim).find((n) => n.startsWith('An Audition For Theo'))).toMatch(/It clashes with (Classes at 9:00 AM|your classes, from 9:00 AM)/);
+    expect(notices(sim).find((n) => n.startsWith('An Audition For Felix'))).toMatch(/It clashes with (Classes at 9:00 AM|your classes, from 9:00 AM)/);
     const first = roundToCome(o)!.at;
     const twin = reload(sim);
     // A first-year's weekdays run from nine to the afternoon's lab: casting has a time clear of them, or says it has none.
@@ -815,7 +815,7 @@ describe('V12: a scheduling conflict, said and handled', () => {
     }
     // Going at the first time: away from nine with the trip, so the School counts that day's classes missed, unexcused.
     const p = zonedParts(first, zone);
-    expect(awayAt(twin.player, at(p.year, p.month, p.day, 9))).toEqual({ label: 'Audition: Theo', approved: false });
+    expect(awayAt(twin.player, at(p.year, p.month, p.day, 9))).toEqual({ label: 'Audition: Felix', approved: false });
     played(twin, first + MS_HOUR);
     expect(twin.player.pro!.opportunities.find((x) => x.id === o.id)!.rounds![0]!.status).toBe('done');
     expect(twin.universe.notifications.filter((n) => n.title === 'You Missed Classes' && Math.abs(n.at - first) < 12 * MS_HOUR)).toHaveLength(1);
@@ -1000,11 +1000,11 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     sim.player.pro!.opportunities.push(o);
     const other = offered(sim, t.id, posted, 'test-other');
     sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: other.id } });
-    sim.schedule({ at: sim.now + MS_HOUR, kind: 'pro.casting_decision', label: 'Casting Decides: Theo', category: 'career', priority: 40, payload: { personId: sim.player.id, opportunityId: o.id, round: 0 } });
+    sim.schedule({ at: sim.now + MS_HOUR, kind: 'pro.casting_decision', label: 'Casting Decides: Felix', category: 'career', priority: 40, payload: { personId: sim.player.id, opportunityId: o.id, round: 0 } });
     played(sim, sim.now + 2 * MS_HOUR);
     expect(o.status).toBe('passed');
     expect(o.rounds![0]!.casting).toMatchObject({ chance: 0, yes: false });
-    expect(o.outcome).toMatch(/^You’re booked for Paper Moons: Shoot Day 1 on \w+ \d+, 2026, so the film’s director cast another actor as Theo\.$/);
+    expect(o.outcome).toMatch(/^You’re booked for Paper Moons: Shoot Day 1 on \w+ \d+, 2026, so the film’s director cast another actor as Felix\.$/);
   });
 
   it('GUARD: an audition in person set inside a booked work day’s hours is missed, the actor being at work, and the role lapses; the same audition on a free day is gone to and judged (found by brief 19’s playthroughs, 2026-10-21)', () => {
@@ -1029,6 +1029,62 @@ describe('availability and the School’s calls, checked and never drawn', () =>
     expect([free.rounds![0]!.status, free.rounds![0]!.band !== undefined]).toEqual(['done', true]);
     expect([during.rounds![0]!.status, during.status]).toEqual(['missed', 'lapsed']);
     expect(during.outcome).toBe(`You missed the audition for ${film.role.part} on ${formatDate(shoot.from + 4 * MS_HOUR, zone)} at 11:00 AM, so ${film.casting} moved on without you.`);
+  });
+
+  it('GUARD: two auditions in person whose trips meet can’t both be gone to: the one the clock reaches first is judged and the other missed, said with where she was; two days apart, both are gone to (the app’s third walk, 2026-10-21)', () => {
+    const sim = graduate('work-two-towns');
+    const posted = postingTimes(sim.now, sim.now + 8 * MS_DAY)[0]!;
+    const hudson = PROJECTS.find((x) => x.kind === 'lort' && writtenFor(x, sim.player))!;
+    const brooklyn = PROJECTS.find((x) => x.kind === 'student-film' && writtenFor(x, sim.player))!;
+    // TEST SETUP: auditions in person, as `setRound` sets one: the round and its item, with the trip from home.
+    const audition = (id: string, t: typeof hudson, when: number): Opportunity => {
+      const o: Opportunity = { id, projectId: t.id, via: 'open', status: 'audition', postedAt: posted, submitBy: posted + 7 * MS_DAY, history: [], counts: {}, auditionAt: when, rounds: [{ round: 'audition', form: 'in-person', at: when, status: 'set' }] };
+      sim.player.pro!.opportunities.push(o);
+      sim.schedule({ at: when, kind: AUDITION_KIND, label: `Audition: ${t.role.part}, ${t.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: tripMinutes(sim.player.currentLocationId, t.place.cityId), locationId: t.place.cityId, refType: 'pro.opportunity', refId: id, payload: { personId: sim.player.id, opportunityId: id, round: 0 } });
+      return o;
+    };
+    const day = at(2026, 9, 15, 11);
+    const first = audition('test-hudson', hudson, day);
+    const second = audition('test-brooklyn', brooklyn, day);
+    // Three hours on, the Brooklyn trip still meets the Hudson one: each is from home and back.
+    const after = audition('test-after', brooklyn, day + 3 * MS_HOUR);
+    const apart = audition('test-apart', brooklyn, day + 2 * MS_DAY);
+    played(sim, day + 3 * MS_DAY);
+    expect([first.rounds![0]!.status, first.rounds![0]!.band !== undefined]).toEqual(['done', true]);
+    for (const o of [second, after]) {
+      expect([o.rounds![0]!.status, o.status]).toEqual(['missed', 'lapsed']);
+      expect(o.outcome).toBe(`You were at the audition for ${hudson.role.part} in Hudson, so you missed the audition for ${brooklyn.role.part} on ${formatDate(day, zone)} at ${o === second ? '11:00 AM' : '2:00 PM'}, and ${brooklyn.casting} moved on without you.`);
+    }
+    expect(notices(sim)).toContain(`You Missed The Audition For ${brooklyn.role.part} | ${second.outcome}`);
+    expect([apart.rounds![0]!.status, apart.rounds![0]!.band !== undefined]).toEqual(['done', true]);
+  });
+
+  it('GUARD: a meeting at the agent’s office and an audition in person at its hour can’t both be gone to: the meeting, which the clock reaches first, is kept and the audition missed; an audition gone to first leaves the meeting missed, said with where she was (the app’s third walk, 2026-10-21)', () => {
+    const agent = AGENTS[0]!;
+    const film = (sim: Simulation) => PROJECTS.find((x) => x.kind === 'student-film' && writtenFor(x, sim.player))!;
+    // TEST SETUP: a meeting with his office, as `scheduleMeeting` sets one after a referral, and an audition in person,
+    // as `setRound` sets one, each with its trip from New Haven.
+    const setUp = (seed: string, meetAt: number, auditionAt: number) => {
+      const sim = graduate(seed);
+      const meeting = { id: 'test-meeting', at: meetAt, where: 'office' as const, moved: 0, status: 'set' as const };
+      sim.player.pro!.relations[agent.id] = { agentId: agent.id, stage: 'meeting', since: sim.now, stageAt: sim.now, noticeShownAt: sim.now, via: { route: 'referral', at: sim.now, by: 'the film’s director' }, history: [], counts: {}, meeting };
+      sim.schedule({ at: meetAt, kind: MEETING_KIND, label: 'Meeting At Halberd Talent', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60, travelMinutes: 120, locationId: 'us-ny-newyork', refType: 'pro-meeting', refId: meeting.id, payload: { personId: sim.player.id, agentId: agent.id, meetingId: meeting.id } });
+      const t = film(sim);
+      const o: Opportunity = { id: 'test-audition', projectId: t.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, auditionAt, rounds: [{ round: 'audition', form: 'in-person', at: auditionAt, status: 'set' }] };
+      sim.player.pro!.opportunities.push(o);
+      sim.schedule({ at: auditionAt, kind: AUDITION_KIND, label: `Audition: ${t.role.part}, ${t.project}`, category: 'career', priority: 40, requiresPlayer: true, durationMinutes: WORK.auditionMinutes, travelMinutes: 120, locationId: t.place.cityId, refType: 'pro.opportunity', refId: o.id, payload: { personId: sim.player.id, opportunityId: o.id, round: 0 } });
+      played(sim, Math.max(meetAt, auditionAt) + MS_DAY);
+      return { sim, o, t, m: sim.player.pro!.relations[agent.id]!.meeting! };
+    };
+    const eleven = at(2026, 9, 18, 11);
+    const same = setUp('work-meeting-audition', eleven, eleven);
+    expect([same.m.status, same.o.rounds![0]!.status]).toEqual(['kept', 'missed']);
+    expect(same.o.outcome).toBe(`You were at the meeting with ${agent.name}’s office, so you missed the audition for ${same.t.role.part} on ${formatDate(eleven, zone)} at 11:00 AM, and ${same.t.casting} moved on without you.`);
+    // An audition at ten, gone to, and the meeting at eleven, its trip from New Haven meeting the audition's.
+    const ten = at(2026, 9, 18, 10);
+    const before = setUp('work-audition-meeting', eleven, ten);
+    expect([before.o.rounds![0]!.status, before.m.status]).toEqual(['done', 'missed']);
+    expect(notices(before.sim).find((n) => n.startsWith('You Missed The Meeting At Halberd Talent'))).toMatch(new RegExp(`^You Missed The Meeting At Halberd Talent \\| You were at the audition for ${before.t.role.part} in New York, so you missed the meeting with ${agent.name}’s office at Halberd Talent at 11:00 AM on September 18, 2026\\. In the game a meeting comes before an offer, so his office closed your approach\\.`));
   });
 
   it('GUARD: a stage day she slept through the start of is no longer where she is, as the School reads it (`awayAt`): an audition in person in its later hours is gone to and judged (found by brief 19’s playthroughs, 2026-10-21)', () => {

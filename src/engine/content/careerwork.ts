@@ -217,7 +217,8 @@ export interface ProjectTemplate {
  * actress, so each sees all seven projects and each kind as often. Where a project's part is written for one, a second
  * part in it is written for the other, its own person in the same story, not the first one renamed, and named as no
  * classmate can be (`school.ts`'s given names): Callum beside Nell, Hester Vane beside Tobias Marsh, Ferris beside Wren,
- * Ivy beside Theo. Until then there were seven parts, one a project.
+ * Ivy beside Felix. Until then there were seven parts, one a project; Felix was Theo, and Callum Owen, until the walk
+ * found classmates given each name (Theo Patel among them).
  */
 export const PROJECTS: readonly ProjectTemplate[] = [
   {
@@ -323,7 +324,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     project: 'Paper Moons', company: 'a graduate film program’s thesis production', casting: 'the film’s director',
     medium: 'film', genres: ['coming_of_age', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an apartment in Brooklyn' },
-    role: { part: 'Theo', size: 'lead', for: 'actor', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
+    role: { part: 'Felix', size: 'lead', for: 'actor', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Student Film',
     requirements: { ages: [21, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: false },

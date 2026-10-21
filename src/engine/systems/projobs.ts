@@ -540,6 +540,38 @@ export function awayAt(person: Person, when: Instant): { label: string; approved
 }
 
 /**
+ * The career commitment the actor went to across a window, where there is one, said as a sentence names it: an audition
+ * or callback in person they were at (its round done), or a meeting they kept at an agent's office, each with its trip
+ * each way from home as the calendar puts it, or a meeting by video, its hour alone. Each trip is from home and back,
+ * so two whose windows meet can't both be gone to, and the one the clock reached first is the one gone to: the
+ * audition's handler and the meeting's read this before they judge or keep anything. From 2026-10-21 (the app's second
+ * walk): until then an actress was judged at two auditions at 11 AM the same day, one in Hudson and one in Brooklyn,
+ * though the notice that set the second said it clashed with the first, and a meeting at an audition's hour was kept too.
+ */
+export function attendedAcross(person: Person, from: Instant, to: Instant, except?: string): string | undefined {
+  const pro = person.pro;
+  if (!pro) return undefined;
+  for (const o of pro.opportunities) {
+    const t = projectById(o.projectId);
+    if (!t || o.id === except) continue;
+    const away = tripMinutes(person.currentLocationId, t.place.cityId) * MIN;
+    for (const r of o.rounds ?? []) {
+      if (r.form === 'in-person' && r.status === 'done' && r.at - away < to && r.at + WORK.auditionMinutes * MIN + away > from) return `the ${r.round} for ${t.role.part} in ${t.place.city}`;
+    }
+  }
+  for (const [agentId, rel] of Object.entries(pro.relations)) {
+    const m = rel.meeting;
+    if (!m || m.status !== 'kept' || m.id === except) continue;
+    const away = (m.where === 'office' ? TRAVEL_MINUTES[person.currentLocationId] ?? 0 : 0) * MIN;
+    if (m.at - away < to && m.at + AGENT_TIMES.meetingMinutes * MIN + away > from) {
+      const agent = agentById(agentId);
+      return `the meeting with ${agent ? `${agent.name}’s office` : 'an agent’s office'}`;
+    }
+  }
+  return undefined;
+}
+
+/**
  * The booked work day whose own hours an audition in person at a moment would fall in: a live engagement's day, not
  * already missed, overlapping the round's half hour. The actor is at work then, so the round can't be gone to (from
  * 2026-10-21, brief 19's playthroughs: a callback set inside a shoot day's hours was gone to and judged as if the actor
@@ -974,13 +1006,15 @@ function finishRound(sim: Simulation, person: Person, o: Opportunity, r: Auditio
 /** Whether the actor is there at a moment: awake, and not in hospital or laid up (`offSick`, the School's). */
 const there = (person: Person, at: Instant): boolean => !(person.awakeSince !== undefined && person.awakeSince > at) && !offSick(person, at);
 
-/** A round missed: the opportunity lapses, said, and the problem noted. */
-function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionRound): void {
+/** A round missed: the opportunity lapses, said, and the problem noted, with where the actor was if it was elsewhere. */
+function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionRound, elsewhere?: string): void {
   const t = projectOf(o);
   r.status = 'missed';
   const words = r.form === 'self-tape'
     ? `Your self-tape for ${t.role.part} wasn’t in by ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without it.`
-    : `You missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
+    : elsewhere
+      ? `You were at ${elsewhere}, so you missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, and ${t.casting} moved on without you.`
+      : `You missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
   note(sim, person, o, { kind: 'problem', key: `${r.round}:missed`, words });
   settle(sim, person, o, 'lapsed', words);
   tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${r.round === 'callback' ? 'Callback' : 'Audition'} For ${t.role.part}`, words, 75);
@@ -1245,8 +1279,12 @@ export function registerProJobs(sim: Simulation): void {
     const idx = Number(item.payload.round);
     const r = at?.o.rounds?.[idx];
     if (!at || !r || r.status !== 'set' || r.form !== 'in-person' || r.at !== item.at) return;
-    // Asleep, ill or at a booked day's work (`workDayAt`), the round is missed.
+    // Asleep, ill or at a booked day's work (`workDayAt`), the round is missed; and at another audition or a meeting
+    // whose trip meets this one's (`attendedAcross`), missed with where they were.
     if (!there(at.person, item.at) || workDayAt(at.person, item.at)) { missRound(s, at.person, at.o, r); return; }
+    const trip = (item.travelMinutes ?? 0) * MIN;
+    const elsewhere = attendedAcross(at.person, item.at - trip, item.at + WORK.auditionMinutes * MIN + trip, at.o.id);
+    if (elsewhere) { missRound(s, at.person, at.o, r, elsewhere); return; }
     finishRound(s, at.person, at.o, r, idx, evaluate(s, at.person, auditionContext(s, at.person, at.o, r, idx)));
   });
 

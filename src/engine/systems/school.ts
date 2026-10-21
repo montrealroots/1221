@@ -1038,8 +1038,8 @@ export function grewFrom(sim: Simulation, person: Person, source: string, focus:
 }
 
 /** Names classmates are given: common American given names and surnames, not real students'. An actress's from the first list, an actor's from the second. */
-const GIVEN_ACTRESS = ['Maya', 'Elena', 'Priya', 'Sofia', 'Hannah', 'Nadia', 'Grace', 'Imani', 'Lucia', 'Aaliyah', 'Chloe', 'Zoe'];
-const GIVEN_ACTOR = ['Jordan', 'Marcus', 'Daniel', 'Isaiah', 'Theo', 'Caleb', 'Julian', 'Owen', 'Samuel', 'Noah', 'Mateo', 'Ethan'];
+export const GIVEN_ACTRESS = ['Maya', 'Elena', 'Priya', 'Sofia', 'Hannah', 'Nadia', 'Grace', 'Imani', 'Lucia', 'Aaliyah', 'Chloe', 'Zoe'];
+export const GIVEN_ACTOR = ['Jordan', 'Marcus', 'Daniel', 'Isaiah', 'Theo', 'Caleb', 'Julian', 'Owen', 'Samuel', 'Noah', 'Mateo', 'Ethan'];
 const FAMILY = ['Okafor', 'Reyes', 'Chen', 'Patel', 'Brooks', 'Kowalski', 'Nguyen', 'Alvarez', 'Bennett', 'Haddad', 'Morales', 'Kim', 'Sullivan', 'Abara', 'Castillo', 'Fischer', 'Walsh', 'Tanaka', 'Rivera', 'Osei', 'Park', 'Donovan', 'Mendez', 'Carter'];
 
 /**

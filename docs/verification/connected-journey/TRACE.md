@@ -1204,7 +1204,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 
 - **Action:** , at Career, Work, Your Engagements (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. The Work tab lists work once you’ve booked some.
 - **Preconditions:**
-  - Work you’ve booked. A student film’s pay is deferred, so it’s listed and never paid.
+  - Work you’ve booked. A student film’s pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so it’s listed and never paid.
   - Permission To Work first: Each engagement’s dates are read against your permission to work when you book it.
 - **Costs:**
   - Tax: Withheld from each payment as a paycheck’s is: federal income tax, Social Security and Medicare, and the tax of the state the work is in
@@ -1217,7 +1217,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Your Tax Return, evaluation: Your tax return reads each payment’s wages, withholding, commission, dues and the town the work was done in.
 - **Feedback (how to read what comes back):**
   - Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.
-  - Deferred pay is shown and never paid.
+  - Deferred pay is shown and never paid: a student film pays only if it earns money later, and no film in the game does.
   - On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.
 - **History (kept in the record):**
   - (none)
@@ -1342,7 +1342,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Calendar, scheduled: Accepting puts each work day on your calendar, and each stops the clock for you.
   - Auditions And Callbacks reads it, evaluation: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.
 - **Feedback (how to read what comes back):**
-  - Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred, so nothing is paid.
+  - Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid.
 - **History (kept in the record):**
   - Your Résumé: The part goes on your professional credits, and your résumé reads as behind until it has it.
 - **Later consequence:**

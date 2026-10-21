@@ -254,16 +254,16 @@ describe('the top bar’s dialogs', () => {
     const career = quickSave({}, 'frame-due-now-career');
     for (const i of career.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) career.timeline.cancel(i.id, career.now);
     const call = career.now + 2 * MS_HOUR;
-    career.schedule({ at: call, kind: AUDITION_KIND, label: 'Audition: Theo, Paper Moons', category: 'career', priority: 40, requiresPlayer: true, durationMinutes: 30, travelMinutes: 120, locationId: 'us-ny-newyork', payload: {} });
+    career.schedule({ at: call, kind: AUDITION_KIND, label: 'Audition: Felix, Paper Moons', category: 'career', priority: 40, requiresPlayer: true, durationMinutes: 30, travelMinutes: 120, locationId: 'us-ny-newyork', payload: {} });
     h.given = new Map();
     ({ game } = drawn(career, TimeControls));
     h.sets = [];
     game.advanceTo(call + MS_HOUR);
     for (const one of h.sets) h.given.set(one.at, one.value);
-    said = dialog(drawn(career, TimeControls).html, 'Audition: Theo, Paper Moons');
+    said = dialog(drawn(career, TimeControls).html, 'Audition: Felix, Paper Moons');
     expect(said).toContain('Going takes 30 minutes, and the clock moves on to');
     expect(said).toContain('Getting there and back, about 2 hours each way, doesn’t move the clock.');
-    expect(said).toContain('Audition: Theo, Paper Moons starts the next time the clock moves, and you’re there if you’re awake and not in hospital or laid up with an injury.');
+    expect(said).toContain('Audition: Felix, Paper Moons starts the next time the clock moves, and you’re there if you’re awake and not in hospital or laid up with an injury.');
     expect(said).not.toContain('in its town');
   });
 

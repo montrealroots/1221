@@ -475,7 +475,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'After its payday, the payment says what was withheld for tax, any union dues, the commission and what reached you.',
       'Open Money to see it land, with its line on your account’s statement.',
     ],
-    needs: ['Work you’ve booked. A student film’s pay is deferred, so it’s listed and never paid.'],
+    needs: ['Work you’ve booked. A student film’s pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so it’s listed and never paid.'],
     costs: [
       { label: 'Tax', value: 'Withheld from each payment as a paycheck’s is: federal income tax, Social Security and Medicare, and the tax of the state the work is in' },
       { label: 'When It’s Paid', value: 'The Thursday after each week’s work, as SAG-AFTRA’s rules give it, for all professional work', estimate: true },
@@ -494,7 +494,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     interpret: [
       'Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.',
-      'Deferred pay is shown and never paid.',
+      'Deferred pay is shown and never paid: a student film pays only if it earns money later, and no film in the game does.',
       'On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.',
     ],
     unavailable: ['“No work booked. Work you accept appears here with its dates, its calls, its pay and any commission.”'],
@@ -628,7 +628,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     short: `The Opportunities tab lists the roles you can be seen for, every project, company and casting office invented for the game. New roles go up each Monday morning and take submissions for ${word(WORK.submitDays)} days.\n\nPress Submit Yourself on an open role to send your headshots and résumé, and a reel where casting asks for one. Some casting offices take actors only through an agent, and their roles reach you only while one represents you.`,
     steps: [
       'Open Career, then the Opportunities tab.',
-      'Under Open Calls, read a role: the project, the part, what it asks, its dates and place, its pay and whether you can be seen for it.',
+      'Under Open Calls, read a role: the project, the part, who it’s written for, what it asks, its dates and place, its pay and whether you can be seen for it. Each part is written for an actor, an actress or either, and you’re posted only the ones written for you or for either.',
       'Press Submit Yourself. If it’s grayed out, the line under it says why.',
     ],
     needs: [
@@ -752,7 +752,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.',
       'Miss a shoot day, or a second day of a run, and the production replaces you.',
     ],
-    interpret: ['Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred, so nothing is paid.'],
+    interpret: ['Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid.'],
     unavailable: [
       'Your F-1 lets you work only on campus while you’re a student.',
       'You’re booked for another job on those days.',

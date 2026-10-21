@@ -20,7 +20,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
-import { COMMENCEMENT_KIND, EVALUATION_KIND } from '@/engine/systems/school';
+import { COMMENCEMENT_KIND, EVALUATION_KIND, GIVEN_ACTOR, GIVEN_ACTRESS } from '@/engine/systems/school';
 import { BRIEFS } from '@/engine/content/briefs';
 import { AGENTS, AGENCIES, agencyOf, agentById } from '@/engine/content/agents';
 import { AGREEMENT_TERMS, PROJECTS, RATES, minimumOn, type RateId } from '@/engine/content/careerwork';
@@ -477,6 +477,11 @@ describe('the agent and the work, as data', () => {
     }
     // A part for either says nobody's sex; the four that name it say the one they're written for.
     for (const p of PROJECTS.filter((x) => x.role.for === 'either')) expect(p.role.about).not.toMatch(/\b(he|she|his|her|him|brother|sister|widow|fiancées?)\b/i);
+  });
+
+  it('names no part as the School names a classmate, so an audition’s notice can’t read as a classmate’s (Theo, Felix since, and Owen, Callum since, until the app’s walks found them, 2026-10-21)', () => {
+    const given = new Set([...GIVEN_ACTOR, ...GIVEN_ACTRESS]);
+    expect(PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => given.has(first))).toEqual([]);
   });
 
   it('says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him', () => {

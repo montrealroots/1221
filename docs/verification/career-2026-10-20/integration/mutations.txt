@@ -48,3 +48,9 @@ I38 the deferred pay's why back to "only if it earns money later" alone | src/en
 I39 the posting decider's agreement with the real agent's old id (as until this fix, which the swap left naming nobody) | src/engine/decided.ts (represent) | tests/deciders.test.ts 'pro.posting … is actually changed by represented' | KILLED (it failed the suite at the swap's commit)
 I40 the decider's sweep not setting the title | src/engine/decided.ts (pro.posting) | tests/deciders.test.ts 'pro.posting … is actually changed by title' | KILLED
 I41 the postings not reading who a part is written for, against the decider's sweep | src/engine/systems/projobs.ts (postingsAt) | the same test | KILLED
+
+Mutations at the fixes for what the app's third walk found (2026-10-21, on 9c3b7ee8): two auditions in person at 11 AM the same day in Hudson and Brooklyn, both judged, and a part named as the School names classmates (Theo, with Theo Patel a classmate in many lives). Run by `mut-parts.py` with ONLY=I42,I43,I44,I45.
+I42 the audition's handler not reading where she was (as until this fix) | src/engine/systems/projobs.ts (AUDITION_KIND) | tests/pro-work.test.ts 'two auditions in person whose trips meet can’t both be gone to…' | KILLED
+I43 the meeting's handler not reading where she was | src/engine/systems/proagent.ts (MEETING_KIND) | tests/pro-work.test.ts 'a meeting at the agent’s office and an audition in person at its hour can’t both be gone to…' | KILLED
+I44 the rounds' windows without their trips | src/engine/systems/projobs.ts (attendedAcross) | the two auditions' test (the one three hours on) | KILLED
+I45 the film's part named Theo again | src/engine/content/careerwork.ts | tests/pro-core.test.ts 'names no part as the School names a classmate…' | KILLED

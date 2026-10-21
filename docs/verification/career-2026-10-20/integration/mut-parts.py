@@ -14,6 +14,10 @@ M = [
  ('I39', 'src/engine/decided.ts', "agentId: AGENTS[0]!.id,", "agentId: 'jordan-parente',", 'tests/deciders.test.ts', 'pro.posting'),
  ('I40', 'src/engine/decided.ts', "    sim.player.performerTitle = title === 1 ? 'actress' : 'actor';\n", "", 'tests/deciders.test.ts', 'pro.posting'),
  ('I41', 'src/engine/systems/projobs.ts', "    if (!writtenFor(t, person)) continue;\n", "", 'tests/deciders.test.ts', 'pro.posting'),
+ ('I42', 'src/engine/systems/projobs.ts', "    if (elsewhere) { missRound(s, at.person, at.o, r, elsewhere); return; }\n", "", 'tests/pro-work.test.ts', 'two auditions in person whose trips meet'),
+ ('I43', 'src/engine/systems/proagent.ts', "    if (present(person, item.at) && !elsewhere) {", "    if (present(person, item.at)) {", 'tests/pro-work.test.ts', 'a meeting at the agent’s office and an audition'),
+ ('I44', 'src/engine/systems/projobs.ts', "    const away = tripMinutes(person.currentLocationId, t.place.cityId) * MIN;\n    for (const r of o.rounds ?? []) {\n      if (r.form === 'in-person' && r.status === 'done'", "    const away = 0;\n    for (const r of o.rounds ?? []) {\n      if (r.form === 'in-person' && r.status === 'done'", 'tests/pro-work.test.ts', 'two auditions in person whose trips meet'),
+ ('I45', 'src/engine/content/careerwork.ts', "part: 'Felix', size: 'lead'", "part: 'Theo', size: 'lead'", 'tests/pro-core.test.ts', 'names no part as the School names a classmate'),
 ]
 import os
 ONLY = os.environ.get('ONLY', '').split(',') if os.environ.get('ONLY') else None

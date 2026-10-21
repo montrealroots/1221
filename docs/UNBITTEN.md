@@ -1237,7 +1237,8 @@ gender neutral and different parts for each genders. We need versatility
 always."), each is written for an actor, an actress or either, and only one
 written for the player or for either is posted to them (`writtenFor` in
 `systems/projobs.ts`): three for either, and four for each, so an actor and an
-actress each have a part in all seven projects.
+actress each have a part in all seven projects. Theo is Felix since, and no part
+shares a name the School gives a classmate.
 
 What was kept and only told back, made to count: an agency remembers how a
 client left (`takesBack`); a showcase's buzz brings managers for half a year

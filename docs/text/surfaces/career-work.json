@@ -110,6 +110,7 @@
    "src/engine/systems/projobs.ts#setRound",
    "src/engine/systems/projobs.ts#finishRound",
    "src/engine/systems/projobs.ts#missRound",
+   "src/engine/systems/projobs.ts#attendedAcross",
    "src/engine/systems/projobs.ts#awayAt",
    "src/engine/systems/projobs.ts#registerProJobs <pro.move_audition>"
   ],
@@ -124,7 +125,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19: the casting office’s answer, its time and place with the trip, a clash with the calendar and how to move it, the preparation steps a practice brief has, and a missed round said.",
-  "changes": "Written new: “The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Thursday, October 22, 2026 at 11:00 AM. Getting there takes about two hours each way.”, the clash with the way to move it once, each step with its minutes, each refusal in words, and a missed audition or tape said with what it cost. From 2026-10-21 (brief 19's app walk, read with the life docs/verification/career-2026-10-20/app/make-saves.ts plays): a round's line in the history says casting asked, in the past, where it had kept the notice's present tense among lines in the past.",
+  "changes": "Written new: “The film’s director wants to see you for Theo in Paper Moons: an apartment in Brooklyn in New York, Thursday, October 22, 2026 at 11:00 AM. Getting there takes about two hours each way.”, the clash with the way to move it once, each step with its minutes, each refusal in words, and a missed audition or tape said with what it cost. From 2026-10-21 (brief 19's app walk, read with the life docs/verification/career-2026-10-20/app/make-saves.ts plays): a round's line in the history says casting asked, in the past, where it had kept the notice's present tense among lines in the past. From 2026-10-21 (the app's third walk): an audition in person whose trip meets one already gone to, or a meeting kept at the agent's office, is missed and says where the actor was (“You were at the audition for Hester Vane in Hudson, so you missed the audition for Ivy…”), where both had been judged.",
   "evidence": [
    {
     "kind": "test",
@@ -145,6 +146,10 @@
    {
     "kind": "test",
     "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY (V10, V15, J2, J4): an unsigned graduate, from a posted student film to a booked, worked and credited part, saved and loaded at each stage with nothing settled twice'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'GUARD: two auditions in person whose trips meet can’t both be gone to: the one the clock reaches first is judged and the other missed, said with where she was; two days apart, both are gone to (the app’s third walk, 2026-10-21)'"
    }
   ]
  },
