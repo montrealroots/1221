@@ -249,5 +249,15 @@
   "tests": [
    "tests/b20-school-workstudy.test.ts"
   ]
+ },
+ {
+  "id": "B20-SCHOOL-26",
+  "what": "Most of a term’s class days missed ill never asks for Yale Health’s assessment: the excused share is never met",
+  "file": "src/engine/systems/leave.ts",
+  "find": "if (t.classDays >= MANDATORY_LEAVE.minClassDays && t.excused / t.classDays >= MANDATORY_LEAVE.excusedShare)",
+  "replace": "if (t.classDays >= MANDATORY_LEAVE.minClassDays && t.excused / t.classDays >= 2)",
+  "tests": [
+   "tests/b20-school-welfare.test.ts"
+  ]
  }
 ]
