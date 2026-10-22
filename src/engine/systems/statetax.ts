@@ -10,6 +10,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
+import { plural } from '../core/text';
 import { exchange } from '../content/currency';
 import { STATE_TAX, STATE_UNRESEARCHED, type Part, type StateCode, type StateRules } from '../content/statetax';
 import { deadline, type OwedParts, type TaxReturn } from './taxreturn';
@@ -55,8 +56,12 @@ export interface StateDue {
   /** When its first notice came, and when a plan was first asked for it: what a raised rate reads. */
   noticedAt?: Instant;
   planAskedAt?: Instant;
-  /** Assessed by the state on a return never filed (`assessStateNonFiler`, from 2026-10-11), and when their own replaced it. */
-  assessedBy?: { at: Instant };
+  /**
+   * Assessed by the state on a return never filed (`assessStateNonFiler`, from 2026-10-11), and when their own replaced
+   * it; with the tax it assessed (from 2026-10-21), which `lienInError` reads once their own return's tax has taken its
+   * place in `balance`. An assessment from before keeps none, and is read as their own return's.
+   */
+  assessedBy?: { at: Instant; tax?: Money };
   replacedAt?: Instant;
   /** Its lien, from its notice of intent to its release or withdrawal (`fileStateLien`, from the remaining-gaps pass). */
   lien?: Lien;
@@ -548,7 +553,8 @@ function startStatePlan(sim: Simulation, person: Person, p: StatePlan): void {
   }
   p.nextDue = sim.now + 30 * MS_DAY;
   sim.schedule({ at: p.nextDue, kind: STATE_PLAN_KIND, label: `${rules.short}: A Plan Payment`, category: 'personal', priority: 25, payload: { personId: person.id, state: p.state } });
-  note(p, sim.now, `Approved: ${formatMoney(p.monthly, saveCurrency(sim.universe))} a month for ${p.months} months`);
+  // The months counted with their noun (from 2026-10-21, brief 20: until then New York's plan over one month said “1 months”).
+  note(p, sim.now, `Approved: ${formatMoney(p.monthly, saveCurrency(sim.universe))} a month for ${plural(p.months, 'month')}`);
 }
 
 function endStatePlan(sim: Simulation, person: Person, p: StatePlan, status: 'ended' | 'paid', why: string): void {
@@ -740,16 +746,34 @@ export function lienReleaseRefusal(sim: Simulation, person: Person, r: TaxReturn
 }
 
 /**
- * Whether a lien was filed in error: the assessment it secured, replaced by their own return, came to no more than they'd
- * paid toward the year when it was filed. Withdrawn on request, its fees back (California's reading of an error; the
+ * Whether a lien was filed in error: with their own return in the place of the assessment it secured, nothing was owed on
+ * the year when it was filed (`owedThen`). Withdrawn on request, its fees back (California's reading of an error; the
  * others' process where published, SLATE's 30 days where not).
+ *
+ * Until 2026-10-21 it read the tax alone: their own return's tax no more than the tax paid before the lien. New York
+ * takes a part payment to the tax first, so a graduate who never filed her 2026 return, paid the $0.46 of tax New York
+ * assessed, had its tax warrant filed for the $0.57 of late penalty and interest left, and then filed her own return
+ * showing the same $0.46, was offered the warrant's withdrawal as filed in error (tests/b20-benefits-reach.test.ts). A
+ * lien is erroneous where "the tax liability that gave rise to the lien was satisfied prior to the filing of the notice"
+ * (26 CFR 301.6326-1(b)(1)), and the liability is the penalties and interest as well as the tax (IRC 6665(a)(2)); SLATE
+ * reads every state's the same way.
  */
 export function lienInError(r: TaxReturn, state: string): boolean {
   const sd = r.stateDue?.[state];
   const l = sd?.lien;
   if (!sd || !l || l.filedAt === undefined || sd.replacedAt === undefined) return false;
-  const paidBefore = (sd.payments ?? []).filter((p) => p.at < l.filedAt!).reduce((s, p) => s + p.tax, 0);
-  return Math.max(0, sd.balance) <= paidBefore;
+  const paidTax = (sd.payments ?? []).filter((p) => p.at < l.filedAt!).reduce((s, p) => s + p.tax, 0);
+  return owedThen(Math.max(0, sd.balance), sd.assessedBy?.tax ?? Math.max(0, sd.balance), paidTax, l.amount - l.fee) <= 0;
+}
+
+/**
+ * What their own return, in an assessment's place, left owed on a year when a lien was filed (from 2026-10-21): its tax
+ * less the tax paid by then, and what the lien secured beyond the assessment's tax, its penalties and interest, in the
+ * share their own return keeps of them, as a reconsideration keeps them (`reconsiderState`, `reconsider`).
+ */
+export function owedThen(own: Money, assessed: Money, paidTax: Money, secured: Money): Money {
+  const beyondTax = Math.max(0, secured - Math.max(0, assessed - paidTax));
+  return Math.max(0, own - paidTax) + Math.round(beyondTax * (assessed > 0 ? own / assessed : 0));
 }
 
 export function lienDisputeRefusal(r: TaxReturn | undefined, state: string): string | undefined {
@@ -861,7 +885,7 @@ export function assessStateNonFiler(sim: Simulation, person: Person, r: TaxRetur
   const sd = (stateDuesOf(r)[state] ??= { state, balance: tax });
   sd.balance = tax;
   sd.filedAt = sim.now;
-  sd.assessedBy = { at: sim.now };
+  sd.assessedBy = { at: sim.now, tax };
   const fileLate = stateFileLate(rules, tax, stateDueOf(r), sim.now, cur);
   const adds = (rules.nonFiler.adds ?? []).reduce((sum, a) => {
     let x = a.share !== undefined ? a.share * tax : 0;
@@ -901,9 +925,11 @@ export function reconsiderState(sim: Simulation, person: Person, r: TaxReturn, s
   if (over > 0) sim.post({ memo: `${stateName(state)} tax refund, ${r.year}: its assessment replaced by your return`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: over }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -over }] });
   sd.balance = own;
   sd.replacedAt = sim.now;
+  // Said to have fallen only where they did (from 2026-10-21, brief 20): a state assesses from the return's own figures,
+  // so their own in its place leaves them as they were, where until then the notice said they were "reduced in proportion".
   if (!sd.owed) stateLienPaid(sim, person, r, state);
   if (!sd.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year && one.payload.state === state) sim.timeline.cancel(one.id, sim.now);
-  notifyPlayer(sim, person, `Your ${r.year} Return Replaces ${stateName(state)}’s Assessment`, `${agencyOf(state)} accepted your own return: ${formatMoney(Math.max(0, own), saveCurrency(sim.universe))} of tax for the year. ${sd.owed ? `You still owe ${formatMoney(sd.owed, saveCurrency(sim.universe))}, with the penalties and interest reduced in proportion.` : over > 0 ? `The ${formatMoney(over, saveCurrency(sim.universe))} you paid beyond it comes back to you.` : 'Nothing more is owed.'}`);
+  notifyPlayer(sim, person, `Your ${r.year} Return Replaces ${stateName(state)}’s Assessment`, `${agencyOf(state)} accepted your own return: ${formatMoney(Math.max(0, own), saveCurrency(sim.universe))} of tax for the year. ${sd.owed ? `You still owe ${formatMoney(sd.owed, saveCurrency(sim.universe))}${ratio < 1 ? ', with the penalties and interest reduced in proportion.' : '. Your return shows the same tax, so its penalties and interest stand.'}` : over > 0 ? `The ${formatMoney(over, saveCurrency(sim.universe))} you paid beyond it comes back to you.` : 'Nothing more is owed.'}`);
 }
 
 // --- How a state's rules read on the screen.
@@ -1141,7 +1167,7 @@ export function registerStateTax(sim: Simulation): void {
         return;
       }
       startStatePlan(s, person, p);
-      notifyPlayer(s, person, `${rules.short} Approved Your Plan`, `${formatMoney(p.monthly, cur)} a month for ${p.months} months, from ${formatDate(p.nextDue!, HOME)}. Collection has stopped, but interest${rules.payLate.monthly ? ' and the late-payment penalty keep' : ' keeps'} adding up.`);
+      notifyPlayer(s, person, `${rules.short} Approved Your Plan`, `${formatMoney(p.monthly, cur)} a month for ${plural(p.months, 'month')}, from ${formatDate(p.nextDue!, HOME)}. Collection has stopped, but interest${rules.payLate.monthly ? ' and the late-payment penalty keep' : ' keeps'} adding up.`);
       return;
     }
     if (p.status !== 'active') return;

@@ -94,7 +94,7 @@ import { markRecord } from './credit';
 import { openingOf, usPerson } from './bankmoves';
 import { hasSsn } from './taxid';
 import { pendingOn } from './pending';
-import { abroadRefusal, balanceText, cardFeeAbroad, heldOf } from './abroad';
+import { abroadRefusal, balanceText, cardFeeAbroad, heldOf, nonResidentTaxOn } from './abroad';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -728,9 +728,17 @@ function transactionsBetween(sim: Simulation, account: Account, from: Instant, t
   return { count, wages };
 }
 
+/**
+ * A loan's next payment after a moment: on the day of the month it was taken, or the month's last day where the month is
+ * shorter, as the payment schedule a lender discloses when the loan is made (Reg Z §1026.18(g)) is a day of each month.
+ * From 2026-10-21 (brief 20's money audit): until then each payment was set a calendar month after the one before, so a
+ * loan taken on 31 October was paid on 30 November, 30 December, 30 January, 28 February and on the 28th from then on.
+ */
 function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
+  let months = 1;
+  while (addMonths(loan.openedAt, months, sim.homeZone) <= after) months += 1;
   sim.schedule({
-    at: addMonths(after, 1, sim.homeZone), kind: LOAN_DUE_KIND, label: 'World Simulation', category: 'system', priority: 85,
+    at: addMonths(loan.openedAt, months, sim.homeZone), kind: LOAN_DUE_KIND, label: 'World Simulation', category: 'system', priority: 85,
     refType: 'account', refId: loan.id, payload: { accountId: loan.id },
   });
 }
@@ -915,12 +923,17 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
 
 /**
  * Iceland: on the assessment's day, the tax taken on the first 300,000 kr of
- * last year's interest comes back into the current account.
+ * last year's interest comes back into the current account. The allowance is a
+ * resident's, as `interestAllowanceLeft` in `systems/banking.ts` reads it: a
+ * customer abroad has 12% taken at source (`NON_RESIDENT_TAX`) and nothing back.
+ * From 2026-10-21 (brief 20's money audit): until then a Reykjavík-raised student
+ * keeping her account at Arion from New Haven was given back 22% of the first
+ * 300,000 kr on 1 June, more than the 12% taken.
  */
 function refundInterestTax(sim: Simulation, person: Person, current: Account, bank: Bank): void {
   const rule = bankingIn(bank.iso)?.interestTax;
   const refund = rule?.refund;
-  if (!rule || !refund || !rule.rate) return;
+  if (!rule || !refund || !rule.rate || nonResidentTaxOn(sim, current) !== undefined) return;
   const today = zonedParts(sim.now, sim.homeZone);
   if (today.month !== refund.month || today.day !== refund.day) return;
   const from = instantFromZoned({ year: today.year - 1, month: 1, day: 1, hour: 0 }, sim.homeZone);

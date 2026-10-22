@@ -344,14 +344,15 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const one = slept(3);
     expect(one).toHaveLength(1);
     let notice = sim.universe.notifications.at(-1)!;
-    expect(notice.title).toBe('You Slept Through 1 Commitment');
+    // The count in words under ten, as titles say one (from 2026-10-21): until then "You Slept Through 1 Commitment".
+    expect(notice.title).toBe('You Slept Through One Commitment');
     expect(notice.body).toBe(`You were asleep for ${one[0]!.label}, so you missed it.`);
     // Tuesday 8 September from seven: the day's classes, then Drama 50's lab at three.
     tended(sim, on(2026, 9, 8, 7));
     const many = slept(10);
     expect(many.length).toBeGreaterThan(1);
     notice = sim.universe.notifications.at(-1)!;
-    expect(notice.title).toBe(`You Slept Through ${many.length} Commitments`);
+    expect(notice.title).toBe(`You Slept Through ${['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'][many.length - 2] ?? many.length} Commitments`);
     expect(notice.body).toMatch(/^You were asleep for .+ and .+, so you missed them\.$/);
     for (const c of many) expect(notice.body).toContain(c.label);
     for (const b of [notice.body]) { sound(b); whole(b); }

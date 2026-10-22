@@ -746,7 +746,7 @@ describe('creation’s pickers and Before Yale, said in words', () => {
     expect(text).toContain('Ambition: how fast stress builds, from work and from money alike.');
     expect(text).toContain('Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.');
     expect(text).toContain('Agreeableness: whether a day of rehearsal lifts your morale or lowers it.');
-    expect(text).toContain('how hard an illness hits; how sharp you are in the morning or the evening; which part of preparing a scene goes furthest; how you warm to classmates, and how much a slight from one hurts; and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.');
+    expect(text).toContain('how hard an illness hits; how sharp you are in the morning or the evening; which part of preparing a scene goes furthest; how you warm to classmates, and how much a slight from one hurts; and, for Frugal, Spender and Generous, what your food costs, and for Frugal and Spender how much a meal lifts you.');
     expect(text).toContain('A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.');
     text = at(2, withFamily(ada(), 'scraping'));
     expect(text).toContain('Background Who you were before you arrived.');

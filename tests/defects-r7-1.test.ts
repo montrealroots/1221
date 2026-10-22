@@ -149,9 +149,11 @@ describe('FIXTURE: papers held from before 2026-10-09, and the country each name
     // FIXTURE: issued on a passport since replaced, so a visit would still ask more.
     gb.passportId = 'pp-replaced';
     expect(page(sim, gb.id)).toMatch(/It’s in force for the United Kingdom, but a week’s visit there would still need more: /);
-    // FIXTURE: issued from tomorrow, so it isn't in force yet; the sentence opens on the country, capitalized.
+    // FIXTURE: issued from tomorrow, so it isn't in force yet; the sentence opens on the country, capitalized. Until
+    // brief 20's papers area (2026-10-21) this fell through to the out-of-force words, "The United Kingdom won’t let you
+    // in on it now."; since then a valid paper whose first day is ahead reads Approved, and says what it doesn't do yet.
     gb.issuedAt = sim.now + MS_DAY;
-    expect(page(sim, gb.id)).toContain('The United Kingdom won’t let you in on it now.');
+    expect(page(sim, gb.id)).toBe('The United Kingdom approved it. It doesn’t let you into the United Kingdom until then.');
     // FIXTURE: a US permit to work, which an OPT card is.
     documentsOf(sim.player).push({ id: 'permit', kind: 'permit', issuer: 'US', name: 'Employment Authorization', number: 'IOE1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + YEAR, destination: 'US' });
     expect(page(sim, 'permit')).toMatch(/^The United States issued it on .*It lets you work in the United States\./);

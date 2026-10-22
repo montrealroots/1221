@@ -1,0 +1,5080 @@
+{
+ "area": "money",
+ "rows": [
+  {
+   "id": "bank.add_standing_order",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, How You Pay, Set Up A Standing Order Into Savings (src/ui/bank/BankPayments.tsx:47)",
+   "prerequisites": "One of the player’s open easy-access savings accounts to pay into, an amount above nothing and a day from 1 to 31. Refused in the player’s words: “A standing order can only go into one of your savings accounts.”, a term deposit (“… is a term deposit, locked until its end.”), “Enter how much to pay each month.”, “Pick a day of the month, 1 to 31.”",
+   "reads": "The account named, its kind and category; the amount and the day.",
+   "changes": "Adds the order to Person.payments.standingOrders and puts its first date on the calendar (bank.standing_order, at 9 AM on the day, the month’s last day where the month is shorter).",
+   "consumers": [
+    {
+     "what": "the order’s monthly handler finds it and pays it from its account",
+     "at": "src/engine/systems/payments.ts:200"
+    },
+    {
+     "what": "Short For A Payment lists it against the account it pays from",
+     "at": "src/engine/systems/obligations.ts:54"
+    },
+    {
+     "what": "closing the savings it pays into calls it off",
+     "at": "src/engine/systems/banking.ts:493"
+    },
+    {
+     "what": "the account it pays from can’t be closed while it does (What Pays From Where)",
+     "at": "src/engine/systems/routing.ts:98"
+    }
+   ],
+   "experienced": "Listed on How You Pay at once; on its day each month the money is in savings, or “A Standing Order Didn’t Go” says why; Short For A Payment warns within three days of a date the account can’t make.",
+   "saveLoad": "The order in Person.payments and its date on the calendar; `armPayments` puts back a date a save is missing, and never a second. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/journey-money.test.ts",
+     "tests/payments.test.ts"
+    ],
+    "comparisons": [
+     "month ends on a Saturday and on Memorial Day, a Sunday due date: each once (b20-money-clock)",
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-17"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found. An order pays only from the account’s balance, never linked savings, as the handler says; the guide says so.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.arrange_overdraft",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Overdraft, Arrange It / Close The Overdraft (src/ui/bank/BankLending.tsx:210)",
+   "prerequisites": "A bank that arranges overdrafts (`kind: arranged`), a record of 580, wages paid in; refused at every US bank in its words (“… doesn’t arrange overdrafts. It handles them its own way, as the Overdraft panel says.”).",
+   "reads": "`overdraftOffer`: the bank’s terms, the record, wages in the last 30 days, other banks’ arranged limits.",
+   "changes": "The account’s arranged limit, rate and fees.",
+   "consumers": [
+    {
+     "what": "the room below zero",
+     "at": "src/engine/systems/lending.ts:396"
+    }
+   ],
+   "experienced": "The arranged overdraft on the panel.",
+   "saveLoad": "The account’s fields.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/lending.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money (its refusal)"
+    ]
+   },
+   "missing": "Its consequences are held only on fixture lives abroad.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and no US bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item, Citi and Capital One have no overdraft terms); a bank kept at home abroad opens nothing new for a customer abroad (`abroadRefusal`). The refusal is reached and tested (journey-money). Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.borrow",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Personal Loan, Borrow It (its quote, or why not, said first) (src/ui/bank/BankLending.tsx:383)",
+   "prerequisites": "A bank of the player’s that lends (Citi, Wells Fargo, Capital One through Discover; Chase and Bank of America lend nothing in SLATE), its customer conditions, a record of 580 or more, the bank’s amounts and months, wages paid in over the last 30 days with every loan’s payment within 35% of them, no loan there already; not a bank abroad. Each refused in its words.",
+   "reads": "`loanOffer`: the bank’s terms, the record (the rate within its range), wages in the last 30 days, loans held.",
+   "changes": "Opens the loan, pays the proceeds into the account named or the checking account there, records its repayment account, and puts its first payment on the calendar on the day it was taken a month on.",
+   "consumers": [
+    {
+     "what": "each month’s payment is drawn and its interest charged",
+     "at": "src/engine/systems/lending.ts:1319"
+    },
+    {
+     "what": "a second loan there is refused",
+     "at": "src/engine/systems/lending.ts:489"
+    },
+    {
+     "what": "its payment counts against the next loan’s 35%",
+     "at": "src/engine/systems/lending.ts:509"
+    },
+    {
+     "what": "Short For A Payment watches its payment",
+     "at": "src/engine/systems/obligations.ts:65"
+    }
+   ],
+   "experienced": "The money in checking at once; each month’s payment on the loan’s day; a missed one on the record with its notice.",
+   "saveLoad": "The loan account and its next payment on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-defects.test.ts",
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "linked against unlinked savings for a loan’s payment (b20-money-defects)"
+    ],
+    "mutations": [
+     "B20-MONEY-2"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "Until 2026-10-21 each payment fell a calendar month after the last, so a loan taken on the 31st was paid on the 28th for good; fixed on b20-money (b20-money-defects).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.break_term",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, the term deposit, Break It (src/ui/bank/BankAccountLife.tsx:84)",
+   "prerequisites": "A term deposit of the player’s where the bank allows an early close (or in a cooling-off period); NatWest on 35 days’ notice.",
+   "reads": "`breakQuote`: the bank’s penalty rule, what it has earned.",
+   "changes": "Pays it into checking at its bank (or sends it to the primary), less the penalty from its interest and from the deposit past it; or closes it on notice (bank.term_notice).",
+   "consumers": [
+    {
+     "what": "the money then spends from checking",
+     "at": "src/engine/systems/spending.ts:150"
+    }
+   ],
+   "experienced": "Checking up by what was paid; the penalty on the statement.",
+   "saveLoad": "The postings; a notice on the calendar.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence2-b04.test.ts",
+     "tests/evidence3-lifepapers.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.cancel_new",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, Cancel It (src/ui/bank/BankAccountLife.tsx:131)",
+   "prerequisites": "An account in its country’s cooling-off period.",
+   "reads": "`inCoolingOff`, `cancelRefusal`, the country’s rule on interest and charges.",
+   "changes": "Settles and closes it, its interest and charges kept or returned by the rule.",
+   "consumers": [
+    {
+     "what": "its standing orders and payments end with it",
+     "at": "src/engine/systems/banking.ts:490"
+    }
+   ],
+   "experienced": "The account gone with its money back.",
+   "saveLoad": "The postings.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/accountlife.test.ts",
+     "tests/defects5.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on fixture lives in Canada, Britain and Germany.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and the US gives no cooling-off period on a bank account or a card, and an account kept at home was opened before the life began. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.cancel_scheduled",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, How You Pay, Cancel on the payment (src/ui/bank/BankPayments.tsx:124)",
+   "prerequisites": "A payment of the player’s still ahead; refused “That payment is no longer scheduled.”",
+   "reads": "The calendar.",
+   "changes": "Cancels the item.",
+   "consumers": [
+    {
+     "what": "the calendar never runs a cancelled item",
+     "at": "src/engine/core/scheduler.ts:122"
+    }
+   ],
+   "experienced": "Gone from How You Pay; nothing moves on the day (journey-money checks the money didn’t).",
+   "saveLoad": "The item stays cancelled in the save.",
+   "evidence": {
+    "tests": [
+     "tests/journey-money.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/payments.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.cancel_standing_order",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, How You Pay, Cancel on the order (src/ui/bank/BankPayments.tsx:98)",
+   "prerequisites": "An order of the player’s; refused “That standing order no longer exists.”",
+   "reads": "Person.payments.standingOrders.",
+   "changes": "Takes the order off the list and its date off the calendar.",
+   "consumers": [
+    {
+     "what": "the monthly handler finds no order and pays nothing",
+     "at": "src/engine/systems/payments.ts:201"
+    },
+    {
+     "what": "the calendar skips a cancelled date",
+     "at": "src/engine/core/scheduler.ts:122"
+    }
+   ],
+   "experienced": "Gone from How You Pay; nothing moves on its day again.",
+   "saveLoad": "The list as left; the cancelled date stays cancelled. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/journey-money.test.ts",
+     "tests/payments.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.cancel_switch",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Switch Bank, Call It Off (src/ui/bank/BankLending.tsx:421)",
+   "prerequisites": "A switch under way, within the service’s right to call it off.",
+   "reads": "The switch’s items.",
+   "changes": "Cancels them; the history says it was called off.",
+   "consumers": [
+    {
+     "what": "nothing completes",
+     "at": "src/engine/core/scheduler.ts:122"
+    }
+   ],
+   "experienced": "The switch gone from the panel.",
+   "saveLoad": "The history.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on fixture lives.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and a switching service runs only where SWITCHING lists the country (Britain, Ireland, Germany, France, Spain, Iceland, New Zealand), where no life lives; the Switch Bank panel is drawn only there, and in the US Open An Account At Another Bank gives the steps instead. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.claim_unclaimed",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, Claim It Back (src/ui/bank/BankAccountLife.tsx:138)",
+   "prerequisites": "Money of the player’s held as unclaimed, and a primary account.",
+   "reads": "Person.unclaimed.",
+   "changes": "Posts it all back into the primary account and empties the list.",
+   "consumers": [
+    {
+     "what": "the panel reads what’s held as unclaimed, and offers Claim It Back only while something is",
+     "at": "src/ui/bank/BankAccountLife.tsx:43"
+    }
+   ],
+   "experienced": "Checking up by exactly what went (b20-money-clock, evidence-g10).",
+   "saveLoad": "Person.unclaimed and the postings.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-MONEY-13",
+     "B20-MONEY-14"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.close_current",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Banks, Close It (src/ui/bank/BankMoves.tsx:177)",
+   "prerequisites": "Not the only checking account nor the primary, not overdrawn, nothing in transit or set for a date, no wages, orders, autopay or loan from it, no savings beside it, nothing pending (or Citi’s 21 days), its fees covered; and where its money goes.",
+   "reads": "`closeRefusal`, `closeHold`, the bank’s pending rule.",
+   "changes": "Settles interest, overdraft interest and fees, sends what it holds, closes it, calls off what touched it; or closes on a day (bank.current_closes).",
+   "consumers": [
+    {
+     "what": "it’s no longer a checking account anything reads",
+     "at": "src/engine/systems/lending.ts:351"
+    }
+   ],
+   "experienced": "Gone from Your Banks; its money at the other bank in its days (evidence-g14).",
+   "saveLoad": "The account and its postings.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b05.test.ts",
+     "tests/bank-moves.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.close_savings",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, the savings account’s Close Savings (src/ui/workspaces/BankWorkspace.tsx:185)",
+   "prerequisites": "An open savings account of the player’s and a checking account to receive it; refused for notice already given; past Germany’s monthly allowance it gives the law’s three months’ notice.",
+   "reads": "The account, its interest, its fees and `savingsLeftThisMonth`.",
+   "changes": "Pays its interest, settles its fees, moves what it holds into checking at its bank (or sends it to the primary in the bank’s days), closes it and calls off the standing orders and payments set for a date into it; or schedules bank.savings_notice.",
+   "consumers": [
+    {
+     "what": "the standing orders into it are called off",
+     "at": "src/engine/systems/banking.ts:490"
+    },
+    {
+     "what": "the link finds no savings there any more",
+     "at": "src/engine/systems/payments.ts:133"
+    }
+   ],
+   "experienced": "Gone from Accounts with what it held in checking; Savings Covers The Checking Account refuses On without it.",
+   "saveLoad": "The closed account and its postings; a notice period on the calendar.",
+   "evidence": {
+    "tests": [
+     "tests/banking.test.ts",
+     "tests/accountlife.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/integration-savings-notice.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.debit_overdraft",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Overdraft, Debit Card Coverage (src/ui/bank/BankLending.tsx:160)",
+   "prerequisites": "A US bank that asks the customer (Chase, Wells Fargo); refused where the bank never pays a debit purchase into an overdraft or doesn’t ask.",
+   "reads": "The bank’s overdraft terms.",
+   "changes": "The checking account’s debitOverdraft.",
+   "consumers": [
+    {
+     "what": "whether a debit purchase can go below zero",
+     "at": "src/engine/systems/lending.ts:335"
+    },
+    {
+     "what": "the day’s spending reads it",
+     "at": "src/engine/systems/spending.ts:327"
+    }
+   ],
+   "experienced": "Opted in, the groceries go into the overdraft, a fee after the next business day where it’s past Chase’s $50, and the day overdrawn worries her (b20-money-promises); opted out, they’re declined (b20-money-funds).",
+   "saveLoad": "The account’s field.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/b20-money-funds.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ],
+    "comparisons": [
+     "overdrawn against a twin with money: troubles, stress and morale (b20-money-promises)",
+     "limited funds, a purchase the account can’t make (b20-money-funds)"
+    ],
+    "mutations": [
+     "B20-MONEY-11",
+     "B20-MONEY-16"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.new_number",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, Your Cards, Move To A New Number (src/ui/bank/BankSecurity.tsx:149)",
+   "prerequisites": "A bank that offers it (Bank of America, not Chase: “… doesn’t offer to move an account to a new number.”).",
+   "reads": "The bank’s security terms.",
+   "changes": "The account’s number and last four, and a new debit card on its way.",
+   "consumers": [
+    {
+     "what": "an attempt on the old number is declined",
+     "at": "src/engine/systems/security.ts:430"
+    },
+    {
+     "what": "the new card arrives",
+     "at": "src/engine/systems/security.ts:236"
+    }
+   ],
+   "experienced": "The new number on Accounts; the new card once (evidence-g13); a debit on the old number declined.",
+   "saveLoad": "The account’s number.",
+   "evidence": {
+    "tests": [
+     "tests/coverage-gaps-number.test.ts",
+     "tests/security.test.ts",
+     "tests/evidence-g13-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The attempt on an exposed number is given in its test (`attemptOnNumber` called with a size, TEST SETUP), not drawn by the clock: at 21% a year after an exposure, no played seed was searched for one.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.open_current",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Open An Account At Another Bank, Apply (src/ui/bank/BankMoves.tsx:66)",
+   "prerequisites": "A bank where they live, none held there, no review under way, no charge-off or ChexSystems refusal, a valid photo ID, the bank’s age and US-person rules, a branch hour clear of the calendar without a Social Security number; the opening deposit from another bank of theirs.",
+   "reads": "`openRefusal`, the bank’s opening rules, the deposit’s account.",
+   "changes": "Opens the account at once (its card on its way, waiting for funds where the bank does) or puts the application under review (bank.application); sends the deposit in the bank’s days.",
+   "consumers": [
+    {
+     "what": "it becomes one of the checking accounts every payment, alert and day’s fee reads",
+     "at": "src/engine/systems/lending.ts:350"
+    },
+    {
+     "what": "a bank closes one never funded, or at zero too long",
+     "at": "src/engine/systems/bankmoves.ts:453"
+    }
+   ],
+   "experienced": "The new bank on Your Banks; money moves to it (b20-money-clock); the debit card arrives in the bank’s days.",
+   "saveLoad": "The account and any application on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b05.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/evidence2-b03.test.ts"
+    ],
+    "comparisons": [
+     "saved and opened mid-cycle against played straight (b20-money-clock)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.open_savings",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Open Savings (src/ui/workspaces/BankWorkspace.tsx:202)",
+   "prerequisites": "A checking account at the bank, none of its savings already, not a bank in another country. Refused: “You can only open savings at a bank where you have a checking account.”, “You already have a savings account at ….”, and the abroad refusal.",
+   "reads": "The player’s accounts at the bank.",
+   "changes": "Opens an easy-access savings account at nothing.",
+   "consumers": [
+    {
+     "what": "the link and every draw find savings at the bank of the account drawn",
+     "at": "src/engine/systems/spending.ts:115"
+    },
+    {
+     "what": "round-ups go into it",
+     "at": "src/engine/systems/roundups.ts:96"
+    },
+    {
+     "what": "it earns the bank’s rate each midnight",
+     "at": "src/engine/systems/banking.ts:872"
+    }
+   ],
+   "experienced": "The account appears on Accounts, Savings Covers The Checking Account can go On, and money moved in earns at the month’s end.",
+   "saveLoad": "The account in the save.",
+   "evidence": {
+    "tests": [
+     "tests/defects-g14-1.test.ts",
+     "tests/bank-moves.test.ts",
+     "tests/accountlife.test.ts",
+     "tests/banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.open_term",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, the bank’s CD panel, Put It Away (src/ui/bank/BankLending.tsx:280)",
+   "prerequisites": "A checking account at the bank holding the amount; a bank that offers a term deposit; not a bank abroad.",
+   "reads": "The bank’s term (`lendingOf(bank).term`): rate and months.",
+   "changes": "Moves the amount into a new term deposit at its fixed rate with its end date.",
+   "consumers": [
+    {
+     "what": "each midnight it builds its fixed rate",
+     "at": "src/engine/systems/lending.ts:1280"
+    },
+    {
+     "what": "it ends at its date: renewed, into savings or paid out",
+     "at": "src/engine/systems/accountlife.ts:803"
+    },
+    {
+     "what": "it counts in worth",
+     "at": "src/engine/systems/finance.ts:71"
+    }
+   ],
+   "experienced": "The CD on its panel; worth unchanged on the day (b20-money-promises); interest at its end.",
+   "saveLoad": "The term account. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/evidence-g10-money.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "a CD and cash in hand counted in worth from the moment they’re made (b20-money-promises)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.pay_collections",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, In Collections, Pay It (src/ui/bank/BankLending.tsx:303)",
+   "prerequisites": "A debt in collections and money in checking.",
+   "reads": "The debt and the checking account.",
+   "changes": "Pays it down or off.",
+   "consumers": [
+    {
+     "what": "a card application reads a debt in collections",
+     "at": "src/engine/systems/cardlife.ts:145"
+    },
+    {
+     "what": "the day’s worry reads it",
+     "at": "src/engine/systems/spending.ts:475"
+    },
+    {
+     "what": "the record with no card ages back only once it’s paid",
+     "at": "src/engine/systems/credit.ts:1114"
+    }
+   ],
+   "experienced": "Owed down; once paid, a card can be approved and the bank opens again (evidence-g10).",
+   "saveLoad": "The debt account and its postings.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/arrears.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.reactivate",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, Reactivate; or the bank’s letter’s Keep The Account in What Needs You (src/ui/bank/BankAccountLife.tsx:108)",
+   "prerequisites": "A dormant account, or one the bank has written about.",
+   "reads": "The account.",
+   "changes": "Not dormant, not inactive, the letter answered, reactivatedAt now.",
+   "consumers": [
+    {
+     "what": "its months of idleness start again",
+     "at": "src/engine/systems/accountlife.ts:726"
+    },
+    {
+     "what": "Move Money takes it again",
+     "at": "src/engine/systems/banking.ts:974"
+    }
+   ],
+   "experienced": "Move Money and cash work again; the money doesn’t go to the state (b20-money-clock’s twin who pressed Keep The Account).",
+   "saveLoad": "The account’s fields.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ],
+    "comparisons": [
+     "an untouched account against its twin who pressed Keep The Account (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-14"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.redirect_deposits",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Banks, Have Wages Paid Here (src/ui/bank/BankMoves.tsx:163)",
+   "prerequisites": "An open checking or savings account of theirs, not closing, in America.",
+   "reads": "Each payer’s lead days.",
+   "changes": "Where wages go, from each payer’s day.",
+   "consumers": [
+    {
+     "what": "wages and the School’s money are paid where it says",
+     "at": "src/engine/systems/cash.ts:68"
+    }
+   ],
+   "experienced": "Friday’s wages into checking, the next Friday’s into the account chosen once Yale’s payroll has had its seven days (evidence-g21-school); the account it leaves can close once nothing else uses it (bank-moves).",
+   "saveLoad": "Person.payments.depositTo and depositChange.",
+   "evidence": {
+    "tests": [
+     "tests/bank-moves.test.ts",
+     "tests/evidence-g21-school.test.ts",
+     "tests/language-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.repay_loan",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Personal Loan, Pay It Off (src/ui/bank/BankLending.tsx:334)",
+   "prerequisites": "A loan; its repayment account able to cover what’s owed with the days’ interest since the last payment day.",
+   "reads": "The loan, the next payment’s date (a month before it, the last payment day), the repayment account.",
+   "changes": "Charges the days’ interest, pays the loan off, closes it and calls off its payments.",
+   "consumers": [
+    {
+     "what": "the bank lends again where it said a loan was held",
+     "at": "src/engine/systems/lending.ts:489"
+    }
+   ],
+   "experienced": "The loan gone; the next payment never comes; Citi lends again (evidence-g11).",
+   "saveLoad": "The closed loan and its postings.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/journey-money.test.ts",
+     "tests/lending.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.schedule_payment",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, How You Pay, Set A Payment For A Date (src/ui/bank/BankPayments.tsx:56)",
+   "prerequisites": "Two different open checking or easy-access savings accounts of the player’s, an amount and a date ahead. Refused: “A payment set for a date goes between two of your own accounts.”, a term deposit, “Enter an amount.”, “Choose a date in the future.”",
+   "reads": "The two accounts, the amount, the date.",
+   "changes": "Puts bank.scheduled_payment on the calendar for the date.",
+   "consumers": [
+    {
+     "what": "on the day it moves the money, at once at one bank or in the sending bank’s days at another, or says why it didn’t",
+     "at": "src/engine/systems/payments.ts:222"
+    },
+    {
+     "what": "Short For A Payment lists it against the account it comes from",
+     "at": "src/engine/systems/obligations.ts:58"
+    },
+    {
+     "what": "the account it touches can’t be closed while it’s ahead",
+     "at": "src/engine/systems/routing.ts:163"
+    }
+   ],
+   "experienced": "Listed on How You Pay; on the day the money is in the other account, or “A Scheduled Payment Didn’t Go” says why; Short For A Payment warns within three days.",
+   "saveLoad": "The item on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g13-money.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-22"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_alerts",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Statements, Alerts, Save Alerts (src/ui/bank/BankStatements.tsx:224)",
+   "prerequisites": "None; an amount, or blank for off.",
+   "reads": "Person.alerts.",
+   "changes": "The low-balance line, the large-payment line, Statement Ready, Short For A Payment.",
+   "consumers": [
+    {
+     "what": "the day’s alerts read the lines",
+     "at": "src/engine/systems/obligations.ts:97"
+    },
+    {
+     "what": "a statement is told only where asked, or with a payment due",
+     "at": "src/engine/systems/statements.ts:479"
+    },
+    {
+     "what": "a stranger’s charge over the line is learned of the day it happens",
+     "at": "src/engine/systems/security.ts:404"
+    }
+   ],
+   "experienced": "The alerts in What Needs You; a stranger’s charge over A Payment Over is learned of the day it happens, so Regulation E’s two business days run from then: reported four business days on it leaves $500 hers, where a twin who learned of it from the statement carries $50 (evidence-g11).",
+   "saveLoad": "Person.alerts.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/account-alerts.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "twins told at once against learning from the statement: $500 against $50 carried (evidence-g11)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_loan_repayment",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Personal Loan, Repay From There (src/ui/bank/BankLending.tsx:333)",
+   "prerequisites": "An open loan and an open checking account of the player’s not closing.",
+   "reads": "The loan and the account.",
+   "changes": "The loan’s repayment account.",
+   "consumers": [
+    {
+     "what": "each month’s payment is drawn from it",
+     "at": "src/engine/systems/lending.ts:1337"
+    }
+   ],
+   "experienced": "The month’s payment from the account chosen (evidence-g14); the old account can close.",
+   "saveLoad": "The loan’s repayFromId.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/defects-r3b-1.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_order_source",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, What Pays From Where, Pay From There (src/ui/bank/BankMoves.tsx:217)",
+   "prerequisites": "An order of theirs and an open checking account not closing.",
+   "reads": "The order.",
+   "changes": "The order’s fromId.",
+   "consumers": [
+    {
+     "what": "the order pays from it",
+     "at": "src/engine/systems/payments.ts:203"
+    }
+   ],
+   "experienced": "The order from the new account in its bank’s days (evidence-g14).",
+   "saveLoad": "The order.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b05.test.ts",
+     "tests/bank-moves.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_payments",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, How You Pay: The Day’s Spending, and Savings Covers The Checking Account (src/ui/bank/BankPayments.tsx:65)",
+   "prerequisites": "The day on the debit card, the credit card or in cash; the link On only where easy-access savings sits at the bank of a checking account a payment comes from (“There’s no savings account at … to cover your checking account.”).",
+   "reads": "Person.payments; `linkCovers` (the primary, autopay accounts and loan repayment accounts, and savings at each one’s bank).",
+   "changes": "Person.payments.everyday and .linkSavings.",
+   "consumers": [
+    {
+     "what": "the day’s groceries and a meal go on the card first where it’s chosen",
+     "at": "src/engine/systems/spending.ts:358"
+    },
+    {
+     "what": "every draw from the bank reaches linked savings where it’s on",
+     "at": "src/engine/systems/spending.ts:144"
+    },
+    {
+     "what": "a card’s autopay draws linked savings",
+     "at": "src/engine/systems/credit.ts:629"
+    },
+    {
+     "what": "Short For A Payment counts the linked savings a card or loan payment draws",
+     "at": "src/engine/systems/obligations.ts:90"
+    }
+   ],
+   "experienced": "The day’s groceries post where it says, the card’s statement grows with them, and a payment the checking account can’t make is taken from savings with the link On.",
+   "saveLoad": "Person.payments as set. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/b20-money-defects.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/payments.test.ts"
+    ],
+    "comparisons": [
+     "a card carried against one paid in full: interest at each statement, 28.99%; the record, savings and School the same (b20-money-interest)",
+     "linked against unlinked savings: Short For A Payment silent where the link pays, said where it doesn’t (b20-money-defects)"
+    ],
+    "mutations": [
+     "B20-MONEY-9",
+     "B20-MONEY-1"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_primary",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Banks, Make Primary (src/ui/bank/BankMoves.tsx:158)",
+   "prerequisites": "An open checking account of theirs, not already primary, not closing, a card that works here.",
+   "reads": "The instructions that follow the primary.",
+   "changes": "Pins each instruction where it is, then makes the account primary.",
+   "consumers": [
+    {
+     "what": "the day’s spending comes from the primary",
+     "at": "src/engine/systems/spending.ts:85"
+    },
+    {
+     "what": "cash from a machine comes from it",
+     "at": "src/engine/systems/cash.ts:85"
+    }
+   ],
+   "experienced": "Groceries, a machine’s cash and a card paid by hand from the new primary; the old one unmoved (evidence-g14).",
+   "saveLoad": "Person.primaryAccountId.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/bank-moves.test.ts",
+     "tests/defects-g19-1.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_round_ups",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, Round-Ups (src/ui/bank/RoundUps.tsx:82)",
+   "prerequisites": "A bank that rounds up (Bank of America, Wells Fargo, Citi among the US), savings there, the choices it leaves to the customer.",
+   "reads": "The bank’s rule and the choices.",
+   "changes": "Person.roundUps on with its choices, or off with what was counted dropped.",
+   "consumers": [
+    {
+     "what": "a purchase counts toward savings",
+     "at": "src/engine/systems/spending.ts:318"
+    },
+    {
+     "what": "what was counted moves on the bank’s day",
+     "at": "src/engine/systems/accountlife.ts:534"
+    },
+    {
+     "what": "the bank’s own credit card counts where it does (Citi)",
+     "at": "src/engine/systems/roundups.ts:154"
+    }
+   ],
+   "experienced": "Each day’s change in savings on the bank’s day; the panel says what’s counted and what didn’t move.",
+   "saveLoad": "Person.roundUps.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/roundups.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "Citi against Bank of America with the day on the credit card: Citi’s card rounds up, Bank of America’s doesn’t (b20-money-promises)"
+    ],
+    "mutations": [
+     "B20-MONEY-15"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found. The guide said only the debit card rounds up, which Citi contradicts; its words were corrected on b20-money.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.set_term_end",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, the term deposit, At Its End (src/ui/bank/BankAccountLife.tsx:80)",
+   "prerequisites": "A term deposit; a choice the bank offers; its notice before the end.",
+   "reads": "The bank’s end choices and notice.",
+   "changes": "The deposit’s atEnd.",
+   "consumers": [
+    {
+     "what": "at its end it renews, moves to savings or is paid out as set",
+     "at": "src/engine/systems/accountlife.ts:804"
+    }
+   ],
+   "experienced": "Paid out on its day where a twin left to Chase’s default is reinvested (evidence3-lifepapers).",
+   "saveLoad": "The account’s field.",
+   "evidence": {
+    "tests": [
+     "tests/evidence3-lifepapers.test.ts",
+     "tests/accountlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Switch Bank, Keep The Balance (src/ui/bank/BankLending.tsx:418)",
+   "prerequisites": "A switch under way, until close of business the working day before.",
+   "reads": "The switch item.",
+   "changes": "The switch keeps the old account’s balance where it is.",
+   "consumers": [
+    {
+     "what": "the completion reads keepBalance",
+     "at": "src/engine/systems/lending.ts:1366"
+    }
+   ],
+   "experienced": "The old account left open with its money.",
+   "saveLoad": "The item’s payload.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on fixture lives.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and a switching service runs only where SWITCHING lists the country (Britain, Ireland, Germany, France, Spain, Iceland, New Zealand), where no life lives; the Switch Bank panel is drawn only there, and in the US Open An Account At Another Bank gives the steps instead. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.switch",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, Switch Bank (drawn only where the country has a switching service) (src/ui/bank/BankLending.tsx:447)",
+   "prerequisites": "A country with a switching service; another bank there that takes the player; a photo ID; no overdraft; no switch under way.",
+   "reads": "SWITCHING, the banks, ChexSystems, collections, the ID.",
+   "changes": "Schedules the new bank’s first look and the completion on the service’s working days.",
+   "consumers": [
+    {
+     "what": "the switch completes on its day",
+     "at": "src/engine/systems/lending.ts:1363"
+    }
+   ],
+   "experienced": "The new bank’s accounts with everything moved on the day.",
+   "saveLoad": "The items on the calendar and the switch history.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/lending.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on fixture lives in Britain and Iceland.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and a switching service runs only where SWITCHING lists the country (Britain, Ireland, Germany, France, Spain, Iceland, New Zealand), where no life lives; the Switch Bank panel is drawn only there, and in the US Open An Account At Another Bank gives the steps instead. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Borrowing, A Loan For The Overrun (src/ui/bank/BankLending.tsx:313)",
+   "prerequisites": "A French bank’s offer of credit after three months past an arranged limit.",
+   "reads": "The offer on the account.",
+   "changes": "A loan that clears the overrun.",
+   "consumers": [
+    {
+     "what": "its payments each month",
+     "at": "src/engine/systems/lending.ts:1319"
+    }
+   ],
+   "experienced": "The overrun cleared into a loan.",
+   "saveLoad": "The loan.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/commands-kept.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The offer itself isn’t made by a bank abroad to a customer abroad (home-account-setoff).",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and only a French bank offers it, to a customer living in France; a Paris-raised student’s BNP account kept at home writes about an overrun but offers no loan, a bank abroad opening nothing new (tests/home-account-setoff.test.ts). Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.take_term_interest",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Your Accounts Over Time, the term deposit, Take The Interest (src/ui/bank/BankAccountLife.tsx:86)",
+   "prerequisites": "A term deposit at a bank that pays interest during the term (Chase), something earned.",
+   "reads": "What it has built.",
+   "changes": "Pays it into checking, less the country’s tax, and lowers what it has built.",
+   "consumers": [
+    {
+     "what": "breaking it later costs less",
+     "at": "src/engine/systems/accountlife.ts:119"
+    }
+   ],
+   "experienced": "Checking up; the break penalty smaller; the renewal reinvests only what came after (evidence-g11).",
+   "saveLoad": "The postings and what it has built.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence3-lifepapers.test.ts",
+     "tests/accountlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.transfer",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, Move Money (src/ui/workspaces/BankWorkspace.tsx:117)",
+   "prerequisites": "Two different open checking or easy-access savings accounts of the player’s, an amount within what the sending account holds; refused for a dormant, closing or switch-blocked account, past Germany’s monthly allowance, past a withdrawal fee, in the wrong currency, and past the sending bank’s limits to another bank, each in its words.",
+   "reads": "Both accounts, their bank, balance, dormancy and closing; `savingsDebit`, `savingsLeftThisMonth`, the sending bank’s days (`arrivalOf`).",
+   "changes": "At one bank, both balances at once; to another bank, out now into Money In Transit and in on the sending bank’s day (bank.transfer_arrives); abroad, as a payment abroad.",
+   "consumers": [
+    {
+     "what": "each midnight’s interest is built on what the account holds",
+     "at": "src/engine/systems/banking.ts:872"
+    },
+    {
+     "what": "the day’s spending and every payment draw on the account it left or reached",
+     "at": "src/engine/systems/spending.ts:150"
+    },
+    {
+     "what": "a move counts as using both accounts, for dormancy and the state",
+     "at": "src/engine/systems/lending.ts:710"
+    }
+   ],
+   "experienced": "The balances move at once on the Accounts tab, or On Its Way says when it lands; interest at the month’s end follows where the money sat each midnight.",
+   "saveLoad": "The postings, and a transfer in transit on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-funds.test.ts",
+     "tests/banking.test.ts"
+    ],
+    "comparisons": [
+     "a savings rate paying interest: $50,000 moved earns its 29 midnights at 3.00%, worked by hand; the card and the School unmoved (b20-money-interest)",
+     "a dollar moved at twenty months against none: dormant or not at thirty (b20-money-promises)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-8",
+     "B20-MONEY-12"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.apply",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, Another Card, Apply For This Card (with the card’s rate, fee and limit said before it’s pressed) (src/ui/bank/BankCard.tsx:138)",
+   "prerequisites": "A credit record and a bank in the country banked in that issues a card, not one already held or on its way; with a balance transfer, a card at another bank owing something that the new limit takes with its fee. Refused in their words.",
+   "reads": "The score after the hard inquiry, a debt in collections, money in the bank (and, in the US under 21, means of one’s own).",
+   "changes": "The score loses five points either way; declined with the reason, or approved: the limit the score opens with, the card on its way a week (card.arrives), an old card closing where a balance moves.",
+   "consumers": [
+    {
+     "what": "the card arrives priced at the record that day",
+     "at": "src/engine/systems/cardlife.ts:105"
+    },
+    {
+     "what": "the record the next application reads",
+     "at": "src/engine/systems/cardlife.ts:142"
+    }
+   ],
+   "experienced": "“Card Approved” or “Card Application Declined” with the reason; a week on the card, its limit and its rate (b20-money-funds: dearer after missed payments).",
+   "saveLoad": "Person.credit.applied and the arrival on the calendar; `armCardLife` arms one a save is missing. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/cardlife.test.ts",
+     "tests/cardoffers.test.ts"
+    ],
+    "comparisons": [
+     "limited funds, a card payment the account can’t make: late fee, interest, the record, a cut limit, a dearer card after; the savings and the School unmoved (b20-money-funds)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-7"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.close",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Close This Card (src/ui/bank/BankCard.tsx:345)",
+   "prerequisites": "A card not already closing.",
+   "reads": "What the card owes.",
+   "changes": "Owing nothing it closes now; otherwise it takes nothing new and closes at the statement once paid off.",
+   "consumers": [
+    {
+     "what": "a closing card has no room",
+     "at": "src/engine/systems/credit.ts:578"
+    },
+    {
+     "what": "the statement closes it once paid off",
+     "at": "src/engine/systems/credit.ts:847"
+    },
+    {
+     "what": "credit used is counted on the cards still open",
+     "at": "src/engine/systems/credit.ts:1324"
+    }
+   ],
+   "experienced": "The day’s groceries no longer on it; “Card Closed”; Credit Used across fewer limits.",
+   "saveLoad": "The card’s state.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/cardlife.test.ts",
+     "tests/several-cards.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.dispute",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, Your Cards, It Wasn’t Me (src/ui/bank/BankSecurity.tsx:136)",
+   "prerequisites": "A stranger’s use learned of and not yet reported, within the law’s days from the statement.",
+   "reads": "When it was learned of and reported, the country’s liability law.",
+   "changes": "What the law leaves the holder, the refund on the clock (bank.fraud_refund), the card stopped and replaced free.",
+   "consumers": [
+    {
+     "what": "the refund on its day",
+     "at": "src/engine/systems/security.ts:260"
+    }
+   ],
+   "experienced": "Refunded less the law’s share: learned of the day it happened and reported four business days on, $500 is hers; her twin who learned of it from the statement and reported it then carries $50 (evidence-g11).",
+   "saveLoad": "Person.fraud and the refund on the calendar.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence-g13-money.test.ts",
+     "tests/defects-g17-1.test.ts",
+     "tests/security.test.ts"
+    ],
+    "comparisons": [
+     "twins told at once against learning from the statement: $500 against $50 carried, reported four business days on and at the statement (evidence-g11)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The stranger’s use is drawn with the US rate set to certain in its tests (TEST SETUP on the rate, not the consequence).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.lock",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, Your Cards, Lock It / Unlock It (src/ui/bank/BankSecurity.tsx:98)",
+   "prerequisites": "A debit or credit card not stopped (“That card is stopped, and a new one is on its way.”).",
+   "reads": "The card in the hand.",
+   "changes": "plastic.locked.",
+   "consumers": [
+    {
+     "what": "a locked credit card has no room",
+     "at": "src/engine/systems/credit.ts:582"
+    },
+    {
+     "what": "a locked debit card buys nothing: the day goes on the credit card or in cash",
+     "at": "src/engine/systems/spending.ts:344"
+    },
+    {
+     "what": "a machine refuses a locked debit card",
+     "at": "src/engine/systems/cash.ts:130"
+    },
+    {
+     "what": "somebody else’s use falls on the card that works",
+     "at": "src/engine/systems/security.ts:375"
+    }
+   ],
+   "experienced": "Groceries on the other card; the machine refused and the counter paying; Left To Spend nothing; through a reload (evidence-g11, evidence2-b04).",
+   "saveLoad": "The plastic’s field.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence2-b04.test.ts",
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "limited funds, a purchase the account can’t make (b20-money-funds: the credit card locked in both twins)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.money_transfer",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, The Card’s Offers, Money Transfer (src/ui/bank/BankCardOffers.tsx:100)",
+   "prerequisites": "A card whose terms offer a money transfer: NatWest’s, Santander España’s and Bankinter’s alone.",
+   "reads": "The card’s terms, its room, the primary account.",
+   "changes": "The card owes the amount and its fee as a transfer at its rate; the checking account holds the amount.",
+   "consumers": [
+    {
+     "what": "each night the transfer builds interest at its own rate",
+     "at": "src/engine/systems/credit.ts:1038"
+    }
+   ],
+   "experienced": "Checking up, the card owing more; the transfer’s interest at each statement.",
+   "saveLoad": "The card’s transfers.",
+   "evidence": {
+    "tests": [
+     "tests/cardoffers.test.ts",
+     "tests/scope-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Reached only on a fixture life in London or Spain.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale banking in America, no US card offers a money transfer, and a card isn’t opened at a bank abroad (`abroadRefusal`). Read again 2026-10-21: still so. Its tests play a fixture life in London. Left to the owner’s banking decisions; not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.plan",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, The Card’s Offers, Pay A Purchase In Equal Months (src/ui/bank/BankCardOffers.tsx:126)",
+   "prerequisites": "A card whose terms offer a plan, a purchase on it to plan, months the bank offers.",
+   "reads": "The card’s plan terms and room.",
+   "changes": "A plan: what’s left, the month and the fee, asked in the minimum, drawing no interest.",
+   "consumers": [
+    {
+     "what": "each statement takes the plan’s month and fee",
+     "at": "src/engine/systems/cardoffers.ts:166"
+    }
+   ],
+   "experienced": "The plan’s month in each statement’s minimum, no interest on it (cardoffers.test).",
+   "saveLoad": "The card’s plans.",
+   "evidence": {
+    "tests": [
+     "tests/cardoffers.test.ts",
+     "tests/defects-r4-1.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.redeem_rewards",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, The Card’s Offers, Redeem (src/ui/bank/BankCardOffers.tsx:91)",
+   "prerequisites": "Rewards earned on the card.",
+   "reads": "The card’s rewards, built at each statement on what was spent on it.",
+   "changes": "Posts the rewards onto the card as a credit and sets them to nothing.",
+   "consumers": [
+    {
+     "what": "rewards are built at each statement from what was spent",
+     "at": "src/engine/systems/cardoffers.ts:189"
+    }
+   ],
+   "experienced": "What the card owes falls by them (cardoffers.test: Chase’s 1.5% redeemed onto the card).",
+   "saveLoad": "The rewards on the card’s state. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/cardoffers.test.ts",
+     "tests/journey-money.test.ts",
+     "tests/b20-money-clock.test.ts"
+    ],
+    "comparisons": [
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.refund_credit",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Send The Credit Back (src/ui/bank/BankCard.tsx:339)",
+   "prerequisites": "A card holding a credit balance.",
+   "reads": "The card’s balance.",
+   "changes": "Posts the credit back to the primary account.",
+   "consumers": [
+    {
+     "what": "the primary account then holds it for the day’s spending",
+     "at": "src/engine/systems/spending.ts:150"
+    }
+   ],
+   "experienced": "The card at nothing, checking up by the credit (interest.test, evidence-g13).",
+   "saveLoad": "The postings.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts",
+     "tests/interest.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.report",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, Your Cards, Report Lost / Report Stolen (rushed where the bank publishes it) (src/ui/bank/BankSecurity.tsx:108)",
+   "prerequisites": "A card not already stopped; lost, stolen or damaged; a rush only where the bank publishes its fee or days.",
+   "reads": "The bank’s security terms: fee, free reasons, days, rush.",
+   "changes": "Stops the card, charges the bank’s fee, and schedules the replacement (card.replaced) in the bank’s days.",
+   "consumers": [
+    {
+     "what": "the stopped card buys nothing until the new one comes",
+     "at": "src/engine/systems/credit.ts:582"
+    },
+    {
+     "what": "the new card arrives once with a new number",
+     "at": "src/engine/systems/security.ts:236"
+    }
+   ],
+   "experienced": "Groceries on the credit card meanwhile; the new card on the bank’s seventh business day, Thanksgiving not one (evidence-g12, evidence2-b03).",
+   "saveLoad": "The plastic and the arrival on the calendar.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence2-b03.test.ts",
+     "tests/evidence2-b04.test.ts",
+     "tests/security.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.request_hardship",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Ask For Help With Payments (src/ui/bank/BankCard.tsx:348)",
+   "prerequisites": "A card owing something, no plan already, and a bank that couldn’t clear it today (“You could pay it off today…”).",
+   "reads": "What’s owed, what the bank holds.",
+   "changes": "A plan: interest frozen, a forty-eighth of what’s owed a month, the card suspended; a statement still to come due judged on the plan’s payment.",
+   "consumers": [
+    {
+     "what": "no interest builds on a plan",
+     "at": "src/engine/systems/credit.ts:1028"
+    },
+    {
+     "what": "the due date asks the plan’s payment",
+     "at": "src/engine/systems/credit.ts:1189"
+    }
+   ],
+   "experienced": "The plan on the panel; no interest at the statement where a twin is charged; the plan ends once paid off (evidence-g12).",
+   "saveLoad": "The card’s state.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence2-b04.test.ts",
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.request_limit",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, A Different Limit, Ask For It (src/ui/bank/BankCard.tsx:380)",
+   "prerequisites": "A card. A lower limit is always granted, never under what’s owed. A higher one waits six months from the card’s opening and from the last ask or raise (`askRefusal`, said under the button), and needs a record of 700, no late payment in a year, a card not suspended, and income or savings that carry the payments on it (`limitCarried`).",
+   "reads": "The record, the late payments, the card’s state (askedAt, raisedAt, suspended), the twelve months’ income in the earnings record, the other cards’ statements and loans’ payments, the money in the bank.",
+   "changes": "The card’s limit: lower to the ask; higher by a fifth at most, as far as the income or savings carry. askedAt, and raisedAt where raised.",
+   "consumers": [
+    {
+     "what": "the room the day’s spending has",
+     "at": "src/engine/systems/credit.ts:586"
+    },
+    {
+     "what": "credit used at the record’s month",
+     "at": "src/engine/systems/credit.ts:1326"
+    },
+    {
+     "what": "the next ask waits six months from this one",
+     "at": "src/engine/systems/cardlife.ts:69"
+    }
+   ],
+   "experienced": "The new limit on the panel; a declined raise’s notice with the rule; under the button, when the next ask can be made.",
+   "saveLoad": "The card’s limit, askedAt and raisedAt; a declined ask’s wait holds across a save and a load (tests/b20-credit-limit.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-credit-limit.test.ts",
+     "tests/cardlife.test.ts",
+     "tests/evidence-g12-money.test.ts",
+     "tests/language-crossarea-raise.test.ts"
+    ],
+    "comparisons": [
+     "income that carries a raise against none (b20-credit-limit)",
+     "ten asks in a row raise it once (b20-credit-limit)"
+    ],
+    "mutations": [
+     "B20-D2-6",
+     "B20-D2-7",
+     "B20-D2-8",
+     "B20-D2-10"
+    ],
+    "journeys": []
+   },
+   "missing": "None found since D2 (`c4832549`, `credit/README.md`). Read on b20-money it raised $65,217 to $194,736 in six asks in a row; the ask is held to the review's test and waits six months now. Savings count in full against the whole limit, which is the owner's to decide.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759, and the coordinator at 16630746"
+  },
+  {
+   "id": "card.set_auto_raise",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Raise The Limit Unasked (src/ui/bank/BankCard.tsx:386)",
+   "prerequisites": "A credit record.",
+   "reads": "Nothing but the card.",
+   "changes": "The card’s noAutoRaise.",
+   "consumers": [
+    {
+     "what": "the six-monthly review leaves the limit where it is",
+     "at": "src/engine/systems/credit.ts:813"
+    }
+   ],
+   "experienced": "At the review the limit stays, where a twin’s rises (evidence-g13 card.statement).",
+   "saveLoad": "The card’s state.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts",
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.set_autopay_from",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Accounts, What Pays From Where, the card’s autopay, Pay From There (src/ui/bank/BankMoves.tsx:231)",
+   "prerequisites": "A card of theirs and an open checking account not closing.",
+   "reads": "The card.",
+   "changes": "The card’s autopayFrom.",
+   "consumers": [
+    {
+     "what": "autopay draws it and the savings linked at its bank",
+     "at": "src/engine/systems/credit.ts:623"
+    },
+    {
+     "what": "Short For A Payment watches it",
+     "at": "src/engine/systems/obligations.ts:62"
+    }
+   ],
+   "experienced": "The due date draws the new account, and the alert names it (account-alerts.test, defects-g19).",
+   "saveLoad": "The card’s state.",
+   "evidence": {
+    "tests": [
+     "tests/account-alerts.test.ts",
+     "tests/defects-g19-1.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.set_everyday",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Make It The Everyday Card (src/ui/bank/BankCard.tsx:342)",
+   "prerequisites": "A card of the player’s, not closing.",
+   "reads": "The cards’ states.",
+   "changes": "Swaps the card into the record’s fields as the everyday card.",
+   "consumers": [
+    {
+     "what": "the day’s spending goes on the everyday card",
+     "at": "src/engine/systems/credit.ts:590"
+    }
+   ],
+   "experienced": "The next groceries on it, and somebody else’s use lands on it (evidence-g12).",
+   "saveLoad": "Person.credit.primaryId and the cards’ states.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/journey-money.test.ts",
+     "tests/several-cards.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.set_over_limit",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Going Over The Limit (src/ui/bank/BankCard.tsx:390)",
+   "prerequisites": "A US card (“Only a US card lets you opt in…”).",
+   "reads": "The card’s bank.",
+   "changes": "The card’s overLimitOptIn.",
+   "consumers": [
+    {
+     "what": "a tenth more room",
+     "at": "src/engine/systems/credit.ts:584"
+    }
+   ],
+   "experienced": "A meal behind a locked debit card bought a tenth over the limit; no over-limit fee, no researched card charging one (evidence-g12).",
+   "saveLoad": "The card’s state.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.set_statement_day",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Statement Day (src/ui/bank/BankCard.tsx:369)",
+   "prerequisites": "A card; a day from the 1st to the 28th; once a statement cycle (“You’ve moved the statement day since the last statement…”).",
+   "reads": "The card’s last statement.",
+   "changes": "The statement day; the next statement no sooner than 27 days after the last (`MIN_CYCLE_DAYS`), which moves the due date with it.",
+   "consumers": [
+    {
+     "what": "the next statement comes on the new day",
+     "at": "src/engine/systems/credit.ts:720"
+    }
+   ],
+   "experienced": "The next statement and its due date on the new day (evidence-g13: moved each morning, still once a cycle).",
+   "saveLoad": "The card’s state.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts",
+     "tests/cardlife.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "cash.deposit",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, Cash, Pay It In (src/ui/bank/BankCash.tsx:42)",
+   "prerequisites": "Cash in hand; into an open checking or easy-access savings account of the player’s at a counter, a machine (the debit card working) or Britain’s Post Office where the bank allows; not a dormant account, not a bank kept abroad.",
+   "reads": "The wallet, the account, its bank’s rules, the debit card.",
+   "changes": "Cash In Hand down, the account up.",
+   "consumers": [
+    {
+     "what": "the day’s spending and every payment draw on it",
+     "at": "src/engine/systems/spending.ts:150"
+    }
+   ],
+   "experienced": "The balance up; the next groceries paid from it (evidence-g12).",
+   "saveLoad": "The postings.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "every balance the sum of its postings after half a year played (b20-money-clock)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "cash.withdraw",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Payments And Cash, Cash, Take It Out (src/ui/bank/BankCash.tsx:35)",
+   "prerequisites": "From the primary account at its bank’s machine, another bank’s machine, the counter or Britain’s Post Office, or a cash advance on a card. A machine needs the debit card arrived and unlocked; within the bank’s daily limit; what the account holds with the fees; the card’s free limit and its cash limit. Each refused in its words.",
+   "reads": "The primary account (`currentOf`), its plastic and dormancy, the bank’s cash rules (`content/cash.ts`), the card’s terms and room.",
+   "changes": "Cash In Hand up; the account down with the bank’s fee and a machine owner’s; or the card owing it, its fee, and its cash balance (`cashOwed`).",
+   "consumers": [
+    {
+     "what": "the day’s food spends cash first for somebody paying in cash, or behind a stopped debit card",
+     "at": "src/engine/systems/spending.ts:330"
+    },
+    {
+     "what": "a cash advance draws its rate each night from the day it’s taken",
+     "at": "src/engine/systems/credit.ts:1035"
+    },
+    {
+     "what": "a payment to the card goes to the cash first, the dearest balance",
+     "at": "src/engine/systems/cash.ts:182"
+    },
+    {
+     "what": "cash counts in worth",
+     "at": "src/engine/systems/finance.ts:71"
+    }
+   ],
+   "experienced": "Cash In Hand on the panel and in net worth; the fee on the statement; a cash advance’s interest at the next statement.",
+   "saveLoad": "The postings and the card’s cash balance.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "every balance the sum of its postings after half a year played (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-21"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "finance.pay_card",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Pay Card In Full / Pay What You Can (src/ui/bank/BankCard.tsx:335)",
+   "prerequisites": "A card with something owed (or any sum, which the card holds as a credit) and money in the bank. Refused: “You don’t have a card.”, “You don’t owe anything on it.”, “Enter an amount to pay.”, “Your bank accounts have nothing available to pay it with, so nothing was paid.”",
+   "reads": "The card, its statement and minimum (a hardship plan’s payment on a plan), the primary account and its savings (`payCard`, by hand, draws savings at the primary’s bank whatever the link).",
+   "changes": "Posts the payment, adds it to what’s paid since the statement and to a statement still waiting for its due date, holds the freed credit where the card’s bank does for a payment from another bank, and puts it to the dearest balance first (`allocatePayment`).",
+   "consumers": [
+    {
+     "what": "the due date asks autopay only what’s still owed after it",
+     "at": "src/engine/systems/credit.ts:1191"
+    },
+    {
+     "what": "paid in full by the due date the grace period holds and the cycle’s interest is dropped",
+     "at": "src/engine/systems/credit.ts:911"
+    },
+    {
+     "what": "a month paid as agreed raises the record",
+     "at": "src/engine/systems/credit.ts:984"
+    }
+   ],
+   "experienced": "The card’s balance down at once; at the due date no bounce and no late fee; the next statement charges no interest where the statement was paid in full.",
+   "saveLoad": "The postings and the card’s state (paid since the statement, holds). The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/evidence-g13-money.test.ts",
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [
+     "autopay against paying by hand: the same outcome, no interest, no fee, the same record (b20-money-interest)"
+    ],
+    "mutations": [
+     "B20-MONEY-5"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "finance.set_autopay",
+   "kind": "command",
+   "area": "money",
+   "mechanic": true,
+   "where": "Your Bank, Cards, the card’s panel, Autopay: The Whole Statement / The Minimum (src/ui/bank/BankCard.tsx:354)",
+   "prerequisites": "A card; a charge card can’t be set to the minimum (“… takes the whole statement from your account each month.”). There is no Off: SLATE’s autopay always pays the minimum or the whole statement where the account can.",
+   "reads": "The card’s terms.",
+   "changes": "The card’s autopay mode.",
+   "consumers": [
+    {
+     "what": "the due date asks the whole statement or the minimum",
+     "at": "src/engine/systems/credit.ts:1190"
+    },
+    {
+     "what": "the statement’s notice says what autopay will take",
+     "at": "src/engine/systems/credit.ts:1166"
+    }
+   ],
+   "experienced": "On the minimum the card carries: interest at each statement after the first due date; on the whole statement none (b20-money-interest).",
+   "saveLoad": "The mode on the card’s state. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/evidence-g13-money.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "a card carried against one paid in full: interest at each statement, 28.99%; the record, savings and School the same (b20-money-interest)"
+    ],
+    "mutations": [
+     "B20-MONEY-4",
+     "B20-MONEY-5"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "Autopay can’t be turned off. A real US card needn’t be on autopay; in SLATE every card is, from creation (risk tolerance over 65 starts it on the minimum). Recorded for the owner, not changed: it is the design, and the guide says autopay pays the minimum or the whole statement.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.application",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, on the bank’s review day (Bank of America’s two business days).",
+   "prerequisites": "An application under review.",
+   "reads": "The opening checks again that day.",
+   "changes": "Opens the account, or turns it down and the deposit comes back.",
+   "consumers": [
+    {
+     "what": "the deposit in transit lands, or comes back",
+     "at": "src/engine/systems/bankmoves.ts:423"
+    }
+   ],
+   "experienced": "“… Opened Your Account” or “… Turned Down Your Application” (evidence2-b05: a photo ID reported lost meanwhile).",
+   "saveLoad": "The item.",
+   "evidence": {
+    "tests": [
+     "tests/evidence2-b05.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b03.test.ts"
+    ],
+    "comparisons": [
+     "a photo ID lost against kept (evidence2-b05)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.current_closes",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, the day a closing kept open for pending items closes (Citi).",
+   "prerequisites": "A close asked for while items were pending.",
+   "reads": "The account; overdrawn by what posted since, it stays open.",
+   "changes": "Closes it and sends what it holds, or tells the player it didn’t close.",
+   "consumers": [
+    {
+     "what": "it’s no longer a checking account anything reads",
+     "at": "src/engine/systems/lending.ts:351"
+    }
+   ],
+   "experienced": "“… Closed”, or “… Didn’t Close” with what to do (evidence-g14).",
+   "saveLoad": "The item.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.fraud_refund",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, the bank’s days after a dispute.",
+   "prerequisites": "A dispute.",
+   "reads": "The use, what the holder carries, the account (or, closed, the checking account at its bank, or the primary).",
+   "changes": "Posts the refund and tells the player where.",
+   "consumers": [
+    {
+     "what": "the refunded account spends it",
+     "at": "src/engine/systems/spending.ts:150"
+    }
+   ],
+   "experienced": "“Refunded” with what the law leaves them (evidence-g13).",
+   "saveLoad": "The refund once across a reload.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.home_closes",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, on the day a bank kept at home closes the account of a customer abroad (Barclays’ 60 days), retried each day while it’s overdrawn.",
+   "prerequisites": "A student raised abroad who kept an account at a home bank that closes a non-resident’s (or a US citizen’s), as creation offers.",
+   "reads": "The home accounts, their interest and fees, the American account it’s sent to.",
+   "changes": "Settles interest and fees, gathers the accounts, sends it all as the bank’s payment abroad, closes them and ends their standing orders; overdrawn, tries again the next day.",
+   "consumers": [
+    {
+     "what": "the money arrives at the American account in both countries’ business days",
+     "at": "src/engine/systems/abroad.ts:440"
+    }
+   ],
+   "experienced": "“Barclays Is Closing Your Account” on the first morning with its date, then “Barclays Closed Your Account” and the money at Chase less its costs (home-account-abroad).",
+   "saveLoad": "The item, once through a reload.",
+   "evidence": {
+    "tests": [
+     "tests/home-account-abroad.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found. Read again: reachable from creation (a London-raised student keeping Barclays), where the seed called it incomplete.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.loan_due",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, monthly on the day the loan was taken (systems/lending.ts).",
+   "prerequisites": "An open loan.",
+   "reads": "The loan’s balance and rate, its months, its repayment account, linked savings and the overdraft there (`drawFromBank`).",
+   "changes": "Charges a month’s interest, draws the payment (the last whatever is left), or the part there is: the bank’s returned-payment fee where it charges one, the record marked (50 points, a late payment) and the notice; closes the loan paid off; the next payment on the calendar.",
+   "consumers": [
+    {
+     "what": "a mark lowers the record the next card or loan is priced on",
+     "at": "src/engine/systems/credit.ts:358"
+    },
+    {
+     "what": "a late payment blocks a raise for a year",
+     "at": "src/engine/systems/cardlife.ts:213"
+    }
+   ],
+   "experienced": "The payment on the statement each month, on the same day; “A Missed Loan Payment” with the fee and the record.",
+   "saveLoad": "The next payment on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-defects.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence-g10-money.test.ts",
+     "tests/defects3-bank.test.ts"
+    ],
+    "comparisons": [
+     "linked against unlinked savings for a loan’s payment (b20-money-defects)"
+    ],
+    "mutations": [
+     "B20-MONEY-2"
+    ],
+    "journeys": []
+   },
+   "missing": "Fixed on b20-money: the day drifted to the 28th after a short month.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.month_end",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, at 11 PM on the month’s last day, weekend or holiday alike (systems/banking.ts).",
+   "prerequisites": "None.",
+   "reads": "Each account’s interest built at each midnight, its bonus, the fee’s waivers (deposits, the month’s lowest balance, the average, age), Germany’s quarterly closing, a bank abroad’s fee; marks on the record past their years.",
+   "changes": "Pays interest less the country’s tax, charges the month’s fee (or keeps it for the quarter or the 1st), a fee abroad, the checking account’s statement notice where asked; resets the month’s trackers; marks past their years leave the record.",
+   "consumers": [
+    {
+     "what": "the year’s interest for the return",
+     "at": "src/engine/systems/banking.ts:824"
+    },
+    {
+     "what": "the statement page reads the month",
+     "at": "src/engine/systems/statements.ts:118"
+    },
+    {
+     "what": "a mark off the record lifts the score a card application reads",
+     "at": "src/engine/systems/credit.ts:371"
+    }
+   ],
+   "experienced": "Interest and fees on the statement once a month, on a Saturday 31 October and on Memorial Day as on any day (b20-money-clock), the gap a $50,000 move makes worked by hand (b20-money-interest).",
+   "saveLoad": "The next month’s end on the calendar; `armBanking` arms one a save is missing. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/banking.test.ts"
+    ],
+    "comparisons": [
+     "a savings rate paying interest: $50,000 moved earns its 29 midnights at 3.00%, worked by hand; the card and the School unmoved (b20-money-interest)",
+     "month ends on a Saturday and on Memorial Day: each once (b20-money-clock)",
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-8",
+     "B20-MONEY-18"
+    ],
+    "journeys": []
+   },
+   "missing": "A savings rate published as an APY is run as a nominal rate: Capital One’s “3.00% APY” pays 3.04% APY in SLATE, and its panel says “3.00% a year (3.04% APY)”. Recorded for the owner, not changed: the bank data across 182 savings rates would have to be read again for which are APYs.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.savings_notice",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, three calendar months after Close Savings past Germany’s €2,000 a month (systems/banking.ts).",
+   "prerequisites": "A German savings account closed past the month’s allowance: a student raised in Germany who kept her savings at home (Before Yale), as creation offers.",
+   "reads": "The account and the primary account.",
+   "changes": "Closes the savings into the checking account at its bank, or sends it to the primary, and tells the player where.",
+   "consumers": [
+    {
+     "what": "the standing orders into it end with it",
+     "at": "src/engine/systems/banking.ts:490"
+    }
+   ],
+   "experienced": "A notice on the day, “… Closed”, and the money in the account it names.",
+   "saveLoad": "The item on the calendar.",
+   "evidence": {
+    "tests": [
+     "tests/integration-savings-notice.test.ts",
+     "tests/scope-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.scheduled_payment",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, on the date set (systems/payments.ts).",
+   "prerequisites": "A payment set for a date (bank.schedule_payment).",
+   "reads": "Both accounts, open or closed, blocked, the sending account’s room (`savingsDebit` from savings) and the banks.",
+   "changes": "Moves the amount once, with a savings withdrawal fee where the bank charges one, or tells the player why not.",
+   "consumers": [
+    {
+     "what": "the account it reached earns on it at midnight",
+     "at": "src/engine/systems/banking.ts:872"
+    }
+   ],
+   "experienced": "The money moved on the day, once; or “A Scheduled Payment Didn’t Go” with the reason.",
+   "saveLoad": "The item on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g13-money.test.ts",
+     "tests/journey-money.test.ts"
+    ],
+    "comparisons": [
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-22"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.standing_order",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, at 9 AM on the order’s day each month (systems/payments.ts).",
+   "prerequisites": "An order set up (bank.add_standing_order).",
+   "reads": "The order, the account it pays from (`orderSource`), the savings it pays into, their balance and blocks.",
+   "changes": "Moves the amount, at once at one bank or in the sending bank’s days at another, or says why it didn’t go; puts the next month’s date on the calendar.",
+   "consumers": [
+    {
+     "what": "the savings then earn on it each midnight",
+     "at": "src/engine/systems/banking.ts:872"
+    },
+    {
+     "what": "a move counts as using both accounts",
+     "at": "src/engine/systems/lending.ts:710"
+    }
+   ],
+   "experienced": "The money is in savings on the day, once a month, on the 31st as on the month’s last day of a shorter month, Saturdays and holidays alike; or a “Didn’t Go” notice.",
+   "saveLoad": "The next date on the calendar. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/payments.test.ts",
+     "tests/accountlife.test.ts"
+    ],
+    "comparisons": [
+     "month ends on a Saturday and on Memorial Day, a Sunday due date: each once (b20-money-clock)",
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-17"
+    ],
+    "journeys": []
+   },
+   "missing": "An order falling on a weekend or a bank holiday is paid that day, at one bank, as an internal transfer; between two banks it travels in business days. SLATE’s reading; no US bank’s terms for an internal recurring transfer were read.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.switch_complete",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, on the switching service’s completion day.",
+   "prerequisites": "A switch asked for.",
+   "reads": "The switch, the old accounts, their payments.",
+   "changes": "Opens the new bank’s accounts, moves the balances, the wages, the orders and autopay, and closes the old ones (or keeps one in debt).",
+   "consumers": [
+    {
+     "what": "every payment follows the new primary account",
+     "at": "src/engine/systems/spending.ts:85"
+    }
+   ],
+   "experienced": "“Switched To …”.",
+   "saveLoad": "The accounts and the history.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on fixture lives.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and a switching service runs only where SWITCHING lists the country (Britain, Ireland, Germany, France, Spain, Iceland, New Zealand), where no life lives; the Switch Bank panel is drawn only there, and in the US Open An Account At Another Bank gives the steps instead. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.switch_debt",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, after a switch that left the old account in debt.",
+   "prerequisites": "A switch completed with the old account overdrawn.",
+   "reads": "The old account, blocked to all but repayment.",
+   "changes": "Closes it once repaid.",
+   "consumers": [
+    {
+     "what": "the old account is blocked to Move Money until then",
+     "at": "src/engine/systems/banking.ts:970"
+    }
+   ],
+   "experienced": "The old account closed once paid.",
+   "saveLoad": "The item.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No test reaches it on a played life.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and a switching service runs only where SWITCHING lists the country (Britain, Ireland, Germany, France, Spain, Iceland, New Zealand), where no life lives; the Switch Bank panel is drawn only there, and in the US Open An Account At Another Bank gives the steps instead. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.switch_review",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, the new bank’s first look at a switch.",
+   "prerequisites": "A switch asked for.",
+   "reads": "The new bank’s opening rules now.",
+   "changes": "Ends the switch where they refuse it, or lets it go on.",
+   "consumers": [
+    {
+     "what": "the completion is called off where refused",
+     "at": "src/engine/systems/lending.ts:1370"
+    }
+   ],
+   "experienced": "A declined switch’s notice.",
+   "saveLoad": "The items.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No test reaches it through a declined review on a played life.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and a switching service runs only where SWITCHING lists the country (Britain, Ireland, Germany, France, Spain, Iceland, New Zealand), where no life lives; the Switch Bank panel is drawn only there, and in the US Open An Account At Another Bank gives the steps instead. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.term_notice",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, when a notice to close a term deposit runs out.",
+   "prerequisites": "A term deposit at a bank that needs notice to break it: NatWest’s 35 days alone (BREAK_NOTICE).",
+   "reads": "The deposit.",
+   "changes": "Breaks it on its day.",
+   "consumers": [
+    {
+     "what": "the money in checking",
+     "at": "src/engine/systems/accountlife.ts:582"
+    }
+   ],
+   "experienced": "“Your … Closed” with what went where.",
+   "saveLoad": "The item, put back on a save from before it went on the clock.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence2-b04.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on a London fixture life.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life is a student at Yale in New Haven, banking in America, and only NatWest needs notice, and no life opens a term deposit there: a bank abroad opens nothing new for a customer abroad. Read again 2026-10-21 against the code: still so. Left to the owner’s banking decisions (brief 20 says scope isn’t added to reach it); not made reachable here.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.arrives",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, a week after an approved application (systems/cardlife.ts).",
+   "prerequisites": "An approved application on its way.",
+   "reads": "The application, the record, the bank’s card.",
+   "changes": "Opens the card at its limit and its rate for the record that day, a fresh state, the everyday card where none is held; moves a balance from the old card where asked; arms its first statement.",
+   "consumers": [
+    {
+     "what": "the card’s rate is held from here",
+     "at": "src/engine/systems/credit.ts:475"
+    },
+    {
+     "what": "the day’s spending can go on it",
+     "at": "src/engine/systems/credit.ts:586"
+    }
+   ],
+   "experienced": "“Your New Card Arrived” with its limit; its panel on Cards with its rate.",
+   "saveLoad": "The card; a save opened with one on its way gets its arrival once. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/cardlife.test.ts",
+     "tests/editorial-money.test.ts"
+    ],
+    "comparisons": [
+     "limited funds, a card payment the account can’t make: late fee, interest, the record, a cut limit, a dearer card after; the savings and the School unmoved (b20-money-funds)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+    ],
+    "mutations": [
+     "B20-MONEY-7"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.due",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, at noon on the due date: the bank’s days after the statement, or the 15th of the next month.",
+   "prerequisites": "A statement with something owed.",
+   "reads": "The statement it’s for (or a newer one’s `waiting` record), what was paid since, the autopay account and its linked savings (`autopayReach`), the card’s terms and late-fee rules, the record.",
+   "changes": "Autopay pays, or bounces (a returned-payment fee, or on a US card the late fee alone); short of the minimum, the late fee, a missed payment, on the record (a US card at the second), the limit cut to 70%, a suspension at two, the default notice at five and the charge-off at six; the penalty rate; paid on time, the record’s month and the suspension lifted.",
+   "consumers": [
+    {
+     "what": "the grace period is kept or lost for the next statement",
+     "at": "src/engine/systems/credit.ts:779"
+    },
+    {
+     "what": "a suspended card has no room for the day’s spending",
+     "at": "src/engine/systems/credit.ts:578"
+    },
+    {
+     "what": "a card application reads the record it moved",
+     "at": "src/engine/systems/cardlife.ts:150"
+    },
+    {
+     "what": "the day’s worry reads a card behind",
+     "at": "src/engine/systems/spending.ts:473"
+    }
+   ],
+   "experienced": "“A Card Payment Bounced” and “A Late Card Payment” with the fee and what the next miss does; the score lower and a later card dearer (b20-money-funds); a due date on a Sunday paid that day.",
+   "saveLoad": "The due date on the calendar and the statement it judges. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-interest.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-defects.test.ts",
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [
+     "limited funds, a card payment the account can’t make: late fee, interest, the record, a cut limit, a dearer card after; the savings and the School unmoved (b20-money-funds)",
+     "a card carried against one paid in full: interest at each statement, 28.99%; the record, savings and School the same (b20-money-interest)",
+     "autopay against paying by hand: the same outcome, no interest, no fee, the same record (b20-money-interest)",
+     "month ends on a Saturday and on Memorial Day, a Sunday due date: each once (b20-money-clock)",
+     "linked against unlinked savings: Short For A Payment silent where the link pays, said where it doesn’t (b20-money-defects)"
+    ],
+    "mutations": [
+     "B20-MONEY-5",
+     "B20-MONEY-6",
+     "B20-MONEY-20",
+     "B20-MONEY-9"
+    ],
+    "journeys": []
+   },
+   "missing": "Its due day moves with the month where the bank counts days from the statement (Chase’s 21: 11 October, 10 November, 11 December), where Reg Z §1026.7(b)(11) asks the same day each month. Recorded for the owner, not changed (every dated card test would move). The penalty rate and an intro rate’s end come at the second missed due date, thirty days late, where Reg Z says sixty, as credit.ts says is the owner’s to rule on.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.replaced",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, on the day the bank’s new card arrives.",
+   "prerequisites": "A card reported, stopped for fraud, moved to a new number, or a new account’s first card.",
+   "reads": "The plastic’s replacement date.",
+   "changes": "A new number (a new account’s first keeps its own), unstopped and unlocked, a new expiry; the notice.",
+   "consumers": [
+    {
+     "what": "the card buys again",
+     "at": "src/engine/systems/credit.ts:582"
+    }
+   ],
+   "experienced": "“Your New Card Arrived”; groceries back on it (evidence-g13).",
+   "saveLoad": "The item, arriving once across a reload.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts",
+     "tests/evidence-g12-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "card.statement",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, on the card’s statement day at 9 AM (the 20th, or the day moved to).",
+   "prerequisites": "A card with a credit record.",
+   "reads": "The card’s balance, the interest built day by day, whether the last statement was carried, cash interest, transfers and plans, the yearly fee’s month, the record and the late payments, the six-monthly review.",
+   "changes": "Charges the interest where the grace period was lost (and trailing interest), cash and transfer interest, a plan’s month and fee, rewards, the yearly fee in its month; cuts the statement and its minimum; schedules the due date, or with nothing owed reports the month paid as agreed; reviews the limit every six months, raising it a fifth or as far as the income or savings carry (`limitCarried`); closes a closing card paid off; tells the player.",
+   "consumers": [
+    {
+     "what": "the due date judges this statement",
+     "at": "src/engine/systems/credit.ts:871"
+    },
+    {
+     "what": "the statement page shows it as cut",
+     "at": "src/engine/systems/statements.ts:187"
+    },
+    {
+     "what": "Short For A Payment watches the autopay it sets",
+     "at": "src/engine/systems/obligations.ts:60"
+    },
+    {
+     "what": "a review's raise makes the next ask wait six months",
+     "at": "src/engine/systems/cardlife.ts:69"
+    }
+   ],
+   "experienced": "“Statement Ready” with the sum, the due date, the least and what autopay will take; the interest on the statement; a raised limit’s notice.",
+   "saveLoad": "The card’s state (cuts, issued, waiting) and the next statement on the calendar; `armCredit` arms one a save is missing, never a second. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-credit-limit.test.ts",
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-interest.test.ts",
+     "tests/evidence-g13-money.test.ts"
+    ],
+    "comparisons": [
+     "a card carried against one paid in full: interest at each statement, 28.99%; the record, savings and School the same (b20-money-interest)",
+     "limited funds, a card payment the account can’t make: late fee, interest, the record, a cut limit, a dearer card after; the savings and the School unmoved (b20-money-funds)",
+     "the clock by the hour, day, week and month: the same ledger (b20-money-clock)",
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)",
+     "income or savings that carry a raise against none, the same record (b20-credit-limit)",
+     "a fixed income's ceiling, review after review (b20-credit-limit)"
+    ],
+    "mutations": [
+     "B20-MONEY-4",
+     "B20-D2-1",
+     "B20-D2-2",
+     "B20-D2-3",
+     "B20-D2-4",
+     "B20-D2-5",
+     "B20-D2-9"
+    ],
+    "journeys": [
+     "journey-money"
+    ]
+   },
+   "missing": "None found since D2 (`c4832549`, `credit/README.md`): the review had raised a clean record's limit a fifth every 182 days with no ceiling (brief 19's life A to $194,736), and goes only as far as the holder's income or savings carry now. Savings counting in full, and the opening limit by the score alone, are the owner's.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759, and the coordinator at 16630746"
+  },
+  {
+   "id": "look.bank",
+   "kind": "look",
+   "area": "money",
+   "mechanic": false,
+   "purpose": "To say what’s held at and owed to one bank.",
+   "where": "Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is now. A bank.",
+   "prerequisites": "Something there to show; otherwise its own words say why not.",
+   "reads": "The accounts held there, what they hold and owe.",
+   "changes": "Nothing: it shows.",
+   "consumers": [
+    {
+     "what": "what it reads",
+     "at": "src/ui/looks/bank.tsx:104"
+    }
+   ],
+   "experienced": "“You have $508,179 here and owe it $1,180.39, across 3 accounts.” (b20-money-looks).",
+   "saveLoad": "Nothing of its own: worked from the save each time it’s opened.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/language-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "look.transaction",
+   "kind": "look",
+   "area": "money",
+   "mechanic": false,
+   "purpose": "To say what one entry did, when.",
+   "where": "Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is now. A statement line.",
+   "prerequisites": "Something there to show; otherwise its own words say why not.",
+   "reads": "The transaction and what it did to each of their accounts.",
+   "changes": "Nothing: it shows.",
+   "consumers": [
+    {
+     "what": "what it reads",
+     "at": "src/ui/looks/bank.tsx:196"
+    }
+   ],
+   "experienced": "“It added $24.38 to what you owe on Platinum from Capital One, on Sunday, December 20, 2026.” (b20-money-looks).",
+   "saveLoad": "Nothing of its own: worked from the save each time it’s opened.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/language-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "look.account",
+   "kind": "look",
+   "area": "money",
+   "mechanic": false,
+   "purpose": "To say what one account holds or owes and what it’s for.",
+   "where": "Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is now. An account.",
+   "prerequisites": "Something there to show; otherwise its own words say why not.",
+   "reads": "The account’s balance, its bank, its role, its limit.",
+   "changes": "Nothing: it shows.",
+   "consumers": [
+    {
+     "what": "what it reads",
+     "at": "src/ui/looks/money.tsx:168"
+    }
+   ],
+   "experienced": "Each account its balance; the card what’s free of its limit (b20-money-looks).",
+   "saveLoad": "Nothing of its own: worked from the save each time it’s opened.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/language-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "look.networth",
+   "kind": "look",
+   "area": "money",
+   "mechanic": false,
+   "purpose": "To say what they’re worth now and what it’s made of, true to the cent.",
+   "where": "Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is now. Net Worth.",
+   "prerequisites": "Something there to show; otherwise its own words say why not.",
+   "reads": "`netWorth`: every account of theirs, cash, held, pension and owed.",
+   "changes": "Nothing: it shows.",
+   "consumers": [
+    {
+     "what": "what it reads",
+     "at": "src/ui/looks/money.tsx:338"
+    }
+   ],
+   "experienced": "After a played half-term, “You’re worth $506,999: $508,179 in the bank and $1,180 owed against it.”, each figure the accounts’ own (b20-money-looks).",
+   "saveLoad": "Nothing of its own: worked from the save each time it’s opened.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/language-money.test.ts",
+     "tests/defects-r5-2.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-MONEY-19"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "look.debt",
+   "kind": "look",
+   "area": "money",
+   "mechanic": false,
+   "purpose": "To say what’s owed, where, at what rate.",
+   "where": "Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is now. Owed.",
+   "prerequisites": "Something there to show; otherwise its own words say why not.",
+   "reads": "Every account owing something: cards, loans, collections, bills owed.",
+   "changes": "Nothing: it shows.",
+   "consumers": [
+    {
+     "what": "what it reads",
+     "at": "src/ui/looks/money.tsx:500"
+    }
+   ],
+   "experienced": "“You owe $1,180.39, all of it on the Platinum from Capital One.”, the card’s balance (b20-money-looks).",
+   "saveLoad": "Nothing of its own: worked from the save each time it’s opened.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/language-money.test.ts",
+     "tests/guide-examples-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "look.currency",
+   "kind": "look",
+   "area": "money",
+   "mechanic": false,
+   "purpose": "To say what money is used here and how it’s written.",
+   "where": "Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is now. A currency.",
+   "prerequisites": "Something there to show; otherwise its own words say why not.",
+   "reads": "The country where they stand and its money.",
+   "changes": "Nothing: it shows.",
+   "consumers": [
+    {
+     "what": "what it reads",
+     "at": "src/ui/looks/place.tsx:523"
+    }
+   ],
+   "experienced": "“The dollar is the money here, written $. Every exchange rate is quoted against it.” (b20-money-looks).",
+   "saveLoad": "Nothing of its own: worked from the save each time it’s opened.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/language-money.test.ts",
+     "tests/language-frame.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/abroad#arriveFromAbroad",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock: a payment abroad lands, or comes back (`arriveFromAbroad`, systems/abroad.ts).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The payment, its margin and fees, the account it’s for.",
+   "changes": "Posts it less the margin and the receiving bank’s fee, or back to where it came from; “Money Arrived From Abroad” or “A Payment Abroad Came Back”.",
+   "consumers": [
+    {
+     "what": "the account it reached",
+     "at": "src/engine/systems/abroad.ts:440"
+    }
+   ],
+   "experienced": "The money at the account named, less its costs (home-account-abroad: Barclays’ closing at Chase on 27 October).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/home-account-abroad.test.ts",
+     "tests/home-account-transfers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/abroad#armHomeAccounts",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The first morning of a life keeping an account at a home bank that closes a customer abroad’s (`armHomeAccounts`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The home bank’s terms and the notice it gives.",
+   "changes": "Puts the closing on the calendar and says when.",
+   "consumers": [
+    {
+     "what": "the closing on its day",
+     "at": "src/engine/systems/abroad.ts:591"
+    }
+   ],
+   "experienced": "“Barclays Is Closing Your Account”, once through a reload (home-account-abroad).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/home-account-abroad.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/abroad#homeCloses",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock: the home bank’s closing (`homeCloses`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The home accounts.",
+   "changes": "Closed and sent, or not closed for an overdraft, said.",
+   "consumers": [
+    {
+     "what": "the money arrives as a payment abroad",
+     "at": "src/engine/systems/abroad.ts:440"
+    }
+   ],
+   "experienced": "“Barclays Closed Your Account” with the day it arrives; “… Didn’t Close Your Account” once while overdrawn (home-account-abroad).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/home-account-abroad.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/accountlife#idleAccounts",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The 1st of each month (`idleAccounts`, from the day’s lending pass).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "When each account was last used by its owner (`lastUsed`: not the bank’s interest, fees or tax refund), a reactivation, the bank’s months, the country’s unclaimed-money law.",
+   "changes": "Inactive; dormant, blocked, with its notice; the bank’s letter ninety days before the state, with Keep The Account; the money to the state, the account closed, its orders ended, with its notice.",
+   "consumers": [
+    {
+     "what": "a dormant account refuses Move Money",
+     "at": "src/engine/systems/banking.ts:974"
+    },
+    {
+     "what": "Claim It Back reads what went",
+     "at": "src/engine/systems/accountlife.ts:691"
+    }
+   ],
+   "experienced": "For a wealthy student who never touches Chase Savings: dormant on 1 March 2029, the letter on 1 June, the money to the state on 1 September though the bank credited interest every month; Keep The Account keeps it (b20-money-clock).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g10-money.test.ts",
+     "tests/accountlife.test.ts"
+    ],
+    "comparisons": [
+     "an untouched account against its twin who pressed Keep The Account (b20-money-clock)",
+     "a dollar moved at twenty months against none: dormant or not at thirty (b20-money-promises)"
+    ],
+    "mutations": [
+     "B20-MONEY-12",
+     "B20-MONEY-13",
+     "B20-MONEY-14"
+    ],
+    "journeys": []
+   },
+   "missing": "None found. Asked by the coordinator (2026-10-21): the player is told twice first, interest isn’t the owner’s use (Conn. Gen. Stat. §3-57a), and Claim It Back returns it.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/bankmoves#closedByBank",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s pass: a new account never funded in the bank’s days, or at zero too long (`closedByBank`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The account and the bank’s opening rules.",
+   "changes": "Closes it, moves what it earned, ends its orders, says why.",
+   "consumers": [
+    {
+     "what": "it’s no longer a checking account anything reads",
+     "at": "src/engine/systems/lending.ts:351"
+    }
+   ],
+   "experienced": "“Citi Closed Citi Access Checking” on its 90th day unfunded (evidence2-b05).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/evidence2-b05.test.ts",
+     "tests/remaining-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/cardoffers#transferOnArrival",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The new card’s arrival with a balance transfer asked for (`transferOnArrival`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The old card’s balance, the new card’s transfer terms.",
+   "changes": "Moves the balance for the fee at the transfer’s rate, closes the old card, says so.",
+   "consumers": [
+    {
+     "what": "the transfer builds its own rate each night",
+     "at": "src/engine/systems/credit.ts:1038"
+    }
+   ],
+   "experienced": "“Your Balance Moved” with the fee, the rate and its end (editorial-money, cardoffers).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/editorial-money.test.ts",
+     "tests/cardoffers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/credit#afterMissed",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "A due date short of the minimum (`afterMissed`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The payments missed in a row, the bank.",
+   "changes": "Britain’s set-off; the card suspended at two; the default notice at five; the charge-off at six.",
+   "consumers": [
+    {
+     "what": "a suspended card has no room",
+     "at": "src/engine/systems/credit.ts:578"
+    }
+   ],
+   "experienced": "“Your Card Is Suspended” at the second miss (b20-money-funds).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/cardlife.test.ts",
+     "tests/evidence2-b11.test.ts"
+    ],
+    "comparisons": [
+     "limited funds, a card payment the account can’t make (b20-money-funds)"
+    ],
+    "mutations": [
+     "B20-MONEY-6"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/credit#chargeOff",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The sixth missed due date (`chargeOff`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "What the card owes, the bank.",
+   "changes": "The card closed, its debt in collections, the record marked for its country’s years.",
+   "consumers": [
+    {
+     "what": "a card application refuses while it’s unpaid",
+     "at": "src/engine/systems/cardlife.ts:151"
+    }
+   ],
+   "experienced": "“Your Card Was Charged Off” with how long it stays; the debt in Owed (evidence-g10, six due dates missed by the clock).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "At the sixth due date, 150 days, where the FFIEC says 180; credit.ts says it’s the owner’s to rule on.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/credit#persistentDebt",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "A British card’s statement after 18 and 36 months of more to interest and fees than off the card (`persistentDebt`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The card’s transactions.",
+   "changes": "The bank’s letter; at 36, a plan and a suspension.",
+   "consumers": [
+    {
+     "what": "the plan’s payment at the due date",
+     "at": "src/engine/systems/credit.ts:1189"
+    }
+   ],
+   "experienced": "“Persistent Debt”, then “A Plan To Clear The Card”.",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/cardlife.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on a London fixture life.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: every life banks in America, only a British card is held to FCA’s persistent-debt rules, and a card isn’t opened at a bank abroad. Read again 2026-10-21. Left to the owner’s banking decisions.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/lending#frenchOverrun",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s pass on a French checking account past its limit (`frenchOverrun`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "How long it’s been past its limit.",
+   "changes": "The month’s letter; credit offered at three months by a bank at home; the closing’s notice.",
+   "consumers": [
+    {
+     "what": "the bank closes the relationship at its deadline",
+     "at": "src/engine/systems/lending.ts:1039"
+    }
+   ],
+   "experienced": "“BNP Paribas Wrote About Your Overrun” in euros, for a Paris-raised student keeping BNP at home (home-account-setoff); no loan for it from a bank abroad.",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/home-account-setoff.test.ts",
+     "tests/scope-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/lending#completeSwitch",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "A switch’s completion (`completeSwitch`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The switch.",
+   "changes": "Says the switch is done, or done in part.",
+   "consumers": [
+    {
+     "what": "every payment follows the new account",
+     "at": "src/engine/systems/spending.ts:85"
+    }
+   ],
+   "experienced": "“Switched To …”.",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/scope-money.test.ts",
+     "tests/remaining-09-banking.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Held only on fixture lives.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches it: a switching service runs only in Britain, Ireland, Germany, France, Spain, Iceland and New Zealand, where no life lives. Read again 2026-10-21. Left to the owner’s banking decisions.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/lending#refundInterestTax",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "Iceland’s assessment day, 1 June (`refundInterestTax`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "Last year’s interest at Icelandic banks, the allowance, whether the holder is a customer abroad.",
+   "changes": "A resident: the tax on the first 300,000 kr back into checking, said. A customer abroad: nothing.",
+   "consumers": [
+    {
+     "what": "the year’s tax the bank took, as the refund reads it",
+     "at": "src/engine/systems/banking.ts:424"
+    }
+   ],
+   "experienced": "A Reykjavík-raised student keeping Arion from New Haven is given nothing back, her 12% taken as a customer abroad’s (b20-money-defects); a resident’s refund is a fixture’s (bank-fees).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-defects.test.ts",
+     "tests/bank-fees.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-MONEY-3"
+    ],
+    "journeys": []
+   },
+   "missing": "Until 2026-10-21 a customer abroad was refunded at the resident’s 22% on the resident’s allowance, tax never taken; fixed on b20-money.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "Its notice is a resident’s, and no current life lives in Iceland: the one life it reached, a customer abroad, it reached in error, and no longer does (b20-money-defects). The resident’s refund is held only on a fixture life (bank-fees).",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/lending#closeForOverdraft",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s pass: an account below its limit past the bank’s days (`closeForOverdraft`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The accounts at the bank, their interest and fees.",
+   "changes": "Sets off, charges off to collections, marks the record, files ChexSystems, moves the money elsewhere, says so.",
+   "consumers": [
+    {
+     "what": "a debt in collections refuses a card",
+     "at": "src/engine/systems/cardlife.ts:151"
+    }
+   ],
+   "experienced": "Citi closed after sixty days overdrawn on its own fee, by the clock (evidence-g10).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/home-account-setoff.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/obligations#accountAlerts",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s alerts at each midnight (`accountAlerts`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The low-balance line; each payment due in three days and what it can draw: the account, and for a card’s autopay or a loan’s payment the savings linked at its bank where the link is on.",
+   "changes": "“Low Balance: …” once until it’s back; “Short For A Payment: …” once for each payment.",
+   "consumers": [
+    {
+     "what": "the payments it warns of",
+     "at": "src/engine/systems/obligations.ts:49"
+    }
+   ],
+   "experienced": "Told within three days where a payment won’t go; not told where the link will pay it (b20-money-defects, b20-money-promises, account-alerts).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-defects.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/account-alerts.test.ts"
+    ],
+    "comparisons": [
+     "linked against unlinked savings: Short For A Payment silent where the link pays, said where it doesn’t (b20-money-defects)"
+    ],
+    "mutations": [
+     "B20-MONEY-1"
+    ],
+    "journeys": []
+   },
+   "missing": "Until 2026-10-21 it read the account alone, and told a player with savings linked to move money in for a payment the savings then paid; fixed on b20-money.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/roundups#moveRoundUps",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s pass: round-ups moved on the bank’s day (`moveRoundUps`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "What was counted, the bank’s day, the checking account’s balance.",
+   "changes": "Moves it into savings, or drops it where the account can’t cover it, said on the panel and when Citi turns it off.",
+   "consumers": [
+    {
+     "what": "the savings then earn on it",
+     "at": "src/engine/systems/banking.ts:872"
+    }
+   ],
+   "experienced": "The change in savings the next day (b20-money-promises, evidence-g11).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/roundups.test.ts"
+    ],
+    "comparisons": [
+     "Citi against Bank of America with the day on the credit card (b20-money-promises)"
+    ],
+    "mutations": [
+     "B20-MONEY-15"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/security#somebodyElse",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s pass: the day’s draw of somebody else using a card (`somebodyElse`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The country’s fraud rate and average, the cards that work, the large-payment alert.",
+   "changes": "The charge, or the bank’s stop and a free card; when it’s learned of; told at once where the alert catches it.",
+   "consumers": [
+    {
+     "what": "a dispute reads when it was learned of",
+     "at": "src/engine/systems/security.ts:216"
+    }
+   ],
+   "experienced": "“A Large Payment” the day it happens where the alert is set; otherwise at the statement (evidence-g11, evidence-g12).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence2-b04.test.ts",
+     "tests/security.test.ts"
+    ],
+    "comparisons": [
+     "twins told at once against learning from the statement: $500 against $50 carried (evidence-g11)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Its tests set the country’s rate to certain (TEST SETUP on the rate, never the consequence) so a use comes inside the stretch played.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/security#attemptOnNumber",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "The day’s pass on an exposed account number (`attemptOnNumber`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The exposure, the number now.",
+   "changes": "Declined on an old number, said; taken on the same number, said.",
+   "consumers": [
+    {
+     "what": "a dispute reads it",
+     "at": "src/engine/systems/security.ts:216"
+    }
+   ],
+   "experienced": "“A Debit On Your Old Number Declined” or “An Electronic Debit You Didn’t Make”.",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/coverage-gaps-number.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Its test calls it with the day’s draw given, in the clock’s place.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "No test reaches it through the clock: coverage-gaps-number calls `attemptOnNumber` with a draw given (TEST SETUP). Reachable in play (a debit card used by a stranger at Bank of America exposes the number, then 21% a year), but no played seed was found for it.",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/spending#buyTheDaysFood",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "Each midnight: the day’s groceries (`buyTheDaysFood`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "The town’s prices, the person’s spending, how they pay, EBT, the bank, the card, cash.",
+   "changes": "Buys them, or not: “No Money For Food Today” with why.",
+   "consumers": [
+    {
+     "what": "the morning’s meals eat what was bought",
+     "at": "src/engine/systems/life.ts:1063"
+    }
+   ],
+   "experienced": "With checking emptied, no opt-in and the credit card locked: not bought, the notice, the day unfed; the twin fed (b20-money-funds).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ],
+    "comparisons": [
+     "limited funds, a purchase the account can’t make (b20-money-funds)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/statements#statementReady",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "A statement cut, a card’s or the month’s checking (`statementReady`).",
+   "prerequisites": "What sends it, as `where` says.",
+   "reads": "Whether a payment is due, and Statement Ready.",
+   "changes": "Tells the player, always with a payment due.",
+   "consumers": [
+    {
+     "what": "the statement page shows the period",
+     "at": "src/engine/systems/statements.ts:118"
+    }
+   ],
+   "experienced": "“Statement Ready: …” with what’s due (evidence-g11: only while Statement Ready is On, and always with a payment due).",
+   "saveLoad": "The notice in the save’s notifications, said once, an unread one brought up to now rather than repeated.",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/b20-money-funds.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "bank.transfer_arrives",
+   "kind": "scheduled",
+   "area": "money",
+   "mechanic": true,
+   "where": "The clock, the day money sent between two of the player’s banks lands (systems/bankmoves.ts `ARRIVES_KIND`).",
+   "prerequisites": "Money sent to another bank: Move Money, a standing order or payment set for a date across banks, an opening deposit, a closing’s remainder.",
+   "reads": "The transfer, the account it’s for (or the checking account at that bank), an application still under review.",
+   "changes": "Moves it out of Money In Transit into the account, waits for a decision still to come, or sends it back where the account isn’t open.",
+   "consumers": [
+    {
+     "what": "the account funded is no longer waiting for its deposit",
+     "at": "src/engine/systems/bankmoves.ts:256"
+    },
+    {
+     "what": "the money spends from the account it reached",
+     "at": "src/engine/systems/spending.ts:150"
+    }
+   ],
+   "experienced": "The money on the receiving account on the sending bank’s day; On Its Way until then; “A Transfer Came Back” where it couldn’t land.",
+   "saveLoad": "The item on the calendar, in transit across the save. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b03.test.ts"
+    ],
+    "comparisons": [
+     "saved and opened with money in transit against played straight (b20-money-clock)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found. Until 16630746 the inventory read a kind constant by its name across files, so cardlife.ts's ARRIVES_KIND stood for this one and it was in no table; it reads each name in its own file now.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf632759"
+  }
+ ],
+ "promises": [
+  {
+   "id": "promise.money.affairs>bank.accounts",
+   "kind": "optional",
+   "claim": "The button at the end of the Money line opens Money, where you manage each account.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Home’s Money line ends in a button to the bank’s screen (src/ui/screens/Home.tsx:490)",
+   "tests": [
+    "tests/evidence2-b12.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence2-b12.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.money.affairs>bank.card",
+   "kind": "evaluation",
+   "claim": "Each card’s monthly credit report scores your record on Credit Used, counted across every card’s limit.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Each card’s month reports what’s used across every open card’s limit (src/engine/systems/credit.ts:1324)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts",
+    "tests/several-cards.test.ts",
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/several-cards.test.ts",
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.money.affairs>body.how",
+   "kind": "scheduled",
+   "claim": "Each day something here worries you, it adds stress and takes morale.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Each midnight, a day in trouble adds stress and takes morale (src/engine/systems/spending.ts:508)",
+   "tests": [
+    "tests/b20-money-promises.test.ts",
+    "tests/evidence-g08-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g08-life.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.money.affairs>taxes.pay",
+   "kind": "optional",
+   "claim": "Tax owed worries you each day like a debt, though it’s on Papers and Owed leaves it out.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Tax owed is among the troubles the day’s worry reads; Owed lists only accounts owing (src/engine/systems/spending.ts:483; src/ui/looks/money.tsx:500)",
+   "tests": [
+    "tests/evidence2-b11.test.ts"
+   ],
+   "status": "Implemented, Verification Incomplete",
+   "why": "The worry from tax owed is the same `inTrouble` the overdraft’s is (b20-money-promises), and What Needs You counts tax owed (evidence2-b11); no test plays tax owed and reads the stress it adds, or opens Owed beside it to see it left out.",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence2-b11.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.accounts>money.affairs",
+   "kind": "immediate",
+   "claim": "Every balance here counts in your net worth, and your primary account’s balance is the first figure on Home’s Money line.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Net worth sums every account; the Money line opens on the primary account (src/engine/systems/finance.ts:64)",
+   "tests": [
+    "tests/b20-money-looks.test.ts",
+    "tests/evidence2-b12.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/evidence2-b12.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.accounts>bank.payments",
+   "kind": "prerequisite",
+   "claim": "A standing order needs a savings account to pay into, and Savings Covers The Checking Account uses easy-access savings at the same bank as the checking account a payment comes from.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A standing order goes only into savings; the link covers easy-access savings at the bank of each account a payment comes from (src/engine/systems/payments.ts:267; src/engine/systems/payments.ts:133)",
+   "tests": [
+    "tests/payments.test.ts",
+    "tests/evidence-g11-money.test.ts",
+    "tests/b20-money-defects.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/payments.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/b20-money-defects.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.accounts>bank.transfer",
+   "kind": "optional",
+   "claim": "Move Money appears on this tab once you have two accounts.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Move Money is drawn once there are two accounts (src/ui/workspaces/BankWorkspace.tsx:210)",
+   "tests": [
+    "tests/language-money.test.ts"
+   ],
+   "status": "Implemented, Verification Incomplete",
+   "why": "Presentation: no test was found that renders the Accounts tab with one account and then two and reads Move Money appearing.",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/language-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.accounts>bank.borrowing",
+   "kind": "immediate",
+   "claim": "Your primary account’s bank runs the overdraft your day-to-day spending can run into.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The day’s spending runs into the primary account’s overdraft, by its bank’s way (src/engine/systems/lending.ts:389)",
+   "tests": [
+    "tests/evidence-g10-money.test.ts",
+    "tests/b20-money-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/b20-money-promises.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.accounts>bank.cash",
+   "kind": "immediate",
+   "claim": "Cash comes out of your primary account, at its bank’s machines and fees.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Cash comes out of the primary account at its bank’s rules (src/engine/systems/cash.ts:127)",
+   "tests": [
+    "tests/evidence-g14-money.test.ts",
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.accounts>bank.upkeep",
+   "kind": "scheduled",
+   "claim": "An account you don’t use becomes inactive, then dormant, and after the country’s number of years its money goes to the state.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Inactive, dormant, then the state (src/engine/systems/accountlife.ts:722)",
+   "tests": [
+    "tests/b20-money-clock.test.ts",
+    "tests/b20-money-promises.test.ts",
+    "tests/accountlife.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/accountlife.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.transfer>bank.accounts",
+   "kind": "prerequisite",
+   "claim": "Move Money appears only once you have two accounts.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Move Money is drawn once there are two accounts (src/ui/workspaces/BankWorkspace.tsx:210)",
+   "tests": [
+    "tests/language-money.test.ts"
+   ],
+   "status": "Implemented, Verification Incomplete",
+   "why": "Presentation: no test was found that renders the tab with one account and reads Move Money absent.",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/language-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.transfer>bank.other-banks",
+   "kind": "scheduled",
+   "claim": "Money sent to your account at another bank arrives on the day the sending bank’s own rule sets, or where it sets none, its country’s. Where neither says, the game estimates ${businessDays(ESTIMATE_SEND_DAYS)}.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The sending bank’s days, or its country’s, or SLATE’s estimate (src/engine/systems/bankmoves.ts:170)",
+   "tests": [
+    "tests/evidence-g14-money.test.ts",
+    "tests/evidence2-b03.test.ts",
+    "tests/b20-money-clock.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b03.test.ts",
+     "tests/b20-money-clock.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.transfer>bank.upkeep",
+   "kind": "immediate",
+   "claim": "A move counts as using both accounts, which keeps them from becoming inactive. A dormant account refuses it until you reactivate it.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A move counts as using both accounts; a dormant one refuses it (src/engine/systems/lending.ts:710; src/engine/systems/banking.ts:974)",
+   "tests": [
+    "tests/b20-money-promises.test.ts",
+    "tests/evidence-g10-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.transfer>bank.payments",
+   "kind": "optional",
+   "claim": "A standing order or a payment set for a date makes the same move on a day you choose.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A standing order and a payment set for a date make the same move on their day (src/engine/systems/payments.ts:198)",
+   "tests": [
+    "tests/b20-money-clock.test.ts",
+    "tests/payments.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/payments.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.term>bank.accounts",
+   "kind": "prerequisite",
+   "claim": "A term deposit is paid for from your checking account at the same bank.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A term deposit is paid for from the checking account at its bank (src/engine/systems/lending.ts:1584)",
+   "tests": [
+    "tests/evidence-g10-money.test.ts",
+    "tests/b20-money-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/b20-money-promises.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.term>money.affairs",
+   "kind": "immediate",
+   "claim": "What it holds counts in your worth from the day it opens, though you can’t spend it.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A term deposit is an account of theirs, counted in worth (src/engine/systems/finance.ts:71)",
+   "tests": [
+    "tests/b20-money-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.term>day.needs",
+   "kind": "scheduled",
+   "claim": "The bank’s notice before the end, and the renewal or payout on the day, come to What Needs You.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The bank’s notice before the end, and the renewal or payout, are notices (src/engine/systems/accountlife.ts:545; src/engine/systems/lending.ts:1310)",
+   "tests": [
+    "tests/accountlife.test.ts",
+    "tests/evidence-g11-money.test.ts",
+    "tests/evidence3-lifepapers.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/accountlife.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence3-lifepapers.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.term>bank.upkeep",
+   "kind": "optional",
+   "claim": "Where the country gives a cooling-off period, you can cancel a new term deposit during it without a penalty.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Canceled in a cooling-off period without a penalty, where the country gives one (src/engine/systems/accountlife.ts:625)",
+   "tests": [
+    "tests/accountlife.test.ts"
+   ],
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches a cooling-off period: the US gives none, and a bank abroad opens nothing new for a customer abroad. Held on fixture lives (Canada); left to the owner’s banking decisions, as bank.cancel_new.",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/accountlife.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.upkeep>bank.card-security",
+   "kind": "immediate",
+   "claim": "A Payment Over set at or under a stranger’s charge tells you the day it happens, so you know of it from then: in the US, a debit card charge reported within ${clockOf(DEBIT_PROMPT, 'of')} costs you at most ${usd(DEBIT_PROMPT.max ?? 0)}.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A Payment Over set at or under a stranger’s charge is told the day it happens, and the US debit liability reads when it was learned of (src/engine/systems/security.ts:406; src/engine/systems/security.ts:182)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.upkeep>bank.payments",
+   "kind": "optional",
+   "claim": "Short For A Payment watches each standing order and payment set for a date, ${LOOKAHEAD_DAYS} days ahead.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Short For A Payment lists standing orders and payments set for a date within three days (src/engine/systems/obligations.ts:54)",
+   "tests": [
+    "tests/b20-money-promises.test.ts",
+    "tests/b20-money-defects.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/b20-money-defects.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.upkeep>bank.card",
+   "kind": "optional",
+   "claim": "Short For A Payment watches each card’s autopay against the account it pays from.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Short For A Payment lists each card’s autopay against the account it pays from and the savings linked there (src/engine/systems/obligations.ts:62)",
+   "tests": [
+    "tests/b20-money-defects.test.ts",
+    "tests/account-alerts.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-defects.test.ts",
+     "tests/account-alerts.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.upkeep>day.needs",
+   "kind": "scheduled",
+   "claim": "Alerts, the dormancy notice and the bank’s letter before it hands money over come to What Needs You.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Alerts and the dormancy notice are notices; the letter before the state is a decision with Keep The Account; What Needs You shows both (src/engine/systems/accountlife.ts:742; src/ui/screens/Home.tsx:233)",
+   "tests": [
+    "tests/b20-money-clock.test.ts",
+    "tests/evidence2-b11.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-clock.test.ts",
+     "tests/evidence2-b11.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.upkeep>bank.term",
+   "kind": "optional",
+   "claim": "A term deposit’s end and breaking it early are handled on the same panel.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The term deposit’s end and Break It are on Your Accounts Over Time (src/ui/bank/BankAccountLife.tsx:84)",
+   "tests": [
+    "tests/evidence-g10-money.test.ts",
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.upkeep>bank.round-ups",
+   "kind": "optional",
+   "claim": "Round-ups are set on the same panel, where your bank offers them.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Round-Ups is drawn on Your Accounts Over Time where the bank offers them (src/ui/bank/RoundUps.tsx:82)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.round-ups>bank.payments",
+   "kind": "immediate",
+   "claim": "What the debit card pays rounds up, and at Citi, BBVA México and Santander México what their own credit card pays too: How You Pay sets whether the day goes on the debit card, the credit card or in cash.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "What the debit card pays rounds up, and at Citi, BBVA México and Santander México their own credit card’s too (corrected 2026-10-21 from “only the debit card”) (src/engine/systems/roundups.ts:154; src/engine/systems/spending.ts:389)",
+   "tests": [
+    "tests/b20-money-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.round-ups>bank.accounts",
+   "kind": "scheduled",
+   "claim": "Each transfer is a move from your checking account into savings at the same bank, on the bank’s day.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Each transfer moves from checking into savings at the same bank on the bank’s day (src/engine/systems/roundups.ts:199)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts",
+    "tests/b20-money-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/b20-money-promises.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.round-ups>bank.upkeep",
+   "kind": "optional",
+   "claim": "Round-ups are set under Your Accounts Over Time, with term deposits and unused accounts.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Round-Ups is drawn under Your Accounts Over Time (src/ui/bank/RoundUps.tsx:82)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.payments>bank.cash",
+   "kind": "prerequisite",
+   "claim": "Paying the day in cash first needs cash, taken out under Cash on the same tab.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Paid in cash first, the day spends cash in hand (src/engine/systems/spending.ts:330)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.payments>bank.card",
+   "kind": "immediate",
+   "claim": "On The Credit Card puts each day’s groceries on your everyday card, and its statement and your credit record move with them.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "On The Credit Card puts the groceries on the everyday card; its statement and record follow (src/engine/systems/spending.ts:358)",
+   "tests": [
+    "tests/b20-money-interest.test.ts",
+    "tests/b20-money-funds.test.ts",
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/b20-money-funds.test.ts",
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.payments>bank.borrowing",
+   "kind": "immediate",
+   "claim": "A debit card purchase the account can’t cover goes into the overdraft only where the bank allows it. Chase asks you to opt in.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A debit purchase goes into the overdraft only where the bank may pay it there; Chase asks (src/engine/systems/lending.ts:335)",
+   "tests": [
+    "tests/b20-money-funds.test.ts",
+    "tests/b20-money-promises.test.ts",
+    "tests/evidence-g10-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.payments>body.look-after",
+   "kind": "immediate",
+   "claim": "A meal you pay for or have delivered is paid the way The Day’s Spending says.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A meal is paid as the day is (src/engine/systems/life.ts:474)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts",
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.payments>school.shifts",
+   "kind": "scheduled",
+   "claim": "Have Wages Paid Here reaches Yale’s payroll after ${PAYER_LEAD['yale-payroll']} days, and your shift pay goes there from then.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Wages paid to the new account after Yale’s lead days (src/engine/systems/routing.ts:56)",
+   "tests": [
+    "tests/bank-moves.test.ts",
+    "tests/evidence-g21-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/bank-moves.test.ts",
+     "tests/evidence-g21-school.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.payments>bank.upkeep",
+   "kind": "optional",
+   "claim": "Short For A Payment warns you ${LOOKAHEAD_DAYS} days ahead when an account can’t cover a standing order or a payment set for a date.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Short For A Payment within three days of a standing order or a payment set for a date (src/engine/systems/obligations.ts:58)",
+   "tests": [
+    "tests/b20-money-promises.test.ts",
+    "tests/b20-money-defects.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/b20-money-defects.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.cash>bank.payments",
+   "kind": "optional",
+   "claim": "In Cash, Then The Debit Card spends your cash on the day first.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Paid in cash first, the day spends cash in hand (src/engine/systems/spending.ts:330)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.cash>bank.card",
+   "kind": "immediate",
+   "claim": "A cash advance goes on your everyday card at once, and is charged its cash rate from the day you take it.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A cash advance goes on the card and draws its cash rate from the first night (src/engine/systems/cash.ts:232; src/engine/systems/credit.ts:1035)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.cash>bank.card-security",
+   "kind": "prerequisite",
+   "claim": "A machine needs your debit card, arrived and unlocked. With a locked, stopped or new card, only the counter works.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A machine needs the debit card arrived and unlocked; the counter doesn’t (src/engine/systems/cash.ts:130)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts",
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.cash>money.affairs",
+   "kind": "immediate",
+   "claim": "Cash you carry counts in your worth, with what’s in the bank.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Cash In Hand counts in worth (src/engine/systems/finance.ts:71)",
+   "tests": [
+    "tests/b20-money-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card>money.affairs",
+   "kind": "immediate",
+   "claim": "What you owe on a card counts against your worth at once, and Owed shows its rate and Credit Used.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A card owing counts against worth; Owed shows its rate and Credit Used (src/engine/systems/finance.ts:65)",
+   "tests": [
+    "tests/b20-money-looks.test.ts",
+    "tests/guide-examples-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-looks.test.ts",
+     "tests/guide-examples-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card>bank.payments",
+   "kind": "optional",
+   "claim": "On The Credit Card, in How You Pay, puts each day’s groceries on your everyday card.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "On The Credit Card puts the groceries on the everyday card (src/engine/systems/spending.ts:358)",
+   "tests": [
+    "tests/b20-money-interest.test.ts",
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-interest.test.ts",
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card>bank.card-offers",
+   "kind": "optional",
+   "claim": "Its introductory rate, rewards, money transfers and payment plans are under The Card’s Offers on the same tab.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The Card’s Offers is drawn on the Cards tab with the card (src/ui/bank/BankCardOffers.tsx:87)",
+   "tests": [
+    "tests/cardoffers.test.ts"
+   ],
+   "status": "Implemented, Verification Incomplete",
+   "why": "Presentation: no test renders the Cards tab and reads The Card’s Offers beside the card’s panel.",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/cardoffers.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card>bank.card-security",
+   "kind": "immediate",
+   "claim": "A card that’s locked or reported has nothing Left To Spend until it’s unlocked or the new one arrives.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A locked or reported card has no room (src/engine/systems/credit.ts:582)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts",
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card>bank.borrowing",
+   "kind": "evaluation",
+   "claim": "The credit record your card payments build is what a bank looks at to arrange an overdraft or lend to you, and at what rate.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The record prices a loan and decides it; an arranged overdraft too, where a bank arranges one (src/engine/systems/lending.ts:505)",
+   "tests": [
+    "tests/evidence-g13-money.test.ts",
+    "tests/evidence-g10-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts",
+     "tests/evidence-g10-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card>day.needs",
+   "kind": "scheduled",
+   "claim": "A statement with a payment due, a late payment, a failed autopay and a raised limit all come to What Needs You.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A statement with a payment due, a late payment, a bounced autopay and a raised limit are notices (src/engine/systems/statements.ts:478; src/engine/systems/credit.ts:958)",
+   "tests": [
+    "tests/b20-money-funds.test.ts",
+    "tests/evidence-g11-money.test.ts",
+    "tests/evidence-g13-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence-g13-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card-offers>bank.card",
+   "kind": "prerequisite",
+   "claim": "Offers come with a card, and a balance from another bank’s card moves when you apply for the new one.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The offers are the card’s terms; a balance moves when the new card arrives (src/engine/systems/cardoffers.ts:223)",
+   "tests": [
+    "tests/cardoffers.test.ts",
+    "tests/editorial-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/cardoffers.test.ts",
+     "tests/editorial-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card-offers>money.affairs",
+   "kind": "immediate",
+   "claim": "A money transfer adds to what you owe on the card and to your checking account at once.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A money transfer owes on the card and pays checking at once (src/engine/systems/cardoffers.ts:229)",
+   "tests": [
+    "tests/cardoffers.test.ts"
+   ],
+   "status": "Implemented, Verification Incomplete",
+   "why": "No current life reaches a money transfer: only NatWest’s, Santander España’s and Bankinter’s cards offer one (card.money_transfer). Held on a London fixture life.",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/cardoffers.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card-security>bank.upkeep",
+   "kind": "optional",
+   "claim": "A Payment Over, set low enough, tells you about a stranger’s charge the day it happens.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A Payment Over, set low enough, tells of a stranger’s charge the day it happens (src/engine/systems/security.ts:406)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card-security>bank.card",
+   "kind": "immediate",
+   "claim": "A credit card that’s locked or reported has nothing Left To Spend until it’s unlocked or replaced.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A locked or reported credit card has no room (src/engine/systems/credit.ts:582)",
+   "tests": [
+    "tests/evidence-g11-money.test.ts",
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g11-money.test.ts",
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card-security>bank.payments",
+   "kind": "immediate",
+   "claim": "With the debit card locked or stopped, the day’s groceries go on the credit card or are paid in cash.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A locked or stopped debit card: the groceries on the credit card or in cash (src/engine/systems/spending.ts:344)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts",
+    "tests/evidence2-b04.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence2-b04.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.card-security>bank.cash",
+   "kind": "immediate",
+   "claim": "A machine needs the debit card. While it’s locked, stopped or hasn’t arrived, only the counter pays out.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A machine needs the debit card (src/engine/systems/cash.ts:130)",
+   "tests": [
+    "tests/evidence-g12-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.borrowing>money.affairs",
+   "kind": "history",
+   "claim": "A debt sent to collections stays in Owed until it’s paid.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Owed lists a debt in collections until it’s paid (src/ui/looks/money.tsx:500)",
+   "tests": [
+    "tests/evidence-g10-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.borrowing>bank.card",
+   "kind": "evaluation",
+   "claim": "Your credit record decides whether a bank arranges an overdraft or lends, and at what rate. A debt sent to collections and a missed loan payment lower it.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The record decides a loan and its rate; a charge-off and a missed loan payment mark it (src/engine/systems/credit.ts:1256; src/engine/systems/lending.ts:1345)",
+   "tests": [
+    "tests/evidence-g13-money.test.ts",
+    "tests/evidence-g10-money.test.ts",
+    "tests/b20-money-funds.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g13-money.test.ts",
+     "tests/evidence-g10-money.test.ts",
+     "tests/b20-money-funds.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.borrowing>bank.other-banks",
+   "kind": "scheduled",
+   "claim": "An account closed for being overdrawn sends your money to another account of yours, and a ChexSystems report can make the next bank turn you away.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "An account closed for an overdraft sends the money to another account of theirs and files ChexSystems (src/engine/systems/lending.ts:1049)",
+   "tests": [
+    "tests/evidence-g10-money.test.ts",
+    "tests/evidence-g14-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence-g14-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.borrowing>bank.payments",
+   "kind": "immediate",
+   "claim": "How You Pay decides what can reach the overdraft: a bill always can, a debit card purchase only where the bank allows it.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A bill draws the overdraft; a debit purchase only where the bank may (src/engine/systems/spending.ts:223; src/engine/systems/spending.ts:327)",
+   "tests": [
+    "tests/b20-money-funds.test.ts",
+    "tests/evidence-g10-money.test.ts",
+    "tests/evidence2-b03.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-funds.test.ts",
+     "tests/evidence-g10-money.test.ts",
+     "tests/evidence2-b03.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.borrowing>body.how",
+   "kind": "scheduled",
+   "claim": "Each day your primary account is overdrawn or a debt is in collections, it worries you.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Overdrawn and collections are troubles the day’s worry reads (src/engine/systems/spending.ts:466)",
+   "tests": [
+    "tests/b20-money-promises.test.ts",
+    "tests/evidence-g08-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-money-promises.test.ts",
+     "tests/evidence-g08-life.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.other-banks>documents.passport-id",
+   "kind": "prerequisite",
+   "claim": "A new bank asks for a valid photo ID: a passport, a driver’s license or an ID card.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "A new bank asks for a valid photo ID (src/engine/systems/bankmoves.ts:102)",
+   "tests": [
+    "tests/evidence2-b05.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence2-b05.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.other-banks>bank.payments",
+   "kind": "prerequisite",
+   "claim": "Before the old account closes, wages, standing orders, autopay and loan payments have to be moved off it, and payments set for a date to or from it canceled.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Close It refuses while wages, orders, autopay, a loan or a payment set for a date touch the account (src/engine/systems/bankmoves.ts:290)",
+   "tests": [
+    "tests/evidence-g14-money.test.ts",
+    "tests/evidence2-b05.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b05.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.other-banks>bank.transfer",
+   "kind": "scheduled",
+   "claim": "Money between your banks arrives in the sending bank’s own days or by its cut-off time, or where it sets none, by its country’s system. Where neither says, the game estimates ${businessDays(ESTIMATE_SEND_DAYS)}.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The sending bank’s days or cut-off, or its country’s system, or SLATE’s estimate (src/engine/systems/bankmoves.ts:170)",
+   "tests": [
+    "tests/evidence-g14-money.test.ts",
+    "tests/evidence2-b03.test.ts",
+    "tests/b20-money-clock.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts",
+     "tests/evidence2-b03.test.ts",
+     "tests/b20-money-clock.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.other-banks>bank.accounts",
+   "kind": "immediate",
+   "claim": "Make Primary on the new account puts its bank at the top of Money, and your day-to-day spending comes out of it.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Make Primary moves the day’s spending to the account (src/engine/systems/bankmoves.ts:480)",
+   "tests": [
+    "tests/evidence-g14-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g14-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.other-banks>bank.borrowing",
+   "kind": "optional",
+   "claim": "A second bank lends or arranges an overdraft on its own terms. Choose it in Borrow At.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Each bank lends on its own terms, chosen in Borrow At (src/engine/systems/lending.ts:471)",
+   "tests": [
+    "tests/evidence-g10-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g10-money.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.home-account>bank.accounts",
+   "kind": "immediate",
+   "claim": "Your accounts at home are among your accounts from the first morning, beside the American ones.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The accounts at home are opened with the life (src/engine/systems/homeaccount.ts:270)",
+   "tests": [
+    "tests/home-account-creation.test.ts",
+    "tests/home-account-abroad.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/home-account-creation.test.ts",
+     "tests/home-account-abroad.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.home-account>bank.upkeep",
+   "kind": "scheduled",
+   "claim": "The bank there pays its interest and charges its own fee at the month’s end, as any bank does.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The month’s end pays interest and charges the fee at any bank, a fee abroad beside it (src/engine/systems/banking.ts:932)",
+   "tests": [
+    "tests/home-account-abroad.test.ts",
+    "tests/home-account-ledger.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/home-account-abroad.test.ts",
+     "tests/home-account-ledger.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.home-account>bank.transfer",
+   "kind": "optional",
+   "claim": "Money moves between it and your American account as a payment abroad, counting both countries’ business days.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "Between it and the American account, a payment abroad in both countries’ business days (src/engine/systems/abroad.ts:406)",
+   "tests": [
+    "tests/home-account-transfers.test.ts",
+    "tests/home-account-abroad.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/home-account-transfers.test.ts",
+     "tests/home-account-abroad.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  },
+  {
+   "id": "promise.bank.home-account>taxes.return",
+   "kind": "scheduled",
+   "claim": "Each February’s return reports its interest by its country, and a US citizen is told there about the FBAR and Form 8938.",
+   "entryFile": "src/engine/content/guide/money.ts",
+   "holds": "The return reports its interest by country, and a US citizen is told of the FBAR and Form 8938 (src/engine/systems/abroad.ts:560)",
+   "tests": [
+    "tests/home-account-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/home-account-tax.test.ts"
+    ]
+   },
+   "readBy": "money",
+   "readAt": "bf632759"
+  }
+ ]
+}

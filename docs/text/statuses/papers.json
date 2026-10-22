@@ -253,9 +253,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]": {
   "status": "Rewritten And Verified",
-  "hash": "cc2011055fb0",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
+  "hash": "3d8e3d622ce3",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-benefits-reach.test.ts: a graduate's New York plan missed and caught up by Catch Up in a played life (brief 20, benefits area)"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
   "status": "Rewritten And Verified",
@@ -2143,15 +2143,15 @@
  },
  "src/engine/systems/statetax.ts#reconsiderState": {
   "status": "Rewritten And Verified",
-  "hash": "3faf4f5d1a07",
-  "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "hash": "31a2d48869e3",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-benefits-tax.test.ts: their own return in the place of an assessment says the penalty and interest stand where its tax is the assessment's, and fall in proportion only where it's less (brief 20, benefits area)"
  },
  "src/engine/systems/statetax.ts#registerStateTax": {
   "status": "Rewritten And Verified",
-  "hash": "cf51ea15771c",
-  "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "hash": "a048ba73e300",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-benefits-reach.test.ts: New York's one-month plan says '1 month', not '1 months' (brief 20, benefits area)"
  },
  "src/engine/systems/statetax.ts#registerStateTax <tax.apply_state_plan>": {
   "status": "Rewritten And Verified",
@@ -2209,9 +2209,9 @@
  },
  "src/engine/systems/statetax.ts#startStatePlan": {
   "status": "Rewritten And Verified",
-  "hash": "9dcf7ec50c54",
-  "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "hash": "15ff14362d48",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-benefits-reach.test.ts: New York's one-month plan says '1 month', not '1 months' (brief 20, benefits area)"
  },
  "src/engine/systems/statetax.ts#stateLienPaid": {
   "status": "Rewritten And Verified",
@@ -2383,9 +2383,9 @@
  },
  "src/engine/systems/taxreturn.ts#reconsider": {
   "status": "Rewritten And Verified",
-  "hash": "aeaa0c61ab10",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+  "hash": "98d6a9c1a2a7",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-benefits-tax.test.ts: their own return in the place of an assessment says the penalty and interest stand where its tax is the assessment's, and fall in proportion only where it's less (brief 20, benefits area)"
  },
  "src/engine/systems/taxreturn.ts#refusePlan": {
   "status": "Rewritten And Verified",
@@ -2581,9 +2581,9 @@
  },
  "src/ui/looks/papers.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "e44aff49af26",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g15-papers.test.ts: a citizen's card and its replacement On Its Way with no issue date until it comes, a British student's Being Decided through SAVE's days and On Its Way after, on the row and in the look (4 mutations killed); found by brief 14's document journey, defect 2"
+  "hash": "38cd50ab822c",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 at brief 20's integration: a visa or travel authorization approved but not yet started says the country it doesn't let you into until then (it said 'anything'), to docs/STYLE.md; read in tests/defects-r7-1.test.ts ('says it with the article … not yet in force') and tests/b20-papers-defects.test.ts"
  },
  "src/ui/looks/papers.tsx#whatItDoes": {
   "status": "Rewritten And Verified",
@@ -2773,9 +2773,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel": {
   "status": "Rewritten And Verified",
-  "hash": "c7a707550fa9",
-  "on": "2026-10-17",
-  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+  "hash": "b39e4720f3e7",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-benefits-reach.test.ts: New York's one-month plan says '1 month', not '1 months' (brief 20, benefits area)"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel": {
   "status": "Rewritten And Verified",

@@ -1,0 +1,20 @@
+{
+ "id": "J22",
+ "part": 3,
+ "from": "2028-06-01",
+ "to": "2029-06-01",
+ "secs": 62,
+ "reloads": 35,
+ "done": false,
+ "standing": "good",
+ "notSame": 0,
+ "notices": 718,
+ "showings": 208,
+ "work": 275,
+ "reviews": [
+  "2 2027-12-10 good",
+  "3 2028-04-28 good",
+  "4 2028-12-08 good",
+  "5 2029-04-27 good"
+ ]
+}

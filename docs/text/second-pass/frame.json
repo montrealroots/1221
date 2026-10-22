@@ -7,10 +7,10 @@
   "first": "Pending"
  },
  "public/holidays#names": {
-  "status": "Retained",
-  "hash": "9f3838c1376f",
-  "on": "2026-10-18",
-  "reason": "The names of real public holidays and observances as the published calendar data spells them in English; the calendar shows each verbatim beside its date, and a proper name isn't the game's to reword.",
+  "status": "Rewritten",
+  "hash": "4e7117cd45ec",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-life-looks.test.ts reads Labor Day on the Day look in the United States’ own English",
   "first": "Pending"
  },
  "src/app/game-context.tsx#CLOCK_FAULT": {
@@ -281,9 +281,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
   "status": "Rewritten",
-  "hash": "6351727d98c7",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Your Own Plans",
+  "hash": "b93edc8e4249",
+  "on": "2026-10-21",
+  "evidence": "read against docs/STYLE.md; tests/b20-life-time.test.ts holds the clash the new line says",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.weather]": {
@@ -364,11 +364,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [optional]": {
-  "status": "Retained",
-  "hash": "38c3a669bb27",
-  "on": "2026-10-19",
-  "reason": "Two short lines under Worth Doing With It: the weather is the same town hour by hour, and Go There on a notice opens its screen.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "40507328b733",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-guide-promises.test.ts, start.find > day.needs: Go There goes to the route the notice names, its tab where it names one, and tests/b20-guide-screens.test.ts holds the provider keeping that tab; read against docs/STYLE.md",
+  "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [prerequisite]": {
   "status": "Rewritten",
@@ -2218,6 +2218,13 @@
   "reason": "Names the commitment and its time and says there isn’t the time before it; several guides quote it word for word.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/life.ts#fullNightWords": {
+  "status": "Rewritten",
+  "hash": "7a1818012d74",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-life-screens.test.ts and tests/b20-life-fatigue.test.ts read the bedtime words on Home, the Day look and the Sleep dialog",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/life.ts#hoursSaid": {
   "status": "Rewritten",
   "hash": "adf2dbf53e7b",
@@ -2241,9 +2248,9 @@
  },
  "src/engine/systems/life.ts#napNow": {
   "status": "Rewritten",
-  "hash": "6678f53b5886",
-  "on": "2026-10-20",
-  "evidence": "The nap's two reasons, rested and low, read at 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-390.txt) and held word for word by tests/time-stops.test.ts",
+  "hash": "c96f40374e7b",
+  "on": "2026-10-21",
+  "evidence": "tests/time-stops.test.ts and tests/evidence-g01-life.test.ts read the nap reasons in the Sleep dialog",
   "first": "Pending"
  },
  "src/engine/systems/life.ts#registerLife [life.day_rollover]": {
@@ -2261,11 +2268,12 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/life.ts#registerLife <life.sleep>": {
-  "status": "Retained",
-  "hash": "d3937a9ef2a9",
-  "on": "2026-10-19",
-  "reason": "Each refusal names the obstacle, a time in the past, more than a day ahead, or where you are until when, and the missed notice names what you slept through.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ca489aa4fb47",
+  "on": "2026-10-22",
+  "reason": "The slept-through notice's title says its count in words under ten, as the game's other titles do (brief 20, the journeys' F12): until then \"You Slept Through 1 Commitment\".",
+  "evidence": "tests/evidence-g01-life.test.ts (You Slept Through One Commitment and Two Commitments), tests/language-dynamic.test.ts, tests/sleep-commitments.test.ts, tests/b20-life-bite.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#sleepReason": {
   "status": "Retained",
@@ -2386,6 +2394,13 @@
   "reason": "Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/world/clock.ts#declareOwn": {
+  "status": "Rewritten",
+  "hash": "8755674025df",
+  "on": "2026-10-21",
+  "evidence": "The words of src/engine/world/clock.ts#top, moved unchanged into declareOwn by brief 20's School area (D4); read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-stops.test.ts",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/world/clock.ts#defineStop": {
   "status": "Retained",
   "hash": "2ff2f915a89e",
@@ -2398,13 +2413,6 @@
   "hash": "30a12bfb9806",
   "on": "2026-10-20",
   "evidence": "The fallback refusal a stop's choice says when its command gives no reason, the same words run() says; tests/time-stops.test.ts reads refusals",
-  "first": "Pending"
- },
- "src/engine/world/clock.ts#top": {
-  "status": "Rewritten",
-  "hash": "8755674025df",
-  "on": "2026-10-20",
-  "evidence": "Skip It's and Call It Off's words at the stop and on On The Way, and Call It Off's toast; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts",
   "first": "Pending"
  },
  "src/engine/world/place.ts#placeKindLabel": {
@@ -2457,11 +2465,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/world/plans.ts#registerPlans": {
-  "status": "Retained",
-  "hash": "8487281efae0",
-  "on": "2026-10-19",
-  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ea6e89be257e",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-life-time.test.ts reads the clash notices word for word",
+  "first": "Pending"
  },
  "src/engine/world/plans.ts#registerPlans <calendar.cancel>": {
   "status": "Retained",
@@ -2675,9 +2683,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalityStep": {
   "status": "Rewritten",
-  "hash": "fbdf74f1a1ea",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'creation says what it’s for, a draft put back, each disposition and trait’s reach…', and tests/evidence-g28-ui.test.ts and tests/evidence-g27-ui.test.ts, each disposition's line",
+  "hash": "3ba1118d1706",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 (brief 20, creation area) so the Traits list says Generous moves what food costs and not a meal's lift, to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('creation says what it’s for, a draft put back, each disposition and trait’s reach…') and held to the traits' own knobs by tests/b20-creation-copy.test.ts",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
@@ -2891,10 +2899,10 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/looks/day.tsx#lightSentence": {
-  "status": "Retained",
+  "status": "Rewritten",
   "hash": "0a3205f226cf",
-  "on": "2026-10-19",
-  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-life-looks.test.ts reads the daylight sentence on the Day look",
   "first": "Rewritten And Verified"
  },
  "src/ui/looks/day.tsx#loadOf": {
@@ -2941,10 +2949,10 @@
  },
  "src/ui/looks/day.tsx#top": {
   "status": "Rewritten",
-  "hash": "2f6edcb8f6a1",
+  "hash": "4670b091cbd2",
   "on": "2026-10-21",
-  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs",
-  "first": "Rewritten And Verified"
+  "evidence": "tests/b20-life-looks.test.ts and tests/b20-life-screens.test.ts read the Day look text",
+  "first": "Pending"
  },
  "src/ui/looks/day.tsx#top [observed]": {
   "status": "Retained",
@@ -3417,9 +3425,9 @@
  },
  "src/ui/shell/TimeControls.tsx#SleepDialog": {
   "status": "Rewritten",
-  "hash": "75c06d4a9467",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Sleep dialog); the claim it makes, a commitment slept through is missed, held by tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through…'",
+  "hash": "09cb0b155327",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-life-screens.test.ts renders the Sleep dialog and reads the bedtime line",
   "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {

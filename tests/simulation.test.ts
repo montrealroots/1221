@@ -138,6 +138,9 @@ describe('sleep', () => {
 
   it('accrues debt when the night is short', () => {
     const sim = quickSave();
+    // At eleven, so the four hours are the night: a new life's first morning has its night on record, and a sleep after
+    // a night adds no short night's debt (from 2026-10-21, brief 20's D3). Until then this slept at the first morning.
+    sim.advanceTo(next(sim, 23));
     sim.player.wellbeing.sleepDebt = 0;
     sim.execute({ kind: 'life.sleep', payload: { hours: 4 } });
     expect(sim.player.wellbeing.sleepDebt).toBeGreaterThan(0);
@@ -214,6 +217,10 @@ describe('the waking day', () => {
   it('keeps the debt a short night left over sixty, and drains it the same by the minute as in one jump', () => {
     const make = () => {
       const sim = rested('over-sixty');
+      // The hour slept at eleven that night, so it's the next day's night, short: from 2026-10-21 (brief 20's D3) a sleep
+      // after the night is on record adds no short night's debt, and until then this hour was slept at seven, after the
+      // night `rested` gives.
+      sim.advanceTo(next(sim, 23));
       sim.player.wellbeing.sleepDebt = 59;
       sim.player.wellbeing.energy = 80;
       expect(sim.execute({ kind: 'life.sleep', payload: { hours: 1 } }).ok).toBe(true);
@@ -939,10 +946,15 @@ describe('the waking day', () => {
     }
     expect(most).toBeGreaterThan(60);
     expect(most).toBeLessThanOrEqual(60 + (6 - 2) * 1.35 + 1e-9);
-    // And the hold never takes debt off: a night just short of six, after a
-    // nap has run the debt over the ceiling and its shortfall, leaves what
-    // the night itself cleared.
-    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 0.5 } }).ok).toBe(true);
+    // And the hold never takes debt off: a night just short of six, with the
+    // debt over the ceiling and its shortfall, leaves what the night itself
+    // cleared. A half hour's nap after the last two-hour night ran the debt
+    // there until 2026-10-21, when a sleep after the night stopped adding the
+    // short night's debt (brief 20's D3); the debt is put there by hand now
+    // (TEST SETUP), at the next night.
+    const eleven = next(sim, 23);
+    while (sim.now < eleven) sim.advanceTo(Math.min(eleven, sim.now + MS_HOUR));
+    sim.player.wellbeing.sleepDebt = 72;
     const before = sim.player.wellbeing.sleepDebt;
     const night = sim.execute<{ quality: number }>({ kind: 'life.sleep', payload: { hours: 5.9 } });
     expect(night.ok, night.error).toBe(true);

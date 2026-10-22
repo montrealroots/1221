@@ -19,7 +19,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+            "where": "tests/creation.test.ts:115 'carries every answer into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -71,7 +71,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+            "where": "tests/creation.test.ts:115 'carries every answer into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -122,7 +122,7 @@
         "evidence": [
           {
             "kind": "fixture",
-            "where": "tests/creation.test.ts:99 'settles the title from the pronouns, and only they/them opens the choice'",
+            "where": "tests/creation.test.ts:100 'settles the title from the pronouns, and only they/them opens the choice'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -130,7 +130,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:184 'lets the pronouns decide a save the engine was handed with no title'",
+            "where": "tests/creation.test.ts:185 'lets the pronouns decide a save the engine was handed with no title'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -138,7 +138,7 @@
           },
           {
             "kind": "inspection",
-            "where": "tests/creation.test.ts:83 'bills them as an actor or an actress, and will not go on until it is settled'",
+            "where": "tests/creation.test.ts:84 'bills them as an actor or an actress, and will not go on until it is settled'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -146,7 +146,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+            "where": "tests/creation.test.ts:115 'carries every answer into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -154,7 +154,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:1334 'gives a save written under 80 a title from its pronouns'",
+            "where": "tests/simulation.test.ts:1346 'gives a save written under 80 a title from its pronouns'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -163,7 +163,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "Source-text checks only (creation.test.ts:83). The built app presses Actress under the default they/them (acceptance-ui.mjs:127-128) but never changes the pronouns or reads Billed As back."
+          "have": "Source-text checks only (creation.test.ts:84). The built app presses Actress under the default they/them (acceptance-ui.mjs:127-128) but never changes the pronouns or reads Billed As back."
         },
         "verdict": "informational",
         "gaps": [
@@ -196,7 +196,7 @@
         "evidence": [
           {
             "kind": "inspection",
-            "where": "tests/creation.test.ts:83 'bills them as an actor or an actress, and will not go on until it is settled'",
+            "where": "tests/creation.test.ts:84 'bills them as an actor or an actress, and will not go on until it is settled'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -204,7 +204,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:179 'keeps a pick made under they/them, either way'",
+            "where": "tests/creation.test.ts:180 'keeps a pick made under they/them, either way'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -212,7 +212,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:191 'names the slot by the title it stored, which the pronouns cannot supply'",
+            "where": "tests/creation.test.ts:192 'names the slot by the title it stored, which the pronouns cannot supply'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -261,7 +261,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "Source-text checks (creation.test.ts:83) and an unasserted Actress press in the built app. No render or built-app check of Billed As, Home's title or a casting by title."
+          "have": "Source-text checks (creation.test.ts:84) and an unasserted Actress press in the built app. No render or built-app check of Billed As, Home's title or a casting by title."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -354,7 +354,7 @@
         "evidence": [
           {
             "kind": "fixture",
-            "where": "tests/creation.test.ts:108 'caps the birth year so nobody starts under eighteen, or twenty-one at drama school'",
+            "where": "tests/creation.test.ts:109 'caps the birth year so nobody starts under eighteen, or twenty-one at drama school'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -370,7 +370,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:292 'starts everybody at fifty, no fitter than the age allows'",
+            "where": "tests/creation.test.ts:304 'starts everybody at fifty, no fitter than the age allows'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -641,7 +641,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+            "where": "tests/creation.test.ts:115 'carries every answer into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -793,7 +793,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+            "where": "tests/creation.test.ts:115 'carries every answer into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -922,7 +922,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+            "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -931,7 +931,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "Source text only: creation.test.ts:130 checks the slider row exists. Nothing renders the creation sentence or the Profile's Dispositions line (ProfileWorkspace.tsx:156)."
+          "have": "Source text only: creation.test.ts:131 checks the slider row exists. Nothing renders the creation sentence or the Profile's Dispositions line (ProfileWorkspace.tsx:156)."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -1058,7 +1058,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+            "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -1067,7 +1067,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "Source text only (creation.test.ts:130). No render of the creation sentence or the Profile's Dispositions line."
+          "have": "Source text only (creation.test.ts:131). No render of the creation sentence or the Profile's Dispositions line."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -1177,7 +1177,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+            "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -1538,7 +1538,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+            "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -1563,7 +1563,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "None. The built-app step tools/acceptance-ui.mjs:125 clicks Continue past this step with the default sliders. tests/creation.test.ts:130 only scans the source for the strings `{ key: 'openness',` and type=\"range\". No render test."
+          "have": "None. The built-app step tools/acceptance-ui.mjs:125 clicks Continue past this step with the default sliders. tests/creation.test.ts:131 only scans the source for the strings `{ key: 'openness',` and type=\"range\". No render test."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -1701,7 +1701,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+            "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -1718,7 +1718,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "None. The built-app creation step leaves the sliders at their defaults. There is a source-string scan only (creation.test.ts:130)."
+          "have": "None. The built-app creation step leaves the sliders at their defaults. There is a source-string scan only (creation.test.ts:131)."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -1815,7 +1815,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+            "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -1823,7 +1823,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/creation.test.ts:150 'says why a trait can't be picked, and says nothing when it can'",
+            "where": "tests/creation.test.ts:151 'says why a trait can't be picked, and says nothing when it can'",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,
@@ -1848,7 +1848,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "Only the downstream Profile render (defects-g3-1.test.ts:90). The creation trait buttons have no render or built-app test. The max and conflict lines are held by source-string scans (creation.test.ts:145-147). The built-app creation step picks no trait."
+          "have": "Only the downstream Profile render (defects-g3-1.test.ts:90). The creation trait buttons have no render or built-app test. The max and conflict lines are held by source-string scans (creation.test.ts:146-148). The built-app creation step picks no trait."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -2194,7 +2194,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:211 'carries the genres and the background, and no interests'",
+            "where": "tests/creation.test.ts:212 'carries the genres and the background, and no interests'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -2202,7 +2202,7 @@
           },
           {
             "kind": "inspection",
-            "where": "tests/creation.test.ts:298 and src/ui/looks/wellbeing.tsx:139",
+            "where": "tests/creation.test.ts:310 and src/ui/looks/wellbeing.tsx:139",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": false,
@@ -2291,7 +2291,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "None. The warning text 'Give both, or neither' and 'Out of range, so the body will be drawn instead' (CharacterCreation.tsx:303-311) has no render or built-app test. creation.test.ts:222 only checks that <BodyFields> sits on the step."
+          "have": "None. The warning text 'Give both, or neither' and 'Out of range, so the body will be drawn instead' (CharacterCreation.tsx:303-311) has no render or built-app test. creation.test.ts:223 only checks that <BodyFields> sits on the step."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -2417,7 +2417,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:240 (the test the row cites)",
+            "where": "tests/creation.test.ts:252 (the test the row cites)",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -2430,7 +2430,7 @@
         },
         "verdict": "verified",
         "gaps": [
-          "The row cites tests/creation.test.ts:240, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
+          "The row cites tests/creation.test.ts:252, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
           "The row cites stale lines: CharacterCreation.tsx:846-909 is now 864-905, bootstrap.ts:156-165,183-186,272-305 has moved (atSchool 159-168, newLifeFrom 199-202), and index.ts:227 enroll is now 241."
         ]
       },
@@ -2465,7 +2465,7 @@
           },
           {
             "kind": "inspection",
-            "where": "tests/creation.test.ts:233 'asks where you live and what you start with'",
+            "where": "tests/creation.test.ts:234 'asks where you live and what you start with'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": false,
@@ -2518,7 +2518,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:247 'opens the accounts the money answer promises, and balances them'",
+            "where": "tests/creation.test.ts:259 'opens the accounts the money answer promises, and balances them'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -2939,7 +2939,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:240 (the test the row cites)",
+            "where": "tests/creation.test.ts:252 (the test the row cites)",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -2953,7 +2953,7 @@
         "verdict": "informational",
         "disposition": "stale-claim",
         "gaps": [
-          "The cited test (creation.test.ts:240) does not hold the start date. The evidence is school.test.ts:175 and :200.",
+          "The cited test (creation.test.ts:252) does not hold the start date. The evidence is school.test.ts:175 and :200.",
           "The row cites stale lines: bootstrap.ts:279-282 is now 295-298, and CharacterCreation.tsx:1189-1190 is now 1224."
         ]
       },
@@ -3468,7 +3468,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:768-780 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
+            "where": "tests/simulation.test.ts:775-787 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -4656,7 +4656,7 @@
         "evidence": [
           {
             "kind": "fixture",
-            "where": "tests/coverage-gaps-life.test.ts:104-119 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
+            "where": "tests/coverage-gaps-life.test.ts:140-155 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,
@@ -6761,7 +6761,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/weather.test.ts:206; tests/day-bounds.test.ts:330",
+            "where": "tests/weather.test.ts:207; tests/day-bounds.test.ts:330",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,
@@ -8468,7 +8468,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/simulation.test.ts:1464-1483",
+            "where": "tests/simulation.test.ts:1476-1495",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": false,
@@ -8596,7 +8596,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/creation.test.ts:211-216",
+            "where": "tests/creation.test.ts:212-217",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -8636,7 +8636,7 @@
         "evidence": [
           {
             "kind": "inspection",
-            "where": "tests/creation.test.ts:202-209",
+            "where": "tests/creation.test.ts:203-210",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -8644,7 +8644,7 @@
           },
           {
             "kind": "inspection",
-            "where": "tests/creation.test.ts:262-271",
+            "where": "tests/creation.test.ts:274-283",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,

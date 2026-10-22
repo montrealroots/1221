@@ -42,6 +42,10 @@ const dayOf = (h) => String(h.date).slice(0, 10);
 function rowsFor(iso2, state, region) {
   const local = new Holidays(iso2, state ?? undefined);
   const english = new Holidays(iso2, state ?? undefined, { languages: ['en'] });
+  // A country whose own calendar is written in English needs no English beside it (from 2026-10-21, brief 20's life
+  // area): the dataset's 'en' is British, and the United States' Labor Day, in its own 'en-us', was glossed `Labour Day`,
+  // which the Day look then said of New Haven and the Calendar printed as `Labor Day (Labour Day)`.
+  const ownEnglish = /^en\b/.test(local.getLanguages()[0] ?? '');
   const out = new Map();
   for (let year = FROM; year <= TO; year++) {
     let mine = [];
@@ -54,7 +58,7 @@ function rowsFor(iso2, state, region) {
       const match = enByKey.get(`${day}|${h.rule ?? h.name}`);
       const key = `${day}|${clean(h.name)}|${region}`;
       if (out.has(key)) continue;
-      out.set(key, [day, clean(h.name), clean(match?.name ?? h.name), h.type ?? 'public', region]);
+      out.set(key, [day, clean(h.name), clean(ownEnglish ? h.name : match?.name ?? h.name), h.type ?? 'public', region]);
     }
   }
   return out;

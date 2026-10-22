@@ -17,6 +17,14 @@
  * TEST SETUP, as the showcase journey's: the body kept fed, rested and steady as the clock moves; every open piece of
  * coursework prepared each midnight, the showcase's scenes among them. Nothing read is ever marked read, so the unread
  * list is the one a player who reads nothing has.
+ *
+ * Run again for brief 20 (2026-10-21): until then it told his notices by the line that marked his words fictional
+ * (`AGENT.fictional`), which went with the real agent at `59da1351`. Run after that, the field read as undefined and the
+ * script searched each notice for the word "undefined", so it told his notices by his name alone, and would have called
+ * one naming only his agency a classmate's. It tells them by his name or his agency's now, as `ashgrove.ts` does. Its
+ * question went with the real agent too: the agent is Thomas Ashgrove, whom no classmate's name can match (`ashgrove.ts`
+ * asks that of him), so run now it shows the classmate Jordan's notices apart from the agent's; `jordan-before.txt` and
+ * `jordan-after.txt` are its runs of brief 19, and `jordan-b20.txt` its run of brief 20, the same three seeds.
  */
 import { writeFileSync } from 'node:fs';
 import { createSave } from '../../../../src/engine';
@@ -28,7 +36,7 @@ import { answerStop } from '../../../../src/engine/world/clock';
 import { unreadNotifications } from '../../../../src/engine/world/world';
 import { courseworkOf } from '../../../../src/engine/systems/coursework';
 import { PREP_DIMS } from '../../../../src/engine/content/coursework';
-import { AGENTS } from '../../../../src/engine/content/agents';
+import { AGENTS, agencyOf } from '../../../../src/engine/content/agents';
 
 const OUT = process.argv.at(-1)!;
 const zone = 'America/New_York';
@@ -65,7 +73,8 @@ function jump(sim: Simulation, until: number): ScheduledItem[] {
   return stops;
 }
 
-const isAgents = (t: string, b: string) => t.includes(AGENT.name) || b.includes(AGENT.name) || b.includes(AGENT.fictional);
+const AGENCY = agencyOf(AGENT).name;
+const isAgents = (t: string, b: string) => t.includes(AGENT.name) || b.includes(AGENT.name) || t.includes(AGENCY) || b.includes(AGENCY);
 
 for (const seed of ['showcase-final', 'app-jordan-0', 'app-jordan-2']) {
   const sim = working(createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' }));

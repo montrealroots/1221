@@ -1,0 +1,29 @@
+{
+ "id": "old-state-plan-086d00ca",
+ "part": 2,
+ "from": "2028-12-23",
+ "to": "2029-09-01",
+ "secs": 120,
+ "reloads": 24,
+ "done": true,
+ "standing": "graduated",
+ "schoolEnd": "2029-05-21T14:00",
+ "careerFrom": "2029-01-08T14:05",
+ "notSame": 0,
+ "transitions": [
+  "2028-02-23T00:15 opened: same",
+  "2028-04-28T21:20 term 3 reviewed: good: same",
+  "2028-12-08T22:25 term 4 reviewed: concern: same",
+  "2029-01-01T12:05 the end of 2028: same",
+  "2029-04-27T21:00 term 5 reviewed: good: same",
+  "2029-05-21T14:00 the School’s end: graduated: same"
+ ],
+ "forks": [
+  "2028-02-24T03:50 a rehearsal with a partner booked for 2028-02-27T00:00 on Heightened Text Scene: same",
+  "2029-05-21T14:00 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same"
+ ],
+ "workDays": 0,
+ "notices": 1288,
+ "bank": 0,
+ "errors": []
+}

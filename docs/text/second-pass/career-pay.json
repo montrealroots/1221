@@ -22,9 +22,9 @@
  },
  "src/engine/systems/propay.ts#equityJoined": {
   "status": "Rewritten",
-  "hash": "c45ff5336093",
+  "hash": "c7e98fa1cb99",
   "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
+  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-defects.test.ts, an Equity contract's first day, and tests/propay.test.ts, the degree's",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/propay.ts#equityOnOpening": {

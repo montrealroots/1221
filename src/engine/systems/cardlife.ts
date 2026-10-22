@@ -34,12 +34,12 @@ import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { CommandError } from '../core/simulation';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { MS_DAY } from '../core/time';
+import { MS_DAY, formatDate } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, RAISE_FROM, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, limitCarried, MIN_CYCLE_DAYS, RAISE_FROM, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND, type CardState } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { abroadRefusal } from './abroad';
@@ -57,6 +57,20 @@ export const INQUIRY = 5;
 const ARRIVES_IN = 7 * MS_DAY;
 /** A requested raise the bank grants at most, as a share of the limit: the six-monthly review's fifth. */
 const RAISE_SHARE = 1.2;
+/**
+ * How long a holder waits to ask for a higher limit (from 2026-10-21, brief 20's D2): six months from the card's opening,
+ * and from the last ask or raise. Experian's guidance, "you should be a cardholder for at least six months and should not
+ * have requested an increase in the past six months" (How to Increase Your Credit Limit), the six months a review waits.
+ */
+export const ASK_EVERY = 182 * MS_DAY;
+
+/** Why a higher limit can't be asked for yet, if it can't: six months from the card's opening and from the last ask or raise. */
+export function askRefusal(sim: Simulation, card: Account, state: CardState): string | undefined {
+  const from = Math.max(card.openedAt, state.askedAt ?? -Infinity, state.raisedAt ?? -Infinity);
+  if (sim.now - from >= ASK_EVERY) return undefined;
+  const why = from === card.openedAt ? 'the card opened' : from === state.raisedAt ? 'it last raised your limit' : 'you last asked';
+  return `The bank looks at a higher limit six months after ${why}, so you can ask from ${formatDate(from + ASK_EVERY, sim.zone)}.`;
+}
 
 /** The limit a record opens a card with. */
 export function limitFor(sim: Simulation, score: number): Money {
@@ -210,12 +224,21 @@ export function registerCardLife(sim: Simulation): void {
       card.creditLimit = Math.max(want, owed);
       return { limit: card.creditLimit, granted: true };
     }
+    const state = stateOf(person, card);
+    const early = askRefusal(s, card, state);
+    if (early) throw new CommandError(early);
+    state.askedAt = s.now;
     const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
-    if (credit.score < RAISE_FROM || !clean || stateOf(person, card).suspended || heldInBanks(s, person) <= 0) {
-      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept your limit at ${formatMoney(now, cur)}. It raises a limit only with a credit score of ${RAISE_FROM} or more, no late payment in the last year, and money in the bank to repay it.`, importance: 40 });
+    // As far toward what's asked, at most a fifth more, as the holder's income or savings carry (`limitCarried`, from
+    // 2026-10-21, brief 20's D2: Regulation Z §1026.51(a) holds an ask to the test a review is held to). Until then any
+    // money in the bank at all passed, and an ask could be made again at once, so ten asks in a row raised a limit sixfold.
+    const granted = credit.score >= RAISE_FROM && clean && !state.suspended ? limitCarried(s, person, card, Math.min(want, Math.round(now * RAISE_SHARE / 100) * 100)) : now;
+    if (granted <= now) {
+      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept your limit at ${formatMoney(now, cur)}. It raises a limit only with a credit score of ${RAISE_FROM} or more, no late payment in the last year, and income or savings that cover the payments on a higher one.`, importance: 40 });
       return { limit: now, granted: false };
     }
-    card.creditLimit = Math.min(want, Math.round(now * RAISE_SHARE / 100) * 100);
+    card.creditLimit = granted;
+    state.raisedAt = s.now;
     return { limit: card.creditLimit, granted: true };
   });
 

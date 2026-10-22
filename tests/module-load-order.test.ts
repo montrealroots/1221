@@ -15,4 +15,10 @@ describe('the built app’s modules', () => {
     expect(run.stdout.trim(), run.stderr).toMatch(/^modules loaded/);
     expect(run.status).toBe(0);
   }, 300_000);
+
+  it('load with projobs.ts as the bundle’s entry, the ring entered there: no constant read before it exists', () => {
+    const run = spawnSync(process.execPath, ['tools/load-order.mjs', 'src/engine/systems/projobs.ts'], { encoding: 'utf8', timeout: 240_000 });
+    expect(run.stdout.trim(), run.stderr).toBe('modules loaded');
+    expect(run.status).toBe(0);
+  }, 300_000);
 });

@@ -5,8 +5,9 @@
  * amendment and lien (`systems/taxreturn.ts`), the ITIN's weeks (`systems/taxid.ts`), Connecticut's and Oregon's
  * rules (`content/statetax.ts`), and the federal standard deduction (`content/tax.ts`). The worked examples are figured
  * by the rules too: the late penalty by `latePenalty` itself, the least monthly payment by `leastMonthly`, the deadline
- * by `deadline`. Connecticut is the state written about because every life in SLATE studies, works and files from New
- * Haven.
+ * by `deadline`. Connecticut is the state written about because every life in SLATE studies and lives in New Haven; this
+ * said it worked and filed there alone until 2026-10-21 (brief 20), when a graduate's work, all of it in New York, had
+ * come to be taxed there too, and Payment Plans And Waivers came to say New York's plan has a Catch Up.
  *
  * Six figures here are written as text because their rules don't export them, and are said so where they stand: the
  * worry a day of owing costs (`systems/spending.ts`, 4 stress and 2 morale), the five months the late-filing share runs
@@ -402,7 +403,9 @@ export const TAXES: readonly GuideEntry[] = [
       'By Direct Debit changes the setup fee and the words beside Each Month. Either way, every plan payment is taken from your accounts on its day.',
       'The Plan’s History lists every payment, missed payment and change.',
       'Under a plan, a year’s balance still grows by its interest, so a longer plan costs more in total.',
-      'A Connecticut plan has no Catch Up, and Oregon’s waiver is only for a year you owed Oregon. A life lived in New Haven files in Connecticut, so it meets neither.',
+      // Until 2026-10-21 (brief 20) this said a life lived in New Haven filed in Connecticut alone, so it met no Catch Up:
+      // a graduate's work is in New York, and a year that owes New York on it has its plan's (tests/b20-benefits-reach.test.ts).
+      'A Connecticut plan has no Catch Up: Connecticut ends it at the first missed payment. New York’s plan, for tax on work you did there, has one. Oregon’s waiver is only for a year you owed Oregon, and nobody in the game lives or works there.',
     ],
     next: [
       'Keep each payment in your checking account or savings on its day, every 30 days.',

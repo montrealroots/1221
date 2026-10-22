@@ -692,7 +692,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:70-82",
+    "where": "tests/coverage-gaps-life.test.ts:70-118",
     "asserts": "reported once a year on (healthMonth by hand), one mark; paid after, no trouble and the mark stays",
     "reachesAction": true,
     "checksConsequence": true,
@@ -746,7 +746,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:85-102",
+    "where": "tests/coverage-gaps-life.test.ts:121-138",
     "asserts": "London: the charge is 0 while it runs, across a reload, and charged after; a second is refused; the New Haven student is refused",
     "reachesAction": true,
     "checksConsequence": true,
@@ -1396,7 +1396,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:105 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
+    "where": "tests/coverage-gaps-life.test.ts:141 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
     "asserts": "A New Haven student's body is copied into three shallow-cloned Persons (disciplined_body, [], indulgent), and bodyDay is called directly 90 times. Asserts hungry.weight > plain > lean. bodyDay reads only appetite among these traits, so dropping the factor fails it. Then asserts body.intake is 0 after one bodyDay.",
     "reachesAction": false,
     "checksConsequence": true,
@@ -3267,7 +3267,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:116-131 'holds back the credit a payment from another bank frees...'",
+    "where": "tests/cardlife.test.ts:117-132 'holds back the credit a payment from another bank frees...'",
     "asserts": "No hold when paid from Chase. After the primary's bankId is set to Citi by hand, a hold of exactly 200_00 until now + PENDING days. cardRoom unchanged, and the hold is released after its days.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -3854,7 +3854,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:98-114; tests/several-cards.test.ts:33-43",
+    "where": "tests/cardlife.test.ts:99-115; tests/several-cards.test.ts:33-43",
     "asserts": "The card arrives with the bank and the limit. A second card's state is fresh ({statementBalance:0, missed:0}) with one statement scheduled, and the everyday card stays.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -3893,7 +3893,7 @@
    },
    {
     "kind": "long-run",
-    "where": "tests/cardlife.test.ts:244-267 'is reported by a US lender at thirty days past due...'",
+    "where": "tests/cardlife.test.ts:248-271 'is reported by a US lender at thirty days past due...'",
     "asserts": "First miss: late fee, nothing on the record, limit unchanged. Second miss: late +1, score <= before - 50, limit cut. Iceland: on the record at once.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -3902,7 +3902,7 @@
    },
    {
     "kind": "long-run",
-    "where": "tests/cardlife.test.ts:270-357 ('missed payments' describe)",
+    "where": "tests/cardlife.test.ts:274-361 ('missed payments' describe)",
     "asserts": "Suspend at two, lift on one on time, default notice, charge-off to collections >= owed with score -100, ledger audit clean. Returned fee in Iceland. US fee <= minimum and exactly 30_00 then 41_00. Barclaycard intro lost, Lloyds not. GB set-off posting.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -3944,7 +3944,7 @@
   "verdict": "verified",
   "partialClass": "none",
   "gaps": [
-   "A hardship plan's payment standing in as the due (credit.ts:1046) and the plan ending once the card is paid off (credit.ts:899-902) are not tested through a due date. cardlife.test.ts:227 checks only the statement's interest freeze.",
+   "A hardship plan's payment standing in as the due (credit.ts:1046) and the plan ending once the card is paid off (credit.ts:899-902) are not tested through a due date. cardlife.test.ts:231 checks only the statement's interest freeze.",
    "A payment made by hand before the due date (autopay asking less) is untested here too. See finance.pay_card.",
    "Many tests set credit.autopay by hand instead of running finance.set_autopay."
   ],
@@ -4049,7 +4049,7 @@
    },
    {
     "kind": "long-run",
-    "where": "tests/cardlife.test.ts:383-396, :206-224, :147-165, :359-380",
+    "where": "tests/cardlife.test.ts:387-400, :210-228, :148-166, :363-384",
     "asserts": "The first-year US fee is capped at a quarter of the limit. Over-limit fees are exactly 3 in 4 cycles. A closing card closes at its statement once paid. GB persistent debt notice at 18 months and plan at 36.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4076,7 +4076,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:195-203 'isn’t raised unasked once the holder says never'",
+    "where": "tests/cardlife.test.ts:199-207 'isn’t raised unasked once the holder says never'",
     "asserts": "The limit is unchanged after a statement with card.set_auto_raise off.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -4174,7 +4174,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:122-144 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
+    "where": "tests/simulation.test.ts:122-147 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
     "asserts": "sim.now = before + 8h exactly; energy > 60 and debt < 12 after 9 h from 20/12; debt > 0 after 4 h",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4183,7 +4183,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:291-307 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
+    "where": "tests/simulation.test.ts:298-314 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
     "asserts": "With startAt two hours ahead: quality = the eight o'clock quality - 0.08; lastSleptAt = start + 8h; every waking hour up to the bedtime is charged (100 - 19*3)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4192,7 +4192,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:319-336 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
+    "where": "tests/simulation.test.ts:326-343 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
     "asserts": "Energy, sleepDebt, stress and morale after the command equal applySleep applied once to a bedtime copy, for bedtimes 23, 1 and 16, three nights each",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4237,7 +4237,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1142-1159, 1169-1175",
+    "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1154-1171, 1181-1187",
     "asserts": "NaN hours is refused 'Say how long to sleep.'; a start 3 days ahead is refused; a past start is refused, with the clock, energy, accounts, transactions and audit unchanged",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5379,7 +5379,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:352-373 'costs the same in one-second ticks...'",
+    "where": "tests/simulation.test.ts:359-380 'costs the same in one-second ticks...'",
     "asserts": "16 h from energy 30, nourishment 30, stress 70: condition falls, ticks equal a jump",
     "reachesAction": true,
     "checksConsequence": false,
@@ -5620,7 +5620,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:417",
+    "where": "tests/simulation.test.ts:424",
     "asserts": "after midnight nourishment is 76 less 2 an hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5715,7 +5715,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:338-350",
+    "where": "tests/simulation.test.ts:345-357",
     "asserts": "hygiene 82 at midnight, 82 - 1.6 per waking hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5811,7 +5811,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:352-373",
+    "where": "tests/simulation.test.ts:359-380",
     "asserts": "16 h from energy 30: stress > 75",
     "reachesAction": true,
     "checksConsequence": false,
@@ -6464,7 +6464,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/life-fixes.test.ts:149-158; tests/coverage-gaps-life.test.ts:104-119",
+    "where": "tests/life-fixes.test.ts:149-158; tests/coverage-gaps-life.test.ts:140-155",
     "asserts": "a starved END survives a redraw; appetite twins",
     "reachesAction": false,
     "checksConsequence": true,
@@ -8687,7 +8687,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:164, :174",
+    "where": "tests/defects-g4-2.test.ts:166, :176",
     "asserts": "Into savings at the current account's bank (Bank of America), not Citi's; with none there, nothing moves.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -8696,7 +8696,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:183 'move Wells Fargo’s flat $1...'",
+    "where": "tests/defects-g4-2.test.ts:185 'move Wells Fargo’s flat $1...'",
     "asserts": "Pending is 1_00 and then 2_00.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -8705,7 +8705,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:195",
+    "where": "tests/defects-g4-2.test.ts:197",
     "asserts": "TD rounds up; the rendered panel shows each bank's words and SLATE's estimate note.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -9069,7 +9069,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:98, :133",
+    "where": "tests/cardlife.test.ts:99, :134",
     "asserts": "Approved, score -5, a second application refused while one is on its way, and the card arrives with the limit. Declined at 560 with the notice. Refused at a bank with no card.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -9113,7 +9113,7 @@
   "gaps": [
    "The decline reasons for a debt in collections and for under 21 with no means of their own are untested through the command.",
    "No render of BankCard's Apply or its disabled state.",
-   "The row cites cardlife.test.ts:98,133 and several-cards:33, but not the stronger New Haven guide example."
+   "The row cites cardlife.test.ts:99,134 and several-cards:33, but not the stronger New Haven guide example."
   ],
   "todo": "",
   "weakTests": [
@@ -9132,7 +9132,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:148 'takes nothing new, and closes once it owes nothing'",
+    "where": "tests/cardlife.test.ts:149 'takes nothing new, and closes once it owes nothing'",
     "asserts": "Closing is set and the card stays open while owing; canPay(without card) equals the bank's reach (the card's room is gone); after paying off and the next statement, closedAt is set.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -9150,7 +9150,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:45 'ages back a little each month while nothing is in collections...'",
+    "where": "tests/cardlife.test.ts:46 'ages back a little each month while nothing is in collections...'",
     "asserts": "Once the card is closed, the record ages by NO_CARD.aging on each first.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -9171,7 +9171,7 @@
    "Paying a closing card off through finance.pay_card or its autopay, rather than a hand posting, is untested.",
    "Line references have drifted: cardRoom credit.ts:551-553 (row says :537); fee :744 (:709); close at statement :780 (:740)."
   ],
-  "todo": "Two lives from one seed, each with Chase and Citi cards (the several-cards twoCards route, a New Haven life). Leave Citi owing 30% of its own limit and Chase owing 0. In one, run card.close on Chase through the command. Advance both across Citi's statement and assert the closing life's score move is lower, by the used>0.3 penalty. Replace cardlife.test.ts:155 with expect(cardRoom(sim.player, c)).toBe(0) and a spend that doesn't touch the card. Pay off through finance.pay_card. Assert a second card.close fails with /already being closed/.",
+  "todo": "Two lives from one seed, each with Chase and Citi cards (the several-cards twoCards route, a New Haven life). Leave Citi owing 30% of its own limit and Chase owing 0. In one, run card.close on Chase through the command. Advance both across Citi's statement and assert the closing life's score move is lower, by the used>0.3 penalty. Replace cardlife.test.ts:156 with expect(cardRoom(sim.player, c)).toBe(0) and a spend that doesn't touch the card. Pay off through finance.pay_card. Assert a second card.close fails with /already being closed/.",
   "weakTests": [
    {
     "test": "tests/cardlife.test.ts > takes nothing new, and closes once it owes nothing",
@@ -9287,7 +9287,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:299 (charge-off test)",
+    "where": "tests/cardlife.test.ts:303 (charge-off test)",
     "asserts": "ledger.audit() is [] after six missed dues and a charge-off on the clock",
     "reachesAction": true,
     "checksConsequence": true,
@@ -9336,7 +9336,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:98 'is approved for a record that earns it, costs the record a few points...' and :133 'is declined for a poor record...'",
+    "where": "tests/cardlife.test.ts:99 'is approved for a record that earns it, costs the record a few points...' and :134 'is declined for a poor record...'",
     "asserts": "card.apply at 760 is approved and leaves the score at 755; at 560 it is declined with a notice",
     "reachesAction": true,
     "checksConsequence": true,
@@ -9345,7 +9345,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:46 'ages back a little each month while nothing is in collections...'",
+    "where": "tests/cardlife.test.ts:47 'ages back a little each month while nothing is in collections...'",
     "asserts": "Three 1sts of the month on the clock take 560 to 566",
     "reachesAction": true,
     "checksConsequence": true,
@@ -10492,7 +10492,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:227 'freezes the interest, sets a payment that clears it in four years, and stops the card'",
+    "where": "tests/cardlife.test.ts:231 'freezes the interest, sets a payment that clears it in four years, and stops the card'",
     "asserts": "Refused while the bank could clear the card. After the accounts are emptied, the payment is ceil(owed/48/100)×100 and suspended is 'hardship'. With carrying set to true by hand, no 'Interest' posts at the next statement.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -10552,7 +10552,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:178 'lowers on asking, never under what’s owed, and rises only for a record that earns it, by a fifth at most'",
+    "where": "tests/cardlife.test.ts:179 'lowers on asking, never under what’s owed, and rises only for a record that earns it, by a fifth at most'",
     "asserts": "Asking for $1 sets the limit to what's owed. At score 650 the raise is not granted. At 760 it's granted at round(now × 1.2 / 100) × 100.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -10590,7 +10590,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:195 'isn’t raised unasked once the holder says never'",
+    "where": "tests/cardlife.test.ts:199 'isn’t raised unasked once the holder says never'",
     "asserts": "Score 800 and reviewedAt 400 days back are set by hand, then card.set_auto_raise {on:false}. After the next statement through the clock, the limit is unchanged.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -10599,7 +10599,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:360 (persistent debt in Britain), line 365",
+    "where": "tests/cardlife.test.ts:364 (persistent debt in Britain), line 365",
     "asserts": "Uses the command as setup to hold the limit.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -10680,7 +10680,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:207 'is a US card’s choice, lets a tenth over for someone who opted in, and charges the card’s fee three cycles at most'",
+    "where": "tests/cardlife.test.ts:211 'is a US card’s choice, lets a tenth over for someone who opted in, and charges the card’s fee three cycles at most'",
     "asserts": "Iceland refused. At Chase, with the card product replaced by a test product (overLimitFee 25_00), opting in raises canPay by a tenth of the limit. The balance is posted past the limit by hand. Over four statements, 3 'Over-limit fee' postings.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -10704,7 +10704,7 @@
   "verdict": "partial",
   "partialClass": "stale-claim",
   "gaps": [
-   "The row's downstream 'over-limit fee' describes nothing a life reaches: no researched card has one, and the fee is charged only on a test-made product (cardlife.test.ts:212).",
+   "The row's downstream 'over-limit fee' describes nothing a life reaches: no researched card has one, and the fee is charged only on a test-made product (cardlife.test.ts:216).",
    "No purchase over the limit through spend or a command after opting in is tested. A review probe at Chase with real terms: a $30 purchase with $10 of room was refused before opting in and bought after, leaving the balance past the limit.",
    "Opting out (resetting overLimitCycles, and the room going back to the limit) is untested.",
    "The row's line references are stale: cardlife.ts:200→202, credit.ts:543→559, credit.ts:718→755, BankCard.tsx:279→287."
@@ -10753,7 +10753,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:169 'moves, and the statement and its due date come with it'",
+    "where": "tests/cardlife.test.ts:170 'moves, and the statement and its due date come with it'",
     "asserts": "The next statement falls on the 5th, and day 30 is refused.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -13198,7 +13198,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:259-268 'charges nothing at midnight...'",
+    "where": "tests/simulation.test.ts:266-275 'charges nothing at midnight...'",
     "asserts": "energy across a midnight falls by 0.1 for two minutes",
     "reachesAction": true,
     "checksConsequence": false,
@@ -13234,7 +13234,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:338-349, 806-848",
+    "where": "tests/simulation.test.ts:345-356, 813-855",
     "asserts": "the hygiene floor: 82 at midnight, then 1.6 an hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13578,7 +13578,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:43-82",
+    "where": "tests/coverage-gaps-life.test.ts:43-118",
     "asserts": "New Haven student: billCare (fixture), clock to debt, troubles include 'medical'; pay_bill and a reload clear the trouble and debtSince; the report stays once made",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13587,7 +13587,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-6.test.ts:275-288",
+    "where": "tests/defects-g8-6.test.ts:275-297",
     "asserts": "student: billCare at the reporting figure, the clock past due gives inDebt; healthMonth (direct) gives the 'or more' notice",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13943,7 +13943,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:190-257",
+    "where": "tests/simulation.test.ts:193-264",
     "asserts": "clock-driven drain: 12 over 4 hours; ×1.5 at a debt of 24; the same by the minute as in one jump",
     "reachesAction": true,
     "checksConsequence": true,
@@ -14037,7 +14037,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:203-246, 926-951",
+    "where": "tests/simulation.test.ts:206-253, 933-963",
     "asserts": "drain ×1.5 at a woken debt of 24; over 60 held the same by minute or jump; short nights never leave more than 60 + shortfall × 1.35; a 5.9-hour night clears quality × 1.4 per hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -14046,7 +14046,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:139-144 'accrues debt when the night is short'",
+    "where": "tests/simulation.test.ts:139-147 'accrues debt when the night is short'",
     "asserts": "debt > 0 after 4 hours",
     "reachesAction": true,
     "checksConsequence": true,
@@ -19040,7 +19040,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/weather.test.ts:206; tests/day-bounds.test.ts:330",
+    "where": "tests/weather.test.ts:207; tests/day-bounds.test.ts:330",
     "asserts": "forecastFor's days for a place (engine).",
     "reachesAction": false,
     "checksConsequence": true,
@@ -19257,7 +19257,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:768-780 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
+    "where": "tests/simulation.test.ts:775-787 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
     "asserts": "A light_sleeper save advanced by the clock: unattendedNight hours > 8, and lastSleptAt does not change after 8 AM.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -19801,7 +19801,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:104-119 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
+    "where": "tests/coverage-gaps-life.test.ts:140-155 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
     "asserts": "bodyDay called 90 times directly on shallow copies of sim.player with different traits: weight hungry > plain > lean, and intake is spent once.",
     "reachesAction": false,
     "checksConsequence": true,
@@ -19955,7 +19955,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "createSave(defaultConfig with openness 80) stores personality.openness 80",
     "reachesAction": true,
     "checksConsequence": false,
@@ -19983,7 +19983,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "None. The built-app step tools/acceptance-ui.mjs:125 clicks Continue past this step with the default sliders. tests/creation.test.ts:130 only scans the source for the strings `{ key: 'openness',` and type=\"range\". No render test."
+   "have": "None. The built-app step tools/acceptance-ui.mjs:125 clicks Continue past this step with the default sliders. tests/creation.test.ts:131 only scans the source for the strings `{ key: 'openness',` and type=\"range\". No render test."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20024,7 +20024,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "agreeableness 65 is stored",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20043,7 +20043,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "None. The built-app creation step leaves the sliders at their defaults. There is a source-string scan only (creation.test.ts:130)."
+   "have": "None. The built-app creation step leaves the sliders at their defaults. There is a source-string scan only (creation.test.ts:131)."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20087,7 +20087,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "Traits stored as given",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20096,7 +20096,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/creation.test.ts:150 'says why a trait can't be picked, and says nothing when it can'",
+    "where": "tests/creation.test.ts:151 'says why a trait can't be picked, and says nothing when it can'",
     "asserts": "blockedTraitReason wording for a conflict, for four already held, and for a free trait",
     "reachesAction": false,
     "checksConsequence": true,
@@ -20124,7 +20124,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Only the downstream Profile render (defects-g3-1.test.ts:90). The creation trait buttons have no render or built-app test. The max and conflict lines are held by source-string scans (creation.test.ts:145-147). The built-app creation step picks no trait."
+   "have": "Only the downstream Profile render (defects-g3-1.test.ts:90). The creation trait buttons have no render or built-app test. The max and conflict lines are held by source-string scans (creation.test.ts:146-148). The built-app creation step picks no trait."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20254,7 +20254,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:211 'carries the genres and the background, and no interests'",
+    "where": "tests/creation.test.ts:212 'carries the genres and the background, and no interests'",
     "asserts": "createSave stores background 'Raised by the sea.'",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20263,7 +20263,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:298 and src/ui/looks/wellbeing.tsx:139",
+    "where": "tests/creation.test.ts:310 and src/ui/looks/wellbeing.tsx:139",
     "asserts": "The source still has id=\"background\"; the look prints it",
     "reachesAction": false,
     "checksConsequence": false,
@@ -20339,7 +20339,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "None. The warning text 'Give both, or neither' and 'Out of range, so the body will be drawn instead' (CharacterCreation.tsx:303-311) has no render or built-app test. creation.test.ts:222 only checks that <BodyFields> sits on the step."
+   "have": "None. The warning text 'Give both, or neither' and 'Out of range, so the body will be drawn instead' (CharacterCreation.tsx:303-311) has no render or built-app test. creation.test.ts:223 only checks that <BodyFields> sits on the step."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20406,7 +20406,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:240 (the test the row cites)",
+    "where": "tests/creation.test.ts:252 (the test the row cites)",
     "asserts": "A defaultConfig life in New York is placed in New York, on New York's zone",
     "reachesAction": true,
     "checksConsequence": true,
@@ -20421,7 +20421,7 @@
   "verdict": "verified",
   "partialClass": "none",
   "gaps": [
-   "The row cites tests/creation.test.ts:240, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
+   "The row cites tests/creation.test.ts:252, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
    "The row cites stale lines: CharacterCreation.tsx:846-909 is now 864-905, bootstrap.ts:156-165,183-186,272-305 has moved (atSchool 159-168, newLifeFrom 199-202), and index.ts:227 enroll is now 241."
   ],
   "todo": "",
@@ -20450,7 +20450,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:233 'asks where you live and what you start with'",
+    "where": "tests/creation.test.ts:234 'asks where you live and what you start with'",
     "asserts": "The source contains id=\"live-here\", idPrefix=\"live\" and id=\"wealth\"",
     "reachesAction": false,
     "checksConsequence": false,
@@ -20494,7 +20494,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:247 'opens the accounts the money answer promises, and balances them'",
+    "where": "tests/creation.test.ts:259 'opens the accounts the money answer promises, and balances them'",
     "asserts": "A defaultConfig wealthy life in New York: checking > 0, savings > 0, balances sum to 0, the ledger audit is clean",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20700,7 +20700,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:240 (the test the row cites)",
+    "where": "tests/creation.test.ts:252 (the test the row cites)",
     "asserts": "Location and zone",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20715,7 +20715,7 @@
   "verdict": "informational",
   "partialClass": "stale-claim",
   "gaps": [
-   "The cited test (creation.test.ts:240) does not hold the start date. The evidence is school.test.ts:175 and :200.",
+   "The cited test (creation.test.ts:252) does not hold the start date. The evidence is school.test.ts:175 and :200.",
    "The row cites stale lines: bootstrap.ts:279-282 is now 295-298, and CharacterCreation.tsx:1189-1190 is now 1224."
   ],
   "todo": "Re-cite the row to tests/school.test.ts:175 and :200, and correct the line references.",
@@ -21266,7 +21266,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:163-209",
+    "where": "tests/defects-g4-2.test.ts:165-211",
     "asserts": "round-ups land in savings at the current account's bank; none moved without savings there; Wells Fargo's flat $1; TD's panel says SLATE's estimate",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21520,7 +21520,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:98-144",
+    "where": "tests/cardlife.test.ts:99-145",
     "asserts": "card.apply approved/declined by record, arrives in a week (Iceland)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21529,7 +21529,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:116-131; tests/defects-g19-1.test.ts; tests/interest.test.ts:234-249",
+    "where": "tests/cardlife.test.ts:117-132; tests/defects-g19-1.test.ts; tests/interest.test.ts:234-249",
     "asserts": "finance.pay_card holds credit from another bank for its days, reads the autopay account; card.refund_credit sends $500 back, refused twice, auto after six months",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21547,7 +21547,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:148-224",
+    "where": "tests/cardlife.test.ts:149-228",
     "asserts": "card.close removes the card's room and closes after a statement at zero; set_statement_day moves the next statement to the 5th; request_limit lowers to owed and raises by a fifth for 760; set_auto_raise off leaves the limit; set_over_limit lets 10% over and charges three cycles",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21556,7 +21556,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:227-241",
+    "where": "tests/cardlife.test.ts:231-245",
     "asserts": "card.request_hardship refused when the bank could pay, then payment owed/48, suspended, no interest at the statement",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21581,10 +21581,10 @@
   "partialClass": "missing-evidence",
   "gaps": [
    "finance.pay_card: no test pays through the command before a due date and asserts the statement then asks less, keeps the grace (no interest) or charges no late fee.",
-   "The unasked limit raise in the effects ('a limit raised ... when the record earns it', credit.ts:763-771) has no test: nothing asserts 'Your Card Limit Went Up'; card.set_auto_raise's only test (cardlife.test.ts:195-203) has no positive twin.",
+   "The unasked limit raise in the effects ('a limit raised ... when the record earns it', credit.ts:763-771) has no test: nothing asserts 'Your Card Limit Went Up'; card.set_auto_raise's only test (cardlife.test.ts:199-207) has no positive twin.",
    "card.set_everyday: no purchase after the command checks which card spend charges.",
-   "card.set_statement_day: the due date moving with the statement is not asserted (cardlife.test.ts:169-174).",
-   "card.close test carries a tautological assertion (cardlife.test.ts:155).",
+   "card.set_statement_day: the due date moving with the statement is not asserted (cardlife.test.ts:170-175).",
+   "card.close test carries a tautological assertion (cardlife.test.ts:156).",
    "The row's tests list omits tests/guide-examples-money.test.ts, the New Haven evidence for card.apply and finance.set_autopay.",
    "No reload with a card's statement open."
   ],
@@ -21829,7 +21829,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:55-80; tests/defects-g8-6.test.ts:275-289",
+    "where": "tests/coverage-gaps-life.test.ts:55-116; tests/defects-g8-6.test.ts:275-298",
     "asserts": "medical debt reported a year on, spared when paid",
     "reachesAction": false,
     "checksConsequence": true,
@@ -22007,7 +22007,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:85-100; tests/commands-kept.test.ts:137-145",
+    "where": "tests/coverage-gaps-life.test.ts:121-136; tests/commands-kept.test.ts:137-145",
     "asserts": "health.prepay refused to the New Haven student, sold in London, prescriptions free while it runs",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22271,7 +22271,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "After createSave with the names set, p.firstName === 'Sigrún' and p.lastName === 'Halldórsdóttir'.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22317,7 +22317,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "p.displayName === 'Siggi' after createSave.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22363,7 +22363,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/creation.test.ts:99 'settles the title from the pronouns, and only they/them opens the choice'",
+    "where": "tests/creation.test.ts:100 'settles the title from the pronouns, and only they/them opens the choice'",
     "asserts": "settledTitle('he/him') is 'actor', 'she/her' is 'actress', 'they/them' is undefined; case and spacing don't change the answer.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22372,7 +22372,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:184 'lets the pronouns decide a save the engine was handed with no title'",
+    "where": "tests/creation.test.ts:185 'lets the pronouns decide a save the engine was handed with no title'",
     "asserts": "createSave with pronouns and no title stores actress, actor and actor (for they/them).",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22381,7 +22381,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:83 'bills them as an actor or an actress, and will not go on until it is settled'",
+    "where": "tests/creation.test.ts:84 'bills them as an actor or an actress, and will not go on until it is settled'",
     "asserts": "The source contains 'performerTitle: settledTitle(pronouns)', the settled/open branches in that order, and validate's refusal message.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22390,7 +22390,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "p.pronouns === 'she/her'.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22399,7 +22399,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:1334 'gives a save written under 80 a title from its pronouns'",
+    "where": "tests/simulation.test.ts:1346 'gives a save written under 80 a title from its pronouns'",
     "asserts": "migrate gives a title-less save the pronouns' title and careerLabel.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22409,7 +22409,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source-text checks only (creation.test.ts:83). The built app presses Actress under the default they/them (acceptance-ui.mjs:127-128) but never changes the pronouns or reads Billed As back."
+   "have": "Source-text checks only (creation.test.ts:84). The built app presses Actress under the default they/them (acceptance-ui.mjs:127-128) but never changes the pronouns or reads Billed As back."
   },
   "verdict": "informational",
   "partialClass": "none",
@@ -22435,7 +22435,7 @@
   "evidence": [
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:83 'bills them as an actor or an actress, and will not go on until it is settled'",
+    "where": "tests/creation.test.ts:84 'bills them as an actor or an actress, and will not go on until it is settled'",
     "asserts": "The source has the Billed As label, the settled/open branches, the reset on a pronoun change, and validate's message.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22444,7 +22444,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:179 'keeps a pick made under they/them, either way'",
+    "where": "tests/creation.test.ts:180 'keeps a pick made under they/them, either way'",
     "asserts": "createSave with they/them stores 'actress' or 'actor' as picked.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22453,7 +22453,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:191 'names the slot by the title it stored, which the pronouns cannot supply'",
+    "where": "tests/creation.test.ts:192 'names the slot by the title it stored, which the pronouns cannot supply'",
     "asserts": "careerLabel is 'Actress' after creation and again after refreshMeta.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22508,7 +22508,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source-text checks (creation.test.ts:83) and an unasserted Actress press in the built app. No render or built-app check of Billed As, Home's title or a casting by title."
+   "have": "Source-text checks (creation.test.ts:84) and an unasserted Actress press in the built app. No render or built-app check of Billed As, Home's title or a casting by title."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -22542,7 +22542,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/creation.test.ts:108 'caps the birth year so nobody starts under eighteen, or twenty-one at drama school'",
+    "where": "tests/creation.test.ts:109 'caps the birth year so nobody starts under eighteen, or twenty-one at drama school'",
     "asserts": "latestBirthYear gives 2008, 2012, and 2005 for drama school.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22560,7 +22560,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:292 'starts everybody at fifty, no fitter than the age allows'",
+    "where": "tests/creation.test.ts:304 'starts everybody at fifty, no fitter than the age allows'",
     "asserts": "createSave with birthYear 1944 gives fitness ≈ min(50, ceilingAt(81.5).fitness); 2001 gives 50.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22715,7 +22715,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "Born in Reykjavík and living in New York gives citizenshipId 'is'.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22814,7 +22814,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "raceEthnicity equals ['white', 'asian'].",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22924,7 +22924,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "emotionalStability 90 is stored.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22934,7 +22934,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source text only: creation.test.ts:130 checks the slider row exists. Nothing renders the creation sentence or the Profile's Dispositions line (ProfileWorkspace.tsx:156)."
+   "have": "Source text only: creation.test.ts:131 checks the slider row exists. Nothing renders the creation sentence or the Profile's Dispositions line (ProfileWorkspace.tsx:156)."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -23004,7 +23004,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "conscientiousness 30 is stored.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -23014,7 +23014,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source text only (creation.test.ts:130). No render of the creation sentence or the Profile's Dispositions line."
+   "have": "Source text only (creation.test.ts:131). No render of the creation sentence or the Profile's Dispositions line."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -23071,7 +23071,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "ambition 40 is stored.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -23773,7 +23773,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/simulation.test.ts:1464-1483",
+    "where": "tests/simulation.test.ts:1476-1495",
     "asserts": "Overdue rows sort first; open rows are never resolved or dismissed.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -23835,7 +23835,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:211-216",
+    "where": "tests/creation.test.ts:212-217",
     "asserts": "A life made from creation's config has no 'interests'.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -23865,7 +23865,7 @@
   "evidence": [
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:202-209",
+    "where": "tests/creation.test.ts:203-210",
     "asserts": "The source text of PersonalStep contains '<h2>Genres</h2>' and '<h2>Background</h2>', but not '<h2>Interests</h2>'.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -23874,7 +23874,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:262-271",
+    "where": "tests/creation.test.ts:274-283",
     "asserts": "ReviewStep's source does not contain label=\"Interests\".",
     "reachesAction": false,
     "checksConsequence": false,
@@ -25235,7 +25235,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:121-171 (describe 'sleep')",
+    "where": "tests/simulation.test.ts:121-174 (describe 'sleep')",
     "asserts": "Through the command: the clock moves exactly the hours asked, across DST too; energy and debt recover, and debt grows on a short night; a scheduled item still fires during the night.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -25280,7 +25280,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1150,1172; tests/life-fixes.test.ts:164-165",
+    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1162,1184; tests/life-fixes.test.ts:164-165",
     "asserts": "Refused while the guide holds it, for a start in the past, for NaN hours and for a bedtime more than a day ahead.",
     "reachesAction": true,
     "checksConsequence": true,

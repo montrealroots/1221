@@ -429,6 +429,7 @@ export const DAY: readonly GuideEntry[] = [
       'When the clock reaches it, the clock stops and asks: Go spends its length, and Skip It marks it missed, with a notice.',
       'Inside a Sleep you chose, it comes while you’re asleep and is missed, and the morning’s notice names it.',
       'In hospital when it comes, it’s missed even if you press Go, and no notice says so.',
+      'If it starts while you’re at another commitment you went to, a clash, the one the clock reached first is kept and this one is missed, and a notice says where you were.',
       'Before it begins, it keeps its time free: you can’t start an hour of practice, or anything in Look After Yourself, that would run into it, and the reason says what’s coming and when.',
       'While you’re at it, Sleep and everything in Look After Yourself but Eat A Meal wait until it ends.',
     ],

@@ -1,0 +1,127 @@
+Perform A Complete Functional And Downstream-Effects Audit Of SLATE.
+
+I want every existing gameplay feature, from character creation through school and the current professional career, to read meaningful state, produce logical consequences, and connect to the rest of the game. Nothing presented as functional may be decoration, a placeholder, or an isolated number.
+
+Implement fixes and run the tests. Do not stop at an audit, recommendations, or a plan.
+
+1. Establish The Exact Build And Scope
+
+Read the current handoff, instructions, completion matrix, existing decisions, and latest commits. Preserve uncommitted work. Identify the branch and commit being tested.
+
+Cover everything currently implemented: creation, player profile, attributes, techniques, genres, interests, school, relationships, money and banking, papers, health, readiness, self-care, weather, calendar, holidays, time advancement, tutorials, and the complete current career foundation.
+
+Include any other existing systems discovered during inspection. Do not restore removed personal-life systems or add unrelated industry expansion. Previously deferred features stay explicitly deferred; they must not be counted as verified.
+
+2. Inventory Every Player-Facing Feature
+
+Build the inventory from actual code and reachable screens, not just existing documentation.
+
+Include every action, choice, creation option, displayed statistic, status, notification, calendar event, item, relationship, and promised tutorial behavior.
+
+For each feature, record:
+
+* Where the player encounters it.
+* Its prerequisites and availability rules.
+* The state it reads.
+* What it changes immediately.
+* Which systems consume those changes later.
+* When and how the player experiences the consequences.
+* Save/load behavior.
+* The tests and playthrough evidence supporting it.
+* Any missing connection or limitation.
+
+Trace meaningful effects through their complete lifecycle. A changed number or generated message alone does not prove a functioning consequence.
+
+Distinguish gameplay mechanics from useful presentation. Labels, navigation, and accurate historical records do not need artificial stat changes. Their purpose must still work. Never invent unrelated penalties or bonuses merely to claim that everything has an effect.
+
+3. Prove That Features Read And Bite
+
+For every gameplay-affecting input, show that changing it can produce the intended observable difference when relevant.
+
+Use controlled comparisons with otherwise identical characters, circumstances, and random seeds. Test meaningful differences in attributes, genre experience, health, fatigue, preparation, finances, eligibility, relationships, and prior decisions.
+
+Verify both sides:
+
+* Relevant differences affect the appropriate outcomes.
+* Irrelevant differences do not leak into unrelated outcomes.
+
+Check immediate consequences and delayed consequences: missed deadlines, recovery, payments, interest, fees, attendance, learning, assessments, career eligibility, auditions, work quality, referrals, commission, credits, and future opportunities.
+
+Maximum skill must produce the intended advantage in work quality under controlled conditions. It must not silently guarantee unrelated outcomes such as available roles or an agent’s roster space.
+
+4. Find And Repair Disconnected Features
+
+Look specifically for:
+
+* Values written but never meaningfully read.
+* Choices that lead to identical outcomes despite promising differences.
+* Actions that report success without updating state.
+* Effects calculated but never applied.
+* Notifications or tutorials describing nonexistent behavior.
+* Duplicate charges, rewards, penalties, or progression.
+* Time advancement bypassing obligations.
+* Save/load dropping or replaying consequences.
+* Impossible scheduling or eligibility.
+* UI controls connected to the wrong action.
+* Features accessible only through test-injected state.
+* Repeated opportunities contradicting completed work or established history.
+
+Fix confirmed defects within the existing scope. Repair the connection rather than hiding the feature, weakening its promise, or marking an unreachable path as passed.
+
+Explicitly investigate the previously recorded uncapped credit-limit growth and whether consecutive career workdays cause excessive fatigue. Use justified rules and measured comparisons; do not adjust numbers simply to make a test pass.
+
+5. Run Complete Player Journeys
+
+Exercise creation, school progression, graduation, and the current career loop through real player actions. Include continuing an older save.
+
+Cover successful, unsuccessful, delayed, declined, interrupted, and recovery paths where supported. Include unsigned and represented career routes, conflicting commitments, limited funds, poor preparation, strong preparation, different genre strengths, fatigue, and work-authorization restrictions.
+
+Run save/load checks at important transitions. Compare continuous play with equivalent play interrupted by saving and reopening.
+
+Verify that school history, attributes, genre development, money, papers, relationships, and professional credits remain coherent throughout.
+
+Use the built application for representative desktop and mobile journeys. Engine tests alone cannot prove that the actual buttons, dialogs, navigation, and application startup work.
+
+6. Test Continuity And Variety
+
+Check that the game remembers decisions, completed milestones, missed obligations, existing agreements, and past work.
+
+Verify that text accurately reflects those states and that tutorials explain actual behavior in natural language.
+
+Test repeated actions across changing circumstances. Prevent contradictory repetition, duplicate first-time events, and recurring opportunities that ignore prior completion. Variety must come from meaningful context as well as wording.
+
+Do not promise that ordinary recurring activities will never repeat. Verify that repetition remains appropriate and that progression changes the experience where intended.
+
+7. Demonstrate Test Strength
+
+Add targeted regression tests for confirmed defects.
+
+Use mutation tests or equivalent deliberate fault checks to prove that critical tests detect broken connections. Include representative consequences across all existing systems, not just the career subsystem.
+
+A deliberately broken version must fail for the intended behavioral reason. Distinguish assertion failures from unrelated setup errors.
+
+Use a fixed, documented selection of multiple seeds for broader journeys. Do not replace failing seeds with favorable ones. Keep targeted success-path fixtures, but label them honestly and assess balance separately.
+
+Run the full required regression gate after integration. If a relevant source change occurs afterward, rerun the affected verification and required final checks.
+
+8. Deliver Evidence And An Honest Completion Report
+
+Provide:
+
+* The exact tested commit.
+* The complete feature-to-effect coverage matrix.
+* Defects found, fixes made, and regression tests.
+* Journey results, including unsuccessful paths.
+* Controlled comparison and mutation-test results.
+* Test totals, failures, skips, and reasons.
+* Evidence of desktop/mobile application checks.
+* Every remaining limitation, deferred feature, or owner decision.
+* Clear instructions for any remaining hands-on review.
+
+Every current in-scope feature must have an accounted-for status. Do not hide incomplete rows by changing the denominator, weakening criteria, or calling them decorative after the fact.
+
+Continue through implementation, testing, and repair until all agreed in-scope acceptance criteria pass, or a concrete blocker genuinely prevents further progress. Complete all unblocked work and explain any blocker precisely.
+
+Do not claim “zero possible bugs,” “100% realism,” or “everything complete” beyond what the evidence establishes. The goal is a fully connected, logically functioning current build with proof—not a flattering completion statement.
+
+Keep the work reviewable. Do not merge or deploy without my instruction.

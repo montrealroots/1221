@@ -1,0 +1,794 @@
+[
+ {
+  "id": "b20-1",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:05",
+  "transitions": "14/14 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (in-person) set for 2029-06-11T15:00, : same",
+   "an offer standing: An Offer For Ivy: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 3,
+   "failure": 11,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 12,
+   "recovery": 5,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 2,
+   "workAuthorization": 0
+  },
+  "money": [
+   "creation: bank $12282, cards Chase Freedom Unlimited $6522, score 690, income $0",
+   "the end of 2026: bank $25121.81, cards Chase Freedom Unlimited $6522, score 702, income $1656.24",
+   "the end of 2027: bank $51608.83, cards Chase Freedom Unlimited $9391, score 738, income $3450.71",
+   "the end of 2028: bank $79418.38, cards Chase Freedom Unlimited $13523, score 774, income $3312.71",
+   "the School’s end: graduated: bank $92797.03, cards Chase Freedom Unlimited $16228, score 789, income $3312.7",
+   "the end of 2029: bank $78301.73, cards Chase Freedom Unlimited $19474, score 810, income $1656.47"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-2",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-05-21T14:25",
+  "transitions": "15/15 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-06-17T22:00, : same",
+   "an offer standing: An Offer For Felix: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 5,
+   "failure": 8,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 8,
+   "recovery": 6,
+   "clash": 0,
+   "littleMoney": 1,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 3,
+   "workAuthorization": 0
+  },
+  "money": [
+   "creation: bank $43, cards , score 520, income $0",
+   "the end of 2026: bank $13557.5, cards , score 530, income $1656",
+   "the end of 2027: bank $39198.26, cards , score 554, income $3450",
+   "the end of 2028: bank $66832.13, cards , score 578, income $3312",
+   "the School’s end: graduated: bank $81142.02, cards , score 586, income $3312",
+   "the end of 2029: bank $72695.23, cards , score 602, income $1656"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-3",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:15",
+  "transitions": "12/12 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (in-person) set for 2029-09-10T15:00, : same",
+   "an offer standing: An Offer For Felix: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 4,
+   "failure": 6,
+   "delay": 0,
+   "decline": 2,
+   "interruption": 7,
+   "recovery": 3,
+   "clash": 0,
+   "littleMoney": 1,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 0,
+   "workAuthorization": 7
+  },
+  "money": [
+   "creation: bank $1674, cards Chase Freedom Unlimited $1630, score 610, income $0",
+   "the end of 2026: bank $12273.55, cards Chase Freedom Unlimited $1630, score 622, income $1656.01",
+   "the end of 2027: bank $34967.29, cards Chase Freedom Unlimited $1630, score 658, income $3450.03",
+   "the end of 2028: bank $57917.02, cards Chase Freedom Unlimited $1630, score 694, income $3312.03",
+   "the School’s end: graduated: bank $68640.62, cards Chase Freedom Unlimited $1956, score 709, income $3312.03",
+   "the end of 2029: bank $62749.68, cards Chase Freedom Unlimited $2347, score 730, income $1656.02"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-4",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:25",
+  "transitions": "15/15 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-06-10T22:00, : same",
+   "an offer standing: An Offer For Hester Vane: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 5,
+   "failure": 4,
+   "delay": 0,
+   "decline": 2,
+   "interruption": 11,
+   "recovery": 5,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 1,
+   "workAuthorization": 9
+  },
+  "money": [
+   "creation: bank $65217, cards Chase Freedom Unlimited $21739, score 748, income $0",
+   "the end of 2026: bank $76711.15, cards Chase Freedom Unlimited $21739, score 760, income $1657.61",
+   "the end of 2027: bank $99151.72, cards Chase Freedom Unlimited $31304, score 796, income $3454.56",
+   "the end of 2028: bank $121744.76, cards Chase Freedom Unlimited $45078, score 832, income $3316.58",
+   "the School’s end: graduated: bank $132656.32, cards Chase Freedom Unlimited $54094, score 847, income $3316.56",
+   "the end of 2029: bank $81568.56, cards Chase Freedom Unlimited $64913, score 850, income $1909.04"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-5",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:05",
+  "transitions": "12/12 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-18T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (in-person) set for 2029-07-02T15:00, : same",
+   "an offer standing: An Offer For Sam: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 2,
+   "failure": 8,
+   "delay": 0,
+   "decline": 2,
+   "interruption": 11,
+   "recovery": 9,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 0,
+   "workAuthorization": 7
+  },
+  "money": [
+   "creation: bank $12282, cards Chase Freedom Unlimited $6522, score 690, income $0",
+   "the end of 2026: bank $23267.78, cards Chase Freedom Unlimited $6522, score 702, income $1656.24",
+   "the end of 2027: bank $46142.93, cards Chase Freedom Unlimited $9391, score 738, income $3450.71",
+   "the end of 2028: bank $69320.53, cards Chase Freedom Unlimited $13523, score 774, income $3312.71",
+   "the School’s end: graduated: bank $79161.97, cards Chase Freedom Unlimited $16228, score 789, income $3312.7",
+   "the end of 2029: bank $66120.34, cards Chase Freedom Unlimited $19474, score 810, income $1656.47"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-6",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:05",
+  "transitions": "15/15 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-07-08T22:00, : same",
+   "an offer standing: An Offer For Ivy: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 5,
+   "failure": 9,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 12,
+   "recovery": 10,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 5,
+   "workAuthorization": 0
+  },
+  "money": [
+   "creation: bank $505434, cards Chase Freedom Unlimited $65217, score 795, income $0",
+   "the end of 2026: bank $503682.59, cards Chase Freedom Unlimited $65217, score 807, income $1670.59",
+   "the end of 2027: bank $498705.61, cards Chase Freedom Unlimited $93912, score 843, income $3491.31",
+   "the end of 2028: bank $493604.25, cards Chase Freedom Unlimited $135233, score 850, income $3353.43",
+   "the School’s end: graduated: bank $489984.6, cards Chase Freedom Unlimited $162280, score 850, income $3353.31",
+   "the end of 2029: bank $69147.63, cards Chase Freedom Unlimited $194736, score 850, income $1683.5"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-7",
+  "end": "graduated 2030-05-20T14:00",
+  "career": "2030-01-07T14:05",
+  "transitions": "18/18 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2031-05-20T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2030-06-09T22:00, : same",
+   "an offer standing: An Offer For Felix: same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 7,
+   "failure": 9,
+   "delay": 4,
+   "decline": 0,
+   "interruption": 22,
+   "recovery": 8,
+   "clash": 0,
+   "littleMoney": 4,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 3,
+   "workAuthorization": 0
+  },
+  "money": [
+   "creation: bank $1674, cards Chase Freedom Unlimited $1630, score 610, income $0",
+   "the end of 2026: bank $13765.14, cards Chase Freedom Unlimited $1630, score 622, income $1656.01",
+   "the end of 2027: bank $40522.6, cards Chase Freedom Unlimited $1630, score 658, income $3450.03",
+   "the end of 2028: bank $68186.5, cards Chase Freedom Unlimited $1630, score 694, income $3312.03",
+   "the end of 2029: bank $74562.52, cards Chase Freedom Unlimited $2347, score 730, income $3450.02",
+   "the School’s end: graduated: bank $63741.58, cards Chase Freedom Unlimited $2816, score 745, income $3450.01",
+   "the end of 2030: bank $55770.63, cards Chase Freedom Unlimited $3379, score 766, income $1656"
+  ],
+  "errors": []
+ },
+ {
+  "id": "b20-8",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:00",
+  "transitions": "15/15 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2026-09-01T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-07-08T22:00, : same"
+  ],
+  "checks": {
+   "1 creation": "pass",
+   "2 classes to showings": "pass",
+   "3 development": "pass",
+   "4 advice": "pass",
+   "5 health, stamina, energy": "pass",
+   "6 money": "pass",
+   "7 papers": "pass",
+   "8 warnings": "pass",
+   "9 terms and the end": "pass",
+   "10 save and reload": "pass"
+  },
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 2,
+   "failure": 10,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 9,
+   "recovery": 3,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 3,
+   "workAuthorization": 8
+  },
+  "money": [
+   "creation: bank $12282, cards Chase Freedom Unlimited $6522, score 690, income $0",
+   "the end of 2026: bank $23071.85, cards Chase Freedom Unlimited $6522, score 702, income $1518.24",
+   "the end of 2027: bank $45876.57, cards Chase Freedom Unlimited $9391, score 738, income $3450.71",
+   "the end of 2028: bank $68466.98, cards Chase Freedom Unlimited $13523, score 771, income $3312.71",
+   "the School’s end: graduated: bank $78835.16, cards Chase Freedom Unlimited $16228, score 789, income $3312.7",
+   "the end of 2029: bank $68736.88, cards Chase Freedom Unlimited $19474, score 810, income $2776.47"
+  ],
+  "errors": []
+ },
+ {
+  "id": "journey-j01-degree-8283f80c",
+  "end": "graduated ",
+  "career": "2029-08-04T14:15",
+  "transitions": "4/4 same",
+  "forks": [
+   "a union bill due 2029-11-01T13:00: Initiation fee,: same",
+   "an audition (in-person) set for 2029-08-20T15:00, : same",
+   "an offer standing: An Offer For Jess: same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 3,
+   "failure": 4,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 3,
+   "recovery": 0,
+   "clash": 1,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 3,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $491656.92, cards Chase Freedom Unlimited $162280, score 850, income $3353.31"
+  ],
+  "errors": []
+ },
+ {
+  "id": "journey-j01-last-term-8283f80c",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-03-01T12:05",
+  "transitions": "7/7 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2029-03-04T0: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-06-17T22:00, : same",
+   "an offer standing: An Offer For Nell: same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 1,
+   "unsigned": 0,
+   "success": 11,
+   "failure": 6,
+   "delay": 2,
+   "decline": 0,
+   "interruption": 1,
+   "recovery": 0,
+   "clash": 1,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 10,
+   "genreStrengths": 1,
+   "fatigue": 5,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $492522.81, cards Chase Freedom Unlimited $135233, score 850, income $3215.31",
+   "the School’s end: graduated: bank $491105.72, cards Chase Freedom Unlimited $162280, score 850, income $3353.31"
+  ],
+  "errors": []
+ },
+ {
+  "id": "journey-j01-last-term-8283f80c",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-03-01T12:05",
+  "transitions": "7/7 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2029-03-04T0: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-06-17T22:00, : same",
+   "an offer standing: An Offer For Nell: same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 1,
+   "unsigned": 0,
+   "success": 8,
+   "failure": 4,
+   "delay": 2,
+   "decline": 0,
+   "interruption": 1,
+   "recovery": 0,
+   "clash": 1,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 9,
+   "genreStrengths": 1,
+   "fatigue": 0,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $492522.81, cards Chase Freedom Unlimited $135233, score 850, income $3215.31",
+   "the School’s end: graduated: bank $491105.72, cards Chase Freedom Unlimited $162280, score 850, income $3353.31"
+  ],
+  "errors": []
+ },
+ {
+  "id": "journey-j01-year-one-8283f80c",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:20",
+  "transitions": "8/8 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2027-09-04T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2029-08-05T22:00, : same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 1,
+   "failure": 4,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 5,
+   "recovery": 2,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 0,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $501998.68, cards Chase Freedom Unlimited $78260, score 822, income $3343.68",
+   "the end of 2027: bank $499200.61, cards Chase Freedom Unlimited $93912, score 843, income $3491.31",
+   "the end of 2028: bank $494620.37, cards Chase Freedom Unlimited $135233, score 850, income $3353.43",
+   "the School’s end: graduated: bank $491110.72, cards Chase Freedom Unlimited $162280, score 850, income $3353.31"
+  ],
+  "errors": []
+ },
+ {
+  "id": "old-leave-ff837dfa",
+  "end": "graduated 2030-05-20T14:00",
+  "career": "2030-01-07T14:15",
+  "transitions": "13/13 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2028-03-13T2: same",
+   "a union bill due 2031-05-20T14:00: Initiation fee,: same",
+   "an audition (self-tape) set for 2030-06-09T22:00, : same",
+   "an offer standing: An Offer For Desk Clerk: same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 1,
+   "unsigned": 0,
+   "success": 5,
+   "failure": 5,
+   "delay": 2,
+   "decline": 0,
+   "interruption": 4,
+   "recovery": 2,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 0,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $496538.32, cards Chase Freedom Unlimited $93912, score 849, income $869.42",
+   "the end of 2028: bank $493183.73, cards Chase Freedom Unlimited $135233, score 850, income $3077.43",
+   "the end of 2029: bank $74967.59, cards Chase Freedom Unlimited $194736, score 850, income $3477.5",
+   "the School’s end: graduated: bank $70987.44, cards Chase Freedom Unlimited $233683, score 850, income $3463.92"
+  ],
+  "errors": []
+ },
+ {
+  "id": "old-nonfiler-086d00ca",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:00",
+  "transitions": "5/5 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2028-09-10T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same",
+   "an audition (in-person) set for 2029-06-11T15:00, : same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 1,
+   "failure": 5,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 5,
+   "recovery": 2,
+   "clash": 0,
+   "littleMoney": 0,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 0,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $495536.85, cards Chase Freedom Unlimited $112694, score 850, income $3491.43",
+   "the end of 2028: bank $492014.16, cards Chase Freedom Unlimited $135233, score 850, income $3353.43",
+   "the School’s end: graduated: bank $479329.02, cards Chase Freedom Unlimited $162280, score 850, income $3353.31"
+  ],
+  "errors": []
+ },
+ {
+  "id": "old-state-plan-086d00ca",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:05",
+  "transitions": "6/6 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2028-02-27T0: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 0,
+   "failure": 1,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 7,
+   "recovery": 3,
+   "clash": 0,
+   "littleMoney": 7,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 5,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $204.93, cards Chase Freedom Unlimited $93912, score 849, income $3451.7",
+   "the end of 2028: bank $0, cards , score 300, income $3312",
+   "the School’s end: graduated: bank $0, cards , score 300, income $3312"
+  ],
+  "errors": []
+ },
+ {
+  "id": "old-tax-plan-ff837dfa",
+  "end": "graduated 2029-05-21T14:00",
+  "career": "2029-01-08T14:55",
+  "transitions": "9/9 same",
+  "forks": [
+   "a rehearsal with a partner booked for 2027-04-18T2: same",
+   "a union bill due 2030-05-21T14:00: Initiation fee,: same"
+  ],
+  "checks": {},
+  "coherence": {
+   "school, attributes and genres": "pass",
+   "ledger": "pass",
+   "papers and work": "pass",
+   "relationships and credits": "pass",
+   "breaches": "pass"
+  },
+  "routes": {
+   "represented": 0,
+   "unsigned": 1,
+   "success": 0,
+   "failure": 2,
+   "delay": 0,
+   "decline": 0,
+   "interruption": 6,
+   "recovery": 4,
+   "clash": 0,
+   "littleMoney": 7,
+   "poorPreparation": 5,
+   "strongPreparation": 5,
+   "genreStrengths": 1,
+   "fatigue": 5,
+   "workAuthorization": 0
+  },
+  "money": [
+   "opened: bank $3119.94, cards Chase Freedom Unlimited $78260, score 816, income $42779.8",
+   "the end of 2027: bank $0, cards Chase Freedom Unlimited $46017, score 731, income $3455.21",
+   "the end of 2028: bank $0, cards , score 300, income $3312",
+   "the School’s end: graduated: bank $0, cards , score 300, income $3312"
+  ],
+  "errors": []
+ }
+]

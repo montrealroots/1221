@@ -1,0 +1,376 @@
+[
+ {
+  "id": "B20-LIFE-1",
+  "what": "A sleep after the night on record is charged the short night’s debt again (the D3 repair undone)",
+  "file": "src/engine/systems/life.ts",
+  "find": "if (night && hours < 6) {",
+  "replace": "if (hours < 6) {",
+  "tests": [
+   "tests/b20-life-fatigue.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-2",
+  "what": "The bedtime for a full night leaves out the trip to the commitment",
+  "file": "src/engine/systems/life.ts",
+  "find": "const keep = (GETTING_UP_MINUTES + travelMinutesOf(next)) * 60_000;",
+  "replace": "const keep = GETTING_UP_MINUTES * 60_000;",
+  "tests": [
+   "tests/b20-life-fatigue.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-3",
+  "what": "A professional work day takes no energy but its waking hours (the D3 repair undone)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    person.wellbeing.energy = clamp(person.wellbeing.energy - ESTIMATE.energy.rehearsal, 0, 100);\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-life-fatigue.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-4",
+  "what": "A plan that starts while the player is at another commitment is kept too (the clash repair undone)",
+  "file": "src/engine/world/plans.ts",
+  "find": "const busy = player && inPlace ? occupiedAt(s, item.at, item.id) : undefined;",
+  "replace": "const busy = undefined as ReturnType<typeof occupiedAt>;",
+  "tests": [
+   "tests/b20-life-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-5",
+  "what": "Home’s Calendar doesn’t say the bedtime for a full night",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "{fullNight && <span className=\"stat-note\">{fullNight}</span>}",
+  "replace": "",
+  "tests": [
+   "tests/b20-life-screens.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-6",
+  "what": "A shower no longer eases stress",
+  "file": "src/engine/systems/life.ts",
+  "find": "    w.stress = clamp(w.stress - washed * 0.1, 0, 100);\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-7",
+  "what": "A run in fine weather builds as a workout indoors does",
+  "file": "src/engine/systems/life.ts",
+  "find": "return { where: 'run', builds: TRAINING.run };",
+  "replace": "return { where: 'run', builds: TRAINING.indoors };",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-8",
+  "what": "Readiness no longer reads nourishment",
+  "file": "src/engine/systems/life.ts",
+  "find": "{ key: 'nourishment', factor: remap(w.nourishment, 0, 100, 0.78, 1.05), best: 1.05 },",
+  "replace": "{ key: 'nourishment', factor: 1.05, best: 1.05 },",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-9",
+  "what": "Look After Yourself no longer refuses what would run into a commitment",
+  "file": "src/engine/systems/life.ts",
+  "find": "const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);",
+  "replace": "const clash = undefined as ScheduledItem | undefined;",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-10",
+  "what": "The clock no longer stops for an item that wants the player",
+  "file": "src/engine/core/simulation.ts",
+  "find": "if (opts.stopOnPlayerRequired && (due.requiresPlayer || due.stopsClock) && due.at > from) {",
+  "replace": "if (opts.stopOnPlayerRequired && due.stopsClock && due.at > from) {",
+  "tests": [
+   "tests/b20-life-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-11",
+  "what": "Midnight eats the day’s food without buying it",
+  "file": "src/engine/systems/life.ts",
+  "find": "if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);",
+  "replace": "if (true) eatBeforeTheDay(w);",
+  "tests": [
+   "tests/b20-life-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-12",
+  "what": "The School’s calendar holds classes on Labor Day",
+  "file": "src/engine/content/school.ts",
+  "find": "    ['2026-09-07', '2026-09-07'], // Labor Day\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-13",
+  "what": "A jump of more than an hour no longer sleeps the night alone (every move counted the player’s own)",
+  "file": "src/engine/systems/life.ts",
+  "find": "if (advance === undefined || advance.target - advance.from <= LONGEST_STEP_WITH_THE_PLAYER) {",
+  "replace": "if (advance === undefined || advance.target - advance.from <= 1e15) {",
+  "tests": [
+   "tests/b20-life-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-14",
+  "what": "The waking drain reads the debt now, not the debt they woke with",
+  "file": "src/engine/systems/life.ts",
+  "find": "applyElapsedWellbeing(person, (to - start) / MS_HOUR, debtWokenWith(person, start));",
+  "replace": "applyElapsedWellbeing(person, (to - start) / MS_HOUR, person.wellbeing.sleepDebt);",
+  "tests": [
+   "tests/b20-life-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-15",
+  "what": "A sprain no longer keeps the player from a workout",
+  "file": "src/engine/systems/injury.ts",
+  "find": "  if (!injury || INJURY_KIND[injury.kind].limits === 'none') return undefined;",
+  "replace": "  return undefined;",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-16",
+  "what": "The Day look says a country without its article",
+  "file": "src/ui/looks/day.tsx",
+  "find": "kept in ${theCountry(country)} that day.",
+  "replace": "kept in ${country} that day.",
+  "tests": [
+   "tests/b20-life-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-17",
+  "what": "The world tick no longer closes a question past its date",
+  "file": "src/engine/world/world.ts",
+  "find": "    if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;\n",
+  "replace": "",
+  "tests": [
+   "tests/evidence-g04-life.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-18",
+  "what": "A birthday doesn’t put the next one on",
+  "file": "src/engine/systems/birthdays.ts",
+  "find": "    schedule(s, person, item.at);\n",
+  "replace": "",
+  "tests": [
+   "tests/evidence-g04-life.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-19",
+  "what": "Call It Off leaves the plan on the calendar",
+  "file": "src/engine/world/plans.ts",
+  "find": "    if (!s.timeline.cancel(item.id, s.now)) {",
+  "replace": "    if (false) {",
+  "tests": [
+   "tests/b20-life-looks.test.ts",
+   "tests/evidence-g02-life.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-20",
+  "what": "Skip It doesn’t mark the plan missed",
+  "file": "src/engine/world/plans.ts",
+  "find": "    item.status = 'missed';\n    item.resolvedAt = s.now;\n    s.notify({",
+  "replace": "    item.resolvedAt = s.now;\n    s.notify({",
+  "tests": [
+   "tests/coverage-gaps-life.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-21",
+  "what": "A Sleep over commitments doesn’t say what it slept through",
+  "file": "src/engine/systems/life.ts",
+  "find": "      if (crossed.length > 0) {",
+  "replace": "      if (false) {",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-22",
+  "what": "An ended life’s clock goes on",
+  "file": "src/engine/core/simulation.ts",
+  "find": "    if (this.universe.meta.endedAt !== undefined) {\n      return { from, to: from",
+  "replace": "    if (false) {\n      return { from, to: from",
+  "tests": [
+   "tests/evidence-g04-life.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-23",
+  "what": "An injury’s notice says nothing of what it keeps them from",
+  "file": "src/engine/systems/injury.ts",
+  "find": "injuryKeeps(kind, Boolean(person.school && !schoolEnded(person.school.standing)))",
+  "replace": "''",
+  "tests": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/evidence-g07-life.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-24",
+  "what": "Workers’ compensation’s week pays nothing",
+  "file": "src/engine/systems/injury.ts",
+  "find": "    compWeek(s, person, item.at);\n",
+  "replace": "",
+  "tests": [
+   "tests/life-fixes.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-25",
+  "what": "An hour unwinding no longer lifts morale",
+  "file": "src/engine/systems/life.ts",
+  "find": "    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery'), 0, 100);\n    w.morale = clamp(w.morale + 3 * swing, 0, 100);",
+  "replace": "    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery'), 0, 100);",
+  "tests": [
+   "tests/b20-life-bite.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-26",
+  "what": "Condition no longer drifts toward what rest mends at midnight",
+  "file": "src/engine/systems/life.ts",
+  "find": "  w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);",
+  "replace": "  w.condition = clamp(Math.min(w.condition, ceiling.condition), 0, 100);",
+  "tests": [
+   "tests/wellbeing-bites.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-27",
+  "what": "A dial’s look leads with nought, not its figure",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "  const n = Math.round(dial.value);",
+  "replace": "  const n = 0;",
+  "tests": [
+   "tests/b20-life-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-28",
+  "what": "The weather look says the day’s high as the temperature now",
+  "file": "src/ui/looks/weather.tsx",
+  "find": "        ? `It’s ${now.temperature}${unit} and ${DOING[now.condition]} where you are, `",
+  "replace": "        ? `It’s ${now.high}${unit} and ${DOING[now.condition]} where you are, `",
+  "tests": [
+   "tests/b20-life-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-29",
+  "what": "Your Own Plans counts the missed as Called Off",
+  "file": "src/ui/looks/plans.tsx",
+  "find": "    const called = settled.filter((e) => e.status === 'cancelled');",
+  "replace": "    const called = settled.filter((e) => e.status === 'missed');",
+  "tests": [
+   "tests/b20-life-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-30",
+  "what": "Labor Day glossed in the dataset’s British English again",
+  "file": "public/holidays/us.tsv",
+  "find": "2026-09-07\tLabor Day\tLabor Day\t",
+  "replace": "2026-09-07\tLabor Day\tLabour Day\t",
+  "tests": [
+   "tests/b20-life-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-31",
+  "what": "The Day look says the day’s light as a readout again",
+  "file": "src/ui/looks/day.tsx",
+  "find": ": ${formatDurationWords(sun.daylightMinutes * MS_MINUTE)}.`;",
+  "replace": ": ${formatDaylight(sun.daylightMinutes)}.`;",
+  "tests": [
+   "tests/b20-life-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-32",
+  "what": "The Sleep dialog doesn’t say the bedtime for a full night",
+  "file": "src/ui/shell/TimeControls.tsx",
+  "find": ".${fullNight ? ` ${fullNight}` : ''}`}",
+  "replace": ".`}",
+  "tests": [
+   "tests/b20-life-screens.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-33",
+  "what": "The Day look for today doesn’t say the bedtime for a full night",
+  "file": "src/ui/looks/day.tsx",
+  "find": "            if (!night || night.by < sim.now) return null;",
+  "replace": "            if (night || !night) return null;",
+  "tests": [
+   "tests/b20-life-screens.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-34",
+  "what": "The day’s Celsius is rounded again before the hours are worked out from it, so an hour reads past the high and low shown",
+  "file": "src/engine/systems/weather.ts",
+  "find": "    highC, lowC,\n",
+  "replace": "    highC: Math.round(highC), lowC: Math.round(lowC),\n",
+  "tests": [
+   "tests/b20-life-looks.test.ts",
+   "tests/weather.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-35",
+  "what": "Go through a commitment after a night not slept starts a night nobody chose at the commitment, as if slept there",
+  "file": "src/engine/systems/life.ts",
+  "find": "    if (busy && busy.at + busy.durationMinutes! * 60_000 - midnight >= sound * MS_HOUR) return;\n",
+  "replace": "    if (false && busy && busy.at + busy.durationMinutes! * 60_000 - midnight >= sound * MS_HOUR) return;\n",
+  "tests": [
+   "tests/b20-life-fatigue.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-36",
+  "what": "A sleep after the night wears condition and mood as a short night does (the nap's wear repair undone)",
+  "file": "src/engine/systems/life.ts",
+  "find": "  const restful = night ? effective - 5 : Math.max(0, effective - 5);\n",
+  "replace": "  const restful = effective - 5;\n",
+  "tests": [
+   "tests/b20-life-fatigue.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-37",
+  "what": "The slept-through notice's title says its count as a figure",
+  "file": "src/engine/systems/life.ts",
+  "find": "          title: `You Slept Through ${titleCaseLabel(countWords(crossed.length))} ${crossed.length === 1 ? 'Commitment' : 'Commitments'}`,\n",
+  "replace": "          title: `You Slept Through ${crossed.length} ${crossed.length === 1 ? 'Commitment' : 'Commitments'}`,\n",
+  "tests": [
+   "tests/b20-life-bite.test.ts",
+   "tests/sleep-commitments.test.ts"
+  ]
+ }
+]

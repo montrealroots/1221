@@ -4,7 +4,7 @@
   "where": "The dialog when any way of moving the clock reaches a commitment: Go, Stand Here, and the choices the commitment's kind offers (Skip It on a plan of your own, Call It Off on a rehearsal with a partner)",
   "sources": [
    "src/ui/shell/TimeControls.tsx#DueNow",
-   "src/engine/world/clock.ts#top",
+   "src/engine/world/clock.ts#declareOwn",
    "src/engine/world/clock.ts#refusalOf",
    "src/engine/world/clock.ts#defineStop"
   ],

@@ -717,7 +717,7 @@ describe('health.month', () => {
     expect(workingScreen).toContain('What it would cost you here now: a doctor’s visit $0.00, urgent care $0.00, an emergency $0.00');
   });
 
-  it('PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported on the first month a year past due, once, across a reload', () => {
+  it('PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is owed past a year and never reported, Connecticut barring it, across a reload', () => {
     const sim = student(SEED.depressedToo);
     expect(healthOf(sim.player).chronic!.depression).toBeDefined();
     sim.advanceTo(at(2026, 8, 31, 12));
@@ -741,19 +741,19 @@ describe('health.month', () => {
     expect(billed.slice(0, 3).map((b) => [b.at, b.inDebt])).toEqual([[at(2026, 9, 7, 17), true], [at(2026, 9, 14, 17), true], [at(2026, 9, 21, 17), true]]);
     expect(billed.slice(3).every((b) => b.paid === true && !b.inDebt)).toBe(true);
     expect(medicalDebtOf(sim, sim.player)!.balance).toBe(-720_00);
-    // $500 or more, a year past due, in Connecticut: not on 1 October 2027, six days short of the year.
+    // $500 or more, a year past due: until 2026-10-22 this held it reported on 1 November 2027, the first month's look
+    // a year past due, with a 40-point mark. Connecticut has barred reporting it since 1 July 2024 (Public Act 24-6;
+    // `MEDICAL_DEBT.barredIn`, brief 20's papers area), so it's never reported, and stays owed.
     sim.advanceTo(at(2027, 10, 1, 2));
     expect(medicalDebtOf(sim, sim.player)!.balance).toBe(-720_00);
     expect(titled(sim, 'A Medical Debt Is On Your Record')).toEqual([]);
     expect(healthOf(sim.player).reported).toBeFalsy();
     const again = reload(sim);
-    again.advanceTo(at(2027, 11, 1, 2));
-    const told = titled(again, 'A Medical Debt Is On Your Record');
-    expect(told.map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 1, 0, 30), 'Your medical debt is $500.00 or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.']]);
-    expect(again.player.credit!.marks).toContainEqual({ at: at(2027, 11, 1, 0, 30), points: 40, country: 'us' });
     again.advanceTo(at(2027, 12, 1, 2));
-    expect(titled(again, 'A Medical Debt Is On Your Record')).toHaveLength(1);
-    expect(again.player.credit!.marks!.filter((m) => m.points === 40 && m.at >= at(2027, 11, 1, 0))).toHaveLength(1);
+    expect(medicalDebtOf(again, again.player)!.balance).toBe(-720_00);
+    expect(titled(again, 'A Medical Debt Is On Your Record')).toEqual([]);
+    expect(healthOf(again.player).reported).toBeFalsy();
+    expect((again.player.credit!.marks ?? []).filter((m) => m.points === 40 && m.at >= at(2027, 10, 1, 0))).toEqual([]);
   });
 });
 

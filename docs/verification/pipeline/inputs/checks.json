@@ -7,7 +7,7 @@
     "holds": false,
     "verdict": "verified",
     "problems": [
-     "The one gap the claim leaves open is no longer real. slot() now moves a Saturday, a Sunday or a public holiday (src/engine/systems/appointments.ts:101-111, holidaysOn). tests/evidence-g07-life.test.ts:590 ('DEFECT: a doctor's visit booked from Monday 2 November, 24 days on, isn't put on Thanksgiving Day') books through sim.must health.book and expects the literal Friday 27 November. I didn't run that file; only this group's file was allowed.",
+     "The one gap the claim leaves open is no longer real. slot() now moves a Saturday, a Sunday or a public holiday (src/engine/systems/appointments.ts:101-111, holidaysOn). tests/evidence-g07-life.test.ts:593 ('DEFECT: a doctor's visit booked from Monday 2 November, 24 days on, isn't put on Thanksgiving Day') books through sim.must health.book and expects the literal Friday 27 November. I didn't run that file; only this group's file was allowed.",
      "The other four gaps are closed through the command and the rendered Papers. The three refusals are asserted by their words. owedVisit is undefined after Book An Appointment is pressed, and a second press is refused. The 24-day wait is AMN's 23.5 rounded, moved off Sunday 27 September to Monday 28 September (a literal). The visit is kept on the clock once, across two reloads, as 'Nothing to pay.' with no bill. In the Vancouver fixture, renewPrescriptions is read by the next fill, against a twin left Out Of Medicine.",
      "Only a $0 visit kept from a health.book booking is ever checked (Yale Health, NHS), so careFor billing a nonzero amount on such a visit isn't shown. reviewed and mayRefer are not asserted after a command-booked visit. The review didn't name these as gaps, and the APPOINTMENT_KIND handler is shared with the health week's bookings.",
      "The claimCorrection (tests field, entry :937) isn't applied in the tree yet: docs/verification/audit/life.json and docs/GAMEPLAY-COVERAGE.md:635 still cite referrals.test.ts and journey-life.test.ts.",
@@ -701,7 +701,7 @@
      "bodyDay beyond starvation: an order's 134 kcal goes onto the scale at 134/(23.9x365/ln2) kg, about 10.6 g, within 1 g, and not again the next night. The figures come from the cited sources.",
      "Fitness decays 0.18 a day (50, 49.82, 49.64, 49.46), and Groceries post at each midnight.",
      "Gap 1, the weak cited tests, closes only when the claimCorrection is applied. docs/verification/audit/life.json still cites simulation.test 'charges nothing at midnight' and the direct settleTheBody fixture. The replacement citations exist: defects-r3a-1, the simulation.test hygiene toBe(82), wellbeing-bites 'a year on autopilot', body.test, mortality.test.",
-     "Hygiene is checked only as >= 82 in this file. The exact floor is held by simulation.test.ts:344."
+     "Hygiene is checked only as >= 82 in this file. The exact floor is held by simulation.test.ts:351."
     ],
     "weakTests": [
      {
@@ -1535,9 +1535,9 @@
     "verdict": "verified",
     "problems": [
      "RESOLVED: the fee path is gone. src has no overLimitFee or overLimitCycles except the migration that sheds overLimitCycles from the person and each card state (src/engine/index.ts:649-653). credit.ts:769-771 says in the past tense that the fee was charged until 2026-10-13. BankCard.tsx:193 now always says 'this card charges nothing for it', and guide money.ts:835 says no card here publishes a fee.",
-     "RESOLVED by removal: the vacuous opt-out reset. Opting out is now shown by cardRoom falling from $50 to 0 and the meal refused again in its words (evidence-g12-money.test.ts:784-790). Dropping the opt-out would leave $45 of room and fail.",
+     "RESOLVED by removal: the vacuous opt-out reset. Opting out is now shown by cardRoom falling from $50 to 0 and the meal refused again in its words (evidence-g12-money.test.ts:792-798). Dropping the opt-out would leave $45 of room and fail.",
      "RESOLVED in substance: 'no fee' couldn't fail. Besides the memo check, g12 asserts card.balance unchanged at −$505 across the statement (:781), which catches any charge posted to the card, not just one memo. cardlife's fees() count and /limit/ filter are absence checks with nothing left to mutate.",
-     "The migration is tested on an old-shaped save through migrate() and loadSave (cardlife.test.ts:229-246): 'Dropped the fields this build no longer reads from 1 person.', both levels shed, opt-in kept. cardlife ran 20/20 and g12 33/33.",
+     "The migration is tested on an old-shaped save through migrate() and loadSave (cardlife.test.ts:233-250): 'Dropped the fields this build no longer reads from 1 person.', both levels shed, opt-in kept. cardlife ran 20/20 and g12 33/33.",
      "OPEN in the docs, and not only a line reference: docs/verification/audit/money.json and docs/GAMEPLAY-COVERAGE.md:811 still list the downstream 'over-limit fee credit.ts:718' and the explanation 'opt-in line with fee'. The review claim says the statement 'charges the card’s over-limit fee, three cycles at most'. The row's own words still declare the removed mechanism and must be corrected for the row to read verified."
     ],
     "weakTests": [],
@@ -2338,7 +2338,7 @@
      "The closing test is exercised through the player's route. 'It's already being closed.' is asserted. cardRoom is 0, and the night's groceries, with The Day's Spending on the card, come from checking. Pay Card In Full ($400) is pressed (finance.pay_card), and the card closes at its 20 Sep statement with 'Card Closed', across a reload.",
      "The yearly-fee skip is shown only on Dublin quick-save lives at AIB, because no New Haven card has a fee. The test says so.",
      "The line-reference correction (credit.ts:557, :759, :800, :1195) is proposed, not applied. The audit row in the tree still says :537, :709, :740.",
-     "The tautology at cardlife.test.ts:155 and the if-guarded hand pay-off at :162 are still in the gate. The review's todo asked for them to be replaced, but they were only supplemented."
+     "The tautology at cardlife.test.ts:156 and the if-guarded hand pay-off at :163 are still in the gate. The review's todo asked for them to be replaced, but they were only supplemented."
     ],
     "weakTests": [
      {

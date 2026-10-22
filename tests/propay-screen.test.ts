@@ -137,7 +137,7 @@ describe('the Work tab', () => {
     schedulePay(sim, sim.player, e);
     const shown = words(renderToStaticMarkup(createElement(PapersWork)));
     expect(shown).toContain('Your Work And Your Permission');
-    expect(shown).toContain('Sam, Last Bus To Eastview, September 14, 2026 to September 15, 2026. Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
+    expect(shown).toContain('Robin, Last Bus To Eastview, September 14, 2026 to September 15, 2026. Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
   }, 90_000);
 
   it('PLAYER JOURNEY: on OPT, Papers says the days counted so far and the end of its days without work, which the work booked moves two weeks later', () => {

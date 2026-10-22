@@ -1,0 +1,38 @@
+{
+ "id": "old-leave-ff837dfa",
+ "part": 3,
+ "from": "2029-11-10",
+ "to": "2030-09-01",
+ "secs": 121,
+ "reloads": 44,
+ "done": true,
+ "standing": "graduated",
+ "schoolEnd": "2030-05-20T14:00",
+ "careerFrom": "2030-01-07T14:15",
+ "notSame": 0,
+ "transitions": [
+  "2028-03-12T12:35 opened: same",
+  "2028-04-28T21:10 term 3 reviewed: good: same",
+  "2028-12-08T22:15 term 4 reviewed: good: same",
+  "2029-01-01T12:15 the end of 2028: same",
+  "2029-04-27T21:20 term 5 reviewed: good: same",
+  "2029-12-14T22:15 term 6 reviewed: good: same",
+  "2030-01-01T12:15 the end of 2029: same",
+  "2030-04-26T21:20 term 7 reviewed: good: same",
+  "2030-05-20T14:40 the School’s end: graduated: same",
+  "2030-06-03T15:00 a signing: same",
+  "2030-07-17T21:45 the first booking: Jess in Static On Route 9: same",
+  "2030-07-29T22:00 the first work day: same",
+  "2030-08-13T16:00 the first pay: same"
+ ],
+ "forks": [
+  "2028-03-12T14:55 a rehearsal with a partner booked for 2028-03-13T23:00 on A Choreographed Sequence: same",
+  "2030-05-20T14:40 a union bill due 2031-05-20T14:00: Initiation fee, part 2 of 3: same",
+  "2030-06-05T14:00 an audition (self-tape) set for 2030-06-09T22:00, Ferris in Gull Season: same",
+  "2030-07-03T21:15 an offer standing: An Offer For Jess: same"
+ ],
+ "workDays": 6,
+ "notices": 933,
+ "bank": 70383.07,
+ "errors": []
+}

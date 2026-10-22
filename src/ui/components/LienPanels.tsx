@@ -118,7 +118,7 @@ export function FederalLien({ year }: { year: number }) {
       <LienFacts l={r.lien} money={money} zone={sim.zone} />
       <p className="xs dim" style={{ margin: 0 }}>{FEDERAL_LIEN.effect} It’s released within {FEDERAL_LIEN.releaseDays} days of payment in full. After that, you can ask for it to be withdrawn on Form 12277, if your last three years’ returns are filed. A lien filed in error is released as erroneous within {FEDERAL_LIEN.errorDays} days.</p>
       <div className="row gap-2"><Gated feature="tax.federal_lien_withdraw" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ decideAt: number; error: boolean }>('tax.federal_lien_withdraw', { year }); if (a.ok) toast(`${a.value!.error ? 'Asked for its release as erroneous' : 'Form 12277 sent'}. The IRS decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>{error ? 'Ask For Its Release As Erroneous' : 'Ask For Its Withdrawal (Form 12277)'}</Gated><HowItWorks help="taxes.lien" /></div>
-      <WhyNot reasons={[['Ask For Its Withdrawal', no]]} />
+      <WhyNot reasons={[[error ? 'Ask For Its Release As Erroneous' : 'Ask For Its Withdrawal', no]]} />
       <Fine>Source: {FEDERAL_LIEN.source}.</Fine>
     </div>
   );

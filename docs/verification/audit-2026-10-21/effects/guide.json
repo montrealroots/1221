@@ -1,0 +1,1862 @@
+{
+ "area": "guide",
+ "rows": [
+  {
+   "id": "tutorial.read",
+   "kind": "command",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The guide: I’ve Read It at the foot of the chapter that’s next (ui/guide/Guide.tsx, `markRead`), opened by Guide in the top bar, Read on the strip under it, or Read About It on a locked panel.",
+   "prerequisites": "A life made with the guide (`universe.tutorial`), and the next chapter in order, each once. Refused: “You started without the guide, so everything is already open.”; “There’s no such chapter.”; “You’ve already read “…”.”; “Read “…” first. The chapters open in order.” The dialog draws I’ve Read It only on the next chapter (`isNext`); any chapter can be opened and read.",
+   "reads": "universe.tutorial.read and the chapters’ order (`CHAPTERS`, `nextChapter`).",
+   "changes": "Adds the chapter to universe.tutorial.read, and sets tutorial.finished once every chapter is read. Moves no clock and costs nothing; the guide holds the live clock while it’s open (`hold`).",
+   "consumers": [
+    {
+     "what": "isOpen: a part of the game is open once its chapter is read, or the guide is finished",
+     "at": "src/engine/world/tutorial.ts:51"
+    },
+    {
+     "what": "the engine’s guard: a command whose chapter isn’t read is refused, naming the chapter (lockedBecause)",
+     "at": "src/engine/world/tutorial.ts:100"
+    },
+    {
+     "what": "useFeature, behind every Gated button, locked panel and menu",
+     "at": "src/ui/guide/Guide.tsx:44"
+    },
+    {
+     "what": "the rail lists a place once its chapter is read",
+     "at": "src/ui/shell/GameShell.tsx:41"
+    },
+    {
+     "what": "an underlined word opens once its look’s chapter is read",
+     "at": "src/ui/looks/Look.tsx:87"
+    },
+    {
+     "what": "a screen opened by address is locked until its chapter is read",
+     "at": "src/ui/workspaces/WorkspaceRouter.tsx:31"
+    },
+    {
+     "what": "the strip under the bar and Guide (N Left) count what’s left",
+     "at": "src/ui/guide/Guide.tsx:143"
+    }
+   ],
+   "experienced": "At once: the dialog says Opened and lists what the chapter opened, with Try It and Next; Home’s panels fill in, the rail gains its places, the underlined words open and the strip moves to the next chapter. From then on the engine takes the commands the chapter opens. A finished guide stays open whatever chapters are added after it.",
+   "saveLoad": "universe.tutorial (read, finished) is saved; a load keeps what was read and what it opened, and nothing is read again (tests/tutorial.test.ts, “keeps what was read through a save”).",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/tutorial.test.ts",
+     "tests/guide.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-9",
+     "B20-GUIDE-10",
+     "B20-GUIDE-14",
+     "B20-GUIDE-15",
+     "B20-GUIDE-20"
+    ],
+    "journeys": [
+     "tests/b20-guide-chapters.test.ts: a guided life read chapter by chapter, each chapter’s instructions done once it’s read"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "tutorial.read",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "world.dismiss_decision",
+   "kind": "command",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Home, What Needs You: Dismiss on each question the panel draws (src/ui/screens/Home.tsx, the six at the top).",
+   "prerequisites": "A question the save holds that isn’t dismissed already; “What Needs You” read. Refused: “That question isn’t in What Needs You any more.” (none, or forgotten 180 days after it closed); “You’ve already dismissed that question.”",
+   "reads": "universe.decisions[decisionId] (its dismissedAt).",
+   "changes": "Sets dismissedAt to now. Nothing else: what the question was about still stands.",
+   "consumers": [
+    {
+     "what": "openDecisions leaves a dismissed question off Home and out of the count",
+     "at": "src/engine/world/world.ts:164"
+    },
+    {
+     "what": "take_decision_action refuses an answer to a dismissed question",
+     "at": "src/engine/world/world.ts:57"
+    },
+    {
+     "what": "prune forgets it 180 days after it closed",
+     "at": "src/engine/world/world.ts:144"
+    },
+    {
+     "what": "the decision’s own look says it was dismissed, and its date",
+     "at": "src/ui/looks/attention.tsx:173"
+    },
+    {
+     "what": "the rail’s count of what’s waiting",
+     "at": "src/ui/shell/GameShell.tsx:38"
+    }
+   ],
+   "experienced": "At once the row leaves Home and the count beside Home falls by one; its page says it was dismissed and its date. Its answers are refused after, in the game’s words. What it was about goes on: an offer stays open on the Career screen, a return still falls due, a status still ends on its date.",
+   "saveLoad": "dismissedAt is saved with the question; after a load it stays off Home and its answers stay refused (tests/b20-guide-screens.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/evidence2-b01.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-2",
+     "B20-GUIDE-4",
+     "B20-GUIDE-5",
+     "B20-GUIDE-7"
+    ],
+    "journeys": []
+   },
+   "missing": "None found. A raiser could raise a fresh question about the same thing after a dismissal (`requireDecision` passes over a dismissed row); measured on the US status question (a London-born student withdrawn, dismissed, played to the status’s end with a save and a load on the way), it isn’t raised again.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "world.dismiss_decision",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "world.mark_read",
+   "kind": "command",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Home, What Needs You: Mark N Read in the panel’s head, drawn while anything is unread (src/ui/screens/Home.tsx).",
+   "prerequisites": "“What Needs You” read. Nothing else: with nothing unread it reads none. It sends no ids, so every unread notice is marked, the ones past the six the panel shows too; N on the button is every unread notice.",
+   "reads": "universe.notifications (each notice’s read).",
+   "changes": "Sets read on every unread notice (or on the ids given, which no control sends); answers how many.",
+   "consumers": [
+    {
+     "what": "unreadNotifications: Home’s list and Mark N Read’s count leave a read notice out",
+     "at": "src/engine/world/world.ts:177"
+    },
+    {
+     "what": "the rail’s count and the You line’s N Unread",
+     "at": "src/ui/shell/GameShell.tsx:39"
+    },
+    {
+     "what": "notify brings a notice said again up to now only while it’s unread; read, the same words are a new notice",
+     "at": "src/engine/core/simulation.ts:698"
+    },
+    {
+     "what": "settleNotices dedupes only the unread",
+     "at": "src/engine/core/simulation.ts:729"
+    },
+    {
+     "what": "the notice’s own look says it has been read",
+     "at": "src/ui/looks/attention.tsx:344"
+    }
+   ],
+   "experienced": "At once the notices leave Home and the counts fall; each notice’s page says “You’ve read this notice.” Later, the same words said again come as a new notice.",
+   "saveLoad": "Each notice’s read flag is saved; after a load every notice read stays read and none comes back unread, through a day’s play on (tests/b20-guide-screens.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-firsts.test.ts",
+     "tests/evidence2-b01.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-6"
+    ],
+    "journeys": [
+     "tests/b20-guide-firsts.test.ts: a fortnight with every notice read and the save opened again each day"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "world.mark_read",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "world.set_preferences",
+   "kind": "command",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The top bar: Play and Pause (src/ui/shell/TimeControls.tsx, `setSpeed`). The provider sends paused itself when the clock stops at a commitment (`halt`) and when the live clock fails.",
+   "prerequisites": "Only timeSpeed, and only paused or live: “That isn’t a setting the game has.”; “The clock can only be set to Play or Pause.” Pausing needs no chapter; Play opens with “The Clock”, and is refused before it in the guide’s words.",
+   "reads": "universe.preferences.timeSpeed.",
+   "changes": "Sets universe.preferences.timeSpeed.",
+   "consumers": [
+    {
+     "what": "the provider’s live clock reads the speed",
+     "at": "src/app/game-context.tsx:168"
+    },
+    {
+     "what": "a world second a real second while live, none while paused (SPEED_MULTIPLIER)",
+     "at": "src/app/game-context.tsx:337"
+    },
+    {
+     "what": "the button says what a press does: Play while paused, Pause while live",
+     "at": "src/ui/shell/TimeControls.tsx:153"
+    }
+   ],
+   "experienced": "At once the button says the other word and the clock runs, a minute a minute, or stops. A save opens paused or live as it was left; a new life opens paused.",
+   "saveLoad": "universe.preferences is saved; a paused save opens paused (tests/evidence2-b01.test.ts) and a guided one keeps its speed through a load (tests/b20-guide-chapters.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/evidence2-b01.test.ts",
+     "tests/tutorial.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-8"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "world.set_preferences",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "world.take_decision_action",
+   "kind": "command",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Home, What Needs You: each answer’s button on a question, labeled with the answer (src/ui/screens/Home.tsx), which sends that answer’s index.",
+   "prerequisites": "The question open: “That question is already settled: it was answered, or its date passed.”; “You dismissed that question, so it can’t be answered from What Needs You.”; “That isn’t one of this question’s answers.” The answer’s own command must be open in the guide and taken by its handler; refused, its reason is said and the question stays.",
+   "reads": "The question’s actions[actionIndex] (its command and payload), resolvedAt and dismissedAt.",
+   "changes": "Runs the answer’s command inside the same transaction, then sets resolvedAt; a refusal rolls back the whole and leaves the question open.",
+   "consumers": [
+    {
+     "what": "the answer’s own command, run as the player’s: pro.accept_offer, pro.decline_offer, tax.file, bank.reactivate, documents.apply_opt",
+     "at": "src/engine/world/world.ts:64"
+    },
+    {
+     "what": "openDecisions leaves a settled question off Home",
+     "at": "src/engine/world/world.ts:164"
+    },
+    {
+     "what": "its own refusal of a question already settled",
+     "at": "src/engine/world/world.ts:56"
+    },
+    {
+     "what": "prune forgets it 180 days after it closed",
+     "at": "src/engine/world/world.ts:144"
+    },
+    {
+     "what": "the decision’s look says it was dealt with",
+     "at": "src/ui/looks/attention.tsx:172"
+    }
+   ],
+   "experienced": "At once the answer is done to the thing the row is about (with two offers waiting, the second row’s Accept The Offer books the second and leaves the first standing) and the row leaves Home; refused, a toast says why and the row stays. A second answer is refused in the game’s words, and nothing is done twice.",
+   "saveLoad": "resolvedAt is saved; after a load the question stays settled and its answers refused (tests/b20-guide-screens.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-wiring.test.ts",
+     "tests/evidence-g02-life.test.ts",
+     "tests/life-fixes.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-1",
+     "B20-GUIDE-3",
+     "B20-GUIDE-4"
+    ],
+    "journeys": []
+   },
+   "missing": "None found. Read against each raiser’s answers (`decisionAnswers` in docs/verification/audit-2026-10-21/areas/guide/wiring.json): each sends the row’s own thing, the offer’s id, the return’s year, the account’s id. A raiser that raises a question again changes its detail, urgency and date, not its answers (`requireDecision`).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "world.take_decision_action",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "world.day_rollover",
+   "kind": "event",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: emitted at each local midnight by the day’s rollover (`life.day_rollover`, src/engine/systems/life.ts). No control sends it.",
+   "prerequisites": "A life that hasn’t ended, and the rollover on the calendar, which an opening arms where a save lacks it (src/engine/index.ts).",
+   "reads": "The date.",
+   "changes": "Nothing of its own: it wakes the readers listed, each once a day.",
+   "consumers": [
+    {
+     "what": "the day’s worry: money owed adds stress and takes morale, and what’s owed is paid back where there’s money",
+     "at": "src/engine/systems/spending.ts:502"
+    },
+    {
+     "what": "the bank’s day",
+     "at": "src/engine/systems/banking.ts:836"
+    },
+    {
+     "what": "a card’s interest for the day",
+     "at": "src/engine/systems/credit.ts:1092"
+    },
+    {
+     "what": "no card at all: the score’s slow rise",
+     "at": "src/engine/systems/credit.ts:1087"
+    },
+    {
+     "what": "the day’s alerts",
+     "at": "src/engine/systems/statements.ts:491"
+    },
+    {
+     "what": "an injury’s day",
+     "at": "src/engine/systems/injury.ts:221"
+    },
+    {
+     "what": "a loan’s day",
+     "at": "src/engine/systems/lending.ts:1172"
+    },
+    {
+     "what": "a claim’s days",
+     "at": "src/engine/systems/unemployment.ts:205"
+    },
+    {
+     "what": "the age band",
+     "at": "src/engine/systems/birthdays.ts:79"
+    },
+    {
+     "what": "an account’s life",
+     "at": "src/engine/systems/accountlife.ts:529"
+    },
+    {
+     "what": "money on its way",
+     "at": "src/engine/systems/bankmoves.ts:447"
+    }
+   ],
+   "experienced": "Each midnight, as the clock passes it: the day’s worry where money’s owed, interest, alerts, a debt’s day, an injury healing.",
+   "saveLoad": "The event isn’t saved; the rollover item is, and its next one is put on the clock as each runs. A save opened mid-day plays on to the evening as the life never saved (tests/b20-guide-startup.test.ts), and every older save in tests/fixtures/ plays a day past its midnight without an error.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-startup.test.ts"
+    ],
+    "comparisons": [
+     "tests/b20-guide-chapters.test.ts, 6. How You Are: twins at 11 PM on a Friday, one overdrawn by a purchase; carried past midnight, the one owing has the higher stress"
+    ],
+    "mutations": [
+     "B20-GUIDE-16"
+    ],
+    "journeys": []
+   },
+   "missing": "None found in what the event does. Its readers are each their own area’s rows.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "look.decision",
+   "kind": "look",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, What Needs You: a question’s title or its date, pressed (src/ui/screens/Home.tsx); the look is src/ui/looks/attention.tsx.",
+   "prerequisites": "“What Needs You” read (look.decision); a question the save holds, or what it says once it’s forgotten, 180 days after it closed.",
+   "reads": "The question (detail, urgency, dueAt, createdAt, resolvedAt, dismissedAt, actions, route) and openDecisions’ order.",
+   "changes": "Nothing: reading it runs no command and moves no clock (tests/guide.test.ts holds a save byte for byte under every look).",
+   "consumers": [],
+   "experienced": "On Home, below the question: its detail; its buttons by name while it’s among the six drawn; when it closes; its urgency and place. Dismissed, it says so and that what it was about still stands.",
+   "saveLoad": "Nothing of its own: it reads the question as saved.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/looks.test.ts",
+     "tests/language-dynamic.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-26"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Says what a question asks, what to press for it on Home, when it closes and where it stands, true at the moment it’s opened.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "look.notification",
+   "kind": "look",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, What Needs You: a notice’s title or its time, pressed (src/ui/screens/Home.tsx); the look is src/ui/looks/attention.tsx.",
+   "prerequisites": "“What Needs You” read (look.notification); a notice the save keeps, or what it says once it’s gone, past the latest 500.",
+   "reads": "The notice (body, read, importance, at, route, refType) and unreadNotifications’ order.",
+   "changes": "Nothing: opening it doesn’t mark it read, as it says.",
+   "consumers": [],
+   "experienced": "Under the notice on Home: its words, whether it’s read, what Mark N Read would mark, and its place among the unread.",
+   "saveLoad": "Nothing of its own: it reads the notice as saved, read or not.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/language-dynamic.test.ts",
+     "tests/looks.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-27"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Says what a notice says, whether it has been read, its place among the unread and what Mark N Read and Go There do.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.how",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, How You Are (src/ui/screens/Home.tsx).",
+   "prerequisites": "“How You Are” read; Locked before it, naming the chapter, with Read About It.",
+   "reads": "The player’s wellbeing (energy, stress) and readiness(), and wellbeingSummary.",
+   "changes": "Nothing: it reads.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: the three figures as they stand, rounded; pressing one opens its dial or readiness.",
+   "saveLoad": "Nothing of its own: the dials are saved with the person.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-chapters.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-9"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Shows the energy, stress and readiness the life holds now, each a way to its dial, under a line on how you are.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.sleep",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The top bar: Sleep (src/ui/shell/TimeControls.tsx).",
+   "prerequisites": "“Sleep” read; grayed out while a commitment is under way (`occupiedAt`), with “You’re at … until …”.",
+   "reads": "occupiedAt for the reason; nothing else until its dialog’s button is pressed.",
+   "changes": "Nothing: the dialog’s Sleep N Hours sends life.sleep, with the hours on it.",
+   "consumers": [],
+   "experienced": "At once the dialog: the hours, from the shortest sleep to the longest night, what you’d sleep through, when you’d wake; the clock held while it’s open.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-screens.test.ts",
+     "tests/whynot-time.test.ts",
+     "tests/time-controls.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-12"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Opens the Sleep dialog, and is grayed out with the reason, said under the bar, while you’re at a commitment.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.look-after",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The top bar: Look After Yourself (src/ui/shell/TimeControls.tsx).",
+   "prerequisites": "“Looking After Yourself” read; each line refused as the command refuses it.",
+   "reads": "lookAfterOptions: the dials, the money, the hour and the weather.",
+   "changes": "Nothing: a line sends life.look_after with its action.",
+   "consumers": [],
+   "experienced": "On opening: Eat A Meal, Order In, Shower, Work Out and Unwind in the engine’s order, the top marked Needed Now or Most Worth It; pressed, the clock moves its time and a message says when it was done.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/evidence2-b01.test.ts",
+     "tests/look-after.test.ts",
+     "tests/looking-after.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Lists what a day needs besides sleep, the most pressing first, each with its time, cost and what it would change, grayed out with the reason where it can’t be done.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.career",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The rail’s Career, under Your Work (src/ui/shell/destinations.ts), and the screen’s address (src/ui/workspaces/WorkspaceRouter.tsx).",
+   "prerequisites": "“Your Career” read: not on the rail before it, and the screen opened by address says Locked and names the chapter.",
+   "reads": "isOpen(ui.career).",
+   "changes": "Nothing: it goes to /workspace/career.",
+   "consumers": [],
+   "experienced": "Once the chapter is read, Career is on the rail and its screen opens on its kept tab.",
+   "saveLoad": "Nothing of its own: where the screen is isn’t saved.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-promises.test.ts",
+     "tests/pro-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-14"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Takes the player to the Career screen, once “Your Career” is read.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.career-reasons",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Career, Representation: Show The Reasons under Why It Went This Way (src/ui/career/RepresentationPane.tsx).",
+   "prerequisites": "“Representation” read; it shows and hides, Hide The Reasons once open.",
+   "reads": "interestOf for now, and the relation’s last decision (`why`).",
+   "changes": "Nothing: it shows and hides; kept while the player is elsewhere, never in the save.",
+   "consumers": [],
+   "experienced": "Pressed: the factors at the last decision and now, how many are at the bar, and what an approach needs.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/pro-representation-screen.test.ts",
+     "tests/journey-agent.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Opens the game’s seven factors at the agent’s office’s last decision and as things stand now, each with its level and its words.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.profile",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The rail’s Player Profile, under You, and your name at the rail’s foot (src/ui/shell/destinations.ts, src/ui/shell/GameShell.tsx); P from anywhere but a text box.",
+   "prerequisites": "“You As An Actor” read: not on the rail before it, and your name’s title says it’s locked.",
+   "reads": "isOpen(ui.profile).",
+   "changes": "Nothing: it goes to /workspace/profile.",
+   "consumers": [],
+   "experienced": "Once the chapter is read, Player Profile is on the rail and opens.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-promises.test.ts",
+     "tests/language-frame.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-14"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Takes the player to the Player Profile, once “You As An Actor” is read.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.calendar",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, Calendar (src/ui/screens/Home.tsx).",
+   "prerequisites": "“What’s Coming” read; Locked before it.",
+   "reads": "nextCommitment and upcoming(6) from the calendar.",
+   "changes": "Nothing: it reads.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: “in 1 hour Classes August 31, 2026 at 9:00 AM” and the five after it; an entry pressed says when, how long, where and what missing it would cost. Of a next commitment in another town that needs you there already, it says “you’re not in …”.",
+   "saveLoad": "Nothing of its own: the calendar is the save’s scheduled items.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-screens.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-23"
+    ],
+    "journeys": []
+   },
+   "missing": "None found after the repair. Until 2026-10-21 it said “you’re not in New York”, in red, of a career meeting, audition or work day whose trip is part of it (`travelMinutes`), which its entry, its stop and its handler all say needs no being there first; repaired in src/ui/screens/Home.tsx, held by tests/b20-guide-screens.test.ts.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Shows the next commitment, how soon and when, and up to five more after it, each opening to its entry.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.go",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "A stop’s dialog: Go (src/ui/shell/TimeControls.tsx, `onGo`), when the clock stops at a commitment.",
+   "prerequisites": "“What’s Coming” read (ui.go); Locked before it, opening the guide there. The dialog is drawn when any move of the clock stops at something that wants the player (`halt`).",
+   "reads": "The stop: the item, where the jump was headed and where it was sent from.",
+   "changes": "Moves the clock through the commitment’s own hours, on to where the jump was headed where that’s later (`carryOnTo`), as the same jump, stopping again at the next commitment on the way; the commitment’s handler runs with the player there.",
+   "consumers": [
+    {
+     "what": "carryOnTo: through the commitment’s hours, or on to where the jump was headed",
+     "at": "src/engine/world/clock.ts:75"
+    },
+    {
+     "what": "the provider’s advanceTo, which stops again at the next commitment and pauses there",
+     "at": "src/app/game-context.tsx:238"
+    },
+    {
+     "what": "Go’s own press",
+     "at": "src/ui/shell/TimeControls.tsx:185"
+    }
+   ],
+   "experienced": "At once the clock runs through the commitment (Classes nine to three: the clock at three, the class attended and counted at the term review); a commitment went to is never missed.",
+   "saveLoad": "The stop itself is the screen’s, not the save’s: a save made at a stop opens with the commitment due and the clock where it was, and the next move runs it (tests/b20-guide-startup.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-11"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.play",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The top bar (src/ui/shell/TimeControls.tsx).",
+   "prerequisites": "“The Clock” read; Locked before it, so a new guided life’s clock can’t start until then.",
+   "reads": "universe.preferences.timeSpeed.",
+   "changes": "Nothing itself: it sends world.set_preferences, live or paused.",
+   "consumers": [],
+   "experienced": "Pressed: the clock runs a minute a minute or stops, and the button says the other word.",
+   "saveLoad": "Nothing of its own: the speed is saved by the command.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/evidence2-b01.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-8"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Starts and stops the clock, named for what a press does: Play while paused, Pause while live.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.advance",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The top bar: Advance, its lines One Hour, This Evening, Tonight, Tomorrow Morning, Next Event, Next Monday and One Week (src/ui/shell/TimeControls.tsx, AdvanceMenu).",
+   "prerequisites": "“Moving Time On” read; Locked before it. A jump past commitments asks first, in On The Way; a line with nothing to go to (Next Event, with nothing ahead) is grayed out.",
+   "reads": "The clock and the town’s zone (nextAtHour, nextMondayAt), the next event, and onTheWay: the commitments the jump would pass, those not on the calendar yet among them.",
+   "changes": "Moves the clock to the line’s time, through everything due on the way in order, stopping at each commitment that wants the player (the provider’s advanceTo).",
+   "consumers": [
+    {
+     "what": "onTheWay, what On The Way lists before the jump",
+     "at": "src/ui/shell/TimeControls.tsx:162"
+    },
+    {
+     "what": "the jump itself, stopping at a commitment and pausing there",
+     "at": "src/app/game-context.tsx:238"
+    },
+    {
+     "what": "Advance in On The Way",
+     "at": "src/ui/shell/TimeControls.tsx:202"
+    }
+   ],
+   "experienced": "Each line shows the day and the time it lands; a jump past commitments asks in On The Way (Advance or Cancel), then stops at each to ask Go or Stand Here. A jump of more than an hour through the night puts the character to bed from midnight.",
+   "saveLoad": "Nothing of its own: what the jump did is the save’s.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/time-controls.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.skip",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The top bar: Advance, Choose An Event, which opens Skip To Event (src/ui/shell/TimeControls.tsx, SkipDialog).",
+   "prerequisites": "“Moving Time On” read (ui.skip); Skip To grayed out with “Pick an event from the list.” when none is picked, and none on an empty calendar.",
+   "reads": "skipTargets(14): the next fourteen on the calendar, each with what’s on the way and what isn’t on the calendar yet (onTheWay).",
+   "changes": "Moves the clock to the event chosen, through everything on the way, stopping at each commitment.",
+   "consumers": [
+    {
+     "what": "the next fourteen events",
+     "at": "src/ui/shell/TimeControls.tsx:459"
+    },
+    {
+     "what": "Skip To moves the clock there",
+     "at": "src/ui/shell/TimeControls.tsx:194"
+    },
+    {
+     "what": "the jump, stopping at a commitment on the way",
+     "at": "src/app/game-context.tsx:238"
+    }
+   ],
+   "experienced": "The list, each with its count on the way; Skip To with the event’s name goes there, asking at each commitment on the way. One in another town that needs you there already is marked Elsewhere and the towns said.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-screens.test.ts",
+     "tests/whynot-time.test.ts",
+     "tests/time-controls.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-24"
+    ],
+    "journeys": []
+   },
+   "missing": "None found after the repair. Until 2026-10-21 it marked a commitment carrying its own trip Elsewhere and said “You’re in New Haven and this is in New York.” in red, though the trip is part of it; repaired in src/ui/shell/TimeControls.tsx, held by tests/b20-guide-screens.test.ts.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.needs",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, What Needs You (src/ui/screens/Home.tsx).",
+   "prerequisites": "“What Needs You” read; Locked before it.",
+   "reads": "openDecisions, unreadNotifications, troubles and the calendar’s clashes in the next month.",
+   "changes": "Nothing itself: its buttons send world.take_decision_action, world.dismiss_decision and world.mark_read, and Go There goes to a route.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: six questions at most, the rest coming up as those above close; six notices, or all of them with Show All; All Clear or No Questions Waiting with what still weighs.",
+   "saveLoad": "Nothing of its own: the questions and notices are the save’s.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/evidence2-b01.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-1",
+     "B20-GUIDE-2",
+     "B20-GUIDE-17"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Lists the open questions, overdue first and then by urgency, with their answers, and every unread notice, the most important first; with nothing waiting, it says what still weighs: money owed, a card behind, two commitments at once.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.open-calendar",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, the Calendar panel’s head: Open Calendar (src/ui/screens/Home.tsx); C from anywhere but a text box.",
+   "prerequisites": "“Your Own Plans” read; Locked before it, opening the guide there.",
+   "reads": "Nothing.",
+   "changes": "Nothing: it goes to /workspace/calendar.",
+   "consumers": [],
+   "experienced": "Pressed: the Calendar screen.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Opens the Calendar screen, the month, where a plan of your own is put on and called off.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.weather",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, Weather (src/ui/screens/Home.tsx).",
+   "prerequisites": "“Weather” read; Locked before it. The line under the greeting shows the weather from the first chapter.",
+   "reads": "weatherAt and forecastFor for the town Where You Are names.",
+   "changes": "Nothing: it reads, and the weather is the same however often it’s read.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: the figure now, the condition, the high and low, humidity and wind, the climate, and five days ahead.",
+   "saveLoad": "Nothing of its own: the weather is drawn from the save’s seed, the same after a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-chapters.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Found, outside the guide’s code: the hour’s figure can read above the day’s high or below its low by a degree, since the hour’s curve uses the high and low rounded in Celsius and the panel’s high and low are converted from them unrounded (`temperatureAtHour` and `weatherOn`, src/engine/systems/weather.ts). Measured on a year of New Haven hours: 124 above the day’s high, 118 below its low; on 25 August 2026 at 2:37 PM, “86°F … High 85°F”. Reported to the coordinator; not changed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Shows the town’s weather now, the day’s high and low, and the days ahead, each opening to the week, the day and its hours.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.money",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, Your Affairs: the Money line (src/ui/screens/Home.tsx).",
+   "prerequisites": "“Money” read; Locked before it.",
+   "reads": "The ledger’s accounts, the primary account, netWorth.",
+   "changes": "Nothing: it reads.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: “<account>: $…. Worth $…, after $… owed.”; an overdrawn account says so.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-18"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Says the primary checking account’s balance, accounts kept at home, and what you’re worth after what you owe.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.bank",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, the Money line’s button, the bank’s name (src/ui/screens/Home.tsx); the rail’s Money, under Your Affairs (src/ui/shell/destinations.ts).",
+   "prerequisites": "“Your Bank” read: Locked before it, and not on the rail.",
+   "reads": "isOpen(ui.bank).",
+   "changes": "Nothing: it goes to /workspace/bank.",
+   "consumers": [],
+   "experienced": "Pressed: the Money screen on its kept tab.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-promises.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Opens the Money screen, from the bank’s own name on the Money line and from the rail.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.papers",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, Your Affairs: the Papers line and its button (src/ui/screens/Home.tsx); the rail’s Papers.",
+   "prerequisites": "“Cover, Benefits And Returns” read; Locked before it. Drawn for a life at the School.",
+   "reads": "coverOn and coverLabel, the open returns, what’s owed, an unemployment claim.",
+   "changes": "Nothing: the button goes to /workspace/papers.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: “Cover: Yale Health.” and an alert for what needs doing; pressed, Papers.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-promises.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Says what covers you and what needs doing in your papers (a return due, tax owed, a claim), and opens Papers.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.school",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, Your Affairs: the School line and its button, Yale (src/ui/screens/Home.tsx); the rail’s School.",
+   "prerequisites": "“Drama School” read; Locked before it. Drawn for a life at the School.",
+   "reads": "The school record: standing, terms, rank, the next school commitment.",
+   "changes": "Nothing: the button goes to /workspace/school.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: “Year 1, good standing, 1st of 16 in the class. Next: …”; a concern or worse is an alert; pressed, the School.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-promises.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Says the year, the standing, the place in the class and what’s next at the School, and opens the School.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "ui.where",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home, Where You Are (src/ui/screens/Home.tsx).",
+   "prerequisites": "“Your Life, Hour By Hour” read; Locked before it.",
+   "reads": "placeProfile for the town: its zone, its people, its sun.",
+   "changes": "Nothing: it reads.",
+   "consumers": [],
+   "experienced": "Each time Home is drawn: the town, region and country, “Your home.” and its size, Local Time (the game’s clock in the town’s zone) and Daylight; each opens.",
+   "saveLoad": "Nothing of its own.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-screens.test.ts",
+     "tests/b20-guide-chapters.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-15"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Says the town, its region and country, its local time and daylight, each a way to its look.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.welcome",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 1, “Your Life, Hour By Hour” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life: the guide opens on it by itself. A life made with “I Know SLATE” has everything open.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: a new life starts paused on Home; the line under the greeting shows the time, the town, its zone, the season and the weather; a panel not yet open says Locked and names its chapter, with Read About It; I’ve Read It opens what the chapter lists and Next names the next; Save & Exit and Continue pick the life up at the same moment.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-startup.test.ts",
+     "tests/tutorial.test.ts",
+     "tests/guide-examples-start-day-body.test.ts",
+     "tests/help-mechanics.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-25"
+    ],
+    "journeys": []
+   },
+   "missing": "Found and repaired: until 2026-10-21 Save & Exit went to the save slots whatever the save did, so a save refused (a full device, a server’s error) lost the life played since the last one, and the toast that said so closed with the shell; from then it stays in the game, says why and offers Save Failed: Try Again (src/app/game-context.tsx, held by tests/b20-guide-startup.test.ts). Not followed here: the keys (? and /), Menu on a phone and How This Works on each panel, the shell’s and the help’s, held by tests/help-mechanics.test.ts.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches how SLATE works and how to read Home in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.calendar",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 2, “What’s Coming” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: the panel shows the next thing, how soon, and five more; the clock stops at Classes and the dialog is named for it; Go is there for its six hours and it counts as attended; Stand Here leaves the clock paused at nine and the class starts the next time the clock moves; asleep, it’s missed and said so; a plan of your own offers Skip It, which marks it missed and carries the jump on, and a class offers none.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/guide-examples-start-day-body.test.ts",
+     "tests/guide-chapter-facts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-11"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Calendar panel and what to do when the clock stops at a commitment in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.clock",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 3, “The Clock” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Play starts the clock and the button then says Pause; live is a minute a minute; running on its own, the clock stops at the first commitment; Sleep runs straight through what’s in its hours, its dialog listing them first.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/realclock.test.ts",
+     "tests/time-controls.test.ts",
+     "tests/evidence2-b01.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-8"
+    ],
+    "journeys": []
+   },
+   "missing": "That the clock waits while the Sleep, On The Way or Skip To Event dialog is open is the provider’s hold, held by tests/time-controls.test.ts (D4), not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches Play and Pause and what moves the clock in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.advance",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 4, “Moving Time On” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Advance lists its seven lines and Choose An Event, each with the day and time it lands; a week’s jump asks first in On The Way, how many it passes, those not on the calendar yet among them, and Advance there stops at the first while Cancel stays; Skip To Event lists fourteen at most and Skip To goes to the one picked; the clock never moves back.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/time-controls.test.ts",
+     "tests/whynot-time.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The night slept by itself from midnight on a jump, never above its energy ceiling, is held by tests/guide-examples-start-day-body.test.ts (day.advance), and Skip It’s and Call It Off’s carrying the jump on by tests/time-stops.test.ts; neither followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches Advance, Choose An Event and On The Way in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.needs",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 5, “What Needs You” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Mark 3 Read, the chapter’s own example, clears three; with nothing waiting the panel says two commitments at one time; an answer does what its button says to its own row, an answer that can’t be done says why and stays, Dismiss takes a row off and leaves what it was about standing.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-screens.test.ts",
+     "tests/evidence2-b01.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-1",
+     "B20-GUIDE-2",
+     "B20-GUIDE-6"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches What Needs You: notices, questions, Mark Read, the answers, Dismiss and Go There in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.body",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 6, “How You Are” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: energy runs down every hour awake, faster after a short night, and a meal or an hour unwinding doesn’t bring it back; stress eases while energy lasts and climbs once it’s gone; money owed adds to it at the day’s turn; readiness moves with morale and not with fitness, and its look names three dials at most.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-chapter-facts.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [
+     "twins from one seed, one sleeping four hours and one eight: the short night drains more energy over the same three hours",
+     "twins at 40 stress, one at no energy: an hour on, one lower and one higher",
+     "twins at 11 PM, one overdrawn: past midnight the one owing has the higher stress"
+    ],
+    "mutations": [
+     "B20-GUIDE-16"
+    ],
+    "journeys": []
+   },
+   "missing": "Condition’s wear and mending and the traits’ and age’s figures in The Details are held by tests/guide-chapter-facts.test.ts and the life area’s tests, not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches energy, stress, readiness and the rest of the wellbeing in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.sleep",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 7, “Sleep” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: the dialog asks from the shortest sleep to the longest night; Sleep 8 Hours, its example, moves the clock eight hours; energy comes back less the more sleep is owed; seven hours mend condition and four wear it down and add to what’s owed; at a commitment Sleep is refused and grayed out, the bar saying until when.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-screens.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/whynot-time.test.ts"
+    ],
+    "comparisons": [
+     "twins at 11 PM, one owing twelve hours: eight hours’ sleep brings the owing one’s energy back less",
+     "twins at 11 PM: seven hours mends condition, four wears it down and adds to the sleep owed"
+    ],
+    "mutations": [
+     "B20-GUIDE-12"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Sleep dialog and what a night does in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.looking-after",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 8, “Looking After Yourself” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: hungry, Eat A Meal is first and marked Needed Now, its line giving its minutes, its price and its change; pressed, the clock moves its time and the message says when it was done; Shower cleans and eases stress, Unwind eases stress and lifts morale, Work Out builds fitness, eases stress, costs energy and food and leaves you needing a shower.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/evidence2-b01.test.ts",
+     "tests/look-after.test.ts",
+     "tests/looking-after.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The groceries bought each day, and the notice when there’s no money for them, are the life and money areas’ rows, not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Look After Yourself menu in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.plans",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 9, “Your Own Plans” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Put It On puts a plan on the calendar, or says why it can’t; two at one hour are marked Clash; Call It Off takes one off; a plan slept through is missed.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-start-day-body.test.ts",
+     "tests/time-stops.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches putting plans of your own on the calendar and taking them off in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.weather",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 10, “Weather” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: the weather is the same however often it’s read and reading changes nothing; today, each day and each hour open; the day’s weather decides the run (two worlds of one town whose mornings differ build differently), and the flu’s weeks are the town’s, the same in both.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-promises.test.ts",
+     "tests/guide-examples-start-day-body.test.ts"
+    ],
+    "comparisons": [
+     "two worlds of New Haven, their skies drawn apart: on a morning one’s workout is a run and the other’s indoors, and the flu’s weeks are the same in both"
+    ],
+    "mutations": [
+     "B20-GUIDE-21"
+    ],
+    "journeys": []
+   },
+   "missing": "None found after the repair. Until 2026-10-21 the chapter said the weather affected the weeks the flu goes around; the flu reads the town’s climate and never the day’s weather (fluByWeek), as the guide’s entry said. Corrected in the chapter’s words.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Weather panel and what the weather decides in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.school",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 11, “Drama School” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: the School line’s button opens the School; classes run nine to three; Call In Sick is refused when well, with the reason, and excuses the day when ill; Read The Scene takes its minutes and says what it added; Ask with a partner’s name two hours ahead is answered at once and a yes goes on the calendar, sooner refused; Take An Elective Shift books the next free evening, seven to eleven; Research It waits for Read It.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-school.test.ts",
+     "tests/guide-examples-coursework.test.ts",
+     "tests/guide-examples-productions.test.ts",
+     "tests/guide-chapter-facts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Followed here: the instructions above. The rest (casting, the Cabaret, the review’s standings, the degree, the showcase) are the school and craft areas’ rows, played in the guide’s own examples (tests/guide-examples-school.test.ts, -coursework, -productions), not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the School: classes, coursework, partners, casting, shifts and the degree in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.profile",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 12, “You As An Actor” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Practice An Hour at Comic Timing, its example, moves the clock an hour and builds the technique; Study It takes an hour and a half and builds Familiarity; Tape It is refused until a reading is chosen, then takes an hour and gives the tape’s result.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-craft.test.ts",
+     "tests/guide-chapter-facts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The day’s four hours of practice are held by tests/guide-chapter-facts.test.ts; the readings, readers, callbacks and What To Work On by the craft area’s tests (tests/guide-examples-craft.test.ts); not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Player Profile: abilities, techniques, practice, genres and briefs in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.career",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 13, “Your Career” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Use This Name sets the name the résumé uses, and blank goes back to your own; Make Your Résumé takes an hour; Book A Headshot Session takes four hours and costs about $700.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/pro-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The reel, the Work tab’s pay and commission and the unions’ dues are the career area’s rows, held by its tests, not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Career screen’s portfolio, its pay and the unions in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.representation",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 14, “Representation” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: nothing opens before I’ve Read This; Check Your Materials says what’s missing; Send Your Materials says his office sees materials only after the showcase or a referral.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/pro-representation-screen.test.ts",
+     "tests/journey-agent.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The answers, the meeting, the reasons and the agreement are the career area’s rows, held by its tests, not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the agent’s panel, its notice, the approach and the agreement in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.finding-work",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 15, “Finding Work” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: roles go up on Monday morning at nine, each taking submissions for seven days; Submit Yourself with nothing to send says what’s missing.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/pro-opportunities-screen.test.ts",
+     "tests/pro-work.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Auditions, Ask For Another Time, offers, the work days and the School’s approval are the career area’s rows, held by its tests, not followed here. An offer’s Accept and Decline on Home are held in tests/b20-guide-screens.test.ts.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Opportunities tab, submissions, auditions, offers and the work in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.papers",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 16, “Cover, Benefits And Returns” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Papers opens from its line on Home, and while you’re at school the line says Yale Health covers you.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-papers.test.ts",
+     "tests/guide-chapter-facts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Enroll, the doctor, the bills, the claims and the returns are the papers and benefits areas’ rows, played in the guide’s own examples (tests/guide-examples-papers.test.ts), not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches Papers: health cover, care and its bills, benefits, pensions and tax returns in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.documents",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 17, “Passports And ID” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Apply For One pays the passport office’s fee and says when it should arrive; Report Lost cancels the passport, and a day on it’s still canceled.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-papers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The ID card, a license replaced, Going Abroad and OPT are the papers area’s rows, played in the guide’s own examples, not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the passport, the ID card, reporting one lost, Going Abroad and OPT in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.money",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 18, “Money” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: the Money line names the primary checking account and says the worth, what you have less what you owe.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-money.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-GUIDE-18"
+    ],
+    "journeys": []
+   },
+   "missing": "What moves the credit score is the money area’s row, not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the Money line, your worth and the credit score in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.bank",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 19, “Your Bank” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: Move Money between two accounts at one bank moves at once.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/guide-examples-money.test.ts",
+     "tests/guide-chapter-facts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The card, autopay, help with payments, alerts, cash, locking and reporting a card, borrowing and switching are the money area’s rows, played in the guide’s own examples (tests/guide-examples-money.test.ts), not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches the bank’s accounts, cards, payments, borrowing and statements in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "chapter.life",
+   "kind": "chapter",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The guide, chapter 20, “A Whole Life” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip under it, or Read About It on what it opens.",
+   "prerequisites": "A guided life; read in order, after the chapter before it (tutorial.read). A life made with “I Know SLATE” has everything open, and any chapter can be read.",
+   "reads": "Nothing but its words, its figures written in from the rules’ own constants as the module loads.",
+   "changes": "Nothing itself. I’ve Read It on it sends tutorial.read, which opens what the chapter names (its `opens`).",
+   "consumers": [],
+   "experienced": "Read, it opens what it names; done as it says, each instruction followed here does what it says: the birthday comes at nine in the morning on its day, and the next is put on the calendar a year on; your own page opens from your name.",
+   "saveLoad": "The chapter read is kept in universe.tutorial.read, through a save and a load.",
+   "evidence": {
+    "tests": [
+     "tests/b20-guide-chapters.test.ts",
+     "tests/mortality.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "The year’s chance of death and the ended life’s page are the life area’s rows (tests/mortality.test.ts), not followed here.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Teaches your own page, birthdays and the end of a life in the screen’s own words, and, read, opens what it names.",
+   "readBy": "guide",
+   "readAt": "c4832549"
+  }
+ ],
+ "promises": [
+  {
+   "id": "promise.start.home>start.guide",
+   "kind": "prerequisite",
+   "claim": "A word becomes a link once you’ve read the guide chapter that covers it.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "An underlined word is a link only once its look’s chapter is read (`guideOpen`, src/ui/looks/Look.tsx:87, by isOpen, src/engine/world/tutorial.ts:51); before, it’s drawn as plain words.",
+   "tests": [
+    "tests/b20-guide-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.home>day.weather",
+   "kind": "optional",
+   "claim": "The weather beside it shows the same town, hour by hour.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "Home draws Where You Are and Weather from the one town (`place` and `weather`, both of `city`, src/ui/screens/Home.tsx:102 and :105); the weather’s look opens that town’s day hour by hour (src/ui/looks/weather.tsx:188).",
+   "tests": [
+    "tests/b20-guide-promises.test.ts",
+    "tests/b20-guide-chapters.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.home>day.clock",
+   "kind": "immediate",
+   "claim": "The local time is the game’s clock, so it moves when the clock does.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "Local Time is the game’s clock in the town’s zone (`localTime: formatTime(sim.now, city.timeZone)`, src/engine/world/place.ts:156), drawn by Home (src/ui/screens/Home.tsx:397).",
+   "tests": [
+    "tests/b20-guide-promises.test.ts",
+    "tests/b20-guide-screens.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.guide>start.home",
+   "kind": "immediate",
+   "claim": "Reading a chapter opens Home’s panels and the underlined words it names.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "Each of Home’s panels is drawn once its chapter is read, and Locked before (`shows`, src/ui/screens/Home.tsx:112, `LockedPanel`, src/ui/guide/Guide.tsx:111), and its words open by the same rule (src/ui/looks/Look.tsx:87).",
+   "tests": [
+    "tests/b20-guide-promises.test.ts",
+    "tests/b20-guide-chapters.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.guide>day.calendar",
+   "kind": "immediate",
+   "claim": "“What’s Coming” opens the calendar, and the dialog that asks what to do when a commitment comes up.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "“What’s Coming” opens ui.calendar and ui.go (src/engine/content/tutorial.ts:162): the Calendar panel (src/ui/screens/Home.tsx:166) and Go in the stop’s dialog (src/ui/shell/TimeControls.tsx:408), Locked before it.",
+   "tests": [
+    "tests/b20-guide-promises.test.ts",
+    "tests/b20-guide-chapters.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.guide>day.clock",
+   "kind": "prerequisite",
+   "claim": "With the guide, the clock starts paused, and reading “The Clock” opens Play.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "A life made with the guide starts paused (src/engine/world/bootstrap.ts:359); Play is Locked and world.set_preferences refused until “The Clock”, which opens both (src/engine/content/tutorial.ts:175).",
+   "tests": [
+    "tests/b20-guide-promises.test.ts",
+    "tests/tutorial.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.find>start.guide",
+   "kind": "prerequisite",
+   "claim": "A place joins the menu once you’ve read its chapter.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "The rail lists a place only once its chapter is read (`railGroups`, src/ui/shell/GameShell.tsx:41).",
+   "tests": [
+    "tests/b20-guide-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.start.find>day.needs",
+   "kind": "optional",
+   "claim": "Go There on a notice takes you to its screen, and to its tab where the notice names one.",
+   "entryFile": "src/engine/content/guide/start.ts",
+   "holds": "Go There goes to the notice’s own route (src/ui/screens/Home.tsx:327), and the provider opens the screen at the tab a route names (`?tab=`, src/app/game-context.tsx:262), else where it was left. Until 2026-10-21 the promise said “its screen and tab”, though most notices name only their screen.",
+   "tests": [
+    "tests/b20-guide-promises.test.ts",
+    "tests/b20-guide-screens.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "c4832549"
+  }
+ ]
+}

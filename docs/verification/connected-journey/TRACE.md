@@ -58,7 +58,7 @@ Home, how the guide and this help work, and finding your way around.
   - (none)
 - **Later consequence:**
   - What a chapter opens stays open from then on.
-- **Tested by:** `tutorial.read`: `tests/defects-g3-1.test.ts`, `tests/defects-r8-1.test.ts`, `tests/evidence-g02-life.test.ts`, `tests/evidence-g29-ui.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g32-ui.test.ts`, `tests/evidence-g33-ui.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/help-mechanics.test.ts`, `tests/trace-commands.test.ts`
+- **Tested by:** `tutorial.read`: `tests/b20-craft-promises.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-guide-promises.test.ts`, `tests/b20-guide-wiring.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-r8-1.test.ts`, `tests/evidence-g02-life.test.ts`, `tests/evidence-g29-ui.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g32-ui.test.ts`, `tests/evidence-g33-ui.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/help-mechanics.test.ts`, `tests/trace-commands.test.ts`
 
 ### Finding Your Way (`start.find`)
 
@@ -125,7 +125,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - Once 6 of the term’s pieces have been due and 35% or more of them were Unready or not shown, as the review counts them, A Word On Your Coursework comes, once. It’s a warning, not the term review: it says how many, the day the faculty review the term and what the review would do to your standing if the term ends short, then what they were short on (the part most often unfinished on two or more of them with the steps that work on it, or that every part of each was unfinished, or that each was short on a different part). The review’s notice says what they were short on the same way.
   - At the term’s review, once 3 or more pieces are due, 50% or more of them Unready or not shown is short, and 50% or more Strong or better is noted.
   - A piece the course revises comes back to be shown again at its next class, with the note to take; a piece in rounds is shown a round at a time. A piece still open when the term’s classes end lapses.
-- **Tested by:** `school.prepare`: `tests/approaches.test.ts`, `tests/attributes-phase-2a.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/defects-g10-1.test.ts`, `tests/defects-g28-1.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-g8-9.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b03.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b10.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/mastery-integration.test.ts`, `tests/partners.test.ts`, `tests/pro-showcase.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/table-work-unread.test.ts`, `tests/trace-commands.test.ts`, `tests/traits-connected.test.ts`
+- **Tested by:** `school.prepare`: `tests/approaches.test.ts`, `tests/attributes-phase-2a.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-creation-personality.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/defects-g10-1.test.ts`, `tests/defects-g28-1.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-g8-9.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b03.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b10.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/mastery-integration.test.ts`, `tests/partners.test.ts`, `tests/pro-showcase.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/table-work-unread.test.ts`, `tests/trace-commands.test.ts`, `tests/traits-connected.test.ts`
 
 ### Table Work (`coursework.table`)
 
@@ -157,7 +157,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - When the piece is shown, the table work is one part of the preparation, and each quality it affects is held back by the least prepared part. Its Note Priority only decides what the note is about.
   - You put a note about an answer right when this piece, shown again, or a later one answers that question the way the text supports.
   - If you come back to a scene and are asked to read it another way, your answers are compared with last time’s.
-- **Tested by:** `school.choose`: `tests/defects-g8-9.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/integration-mastery.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/pro-showcase.test.ts`, `tests/table-work-unread.test.ts`
+- **Tested by:** `school.choose`: `tests/b20-craft-promises.test.ts`, `tests/defects-g8-9.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/integration-mastery.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/pro-showcase.test.ts`, `tests/table-work-unread.test.ts`
 
 ### How You’ll Play A Scene (`coursework.playing`)
 
@@ -189,7 +189,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
 - **Later consequence:**
   - Each rehearsal step rehearses the choice by 90% of that step’s own share of what’s left, and keeps doing so after its own part is complete, until the choice is complete at the scene’s own mark. A rehearsal kept with your partner does the same, by 90% of its own share.
   - The showing counts it with the rest of the preparation, and Your Work So Far names a way you choose most of the time as a habit.
-- **Tested by:** `school.choose_playing`: `tests/defects-g8-10.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-school.test.ts`, `tests/stage-interpretation.test.ts`, `tests/trace-commands.test.ts`
+- **Tested by:** `school.choose_playing`: `tests/b20-craft-promises.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-school.test.ts`, `tests/stage-interpretation.test.ts`, `tests/trace-commands.test.ts`
 
 ### Feedback And Your Notes (`coursework.feedback`)
 
@@ -308,7 +308,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - In class, on a day with nothing booked between you, they may ask (on 40% of such days) for 7 p.m. on one of the next three evenings they’re free. If you don’t answer, it lapses, and their trust falls 2.
   - When the piece is shown, a scene together at Strong or better brings you 1 closer, and a slip of theirs you covered earns 2 of their trust.
   - If you’re not there for the showing and have no excuse, their trust and the bond fall as for a missed rehearsal.
-- **Tested by:** `school.ask_partner`: `tests/attributes-phase-2b.test.ts`, `tests/commands-kept.test.ts`, `tests/coursework-defects.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/partners.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`; `school.answer_partner`: `tests/evidence-g24-school.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/language-frame-ui.test.ts`, `tests/partners.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/time-stops.test.ts`; `school.cancel_rehearsal`: `tests/commands-kept.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/time-stops.test.ts`
+- **Tested by:** `school.ask_partner`: `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/commands-kept.test.ts`, `tests/coursework-defects.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/partners.test.ts`, `tests/remaining-school.test.ts`, `tests/school-journey-gaps.test.ts`; `school.answer_partner`: `tests/b20-craft-promises.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/language-frame-ui.test.ts`, `tests/partners.test.ts`, `tests/school-journey-gaps.test.ts`, `tests/time-stops.test.ts`; `school.cancel_rehearsal`: `tests/commands-kept.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/time-stops.test.ts`
 
 ### Your Class (`coursework.class`)
 
@@ -342,7 +342,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
   - An evening of running lines you agree goes on your calendar as Running Lines With …. Kept, it works on the scene you share; with no scene shared, it works on their lines and none of yours.
   - With both readings tried at the next rehearsal you keep, the scene together counts your answers as one again, and where the course has a step of its own at the table, that step’s half of the table work moves 15% of what’s left. Where the table work is your answers alone, none of your figures moves.
   - A bond of 25 makes them a friend, 50 a close friend, and −20 or lower a rival.
-- **Tested by:** `school.respond`: `tests/classmate-moments.test.ts`, `tests/continuity-incidents.test.ts`, `tests/coverage-gaps-classmates.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b10.test.ts`, `tests/evidence3-school.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/remaining-school.test.ts`, `tests/repeat-moments.test.ts`, `tests/scope-school.test.ts`, `tests/student-experience.test.ts`; `school.make_amends`: `tests/commands-kept.test.ts`, `tests/defects-g8-10.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`
+- **Tested by:** `school.respond`: `tests/b20-creation-personality.test.ts`, `tests/classmate-moments.test.ts`, `tests/continuity-incidents.test.ts`, `tests/coverage-gaps-classmates.test.ts`, `tests/defects-g8-10.test.ts`, `tests/defects-r2-1.test.ts`, `tests/evidence-g09-life.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g30-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b10.test.ts`, `tests/evidence3-school.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/journey-school-year.test.ts`, `tests/journey-three-students.test.ts`, `tests/remaining-school.test.ts`, `tests/repeat-moments.test.ts`, `tests/scope-school.test.ts`, `tests/student-experience.test.ts`; `school.make_amends`: `tests/b20-school-trust.test.ts`, `tests/commands-kept.test.ts`, `tests/defects-g8-10.test.ts`, `tests/evidence-g18-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence2-b07.test.ts`, `tests/guide-examples-coursework.test.ts`
 
 ### Working A Problem Through (`coursework.workbook`)
 
@@ -378,7 +378,7 @@ Preparing the pieces your classes set, table work, how you’ll play a scene, yo
 - **Later consequence:**
   - Every later forecast and performance of the piece includes what you kept: the take of a brief, the showing of a scene, a night of a part.
   - What You’ve Found lists each part played its own way and how far it’s rehearsed, places to breathe you’ve found, and each try kept that moved its figure half a point or more.
-- **Tested by:** `work.identify`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-9.test.ts`, `tests/determinism-played.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`; `work.try`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-9.test.ts`, `tests/determinism-played.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`; `work.settle`: `tests/defects-g8-13.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/direction-mastery.test.ts`, `tests/direction.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/rehearsal-notes-history.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `work.identify`: `tests/b20-craft-productions.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-9.test.ts`, `tests/determinism-played.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`; `work.try`: `tests/b20-craft-productions.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-9.test.ts`, `tests/determinism-played.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`; `work.settle`: `tests/defects-g8-13.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/direction-mastery.test.ts`, `tests/direction.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/rehearsal-notes-history.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/workbook.test.ts`
 
 ### The Actor Showcase (`coursework.showcase`)
 
@@ -524,7 +524,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
   - At the next work-through, if the same note comes again: “Better since the last note.” if it was taken, and “Still:” if it wasn’t; either way, if you worked on it a way, the way you tried with its figure then and now.
   - When the run closes, the notes still open go into your notes from the courses: what you want as the choices, listening and a relationship as the work with your partner, lines as the lines, a skill as that skill, the rest as rehearsal on your feet. A note on the director’s request stays with the part.
   - Looking Back, at the closing, counts the notes you took and those you worked on that didn’t move.
-- **Tested by:** `school.work_note`: `tests/attributes-phase-2b.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-13.test.ts`, `tests/defects-r8-1.test.ts`, `tests/direction-mastery.test.ts`, `tests/direction.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/journey-school-production.test.ts`, `tests/rehearsal-notes-history.test.ts`
+- **Tested by:** `school.work_note`: `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-productions.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-13.test.ts`, `tests/defects-r8-1.test.ts`, `tests/direction-mastery.test.ts`, `tests/direction.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/journey-school-production.test.ts`, `tests/rehearsal-notes-history.test.ts`
 
 ### How You’ll Play A Part (`productions.playing`)
 
@@ -557,7 +557,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
   - At a work-through, a choice against the director’s request is the note, “I want it …”, and the next call marks it Taken if you’ve changed the choice by then.
   - Each night counts it: what it favors, the abilities it uses, and how far it’s rehearsed.
   - Work It Through offers a movement played another way only on an aspect the whole part leaves open.
-- **Tested by:** `school.choose_part_playing`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-12.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/trace-commands.test.ts`
+- **Tested by:** `school.choose_part_playing`: `tests/b20-craft-productions.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-12.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/trace-commands.test.ts`
 
 ### The Nights (`productions.nights`)
 
@@ -643,7 +643,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
   - The summer stipend is paid each Friday at five, with tax withheld, and counts as wages on the year’s tax return.
   - If you’re put on academic warning, go on a leave or leave the School during a Cabaret show, the calls still to come are called off and not held against you; what you played stays.
   - If you’re hurt on a Summer Cabaret stage, workers’ compensation pays the care and, if you’re kept off it, 75% of the whole stipend as well (Connecticut’s minimum for a week under $473.60, and more than its 75% after tax); nothing for the first three days unless you’re off more than six. For the days it keeps you off, the stipend stops and the compensation is paid in its place. Laid up by anything else, the company covers the nights and the stipend goes on.
-- **Tested by:** `school.cabaret`: `tests/defects-g8-1.test.ts`, `tests/defects-g8-14.test.ts`, `tests/evidence-g08-life.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g28-ui.test.ts`, `tests/evidence-g29-ui.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b03.test.ts`, `tests/evidence2-b10.test.ts`, `tests/remaining-school.test.ts`, `tests/school.test.ts`, `tests/student-experience.test.ts`; `school.summer_cabaret`: `tests/decisions-2026-10-14.test.ts`, `tests/defects-g8-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-13.test.ts`, `tests/defects-g8-14.test.ts`, `tests/defects3-unread.test.ts`, `tests/editorial17-school.test.ts`, `tests/evidence-g15-papers.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g21-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence2-b02.test.ts`, `tests/evidence2-b05.test.ts`, `tests/evidence2-b06.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b12.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/school.test.ts`
+- **Tested by:** `school.cabaret`: `tests/b20-creation-personality.test.ts`, `tests/b20-school-attendance.test.ts`, `tests/defects-g8-1.test.ts`, `tests/defects-g8-14.test.ts`, `tests/evidence-g08-life.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g28-ui.test.ts`, `tests/evidence-g29-ui.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b03.test.ts`, `tests/evidence2-b10.test.ts`, `tests/remaining-school.test.ts`, `tests/school.test.ts`, `tests/student-experience.test.ts`; `school.summer_cabaret`: `tests/b20-creation-twins.test.ts`, `tests/b20-papers-pension.test.ts`, `tests/decisions-2026-10-14.test.ts`, `tests/defects-g8-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-13.test.ts`, `tests/defects-g8-14.test.ts`, `tests/defects3-unread.test.ts`, `tests/editorial17-school.test.ts`, `tests/evidence-g15-papers.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g21-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence2-b02.test.ts`, `tests/evidence2-b05.test.ts`, `tests/evidence2-b06.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b12.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/school.test.ts`
 
 ### Plays To Read (`productions.plays`)
 
@@ -671,7 +671,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
   - (none)
 - **Later consequence:**
   - The training shows as your craft grows, each step kept in your development history.
-- **Tested by:** `plays.read`: `tests/attributes-phase-2b.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g21-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence2-b08.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/journey-life.test.ts`, `tests/playreading.test.ts`, `tests/whynot-school.test.ts`; `plays.research`: `tests/evidence-g20-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/playreading.test.ts`
+- **Tested by:** `plays.read`: `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g19-school.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g21-school.test.ts`, `tests/evidence-g22-school.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence2-b08.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/journey-life.test.ts`, `tests/playreading.test.ts`, `tests/whynot-school.test.ts`; `plays.research`: `tests/b20-guide-chapters.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/guide-examples-productions.test.ts`, `tests/playreading.test.ts`
 
 ## Your Craft
 
@@ -744,7 +744,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
   - Every piece of work judged afterward uses what grew at its new level.
   - Spaced pays a day to a week after the exercise’s last session.
   - Discipline counts toward the consistency of most work and toward how much every gain counts, so days kept up add up.
-- **Tested by:** `practice.exercise`: `tests/ability-mastered.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-r8-1.test.ts`, `tests/development.test.ts`, `tests/engagement.test.ts`, `tests/evidence-g06-life.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g32-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b13.test.ts`, `tests/genre-coverage.test.ts`, `tests/guide-chapter-facts.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/remaining-school.test.ts`, `tests/whynot-profile.test.ts`
+- **Tested by:** `practice.exercise`: `tests/ability-mastered.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-creation-looks.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-r8-1.test.ts`, `tests/development.test.ts`, `tests/engagement.test.ts`, `tests/evidence-g06-life.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g24-school.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g32-ui.test.ts`, `tests/evidence2-b07.test.ts`, `tests/evidence2-b08.test.ts`, `tests/evidence2-b13.test.ts`, `tests/genre-coverage.test.ts`, `tests/guide-chapter-facts.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/remaining-school.test.ts`, `tests/whynot-profile.test.ts`
 
 ### Genres (`craft.genre`)
 
@@ -775,7 +775,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - The next take of a brief in the genre uses the new figure.
   - The next step on a scene, or the next lines learned, from a play of the kind goes faster by it.
-- **Tested by:** `genre.study`: `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-r8-1.test.ts`, `tests/engagement.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/migration-94.test.ts`
+- **Tested by:** `genre.study`: `tests/b20-craft-bite.test.ts`, `tests/b20-craft-clock.test.ts`, `tests/b20-creation-looks.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-r8-1.test.ts`, `tests/engagement.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/migration-94.test.ts`
 
 ### Preparing A Brief (`craft.brief-prepare`)
 
@@ -810,7 +810,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - The next take judges each part against what completes it; a part left short holds back the qualities that depend on it.
   - Preparation keeps from day to day: it doesn’t fade.
-- **Tested by:** `brief.prepare`: `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `brief.prepare`: `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### A Reading And A Way To Play It (`craft.brief-choose`)
 
@@ -838,7 +838,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - The next take uses the reading, and the way as far as you’ve rehearsed it by then.
   - Work It Through can play one beat its own way, on an axis the whole leaves open.
-- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### Who Reads With You (`craft.brief-reader`)
 
@@ -866,7 +866,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
   - Each take works out the take with the reader beside your own, blending in what the reader brought, most of all in connection and responsiveness, as far as the scene is played off them. Strong, 65 or more, earns a callback where the take wasn’t one itself.
   - With a classmate, a take together at Strong or better adds 1 to your bond, more or less by how warmly you take to people, and a slip of theirs you cover at least half of adds 2 to their trust, and stays in what they remember of you.
   - Every take with a reader counts toward Playing With Others in Your Work So Far.
-- **Tested by:** `brief.reader`: `tests/defects-g31-1.test.ts`, `tests/determinism-played.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`
+- **Tested by:** `brief.reader`: `tests/b20-craft-promises.test.ts`, `tests/defects-g31-1.test.ts`, `tests/determinism-played.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/remaining-09-coverage.test.ts`
 
 ### Taping A Brief (`craft.brief-tape`)
 
@@ -908,7 +908,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - A callback stays until a take plays it the way its note asks; that take ends the round, and only a take that isn’t a callback earns the next.
   - What held the take back is counted by Your Work So Far; What To Work On Next forecasts every ability and technique the take called on, so what held it back most and what pays most to train can be two things, and the pane says which. The next suggestions in Where It Would Show Next follow from what it names.
-- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### A Piece Of Work, Explained (`craft.work`)
 
@@ -1027,7 +1027,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Player Profile: Your special skills are your techniques on the Player Profile, at the level it shows.
 - **Later consequence:**
   - A résumé made under your old name reads as behind, and Update Your Résumé makes one under the new name.
-- **Tested by:** `pro.set_name`: `tests/pro-core.test.ts`
+- **Tested by:** `pro.set_name`: `tests/b20-guide-chapters.test.ts`, `tests/pro-core.test.ts`
 
 ### Headshots (`career.headshots`)
 
@@ -1050,7 +1050,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.headshots`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1074,7 +1074,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1099,7 +1099,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - New recorded work after it shows under What’s Missing as worth adding.
-- **Tested by:** `pro.cut_reel`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.cut_reel`: `tests/b20-career-effects.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### The Agent And How To Reach Him (`career.agent`)
 
@@ -1128,7 +1128,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - His office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
   - After a pass, his office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
-- **Tested by:** `pro.agent_notice`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### His Office’s Answers And The Meeting (`career.agent-answers`)
 
@@ -1198,7 +1198,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
-- **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.accept_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### Your Work And Its Pay (`career.pay`)
 
@@ -1255,10 +1255,10 @@ The Career screen, your professional profile and name, headshots, your résumé 
 
 - **Action:** `pro.join_sag`, at Career, Work, Your Unions (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. Join SAG-AFTRA opens once you’ve worked a SAG-AFTRA principal role.
 - **Preconditions:**
-  - For Equity: the degree.
+  - For Equity: the degree, or a first day of work under an Equity contract.
   - For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank.
 - **Costs:**
-  - Equity’s Initiation Fee: $1,800.00 within three years: $600.00 at the degree, then two parts a year apart. The two parts’ dates are estimated
+  - Equity’s Initiation Fee: $1,800.00 within three years: $600.00 when you join, then two parts a year apart. The two parts’ dates are estimated
   - Equity’s Dues: $88.00 each May and November, and 2.5% of Equity pay, taken from it. Taking it from the pay is estimated
   - Joining SAG-AFTRA: About $3,244.07: the initiation fee and half a year’s base dues, then half a year’s dues each May and November, and 1.575% of SAG-AFTRA pay. Read from a search engine’s copy of its pages (an estimate)
 - **State (what changes at once):**
@@ -1295,11 +1295,12 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Feedback (how to read what comes back):**
   - Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.
   - Each role says it’s fictional: no real production is casting.
+  - A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
   - Two days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.
-- **Tested by:** `pro.submit`: `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Auditions And Callbacks (`career.auditions`)
 
@@ -1334,6 +1335,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Permission To Work first: An offer can be accepted only where your permission to work covers every one of its days.
 - **Costs:**
   - Time: Each work day’s hours, with the trip each way
+  - Energy: 8 a work day, as a School rehearsal call takes, on top of its hours awake (an estimate)
   - Money: None: the work pays you
 - **State (what changes at once):**
   - The work days go on your calendar, and the pay for each week is promised, due the Thursday after it. It isn’t paid yet.
@@ -1348,7 +1350,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 

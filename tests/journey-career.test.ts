@@ -170,18 +170,20 @@ interface Watched { what: string; at: number; changed: string[] }
  * items are inside it. A step that takes time moves the body's day beside an hour only waited (exertion, hunger);
  * preparation trains the abilities its steps train (`ordinary`); judged work goes on the work record and the journey,
  * and a night or a shoot day is work in its genres (J6); money moves through the ledger, and wages onto the year's
- * earnings.
+ * earnings. From 2026-10-21 (brief 20): a union's fee or dues paid from the bank counts in the year's dues too, as the
+ * working dues taken from pay always did, so Join SAG-AFTRA and a union bill write the papers; and a night on stage takes
+ * its nerves, which grow composure and presence, so a work day may write the abilities.
  */
 const MAY: Readonly<Record<string, readonly string[]>> = {
   'school.choose_showcase': ['school'],
   'pro.headshots': ['body', 'ledger'], 'pro.update_resume': ['body'], 'pro.cut_reel': ['body', 'ledger'],
   'pro.agent_check': [], 'pro.send_materials': [], 'pro.supply_material': [], 'pro.accept_agreement': [], 'pro.decline_agreement': [], 'pro.end_agreement': [],
-  'pro.ask_to_move': [], 'pro.join_sag': ['ledger'],
+  'pro.ask_to_move': [], 'pro.join_sag': ['ledger', 'papers'],
   'pro.prepare': ['body', 'abilities'], 'pro.tape_audition': ['body', 'work'], 'world.take_decision_action': [],
   [FOLLOW_UP_KIND]: [], [AGENT_REPLY_KIND]: [], [MEETING_KIND]: [], [DECISION_KIND]: [],
   [REPLY_KIND]: [], [TAPE_DUE_KIND]: [], [CASTING_KIND]: [], [AUDITION_KIND]: ['work'],
-  [WORK_DAY_KIND]: ['work', 'genres', 'body'], [SAG_ELIGIBLE_KIND]: [],
-  [PAY_KIND]: ['ledger', 'papers'], [RELEASE_KIND]: ['ledger'], [DUES_KIND]: ['ledger'],
+  [WORK_DAY_KIND]: ['work', 'genres', 'body', 'abilities'], [SAG_ELIGIBLE_KIND]: [],
+  [PAY_KIND]: ['ledger', 'papers'], [RELEASE_KIND]: ['ledger'], [DUES_KIND]: ['ledger', 'papers'],
 };
 /** How many of each kind are watched: enough to see what the kind writes, few enough to play in time. */
 const WATCH_EACH = 2;
@@ -407,8 +409,10 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const signed = sg.player.pro!.agreements[0]!;
     expect([signed.status, formatDate(signed.signedAt!, zone), formatDate(signed.endsAt!, zone)]).toEqual(['accepted', 'June 6, 2029', 'June 6, 2030']);
     expect(relationOf(sg.player, AGENT.id)!.stage).toBe('represented');
+    // Checked and sent at 10:20 from 2026-10-21, when brief 20's life area had a sleep after the night stop costing
+    // condition and mood as a short night does, and her morning went otherwise by twenty minutes; at 10:00 until then.
     expect(met(A.lines, /^(NOTICE \| (The School’s Follow-Up|A Meeting|You Met|He Offered)|PRESS \| (Check|Send Your|Accept The Agreement)|STOP \| Meeting)/)).toEqual([
-      'May 11, 2029 at 10:00 AM | NOTICE: The School’s Follow-Up After The Showcase', 'May 11, 2029 at 10:00 AM | PRESS: Check Your Materials', 'May 11, 2029 at 10:00 AM | PRESS: Send Your Materials',
+      'May 11, 2029 at 10:00 AM | NOTICE: The School’s Follow-Up After The Showcase', 'May 11, 2029 at 10:20 AM | PRESS: Check Your Materials', 'May 11, 2029 at 10:20 AM | PRESS: Send Your Materials',
       'May 18, 2029 at 10:00 AM | NOTICE: A Meeting Is Set', 'May 25, 2029 at 11:00 AM | STOP: Meeting At Halberd Talent | Ask To Move',
       'June 1, 2029 at 11:00 AM | STOP: Meeting At Halberd Talent | Go', 'June 1, 2029 at 11:00 AM | NOTICE: You Met His Office',
       'June 6, 2029 at 10:00 AM | NOTICE: He Offered You Representation', 'June 6, 2029 at 10:00 AM | PRESS: Accept The Agreement',

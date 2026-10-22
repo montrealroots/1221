@@ -1,0 +1,2357 @@
+{
+ "area": "craft",
+ "rows": [],
+ "promises": [
+  {
+   "id": "promise.coursework.prepare>school.orientation",
+   "kind": "prerequisite",
+   "claim": "The tour opens the studios and the library for your steps, and the session on the courses sets the first-year fall’s first pieces.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A studio or library step is refused until the tour is done (src/engine/systems/coursework.ts:518, src/engine/systems/coursework.ts:519); the session on the courses sets each first-year fall course's first piece through `setWork` (src/engine/systems/coursework.ts:1674).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.prepare>coursework.playing",
+   "kind": "immediate",
+   "claim": "Each rehearsal step rehearses the way you chose to play the scene.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`prepare` rehearses the chosen way in with any step of the rehearsal or partner part (`rehearseChoice`, src/engine/systems/coursework.ts:689; src/engine/systems/material.ts:220).",
+   "tests": [
+    "tests/guide-examples-coursework.test.ts",
+    "tests/defects-g8-10.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.prepare>craft.profile",
+   "kind": "immediate",
+   "claim": "A step trains its skill for up to ${WORK.trainingSteps} steps a piece, and practices the ability it calls on.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A step's `trains` grows its skill while `a.trained < WORK.trainingSteps` (src/engine/systems/coursework.ts:692), and every step that moves its part practices `PREP_ABILITY`'s ability (src/engine/systems/coursework.ts:699).",
+   "tests": [
+    "tests/guide-examples-coursework.test.ts",
+    "tests/evidence-g18-school.test.ts",
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.prepare>coursework.feedback",
+   "kind": "scheduled",
+   "claim": "In the class it’s due, the preparation is judged and the showing gives its band and its note.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The class day's reckoning asks `meetingWeight` for each course (src/engine/systems/school.ts:3489), which finds the piece due (src/engine/systems/coursework.ts:1473) and shows it (src/engine/systems/coursework.ts:1498): `show` judges it (`judgeWork`, src/engine/systems/coursework.ts:974), bands it and writes the note (src/engine/systems/coursework.ts:1096-1229).",
+   "tests": [
+    "tests/b20-craft-clock.test.ts",
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-4",
+    "B20-CRAFT-5"
+   ]
+  },
+  {
+   "id": "promise.coursework.prepare>school.standing",
+   "kind": "evaluation",
+   "claim": "The term’s review counts each piece’s band: once ${ESTIMATE.coursework.shown} or more are due, ${pct(ESTIMATE.coursework.unready)} Unready or not shown is short.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`termTally` counts each piece's band, a piece not shown as Unready (src/engine/systems/coursework.ts:1329); the review reads it (src/engine/systems/school.ts:3204-3205: counted at `ESTIMATE.coursework.shown`, short at `ESTIMATE.coursework.unready`).",
+   "tests": [
+    "tests/evidence-g21-school.test.ts",
+    "tests/evidence-g24-school.test.ts",
+    "tests/remaining-school-term.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.prepare>body.how",
+   "kind": "evaluation",
+   "claim": "Readiness sets how far each step moves its part, and your condition in class counts in the showing.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A step's move is scaled by the day's focus at the hour (`focusAt`, src/engine/systems/coursework.ts:668, src/engine/systems/coursework.ts:683; src/engine/systems/school.ts:950); the showing is judged at the day's condition at the meeting (`conditionAt`, src/engine/systems/coursework.ts:974; src/engine/systems/school.ts:960).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/b20-craft-clock.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-2",
+    "B20-CRAFT-3"
+   ]
+  },
+  {
+   "id": "promise.coursework.prepare>craft.identity",
+   "kind": "history",
+   "claim": "Each showing is kept on your record, where Your Work So Far reads your strengths and what keeps holding you back.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`show` keeps the judged piece (`recordWork`, src/engine/systems/coursework.ts:1134; src/engine/systems/evaluation.ts:629), which counts it for life with its limits (`countWork`, src/engine/systems/evaluation.ts:580); Your Work So Far reads the record's strengths and the limits kept for life (src/engine/systems/artistry.ts:92-127).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence-g23-school.test.ts",
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.table>coursework.prepare",
+   "kind": "prerequisite",
+   "claim": "Reading the scene to 30% with ${READ.label} opens the questions.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`tableWorkRefusal` refuses an answer under 30% read (src/engine/systems/coursework.ts:597), asked by `school.choose` (src/engine/systems/coursework.ts:1970).",
+   "tests": [
+    "tests/table-work-unread.test.ts",
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.table>coursework.class",
+   "kind": "scheduled",
+   "claim": "A partner may come to class with another answer to a question you’ve answered, and ask you to keep yours, take theirs or try both.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "In class, a partner on a shared scene with a question answered may bring a different reading (src/engine/systems/classmates.ts:357), answered Keep Yours, Try Theirs or Try Both (src/engine/systems/classmates.ts:605-628).",
+   "tests": [
+    "tests/evidence-g18-school.test.ts",
+    "tests/journey-school-year.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.table>coursework.feedback",
+   "kind": "evaluation",
+   "claim": "The showing counts your answers as the table work, and an answer the text doesn’t support can be its note.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The showing's table work is the answers the text supports (`interpretationOf`, src/engine/systems/coursework.ts:753), and an answer it doesn't support is a note candidate (src/engine/systems/coursework.ts:895).",
+   "tests": [
+    "tests/evidence-g18-school.test.ts",
+    "tests/guide-examples-coursework.test.ts",
+    "tests/coursework-defects.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.table>coursework.partners",
+   "kind": "evaluation",
+   "claim": "An answer that differs from your partner’s leaves the scene together at ${pct(ENSEMBLE.apart)} agreement until you’ve tried both.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "Kept apart, the scene together reads `ENSEMBLE.apart` agreement (src/engine/systems/coursework.ts:798, src/engine/systems/classmates.ts:615), cleared when both are tried at a rehearsal kept (src/engine/systems/coursework.ts:1812-1815).",
+   "tests": [
+    "tests/evidence-g18-school.test.ts",
+    "tests/ensemble.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.table>coursework.workbook",
+   "kind": "optional",
+   "claim": "On ${SCENE_STUDY.title} and courses like it, Work It Through can name the table work as a problem, with no way to work on it there: an answer the text supports is what fixes it.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A part of the preparation short is a `prep` problem (src/engine/systems/workbook.ts:125-130), and no adjustment answers a `prep` problem (src/engine/content/workbook.ts:38-43), so it has no way at it; an answer the text supports raises the table work, and the problem leaves.",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.playing>coursework.prepare",
+   "kind": "prerequisite",
+   "claim": "A choice pays off once it’s rehearsed, and the rehearsal steps, ${ALONE.label} among them, are what rehearse it, with the rehearsals kept with your partner.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The showing reads the way's rehearsal as a part of its preparation against its mark (src/engine/systems/coursework.ts:1010, src/engine/systems/coursework.ts:1026); the steps on the rehearsal part rehearse it (src/engine/systems/coursework.ts:689), and so does a rehearsal kept with the partner (src/engine/systems/coursework.ts:1799).",
+   "tests": [
+    "tests/guide-examples-coursework.test.ts",
+    "tests/defects-g8-10.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.playing>coursework.partners",
+   "kind": "scheduled",
+   "claim": "A rehearsal kept with your partner rehearses the choice too, as a rehearsal step does.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`rehearsalOutcome` rehearses the chosen way in at a rehearsal kept (src/engine/systems/coursework.ts:1799).",
+   "tests": [
+    "tests/defects-g8-10.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.playing>coursework.feedback",
+   "kind": "evaluation",
+   "claim": "The showing counts the choice: what it favors, the abilities it uses, and how far it’s rehearsed.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`workContext` reads the scene's material with the way played (`materialContext`: its lean, its abilities, its fit, src/engine/systems/coursework.ts:1023-1027) and its rehearsal as preparation (src/engine/systems/coursework.ts:1010).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/stage-interpretation.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-8"
+   ]
+  },
+  {
+   "id": "promise.coursework.playing>coursework.workbook",
+   "kind": "optional",
+   "claim": "An aspect left open here can be played its own way in one part of the scene, with Play This Part Another Way.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "Play This Part Another Way is offered only on an axis the whole leaves open (`waysFor`, src/engine/systems/workbook.ts:162-169), for a segment (`optionsOf`, src/engine/systems/workbook.ts:198-205).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/workbook.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.playing>craft.identity",
+   "kind": "history",
+   "claim": "Every way you choose and show is kept, and Your Work So Far names one you choose most of the time.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A side newly chosen is noted (`school.choose_playing`, src/engine/systems/coursework.ts:1958) and a showing notes the sides shown (src/engine/systems/coursework.ts:1136); Your Work So Far names a side chosen most of the time (src/engine/systems/artistry.ts:149-160).",
+   "tests": [
+    "tests/defects-g8-15.test.ts",
+    "tests/evidence2-b11.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.feedback>coursework.approach",
+   "kind": "immediate",
+   "claim": "A note that’s open and given ${LEARNING.persistent} times, on a part a piece prepares, opens another way to work on it on that piece.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`persistentFor` offers a way only for an open note given `LEARNING.persistent` times on a part the piece prepares (src/engine/systems/coursework.ts:527-534), asked by `approachRefusal` (src/engine/systems/coursework.ts:537).",
+   "tests": [
+    "tests/approaches.test.ts",
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.feedback>coursework.prepare",
+   "kind": "scheduled",
+   "claim": "A piece the course revises comes back open, due at its next class, with the note to take.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A revised template's piece is set revising, due at the next meeting, with the note (src/engine/systems/coursework.ts:1507-1512), shown again there (src/engine/systems/coursework.ts:1540-1563).",
+   "tests": [
+    "tests/b20-craft-clock.test.ts",
+    "tests/guide-examples-coursework.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-4",
+    "B20-CRAFT-5",
+    "B20-CRAFT-6"
+   ]
+  },
+  {
+   "id": "promise.coursework.feedback>craft.profile",
+   "kind": "immediate",
+   "claim": "The band sets how much the class grows the course’s skills, from ${pct(WORK.weight.unready)} of a usual class for Unready to ${pct(WORK.weight.exceptional)} for Exceptional.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`meetingWeight` returns `WORK.weight[band]` (src/engine/systems/coursework.ts:1538), the weight the class day grows the course's skills by (src/engine/systems/school.ts:3516).",
+   "tests": [
+    "tests/evidence-g21-school.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.feedback>school.standing",
+   "kind": "evaluation",
+   "claim": "The term’s review counts the bands: once ${ESTIMATE.coursework.shown} or more pieces are due, ${pct(ESTIMATE.coursework.unready)} or more Unready or not shown is short.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`termTally` counts the bands (src/engine/systems/coursework.ts:1329); the review reads it (src/engine/systems/school.ts:3204-3205).",
+   "tests": [
+    "tests/evidence-g21-school.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.feedback>coursework.partners",
+   "kind": "evaluation",
+   "claim": "Under a paired piece, the scene together shows your partner’s preparation, timing, answers and any slip, separately from your band.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The scene together is worked out apart from the band (`togetherOf`, src/engine/systems/coursework.ts:980; `sharedOf`, src/engine/systems/ensemble.ts:82) and kept as `showing.together` (src/engine/systems/coursework.ts:1142), its partner's preparation, timing, agreement and slip in its parts.",
+   "tests": [
+    "tests/ensemble.test.ts",
+    "tests/guide-examples-coursework.test.ts",
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.feedback>craft.identity",
+   "kind": "history",
+   "claim": "Each showing is on your record, and a note still open after ${LEARNING.persistent} times shows in Your Work So Far as one that keeps coming back.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The record keeps each showing (src/engine/systems/coursework.ts:1134); an open note given `LEARNING.persistent` times or more is A Note That Keeps Coming Back (src/engine/systems/artistry.ts:123-127).",
+   "tests": [
+    "tests/defects-g8-11.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.approach>coursework.feedback",
+   "kind": "prerequisite",
+   "claim": "It opens once a note has been given ${LEARNING.persistent} times on the same part and is still open.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`persistentFor`: open, and given `LEARNING.persistent` times (src/engine/systems/coursework.ts:530).",
+   "tests": [
+    "tests/approaches.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.approach>coursework.prepare",
+   "kind": "immediate",
+   "claim": "${APPROACHES.drill.label} adds a step to the piece, and ${APPROACHES.objective.label} changes what counts most in it.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A drill adds a step (`activitiesOf`, src/engine/systems/coursework.ts:587-589); Put It First weighs the dimensions reading the part more (`workContext`'s `putFirst`, src/engine/systems/coursework.ts:1015-1021).",
+   "tests": [
+    "tests/approaches.test.ts",
+    "tests/evidence-g18-school.test.ts",
+    "tests/coursework-objective.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.approach>coursework.partners",
+   "kind": "scheduled",
+   "claim": "${APPROACHES.partner.label} works on the part at the next rehearsal kept with your partner.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`rehearsalOutcome` works the part once at the next rehearsal kept (src/engine/systems/coursework.ts:1805).",
+   "tests": [
+    "tests/approaches.test.ts",
+    "tests/evidence-g18-school.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.approach>school.standing",
+   "kind": "evaluation",
+   "claim": "${APPROACHES.smaller.label} caps the band at Working, and the term’s review counts a Working piece as neither Unready nor Strong.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`bandFor` caps a smaller piece at Working (src/engine/systems/coursework.ts:1090-1093); `termTally` counts Working as neither Unready nor Strong (src/engine/systems/coursework.ts:1334-1335).",
+   "tests": [
+    "tests/approaches.test.ts",
+    "tests/guide-examples-coursework.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>school.orientation",
+   "kind": "prerequisite",
+   "claim": "You can’t ask a partner you haven’t met; Meeting Your Class, or your first class, meets them.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`askRefusal` refuses a partner not met (src/engine/systems/coursework.ts:1707); Meeting Your Class meets them (src/engine/systems/coursework.ts:1665-1667), and so does the first class (src/engine/systems/school.ts:3522).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>day.calendar",
+   "kind": "scheduled",
+   "claim": "A rehearsal you agree goes on your calendar, and the clock stops at it.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`book` schedules the rehearsal, needing the player (src/engine/systems/coursework.ts:1897), so a jump stops at it.",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/time-stops.test.ts",
+    "tests/partners.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>coursework.prepare",
+   "kind": "scheduled",
+   "claim": "A rehearsal kept moves the piece’s partner part when it’s held, and a request of theirs left open holds the piece’s other steps until you answer.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "Kept, it moves the partner part (src/engine/systems/coursework.ts:1794); an ask left open refuses the piece's steps (src/engine/systems/coursework.ts:607).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/partners.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-7"
+   ]
+  },
+  {
+   "id": "promise.coursework.partners>coursework.class",
+   "kind": "history",
+   "claim": "A rehearsal missed or called off late is held against you until you make amends, and two of them can bring a boundary.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A missed rehearsal or a late call-off is an incident to make right (src/engine/systems/coursework.ts:1763-1764, src/engine/systems/coursework.ts:2039); two unrepaired bring a boundary (src/engine/systems/classmates.ts:404).",
+   "tests": [
+    "tests/guide-examples-coursework.test.ts",
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>coursework.feedback",
+   "kind": "evaluation",
+   "claim": "The showing’s scene together shows their preparation, timing, agreement and reliability, separately from your band.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The partner as the scene together reads them: preparation, timing, agreement, reliability (`partnerReadOf`, src/engine/systems/coursework.ts:791-800), apart from the band (src/engine/systems/coursework.ts:1140-1145).",
+   "tests": [
+    "tests/ensemble.test.ts",
+    "tests/guide-examples-coursework.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>craft.identity",
+   "kind": "history",
+   "claim": "Each scene played together is counted, and Your Work So Far gives how they came out on average from the third on.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "Each scene together is counted (`countTogether`, src/engine/systems/coursework.ts:1144; src/engine/systems/evaluation.ts:607); Playing With Others is named from the third (src/engine/systems/artistry.ts:213).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>school.sick",
+   "kind": "scheduled",
+   "claim": "A rehearsal booked on a day you’ve called in sick is excused, and costs none of their trust.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`rehearsalOutcome` excuses a rehearsal on a day called in sick, trust unmoved (src/engine/systems/coursework.ts:1751-1755).",
+   "tests": [
+    "tests/coursework-defects.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.partners>coursework.playing",
+   "kind": "immediate",
+   "claim": "A rehearsal kept rehearses the way you chose to play the scene, as a rehearsal step does.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`rehearsalOutcome` rehearses the chosen way in (src/engine/systems/coursework.ts:1799).",
+   "tests": [
+    "tests/defects-g8-10.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.class>school.orientation",
+   "kind": "prerequisite",
+   "claim": "A classmate brings you something once you’ve met them, at Meeting Your Class or in class.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A classmate brings nothing before they're met (src/engine/systems/classmates.ts:353); Meeting Your Class meets them (src/engine/systems/coursework.ts:1666), and the first class does before the day's moment is drawn (src/engine/systems/school.ts:3522-3524).",
+   "tests": [
+    "tests/evidence-g22-school.test.ts",
+    "tests/evidence-g18-school.test.ts",
+    "tests/classmate-moments.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.class>coursework.table",
+   "kind": "immediate",
+   "claim": "${CHOICES.disagreement[1]!.label} replaces your answer to the question with theirs at once.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "Try Theirs sets their answer at once (src/engine/systems/classmates.ts:620).",
+   "tests": [
+    "tests/evidence-g18-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.class>coursework.partners",
+   "kind": "immediate",
+   "claim": "An answer can change their trust, which counts when you ask them to rehearse; a boundary asks for a day’s notice.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "An answer moves their trust (src/engine/systems/classmates.ts:613, src/engine/systems/classmates.ts:622, src/engine/systems/classmates.ts:627), read when you ask (`askRefusal`, src/engine/systems/coursework.ts:1732); a boundary asks a day's notice (`boundaryRefusal`, src/engine/systems/classmates.ts:295; src/engine/systems/coursework.ts:1734).",
+   "tests": [
+    "tests/evidence-g24-school.test.ts",
+    "tests/guide-examples-coursework.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.class>coursework.prepare",
+   "kind": "scheduled",
+   "claim": "An evening of running lines kept moves the lines of the scene you share ${pct(CLASS.study.memorization)} of what’s left.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "An evening running lines kept moves the shared scene's lines `CLASS.study.memorization` of what's left (src/engine/systems/classmates.ts:719).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.class>body.how",
+   "kind": "immediate",
+   "claim": "A word after a hard showing lifts your morale ${CLASS.encourage.morale}.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A word after a hard showing lifts morale `CLASS.encourage.morale` (src/engine/systems/classmates.ts:431).",
+   "tests": [
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>coursework.prepare",
+   "kind": "prerequisite",
+   "claim": "A scene’s lines learned to 30% let you try a way, and a problem in a part of the preparation is fixed by that part’s own step.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A scene can't be worked through under 30% of its lines (src/engine/systems/workpieces.ts:97); a `prep` problem has no adjustment (src/engine/systems/workbook.ts:125-130, src/engine/content/workbook.ts:38-43), so the part's own step answers it.",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>coursework.feedback",
+   "kind": "evaluation",
+   "claim": "The showing judges the scene with each part’s own work and every discovery you kept.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "The showing judges the scene in its segments with each segment's own work and the ways kept (`scenePiece`'s `withBook`, src/engine/systems/coursework.ts:812-820).",
+   "tests": [
+    "tests/guide-examples-coursework.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>craft.brief-prepare",
+   "kind": "evaluation",
+   "claim": "A brief’s take includes its beats’ own work and the ways you kept, as its forecast did.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A take is judged on `briefPiece`, with its beats' work and the ways kept (src/engine/systems/briefs.ts:315-322, src/engine/systems/briefs.ts:633-637), as the forecast is (src/engine/systems/briefs.ts:409).",
+   "tests": [
+    "tests/workbook.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>craft.brief-reader",
+   "kind": "immediate",
+   "claim": "${ADJUSTMENTS['with-partner'].label} moves the preparation of a classmate reading a brief with you.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "Run It With Your Partner moves a reading classmate's preparation (src/engine/systems/workbook.ts:285).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>productions.notes",
+   "kind": "optional",
+   "claim": "A part’s director’s notes are worked on through Work On The Note, by the same ways; Work It Through takes what the notes leave.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A craft note's ways are the workbook's (`solutionsOf`, src/engine/systems/production.ts:438-443), tried through `tryAdjustment` (src/engine/systems/production.ts:653-668).",
+   "tests": [
+    "tests/direction.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>coursework.playing",
+   "kind": "optional",
+   "claim": "Play This Part Another Way works on an aspect the whole leaves open: leave one open to play a part its own way.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "`waysFor` offers only axes the whole leaves open (src/engine/systems/workbook.ts:162-169).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/workbook.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.coursework.workbook>craft.profile",
+   "kind": "immediate",
+   "claim": "Working on an ability’s problem trains it a little, and running into a part trains adaptability.",
+   "entryFile": "src/engine/content/guide/coursework.ts",
+   "holds": "A way at a limit or a segment held back by an ability trains it (src/engine/systems/workbook.ts:299); Run Into It trains adaptability (src/engine/systems/workbook.ts:300).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.profile>start.guide",
+   "kind": "prerequisite",
+   "claim": "The profile opens with the guide’s chapter “${CHAPTER}”.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "The profile chapter opens `ui.profile` (src/engine/content/tutorial.ts:441), which the shell reads (src/ui/shell/GameShell.tsx:42).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.profile>craft.practice",
+   "kind": "optional",
+   "claim": "Each ability and technique has its exercise in the Practice column beside it.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Abilities and Techniques each have a Practice column (src/ui/workspaces/ProfileWorkspace.tsx:349, src/ui/workspaces/ProfileWorkspace.tsx:396).",
+   "tests": [
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.profile>craft.work",
+   "kind": "optional",
+   "claim": "A piece of work in School Journey opens into how it was judged.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "School Journey's work opens the work look (src/ui/looks/actor.tsx:245), which shows how it was judged.",
+   "tests": [
+    "tests/b20-craft-screens.test.ts",
+    "tests/guide-examples-craft.test.ts",
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.profile>craft.identity",
+   "kind": "optional",
+   "claim": "Your Work So Far, near the profile’s foot, reads the actor your work shows.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Your Work So Far on the Profile (src/ui/workspaces/ProfileWorkspace.tsx:320) reads `identityOf` (src/engine/systems/artistry.ts:85).",
+   "tests": [
+    "tests/evidence-g32-ui.test.ts",
+    "tests/evidence2-b11.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.profile>body.how",
+   "kind": "optional",
+   "claim": "Readiness Today shows how ready you are for today’s work, from how you are.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Readiness Today (src/ui/workspaces/ProfileWorkspace.tsx:511) reads `readiness` (src/engine/systems/life.ts:284) at the hour.",
+   "tests": [
+    "tests/evidence-g32-ui.test.ts",
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.profile>start.find",
+   "kind": "optional",
+   "claim": "P opens the profile from anywhere but a text box.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "P opens /workspace/profile unless typing in a field or behind a dialog (src/app/game-context.tsx:439-445).",
+   "tests": [
+    "tests/help-mechanics.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.practice>craft.profile",
+   "kind": "prerequisite",
+   "claim": "Practice is done from the Player Profile, in the row of what it trains.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Each row's Practice cell holds its exercise (src/ui/workspaces/ProfileWorkspace.tsx:349, src/ui/workspaces/ProfileWorkspace.tsx:396), sending `practice.exercise`.",
+   "tests": [
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.practice>day.clock",
+   "kind": "immediate",
+   "claim": "Each hour of practice moves the clock ${plural(PRACTICE.minutes, 'minute')} and spends its energy.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`practiceHour` moves the clock `PRACTICE.minutes` (src/engine/systems/practice.ts:184) and spends energy (src/engine/systems/practice.ts:187).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts",
+    "tests/evidence-g31-ui.test.ts",
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.practice>craft.work",
+   "kind": "evaluation",
+   "claim": "Every piece of work judged afterward is judged with your abilities and techniques where practice left them.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Practice grows the level where it's kept (src/engine/systems/practice.ts:188); every judgment reads the levels as they stand (`performerOf`, src/engine/systems/evaluation.ts:107-111).",
+   "tests": [
+    "tests/b20-craft-advice.test.ts",
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-13"
+   ]
+  },
+  {
+   "id": "promise.craft.practice>craft.brief-prepare",
+   "kind": "immediate",
+   "claim": "An exercise counts as experience of the material it names, and a brief built on that material prepares faster.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "An hour counts toward the features its exercise practises (src/engine/systems/practice.ts:202); a brief's step reads them (`prepSpeed`, src/engine/systems/briefs.ts:339, src/engine/systems/briefs.ts:501; `featureSpeed`, src/engine/systems/experience.ts:140).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/material.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-22"
+   ]
+  },
+  {
+   "id": "promise.craft.practice>craft.identity",
+   "kind": "history",
+   "claim": "The material an exercise practices is kept in the record that Material You Know reads.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "The features practised are kept (src/engine/systems/practice.ts:202), read by Material You Know (src/engine/systems/artistry.ts:132-137; src/ui/workspaces/ProfileWorkspace.tsx:324).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence2-b11.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-22"
+   ]
+  },
+  {
+   "id": "promise.craft.practice>body.look-after",
+   "kind": "optional",
+   "claim": "Stamina has no exercise: a workout under Look After Yourself builds it, and so does a class that trains the body as hard, attended.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "No exercise trains stamina (`exerciseFor`, src/engine/content/practice.ts:131); a workout and a class that trains the body as hard build it (`classTrains`, src/engine/systems/life.ts:677; src/engine/systems/school.ts:3519).",
+   "tests": [
+    "tests/fitness.test.ts",
+    "tests/decisions-advice.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.practice>body.sleep",
+   "kind": "optional",
+   "claim": "A rested hour counts for more: the day’s focus scales every hour, and ${FOCUS.precision.label} most.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Every hour is scaled by the day's focus (`focusAt`, src/engine/systems/practice.ts:178, src/engine/systems/practice.ts:188), Precision most by it (`focusFactor`, src/engine/systems/practice.ts:95-96).",
+   "tests": [
+    "tests/material.test.ts",
+    "tests/evidence-g20-school.test.ts",
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.genre>craft.profile",
+   "kind": "prerequisite",
+   "claim": "Genres is a panel of the Player Profile.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "The Profile's Genres panel (src/ui/workspaces/ProfileWorkspace.tsx:451).",
+   "tests": [
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.genre>craft.brief-tape",
+   "kind": "evaluation",
+   "claim": "Knowing the genre is part of a take’s preparation: it counts toward the take’s interpretation, and is complete at ${pct(BRIEF.complete.genre)}.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Knowing the genre is a part of a take's preparation (`genreKnown`, src/engine/systems/briefs.ts:333, src/engine/systems/briefs.ts:400), read by interpretation (src/engine/content/tasks.ts `tape`), complete at `BRIEF.complete.genre` (src/engine/systems/briefs.ts:294-297).",
+   "tests": [
+    "tests/b20-craft-bite.test.ts",
+    "tests/genre-identity.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-9"
+   ]
+  },
+  {
+   "id": "promise.craft.genre>coursework.prepare",
+   "kind": "immediate",
+   "claim": "A scene from a play of a kind you know is prepared faster, by the better of Familiarity and Work In It.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A step is sped by the better of the genre's familiarity and practice and the material's features (`genreSpeed`, src/engine/systems/engagement.ts:101; src/engine/systems/coursework.ts:680).",
+   "tests": [
+    "tests/b20-craft-bite.test.ts",
+    "tests/evidence-g20-school.test.ts",
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-1"
+   ]
+  },
+  {
+   "id": "promise.craft.genre>productions.part",
+   "kind": "immediate",
+   "claim": "A part in a play of a kind you know is learned faster.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Learn The Part is sped by `genreSpeed` (src/engine/systems/production.ts:605), as a lines note worked is (src/engine/systems/production.ts:680).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.genre>craft.brief-prepare",
+   "kind": "optional",
+   "claim": "Open Its Brief, beside each genre, opens the practice brief written for it.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Open Its Brief beside each genre (src/ui/workspaces/ProfileWorkspace.tsx:467).",
+   "tests": [
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.genre>craft.identity",
+   "kind": "history",
+   "claim": "The genres you’ve worked in are counted in Range.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Range counts the genres with practice (src/engine/systems/artistry.ts:180-182).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-prepare>craft.genre",
+   "kind": "prerequisite",
+   "claim": "A brief opens from its genre’s row in Genres, with Open Its Brief.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Open Its Brief on the genre's row (src/ui/workspaces/ProfileWorkspace.tsx:467).",
+   "tests": [
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-prepare>craft.brief-tape",
+   "kind": "evaluation",
+   "claim": "The take judges each part of the preparation against what completes it, and rehearsal beat by beat.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Each part against `requiredOf` (src/engine/systems/briefs.ts:294-297, src/engine/systems/briefs.ts:400-403); rehearsal beat by beat in `briefPiece` (src/engine/systems/briefs.ts:315-322).",
+   "tests": [
+    "tests/b20-craft-bite.test.ts",
+    "tests/briefs.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-prepare>craft.brief-choose",
+   "kind": "immediate",
+   "claim": "${BRIEF.steps.rehearse.label} rehearses the way you chose to play it, at ${pct(PLAYING.gainShare)} of the step’s reach.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Rehearse It rehearses the way in (`rehearseChoice`, src/engine/systems/briefs.ts:503) at `PLAYING.gainShare` of the step's gain (src/engine/systems/material.ts:220-222).",
+   "tests": [
+    "tests/briefs.test.ts",
+    "tests/remaining-09-coverage.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-prepare>craft.brief-reader",
+   "kind": "immediate",
+   "claim": "A classmate reading with you learns it as you rehearse, at ${pct(BRIEF.reader.rehearse)} of the step’s reach.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A reading classmate learns it at `BRIEF.reader.rehearse` of the step (src/engine/systems/briefs.ts:506).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-prepare>craft.profile",
+   "kind": "immediate",
+   "claim": "${BRIEF.steps.read.label} practices imagination and ${BRIEF.steps.lines.label} memory, a little each time the part rises.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Break It Down practises imagination and the lines memory when the part rises (src/engine/systems/briefs.ts:511-512).",
+   "tests": [
+    "tests/b20-craft-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-10"
+   ]
+  },
+  {
+   "id": "promise.craft.brief-prepare>coursework.workbook",
+   "kind": "optional",
+   "claim": "Work It Through works one beat at a time: Work It Slowly raises that beat’s own rehearsal.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Work It Slowly raises that beat's own work (src/engine/systems/workbook.ts:272).",
+   "tests": [
+    "tests/workbook.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-choose>craft.brief-prepare",
+   "kind": "immediate",
+   "claim": "A new reading keeps ${pct(BRIEF.readingKept)} of the breakdown.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A changed reading keeps `BRIEF.readingKept` of the breakdown (src/engine/systems/briefs.ts:526).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-choose>craft.brief-tape",
+   "kind": "evaluation",
+   "claim": "The take uses the reading and the way it’s played: what they lean toward, the abilities they call on, and how far the way is rehearsed.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`briefContext` leans by the reading and draws on its abilities (src/engine/systems/briefs.ts:369-378), reads the way's material context and its rehearsal as preparation (src/engine/systems/briefs.ts:366, src/engine/systems/briefs.ts:402).",
+   "tests": [
+    "tests/briefs.test.ts",
+    "tests/decisions-judge.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-choose>craft.identity",
+   "kind": "history",
+   "claim": "Each side newly chosen, and each take’s reading, is counted toward the habits Your Work So Far names.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A side newly chosen is noted (src/engine/systems/briefs.ts:534); takes' readings are counted for a habit (src/engine/systems/artistry.ts:161-170).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/guide-examples-craft.test.ts",
+    "tests/defects-g8-15.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-choose>coursework.playing",
+   "kind": "optional",
+   "claim": "A scene for class is played the same three ways, chosen the same way.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`school.choose_playing` takes the same three axes (src/engine/systems/coursework.ts:1946-1955) as `brief.choose` (src/engine/systems/briefs.ts:837-843).",
+   "tests": [
+    "tests/guide-examples-coursework.test.ts",
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-choose>coursework.workbook",
+   "kind": "optional",
+   "claim": "Play This Part Another Way plays one beat its own way, on an axis the whole leaves open.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`waysFor` (src/engine/systems/workbook.ts:162-169), for a beat (src/engine/systems/workbook.ts:198-205).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/workbook.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-reader>craft.brief-tape",
+   "kind": "evaluation",
+   "claim": "The take with its reader is what earns a callback; your own result counts nothing the reader brings.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A callback is earned by the take with its reader (src/engine/systems/briefs.ts:684-685); the take's own result is `e.overall` (src/engine/systems/briefs.ts:642, src/engine/systems/briefs.ts:666).",
+   "tests": [
+    "tests/ensemble.test.ts",
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-reader>coursework.partners",
+   "kind": "immediate",
+   "claim": "A take with a classmate at ${BAND_LABEL.strong} or better together adds about ${TOGETHER_BOND} to your bond; a slip of theirs you cover at least half of adds ${TOGETHER_COVERED} to their trust.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`afterTogether` moves the bond by `TOGETHER_BOND` at Strong or better and trust by `TOGETHER_COVERED` for a slip half covered (src/engine/systems/coursework.ts:142-151), from a take (src/engine/systems/briefs.ts:662).",
+   "tests": [
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-reader>coursework.workbook",
+   "kind": "optional",
+   "claim": "Run It With Your Partner brings a classmate reading with you ${pct(WORKBOOK.partnerGain)} of the way they have left.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Run It With Your Partner moves the reader `WORKBOOK.partnerGain` of what's left (src/engine/systems/workbook.ts:285).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-reader>craft.identity",
+   "kind": "history",
+   "claim": "Every take with a reader counts toward Playing With Others, with the slips and those you covered.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Each take with a reader is counted together (src/engine/systems/briefs.ts:663; src/engine/systems/evaluation.ts:607), named Playing With Others from the third (src/engine/systems/artistry.ts:209-213).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-20"
+   ]
+  },
+  {
+   "id": "promise.craft.brief-tape>craft.brief-choose",
+   "kind": "prerequisite",
+   "claim": "A take needs a reading chosen first.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`tapeRefusal` refuses a take before a reading (src/engine/systems/briefs.ts:550).",
+   "tests": [
+    "tests/briefs.test.ts",
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-tape>craft.work",
+   "kind": "history",
+   "claim": "Each take is kept on your work record, and opens there into how it was judged, beat by beat.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`tapeBrief` keeps the take on the record (src/engine/systems/briefs.ts:642), which the work look opens beat by beat (src/ui/looks/actor.tsx:245).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts",
+    "tests/b20-craft-screens.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-tape>craft.genre",
+   "kind": "immediate",
+   "claim": "A take is practice in the brief’s genres, one session’s worth shared among them.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`practiceGenres` shares one session among the brief's kinds, by how far the take was prepared (src/engine/systems/briefs.ts:653; src/engine/systems/engagement.ts:81-94).",
+   "tests": [
+    "tests/briefs.test.ts",
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-tape>craft.profile",
+   "kind": "immediate",
+   "claim": "A take grows ${TECHNIQUE_LABEL.screen}, or ${TECHNIQUE_LABEL.voiceover}, toward where classes level off.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A take grows screen or voice-over by `ordinary`, toward the reach classes level off at (src/engine/systems/briefs.ts:648; src/engine/systems/school.ts:996).",
+   "tests": [
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-tape>craft.identity",
+   "kind": "history",
+   "claim": "Takes and their readings are read for habits, and a callback answered counts toward Taking Direction.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Takes' readings are read for habits (src/engine/systems/artistry.ts:161-170); a callback answered counts toward Taking Direction (src/engine/systems/briefs.ts:682; src/engine/systems/evaluation.ts:615; src/engine/systems/artistry.ts:184-193).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-tape>coursework.workbook",
+   "kind": "optional",
+   "claim": "Work It Through names the problems the forecast shows before you tape: a beat not secure, a turn, stamina late.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`problemsOf` names a beat not secure, a turn and stamina late from the forecast (src/engine/systems/workbook.ts:89-115).",
+   "tests": [
+    "tests/workbook.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.brief-tape>body.sleep",
+   "kind": "optional",
+   "claim": "Rested, at readiness ${EVALUATION.sufficientReadiness} or more, tiredness costs a take nothing.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "The condition is 1 at readiness `EVALUATION.sufficientReadiness` or more (src/engine/content/tasks.ts:314; the take's condition, src/engine/systems/briefs.ts:628).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/b20-craft-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-11"
+   ]
+  },
+  {
+   "id": "promise.craft.work>craft.profile",
+   "kind": "history",
+   "claim": "Each piece judged is kept in School Journey, the latest ${WORK_KEPT} in full and every one counted.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`recordWork` keeps the latest `WORK_KEPT` (src/engine/systems/evaluation.ts:517, src/engine/systems/evaluation.ts:629-643) and counts every one for life (`countWork`, src/engine/systems/evaluation.ts:580); School Journey draws both (src/ui/workspaces/ProfileWorkspace.tsx:478).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence-g32-ui.test.ts",
+    "tests/attributes-complete.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.work>craft.identity",
+   "kind": "history",
+   "claim": "Your Work So Far reads the record for strengths, and what held each piece back, kept for life, for what keeps coming back.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Strengths from the record (src/engine/systems/artistry.ts:92-107), what held pieces back kept for life (src/engine/systems/evaluation.ts:580; src/engine/systems/artistry.ts:113-119).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/evidence2-b11.test.ts",
+    "tests/defects-r8-1.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.work>craft.practice",
+   "kind": "optional",
+   "claim": "An ability or technique that held recent work back, with room to grow, is what What To Work On Next recommends practicing.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`recommendations` names what recent work's forecast says practice would pay for, an input with room and its exercise (src/engine/systems/experience.ts:223-268; src/engine/systems/next-steps.ts:46; src/ui/workspaces/ProfileWorkspace.tsx:301).",
+   "tests": [
+    "tests/b20-craft-advice.test.ts",
+    "tests/evidence-g23-school.test.ts",
+    "tests/material.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-13"
+   ]
+  },
+  {
+   "id": "promise.craft.work>coursework.feedback",
+   "kind": "optional",
+   "claim": "A showing in class opens the same way from School Journey; the teacher’s note on it is in the scene’s Feedback, under Coursework.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A showing is a work record (src/engine/systems/coursework.ts:1134) the work look opens (src/ui/looks/actor.tsx:245); its note is the piece's Feedback (src/ui/components/CourseworkPane.tsx:290-295).",
+   "tests": [
+    "tests/b20-craft-screens.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.work>productions.nights",
+   "kind": "optional",
+   "claim": "A night on stage is judged in the play’s parts, and the night with the company together is worked out beside your own.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "A night is judged in the play's movements (`playPiece`, src/engine/systems/school.ts:2485-2489; `evaluatePiece`, src/engine/systems/school.ts:2518) and the night with the company beside it (`nightTogether`, src/engine/systems/school.ts:3689).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.work>body.how",
+   "kind": "optional",
+   "claim": "Readiness at the hour is the condition every piece reads.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Every piece reads `conditionAt`, readiness at the hour's fit (src/engine/systems/school.ts:960-970).",
+   "tests": [
+    "tests/b20-craft-bite.test.ts",
+    "tests/b20-craft-clock.test.ts",
+    "tests/evidence-g31-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-3",
+    "B20-CRAFT-11"
+   ]
+  },
+  {
+   "id": "promise.craft.identity>craft.work",
+   "kind": "prerequisite",
+   "claim": "Patterns are named once ${plural(ARTISTRY.least, 'piece')} of work have been judged.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Nothing is named under `ARTISTRY.least` pieces (src/engine/systems/artistry.ts:88, src/engine/systems/artistry.ts:93, src/engine/systems/artistry.ts:112).",
+   "tests": [
+    "tests/guide-examples-craft.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.identity>craft.brief-tape",
+   "kind": "optional",
+   "claim": "Where It Would Show Next, beside a brief, suggests the briefs your work so far points to.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Where It Would Show Next lists `suggestions` from the identity (src/ui/components/BriefPane.tsx:130, src/ui/components/BriefPane.tsx:284; src/engine/systems/briefs.ts:745).",
+   "tests": [
+    "tests/b20-craft-screens.test.ts",
+    "tests/briefs.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.identity>coursework.partners",
+   "kind": "optional",
+   "claim": "Reliability counts the rehearsals with a partner kept, and those you missed.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Reliability counts partners' rehearsals kept and missed by you (src/engine/systems/artistry.ts:202-205).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/defects-g8-14.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-23"
+   ]
+  },
+  {
+   "id": "promise.craft.identity>productions.notes",
+   "kind": "optional",
+   "claim": "Taking Direction counts the director’s notes on the craft given, worked and answered, and a note on the weakness your work keeps coming back to says so.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "Taking Direction counts notes given, worked and answered (src/engine/systems/production.ts:508, src/engine/systems/production.ts:520, src/engine/systems/production.ts:669; src/engine/systems/artistry.ts:184-193); a note on the recurring weakness says so (src/engine/systems/production.ts:369).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/defects-r8-1.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.identity>craft.profile",
+   "kind": "immediate",
+   "claim": "What To Work On Next names the weakness your work keeps coming back to with its count in all, and may put it first.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "`recommendations` says the recurring weakness's pieces for life (src/engine/systems/experience.ts:335-342).",
+   "tests": [
+    "tests/defects-r8-1.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.casting>school.standing",
+   "kind": "prerequisite",
+   "claim": "Only a student in the casting pool is cast, and only one in good standing goes to Yale Rep; ${word(ESTIMATE.missedCallsOut)} missed calls take you out until a term review finds you in good standing.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Only a castable student is cast (src/engine/systems/school.ts:2888); the Rep takes good standing (src/engine/systems/school.ts:2999); two missed calls take them out (`missedCallsOut`, src/engine/systems/school.ts:2097).",
+   "tests": [
+    "tests/evidence-g21-school.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.casting>productions.part",
+   "kind": "immediate",
+   "claim": "Being cast puts every rehearsal call on your calendar with its stage, and opens the part’s rehearsal process.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`cast` stages and books every call (src/engine/systems/school.ts:2970-2974, src/engine/systems/school.ts:3073-3080).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence-g20-school.test.ts",
+    "tests/production-staging.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-21"
+   ]
+  },
+  {
+   "id": "promise.productions.casting>day.calendar",
+   "kind": "scheduled",
+   "claim": "Each call and performance goes on your calendar, and the clock stops at it.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Calls and performances are booked needing the player (src/engine/systems/school.ts:3079; `schedule`'s default, src/engine/systems/school.ts:1584-1599).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-21"
+   ]
+  },
+  {
+   "id": "promise.productions.casting>productions.nights",
+   "kind": "evaluation",
+   "claim": "The part’s size and stage set how hard each night is: a lead harder than a featured part, and the Rep harder than the School.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`NIGHT_DIFFICULTY` by stage and size (src/engine/systems/school.ts:2456-2459), read by the night (src/engine/systems/school.ts:2514).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/understudy-part.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.casting>coursework.partners",
+   "kind": "immediate",
+   "claim": "The cast list changes bonds: a classmate in your cast comes ${BONDS.shared} closer, or ${BONDS.leadTaken} less close where a lead went between you.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The cast moves bonds by `BONDS.shared` and `BONDS.leadTaken` (src/engine/systems/school.ts:2939-2944).",
+   "tests": [
+    "tests/casting.test.ts",
+    "tests/evidence-g27-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.casting>body.how",
+   "kind": "immediate",
+   "claim": "When the list goes up, your own lead lifts morale ${CAST_LIST.ownLead}, a friend’s ${CAST_LIST.friendLead}, and a rival’s adds ${CAST_LIST.rivalLead} stress.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`castListRead` (src/engine/systems/school.ts:2833-2845).",
+   "tests": [
+    "tests/evidence-g24-school.test.ts",
+    "tests/evidence-g30-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.casting>productions.cabaret",
+   "kind": "optional",
+   "claim": "A Cabaret show is set in a week clear of your casting calls; cast at the School and the Rep at once, you can’t take one.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`cabaretWeek` finds a week clear of the calls (src/engine/systems/school.ts:1758-1780); double-cast is refused (src/engine/systems/school.ts:1619).",
+   "tests": [
+    "tests/remaining-school.test.ts",
+    "tests/school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.part>productions.casting",
+   "kind": "prerequisite",
+   "claim": "Only a part you’re cast in, with its run to come, has lines and blocking to learn.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`ownWorkRefusal`: not cast there, or the run over (src/engine/systems/production.ts:563-567).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.part>productions.notes",
+   "kind": "immediate",
+   "claim": "A missed blocking call, or lines under ${pct(PROCESS.offBook)} after the off-book call, is what the next note asks for first.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`noteKind`: a blocking call missed, then lines under `PROCESS.offBook` past it (src/engine/systems/production.ts:226-227), read at a work-through (src/engine/systems/production.ts:510-512).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts",
+    "tests/journey-school-production.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.part>productions.nights",
+   "kind": "evaluation",
+   "claim": "The lines and the blocking are a night’s preparation, against what keeping every call gives you.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The night's preparation is the process (`prepOf`, src/engine/systems/production.ts:278-282; src/engine/systems/school.ts:2499) against what every call makes (`completeFor`, src/engine/systems/production.ts:265-270; src/engine/systems/school.ts:2502).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.part>school.standing",
+   "kind": "evaluation",
+   "claim": "Each call kept or missed counts in the attendance the term’s review counts.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Each call counted and answered (src/engine/systems/school.ts:3849-3851), read as attendance (src/engine/systems/school.ts:3187).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.part>craft.profile",
+   "kind": "immediate",
+   "claim": "An hour on the part trains memory the first ${word(PROCESS.own.trainsAtMost)} times for each part; an hour with the book does every time.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Learn The Part trains memory while `trained < PROCESS.own.trainsAtMost` (src/engine/systems/production.ts:607); the book every time (src/engine/systems/production.ts:619).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.part>coursework.workbook",
+   "kind": "optional",
+   "claim": "Work It Through on the part works on a movement’s own blocking, slowly or run into from the one before.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The part's workbook works a movement's own work (`work-beat`, src/engine/systems/workbook.ts:272; `run-into`, src/engine/systems/workbook.ts:273) on the part (src/engine/systems/workpieces.ts:105-130).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.notes>productions.part",
+   "kind": "prerequisite",
+   "claim": "A note comes at a work-through call you come to; one on the lines or the blocking comes first while either is short.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A note at a work-through (src/engine/systems/production.ts:510-512), lines or blocking first while short (src/engine/systems/production.ts:226-227).",
+   "tests": [
+    "tests/journey-school-production.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.notes>coursework.workbook",
+   "kind": "immediate",
+   "claim": "A craft note’s ways are Work It Through’s, and working on one is a try kept in the part’s workbook.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A craft note is worked one of the workbook's ways and kept in the part's book (src/engine/systems/production.ts:651-671).",
+   "tests": [
+    "tests/direction.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.notes>productions.nights",
+   "kind": "evaluation",
+   "claim": "The share of notes taken is part of a night’s preparation, and of Growth From A Night.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The notes share is the night's `notes` part (src/engine/systems/production.ts:221, src/engine/systems/production.ts:281) and part of `nightFactor` (src/engine/systems/production.ts:222, src/engine/systems/production.ts:285-290), which scales a night's growth (src/engine/systems/school.ts:3869).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-17"
+   ]
+  },
+  {
+   "id": "promise.productions.notes>craft.identity",
+   "kind": "history",
+   "claim": "Each note on the craft given, worked on and answered counts for life in Taking Direction, with the way you reach for most; a note on the weakness your work keeps coming back to names it, with its count.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Given, worked and answered counted for life (src/engine/systems/production.ts:508, src/engine/systems/production.ts:520, src/engine/systems/production.ts:669); the way reached for most (src/engine/systems/artistry.ts:188-192); a note on the recurring weakness names it (src/engine/systems/production.ts:369).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/defects-r8-1.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.notes>coursework.feedback",
+   "kind": "history",
+   "claim": "Notes still open when the run closes go into your notes from the courses, and the next piece can ask for them.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`reflect` carries the open notes into the course notes (src/engine/systems/production.ts:729-746), called at the run's close (src/engine/systems/school.ts:3745).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.notes>craft.profile",
+   "kind": "immediate",
+   "claim": "Working on a note trains adaptability, and a note taken makes that call grow you ${pct(PROCESS.noteTaken - 1)} more.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Working a note trains adaptability (src/engine/systems/production.ts:670, src/engine/systems/production.ts:676); a note taken makes that call's growth `PROCESS.noteTaken` (src/engine/systems/production.ts:505; src/engine/systems/school.ts:3875-3876).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.notes>productions.playing",
+   "kind": "optional",
+   "claim": "A choice against the director’s request comes back as a note until the choice changes.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A choice against the request is the note (src/engine/systems/production.ts:511-512), taken once the choice changes (src/engine/systems/production.ts:504).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/material.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-19"
+   ]
+  },
+  {
+   "id": "promise.productions.playing>productions.casting",
+   "kind": "prerequisite",
+   "claim": "Only a part you’re cast in, with calls to come, can be chosen how to play.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`partPlayingRefusal`: not cast there, or the run over (src/engine/systems/production.ts:185-190).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.playing>productions.part",
+   "kind": "scheduled",
+   "claim": "Each call after the read-through rehearses the choice, ${pct(CALL_GAIN)} of what’s left.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Every call after the read-through rehearses it (`callAnswered`, src/engine/systems/production.ts:488; src/engine/systems/material.ts:220-222).",
+   "tests": [
+    "tests/guide-examples-productions.test.ts",
+    "tests/b20-craft-productions.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.playing>productions.notes",
+   "kind": "immediate",
+   "claim": "A choice against the director’s request is the note at the next work-through.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`againstDirection` makes the work-through's note the direction (src/engine/systems/production.ts:511-512).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/material.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-19"
+   ]
+  },
+  {
+   "id": "promise.productions.playing>productions.nights",
+   "kind": "evaluation",
+   "claim": "Each night counts the choice: what it favors, the abilities it uses, and how far it’s rehearsed.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`nightEvaluation` reads the way's material context and its rehearsal as preparation (src/engine/systems/school.ts:2511-2512).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.playing>craft.identity",
+   "kind": "history",
+   "claim": "The ways you choose are kept as habits in Your Work So Far.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A side newly chosen for the part is noted (src/engine/systems/production.ts:636); habits read the choices (src/engine/systems/artistry.ts:149-160).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/defects-g8-15.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.playing>coursework.playing",
+   "kind": "optional",
+   "claim": "A scene for class is chosen the same way, on the same three aspects.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`school.choose_part_playing` takes the three axes (src/engine/systems/production.ts:624-633) as `school.choose_playing` does (src/engine/systems/coursework.ts:1946-1955).",
+   "tests": [
+    "tests/guide-examples-productions.test.ts",
+    "tests/guide-examples-coursework.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>productions.part",
+   "kind": "prerequisite",
+   "claim": "The lines and the blocking at what keeping every call gives you, and never under ${pct(NIGHT_LEAST.lines)}, complete a night’s preparation.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Required at the larger of what every call makes and `NIGHT_LEAST` (src/engine/systems/school.ts:2501-2502).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>school.standing",
+   "kind": "evaluation",
+   "claim": "A run with ${ESTIMATE.workNights} or more nights by the term’s review is counted: mostly Off is short.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The review reads runs of `ESTIMATE.workNights` nights or more, short at their mean under `workFloor` (src/engine/systems/school.ts:3192-3199).",
+   "tests": [
+    "tests/casting.test.ts",
+    "tests/evidence-g21-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>productions.casting",
+   "kind": "evaluation",
+   "claim": "The chair reads what each night delivered at the next casting; a night missed counts as nothing.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`readRuns` weighs each run's delivery (src/engine/systems/school.ts:2663-2689); a night missed is delivered at nothing (src/engine/systems/school.ts:3891).",
+   "tests": [
+    "tests/casting.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>craft.work",
+   "kind": "history",
+   "claim": "Each night is kept in your work, judged movement by movement, with what held it back.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`reckonNight` keeps the night, judged in its movements (src/engine/systems/school.ts:3669-3671).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence-g23-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>craft.identity",
+   "kind": "history",
+   "claim": "The nights with a company count toward Playing With Others in Your Work So Far.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A night with a company is counted together (src/engine/systems/school.ts:3697; src/engine/systems/evaluation.ts:607), read by Playing With Others (src/engine/systems/artistry.ts:213).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>body.how",
+   "kind": "immediate",
+   "claim": "A night Strong or better, the night together where there’s a company, lifts morale ${ESTIMATE.nights.lift}, an Off one takes ${ESTIMATE.nights.sting}, and nerves add stress before the curtain.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The night together's band lifts or stings morale by `ESTIMATE.nights` (src/engine/systems/school.ts:3698-3701); nerves before the curtain (src/engine/systems/school.ts:3862; src/engine/systems/attributes.ts:349-356).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/evidence-g22-school.test.ts",
+    "tests/evidence-g27-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1",
+   "mutations": [
+    "B20-CRAFT-18"
+   ]
+  },
+  {
+   "id": "promise.productions.nights>craft.profile",
+   "kind": "immediate",
+   "claim": "A night grows scene work, feeling, voice and what the play asks, scaled by Growth From A Night, and listening with them.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A night grows `nightWeights` (scene, emotion, voice and the play's reads, src/engine/systems/school.ts:2394-2398) at the focus times `nightFactor` (src/engine/systems/school.ts:3869), and listening (src/engine/systems/school.ts:3684).",
+   "tests": [
+    "tests/b20-craft-productions.test.ts",
+    "tests/evidence-g23-school.test.ts",
+    "tests/casting.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.nights>coursework.feedback",
+   "kind": "history",
+   "claim": "At the closing, the notes still open go into your notes from the courses for the next piece.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`reflect` at the close (src/engine/systems/school.ts:3745; src/engine/systems/production.ts:729-746).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>school.standing",
+   "kind": "prerequisite",
+   "claim": "Academic warning keeps you out of the Cabaret and takes you out of a show under way; the summer company takes students in good standing.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`cabaretRefusal` on warning (src/engine/systems/school.ts:1604); warning takes them out of a show under way (`leaveCabaret`, src/engine/systems/school.ts:2008, src/engine/systems/school.ts:2080-2087); the summer company takes good standing (`summerRefusal`, src/engine/systems/school.ts:1623-1625).",
+   "tests": [
+    "tests/school.test.ts",
+    "tests/student-experience.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>productions.casting#prerequisite",
+   "kind": "prerequisite",
+   "claim": "A Cabaret week has to miss every casting call and night on call; with the School and the Rep both calling in its weeks, you can’t take one.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`readRuns` weighs a Cabaret or summer run by `R.weight` (src/engine/systems/school.ts:2680).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>day.calendar",
+   "kind": "immediate",
+   "claim": "Joining puts every evening, call and show on your calendar at once.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`school.cabaret` books every evening, call and show at once (src/engine/systems/school.ts:3960-3984).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>productions.part",
+   "kind": "immediate",
+   "claim": "Each show has its own rehearsal process, lines, blocking and notes, under its panel.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A Cabaret show and a summer show are holders with their own process (`holderFor`, src/engine/systems/production.ts:553-560), its calls staged as a Cabaret's (`cabaretStages`, src/engine/systems/production.ts:198-202).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>productions.nights",
+   "kind": "evaluation",
+   "claim": "Each show is a night judged like any other, kept on the run and in your work.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Each show is judged as a night and kept on the run (`CABARET_KIND`, src/engine/systems/school.ts:3985; `noteRun`, src/engine/systems/school.ts:2699).",
+   "tests": [
+    "tests/evidence-g23-school.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>productions.casting#evaluation",
+   "kind": "evaluation",
+   "claim": "A Cabaret or Summer run counts ${pct(R.weight.cabaret)} of a School production’s in what the chair reads you delivered.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "`readRuns` weighs a Cabaret or summer run by `R.weight` (src/engine/systems/school.ts:2680).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>money.affairs",
+   "kind": "scheduled",
+   "claim": "The summer stipend lands in your account each Friday at five, ${usd(SUMMER_CABARET.stipendWeekly)} a week before tax.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Fridays at five (`STIPEND_KIND`, src/engine/systems/school.ts:4081), paid by the clock (src/engine/systems/school.ts:4210).",
+   "tests": [
+    "tests/evidence-g22-school.test.ts",
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.cabaret>taxes.return",
+   "kind": "history",
+   "claim": "The summer stipend is wages on the year’s tax return, with its tax already withheld.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "The stipend is posted as wages with its withholding (src/engine/systems/school.ts:4210-4265), read by the year's return.",
+   "tests": [
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.plays>school.orientation",
+   "kind": "prerequisite",
+   "claim": "The tour shows you the Haas Arts Library, where every copy is borrowed.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A read is refused until the tour (src/engine/systems/playreading.ts:65-69).",
+   "tests": [
+    "tests/evidence-g19-school.test.ts",
+    "tests/evidence-g22-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.plays>craft.profile",
+   "kind": "immediate",
+   "claim": "A read trains script analysis and imagination, and research trains script analysis again, each kept in your development history.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "A read trains script and imagination (src/engine/systems/playreading.ts:136-137), research script (src/engine/systems/playreading.ts:169), each recorded (`grown`, src/engine/systems/attributes.ts:325).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts",
+    "tests/playreading.test.ts",
+    "tests/evidence-g20-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.productions.plays>coursework.prepare",
+   "kind": "optional",
+   "claim": "Script analysis, which every read trains, is part of the craft a scene’s preparation uses.",
+   "entryFile": "src/engine/content/guide/productions.ts",
+   "holds": "Table Work, a scene's analysis, reads script analysis (src/engine/content/coursework.ts:1081-1088, the showing's techniques, src/engine/systems/coursework.ts:1024).",
+   "tests": [
+    "tests/b20-craft-promises.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "12c04ee1"
+  }
+ ]
+}

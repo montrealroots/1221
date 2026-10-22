@@ -382,6 +382,16 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   populateWorld(sim, config);
   // The attributes, drawn at the start of the life (`systems/attributes.ts`).
   attributesOf(sim, sim.player);
+  // The three records an opening makes for anybody with a craft (`migrate`'s step 92, run on every open), made with the
+  // life (from 2026-10-22, brief 20's J4, found by the guide area): until then each was made by its first writer, so a life
+  // saved and opened before its first genre practised, piece judged or day counted held three empty records the life
+  // never saved didn't, and the two weren't the same to the byte, though nothing read them differently.
+  for (const person of Object.values(sim.universe.people)) {
+    if (!person.craft) continue;
+    person.engagement ??= { byGenre: {} };
+    person.development ??= { day: '', counts: {}, history: [] };
+    person.work ??= [];
+  }
   // The papers the life begins with (`systems/documents.ts`).
   startingDocuments(sim, sim.player);
   // A foreign student's status looked at when it can next change (`systems/permission.ts`, from 2026-10-01).

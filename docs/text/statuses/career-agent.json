@@ -5,6 +5,12 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/systems/proagent.ts#agreementBefore": {
+  "status": "Rewritten And Verified",
+  "hash": "fbba53339915",
+  "on": "2026-10-21",
+  "evidence": "Written for brief 20's D1 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts, a second offer after one declined and one let lapse"
+ },
  "src/engine/systems/proagent.ts#answer": {
   "status": "Rewritten And Verified",
   "hash": "88f29169ed5d",
@@ -61,9 +67,9 @@
  },
  "src/engine/systems/proagent.ts#followUp": {
   "status": "Rewritten And Verified",
-  "hash": "10b7898f0d2b",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "hash": "e40f9e4c6b64",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 for brief 20's F10, so the School's request to meet lapses on its day with a notice and a line in History With His Office, to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-agent-ask-lapse.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/systems/proagent.ts#FOUND": {
   "status": "Rewritten And Verified",
@@ -121,9 +127,9 @@
  },
  "src/engine/systems/proagent.ts#offerAgreement": {
   "status": "Rewritten And Verified",
-  "hash": "def93de3e1e7",
+  "hash": "d227db915f6a",
   "on": "2026-10-21",
-  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts"
+  "evidence": "Written for brief 20's D1 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts, a second offer after one declined and one let lapse"
  },
  "src/engine/systems/proagent.ts#officeOf": {
   "status": "Rewritten And Verified",
@@ -157,9 +163,9 @@
  },
  "src/engine/systems/proagent.ts#registerProAgent": {
   "status": "Rewritten And Verified",
-  "hash": "a20e6524fe7f",
-  "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so a round or a meeting missed for another career commitment says where the actor was (the app's third walk), to docs/STYLE.md; read in tests/pro-work.test.ts ('two auditions in person whose trips meet…' and 'a meeting at the agent’s office and an audition…')"
+  "hash": "98e94096675c",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 for brief 20's F10, so the School's request to meet lapses on its day with a notice and a line in History With His Office, to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-agent-ask-lapse.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>": {
   "status": "Rewritten And Verified",

@@ -1,0 +1,233 @@
+[
+  {
+    "id": "B20-CRAFT-1",
+    "what": "A scene's step no longer goes faster in a genre known: the genre and the material's features unread (`prepare`).",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "const speed = Math.max(genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined), featureSpeed(person, materialOf(a.sceneId)));",
+    "replace": "const speed = 1;",
+    "tests": [
+      "tests/b20-craft-bite.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-2",
+    "what": "A coursework step no longer reads the day's focus: a tired step moves its part as far as a rested one.",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean",
+    "replace": "a.prep[act.dim] = clamp01(before + act.gain * prepLean",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-3",
+    "what": "A showing no longer reads the day's condition at the meeting: judged as if rested.",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "const ctx = { ...workContext(a, parts, required), condition: conditionAt(sim, person, when), key };",
+    "replace": "const ctx = { ...workContext(a, parts, required), condition: { readiness: 100 }, key };",
+    "tests": [
+      "tests/b20-craft-clock.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-4",
+    "what": "The meeting a piece is shown again at no longer grows the course's skills by whether the note was taken.",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "return applied ? WORK.revision.applied : WORK.revision.notApplied;",
+    "replace": "return 1;",
+    "tests": [
+      "tests/b20-craft-clock.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-5",
+    "what": "A note on a part is never taken by the revision, however far the part has moved (`noteTaken`).",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "return now >= before + r.dimRise || (now >= r.dimEnough && before < r.dimEnough) || a.prep.revision >= r.worked;",
+    "replace": "return false;",
+    "tests": [
+      "tests/b20-craft-clock.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-6",
+    "what": "A note left unread no longer holds the piece's steps: unread feedback reaches the revision as read does.",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "if (a.feedback && !a.feedback.seen) return 'There’s new feedback on this piece. Read it, then press Mark As Read.';",
+    "replace": "",
+    "tests": [
+      "tests/b20-craft-clock.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-7",
+    "what": "A rehearsal kept with the partner no longer moves the partner part.",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "a.prep.partner = clamp01(before + gain * listened * (1 - before));",
+    "replace": "a.prep.partner = before;",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-8",
+    "what": "The showing no longer reads how far the way of playing is rehearsed as a part of its preparation.",
+    "file": "src/engine/systems/coursework.ts",
+    "find": "if (sidesOf(playing).length) { prep.approach = playing!.prep; req.approach = PLAYING.complete; }",
+    "replace": "",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-9",
+    "what": "A take no longer reads knowing the genre as a part of its preparation.",
+    "file": "src/engine/systems/briefs.ts",
+    "find": "const prep: Record<string, number> = { ...rec.prep, genre: genreKnown(person, b), ...(over.prep ?? {}) } as Record<string, number>;",
+    "replace": "const prep: Record<string, number> = { ...rec.prep, genre: 0, ...(over.prep ?? {}) } as Record<string, number>;",
+    "tests": [
+      "tests/b20-craft-bite.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-10",
+    "what": "A brief's breakdown and lines no longer practise imagination and memory.",
+    "file": "src/engine/systems/briefs.ts",
+    "find": "if (trains && rec.prep[s.part] > before) ordinary(sim, person, trains, focus, BRIEF.trainingWeight, `brief:${s.part}`);",
+    "replace": "",
+    "tests": [
+      "tests/b20-craft-bite.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-11",
+    "what": "Readiness under the sufficient mark no longer costs any work: the day reaches no judgment.",
+    "file": "src/engine/content/tasks.ts",
+    "find": "sufficientReadiness: 60,",
+    "replace": "sufficientReadiness: 0,",
+    "tests": [
+      "tests/b20-craft-bite.test.ts",
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-12",
+    "what": "A steady hour of practice carries over to the exercise's kin, as a variation hour does: practice grows abilities it doesn't train.",
+    "file": "src/engine/systems/practice.ts",
+    "find": "if (f === 'variation') return (EXERCISE_DESIGN",
+    "replace": "if (f === 'variation' || f === 'steady') return (EXERCISE_DESIGN",
+    "tests": [
+      "tests/b20-craft-bite.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-13",
+    "what": "An hour of practice grows nothing of what it trains.",
+    "file": "src/engine/systems/practice.ts",
+    "find": "const gained = develop(sim, person, e.trains, { weight: tf * ff, focus, deliberate: true, source: `practice:${e.id}` });",
+    "replace": "const gained = develop(sim, person, e.trains, { weight: 0, focus, deliberate: true, source: `practice:${e.id}` });",
+    "tests": [
+      "tests/b20-craft-advice.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-14",
+    "what": "The chair's casting reads no ability or technique: every student read as an even 50.",
+    "file": "src/engine/systems/school.ts",
+    "find": "return judgePiece(sim.universe.meta.seed, castingPerformer(perf), ctx, piece).overall;",
+    "replace": "return judgePiece(sim.universe.meta.seed, castingPerformer({ ability: () => 50, full: () => 100, technique: () => 50 }), ctx, piece).overall;",
+    "tests": [
+      "tests/b20-craft-clock.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-15",
+    "what": "A leak: race and ethnicity reach every judgment, an ability a point higher for each one given.",
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "ability: (id) => abilityOf(sim, person, id),",
+    "replace": "ability: (id) => abilityOf(sim, person, id) + (person.raceEthnicity?.length ?? 0),",
+    "tests": [
+      "tests/b20-craft-noleak.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-16",
+    "what": "A leak: a loved genre counts as knowing it, in a take's preparation.",
+    "file": "src/engine/systems/briefs.ts",
+    "find": "const prep: Record<string, number> = { ...rec.prep, genre: genreKnown(person, b), ...(over.prep ?? {}) } as Record<string, number>;",
+    "replace": "const prep: Record<string, number> = { ...rec.prep, genre: genreKnown(person, b) + ((person.genres ?? []).includes(b.kinds[0]!) ? 0.2 : 0), ...(over.prep ?? {}) } as Record<string, number>;",
+    "tests": [
+      "tests/b20-craft-noleak.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-17",
+    "what": "A night no longer reads the share of the director's notes taken: every note counted taken.",
+    "file": "src/engine/systems/production.ts",
+    "find": "  return { lines: p.lines, blocking: p.blocking, notes: p.notes.length ? notesShare(p) : 1 };",
+    "replace": "  return { lines: p.lines, blocking: p.blocking, notes: 1 };",
+    "tests": [
+      "tests/b20-craft-productions.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-18",
+    "what": "An Off night no longer stings the morale (its first run deleted the line and left the `else` dangling, a syntax error; this run keeps the line and takes the sting out of it).",
+    "file": "src/engine/systems/school.ts",
+    "find": "if (felt === 'off') w.morale = Math.max(0, w.morale - n.sting);",
+    "replace": "if (felt === 'off') w.morale = Math.max(0, w.morale);",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-19",
+    "what": "A part played against the director's request no longer comes back as the note.",
+    "file": "src/engine/systems/production.ts",
+    "find": "const focus: NoteFocus = against ? { kind: 'direction', ...against } : noteFor(person, p, reads, n, of, piece);",
+    "replace": "const focus: NoteFocus = noteFor(person, p, reads, n, of, piece);",
+    "tests": [
+      "tests/b20-craft-productions.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-20",
+    "what": "Playing With Others is named from the fourth piece with others, not the third.",
+    "file": "src/engine/systems/artistry.ts",
+    "find": "if (tog && tog.n >= 3) collaboration",
+    "replace": "if (tog && tog.n >= 4) collaboration",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-21",
+    "what": "A casting's calls no longer stop the clock: booked as needing nobody.",
+    "file": "src/engine/systems/school.ts",
+    "find": "schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload:",
+    "replace": "schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, requiresPlayer: false, payload:",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-22",
+    "what": "An hour of an exercise no longer counts as experience of the material it practises.",
+    "file": "src/engine/systems/practice.ts",
+    "find": "r.practiced += 1; r.last = sim.now;",
+    "replace": "r.last = sim.now;",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  },
+  {
+    "id": "B20-CRAFT-23",
+    "what": "Reliability no longer says the rehearsals with a partner missed by you.",
+    "file": "src/engine/systems/artistry.ts",
+    "find": "kept${missedByYou ? `, ${missedByYou} missed by you` : ''}.`",
+    "replace": "kept.`",
+    "tests": [
+      "tests/b20-craft-promises.test.ts"
+    ]
+  }
+]

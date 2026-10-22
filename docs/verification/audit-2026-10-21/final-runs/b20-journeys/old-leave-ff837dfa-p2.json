@@ -1,0 +1,25 @@
+{
+ "id": "old-leave-ff837dfa",
+ "part": 2,
+ "from": "2029-01-10",
+ "to": "2029-11-10",
+ "secs": 61,
+ "reloads": 26,
+ "done": false,
+ "standing": "good",
+ "notSame": 0,
+ "transitions": [
+  "2028-03-12T12:35 opened: same",
+  "2028-04-28T21:10 term 3 reviewed: good: same",
+  "2028-12-08T22:15 term 4 reviewed: good: same",
+  "2029-01-01T12:15 the end of 2028: same",
+  "2029-04-27T21:20 term 5 reviewed: good: same"
+ ],
+ "forks": [
+  "2028-03-12T14:55 a rehearsal with a partner booked for 2028-03-13T23:00 on A Choreographed Sequence: same"
+ ],
+ "workDays": 0,
+ "notices": 746,
+ "bank": 491211.47,
+ "errors": []
+}

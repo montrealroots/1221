@@ -1,0 +1,2600 @@
+{
+ "area": "benefits",
+ "rows": [
+  {
+   "id": "benefits.assistance",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Benefits: the SNAP panel’s Apply (PapersWorkspace AssistancePanel), drawn only where nothing refuses it.",
+   "prerequisites": "Living where SLATE keeps a scheme, Connecticut’s SNAP for every life in New Haven (Ontario’s and British Columbia’s for nobody now); no claim open; a US citizen for SNAP; 18 or over; a student not in the summer recess without work-study or 20 hours of paid work a week (snapStudentRefusal). Each refusal in assistanceRefusal’s words.",
+   "reads": "Where they live (schemeFor), citizenship, age, the School’s standing and the summer (snapStudentRefusal); for the provinces, liquid assets.",
+   "changes": "person.assistance (scheme, since, months 0); the month’s item (ASSISTANCE_KIND) a week on for SNAP.",
+   "consumers": [
+    {
+     "what": "the month paid by the clock from the month before’s income",
+     "at": "src/engine/systems/assistance.ts:256"
+    },
+    {
+     "what": "the day’s groceries drawn from the EBT card first",
+     "at": "src/engine/systems/spending.ts:402"
+    },
+    {
+     "what": "the Benefits panel’s claim, its months paid",
+     "at": "src/ui/workspaces/PapersWorkspace.tsx:926"
+    }
+   ],
+   "experienced": "At once the toast with the first month’s day. A week on, and each 30 days, SNAP Paid and the EBT card’s balance, which the day’s groceries spend first; nothing where last month’s income was over the gross limit; SNAP Time Limit Reached or Your SNAP Case Closed where they apply.",
+   "saveLoad": "person.assistance (claim, months, counted months, the EBT account’s id), the EBT account and its postings, and the pending month: a save opened mid-month pays the same month once (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-safetynet.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/evidence-g16-papers.test.ts",
+     "tests/assistance.test.ts"
+    ],
+    "comparisons": [
+     "SNAP: a graduate paid for November against one who wasn’t; nothing over the gross limit against $306 (tests/b20-benefits-safetynet.test.ts)",
+     "SNAP’s no-leak: two students alike but more work-study, paid the same $306 (tests/b20-benefits-safetynet.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-7",
+     "B20-BENEFITS-8"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found in a played life. Ontario Works and BC Income Assistance can’t be reached: no life lives in Canada (tests/assistance.test.ts plays them on quick lives there).",
+   "status": "Implemented And Verified",
+   "prior": "benefits.assistance",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.claim",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Unemployment: File A Claim (PapersWorkspace UnemploymentPanel), drawn only while no claim is open, the base period would pay and they aren’t studying.",
+   "prerequisites": "No claim open; a state SLATE pays in, where the base period’s wages were mostly earned or else where they live; Connecticut refuses a full-time student (CGS 31-235(b)); a noncitizen needs permission to work (FUTA 3304(a)(14)); the base period’s monetary test, New York’s $3,500 quarter and one and a half times it, Connecticut’s 40 times the weekly benefit, California’s. Each refusal in its words, with the quarters’ wages.",
+   "reads": "The earnings record’s quarters and where each was earned (claimStateFor, basePeriodFor, monetary); the School’s standing; permission to work.",
+   "changes": "Person.unemployment.claim: its state, weekly benefit, most it pays, base period, a year’s end, the waiting week; the week’s certification the next Sunday at eight in the evening.",
+   "consumers": [
+    {
+     "what": "each Sunday certified and paid by the clock",
+     "at": "src/engine/systems/unemployment.ts:276"
+    },
+    {
+     "what": "the days able kept each morning for Connecticut’s week",
+     "at": "src/engine/systems/unemployment.ts:237"
+    },
+    {
+     "what": "SNAP’s time limit, which an open claim exempts",
+     "at": "src/engine/systems/assistance.ts:281"
+    },
+    {
+     "what": "the claim panel’s paid to date",
+     "at": "src/ui/workspaces/PapersWorkspace.tsx:992"
+    }
+   ],
+   "experienced": "At once the toast with the weekly benefit; the waiting week’s notice the first Sunday (New York’s); each Sunday after, the week’s benefit in checking; Your Unemployment Claim Ended at its most or its year; the next February, the return’s unemployment line.",
+   "saveLoad": "Person.unemployment (claim, past) and the pending week: a save opened mid-week certifies the same week once (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-unemployment.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/evidence-g15-papers.test.ts",
+     "tests/evidence-g16-papers.test.ts",
+     "tests/evidence2-b05.test.ts"
+    ],
+    "comparisons": [
+     "the base period: two runs worked against none; a New York claim of $314 a week against Connecticut’s refusal; a skilled twin’s same runs the same $314 (tests/b20-benefits-unemployment.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-4",
+     "B20-BENEFITS-5"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found. A claim filed while booked is taken; each week worked pays by its work since this audit’s repair (benefits.week).",
+   "status": "Implemented And Verified",
+   "prior": "benefits.claim",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.ei_register",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Benefits: EI’s Register (PapersWorkspace EiPanel), drawn only for someone living in Canada.",
+   "prerequisites": "Living in Canada, a Canadian citizen, not registered (eiRefusal).",
+   "reads": "Where they live, citizenship.",
+   "changes": "person.ei (registeredAt).",
+   "consumers": [
+    {
+     "what": "a week too sick to work, from the health tick",
+     "at": "src/engine/systems/health.ts:2160"
+    }
+   ],
+   "experienced": "Nothing in a current life: nobody lives in Canada.",
+   "saveLoad": "person.ei.",
+   "evidence": {
+    "tests": [
+     "tests/cabenefits.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No life lives in Canada. eiOnCheck has no caller, so no premium is ever taken; the panel says premiums would come from self-employed earnings.",
+   "status": "Explicitly Deferred",
+   "prior": "benefits.ei_register",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): it needs living in Canada, which no life does.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.bienestar",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Pensions: the Pensión Para El Bienestar panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses it.",
+   "prerequisites": "Its record and age: a Mexican living in Mexico from 65. Refused in its own words otherwise.",
+   "reads": "The contribution record and the age.",
+   "changes": "The claimed pension, and its payments on the calendar.",
+   "consumers": [
+    {
+     "what": "its payments, income on the year’s return",
+     "at": "src/engine/systems/homepensions.ts:204"
+    }
+   ],
+   "experienced": "Nothing in a current life: no life reaches its record or its age.",
+   "saveLoad": "The claimed pension on the person, and the pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/commands-kept.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life reaches it.",
+   "status": "Explicitly Deferred",
+   "prior": "pension.bienestar",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): it needs a Mexican living in Mexico from 65, which no life reaches.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.ie_state",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Pensions: the State Pension (Ireland) panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses it.",
+   "prerequisites": "Its record and age: Irish PRSI contributions and 66. Refused in its own words otherwise.",
+   "reads": "The contribution record and the age.",
+   "changes": "The claimed pension, and its payments on the calendar.",
+   "consumers": [
+    {
+     "what": "its payments, income on the year’s return",
+     "at": "src/engine/systems/homepensions.ts:204"
+    }
+   ],
+   "experienced": "Nothing in a current life: no life reaches its record or its age.",
+   "saveLoad": "The claimed pension on the person, and the pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/homepensions.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life reaches it.",
+   "status": "Explicitly Deferred",
+   "prior": "pension.ie_state",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): it needs Irish PRSI contributions and 66, which no life reaches.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.imss",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Pensions: the IMSS Pension panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses it.",
+   "prerequisites": "Its record and age: IMSS weeks, which nothing records (contribute has no caller). Refused in its own words otherwise.",
+   "reads": "The contribution record and the age.",
+   "changes": "The claimed pension, and its payments on the calendar.",
+   "consumers": [
+    {
+     "what": "its payments, income on the year’s return",
+     "at": "src/engine/systems/imss.ts:162"
+    }
+   ],
+   "experienced": "Nothing in a current life: no life reaches its record or its age.",
+   "saveLoad": "The claimed pension on the person, and the pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/imss.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life reaches it.",
+   "status": "Explicitly Deferred",
+   "prior": "pension.imss",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): it needs IMSS weeks, which nothing records (contribute has no caller), which no life reaches.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.social_security",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Pensions: the Social Security panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses it.",
+   "prerequisites": "Its record and age: forty credits of US work and 62. Refused in its own words otherwise.",
+   "reads": "The contribution record and the age.",
+   "changes": "The claimed pension, and its payments on the calendar.",
+   "consumers": [
+    {
+     "what": "its payments, income on the year’s return",
+     "at": "src/engine/systems/socialsecurity.ts:152"
+    }
+   ],
+   "experienced": "Nothing in a current life: no life reaches its record or its age.",
+   "saveLoad": "The claimed pension on the person, and the pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-safetynet.test.ts"
+    ],
+    "comparisons": [
+     "a pension: 35 years against 20 claim $2,079 against $1,507; $100,000 more in the bank the same (tests/b20-benefits-safetynet.test.ts; TEST SETUP of age and record, the rows deferred)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life reaches it. Measured anyway with TEST SETUP: 35 years at $50,000 claim $2,079 a month, 20 years $1,507, paid by the clock and on the year’s return.",
+   "status": "Explicitly Deferred",
+   "prior": "pension.social_security",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): it needs forty credits of US work and 62, which no life reaches.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.state",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Pensions: the State Pension (UK) panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses it.",
+   "prerequisites": "Its record and age: ten qualifying years of UK earnings or credits and the UK’s pension age. Refused in its own words otherwise.",
+   "reads": "The contribution record and the age.",
+   "changes": "The claimed pension, and its payments on the calendar.",
+   "consumers": [
+    {
+     "what": "its payments, income on the year’s return",
+     "at": "src/engine/systems/statepension.ts:96"
+    }
+   ],
+   "experienced": "Nothing in a current life: no life reaches its record or its age.",
+   "saveLoad": "The claimed pension on the person, and the pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/statepension.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life reaches it.",
+   "status": "Explicitly Deferred",
+   "prior": "pension.state",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): it needs ten qualifying years of UK earnings or credits and the UK’s pension age, which no life reaches.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.amend",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: a filed year’s Amend The Return…, then File The Amendment (PapersWorkspace ReturnLife).",
+   "prerequisites": "A return filed by them, within three years of filing or two of the last payment, none already with the IRS (amendRefusal, which disables the first button with its words); and the year’s figures changed since filing, or File The Amendment refuses: “Your return as filed matches what’s on record, so there’s nothing to amend.”",
+   "reads": "The year’s figures worked out again (figuresFor) against those filed, the IRS’s side and each state’s.",
+   "changes": "TaxReturn.amended (form, figures, the change by side, ten weeks to processing); the processing on the calendar (tax.amended).",
+   "consumers": [
+    {
+     "what": "the amendment processed ten weeks on",
+     "at": "src/engine/systems/taxreturn.ts:1708"
+    },
+    {
+     "what": "a state’s side processed",
+     "at": "src/engine/systems/taxreturn.ts:1813"
+    },
+    {
+     "what": "new tax joining a plan or defaulting it",
+     "at": "src/engine/systems/taxreturn.ts:716"
+    }
+   ],
+   "experienced": "In a played life only the refusal: nothing on record changes after filing.",
+   "saveLoad": "TaxReturn.amended and the pending processing.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/tax-lifecycle.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life reaches an amendment: a career’s pay counts in the year it’s paid, and nothing writes a filed year’s record after its return (tests/b20-benefits-reach.test.ts: a graduate’s year filed in February and lived on to August, refused). Amend The Return… is drawn enabled on every filed year in its time, and File The Amendment then always refuses: a control a played life opens and can’t use, said in its words.",
+   "status": "Implemented, Verification Incomplete",
+   "prior": "tax.amend",
+   "why": "No current life can reach it: nothing changes a filed year’s record (tests/b20-benefits-reach.test.ts). The processing is held by FIXTURE tests with a corrected W-2 typed in (tests/remaining-tax.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.apply_plan",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: the IRS Payment Plan panel’s Apply (PapersWorkspace), with Monthly Payments or Paid Within 180 Days.",
+   "prerequisites": "Owing the IRS; no plan being decided, in force or behind; every return past its due date filed; under the short plan’s $100,000 or the monthly plan’s $50,000; a monthly payment at least what’s owed over 72 months; a setup fee the bank can pay now (planRefusal and the command’s refusals, each in its words).",
+   "reads": "What’s owed to the IRS on every return (owedAll), the returns filed, the latest return’s income for the low-income fee (planFee), a Social Security number (decided online in a minute, or by mail in 30 days).",
+   "changes": "person.taxPlan (pending, its fee, what it covers, the years); its decision on the calendar (tax.plan_decide).",
+   "consumers": [
+    {
+     "what": "the IRS’s decision: refused, or the fee paid and the plan begun",
+     "at": "src/engine/systems/taxreturn.ts:1530"
+    },
+    {
+     "what": "the IRS’s letters held while it’s decided or in force",
+     "at": "src/engine/systems/taxreturn.ts:1455"
+    },
+    {
+     "what": "the reduced rate for each month begun under it",
+     "at": "src/engine/systems/taxreturn.ts:188"
+    }
+   ],
+   "experienced": "At once the toast with when the IRS answers; a minute or 30 days on, Your IRS Payment Plan Is Approved or Declined; each 30 days a payment; the letters stop while it stands.",
+   "saveLoad": "person.taxPlan and its pending decision; payments taken once across reloads (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/scope-taxpapers.test.ts"
+    ],
+    "comparisons": [
+     "a plan kept against a plan missed: payments every 30 days and no letters, against CP523, the end 30 days on, the LT11 35 days after the due date and the levy (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-14",
+     "B20-BENEFITS-15"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.apply_plan",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.apply_state_plan",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: a state’s own plan panel, Apply For The Plan (PapersWorkspace StatePlanPanel), Connecticut’s or New York’s in a played life.",
+   "prerequisites": "Owing that state; every return past its due date filed; its limit and its months (Connecticut’s two to twelve on $50,000, New York’s one to 36 on $20,000); none in collection where the state refuses that (Connecticut); none applied for or in force (statePlanRefusal, each in its words).",
+   "reads": "What’s owed to the state on every year (owedToState), the returns filed, the state’s rules (content/statetax.ts).",
+   "changes": "person.statePlans[state] (pending, monthly, months, fee); its decision on the calendar (tax.state_plan_payment, decide).",
+   "consumers": [
+    {
+     "what": "the state’s decision and each payment",
+     "at": "src/engine/systems/statetax.ts:1149"
+    },
+    {
+     "what": "the state’s letters held while it stands",
+     "at": "src/engine/systems/statetax.ts:969"
+    },
+    {
+     "what": "no lien filed while it stands",
+     "at": "src/engine/systems/statetax.ts:666"
+    }
+   ],
+   "experienced": "At once the toast; the state’s approval notice (a month counted as one since this audit); each 30 days a payment; its letters stop.",
+   "saveLoad": "person.statePlans and the pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/scope-taxpapers.test.ts",
+     "tests/state-tax.test.ts"
+    ],
+    "comparisons": [
+     "a state plan’s hold: with New York’s plan in force a second year’s balance joins it and no bill comes; the twin with no plan is billed 30 days after the due date (tests/b20-benefits-reach.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-3",
+     "B20-BENEFITS-19"
+    ],
+    "journeys": [
+     "a graduate’s New York plan applied for, missed and caught up (tests/b20-benefits-reach.test.ts)"
+    ]
+   },
+   "missing": "None found. Until this audit a one-month plan said “for 1 months” (repaired, statetax.ts, PapersWorkspace).",
+   "status": "Implemented And Verified",
+   "prior": "tax.apply_state_plan",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.catch_up_plan",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: the IRS plan panel’s Catch Up, drawn while a payment is missed (PapersWorkspace).",
+   "prerequisites": "A plan behind (CP523); the missed payment in the bank. Refused otherwise in its words.",
+   "reads": "The plan, what’s owed (owedAll), the bank.",
+   "changes": "The payment taken and applied oldest year first (payPlan); the default’s end canceled; the plan back in force; its next payment on the calendar.",
+   "consumers": [
+    {
+     "what": "the payment applied to tax, penalty, interest",
+     "at": "src/engine/systems/taxreturn.ts:701"
+    },
+    {
+     "what": "the next payment",
+     "at": "src/engine/systems/taxreturn.ts:1545"
+    }
+   ],
+   "experienced": "At once the toast and the plan In force; no end, no final notice.",
+   "saveLoad": "person.taxPlan and its schedule.",
+   "evidence": {
+    "tests": [
+     "tests/scope-taxpapers.test.ts",
+     "tests/finance-paths.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.catch_up_plan",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: a state plan panel’s Catch Up, drawn while a payment is missed (PapersWorkspace StatePlanPanel).",
+   "prerequisites": "A state plan behind: only New York’s and California’s fall behind (Connecticut’s ends at the first missed payment); the payment in the bank. Refused otherwise in its words.",
+   "reads": "The plan, what’s owed to the state (owedToState), the bank.",
+   "changes": "The payment taken and applied oldest year first as a plan payment; the plan’s end canceled; back in force, or ended paid where nothing’s left.",
+   "consumers": [
+    {
+     "what": "the payment applied to the state’s parts",
+     "at": "src/engine/systems/statetax.ts:437"
+    },
+    {
+     "what": "the plan’s end, canceled",
+     "at": "src/engine/systems/statetax.ts:1185"
+    }
+   ],
+   "experienced": "At once the toast; the plan In force or Paid in full; its twin not caught up ends on its day and collection resumes at the warrant.",
+   "saveLoad": "person.statePlans and its schedule.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-17"
+    ],
+    "journeys": [
+     "a graduate whose New York return owes $0.46, filed with her money in a CD, her one-month plan missed on 3 March and caught up after the CD is broken (tests/b20-benefits-reach.test.ts)"
+    ]
+   },
+   "missing": "None found. The record called it unreachable while every life filed in Connecticut alone; a graduate’s New York work makes a New York balance, whose plan falls behind.",
+   "status": "Implemented And Verified",
+   "prior": "tax.catch_up_state_plan",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.federal_lien_withdraw",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: the IRS’s lien panel, Ask For Its Withdrawal (Form 12277) or Ask For Its Release As Erroneous (LienPanels FederalLien).",
+   "prerequisites": "A notice of federal tax lien released after payment with the last three years’ returns filed, or one filed in error (federalLienWithdrawRefusal, the button disabled with its words).",
+   "reads": "The lien and its status, the returns of the three years before, whether it was filed in error (federalLienInError).",
+   "changes": "The lien asked to be withdrawn, its decision in 30 days or 14 (tax.federal_lien, withdraw).",
+   "consumers": [
+    {
+     "what": "the decision: withdrawn",
+     "at": "src/engine/systems/taxreturn.ts:353"
+    },
+    {
+     "what": "the panel’s button and its words",
+     "at": "src/ui/components/LienPanels.tsx:120"
+    }
+   ],
+   "experienced": "At once the toast with the decision’s day; then Your Federal Tax Lien Is Withdrawn and the panel’s status.",
+   "saveLoad": "TaxReturn.lien and the pending decision.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-09-coverage.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/liens-and-arrangements.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "an Inherited family’s student at Capital One who files nothing: lien at the LT11, levied, released, Form 12277 refused while 2028 is unfiled and pressed once it is, withdrawn (tests/remaining-09-coverage.test.ts)"
+    ]
+   },
+   "missing": "The erroneous branch is reached only by FIXTURE (tests/remaining-tax.test.ts): the IRS’s substitute takes the return’s own figures less the credits only hers claims, so her own return leaves the tax’s penalties. From this audit a lien is erroneous only where her own return left nothing owed when it was filed (federalLienInError, owedThen).",
+   "status": "Implemented And Verified",
+   "prior": "tax.federal_lien_withdraw",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.file",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: a year’s File It, or File Your Own In Its Place (PapersWorkspace), and the year’s item in What Needs You.",
+   "prerequisites": "A return for the year, made each 1 February by the clock where one is due; not already filed by them; the guide’s chapter read (Gated). Refused otherwise in its words.",
+   "reads": "The year’s record worked out at filing (figuresFor: wages and withholding by authority, scholarship, interest, unemployment, the states’ shares and credits), the due date, the bank, a state’s assessment, a Social Security number for a 1040-NR’s refund.",
+   "changes": "TaxReturn filed: its figures, the late penalty, the IRS’s balance paid from the bank or owed with its bill and collection, or its refund on the calendar; each state’s side filed (fileState) or its assessment replaced; the year’s decision answered.",
+   "consumers": [
+    {
+     "what": "the IRS’s balance from the bank at filing",
+     "at": "src/engine/systems/taxreturn.ts:1649"
+    },
+    {
+     "what": "a state’s side filed and paid or billed",
+     "at": "src/engine/systems/statetax.ts:319"
+    },
+    {
+     "what": "the refund on its day",
+     "at": "src/engine/systems/taxreturn.ts:1479"
+    },
+    {
+     "what": "the IRS’s letters on what’s left owed",
+     "at": "src/engine/systems/taxreturn.ts:1449"
+    },
+    {
+     "what": "the worry of tax owed each day",
+     "at": "src/engine/systems/spending.ts:483"
+    }
+   ],
+   "experienced": "At once the toast and the panel’s Filed, the money gone from checking, or the bill; the refund in checking on its day; the letters and penalties where it’s left owing.",
+   "saveLoad": "person.returns with their state sides, the pending refund and letters; a reload in the season changes nothing (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-reach.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/evidence-g33-ui.test.ts"
+    ],
+    "comparisons": [
+     "work-study: two F-1 students alike but eight elective shifts; the 1040-NR reads $736 more wages and $88.32 more tax, the refund $88.32 smaller on its day; a twin moving her savings into checking files the same return (tests/b20-benefits-tax.test.ts)",
+     "career pay: a graduate who works Winter Ledger against one who doesn’t; $10,026 on the record with $848.03 withheld and New York’s $0.46 owed and paid at filing, against no return at all; a skilled twin’s record and return the same (tests/b20-benefits-tax.test.ts)",
+     "filing: the heir’s 2026 return filed on time, 85 days late ($555.27 penalties, $31.00 interest), and never (late notice, CP2566, assessment with $643.12 of penalties); the worry of the unfiled return from the day after the due date (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-9",
+     "B20-BENEFITS-10",
+     "B20-BENEFITS-11",
+     "B20-BENEFITS-12"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.file",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: a state lien’s Ask For Its Withdrawal As Filed In Error, drawn only on a lien filed in error (LienPanels StateLienAndPenalty); elsewhere the panel says why not.",
+   "prerequisites": "A state lien filed, paid or released, whose assessment their own return replaced, leaving nothing owed on the year when it was filed (lienInError, owedThen, from this audit); refused otherwise: “It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.”",
+   "reads": "The lien, the state’s assessment and its tax, their own return’s tax, the payments before the lien was filed.",
+   "changes": "The lien asked to be withdrawn, decided in the state’s days (tax.state_lien, decide).",
+   "consumers": [
+    {
+     "what": "the decision: withdrawn, its fee back",
+     "at": "src/engine/systems/statetax.ts:1057"
+    },
+    {
+     "what": "the panel’s button",
+     "at": "src/ui/components/LienPanels.tsx:84"
+    }
+   ],
+   "experienced": "In a played life only the panel’s words saying why it can’t be asked.",
+   "saveLoad": "StateDue.lien and the pending decision.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/liens-and-arrangements.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-2"
+    ],
+    "journeys": []
+   },
+   "missing": "DEFECT, repaired: until this audit a lien was in error where their own return’s tax was no more than the tax paid before it, whatever penalty and interest it secured, so a graduate’s New York tax warrant for the late penalty and interest she owed was offered and taken as filed in error (tests/b20-benefits-reach.test.ts). Now no current life reaches it: a state assesses a return never filed from its own figures, so their own in its place leaves the tax and its penalties as they were.",
+   "status": "Implemented, Verification Incomplete",
+   "prior": "tax.lien_dispute",
+   "why": "No current life reaches a lien filed in error once the penalties and interest are read (tests/b20-benefits-reach.test.ts). The withdrawal is held by FIXTURE tests, their own return showing nothing owed (tests/remaining-tax.test.ts, tests/liens-and-arrangements.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.lien_release",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: a state lien’s Ask For Its Release (LienPanels StateLienAndPenalty), drawn shut with its reason until it can be asked.",
+   "prerequisites": "A state lien paid in full, where the state releases only on request or for a fee (Connecticut’s); not asked already; its fee in the bank (lienReleaseRefusal).",
+   "reads": "The lien, the state’s release rule, the bank.",
+   "changes": "Its release fee paid where there is one; its release on the calendar (tax.state_lien, release).",
+   "consumers": [
+    {
+     "what": "the release on its day",
+     "at": "src/engine/systems/statetax.ts:1057"
+    },
+    {
+     "what": "the panel’s button and its words",
+     "at": "src/ui/components/LienPanels.tsx:83"
+    }
+   ],
+   "experienced": "At once the toast with the day; then Your Connecticut Tax Lien Is Released and the panel’s Released.",
+   "saveLoad": "StateDue.lien and the pending release.",
+   "evidence": {
+    "tests": [
+     "tests/guide-examples-papers.test.ts",
+     "tests/liens-and-arrangements.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.lien_release",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.pay_state",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: Owed To a state’s agency, Pay (PapersWorkspace WhoIsOwed), the box blank for all.",
+   "prerequisites": "Owing that state on the year; an amount above nothing and no more than owed; the bank able to cover it. Refused otherwise in its words.",
+   "reads": "The state’s parts brought up to now (statePartsOn), its order for a part payment (New York’s tax first, Connecticut’s penalty first), the bank.",
+   "changes": "The amount from the bank, applied in the state’s order; paid in full, its letters canceled, its lien to paid, its plan ended paid.",
+   "consumers": [
+    {
+     "what": "the payment applied in the state’s order",
+     "at": "src/engine/systems/statetax.ts:364"
+    },
+    {
+     "what": "its lien paid",
+     "at": "src/engine/systems/statetax.ts:701"
+    }
+   ],
+   "experienced": "At once the toast with the split; the panel’s parts fall; collection stops when it’s paid.",
+   "saveLoad": "StateDue.payments and parts.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/scope-taxpapers.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "New York’s $0.46 of tax paid on its assessment, the tax first (tests/b20-benefits-reach.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.pay_state",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.pay",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: Owed To The IRS, Pay (PapersWorkspace ReturnLife), the box blank for all.",
+   "prerequisites": "Owing the IRS on the year; an amount above nothing and no more than owed; the bank able to cover it. Refused otherwise in its words.",
+   "reads": "The year’s parts brought up to now (partsOn), the bank.",
+   "changes": "The amount from the bank, applied to the tax, then the penalty, then the interest; paid in full, its letters canceled and its lien paid.",
+   "consumers": [
+    {
+     "what": "the payment applied",
+     "at": "src/engine/systems/taxreturn.ts:266"
+    },
+    {
+     "what": "the next month’s penalty on the tax left",
+     "at": "src/engine/systems/taxreturn.ts:149"
+    }
+   ],
+   "experienced": "At once the toast with the split; the panel’s parts; letters stop once it’s paid.",
+   "saveLoad": "TaxReturn.payments and parts.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts",
+     "tests/tax-lifecycle.test.ts",
+     "tests/guide-examples-papers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.pay",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.request_waiver",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: Oregon’s three-year penalty row, Ask For Its Waiver (LienPanels StateLienAndPenalty).",
+   "prerequisites": "Oregon’s three-year penalty charged on the year, not decided, their own return filed in place of an assessment, asked before full payment or within a year after (waiverRefusal).",
+   "reads": "The penalty, the letters sent before their own return (waiverShare), the payments.",
+   "changes": "The waiver’s share off the penalty owed, or credited to the year and refunded.",
+   "consumers": [
+    {
+     "what": "the waived share off what’s owed",
+     "at": "src/engine/systems/statetax.ts:1086"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "StateDue.threeYear.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Only Oregon charges the three-year penalty, and no life lives or works there: every project is in New York and every life stays in New Haven (tests/b20-benefits-reach.test.ts).",
+   "status": "Implemented, Verification Incomplete",
+   "prior": "tax.request_waiver",
+   "why": "No current life can reach it (tests/b20-benefits-reach.test.ts). Held by FIXTURE tests on Portland quick-saves (tests/remaining-tax.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.revise_plan",
+   "kind": "command",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "Papers, Tax Returns: the IRS plan panel’s Revise The Plan (PapersWorkspace), on a monthly plan in force or behind.",
+   "prerequisites": "A monthly plan in force or behind; the new payment at least the least; $50,000 or less owed; the $6 fee in the bank.",
+   "reads": "The plan, what’s owed, the bank.",
+   "changes": "The fee paid; the monthly payment and what it covers set again; a plan behind back in force, its end canceled; its next payment on the calendar.",
+   "consumers": [
+    {
+     "what": "the next payment at the new amount",
+     "at": "src/engine/systems/taxreturn.ts:1545"
+    }
+   ],
+   "experienced": "At once the toast; In force with the new payment.",
+   "saveLoad": "person.taxPlan.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/scope-taxpapers.test.ts",
+     "tests/finance-paths.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-21"
+    ],
+    "journeys": [
+     "the heir’s plan behind on her 2027 tax, revised to cover both years, against her twin’s ended (tests/b20-benefits-tax.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.revise_plan",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.assistance_month",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a week after applying, then every 30 days.",
+   "prerequisites": "A claim open in the scheme where they still live.",
+   "reads": "The month before’s income, earned and unearned with work-study left out (snapIncome), the hours worked (workedBetween), the time limit’s months, the student exemption, the first month.",
+   "changes": "SNAP onto the EBT card (opened at the first), the month counted, SNAP Paid; or the time limit or the case closed; the next month on the calendar.",
+   "consumers": [
+    {
+     "what": "the day’s groceries from the EBT card first",
+     "at": "src/engine/systems/spending.ts:402"
+    }
+   ],
+   "experienced": "SNAP Paid with the amount; the EBT balance on Bank; groceries bought with it; nothing in a month whose income was over the limit.",
+   "saveLoad": "person.assistance, the EBT account; each month once across reloads (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-safetynet.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/evidence-g16-papers.test.ts",
+     "tests/evidence2-b06.test.ts"
+    ],
+    "comparisons": [
+     "SNAP: a graduate paid for November against one who wasn’t; nothing over the gross limit against $306 (tests/b20-benefits-safetynet.test.ts)",
+     "SNAP’s no-leak: two students alike but more work-study, paid the same $306 (tests/b20-benefits-safetynet.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-7",
+     "B20-BENEFITS-8"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "benefits.assistance_month",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.desempleo_month",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock, monthly, on a claim a save already holds.",
+   "prerequisites": "A Seguro de Desempleo claim held, under three payments, living in Mexico City.",
+   "reads": "The claim, where they live.",
+   "changes": "MXN 3,566.22 into the payee account, the payment counted, Seguro De Desempleo Paid; the next month.",
+   "consumers": [
+    {
+     "what": "the payment, posted",
+     "at": "src/engine/systems/homebenefits.ts:162"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "person.desempleo.",
+   "evidence": {
+    "tests": [
+     "tests/homebenefits.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Filing went on 2026-10-09; only a save from before holding a claim in Mexico City reaches it, and none is among tests/fixtures. Its payment isn’t income on any return.",
+   "status": "Implemented, Verification Incomplete",
+   "prior": "benefits.desempleo_month",
+   "why": "No current life reaches it, and no older save in tests/fixtures holds a claim; the test that pays it sets the claim by hand (tests/homebenefits.test.ts). Until this audit the record called it verified on that legacy state.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.ja_week",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: Ireland’s Jobseeker’s Allowance week, on a claim made living there.",
+   "prerequisites": "A claim open, living there (Ireland or Britain).",
+   "reads": "The claim, savings, where they live.",
+   "changes": "The payment into the payee account, or the claim closed.",
+   "consumers": [
+    {
+     "what": "the payment",
+     "at": "src/engine/systems/homebenefits.ts:150"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claim on the person.",
+   "evidence": {
+    "tests": [
+     "tests/homebenefits.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No life lives in Ireland or Britain.",
+   "status": "Explicitly Deferred",
+   "prior": "benefits.ja_week",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): no life lives there.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.uc_period",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: Universal Credit’s monthly assessment, on a claim made living there.",
+   "prerequisites": "A claim open, living there (Ireland or Britain).",
+   "reads": "The claim, savings, where they live.",
+   "changes": "The payment into the payee account, or the claim closed.",
+   "consumers": [
+    {
+     "what": "the payment",
+     "at": "src/engine/systems/universalcredit.ts:134"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claim on the person.",
+   "evidence": {
+    "tests": [
+     "tests/statepension.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No life lives in Ireland or Britain.",
+   "status": "Explicitly Deferred",
+   "prior": "benefits.uc_period",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): no life lives there.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "benefits.week",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: each Sunday at eight in the evening while a claim is open.",
+   "prerequisites": "A claim open in its year.",
+   "reads": "Able and available (in the country, not a student in Connecticut, permission to work, not in hospital or laid up; Connecticut’s most of the week); the week’s work, the School’s (workDoneIn) and, from this audit, the career’s work days (careerWorkIn); the waiting week; what’s left of the claim.",
+   "changes": "The week’s benefit by its work into the payee account, on the year’s and the month’s record (recordBenefit); the waiting week; the claim ended at its most or its year; the next Sunday.",
+   "consumers": [
+    {
+     "what": "the year’s unemployment on the return",
+     "at": "src/engine/systems/taxreturn.ts:964"
+    },
+    {
+     "what": "the month’s unearned income for SNAP",
+     "at": "src/engine/systems/earnings.ts:237"
+    }
+   ],
+   "experienced": "The week’s money in checking; the waiting week’s notice; nothing for a week of over 30 hours’ work in New York; Your Unemployment Claim Ended; the next February’s return.",
+   "saveLoad": "claim.paid, the past claims, the earnings record; each Sunday once across reloads and jumps (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-unemployment.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/evidence-g16-papers.test.ts",
+     "tests/evidence2-b05.test.ts"
+    ],
+    "comparisons": [
+     "the base period: two runs worked against none; a New York claim of $314 a week against Connecticut’s refusal; a skilled twin’s same runs the same $314 (tests/b20-benefits-unemployment.test.ts)",
+     "a week worked on a claim: four shoot days pay nothing, two pay three quarters, a week with no work pays it all (tests/b20-benefits-unemployment.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-1",
+     "B20-BENEFITS-6"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "DEFECT, repaired: until this audit a week read the School’s work alone, so four shoot days in a certified week paid the full $314 (tests/b20-benefits-unemployment.test.ts). The career’s hours are the pay’s eight a day, its assumption.",
+   "status": "Implemented And Verified",
+   "prior": "benefits.week",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.bienestar_payment",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a claimed pension’s payment, on its cycle.",
+   "prerequisites": "The pension claimed (its command, deferred).",
+   "reads": "The claimed amount.",
+   "changes": "The payment into the payee account, and on the year’s income (recordPension).",
+   "consumers": [
+    {
+     "what": "income on the year’s return",
+     "at": "src/engine/systems/homepensions.ts:204"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claimed pension and its pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/homepensions.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life claims a pension.",
+   "status": "Explicitly Deferred",
+   "prior": null,
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): its command is unreachable, no life reaching the record or the age.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.ie_week",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a claimed pension’s payment, on its cycle.",
+   "prerequisites": "The pension claimed (its command, deferred).",
+   "reads": "The claimed amount.",
+   "changes": "The payment into the payee account, and on the year’s income (recordPension).",
+   "consumers": [
+    {
+     "what": "income on the year’s return",
+     "at": "src/engine/systems/homepensions.ts:204"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claimed pension and its pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/homepensions.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life claims a pension.",
+   "status": "Explicitly Deferred",
+   "prior": null,
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): its command is unreachable, no life reaching the record or the age.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.imss_month",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a claimed pension’s payment, on its cycle.",
+   "prerequisites": "The pension claimed (its command, deferred).",
+   "reads": "The claimed amount.",
+   "changes": "The payment into the payee account, and on the year’s income (recordPension).",
+   "consumers": [
+    {
+     "what": "income on the year’s return",
+     "at": "src/engine/systems/imss.ts:162"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claimed pension and its pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/imss.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life claims a pension.",
+   "status": "Explicitly Deferred",
+   "prior": null,
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): its command is unreachable, no life reaching the record or the age.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.ss_month",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a claimed pension’s payment, on its cycle.",
+   "prerequisites": "The pension claimed (its command, deferred).",
+   "reads": "The claimed amount.",
+   "changes": "The payment into the payee account, and on the year’s income (recordPension).",
+   "consumers": [
+    {
+     "what": "income on the year’s return",
+     "at": "src/engine/systems/socialsecurity.ts:152"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claimed pension and its pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-safetynet.test.ts"
+    ],
+    "comparisons": [
+     "a pension: 35 years against 20 claim $2,079 against $1,507; $100,000 more in the bank the same (tests/b20-benefits-safetynet.test.ts; TEST SETUP of age and record, the rows deferred)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life claims a pension.",
+   "status": "Explicitly Deferred",
+   "prior": null,
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): its command is unreachable, no life reaching the record or the age.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "pension.state_payment",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a claimed pension’s payment, on its cycle.",
+   "prerequisites": "The pension claimed (its command, deferred).",
+   "reads": "The claimed amount.",
+   "changes": "The payment into the payee account, and on the year’s income (recordPension).",
+   "consumers": [
+    {
+     "what": "income on the year’s return",
+     "at": "src/engine/systems/statepension.ts:96"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "The claimed pension and its pending payment.",
+   "evidence": {
+    "tests": [
+     "tests/statepension.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life claims a pension.",
+   "status": "Explicitly Deferred",
+   "prior": null,
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): its command is unreachable, no life reaching the record or the age.",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.amended",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: ten weeks after an amendment is filed.",
+   "prerequisites": "An amendment with the IRS, not processed.",
+   "reads": "The amendment’s sides; what’s owed; a plan in force.",
+   "changes": "The figures replaced; more tax added with interest from the due date (joining a plan or defaulting it, or collection begun), less taken off what’s owed and the rest refunded with interest; each state’s side by the state (amendState).",
+   "consumers": [
+    {
+     "what": "a state’s side",
+     "at": "src/engine/systems/taxreturn.ts:1813"
+    },
+    {
+     "what": "new tax under a plan",
+     "at": "src/engine/systems/taxreturn.ts:716"
+    }
+   ],
+   "experienced": "Nothing in a current life (tax.amend).",
+   "saveLoad": "TaxReturn.amended.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts",
+     "tests/tax-lifecycle.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Reached only by an amendment, which no current life files (tax.amend).",
+   "status": "Implemented, Verification Incomplete",
+   "prior": null,
+   "why": "No current life files an amendment (tests/b20-benefits-reach.test.ts); held by FIXTURE tests (tests/remaining-tax.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.due",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a return’s due date, mid-April (a 1040-NR with no wages, mid-June).",
+   "prerequisites": "A return not filed by its due date.",
+   "reads": "Who it’s owed to (owedToOf): the IRS’s part, each state’s, Oregon’s three-year rule.",
+   "changes": "The IRS’s substitute a year on where it’s owed; each state’s non-filer letters; Oregon’s three-year check; the late notice.",
+   "consumers": [
+    {
+     "what": "the IRS’s substitute",
+     "at": "src/engine/systems/taxreturn.ts:1399"
+    },
+    {
+     "what": "a state’s letters and assessment",
+     "at": "src/engine/systems/statetax.ts:860"
+    },
+    {
+     "what": "the worry of a return past due",
+     "at": "src/engine/systems/spending.ts:491"
+    }
+   ],
+   "experienced": "Your 2026 Return Is Late on the due date, with what each month adds; the worry each day from the next; the letters months on.",
+   "saveLoad": "Its items on the calendar; once across jumps and reloads (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/evidence-g33-ui.test.ts"
+    ],
+    "comparisons": [
+     "filing: the heir’s 2026 return filed on time, 85 days late ($555.27 penalties, $31.00 interest), and never (late notice, CP2566, assessment with $643.12 of penalties); the worry of the unfiled return from the day after the due date (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-18"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.due",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.federal_lien",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a federal lien’s release 30 days after payment in full, or its withdrawal’s decision.",
+   "prerequisites": "A notice of federal tax lien filed (at the LT11 on $10,000 or more) and paid, or asked to be withdrawn.",
+   "reads": "The lien’s status.",
+   "changes": "Released, or withdrawn; its history and notice.",
+   "consumers": [
+    {
+     "what": "the lien panel’s status and withdrawal",
+     "at": "src/ui/components/LienPanels.tsx:120"
+    }
+   ],
+   "experienced": "Your Federal Tax Lien Is Released, or Withdrawn; the panel.",
+   "saveLoad": "TaxReturn.lien.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-09-coverage.test.ts",
+     "tests/liens-and-arrangements.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "an Inherited family’s Capital One student who files nothing (tests/remaining-09-coverage.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.notice",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: the IRS’s letters on a balance owed, five weeks apart from the due date (or filing where later), the LT11’s 30 days, then a levy each quarter.",
+   "prerequisites": "A balance owed; no plan being decided, in force or behind.",
+   "reads": "The balance brought up to now, the step reached, the bank for a levy.",
+   "changes": "CP501, CP503, CP504, LT11 (the federal lien filed with it on $10,000 or more), then a levy from the bank applied to what’s owed; the next step.",
+   "consumers": [
+    {
+     "what": "the levy from the bank",
+     "at": "src/engine/systems/taxreturn.ts:1468"
+    },
+    {
+     "what": "the federal lien at the LT11",
+     "at": "src/engine/systems/taxreturn.ts:303"
+    }
+   ],
+   "experienced": "Each letter with what’s owed; the levy’s notice with what it took.",
+   "saveLoad": "TaxReturn.collection and the pending letter; once across jumps (tests/remaining-tax.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [
+     "a plan kept against a plan missed: payments every 30 days and no letters, against CP523, the end 30 days on, the LT11 35 days after the due date and the levy (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.notice",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.plan_decide",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a minute after applying online, or 30 days by mail.",
+   "prerequisites": "A plan pending.",
+   "reads": "The plan asked about as the one being decided (planRefusal), the bank for its fee.",
+   "changes": "Refused (collection back), or its fee paid and the plan begun: letters canceled, the reduced rate, the first payment 30 days on.",
+   "consumers": [
+    {
+     "what": "the first payment",
+     "at": "src/engine/systems/taxreturn.ts:1545"
+    }
+   ],
+   "experienced": "Your IRS Payment Plan Is Approved, or Declined with why.",
+   "saveLoad": "person.taxPlan.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [
+     "a plan kept against a plan missed: payments every 30 days and no letters, against CP523, the end 30 days on, the LT11 35 days after the due date and the levy (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.plan_default",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: 30 days after CP523.",
+   "prerequisites": "A plan still behind.",
+   "reads": "The plan.",
+   "changes": "The plan ended; the reduced rate stops; collection back at the final notice.",
+   "consumers": [
+    {
+     "what": "the IRS’s final notice",
+     "at": "src/engine/systems/taxreturn.ts:1449"
+    }
+   ],
+   "experienced": "Your IRS Payment Plan Has Ended; the LT11 35 days after the due date; the levy 30 days after it.",
+   "saveLoad": "person.taxPlan.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts"
+    ],
+    "comparisons": [
+     "a plan kept against a plan missed: payments every 30 days and no letters, against CP523, the end 30 days on, the LT11 35 days after the due date and the levy (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-14"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.plan_payment",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: every 30 days from approval (a short plan’s on its 180th day).",
+   "prerequisites": "A plan in force.",
+   "reads": "What’s owed (owedAll), the bank.",
+   "changes": "The payment from the bank, applied oldest year first; paid off, the plan ends paid; missed, CP523 and 30 days.",
+   "consumers": [
+    {
+     "what": "the payment applied",
+     "at": "src/engine/systems/taxreturn.ts:701"
+    }
+   ],
+   "experienced": "The payment gone from checking on its day; Notice CP523 when missed.",
+   "saveLoad": "person.taxPlan; each payment once across jumps and reloads (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-time.test.ts"
+    ],
+    "comparisons": [
+     "a plan kept against a plan missed: payments every 30 days and no letters, against CP523, the end 30 days on, the LT11 35 days after the due date and the levy (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-14",
+     "B20-BENEFITS-15"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.refund",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: 21 days after filing, 70 on a 1040-NR without a Social Security number; a state’s on its own day.",
+   "prerequisites": "A refund due and not paid.",
+   "reads": "Another year owed to the IRS, a state’s past-due tax, the payee account.",
+   "changes": "The refund into checking, less what it pays of another year or a state’s past-due tax.",
+   "consumers": [
+    {
+     "what": "the refund into the payee account",
+     "at": "src/engine/systems/taxreturn.ts:1503"
+    },
+    {
+     "what": "a state’s refund, offset first",
+     "at": "src/engine/systems/statetax.ts:609"
+    }
+   ],
+   "experienced": "The money in checking on its day; a notice where it paid another year.",
+   "saveLoad": "TaxReturn.refundedAt: paid once.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/defects-g8-8.test.ts",
+     "tests/finance-paths.test.ts"
+    ],
+    "comparisons": [
+     "work-study: two F-1 students alike but eight elective shifts; the 1040-NR reads $736 more wages and $88.32 more tax, the refund $88.32 smaller on its day; a twin moving her savings into checking files the same return (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-11"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.refund",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.season",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: each 1 February at nine.",
+   "prerequisites": "A return owed: a US citizen, or US income; for a resident, something owed or due back or income at the standard deduction; an F-1 student every year.",
+   "reads": "The year’s record (figuresFor), the UK’s years to settle.",
+   "changes": "The return made with its due date and its item in What Needs You; the due date on the calendar; the next season.",
+   "consumers": [
+    {
+     "what": "the due date",
+     "at": "src/engine/systems/taxreturn.ts:1368"
+    },
+    {
+     "what": "Home’s Papers line",
+     "at": "src/ui/screens/Home.tsx:570"
+    }
+   ],
+   "experienced": "The return on Papers with its lines; Your 2026 Tax Return in What Needs You.",
+   "saveLoad": "The return and the next season once (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-time.test.ts"
+    ],
+    "comparisons": [
+     "work-study: two F-1 students alike but eight elective shifts; the 1040-NR reads $736 more wages and $88.32 more tax, the refund $88.32 smaller on its day; a twin moving her savings into checking files the same return (tests/b20-benefits-tax.test.ts)",
+     "career pay: a graduate who works Winter Ledger against one who doesn’t; $10,026 on the record with $848.03 withheld and New York’s $0.46 owed and paid at filing, against no return at all; a skilled twin’s record and return the same (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-9",
+     "B20-BENEFITS-10",
+     "B20-BENEFITS-16"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.season",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.state_lien",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a state lien filed after its notice of intent, released after payment, or a dispute decided.",
+   "prerequisites": "A lien on its step.",
+   "reads": "The lien, what’s owed, a plan.",
+   "changes": "Filed, dropped, released or withdrawn.",
+   "consumers": [
+    {
+     "what": "the panel’s status",
+     "at": "src/ui/components/LienPanels.tsx:83"
+    }
+   ],
+   "experienced": "The lien’s notices and the panel.",
+   "saveLoad": "StateDue.lien.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/liens-and-arrangements.test.ts",
+     "tests/guide-examples-papers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "New York’s warrant released 30 days after the levy paid it (tests/b20-benefits-reach.test.ts)"
+    ]
+   },
+   "missing": "Its decide branch follows tax.lien_dispute, which no current life reaches; its file-after-intent branch is California’s, which no life owes.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.state_nonfiler",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a state’s letters on a return never filed, then its assessment.",
+   "prerequisites": "A return not filed that owes the state.",
+   "reads": "The state’s rules, the return’s figure for it.",
+   "changes": "Its letters; the assessment with its penalties and interest from the due date; collection begun.",
+   "consumers": [
+    {
+     "what": "the state’s collection",
+     "at": "src/engine/systems/statetax.ts:960"
+    }
+   ],
+   "experienced": "Connecticut DRS Made Your Return; New York’s AU-222 and its letters; the assessment’s notice.",
+   "saveLoad": "The return’s letters sent and the state side; once across jumps (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/b20-benefits-time.test.ts",
+     "tests/state-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.state_notice",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a state’s bill, notice and levy, from its due date.",
+   "prerequisites": "A state balance owed; no plan of the state’s pending, in force or behind.",
+   "reads": "The balance brought up to now, the state’s steps, its lien’s step, the bank.",
+   "changes": "The notice; the lien at its step; the levy applied in the state’s order; the next step.",
+   "consumers": [
+    {
+     "what": "the levy applied",
+     "at": "src/engine/systems/statetax.ts:364"
+    }
+   ],
+   "experienced": "Each letter with what’s owed; the lien’s notice; the levy’s.",
+   "saveLoad": "StateDue.collection and the pending item; once across jumps (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-time.test.ts",
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [
+     "a state plan’s hold: with New York’s plan in force a second year’s balance joins it and no bill comes; the twin with no plan is billed 30 days after the due date (tests/b20-benefits-reach.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-19"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.state_plan_end",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a missed state plan payment’s last day to catch up.",
+   "prerequisites": "The plan still behind.",
+   "reads": "The plan.",
+   "changes": "The plan ended; collection back at its last notice before a levy.",
+   "consumers": [
+    {
+     "what": "the state’s collection",
+     "at": "src/engine/systems/statetax.ts:960"
+    }
+   ],
+   "experienced": "Ended Your Plan; the next notice.",
+   "saveLoad": "person.statePlans.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "the twin who didn’t catch up (tests/b20-benefits-reach.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.state_plan_payment",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a state plan’s decision, then every 30 days.",
+   "prerequisites": "A plan pending or in force.",
+   "reads": "The plan, its statement where asked, what’s owed, the bank.",
+   "changes": "Decided; or the payment applied oldest year first; or missed by the state’s rule.",
+   "consumers": [
+    {
+     "what": "the payment applied",
+     "at": "src/engine/systems/statetax.ts:437"
+    },
+    {
+     "what": "a missed payment by the state’s rule",
+     "at": "src/engine/systems/statetax.ts:576"
+    }
+   ],
+   "experienced": "Approved Your Plan; the payment gone on its day; a plan payment missed.",
+   "saveLoad": "person.statePlans.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/scope-taxpapers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-3"
+    ],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.substitute",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: a year after the due date (CP2566), then 120 days on (assessed).",
+   "prerequisites": "A return owing the IRS never filed.",
+   "reads": "The return’s figures less the credits only theirs claims (sfrFigures), the due date.",
+   "changes": "The proposal’s notice; then the assessment with its late penalties and interest, collection begun.",
+   "consumers": [
+    {
+     "what": "the IRS’s collection",
+     "at": "src/engine/systems/taxreturn.ts:1449"
+    }
+   ],
+   "experienced": "The IRS Figured Your 2026 Return; The IRS Assessed Your 2026 Return; the letters.",
+   "saveLoad": "TaxReturn.substitute and its figures; once across jumps (tests/b20-benefits-time.test.ts).",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-time.test.ts"
+    ],
+    "comparisons": [
+     "filing: the heir’s 2026 return filed on time, 85 days late ($555.27 penalties, $31.00 interest), and never (late notice, CP2566, assessment with $643.12 of penalties); the worry of the unfiled return from the day after the due date (tests/b20-benefits-tax.test.ts)"
+    ],
+    "mutations": [
+     "B20-BENEFITS-13"
+    ],
+    "journeys": [
+     "jumped, stepped a day at a time, and saved and opened mid-season: the same notices, money and records (tests/b20-benefits-time.test.ts)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": "tax.substitute",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "tax.three_year",
+   "kind": "scheduled",
+   "area": "benefits",
+   "mechanic": true,
+   "seeded": false,
+   "where": "The clock: Oregon’s extended due date.",
+   "prerequisites": "Three years running owing Oregon with no return of their own.",
+   "reads": "The three years’ returns and Oregon’s sides.",
+   "changes": "The three-year penalty on each.",
+   "consumers": [
+    {
+     "what": "the penalty charged",
+     "at": "src/engine/systems/statetax.ts:816"
+    }
+   ],
+   "experienced": "Nothing in a current life.",
+   "saveLoad": "StateDue.threeYear.",
+   "evidence": {
+    "tests": [
+     "tests/liens-and-arrangements.test.ts",
+     "tests/b20-benefits-reach.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Only Oregon has it, and no life owes Oregon (tests/b20-benefits-reach.test.ts).",
+   "status": "Implemented, Verification Incomplete",
+   "prior": null,
+   "why": "No current life owes Oregon (tests/b20-benefits-reach.test.ts); held by quick-save tests (tests/liens-and-arrangements.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/statetax#notifyPlayer",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Notices from every state’s collection, plans, liens and refunds (statetax.ts notifyPlayer).",
+   "prerequisites": "Sent by the state’s steps to the player alone.",
+   "reads": "The state side’s figures at the moment.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/scope-taxpapers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-3"
+    ],
+    "journeys": []
+   },
+   "missing": "None found. A one-month plan said “for 1 months” until this audit (repaired).",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player what a state did on their tax: a bill, a notice, a lien, a plan’s approval, a missed payment, a refund offset, a waiver, with the amount and where to act; its words checked against the state of the year.",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#federalLienStep",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The IRS’s lien notice at the LT11.",
+   "prerequisites": "Sent at the LT11 on $10,000 or more owed.",
+   "reads": "What’s owed then.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-09-coverage.test.ts",
+     "tests/liens-and-arrangements.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player the IRS filed a notice of federal tax lien, for how much, and how it’s released.",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#billed",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "A Bill From The IRS, at filing with a balance unpaid.",
+   "prerequisites": "Sent when filing leaves the IRS’s part owed.",
+   "reads": "The balance, the due date.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts",
+     "tests/evidence-g33-ui.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player at filing what they owe the IRS, by when, and what runs on it after (Notice CP14).",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#refusePlan",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The IRS Declined Your Payment Plan.",
+   "prerequisites": "Sent when a pending plan is refused on its decision.",
+   "reads": "The refusal’s reason, whether anything is owed.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts",
+     "tests/defects-g8-7.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player the IRS declined their plan, why, and that its letters start again.",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#newLiability",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Notice CP523: Your Payment Plan.",
+   "prerequisites": "Sent when new tax beyond two payments meets a monthly plan in force.",
+   "reads": "The new tax, the plan.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/remaining-tax.test.ts",
+     "tests/evidence-g17-papers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-21"
+    ],
+    "journeys": []
+   },
+   "missing": "None found. Until this audit only an amendment with a corrected W-2 typed in showed it; a later year’s return filed unpaid under a plan now does, in a played life (tests/b20-benefits-tax.test.ts).",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player new tax is more than two plan payments and the plan must be revised by its day (Notice CP523).",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#settleUkYears",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The UK Refunded Tax, or The UK Collected Its Balance, each 1 February.",
+   "prerequisites": "Sent where a UK tax year’s return fell due.",
+   "reads": "The UK year’s wages and withholding.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/carried.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No life works in the UK.",
+   "status": "Implemented, Verification Incomplete",
+   "prior": null,
+   "purpose": "Tells the player a UK tax year is settled: what came back or was paid.",
+   "why": "No current life earns UK wages (every project is in New York); the test calls settleUkYears with the year set by hand (tests/carried.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#reconsider",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Your 2026 Return Replaces The IRS’s.",
+   "prerequisites": "Sent when they file their own in place of an assessed substitute.",
+   "reads": "Their return’s tax against the IRS’s, what’s owed.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/defects-g8-8.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [
+     "B20-BENEFITS-20"
+    ],
+    "journeys": []
+   },
+   "missing": "DEFECT, repaired: until this audit it said the penalty and interest were “reduced in proportion” where their return’s tax was the IRS’s own and nothing fell (tests/b20-benefits-tax.test.ts); a state’s, the same.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player their own return replaced the IRS’s assessment: the tax as theirs, what’s still owed, and whether the penalty and interest fell.",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/taxreturn#amendState",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "A state’s Processed Your Amended Return.",
+   "prerequisites": "Sent when an amendment with a state side is processed.",
+   "reads": "The state’s change.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No current life amends.",
+   "status": "Implemented, Verification Incomplete",
+   "prior": null,
+   "purpose": "Tells the player a state processed their amended return: more or less tax, and what was refunded.",
+   "why": "Follows tax.amend, which no current life files (tests/b20-benefits-reach.test.ts); held by FIXTURE tests (tests/remaining-tax.test.ts).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/unemployment#close",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Your Unemployment Claim Ended.",
+   "prerequisites": "Sent when a claim pays its most or reaches its year.",
+   "reads": "The claim’s paid total.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-unemployment.test.ts",
+     "tests/evidence-g15-papers.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "prior": null,
+   "purpose": "Tells the player their unemployment claim ended, and why: its most paid, or its year.",
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "notice.systems/universalcredit#close",
+   "kind": "notice",
+   "area": "benefits",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Universal Credit Closed.",
+   "prerequisites": "Sent when a claim closes.",
+   "reads": "The claim.",
+   "changes": "A notice in the log, with the amount and the next step; nothing else.",
+   "consumers": [],
+   "experienced": "The notice in the log and its toast, routed to Papers.",
+   "saveLoad": "The notification log.",
+   "evidence": {
+    "tests": [
+     "tests/statepension.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "No life lives in Britain.",
+   "status": "Explicitly Deferred",
+   "prior": null,
+   "purpose": "Tells the player Universal Credit closed, and why.",
+   "why": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as the completion matrix records it (docs/verification/integration-2026-10-16/COMPLETION-MATRIX.md, its deferred rows): Universal Credit needs living in Britain, which no life does (benefits.uc_period).",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  }
+ ],
+ "promises": [
+  {
+   "id": "promise.taxes.return>bank.accounts#immediate",
+   "kind": "immediate",
+   "claim": "Filing takes any balance from your accounts at once, the checking account first and then savings.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "tax.file pays each authority’s part with payFromBank, the checking account then savings (src/engine/systems/taxreturn.ts:1649; src/engine/systems/statetax.ts:336).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/b20-benefits-reach.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-reach.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.return>day.needs",
+   "kind": "immediate",
+   "claim": "Filing answers the year’s item in What Needs You.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "tax.file answers the year’s decision (src/engine/systems/taxreturn.ts:1623).",
+   "tests": [
+    "tests/evidence-g33-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g33-ui.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.return>taxes.pay",
+   "kind": "scheduled",
+   "claim": "A balance your bank couldn’t pay at filing stays owed: the IRS’s bill comes at once, and its first reminder ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "tax.file left owing sends the bill at once and the first reminder five weeks from the later of the due date and now (src/engine/systems/taxreturn.ts:1657; src/engine/systems/taxreturn.ts:406).",
+   "tests": [
+    "tests/remaining-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.return>bank.accounts#scheduled",
+   "kind": "scheduled",
+   "claim": "A refund is paid into your checking account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "The refund 21 days on, seven weeks more on a 1040-NR without a Social Security number (src/engine/systems/taxreturn.ts:1642), paid to the payee account (src/engine/systems/taxreturn.ts:1503).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/defects-g8-8.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/defects-g8-8.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.return>papers.overview",
+   "kind": "immediate",
+   "claim": "The Papers line on Home says when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "Home’s Papers line reads the open return’s due date, what filing would pay with its late penalty, and the tax owed (src/ui/screens/Home.tsx:564).",
+   "tests": [
+    "tests/evidence-g33-ui.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/evidence-g33-ui.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.return>documents.work",
+   "kind": "optional",
+   "claim": "On a 1040-NR, having a Social Security number before you file saves the ${said(SSN.itinWeeks)} weeks an ITIN application holds up the refund.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "A 1040-NR filed without a Social Security number waits the ITIN’s weeks (src/engine/systems/taxreturn.ts:1641).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/defects-g8-8.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/defects-g8-8.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.pay>taxes.return",
+   "kind": "prerequisite",
+   "claim": "You owe a balance only on a filed return, or on one the IRS or a state assessed without you.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "A balance is set only by filing, an assessment or an amendment (setOwed’s callers); Pay refuses a year not owed (src/engine/systems/taxreturn.ts:1671; src/engine/systems/statetax.ts:1007).",
+   "tests": [
+    "tests/remaining-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/remaining-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.pay>bank.accounts#immediate",
+   "kind": "immediate",
+   "claim": "Each payment leaves your accounts at once, the checking account first and then savings.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "tax.pay and tax.pay_state take the amount with payFromBank, checking then savings (src/engine/systems/taxreturn.ts:1677).",
+   "tests": [
+    "tests/b20-benefits-reach.test.ts",
+    "tests/remaining-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.pay>taxes.lien",
+   "kind": "immediate",
+   "claim": "Paying a year in full moves its lien to Paid: Release To Come.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "Paid in full, the IRS’s lien and a state’s go to paid (src/engine/systems/taxreturn.ts:278; src/engine/systems/statetax.ts:379).",
+   "tests": [
+    "tests/liens-and-arrangements.test.ts",
+    "tests/remaining-09-coverage.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/liens-and-arrangements.test.ts",
+     "tests/remaining-09-coverage.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.pay>bank.accounts#scheduled",
+   "kind": "scheduled",
+   "claim": "If you leave it owing, a levy takes what your accounts hold on its day.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "The IRS’s levy and a state’s take what the accounts hold (src/engine/systems/taxreturn.ts:1468; src/engine/systems/statetax.ts:991).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/b20-benefits-reach.test.ts",
+    "tests/remaining-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-reach.test.ts",
+     "tests/remaining-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.pay>body.how",
+   "kind": "immediate",
+   "claim": "Tax owed weighs on you: each day ends with more stress and less morale until it’s paid.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "Tax owed and a return past due are troubles (src/engine/systems/spending.ts:483), and each day of trouble adds stress and takes morale (src/engine/systems/spending.ts:508).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.pay>taxes.plan",
+   "kind": "optional",
+   "claim": "When you can’t pay at once, a plan stops collection for as long as you keep it up.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "The IRS’s letters and levy wait while its plan stands (src/engine/systems/taxreturn.ts:1455); a state’s while its own does (src/engine/systems/statetax.ts:969).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/b20-benefits-reach.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-reach.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.plan>taxes.return",
+   "kind": "prerequisite",
+   "claim": "Every return past its due date has to be filed before the IRS or a state sets up a plan.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "planRefusal and statePlanRefusal refuse while a return is past due unfiled (src/engine/systems/taxreturn.ts:602; src/engine/systems/statetax.ts:469).",
+   "tests": [
+    "tests/language-crossarea.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/language-crossarea.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.plan>taxes.pay",
+   "kind": "immediate",
+   "claim": "A plan being decided or in force stops the letters and the levy on what you owe.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "A plan decided or in force holds the letters and the levy, and its start cancels those pending (src/engine/systems/taxreturn.ts:650).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/remaining-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/remaining-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.plan>taxes.lien",
+   "kind": "immediate",
+   "claim": "While a state plan is in force, no lien is filed, and one that was only announced comes to nothing.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "No lien step while a state plan stands, and a notice of intent comes to nothing under one (src/engine/systems/statetax.ts:666; src/engine/systems/statetax.ts:545).",
+   "tests": [
+    "tests/liens-and-arrangements.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/liens-and-arrangements.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.plan>bank.accounts",
+   "kind": "scheduled",
+   "claim": "Each plan payment is taken from your accounts on its day, every 30 days.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "Each payment from the accounts on its day, the next 30 days on (src/engine/systems/taxreturn.ts:1553; src/engine/systems/statetax.ts:1177).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/b20-benefits-time.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/b20-benefits-time.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.plan>documents.work",
+   "kind": "optional",
+   "claim": "A Social Security number gets an IRS plan decided within a minute. Without one it takes ${PLAN.mailDays} days.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "Online with a Social Security number the IRS decides in a minute; without, Form 9465 by mail in 30 days (src/engine/systems/taxreturn.ts:1522).",
+   "tests": [
+    "tests/b20-benefits-tax.test.ts",
+    "tests/evidence-g17-papers.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-tax.test.ts",
+     "tests/evidence-g17-papers.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.lien>taxes.pay",
+   "kind": "prerequisite",
+   "claim": "A lien is released only once what it was filed for is paid in full.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "A state’s release is asked only once paid (src/engine/systems/statetax.ts:740); the IRS’s releases itself only on payment in full (src/engine/systems/taxreturn.ts:315).",
+   "tests": [
+    "tests/liens-and-arrangements.test.ts",
+    "tests/remaining-09-coverage.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/liens-and-arrangements.test.ts",
+     "tests/remaining-09-coverage.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.lien>taxes.return",
+   "kind": "prerequisite",
+   "claim": "A lien is withdrawn as filed in error only after your own return has replaced the assessment it was filed on.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "A lien is in error only once their own return has replaced the assessment, and left nothing owed when it was filed (src/engine/systems/statetax.ts:764; src/engine/systems/taxreturn.ts:330).",
+   "tests": [
+    "tests/b20-benefits-reach.test.ts",
+    "tests/liens-and-arrangements.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/b20-benefits-reach.test.ts",
+     "tests/liens-and-arrangements.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  },
+  {
+   "id": "promise.taxes.lien>taxes.plan",
+   "kind": "optional",
+   "claim": "While a state plan is in force, no lien is filed. Connecticut files its lien at its second notice.",
+   "entryFile": "src/engine/content/guide/taxes.ts",
+   "holds": "No lien while a state plan stands (src/engine/systems/statetax.ts:666); Connecticut’s lien at its step 1, its second notice (content/statetax.ts, atStep 1).",
+   "tests": [
+    "tests/liens-and-arrangements.test.ts",
+    "tests/remaining-tax.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "seeded": false,
+   "evidence": {
+    "tests": [
+     "tests/liens-and-arrangements.test.ts",
+     "tests/remaining-tax.test.ts"
+    ]
+   },
+   "why": "",
+   "readBy": "benefits",
+   "readAt": "c4832549"
+  }
+ ]
+}

@@ -27,7 +27,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:122-144 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
+            "where": "tests/simulation.test.ts:122-147 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -35,7 +35,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:291-307 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
+            "where": "tests/simulation.test.ts:298-314 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -43,7 +43,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:319-336 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
+            "where": "tests/simulation.test.ts:326-343 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -79,7 +79,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1142-1159, 1169-1175",
+            "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1154-1171, 1181-1187",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -2439,7 +2439,7 @@
           "holds": false,
           "verdict": "verified",
           "problems": [
-            "The one gap the claim leaves open is no longer real. slot() now moves a Saturday, a Sunday or a public holiday (src/engine/systems/appointments.ts:101-111, holidaysOn). tests/evidence-g07-life.test.ts:590 ('DEFECT: a doctor's visit booked from Monday 2 November, 24 days on, isn't put on Thanksgiving Day') books through sim.must health.book and expects the literal Friday 27 November. I didn't run that file; only this group's file was allowed.",
+            "The one gap the claim leaves open is no longer real. slot() now moves a Saturday, a Sunday or a public holiday (src/engine/systems/appointments.ts:101-111, holidaysOn). tests/evidence-g07-life.test.ts:593 ('DEFECT: a doctor's visit booked from Monday 2 November, 24 days on, isn't put on Thanksgiving Day') books through sim.must health.book and expects the literal Friday 27 November. I didn't run that file; only this group's file was allowed.",
             "The other four gaps are closed through the command and the rendered Papers. The three refusals are asserted by their words. owedVisit is undefined after Book An Appointment is pressed, and a second press is refused. The 24-day wait is AMN's 23.5 rounded, moved off Sunday 27 September to Monday 28 September (a literal). The visit is kept on the clock once, across two reloads, as 'Nothing to pay.' with no bill. In the Vancouver fixture, renewPrescriptions is read by the next fill, against a twin left Out Of Medicine.",
             "Only a $0 visit kept from a health.book booking is ever checked (Yale Health, NHS), so careFor billing a nonzero amount on such a visit isn't shown. reviewed and mayRefer are not asserted after a command-booked visit. The review didn't name these as gaps, and the APPOINTMENT_KIND handler is shared with the health week's bookings.",
             "The claimCorrection (tests field, entry :937) isn't applied in the tree yet: docs/verification/audit/life.json and docs/GAMEPLAY-COVERAGE.md:635 still cite referrals.test.ts and journey-life.test.ts.",
@@ -4519,7 +4519,7 @@
       "downstream": "troubles/inTrouble (the day’s worry), healthMonth’s report a year on, bills settled",
       "persistent": "ledger",
       "explanation": "Papers",
-      "tests": "tests/evidence-g03-life.test.ts health.pay_bill ‘PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay is reported once…’, ‘paid from a savings account named…’, ‘an account named that can’t pay a medical debt, their own credit card, is refused…’ (nothing moved, the words not read); tests/evidence2-b02.test.ts health.appeal_decided ‘PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays…’; tests/evidence-g05-life.test.ts health.bill ‘PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt… until Pay It Off settles it…’; checking less: tests/coverage-gaps-life.test.ts (the report a year on by debtSince put back and healthMonth called by hand)",
+      "tests": "tests/evidence-g03-life.test.ts health.pay_bill ‘PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay still owes it…’, ‘paid from a savings account named…’, ‘an account named that can’t pay a medical debt, their own credit card, is refused…’ (nothing moved, the words not read); tests/evidence2-b02.test.ts health.appeal_decided ‘PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays…’; tests/evidence-g05-life.test.ts health.bill ‘PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt… until Pay It Off settles it…’; checking less: tests/coverage-gaps-life.test.ts (the report a year on by debtSince put back and healthMonth called by hand)",
       "status": "verified",
       "issue": "Until 2026-10-13 the downstream was untested, and a fromId that couldn’t pay was swapped for the primary account. Since then the report a year on is played by the clock against a twin who paid, Home’s worry gone (tests/evidence-g03-life.test.ts), and such a fromId is refused (health.ts:1636). Pay It Off still offers only the whole debt and names no account (PapersWorkspace.tsx:570), so fromId is reached only through the command.",
       "auditStatus": "partial",
@@ -4530,7 +4530,7 @@
         "on": "2026-10-12",
         "status": "verified",
         "said": "Downstream: the day’s money trouble, healthMonth’s report a year on, and the bills settled; verified when the open items were revisited, on coverage-gaps-life.test.ts.",
-        "now": "Through the command, a medical debt paid off is no longer a money trouble, across a reload, debtSince is cleared, and another payment is refused (coverage-gaps-life.test.ts:56-68); paid after a report, the report stays (coverage-gaps-life.test.ts:78-81). Its report a year on, what the payment spares, is checked only by putting debtSince back a year and calling healthMonth in the clock’s place (coverage-gaps-life.test.ts:64, :74-75; defects-g8-6.test.ts:283-284), which checks less, as the idle check called with the idle time typed in does for account upkeep. No test plays a year through the clock with a debt paid or unpaid."
+        "now": "Through the command, a medical debt paid off is no longer a money trouble, across a reload, debtSince is cleared, and another payment is refused (coverage-gaps-life.test.ts:56-68); paid after a report, the report stays (coverage-gaps-life.test.ts:90-93). Its report a year on, what the payment spares, is checked only by putting debtSince back a year and calling healthMonth in the clock’s place (coverage-gaps-life.test.ts:64, :74-75; defects-g8-6.test.ts:283-284), which checks less, as the idle check called with the idle time typed in does for account upkeep. No test plays a year through the clock with a debt paid or unpaid."
       },
       "review": {
         "on": "2026-10-13",
@@ -4548,7 +4548,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/coverage-gaps-life.test.ts:70-82",
+            "where": "tests/coverage-gaps-life.test.ts:70-118",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4589,7 +4589,7 @@
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
-            "title": "PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay is reported once, across a reload, and the one who paid never is",
+            "title": "PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay still owes it, across a reload, and neither is reported, Connecticut barring it",
             "kind": "render",
             "closes": "the report a year on reached by the clock (1 October 2027), once across a reload, with its credit mark, against a twin who paid; Pay It Off rendered and pressed; the bill 'Settled' on the student's Papers; Home's 'You owe $900 for medical care.' gone"
           },
@@ -4681,7 +4681,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/coverage-gaps-life.test.ts:85-102",
+            "where": "tests/coverage-gaps-life.test.ts:121-138",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -5323,7 +5323,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:259-268 'charges nothing at midnight...'",
+            "where": "tests/simulation.test.ts:266-275 'charges nothing at midnight...'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -5354,7 +5354,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:338-349, 806-848",
+            "where": "tests/simulation.test.ts:345-356, 813-855",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -5438,7 +5438,7 @@
             "bodyDay beyond starvation: an order's 134 kcal goes onto the scale at 134/(23.9x365/ln2) kg, about 10.6 g, within 1 g, and not again the next night. The figures come from the cited sources.",
             "Fitness decays 0.18 a day (50, 49.82, 49.64, 49.46), and Groceries post at each midnight.",
             "Gap 1, the weak cited tests, closes only when the claimCorrection is applied. docs/verification/audit/life.json still cites simulation.test 'charges nothing at midnight' and the direct settleTheBody fixture. The replacement citations exist: defects-r3a-1, the simulation.test hygiene toBe(82), wellbeing-bites 'a year on autopilot', body.test, mortality.test.",
-            "Hygiene is checked only as >= 82 in this file. The exact floor is held by simulation.test.ts:344."
+            "Hygiene is checked only as >= 82 in this file. The exact floor is held by simulation.test.ts:351."
           ],
           "weakTests": [
             {
@@ -6242,7 +6242,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/coverage-gaps-life.test.ts:43-82",
+            "where": "tests/coverage-gaps-life.test.ts:43-118",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -6250,7 +6250,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-6.test.ts:275-288",
+            "where": "tests/defects-g8-6.test.ts:275-297",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -6553,7 +6553,7 @@
           },
           {
             "file": "evidence-g05-life.test.ts",
-            "title": "health.month > PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported on the first month a year past due, once, across a reload",
+            "title": "health.month > PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is owed past a year and never reported, Connecticut barring it, across a reload",
             "kind": "command",
             "closes": "The debt report through the clock: $720 of debt from three unpaid sessions (debtSince 7 October 2026), not reported on 1 October 2027, reported on 1 November 2027 ('Unpaid a year and $500.00 or more, it’s reported now.') with a 40-point credit mark, once across a reload and the next month"
           },
@@ -7243,7 +7243,7 @@
       "downstream": "readiness; workout SPENT gate; practice/coursework SPENT; applyElapsedWellbeing empty->stress",
       "persistent": "",
       "explanation": "wellbeing.tsx",
-      "tests": "tests/evidence-g06-life.test.ts energy ‘PLAYER JOURNEY: fourteen hours by the clock leave the 82 a new life wakes with at 40…’, ‘holds the workout’s gate at 25 as the clock reaches it…’, ‘a night chosen at 3:30 AM puts back 8 × quality × 13.5 × 0.995…’ (the debt paid down not read), ‘a stay and an emergency drawn by the health week take CARE’s 40 and 20 against a twin…’, ‘the flu drawn by the health week in its season takes CARE’s 30 against a twin…’, ‘readiness reads it…’; simulation.test.ts:190-257 (the drain by the minute and in one jump); looking-after.test.ts ‘refuses ${name}, and leaves the save as it was’; checking less: personality.test.ts ‘charges running on empty for the hours spent there…’ (applyElapsedWellbeing on a person built by hand), wellbeing-bites.test.ts",
+      "tests": "tests/evidence-g06-life.test.ts energy ‘PLAYER JOURNEY: fourteen hours by the clock leave the 82 a new life wakes with at 40…’, ‘holds the workout’s gate at 25 as the clock reaches it…’, ‘a night chosen at 3:30 AM puts back 8 × quality × 13.5 × 0.995…’ (the debt paid down not read), ‘a stay and an emergency drawn by the health week take CARE’s 40 and 20 against a twin…’, ‘the flu drawn by the health week in its season takes CARE’s 30 against a twin…’, ‘readiness reads it…’; simulation.test.ts:193-264 (the drain by the minute and in one jump); looking-after.test.ts ‘refuses ${name}, and leaves the save as it was’; checking less: personality.test.ts ‘charges running on empty for the hours spent there…’ (applyElapsedWellbeing on a person built by hand), wellbeing-bites.test.ts",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7254,7 +7254,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:190-257",
+            "where": "tests/simulation.test.ts:193-264",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -7419,14 +7419,14 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:203-246, 926-951",
+            "where": "tests/simulation.test.ts:206-253, 933-963",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:139-144 'accrues debt when the night is short'",
+            "where": "tests/simulation.test.ts:139-147 'accrues debt when the night is short'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -7523,7 +7523,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:352-373 'costs the same in one-second ticks...'",
+            "where": "tests/simulation.test.ts:359-380 'costs the same in one-second ticks...'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": false,
@@ -7943,7 +7943,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:417",
+            "where": "tests/simulation.test.ts:424",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -8082,7 +8082,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:338-350",
+            "where": "tests/simulation.test.ts:345-357",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -8260,7 +8260,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:352-373",
+            "where": "tests/simulation.test.ts:359-380",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": false,
@@ -8720,7 +8720,7 @@
           },
           {
             "file": "evidence-g07-life.test.ts",
-            "title": "weather/trainingAt > PLAYER JOURNEY: a humid afternoon under 32 °C that feels over it is indoors: Thursday 27 August 2026, 30 °C at 73% to 1:30 PM",
+            "title": "weather/trainingAt > PLAYER JOURNEY: a humid afternoon under 32 °C that feels over it is indoors: Thursday 27 August 2026, 29 °C at 73% to 1:30 PM",
             "kind": "render",
             "closes": "the heat-index branch through a workout in New Haven: 30 °C (under 32) at 73% is 35.78 °C by the NWS Rothfusz regression worked in the test; indoors, built ×1.0, MET 3.5, gym roll"
           }
@@ -9564,7 +9564,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/life-fixes.test.ts:149-158; tests/coverage-gaps-life.test.ts:104-119",
+            "where": "tests/life-fixes.test.ts:149-158; tests/coverage-gaps-life.test.ts:140-155",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,
@@ -10913,7 +10913,7 @@
         "evidence": [
           {
             "kind": "fixture",
-            "where": "tests/coverage-gaps-life.test.ts:105 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
+            "where": "tests/coverage-gaps-life.test.ts:141 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,

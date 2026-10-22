@@ -1,6 +1,65 @@
-# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, Merged, 2026-10-21
+# Read First: Brief 20, The Functional And Downstream-Effects Audit, Done And Waiting On The Owner, 2026-10-22
 
-**This section is the current status, and where a new session starts.** The owner gave brief 19
+**This section is the current status, and where a new session starts.** The owner gave brief 20
+(`docs/verification/briefs-2026-10-16/20-complete-functional-and-downstream-effects-audit.txt`, kept verbatim) after
+brief 19's merge. It is worked on `claude/peaceful-hamilton-59zdbb`, from `340ce7ae` (`main`, #49), pushed and never
+force-pushed. Nothing of it is in `main`, and nothing is deployed: the owner said "Keep the work reviewable. Do not merge
+or deploy without my instruction." There is no stash and one worktree; brief 19's scratch clones with commits the branch
+didn't hold were kept as `refs/preserved/*` before they were deleted for disk space.
+
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 20's D2 changed `src/engine` (`c4832549`), so the 46 rows brief 19's final runs measured on the engine's or the
+  app's whole source read as measured before what they read last changed, and this said 588 of 658 until brief 20's
+  final runs measured them again on `cbec90d8` (`docs/verification/audit-2026-10-21/final-runs/runs/README.md`): every
+  figure the same as brief 19's but the gate's, and all 46 held. The 20 left are earlier briefs' rows, as before.)
+
+- **Read first:** `docs/verification/audit-2026-10-21/criteria.md` (the items, written before any fix, with the fixed
+  seeds the journeys play), `areas/INSTRUCTIONS.md` (how each area works) and the brief.
+- **The baseline:** the full gate in a clean clone of `340ce7ae`, exit 0 read from its file: 423 of 423 test files, 5,092
+  of 5,092 tests, none skipped, all 21 checks (`docs/verification/audit-2026-10-21/baseline/gate.txt`).
+- **The matrix:** `tools/effects.mjs` finds every feature in the code (commands, scheduled kinds, reactors, events,
+  creation's fields, dials, abilities, personality axes and traits, looks, `ui.*` ids, tutorial chapters, notices sent
+  outside a handler) and every connection the guide promises, and holds a row for each in
+  `docs/verification/audit-2026-10-21/effects/<area>.json`, each read against the code. `EFFECTS.md` is written from
+  them: 491 of 518 features in scope Implemented And Verified (94.8%), 27 Implemented, Verification Incomplete, 20
+  Explicitly Deferred; the guide's promises 389 of 403 (96.5%). From `cbec90d8` its check is the gate's twenty-second.
+- **Done:** the ten areas' audits, each in a clone, merged, each with its report in `areas/<area>/REPORT.md` (the journeys'
+  in `journeys/REPORT.md`): creation, the School, craft, money, benefits, papers, life, the career, the guide, and eight
+  fixed-seed lives with the seven older saves played into the career. 264 mutations, 263 killed by an assertion and none a
+  setup error; the one that survives (B20-SCHOOL-13) removes a registration mark kept twice on purpose for older saves,
+  and B20-SCHOOL-21, which breaks the code that reads it, is killed. D2, the credit limit (`credit/README.md`): a raise,
+  reviewed or asked, goes only as far as the holder's income or savings carry under Regulation Z §1026.51(a), and an ask
+  waits six months. D3, consecutive work days (`areas/life/REPORT.md`): the body's figures were right, and a short night
+  was counted twice; a sleep after the night adds none of its debt, condition or mood, the bedtime for a full night is
+  said by the evening before, and a work day takes a rehearsal call's energy. F10 from the journeys: the School's request
+  to meet lapses on its day with a notice and a line on the record.
+- **The gate on the tested commit:** `cbec90d8`, in a clean clone, exit 0 read from its file: 479 of 479 test files,
+  5,481 of 5,481 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`). Nothing under `src` changed after it.
+  Run again on the receipt's commit, `fdf6897e`, the same: exit 0, 479 of 479 and 5,481 of 5,481, none skipped, all 22
+  checks (`final-runs/runs/gate-receipt.txt`).
+- **The final runs, done on `cbec90d8`** (`final-runs/runs/README.md`, every lane's steps exit 0 but the one that records
+  that brief 19's four lives no longer play line for line, each change brief 20's and said there):
+  - brief 19's lanes again, every figure the same as brief 19's but the gate's;
+  - brief 13's 25 journeys, each ending as before;
+  - the interface's playthroughs at both widths, every step passed;
+  - brief 20's own journeys again, 165 of 165 transitions and 53 of 53 forks the same to the byte, fatigue as the first
+    limit on the work gone from every life;
+  - the built app at 1440 and 390: the career's 52 surfaces and the seven older saves, nothing found.
+- **The receipt:** `docs/verification/audit-2026-10-21/README.md`, with every item brief 20's section 8 asks for, and how
+  to look for oneself.
+- **Waiting on the owner:** nothing is merged or deployed ("Keep the work reviewable. Do not merge or deploy without my
+  instruction."). The next session starts from the decisions below, or from the owner's next brief.
+- **For the owner** (each area's report says more): readiness 60 as the work's knee, at about 20 hours awake; hunger
+  that brings no illness (F9); a start outside the School (`livesWhereBorn`); School casting not reading genre
+  experience; Amend The Return, which no played life can use; whether notices name their tab; autopay that can't be
+  turned off, a card's due day moving with the month, APY run as a nominal rate, the penalty at 30 days and the
+  charge-off at 150, a weekend standing order paid that day; savings counted in full against a limit and the opening
+  limit by the score alone (D2); OPT and the days between gigs (F3).
+
+# Earlier: Brief 19, Professional Career Foundation And The First Individual Agent, Merged, 2026-10-21
+
+**This section was the current status until brief 20 began** (2026-10-21; the completion line is stated in brief 20's section above). The owner gave brief 19
 (`docs/verification/briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept
 verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 it went to `main` at the owner's word, "Merge it." (2026-10-21), in #48, merged as `3b56d056`, and this record of
@@ -324,8 +383,8 @@ The record is `docs/verification/continuity-2026-10-20/`:
 
 ## 5. The Rules, The Schema And The Model
 
-- **The checks:** CLAUDE.md counts twenty-one. The twenty-first is `tools/surfaces.mjs --check`, the coverage matrix,
-  added in this pass; until then CLAUDE.md said twenty.
+- **The checks:** CLAUDE.md counted twenty-one, twenty-two from brief 20's `tools/effects.mjs --check`. The twenty-first
+  is `tools/surfaces.mjs --check`, the coverage matrix, added in this pass; until then CLAUDE.md said twenty.
 - **The save schema is unchanged:** **94** in both places. The incident fix's fields are optional, and a save from
   before is marked once on opening (`school.missesMarked`).
 - **RULESET is evaluation-11:** nothing the judge reads changed (`final/`, the judge's figures).

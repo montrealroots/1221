@@ -1,0 +1,4 @@
+[
+  { "id": "B20-F10-1", "what": "the request to meet's last day not put on the clock, so it goes by unsaid as before", "file": "src/engine/systems/proagent.ts", "find": "    if (asks) sim.schedule({ at: until, kind: ASK_LAPSE_KIND,", "replace": "    if (false as boolean) sim.schedule({ at: until, kind: ASK_LAPSE_KIND,", "tests": ["tests/b20-agent-ask-lapse.test.ts"] },
+  { "id": "B20-F10-2", "what": "the request said to lapse even where the materials were sent in time", "file": "src/engine/systems/proagent.ts", "find": "rel.via?.route !== 'showcase' || approachesOf(rel) > 0) return;", "replace": "rel.via?.route !== 'showcase') return;", "tests": ["tests/b20-agent-ask-lapse.test.ts"] }
+]

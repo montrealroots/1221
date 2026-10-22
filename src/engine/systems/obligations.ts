@@ -8,8 +8,9 @@
  * - **Low balance** (`AlertSettings.lowBalance`): every open current account ending a day under the line, each told
  *   once until it's back above it.
  * - **Short for a payment** (`AlertSettings.upcoming`, on unless turned off): an account that can't cover a payment
- *   due from it within `LOOKAHEAD_DAYS`, told once for that payment on that day: which account, how much it holds,
- *   the payment and its date, and what can be done. A bank's own upcoming-payment alert works this way; the three days
+ *   due from it within `LOOKAHEAD_DAYS`, with the savings linked to it where the payment draws them (`inReach`, from
+ *   2026-10-21), told once for that payment on that day: which account, how much it holds, the payment and its date,
+ *   and what can be done. A bank's own upcoming-payment alert works this way; the three days
  *   are SLATE's design, not a bank's published figure.
  */
 import type { Simulation } from '../core/simulation';
@@ -23,6 +24,7 @@ import { autopayAsk, autopaySource, cardsOf, DUE_KIND } from './credit';
 import { checkingsOf, LOAN_DUE_KIND, repaymentAccount } from './lending';
 import { alertsOf } from './statements';
 import { balanceText, heldOf } from './abroad';
+import { inTheBank } from './spending';
 
 export const LOOKAHEAD_DAYS = 3;
 
@@ -35,6 +37,12 @@ export interface Obligation {
   at: Instant;
   /** What can be done about it, said with the alert. */
   remedy: string;
+  /**
+   * Whether the payment draws the easy-access savings linked at its account's bank too, where the link is on: a card's
+   * autopay (`payCard`, `autopayReach`) and a loan's payment (`drawFromBank`); a standing order and a payment set for a
+   * date don't.
+   */
+  linked?: boolean;
 }
 
 /** Every payment set up to leave one of their accounts between now and a moment, the account it comes from named. */
@@ -53,13 +61,13 @@ export function obligationsAhead(sim: Simulation, person: Person, until: Instant
       const card = cardsOf(sim, person).find((c) => c.id === item.payload.accountId);
       const from = card ? autopaySource(sim, person, card) : undefined;
       const asked = card ? autopayAsk(sim, person, card).asked : 0;
-      if (card && from && asked > 0) out.push({ key: `card:${card.id}:${item.at}`, accountId: from.id, what: `The ${card.name}’s autopay`, amount: asked, at: item.at, remedy: 'Move money into it, pay the card by hand, or have autopay pay from another account.' });
+      if (card && from && asked > 0) out.push({ key: `card:${card.id}:${item.at}`, accountId: from.id, what: `The ${card.name}’s autopay`, amount: asked, at: item.at, remedy: 'Move money into it, pay the card by hand, or have autopay pay from another account.', linked: true });
     } else if (item.kind === LOAN_DUE_KIND) {
       const loan = sim.universe.accounts[String(item.payload.accountId)];
       if (!loan || loan.ownerId !== person.id || loan.closedAt) continue;
       const from = repaymentAccount(sim, person, loan);
       const owed = Math.min(loan.loanPayment ?? 0, Math.max(0, -loan.balance));
-      if (from && owed > 0) out.push({ key: `loan:${loan.id}:${item.at}`, accountId: from.id, what: `The ${loan.name} payment`, amount: owed, at: item.at, remedy: 'Move money into it before the day.' });
+      if (from && owed > 0) out.push({ key: `loan:${loan.id}:${item.at}`, accountId: from.id, what: `The ${loan.name} payment`, amount: owed, at: item.at, remedy: 'Move money into it before the day.', linked: true });
     }
   }
   return out.sort((a, b) => a.at - b.at);
@@ -72,8 +80,14 @@ export function obligationsAhead(sim: Simulation, person: Person, until: Instant
  */
 const overdrawnBy = (sim: Simulation, account: Account): string => balanceText(sim, account, -account.balance, account.currency ? -heldOf(account) : undefined);
 
-/** What an account has in reach on the day for a payment: its balance, never below nothing. */
-const inReach = (account: Account | undefined): Money => Math.max(0, account?.balance ?? 0);
+/**
+ * What a payment has in reach on the day: the account's balance, never below nothing, and the easy-access savings linked at
+ * its bank where the payment draws them (`Obligation.linked`) and the link is on (`inTheBank`), as the payment itself
+ * draws. From 2026-10-21 (brief 20's money audit): until then the balance alone, so with savings linked the alert said an
+ * account was short for a card's autopay or a loan's payment, and to move money in, where the savings then paid it.
+ */
+const inReach = (sim: Simulation, person: Person, account: Account, o: Obligation): Money =>
+  o.linked && paymentsOf(person).linkSavings ? inTheBank(sim, person, account) : Math.max(0, account.balance);
 
 /** The day's account alerts: each current account under the low line, and each one short for a payment coming. */
 export function accountAlerts(sim: Simulation, person: Person): void {
@@ -100,7 +114,7 @@ export function accountAlerts(sim: Simulation, person: Person): void {
     const account = sim.universe.accounts[o.accountId];
     const total = (owing.get(o.accountId) ?? 0) + o.amount;
     owing.set(o.accountId, total);
-    if (!account || account.closedAt || inReach(account) >= total || said.has(o.key)) continue;
+    if (!account || account.closedAt || inReach(sim, person, account, o) >= total || said.has(o.key)) continue;
     said.add(o.key);
     sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and ${account.balance > 0 ? `it has ${balanceText(sim, account)} available` : account.balance < 0 ? `it’s overdrawn by ${overdrawnBy(sim, account)}` : 'it has nothing available'}. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
   }

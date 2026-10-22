@@ -1,0 +1,223 @@
+[
+ {
+  "id": "B20-CAREER-1",
+  "what": "a part posted again as soon as ten weeks have gone, whatever the work its last posting cast (the D4 repair taken out)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  return datesOf({ projectId: t.id, postedAt: last.postedAt }).at(-1)!.to <= at;",
+  "replace": "  return true;",
+  "tests": [
+   "tests/b20-career-history.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-2",
+  "what": "a part posted again with no word of the last time (`again` not copied in)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    ...(last ? { again: { postedAt: last.postedAt, status: last.status, ...(last.outcome ? { outcome: last.outcome } : {}) } } : {}),",
+  "replace": "",
+  "tests": [
+   "tests/b20-career-history.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-3",
+  "what": "Equity by a contract not said, so not billed (the repair taken out)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    sim.emit(EQUITY_JOINED, { personId: person.id });",
+  "replace": "",
+  "tests": [
+   "tests/b20-career-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-4",
+  "what": "an agreement offered again says nothing of the last one",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  if (!before) return undefined;",
+  "replace": "  if (before || !before) return undefined;",
+  "tests": [
+   "tests/b20-career-history.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-5",
+  "what": "a booked or credited part posted again (the booking and the credit not read by the postings)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;",
+  "replace": "",
+  "tests": [
+   "tests/b20-career-history.test.ts",
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-6",
+  "what": "an audition judged without the sides' preparation",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const p = o.prep ?? ZERO;",
+  "replace": "  const p = ZERO;",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-7",
+  "what": "a shoot day judged as if the project's genres were known, whatever the actor knows",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } };",
+  "replace": "genre: BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } };",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-8",
+  "what": "a shoot day or a night no practice in the project's genres",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "      practiceGenres(s, person, projectGenres);",
+  "replace": "",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-9",
+  "what": "pay owed commission paid straight to the bank, the agency's trust account and its commission skipped",
+  "file": "src/engine/systems/propay.ts",
+  "find": "  if (c.agreement && c.agency) {",
+  "replace": "  if (c.agreement && c.agency && c.amount < 0) {",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-10",
+  "what": "a job judged Working can refer the actor (the referral's bar dropped a band)",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "BAND_RANK[band] < BAND_RANK[REFERRAL_BAND]",
+  "replace": "BAND_RANK[band] < BAND_RANK.working",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-11",
+  "what": "an agreement declined holds his office back no time at all (no cooldown)",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "    closeApproach(s, person, rel, 'declined', 'declined');\n    note(s, rel, 'declined',",
+  "replace": "    closeApproach(s, person, rel, 'declined', undefined);\n    note(s, rel, 'declined',",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-12",
+  "what": "a professional credit doesn't raise training and experience in his office's reading",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "raised(base, Math.min(2, professional.length))",
+  "replace": "raised(base, 0)",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-13",
+  "what": "an offer accepted whatever permission to work says",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const bad = days.find((d) => !usWorkAuthorized(person, d.from));",
+  "replace": "  const bad = days.find((d) => !usWorkAuthorized(person, d.from) && false);",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-14",
+  "what": "a screen credit never released on the clock, so its footage never reaches a reel",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    const c = person && releaseScreenCredit(s, person, String(item.payload.creditId));",
+  "replace": "    const c = person && releaseScreenCredit(s, person, `${String(item.payload.creditId)}-not`);",
+  "tests": [
+   "tests/b20-career-effects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-15",
+  "what": "skill leaking into the postings: a part posted only to an actor whose scene study is 50 or more",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    if (!writtenFor(t, person)) continue;",
+  "replace": "    if (!writtenFor(t, person) || (person.craft?.scene ?? 0) < 50) continue;",
+  "tests": [
+   "tests/b20-career-skill.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-16",
+  "what": "skill guaranteeing a booking: casting certain at an Exceptional audition",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  return r3(clamp(base * (CASTING.fitFloor + (1 - CASTING.fitFloor) * clamp(fit, 0, 1)) * CASTING.field[kind], CASTING.least, CASTING.most));",
+  "replace": "  return band === 'exceptional' ? 1 : r3(clamp(base * (CASTING.fitFloor + (1 - CASTING.fitFloor) * clamp(fit, 0, 1)) * CASTING.field[kind], CASTING.least, CASTING.most));",
+  "tests": [
+   "tests/b20-career-skill.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-17",
+  "what": "the agent's roster room read from the actor's skill (skill leaking into his list's room)",
+  "file": "src/engine/systems/proagent.ts",
+  "find": "  const roster = roomLevel(openings, age, billing);",
+  "replace": "  const roster = (person.craft?.scene ?? 0) >= 90 ? 'beyond' : roomLevel(openings, age, billing);",
+  "tests": [
+   "tests/b20-career-skill.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-18",
+  "what": "a professional day not enjoyed: a loved genre and a rehearsal by agreeableness read by no work day (the repair taken out)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "    enjoyWork(person, { genres: kinds, ...(kind === 'rehearsal' ? { rehearsal: true } : {}) });",
+  "replace": "",
+  "tests": [
+   "tests/b20-career-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-19",
+  "what": "a professional night with no nerves: extraversion and composure read by no night on stage (the repair taken out)",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "      if (kind === 'performance') nerves(s, person, 'performance');",
+  "replace": "",
+  "tests": [
+   "tests/b20-career-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-20",
+  "what": "union bills paid from the bank not counted in the year's dues the return reads (the repair taken out)",
+  "file": "src/engine/systems/propay.ts",
+  "find": "  yearOf(person, zonedParts(s.now, s.zone).year).dues += amount;",
+  "replace": "  void yearOf; void amount;",
+  "tests": [
+   "tests/b20-career-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-21",
+  "what": "the near-name back: the part Robin called Sam again, the short form of the classmate Samuel's given name (D4)",
+  "file": "src/engine/content/careerwork.ts",
+  "find": "role: { part: 'Robin', size: 'lead'",
+  "replace": "role: { part: 'Sam', size: 'lead'",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CAREER-22",
+  "what": "the record's bounds drop the newest settled postings instead of the oldest (held, since `trimmed` went, by which postings are kept)",
+  "file": "src/engine/systems/pro.ts",
+  "find": "const done = pro.opportunities.filter(resolved).sort((a, b) => (a.resolvedAt ?? a.postedAt) - (b.resolvedAt ?? b.postedAt));",
+  "replace": "const done = pro.opportunities.filter(resolved).sort((a, b) => (b.resolvedAt ?? b.postedAt) - (a.resolvedAt ?? a.postedAt));",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ]
+ }
+]

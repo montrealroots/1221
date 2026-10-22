@@ -1,0 +1,2019 @@
+{
+ "about": "Every control that issues a command (brief 20, D1), read from the code by tools/wiring.mjs at c4832549: each call of the game's run in src/ui and src/app, the control it sits under (its tag and handler, its guide lock where it has one, its label as the JSX draws it), the kind it issues and the payload's source; beside them a decision's answers (requireDecision's actions, drawn on Home as buttons that issue world.take_decision_action with the answer's index) and a stop's own choices (defineStop). Each line was read against its command's handler, named in `handler` (file:line of its registration): `verdict` says whether the label says what the command does to the thing the control is on, and `note` says why where that needed more than the line. tests/b20-guide-wiring.test.ts holds the list to the code, every kind to a registered command, every key sent to a key its handler takes, each lock to its own command's chapter, and every registered command to some control. A control added or changed fails that test until `node tools/wiring.mjs --write` writes it in and its reading is filled.",
+ "controls": [
+  {
+   "file": "src/ui/bank/BankAccountLife.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.break_term",
+   "label": "{BREAK_NOTICE[term.bankId ?? ''] ? `Give ${BREAK_NOTICE[term.bankId ?? '']} Days’ Notice` : 'Break It Early'}",
+   "kind": "bank.break_term",
+   "payload": "{ accountId: term.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:564"
+  },
+  {
+   "file": "src/ui/bank/BankAccountLife.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_term_end",
+   "label": "{END_BUTTON[end]}",
+   "kind": "bank.set_term_end",
+   "payload": "{ accountId: term.id, atEnd: end }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:551"
+  },
+  {
+   "file": "src/ui/bank/BankAccountLife.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.cancel_new",
+   "label": "Cancel It",
+   "kind": "bank.cancel_new",
+   "payload": "{ accountId: a.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:625"
+  },
+  {
+   "file": "src/ui/bank/BankAccountLife.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.claim_unclaimed",
+   "label": "Claim It Back",
+   "kind": "bank.claim_unclaimed",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:689"
+  },
+  {
+   "file": "src/ui/bank/BankAccountLife.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.reactivate",
+   "label": "Reactivate",
+   "kind": "bank.reactivate",
+   "payload": "{ accountId: a.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:613"
+  },
+  {
+   "file": "src/ui/bank/BankAccountLife.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.take_term_interest",
+   "label": "Take The Interest So Far ({money(Math.floor(term.accrued ?? 0))})",
+   "kind": "bank.take_term_interest",
+   "payload": "{ accountId: term.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:592"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.apply",
+   "label": "{from ? 'Apply And Move The Balance' : 'Apply For This Card'}",
+   "kind": "card.apply",
+   "payload": "{ bankId: chosen.id, ...(from ? { transfer: true, fromId: from.id } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:132"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "finance.pay_card",
+   "label": "{payable < owed ? 'Pay What You Can' : 'Pay Card In Full'} ({money(payable)})",
+   "kind": "finance.pay_card",
+   "payload": "{ amount: 'full', accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/credit.ts:1127"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.request_hardship",
+   "label": "Ask For Help With Payments",
+   "kind": "card.request_hardship",
+   "payload": "{ accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:262"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.request_limit",
+   "label": "Ask For This Limit",
+   "kind": "card.request_limit",
+   "payload": "{ limit: centsFromTyped(limitWanted), accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:212"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "finance.set_autopay",
+   "label": "Autopay: {state.autopay === 'full' ? 'The Whole Statement' : 'The Minimum'}",
+   "kind": "finance.set_autopay",
+   "payload": "{ mode: state.autopay === 'full' ? 'minimum' : 'full', accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/credit.ts:1146"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.set_statement_day",
+   "label": "Change The Day",
+   "kind": "card.set_statement_day",
+   "payload": "{ day: dayWanted, accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:191"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.close",
+   "label": "Close The Card",
+   "kind": "card.close",
+   "payload": "{ accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:180"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.set_over_limit",
+   "label": "Going Over The Limit: {state.overLimitOptIn ? 'Allowed' : 'Declined'}",
+   "kind": "card.set_over_limit",
+   "payload": "{ on: !state.overLimitOptIn, accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:252"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.set_everyday",
+   "label": "Make It The Everyday Card",
+   "kind": "card.set_everyday",
+   "payload": "{ accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/credit.ts:1158"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.set_auto_raise",
+   "label": "Raise My Limit Automatically: {state.noAutoRaise ? 'Off' : 'When My Record Earns It'}",
+   "kind": "card.set_auto_raise",
+   "payload": "{ on: Boolean(state.noAutoRaise), accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardlife.ts:245"
+  },
+  {
+   "file": "src/ui/bank/BankCard.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.refund_credit",
+   "label": "Send The Credit To My Account",
+   "kind": "card.refund_credit",
+   "payload": "{ accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/credit.ts:1120"
+  },
+  {
+   "file": "src/ui/bank/BankCardOffers.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.plan",
+   "label": "Make The Plan",
+   "kind": "card.plan",
+   "payload": "{ amount: cents(planAmount), months, accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardoffers.ts:265"
+  },
+  {
+   "file": "src/ui/bank/BankCardOffers.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.redeem_rewards",
+   "label": "Redeem Onto The Card",
+   "kind": "card.redeem_rewards",
+   "payload": "{ accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardoffers.ts:293"
+  },
+  {
+   "file": "src/ui/bank/BankCardOffers.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.money_transfer",
+   "label": "Transfer It ({pct(terms.moneyTransferFee)} Fee)",
+   "kind": "card.money_transfer",
+   "payload": "{ amount: cents(moveAmount), accountId: card.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cardoffers.ts:245"
+  },
+  {
+   "file": "src/ui/bank/BankCash.tsx",
+   "control": "<Gated onClick>",
+   "feature": "cash.deposit",
+   "label": "Pay It In",
+   "kind": "cash.deposit",
+   "payload": "{ amount: cents(inAmount), toId: into || accounts[0]?.id, at }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cash.ts:246"
+  },
+  {
+   "file": "src/ui/bank/BankCash.tsx",
+   "control": "<Gated onClick>",
+   "feature": "cash.withdraw",
+   "label": "Take It Out",
+   "kind": "cash.withdraw",
+   "payload": "{ amount: cents(outAmount), from }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/cash.ts:221"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.debit_overdraft",
+   "label": "{current?.debitOverdraft ? 'Opt Out Of Debit Card Overdrafts' : 'Opt In To Debit Card Overdrafts'}",
+   "kind": "bank.debit_overdraft",
+   "payload": "{ on: !current?.debitOverdraft }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1410"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.arrange_overdraft",
+   "label": "Arrange It",
+   "kind": "bank.arrange_overdraft",
+   "payload": "{ limit: cents(limit), perUse, accountId: current?.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1439"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.borrow",
+   "label": "Borrow It",
+   "kind": "bank.borrow",
+   "payload": "{ amount: asked, months: Number(months), bankId: bank.id, purpose, intoId: into || current?.id, repayFromId: repay || current?.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1485"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.cancel_switch",
+   "label": "Call It Off",
+   "kind": "bank.cancel_switch",
+   "payload": "{ confirm: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1611"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.arrange_overdraft",
+   "label": "Close The Overdraft",
+   "kind": "bank.arrange_overdraft",
+   "payload": "{ limit: 0, accountId: current?.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1439"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.stop_balance_transfer",
+   "label": "Keep The Balance There",
+   "kind": "bank.stop_balance_transfer",
+   "payload": "{ confirm: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1393"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.repay_loan",
+   "label": "Pay It Off",
+   "kind": "bank.repay_loan",
+   "payload": "{ loanId: loan.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1558"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.pay_collections",
+   "label": "Pay It",
+   "kind": "bank.pay_collections",
+   "payload": "{ amount: cents(toCollections), debtId: debt.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1423"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.open_term",
+   "label": "Put It Away",
+   "kind": "bank.open_term",
+   "payload": "{ amount: cents(deposit), bankId: bank.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1584"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_loan_repayment",
+   "label": "Repay From This Account",
+   "kind": "bank.set_loan_repayment",
+   "payload": "{ loanId: loan.id, accountId: repay }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1511"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.switch",
+   "label": "Switch",
+   "kind": "bank.switch",
+   "payload": "{ bankId: target, ...(switchOn ? { on: switchOn } : {}), ...(partial ? { partial: true } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1626"
+  },
+  {
+   "file": "src/ui/bank/BankLending.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.take_overrun_loan",
+   "label": "Take The Loan",
+   "kind": "bank.take_overrun_loan",
+   "payload": "{ accountId: current.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/lending.ts:1522"
+  },
+  {
+   "file": "src/ui/bank/BankMoves.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.open_current",
+   "label": "Apply",
+   "kind": "bank.open_current",
+   "payload": "{ bankId: chosen.id, ...(fundFrom || minimum > 0 ? { fundFrom: fundFrom || everyday.find((a) => a.bankId !== chosen.id)?.id, amount: centsFromTyped(fundAmount) || minimum } : {}), }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/bankmoves.ts:369"
+  },
+  {
+   "file": "src/ui/bank/BankMoves.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.close_current",
+   "label": "Close It",
+   "kind": "bank.close_current",
+   "payload": "{ accountId: a.id, remainderTo: into }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/bankmoves.ts:523"
+  },
+  {
+   "file": "src/ui/bank/BankMoves.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.redirect_deposits",
+   "label": "Have Wages Paid Here",
+   "kind": "bank.redirect_deposits",
+   "payload": "{ accountId: a.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/bankmoves.ts:485"
+  },
+  {
+   "file": "src/ui/bank/BankMoves.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_primary",
+   "label": "Make Primary",
+   "kind": "bank.set_primary",
+   "payload": "{ accountId: a.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/bankmoves.ts:466"
+  },
+  {
+   "file": "src/ui/bank/BankMoves.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_order_source",
+   "label": "Pay From This Account",
+   "kind": "bank.set_order_source",
+   "payload": "{ orderId: o.id, accountId: sources[o.id] }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/bankmoves.ts:495"
+  },
+  {
+   "file": "src/ui/bank/BankMoves.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.set_autopay_from",
+   "label": "Pay From This Account",
+   "kind": "card.set_autopay_from",
+   "payload": "{ cardId: c.id, accountId: sources[c.id] }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/bankmoves.ts:508"
+  },
+  {
+   "file": "src/ui/bank/BankPayments.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.cancel_scheduled",
+   "label": "Cancel",
+   "kind": "bank.cancel_scheduled",
+   "payload": "{ id: item.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/payments.ts:307"
+  },
+  {
+   "file": "src/ui/bank/BankPayments.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.cancel_standing_order",
+   "label": "Cancel",
+   "kind": "bank.cancel_standing_order",
+   "payload": "{ id: order.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/payments.ts:280"
+  },
+  {
+   "file": "src/ui/bank/BankPayments.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_payments",
+   "label": "Savings Covers The Checking Account: {pay.linkSavings ? 'On' : 'Off'}",
+   "kind": "bank.set_payments",
+   "payload": "{ linkSavings: !pay.linkSavings }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/payments.ts:247"
+  },
+  {
+   "file": "src/ui/bank/BankPayments.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.schedule_payment",
+   "label": "Set The Payment",
+   "kind": "bank.schedule_payment",
+   "payload": "{ fromId: from, toId: to, amount: cents(spAmount), at }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/payments.ts:290"
+  },
+  {
+   "file": "src/ui/bank/BankPayments.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.add_standing_order",
+   "label": "Set Up A Standing Order Into Savings",
+   "kind": "bank.add_standing_order",
+   "payload": "{ toId: soTo || savings[0]?.id, amount: cents(soAmount), day: Number(soDay) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/payments.ts:264"
+  },
+  {
+   "file": "src/ui/bank/BankPayments.tsx",
+   "control": "<select onChange>",
+   "label": "The Day’s Spending (select)",
+   "kind": "bank.set_payments",
+   "payload": "{ everyday: e.target.value }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/payments.ts:247",
+   "note": "A select, its options cash, credit and debit, sending the one chosen."
+  },
+  {
+   "file": "src/ui/bank/BankSecurity.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.lock",
+   "label": "{p.locked ? 'Unlock It' : 'Lock It'}",
+   "kind": "card.lock",
+   "payload": "{ which, locked: !p.locked, accountId: account.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/security.ts:293"
+  },
+  {
+   "file": "src/ui/bank/BankSecurity.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.new_number",
+   "label": "Move My Account To A New Number",
+   "kind": "bank.new_number",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/security.ts:329"
+  },
+  {
+   "file": "src/ui/bank/BankSecurity.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.report",
+   "label": "Report It And Rush The New One",
+   "kind": "card.report",
+   "payload": "{ which, why, rush: true, accountId: account.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/security.ts:304"
+  },
+  {
+   "file": "src/ui/bank/BankSecurity.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.dispute",
+   "label": "Report It As Not Mine",
+   "kind": "card.dispute",
+   "payload": "{ index }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/security.ts:342"
+  },
+  {
+   "file": "src/ui/bank/BankSecurity.tsx",
+   "control": "<Gated onClick>",
+   "feature": "card.report",
+   "label": "Report It",
+   "kind": "card.report",
+   "payload": "{ which, why, accountId: account.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/security.ts:304"
+  },
+  {
+   "file": "src/ui/bank/BankStatements.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_alerts",
+   "label": "Save Alerts",
+   "kind": "bank.set_alerts",
+   "payload": "{ lowBalance: cents(low), largePayment: cents(large) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statements.ts:517"
+  },
+  {
+   "file": "src/ui/bank/BankStatements.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_alerts",
+   "label": "Short For A Payment: {alerts.upcoming === false ? 'Off' : 'On'}",
+   "kind": "bank.set_alerts",
+   "payload": "{ upcoming: alerts.upcoming === false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statements.ts:517"
+  },
+  {
+   "file": "src/ui/bank/BankStatements.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_alerts",
+   "label": "Statement Ready: {alerts.statements ? 'On' : 'Off'}",
+   "kind": "bank.set_alerts",
+   "payload": "{ statements: !alerts.statements }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statements.ts:517"
+  },
+  {
+   "file": "src/ui/bank/RoundUps.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_round_ups",
+   "label": "Round-Ups: {on ? 'On' : 'Off'}",
+   "kind": "bank.set_round_ups",
+   "payload": "on ? { on: false } : { on: true, ...choice }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:611"
+  },
+  {
+   "file": "src/ui/bank/RoundUps.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.set_round_ups",
+   "label": "Save These Choices",
+   "kind": "bank.set_round_ups",
+   "payload": "{ on: true, ...choice }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:611"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.prepare",
+   "label": "{reasons[i]![0]}",
+   "kind": "pro.prepare",
+   "payload": "{ ...target, step }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1506"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.accept_offer",
+   "label": "Accept The Offer",
+   "kind": "pro.accept_offer",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1549"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.move_audition",
+   "label": "Ask For Another Time",
+   "kind": "pro.move_audition",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1531"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.request_outside_work",
+   "label": "Ask The School",
+   "kind": "pro.request_outside_work",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1593"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.decline_offer",
+   "label": "Decline The Offer",
+   "kind": "pro.decline_offer",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1581"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.submit",
+   "label": "Submit Yourself",
+   "kind": "pro.submit",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1497"
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.tape_audition",
+   "label": "Tape It",
+   "kind": "pro.tape_audition",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1516"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.end_agreement",
+   "label": "{label}",
+   "kind": "pro.end_agreement",
+   "payload": "{ agentId: agent.id, how }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1146",
+   "note": "One button for each way an agreement ends (`ends`: by agreement, no offer in its days, under ten days' work), each sending its own `how`."
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.accept_agreement",
+   "label": "Accept The Agreement",
+   "kind": "pro.accept_agreement",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1113"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ask_referral",
+   "label": "Ask For A Referral",
+   "kind": "pro.ask_referral",
+   "payload": "{ agentId: agent.id, engagementId: j.engagementId }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1037"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ask_to_move",
+   "label": "Ask To Move",
+   "kind": "pro.ask_to_move",
+   "payload": "{ meetingId: m.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1097"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.agent_check",
+   "label": "Check Your Materials",
+   "kind": "pro.agent_check",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1021"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.decline_agreement",
+   "label": "Decline The Agreement",
+   "kind": "pro.decline_agreement",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1132"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.agent_notice",
+   "label": "I’ve Read This",
+   "kind": "pro.agent_notice",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1010"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.supply_material",
+   "label": "Send What His Office Asked For",
+   "kind": "pro.supply_material",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1077"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.send_materials",
+   "label": "Send Your Materials",
+   "kind": "pro.send_materials",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1054"
+  },
+  {
+   "file": "src/ui/career/SchoolShowcase.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.choose_showcase",
+   "label": "Choose These Scenes",
+   "kind": "school.choose_showcase",
+   "payload": "{ options: chosen }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proshowcase.ts:647"
+  },
+  {
+   "file": "src/ui/career/WorkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.join_sag",
+   "label": "Join SAG-AFTRA (${fee})",
+   "kind": "pro.join_sag",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/propay.ts:761"
+  },
+  {
+   "file": "src/ui/components/BriefPane.tsx",
+   "control": "<PlayingChooser onChoose>",
+   "feature": "brief.choose",
+   "label": "(PlayingChooser with no words)",
+   "kind": "brief.choose",
+   "payload": "{ brief: b.id, reading: rec.reading, ...c }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/briefs.ts:837",
+   "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It once a way is chosen (PlayingChooser.tsx), locked by brief.choose; it sends the brief, its reading and the way chosen."
+  },
+  {
+   "file": "src/ui/components/BriefPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "brief.prepare",
+   "label": "{`${BRIEF.steps[s].label} (${stepMinutes(b, s)} Min)`}",
+   "kind": "brief.prepare",
+   "payload": "{ brief: b.id, step: s }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/briefs.ts:830"
+  },
+  {
+   "file": "src/ui/components/BriefPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "brief.choose",
+   "label": "{rec?.reading ? 'Change The Reading' : 'Read It This Way'}",
+   "kind": "brief.choose",
+   "payload": "{ brief: b.id, reading: draftReading, ...(rec?.playing ? { pace: rec.playing.pace, scale: rec.playing.scale, structure: rec.playing.structure } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/briefs.ts:837"
+  },
+  {
+   "file": "src/ui/components/BriefPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "brief.reader",
+   "label": "Read With Them",
+   "kind": "brief.reader",
+   "payload": "{ brief: b.id, mate: draft === 'alone' ? 'alone' : Number(draft) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/briefs.ts:844"
+  },
+  {
+   "file": "src/ui/components/BriefPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "genre.study",
+   "label": "Study The Genre",
+   "kind": "genre.study",
+   "payload": "{ genre }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/engagement.ts:123"
+  },
+  {
+   "file": "src/ui/components/BriefPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "practice.self_tape",
+   "label": "Tape It (60 Min)",
+   "kind": "practice.self_tape",
+   "payload": "{ genre, brief: b.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/briefs.ts:850"
+  },
+  {
+   "file": "src/ui/components/ClassMoments.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.respond",
+   "label": "{c.label}",
+   "kind": "school.respond",
+   "payload": "{ momentId: m.id, choice: c.id, ...(m.kind === 'study' && c.id === 'yes' && shared.length ? { assignmentId: scene[m.id] ?? shared[0]!.id } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/classmates.ts:590"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<PlayingChooser onChoose>",
+   "feature": "school.choose_playing",
+   "label": "(PlayingChooser with no words)",
+   "kind": "school.choose_playing",
+   "payload": "{ assignmentId: a.id, ...c }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1946",
+   "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It, locked by school.choose_playing; it sends the scene's assignment and the way chosen."
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.prepare",
+   "label": "{act.label}",
+   "kind": "school.prepare",
+   "payload": "{ assignmentId: a.id, activity: act.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1925"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.approach",
+   "label": "{APPROACHES[k].label}",
+   "kind": "school.approach",
+   "payload": "{ assignmentId: a.id, kind: k }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1933"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<select onChange>",
+   "label": "{q.label} (select)",
+   "kind": "school.choose",
+   "payload": "{ assignmentId: a.id, question: q.id, option: e.target.value }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1962"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.ask_partner",
+   "label": "Ask {first}",
+   "kind": "school.ask_partner",
+   "payload": "{ assignmentId: a.id, at: when }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1988"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.cancel_rehearsal",
+   "label": "Call It Off",
+   "kind": "school.cancel_rehearsal",
+   "payload": "{ assignmentId: a.id, rehearsalId: r.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:2030"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.orientation",
+   "label": "Catch Up",
+   "kind": "school.orientation",
+   "payload": "{ task: o.task }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1914"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.make_amends",
+   "label": "Make Amends",
+   "kind": "school.make_amends",
+   "payload": "{ mate: i }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/classmates.ts:671"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.read_feedback",
+   "label": "Mark As Read",
+   "kind": "school.read_feedback",
+   "payload": "{ assignmentId: a.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:1980"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.answer_partner",
+   "label": "Say No",
+   "kind": "school.answer_partner",
+   "payload": "{ assignmentId: a.id, askId: k.id, yes: false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:2000"
+  },
+  {
+   "file": "src/ui/components/CourseworkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.answer_partner",
+   "label": "Say Yes",
+   "kind": "school.answer_partner",
+   "payload": "{ assignmentId: a.id, askId: k.id, yes: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:2000"
+  },
+  {
+   "file": "src/ui/components/LienPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.federal_lien_withdraw",
+   "label": "{error ? 'Ask For Its Release As Erroneous' : 'Ask For Its Withdrawal (Form 12277)'}",
+   "kind": "tax.federal_lien_withdraw",
+   "payload": "{ year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:373",
+   "note": "The label and the handler read the same `federalLienInError`, so the button names what the handler asks for. Its WhyNot line under it names it Ask For Its Withdrawal either way: noted for the benefits area."
+  },
+  {
+   "file": "src/ui/components/LienPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.lien_release",
+   "label": "Ask For Its Release",
+   "kind": "tax.lien_release",
+   "payload": "{ state, year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statetax.ts:1114"
+  },
+  {
+   "file": "src/ui/components/LienPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.request_waiver",
+   "label": "Ask For Its Waiver",
+   "kind": "tax.request_waiver",
+   "payload": "{ state, year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statetax.ts:1086"
+  },
+  {
+   "file": "src/ui/components/LienPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.lien_dispute",
+   "label": "Ask For Its Withdrawal As Filed In Error",
+   "kind": "tax.lien_dispute",
+   "payload": "{ state, year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statetax.ts:1133"
+  },
+  {
+   "file": "src/ui/components/RehearsalProcess.tsx",
+   "control": "<PlayingChooser onChoose>",
+   "feature": "school.choose_part_playing",
+   "label": "(PlayingChooser with no words)",
+   "kind": "school.choose_part_playing",
+   "payload": "{ which, ...c }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/production.ts:624",
+   "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It, locked by school.choose_part_playing; it sends the production (`which`) and the way chosen."
+  },
+  {
+   "file": "src/ui/components/RehearsalProcess.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.work_note",
+   "label": "{chosen ? `Work On The Note: ${chosen.label}` : 'Work On The Note'}",
+   "kind": "school.work_note",
+   "payload": "{ which, ...(chosen ? { solution: chosen.adjustment, ...(chosen.option ? { option: chosen.option } : {}) } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/production.ts:640"
+  },
+  {
+   "file": "src/ui/components/RehearsalProcess.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.review_blocking",
+   "label": "Catch Up The Blocking",
+   "kind": "school.review_blocking",
+   "payload": "{ which }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/production.ts:610"
+  },
+  {
+   "file": "src/ui/components/RehearsalProcess.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.learn_part",
+   "label": "Learn The Part",
+   "kind": "school.learn_part",
+   "payload": "{ which }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/production.ts:593"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.appeal_leave",
+   "label": "Appeal To The Dean",
+   "kind": "school.appeal_leave",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1122"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.request_extra_term",
+   "label": "Ask For An Additional Term",
+   "kind": "school.request_extra_term",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1157"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.request_aid_review",
+   "label": "Ask For An Aid Review",
+   "kind": "school.request_aid_review",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1192"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.request_conversion",
+   "label": "Ask For Conversion To Grant Aid",
+   "kind": "school.request_conversion",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:3614"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.request_leave",
+   "label": "Ask",
+   "kind": "school.request_leave",
+   "payload": "{ kind, reason, terms }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1057"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.request_repeat",
+   "label": "Ask",
+   "kind": "school.request_repeat",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1315"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.buy_affiliate",
+   "label": "Buy It",
+   "kind": "school.buy_affiliate",
+   "payload": "{ confirm: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1277"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.cancel_leave",
+   "label": "Call It Off",
+   "kind": "school.cancel_leave",
+   "payload": "{ confirm: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1216"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.cancel_repeat",
+   "label": "Call It Off",
+   "kind": "school.cancel_repeat",
+   "payload": "{ confirm: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1317"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.return_notice",
+   "label": "Give Notice Of Return",
+   "kind": "school.return_notice",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1266"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.pay_balance",
+   "label": "Pay From Your Bank",
+   "kind": "school.pay_balance",
+   "payload": "amount ? { amount: value } : {}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1382"
+  },
+  {
+   "file": "src/ui/components/StudyPlanPanels.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.reregister",
+   "label": "Register",
+   "kind": "school.reregister",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/leave.ts:1301"
+  },
+  {
+   "file": "src/ui/components/WorkThrough.tsx",
+   "control": "<Gated onClick>",
+   "feature": "work.try",
+   "label": "{`${o.label} (${o.minutes} Min)`}",
+   "kind": "work.try",
+   "payload": "{ piece: key, adjustment: o.adjustment, ...(o.option ? { option: o.option } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/workbook.ts:357"
+  },
+  {
+   "file": "src/ui/components/WorkThrough.tsx",
+   "control": "<Gated onClick>",
+   "feature": "work.identify",
+   "label": "{p.label}",
+   "kind": "work.identify",
+   "payload": "{ piece: key, problem: p.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/workbook.ts:350"
+  },
+  {
+   "file": "src/ui/components/WorkThrough.tsx",
+   "control": "<Gated onClick>",
+   "feature": "work.settle",
+   "label": "Keep It",
+   "kind": "work.settle",
+   "payload": "{ piece: key, keep: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/workbook.ts:364"
+  },
+  {
+   "file": "src/ui/components/WorkThrough.tsx",
+   "control": "<Gated onClick>",
+   "feature": "work.settle",
+   "label": "Put It Back",
+   "kind": "work.settle",
+   "payload": "{ piece: key, keep: false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/workbook.ts:364"
+  },
+  {
+   "file": "src/ui/guide/Guide.tsx",
+   "control": "<button onClick>",
+   "label": "I’ve Read It",
+   "kind": "tutorial.read",
+   "payload": "{ chapterId: chapter.id }",
+   "verdict": "Right",
+   "handler": "src/engine/world/tutorial.ts:87",
+   "note": "Drawn only on the chapter that is next (`isNext`), and sends that chapter's id."
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.replace_license",
+   "label": "{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}",
+   "kind": "documents.replace_license",
+   "payload": "{ documentId: d.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/identity.ts:349"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.apply_passport",
+   "label": "{passport ? 'Renew It Faster' : 'Apply Faster'}",
+   "kind": "documents.apply_passport",
+   "payload": "{ expedite: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/documents.ts:324"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.apply_passport",
+   "label": "{passport ? 'Renew It' : 'Apply For One'}",
+   "kind": "documents.apply_passport",
+   "payload": "{ expedite: false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/documents.ts:324"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.replace_idcard",
+   "label": "{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}",
+   "kind": "documents.replace_idcard",
+   "payload": "{ documentId: d.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/identity.ts:288"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.apply_ssn",
+   "label": "Apply At The Social Security Office",
+   "kind": "documents.apply_ssn",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxid.ts:62"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.apply_opt",
+   "label": "Apply For OPT",
+   "kind": "documents.apply_opt",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/permission.ts:271"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.apply_opt",
+   "label": "Apply With Premium Processing",
+   "kind": "documents.apply_opt",
+   "payload": "{ premium: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/permission.ts:271"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.residence",
+   "label": "Apply",
+   "kind": "documents.residence",
+   "payload": "{ country: iso }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/residence.ts:189"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.report_lost",
+   "label": "Cancel It",
+   "kind": "documents.report_lost",
+   "payload": "{ documentId: d.id, ...(confirming.stolen ? { stolen: true } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/documents.ts:343"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.police_report",
+   "label": "File A Police Report",
+   "kind": "documents.police_report",
+   "payload": "{ documentId: d.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/documents.ts:358"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.apply_idcard",
+   "label": "Get {card?.card.name ?? 'An ID Card'}",
+   "kind": "documents.apply_idcard",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/identity.ts:315"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.naturalize",
+   "label": "Naturalize",
+   "kind": "documents.naturalize",
+   "payload": "{ country: iso }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/citizenship.ts:85"
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.renew_residence",
+   "label": "Renew",
+   "kind": "documents.renew_residence",
+   "payload": "{ country: iso }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/residence.ts:208",
+   "note": "Drawn grayed out for good (`disabled`, its title MEXICO_RENEWAL), and the command refuses with the same words whatever it's sent: the game renews no residence card (from 2026-10-16). The payload's country is read by nothing, which is right for a command that only refuses."
+  },
+  {
+   "file": "src/ui/papers/Documents.tsx",
+   "control": "<Gated onClick>",
+   "feature": "documents.settle",
+   "label": "Settle",
+   "kind": "documents.settle",
+   "payload": "{ country: iso }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/residence.ts:193"
+  },
+  {
+   "file": "src/ui/screens/Home.tsx",
+   "control": "<Gated onClick>",
+   "feature": "world.take_decision_action",
+   "label": "{action.label}",
+   "kind": "world.take_decision_action",
+   "payload": "{ decisionId: decision.id, actionIndex: index }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:50",
+   "note": "Each answer's button is drawn from decision.actions[index] and sends that index with the row's own id; the handler runs decision.actions[p.actionIndex] (world.ts). Pressed on the drawn Home in tests/b20-guide-screens.test.ts, two offers open, the second's Accept The Offer accepting the second."
+  },
+  {
+   "file": "src/ui/screens/Home.tsx",
+   "control": "<Gated onClick>",
+   "feature": "world.dismiss_decision",
+   "label": "Dismiss",
+   "kind": "world.dismiss_decision",
+   "payload": "{ decisionId: decision.id }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:38",
+   "note": "Drawn on each of the six rows Home shows, with that row's id."
+  },
+  {
+   "file": "src/ui/screens/Home.tsx",
+   "control": "<Gated onClick>",
+   "feature": "world.mark_read",
+   "label": "Mark {unread.length} Read",
+   "kind": "world.mark_read",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:101",
+   "note": "Sends no ids, so every unread notice is marked read, the ones past the panel's six too: the count on the button is every unread notice (`unread.length`), and the notification look says so."
+  },
+  {
+   "file": "src/ui/shell/TimeControls.tsx",
+   "control": "<Gated onClick>",
+   "feature": "{choice.command}",
+   "label": "{choice.label}",
+   "kind": "{choice.command}",
+   "payload": "choice.payload(item)",
+   "verdict": "Right",
+   "handler": "src/engine/world/clock.ts:58 (stopChoices: calendar.skip, school.cancel_rehearsal, pro.ask_to_move, each declared by defineStop)",
+   "note": "A stop's own choice (`stopChoices`): Skip It sends calendar.skip with the stopped plan's id, Call It Off school.cancel_rehearsal with the stopped rehearsal's ids, and Ask To Move pro.ask_to_move with the stopped meeting's id. Its lock is the same command. tests/b20-guide-wiring.test.ts resolves the kind to `stopCommands()`."
+  },
+  {
+   "file": "src/ui/shell/TimeControls.tsx",
+   "control": "<button onClick>",
+   "label": "{o.label} {formatDuration(o.minutes * 60_000)}{o.cost > 0 ? ` · ${formatMoney(o.cost, cur)}` : ''} · {refused ?? o.why}",
+   "kind": "life.look_after",
+   "payload": "{ action: action }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/life.ts:458",
+   "note": "Each line is `lookAfterOptions`' own, its label the action's (Eat A Meal, Order In, Shower, Work Out, Unwind), and sends that action. Not wrapped in Gated: it asks `useFeature('life.look_after')` and opens the guide while that's locked."
+  },
+  {
+   "file": "src/ui/shell/TimeControls.tsx",
+   "control": "<Gated onClick>",
+   "feature": "ui.play",
+   "label": "{speed === 'paused' ? 'Play' : 'Pause'}",
+   "kind": "world.set_preferences",
+   "payload": "{ timeSpeed: speed === 'paused' ? 'live' : 'paused' }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:86",
+   "note": "Locked by ui.play, issuing world.set_preferences: both are opened by “The Clock”. The label is what a press does: Play sends live, Pause sends paused."
+  },
+  {
+   "file": "src/ui/shell/TimeControls.tsx",
+   "control": "<Gated onClick>",
+   "feature": "life.sleep",
+   "label": "Sleep {plural(hours, 'Hour')}",
+   "kind": "life.sleep",
+   "payload": "{ hours }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/life.ts:375",
+   "note": "The hours on the button are the slider's, and the same `hours` is sent."
+  },
+  {
+   "file": "src/ui/workspaces/BankWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.close_savings",
+   "label": "Close It",
+   "kind": "bank.close_savings",
+   "payload": "{ accountId: account.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/banking.ts:1013"
+  },
+  {
+   "file": "src/ui/workspaces/BankWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.transfer",
+   "label": "Move It",
+   "kind": "bank.transfer",
+   "payload": "{ fromId, toId, amount: cents, ...(moving?.currency ? { in: moving.currency } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/banking.ts:953"
+  },
+  {
+   "file": "src/ui/workspaces/BankWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "bank.open_savings",
+   "label": "Open A {there.savings.name}",
+   "kind": "bank.open_savings",
+   "payload": "{ bankId: there.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/banking.ts:1000"
+  },
+  {
+   "file": "src/ui/workspaces/CalendarWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "calendar.cancel",
+   "label": "Call It Off",
+   "kind": "calendar.cancel",
+   "payload": "{ entryId: entry.id }",
+   "verdict": "Right",
+   "handler": "src/engine/world/plans.ts:221"
+  },
+  {
+   "file": "src/ui/workspaces/CalendarWorkspace.tsx",
+   "control": "<button onClick>",
+   "label": "Put It On",
+   "kind": "calendar.schedule",
+   "payload": "{ title, at, durationMinutes: minutes, }",
+   "verdict": "Right",
+   "handler": "src/engine/world/plans.ts:178",
+   "note": "Not wrapped in Gated: the Calendar screen is the chapter's own (ui.open-calendar), and calendar.schedule opens with the same chapter."
+  },
+  {
+   "file": "src/ui/workspaces/CareerWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.update_resume",
+   "label": "${current ? 'Update' : 'Make'} Your Résumé (${plural(RESUME.minutes / 60, 'Hour')})",
+   "kind": "pro.update_resume",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/pro.ts:1002"
+  },
+  {
+   "file": "src/ui/workspaces/CareerWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.headshots",
+   "label": "Book A Headshot Session (${plural(HEADSHOTS.minutes / 60, 'Hour')}, ${cost})",
+   "kind": "pro.headshots",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/pro.ts:985"
+  },
+  {
+   "file": "src/ui/workspaces/CareerWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.cut_reel",
+   "label": "Cut A Reel (${plural(REEL.minutes / 60, 'Hour')}, ${formatMoney(reelCost(sim), cur)})",
+   "kind": "pro.cut_reel",
+   "payload": "{ pieces: chosen }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/pro.ts:1014"
+  },
+  {
+   "file": "src/ui/workspaces/CareerWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.set_name",
+   "label": "Use This Name",
+   "kind": "pro.set_name",
+   "payload": "{ name }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/pro.ts:973"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.therapy",
+   "label": "{`Begin A Course Of ${THERAPY.sessions} Sessions`}",
+   "kind": "health.therapy",
+   "payload": "{ therapist: t.name }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/therapy.ts:117"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.extra_supply",
+   "label": "{`Fill A Longer Supply, ${longest} Days`}",
+   "kind": "health.extra_supply",
+   "payload": "{ days: longest }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2237"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.apply_state_plan",
+   "label": "{long && lp ? `Apply For The ${lp.name}` : 'Apply For The Plan'}",
+   "kind": "tax.apply_state_plan",
+   "payload": "{ state, months: Number(months), long, down: downCents }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statetax.ts:1018"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<button onClick>",
+   "label": "{m === 3 ? 'Prepay Three Months, £32.05' : 'Prepay A Year, £114.50'}",
+   "kind": "health.prepay",
+   "payload": "{ months: m }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2247",
+   "note": "Sends the months on the button; the prices on it are NHS.prepayment's (safetynet.ts), written into the label by hand, and the handler charges the same figures. A price moved in the content would leave the label behind: noted for the papers area."
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.file",
+   "label": "{r.substitute ? 'File Your Own In Its Place' : 'File It'}",
+   "kind": "tax.file",
+   "payload": "{ year: r.year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1610"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.treat",
+   "label": "{state.treated ? 'Let It Go' : 'Keep It Up'}",
+   "kind": "health.treat",
+   "payload": "{ condition, on: !state.treated }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2380"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.appeal",
+   "label": "Appeal It",
+   "kind": "health.appeal",
+   "payload": "{ billId: b.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2193"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.apply",
+   "label": "Apply For {PROGRAM_NAMES[state].medicaid}",
+   "kind": "health.apply",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2291"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.apply_aid",
+   "label": "Apply For Assistance",
+   "kind": "health.apply_aid",
+   "payload": "{ billId: b.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2429"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "benefits.assistance",
+   "label": "Apply",
+   "kind": "benefits.assistance",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/assistance.ts:244"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.apply_plan",
+   "label": "Apply",
+   "kind": "tax.apply_plan",
+   "payload": "{ kind, ...(kind === 'long' ? { directDebit: debit, ...(asked ? { monthly: asked } : {}) } : {}) }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1506"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<button onClick>",
+   "label": "Book An Appointment",
+   "kind": "health.book",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/appointments.ts:270"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.dental",
+   "label": "Buy Dental",
+   "kind": "health.dental",
+   "payload": "{ on: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2394"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<button onClick>",
+   "label": "Call It Off",
+   "kind": "health.cancel_appointment",
+   "payload": "{ appointmentId: ap.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/appointments.ts:280"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.catch_up_plan",
+   "label": "Catch Up",
+   "kind": "tax.catch_up_plan",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1575"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.catch_up_state_plan",
+   "label": "Catch Up",
+   "kind": "tax.catch_up_state_plan",
+   "payload": "{ state }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statetax.ts:1194"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pension.bienestar",
+   "label": "Claim It",
+   "kind": "pension.bienestar",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/homepensions.ts:209"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pension.ie_state",
+   "label": "Claim It",
+   "kind": "pension.ie_state",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/homepensions.ts:184"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pension.imss",
+   "label": "Claim It",
+   "kind": "pension.imss",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/imss.ts:141"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pension.state",
+   "label": "Claim It",
+   "kind": "pension.state",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statepension.ts:77"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pension.social_security",
+   "label": "Claim Social Security",
+   "kind": "pension.social_security",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/socialsecurity.ts:129"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.dental",
+   "label": "Drop Dental",
+   "kind": "health.dental",
+   "payload": "{ on: false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2394"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.drop",
+   "label": "Drop The Plan",
+   "kind": "health.drop",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2343"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.enroll",
+   "label": "Enroll",
+   "kind": "health.enroll",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2262"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "benefits.claim",
+   "label": "File A Claim",
+   "kind": "benefits.claim",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/unemployment.ts:244"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.amend",
+   "label": "File The Amendment",
+   "kind": "tax.amend",
+   "payload": "{ year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1687"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.pay_bill",
+   "label": "Pay It Off",
+   "kind": "health.pay_bill",
+   "payload": "{ amount: -debt.balance }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2443"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.pay_state",
+   "label": "Pay",
+   "kind": "tax.pay_state",
+   "payload": "amounts[state] ? { state, year, amount: value } : { state, year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/statetax.ts:1002"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.pay",
+   "label": "Pay",
+   "kind": "tax.pay",
+   "payload": "amount ? { year, amount: value } : { year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1668"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "benefits.ei_register",
+   "label": "Register",
+   "kind": "benefits.ei_register",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/eiself.ts:84"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "health.request_hardship",
+   "label": "Request A Hardship Exception",
+   "kind": "health.request_hardship",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2309"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "tax.revise_plan",
+   "label": "Revise The Plan",
+   "kind": "tax.revise_plan",
+   "payload": "revised ? { monthly: Math.round(Number(revised) * 100) } : {}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1591"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<select onChange>",
+   "label": "Your Doctor (select)",
+   "kind": "health.choose_clinic",
+   "payload": "{ clinicId: e.target.value }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2373"
+  },
+  {
+   "file": "src/ui/workspaces/PapersWorkspace.tsx",
+   "control": "<select onChange>",
+   "label": "Your Pharmacy (select)",
+   "kind": "health.choose_pharmacy",
+   "payload": "{ chain: e.target.value }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/health.ts:2365"
+  },
+  {
+   "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "practice.exercise",
+   "label": "Practice An Hour",
+   "kind": "practice.exercise",
+   "payload": "{ exercise, tier, focus }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/practice.ts:260"
+  },
+  {
+   "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "genre.study",
+   "label": "Study It",
+   "kind": "genre.study",
+   "payload": "{ genre: g.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/engagement.ts:123"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<button onClick>",
+   "label": "{st ? 'Read It Again' : 'Read It'}",
+   "kind": "plays.read",
+   "payload": "{ playId: p.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/playreading.ts:120"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.extend_incomplete",
+   "label": "Ask For A Month More",
+   "kind": "school.extend_incomplete",
+   "payload": "{ key }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/courserecord.ts:280"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.buy_ppe",
+   "label": "Buy The Protective Equipment",
+   "kind": "school.buy_ppe",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:3545"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.call_in_sick",
+   "label": "Call In Sick",
+   "kind": "school.call_in_sick",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:4309"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.cabaret",
+   "label": "Join A Cabaret Show",
+   "kind": "school.cabaret",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:3964"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.summer_cabaret",
+   "label": "Join The Summer Company",
+   "kind": "school.summer_cabaret",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:4040"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.make_up",
+   "label": "Make Up A Session",
+   "kind": "school.make_up",
+   "payload": "{ key }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/courserecord.ts:262"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<button onClick>",
+   "label": "Research It",
+   "kind": "plays.research",
+   "payload": "{ playId: p.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/playreading.ts:158"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.take_shift",
+   "label": "Take An Elective Shift",
+   "kind": "school.take_shift",
+   "payload": "",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:4318"
+  },
+  {
+   "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+   "control": "<Gated onClick>",
+   "feature": "school.withdraw",
+   "label": "Withdraw",
+   "kind": "school.withdraw",
+   "payload": "{ confirm: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/school.ts:4270"
+  }
+ ],
+ "decisionAnswers": [
+  {
+   "file": "src/engine/systems/accountlife.ts",
+   "label": "Keep The Account",
+   "kind": "bank.reactivate",
+   "payload": "{ accountId: account.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/accountlife.ts:613"
+  },
+  {
+   "file": "src/engine/systems/permission.ts",
+   "label": "Apply For OPT",
+   "kind": "documents.apply_opt",
+   "payload": "{}",
+   "verdict": "Right",
+   "handler": "src/engine/systems/permission.ts:271"
+  },
+  {
+   "file": "src/engine/systems/permission.ts",
+   "label": "Apply For OPT, Premium Processing",
+   "kind": "documents.apply_opt",
+   "payload": "{ premium: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/permission.ts:271"
+  },
+  {
+   "file": "src/engine/systems/projobs.ts",
+   "label": "Accept The Offer",
+   "kind": "pro.accept_offer",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1549"
+  },
+  {
+   "file": "src/engine/systems/projobs.ts",
+   "label": "Decline The Offer",
+   "kind": "pro.decline_offer",
+   "payload": "{ opportunityId: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:1581"
+  },
+  {
+   "file": "src/engine/systems/taxreturn.ts",
+   "label": "File It",
+   "kind": "tax.file",
+   "payload": "{ year }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/taxreturn.ts:1610"
+  }
+ ],
+ "stopChoices": [
+  {
+   "file": "src/engine/systems/proagent.ts",
+   "stop": "MEETING_KIND",
+   "label": "Ask To Move",
+   "kind": "pro.ask_to_move",
+   "payload": "(item) => ({ meetingId: item.payload.meetingId })",
+   "handler": "src/engine/systems/proagent.ts:1097",
+   "verdict": "Right"
+  },
+  {
+   "file": "src/engine/world/clock.ts",
+   "stop": "PLAN_KIND",
+   "label": "Skip It",
+   "kind": "calendar.skip",
+   "payload": "(item) => ({ entryId: item.id })",
+   "verdict": "Right",
+   "handler": "src/engine/world/plans.ts:202"
+  },
+  {
+   "file": "src/engine/world/clock.ts",
+   "stop": "PARTNER_KIND",
+   "label": "Call It Off",
+   "kind": "school.cancel_rehearsal",
+   "payload": "(item) => ({ assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId })",
+   "verdict": "Right",
+   "handler": "src/engine/systems/coursework.ts:2030"
+  }
+ ]
+}

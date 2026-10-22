@@ -23,12 +23,6 @@
   "on": "2026-10-20",
   "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
  },
- "src/engine/world/clock.ts#top": {
-  "status": "Rewritten And Verified",
-  "hash": "8755674025df",
-  "on": "2026-10-20",
-  "evidence": "New in brief 19's time area (D1 to D5): read on the built app in docs/verification/career-2026-10-20/time/after/ and held by tests/time-stops.test.ts and tests/time-controls.test.ts"
- },
  "src/ui/shell/TimeControls.tsx#choicesAhead": {
   "status": "Rewritten And Verified",
   "hash": "85d932042752",

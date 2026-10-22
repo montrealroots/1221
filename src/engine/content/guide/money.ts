@@ -687,12 +687,15 @@ export const MONEY: readonly GuideEntry[] = [
       'Making an account at another bank your primary account and expecting round-ups to follow. They’re set up at one bank and stop there.',
     ],
     next: [
-      'Check How You Pay puts the day on the debit card, since only debit card purchases round up.',
+      'Check How You Pay puts the day on the debit card, or at Citi, BBVA México and Santander México on their own credit card, since those are the purchases that round up.',
       'Keep enough in your checking account for each day’s round-ups to move.',
     ],
     related: ['bank.upkeep', 'bank.accounts', 'bank.payments'],
     connections: [
-      { to: 'bank.payments', kind: 'immediate', why: 'Only what the debit card pays rounds up: How You Pay sets whether the day goes on the debit card, the credit card or in cash.' },
+      // What Citi, BBVA México and Santander México's own credit cards pay rounds up too (`roundsUpCard`), as the entry's
+      // needs say: from 2026-10-21 (brief 20's money audit) the connection and the next step say so, where until then they
+      // said only the debit card's purchases round up, and a New Haven student at Citi was told to move the day off Citi's card.
+      { to: 'bank.payments', kind: 'immediate', why: 'What the debit card pays rounds up, and at Citi, BBVA México and Santander México what their own credit card pays too: How You Pay sets whether the day goes on the debit card, the credit card or in cash.' },
       { to: 'bank.accounts', kind: 'scheduled', why: 'Each transfer is a move from your checking account into savings at the same bank, on the bank’s day.' },
       { to: 'bank.upkeep', kind: 'optional', why: 'Round-ups are set under Your Accounts Over Time, with term deposits and unused accounts.' },
     ],
@@ -918,7 +921,7 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'The Opening Limit', value: '$5,000 for a score of 740 or more, $2,500 from 670, and $1,000 below that, in your currency', estimate: true },
       { label: 'Money To Repay', value: 'Anything in your checking and savings accounts at every bank; in the US under 21, money of your own' },
       { label: 'A Month On Your Record', value: '3 points for a month paid as agreed, shared among your cards; 50 off for a late payment once it’s reported; 2 a month for each tenth of all your limits used past 30%', estimate: true },
-      { label: 'A Limit Review', value: `Every six months: a fifth more for a score of ${RAISE_FROM} or more with no late payment in a year, unless you turned Raise My Limit Automatically off`, estimate: true },
+      { label: 'A Limit Review', value: `Every six months: a fifth more for a score of ${RAISE_FROM} or more with no late payment in a year, or as much of it as your income or savings cover, unless you turned Raise My Limit Automatically off. Income covers it when the minimum payment on the whole new limit, with your other cards’ and loans’, is no more than a quarter of what you earned a month over the past year; savings cover it when what you hold in the bank is at least the new limit and all you owe on cards and loans`, estimate: true },
       { label: 'With No Card Open', value: `${NO_CARD.aging} points a month back, on the 1st, while no payment has been late in a year and no debt is in collections, up to ${NO_CARD.ceiling}`, estimate: true },
       { label: 'How Long A Mark Lasts', value: `A mark leaves your record after ${MARK_YEARS.us} years in the US, ${MARK_YEARS.uk} in Britain, ${MARK_YEARS.ca} in Canada and ${MARK_YEARS.ie} in Ireland, and gives back ${MARK_GONE_GIVES} points` },
       { label: 'Moving The Statement Day', value: `Once a statement cycle, and the next statement comes no sooner than ${MIN_CYCLE_DAYS} days after the last`, estimate: true },
@@ -928,7 +931,7 @@ export const MONEY: readonly GuideEntry[] = [
       `Apply: ${INQUIRY} points come off your score at once. If you’re approved, What Needs You gives the limit and the card arrives in a week. If you’re declined, it says why.`,
       'Pay Card In Full: from your primary account, then savings at its bank, as much as you owe or as much as you have. Paid from another bank, some banks hold back the room it frees for a few days while it clears.',
       'Autopay, Statement Day, Raise My Limit Automatically and Going Over The Limit are saved at once.',
-      `Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, needs a credit score of ${RAISE_FROM} or more, no late payment in a year, a card that isn’t suspended, and money in the bank.`,
+      `Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, can be asked for six months after the card opened and six months after you last asked or it was last raised. It needs a credit score of ${RAISE_FROM} or more, no late payment in a year, a card that isn’t suspended, and income or savings that cover the payments on it, as a review does.`,
       'Make It The Everyday Card: the day’s spending goes on it from now.',
       'Close The Card: nothing new can go on it, and if you owe nothing it closes at once.',
       'Send The Credit To My Account: a credit balance on the card moves to your primary account.',

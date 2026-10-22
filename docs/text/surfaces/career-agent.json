@@ -190,7 +190,8 @@
    "src/engine/systems/proagent.ts#endAgreement",
    "src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>",
    "src/engine/systems/proagent.ts#registerProAgent <pro.decline_agreement>",
-   "src/engine/systems/proagent.ts#registerProAgent"
+   "src/engine/systems/proagent.ts#registerProAgent",
+   "src/engine/systems/proagent.ts#agreementBefore"
   ],
   "states": [
    "details",
@@ -198,11 +199,12 @@
    "unavailable",
    "success",
    "notification",
-   "explanation"
+   "explanation",
+   "repeated"
   ],
   "outcome": "Revised",
   "why": "New with brief 19’s agent: nothing on this surface said anything before.",
-  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed. From 2026-10-21 (brief 19's app walk): accepting, declining and a lapse are said in History With His Office without the date their line already gives, and the meeting kept names Stewart Talent's office once, not his office and its office. From 2026-10-21 (the app's second walk): Equity's ending says “no real offer of covered work through him”, as the refusal and the guide say it.",
+  "changes": "Written new: every term shown before an answer with A Published Rule or The Game’s Own Term, the offer’s date, each ending button grayed with when it can under Equity’s or SAG-AFTRA’s rule, and what an ended agreement leaves owed. From 2026-10-21 (brief 19's app walk): accepting, declining and a lapse are said in History With His Office without the date their line already gives, and the meeting kept names Stewart Talent's office once, not his office and its office. From 2026-10-21 (the app's second walk): Equity's ending says “no real offer of covered work through him”, as the refusal and the guide say it. From 2026-10-21 (brief 20's D1) an agreement he offers again says what came of the last one (“He offered you one before, on …, and you declined it.”), in its notice, titled Thomas Ashgrove Offered You Representation Again, and in History With His Office, where until then it read as the first.",
   "evidence": [
    {
     "kind": "test",
@@ -219,6 +221,10 @@
    {
     "kind": "test",
     "ref": "tests/pro-core.test.ts: 'says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b20-career-history.test.ts: 'PLAYER JOURNEY: declined, then six months and a new credit on, his second offer says he offered one before and she declined it; let lapse, it says that'"
    }
   ]
  },

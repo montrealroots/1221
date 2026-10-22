@@ -1,0 +1,12 @@
+ok   1. [save: roundups scenario] Money by the rail: Accounts, each account’s balance, Move Money offered  [August 28, 2026 4:50 PM]
+ok   2. more than the current account holds, refused in words, naming what it holds; nothing moved, the clock as it was  [August 28, 2026 4:50 PM]
+ok   3. $500 moved: the toast says it, the current account $500 less and savings $500 more, the clock as it was  [August 28, 2026 4:50 PM]
+ok   4. a card payment: Look After Yourself, the first item with a price and offered, pressed  [August 28, 2026 5:30 PM]
+ok   5. pending, not available: Statements, the current account this month; what’s available and the posted balance differ by what’s pending; the payment pending, its day to post; its line’s look says so  [August 28, 2026 5:30 PM]
+ok   6. Statement Ready turned on, the clock as it was  [August 28, 2026 5:30 PM]
+ok   7. Save & Exit; Delete asked and kept; Continue: the same moment, the same lines pending on the same days, the same figures, Statement Ready still on  [August 28, 2026 5:30 PM]
+ok   8. One Week, asked: On The Way names what’s on the way, Cancel leaves the clock  [August 28, 2026 5:30 PM]
+ok   9. to the day after the payment posts, each stop gone to: the month’s statement for the current account on Home, its balance at the close; Go There opens Money  [September 2, 2026 7:00 AM]
+ok   10. posted: the payment’s line no longer pending; the closed month’s closing balance is the notice’s figure, to the cent  [September 2, 2026 7:00 AM]
+
+banking at 390: 10 of 10 passed; six missing: none; 0 errors; 0 overflows; 0 language checks failed, 0 recorded

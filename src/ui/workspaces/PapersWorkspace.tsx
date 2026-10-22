@@ -31,7 +31,7 @@ import { STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { CONDITION_LABEL, DENIALS, PROGRAM_NAMES, type MedicalBill, benchmarkFor, coverLabel, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, fillsCharged, longestFillOf, type Chronic, careQuote, dentalYearOf, answerBy, applyRefusal, hardshipRefusal, lookBack, monthsWords } from '@/engine/systems/health';
 import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
-import { readsAsProse, spokenList, titleCaseLabel } from '@/engine/core/text';
+import { plural, readsAsProse, spokenList, titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, claimStateFor, studentUnavailable, unemploymentOf } from '@/engine/systems/unemployment';
 import { f1Of, usWorkAuthorized } from '@/engine/systems/permission';
 import { zonedParts } from '@/engine/core/time';
@@ -222,7 +222,7 @@ function StatePlanPanel({ state }: { state: string }) {
         {plan && (
           <div className="grid grid-3">
             <Stat label="Covers" value={money(plan.covers)} note={plan.down ? `After a ${money(plan.down)} down payment` : undefined} />
-            <Stat label="Each Month" value={money(plan.monthly)} note={`${plan.months} months`} />
+            <Stat label="Each Month" value={money(plan.monthly)} note={plural(plan.months, 'month')} />
             {/* A plan being decided gives its day under Answered By, as the IRS's does (from 2026-10-19, brief 15: until then
                 Next Payment read "Decided …"). */}
             <Stat label={plan.status === 'missed' ? 'Catch Up By' : plan.status === 'pending' ? 'Answered By' : 'Next Payment'} value={plan.status === 'missed' && plan.endsBy !== undefined ? formatDate(plan.endsBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : plan.status === 'pending' ? formatDate(plan.decideAt, sim.zone) : '—'} />
@@ -254,12 +254,12 @@ function StatePlanPanel({ state }: { state: string }) {
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
               {lp && <label className="check" htmlFor={`state-plan-long-${state}`}><input id={`state-plan-long-${state}`} type="checkbox" checked={long} onChange={(e) => setLong(e.target.checked)} /><span>{`Ask For Its ${lp.name}`}</span></label>}
               <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Pay Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
-                {Array.from({ length: longest - rules.plan.minMonths + 1 }, (_, i) => rules.plan.minMonths + i).filter((m) => m <= 12 || m % 6 === 0).map((m) => <option key={m} value={m}>{m} Months</option>)}
+                {Array.from({ length: longest - rules.plan.minMonths + 1 }, (_, i) => rules.plan.minMonths + i).filter((m) => m <= 12 || m % 6 === 0).map((m) => <option key={m} value={m}>{plural(m, 'Month')}</option>)}
               </select></div>
               {dp && <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-down-${state}`}>{dp.required ? 'Down Payment (Required)' : 'Down Payment (Optional)'}</label><input id={`state-plan-down-${state}`} inputMode="decimal" value={down} onChange={(e) => setDown(e.target.value)} placeholder={((dp.required ? suggested : 0) / 100).toFixed(2)} /></div>}
               <Gated feature="tax.apply_state_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ decideAt: number; monthly: number; down: number }>('tax.apply_state_plan', { state, months: Number(months), long, down: downCents }); if (a.ok) { toast(`Applied${a.value!.down ? ` with ${money(a.value!.down)} down` : ''}: ${money(a.value!.monthly)} a month. ${rules.short} decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setDown(''); } }}>{long && lp ? `Apply For The ${lp.name}` : 'Apply For The Plan'}</Gated>
             </div>
-            <p className="xs dim" style={{ margin: 0 }}>{`That’s about ${money(monthly)} a month over ${months} months.`}{lien ? ` With this plan, ${rules.short} also files a ${rules.lien!.name}.` : ''}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{`That’s about ${money(monthly)} a month over ${plural(Number(months), 'month')}.`}{lien ? ` With this plan, ${rules.short} also files a ${rules.lien!.name}.` : ''}</p>
             {statement && <p className="xs dim" style={{ margin: 0 }}>{`${lp!.statement} asks for a financial statement. From your own records over the last three months: ${money(statement.income)} a month coming in, ${money(statement.expenses)} going out and ${money(statement.net)} left over, with ${money(statement.cash)} in the bank.`}{monthly > Math.max(0, statement.net) ? ` At ${money(monthly)} a month it would be declined, because that’s more than the statement leaves over.` : ''}</p>}
             {no && <span className="xs dim why-not">{no}</span>}
           </div>
@@ -604,6 +604,11 @@ function HealthPane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
+  // The state where they live, where its law keeps medical debt off a credit record (`MEDICAL_DEBT.barredIn`), for
+  // Medical Debt's note: from 2026-10-22 (brief 20's papers area), when until then it said the debt went on the record
+  // once a year past due, "never in New York or California", to a student in New Haven, where Connecticut bars it too.
+  const region = CITIES.get(person.currentLocationId)?.parentId ?? '';
+  const debtBarredBy = !MEDICAL_DEBT.barredIn.includes(region) ? undefined : region === 'us-ct' ? 'Connecticut' : region === 'us-ny' ? 'New York' : region === 'us-ca' ? 'California' : undefined;
   const h = healthOf(person);
   const cover = coverOn(person, sim.now);
   // A program by its own name, HUSKY D or Covered Connecticut in New Haven (`coverLabel`, from 2026-10-12: until then
@@ -695,7 +700,7 @@ function HealthPane() {
         help="papers.health-cover"
       >
         <div className="col gap-3">
-          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`It goes on your credit record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, once a year past due, and never in New York or California`} />}
+          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={debtBarredBy ? `${debtBarredBy}’s law keeps it off your credit record` : `It goes on your credit record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, once a year past due`} />}
           {bills.length > 0 && (
             <div className="table-scroll">
               <table>

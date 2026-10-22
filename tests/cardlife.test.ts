@@ -8,7 +8,8 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
-import { cardOf, cardRoom, cardTerms, DUE_KIND, NO_CARD, reportWithoutCard, STATEMENT_KIND } from '@/engine/systems/credit';
+import { cardOf, cardRoom, cardTerms, DUE_KIND, NO_CARD, reportWithoutCard, stateOf, STATEMENT_KIND } from '@/engine/systems/credit';
+import { ASK_EVERY } from '@/engine/systems/cardlife';
 import { PENDING } from '@/engine/content/pending';
 import { canPay } from '@/engine/systems/spending';
 
@@ -188,6 +189,9 @@ describe('the limit', () => {
     sim.player.credit!.score = 650;
     expect((run(sim, 'card.request_limit', { limit: now * 10 }).value as { granted: boolean }).granted).toBe(false);
     sim.player.credit!.score = 760;
+    // TEST SETUP: the declined ask set back six months (`ASK_EVERY`), so this one is looked at: from 2026-10-21 (brief 20's
+    // D2) an ask waits six months from the last, where until then it could follow at once.
+    stateOf(sim.player, c).askedAt! -= ASK_EVERY;
     const up = run(sim, 'card.request_limit', { limit: now * 10 }).value as { granted: boolean; limit: number };
     expect(up.granted).toBe(true);
     expect(up.limit).toBe(Math.round(now * 1.2 / 100) * 100);
