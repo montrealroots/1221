@@ -1,0 +1,3 @@
+[
+  { "id": "B20-J4-1", "what": "a new life made without the three records an opening makes, so a save opened isn't the life never saved", "file": "src/engine/index.ts", "find": "    person.engagement ??= { byGenre: {} };\n    person.development ??= { day: '', counts: {}, history: [] };\n    person.work ??= [];\n  }\n  // The papers", "replace": "  }\n  // The papers", "tests": ["tests/b20-guide-startup.test.ts"] }
+]

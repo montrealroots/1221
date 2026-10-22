@@ -2996,11 +2996,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/components/LienPanels.tsx#FederalLien": {
-  "status": "Retained",
-  "hash": "e3d2bcdf11cc",
-  "on": "2026-10-19",
-  "reason": "The IRS's effect in its own words, its release days and Form 12277's condition, and a button that names the form it sends.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "dffbeb1c6dde",
+  "on": "2026-10-22",
+  "evidence": "The reason under the federal lien's button names the button it's under, Ask For Its Release As Erroneous where that's the button (brief 20, the guide area's finding); no played life reaches that state since the benefits area's lien repair, so it isn't played in a test",
+  "first": "Pending"
  },
  "src/ui/components/LienPanels.tsx#LienFacts": {
   "status": "Rewritten",

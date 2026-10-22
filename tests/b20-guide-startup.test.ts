@@ -11,8 +11,7 @@
  * - Continue opens it as `SaveSlots`' `load` does (`openSlot`, then `loadSave`) at the same moment, and the shell draws
  *   it; so does every older save in `tests/fixtures/`, each opened and drawn without an error, and played on a day.
  * - A save made at 2:37 in the afternoon of a class day opens at 2:37 with the same still to come, and played on through
- *   midnight to the next morning it comes out the same to the byte as the life never saved, but for the three empty
- *   records an opening through a slot fills in (`alike`, below).
+ *   midnight to the next morning it comes out the same to the byte as the life never saved (`alike`, below).
  *
  * FIXTURE: the device's storage, a map in memory behind the real adapter (`LocalSaveAdapter`); the page's address and
  * its listeners, which the shell's help reads as it draws and a node test has none of.
@@ -67,24 +66,13 @@ async function continued(adapter: LocalSaveAdapter, slot: Slot): Promise<Simulat
 }
 
 /**
- * A save as JSON, less the three empty records an opening through a slot fills in (`migrate`'s step 93 in
- * `engine/index.ts`, run on every open: `engagement`, `development` and `work`, each made empty for anybody with a craft
- * who has none yet), where the other side has none. Each is the same empty record the first writer makes for itself
- * (`??=` in `systems/engagement.ts`, `attributes.ts` and `evaluation.ts`), so it changes no outcome; measured on
- * 2026-10-21, it's the only difference a slot's opening makes, and it's the guide area's finding for the coordinator,
- * since `migrate` isn't the guide's.
+ * A save as JSON, each side. Until 2026-10-22 this left out three empty records an opening through a slot filled in
+ * (`migrate`'s step 92 in `engine/index.ts`: `engagement`, `development` and `work`, made for anybody with a craft who had
+ * none yet), which the life never saved didn't hold: the guide area's finding, repaired by the coordinator for brief 20's
+ * J4. A new life is made with them (`createSave`), so the whole save is compared.
  */
-const EMPTY: Readonly<Record<string, string>> = { engagement: '{"byGenre":{}}', development: '{"day":"","counts":{},"history":[]}', work: '[]' };
 function alike(saved: Simulation, never: Simulation): [string, string] {
-  const a = JSON.parse(serialise(saved.universe)) as SaveUniverse;
-  const b = JSON.parse(serialise(never.universe)) as SaveUniverse;
-  for (const [id, p] of Object.entries(a.people)) {
-    const q = b.people[id] as unknown as Record<string, unknown> | undefined;
-    for (const [key, empty] of Object.entries(EMPTY)) {
-      if (q && q[key] === undefined && JSON.stringify((p as unknown as Record<string, unknown>)[key]) === empty) delete (p as unknown as Record<string, unknown>)[key];
-    }
-  }
-  return [JSON.stringify(a), JSON.stringify(b)];
+  return [serialise(saved.universe), serialise(never.universe)];
 }
 
 const words = (html: string) => html.replace(/<!-- -->/g, '').replace(/\stitle="[^"]*"/g, '').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
