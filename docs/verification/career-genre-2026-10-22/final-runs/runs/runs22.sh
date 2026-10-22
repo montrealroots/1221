@@ -17,7 +17,11 @@ ADV=$B/advice
 MEAS=$B/final
 mkdir -p "$OUT" "$OUT/acceptance" "$OUT/saves" "$ADV" "$MEAS" "$SCR"
 EX="$OUT/exits-$LANE.txt"
-[ -f "$EX" ] || echo "at $(git rev-parse --short HEAD), $(git status --short --untracked-files=no | wc -l) tracked files uncommitted, $(date -u +%FT%TZ)" > "$EX"
+# A lane played again on a later commit finds the record its earlier run committed (after #54's merge, 2026-10-22, the
+# paydays fix's): set aside as exits-<lane>.txt.before, never read, and the lane's own record left out of the count of
+# tracked files uncommitted. Until then such a record stopped the lane (below).
+[ -f "$EX" ] && ! grep -q "^at $(git rev-parse --short HEAD)," "$EX" && mv "$EX" "$EX.before"
+[ -f "$EX" ] || echo "at $(git rev-parse --short HEAD), $(git status --short --untracked-files=no -- . ":(exclude)$EX" | wc -l) tracked files uncommitted, $(date -u +%FT%TZ)" > "$EX"
 # A record from another commit would skip steps that never ran on this one (2026-10-18, lanes A and UI on ebdb5577).
 grep -q "^at $(git rev-parse --short HEAD)," "$EX" || { echo "$EX is from another commit: $(head -1 "$EX")" >&2; exit 3; }
 done_() { grep -q "^$1 exit=0 " "$EX"; }

@@ -2,9 +2,23 @@
 # Brief 22's runs gathered (from 2026-10-22), as brief 21's collect21.sh gathered its own: each f22- clone's final-runs/
 # over the repository's, the judge's shared folder into final/, the journeys' outputs whole into journeys-final/, brief
 # 20's journeys into b20-journeys/, the lives in one file.
+# Usage: [P=<prefix>] collect22.sh. With P (after #54's merge: P=f22d, the runs lanes played again on the paydays fix),
+# only that prefix's lanes are gathered, and the judge's outputs (final/), which those lanes don't make, are left as they
+# are.
 set -u
 S=/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad
 B=/home/user/1221/docs/verification/career-genre-2026-10-22/final-runs
+if [ -n "${P:-}" ]; then
+  for L in A ADVF ADVR B C D J UI APP JR1 JR2 JR3 JRC BJ1 BJ2 BJ3; do
+    C="$S/$P-$L/docs/verification/career-genre-2026-10-22/final-runs"
+    [ -d "$C" ] || { echo "no lane $L"; continue; }
+    for d in runs advice interface-final journeys14-final app; do [ -d "$C/$d" ] && mkdir -p "$B/$d" && (cd "$C/$d" && tar cf - --exclude='*.sh' --exclude='*.py' --exclude='*.before' .) | (cd "$B/$d" && tar xf -); done
+  done
+  rm -f "$B"/journeys-final/*.json; cp -r "$S/$P-journeys/." "$B/journeys-final/"
+  rm -rf "${B:?}/b20-journeys/"*; cp -r "$S/$P-b20journeys/." "$B/b20-journeys/"
+  cat $(ls "$S/$P"-B-work/life-*.json "$S/$P"-C-work/life-*.json | sort -V) > "$B/runs/lives.jsonl"
+  echo "collected $P $(date -u +%T)"; exit 0
+fi
 # Brief 20's journeys (BJ1 to BJ3) were played again on afe751f1, its src the tested commit's, once their coherence check
 # read what each part asks (`tools/b20-journeys.ts`): those lanes' clones are f22b-, and their journeys f22b-b20journeys.
 # Brief 13's journeys (JR1 to JR3, and JRC after them) were played again on 0ae97df3, also its src the tested commit's, once
