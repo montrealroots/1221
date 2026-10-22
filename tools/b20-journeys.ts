@@ -42,8 +42,14 @@
  *   npx vite-node tools/b20-journeys.ts -- --table docs/verification/audit-2026-10-21/journeys
  *
  * `--older` opens a save from `tests/fixtures/`, plays it on with the attentive school player and the career player that
- * takes whatever comes, through the School's end and three months past it, in parts of ten months, and records the
+ * takes whatever comes, through the School's end and three months past it, in parts of 304 days, and records the
  * opening (what it built, whether it reads back to the byte) and the transitions.
+ *
+ * For a closer look, none of which the journeys' own parts use: `--reread <life>` works out the ten checks, the coherence
+ * checks and the routes again from a finished journey's save and record, nothing played; `--trace <from> <to>` writes
+ * down every step between two days, what it pressed and the body before and after; `--end <day>` plays a journey on to a
+ * day past its own end; `--to <day>` stops a part early; `--fault fork` takes a point of energy from the reopened copy
+ * at each straight-against-reopened stretch, which must then read DIFFERENT (the comparison's own fault check).
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -54,7 +60,7 @@ import type { NewSaveConfig } from '../src/engine/world/bootstrap';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time';
 import { breaches } from '../src/engine/core/invariants';
-import { occupiedAt, suggestedSleep } from '../src/engine/systems/life';
+import { occupiedAt, readiness, suggestedSleep } from '../src/engine/systems/life';
 import { careFor, healthOf, inHospital } from '../src/engine/systems/health';
 import { injuryOf } from '../src/engine/systems/injury';
 import { CARE } from '../src/engine/content/safetynet';
@@ -346,9 +352,28 @@ function step(ctx: Ctx): void {
     if (n - st.lastAdviceDay >= 7) { st.lastAdviceDay = n; weeklyAdvice(sim, rec); }
   }
   if (careerOn(ctx) && !ctx.t) { ctx.t = transcriptFrom(sim); ctx.player.transcript = ctx.t; rec.b20.careerFrom = stamp(sim.now); }
+  const before = traceFrom(ctx);
   if (ended(sim)) careerHour(ctx); else schoolHour(ctx);
   readNotices(sim, ctx.t);
   watchWork(ctx);
+  if (before) traceStep(ctx, before);
+}
+
+/**
+ * `--trace <from> <to>` (dates, yyyy-mm-dd): each step between them written down, what it did and the body before and
+ * after it: for looking closely at a stretch (brief 20's D3, the nights between shoot days). Reads only.
+ */
+const TRACE = process.argv.includes('--trace') ? [on(Number(arg('trace').slice(0, 4)), Number(arg('trace').slice(5, 7)), Number(arg('trace').slice(8, 10))), on(Number(process.argv[process.argv.indexOf('--trace') + 2]!.slice(0, 4)), Number(process.argv[process.argv.indexOf('--trace') + 2]!.slice(5, 7)), Number(process.argv[process.argv.indexOf('--trace') + 2]!.slice(8, 10)))] : undefined;
+function body(ctx: Ctx) {
+  const p = ctx.sim.player; const w = p.wellbeing;
+  return { at: stamp(ctx.sim.now), awake: (p.awakeSince ?? 0) <= ctx.sim.now, energy: r1(w.energy), sleepDebt: r1(w.sleepDebt), stress: r1(w.stress), condition: r1(w.condition), readiness: r1(readiness(p)), commands: { ...ctx.rec.commands } };
+}
+function traceFrom(ctx: Ctx) { return TRACE && ctx.sim.now >= TRACE[0]! && ctx.sim.now < TRACE[1]! ? body(ctx) : undefined; }
+function traceStep(ctx: Ctx, before: ReturnType<typeof body>): void {
+  const after = body(ctx);
+  const did = Object.entries(after.commands).filter(([k, n]) => n !== (before.commands[k] ?? 0)).map(([k, n]) => `${k}×${n - (before.commands[k] ?? 0)}`);
+  const scheduled = ctx.sim.universe.scheduled.filter((i) => i.requiresPlayer && i.at >= ctx.sim.now && i.at < ctx.sim.now + 12 * MS_HOUR && i.status === 'pending').map((i) => `${stamp(i.at)} ${i.label}`);
+  ((ctx.rec.b20 as Extra & { trace?: unknown[] }).trace ??= []).push({ from: before.at, to: after.at, did, before: { awake: before.awake, energy: before.energy, sleepDebt: before.sleepDebt, readiness: before.readiness }, after: { awake: after.awake, energy: after.energy, sleepDebt: after.sleepDebt, stress: after.stress, condition: after.condition, readiness: after.readiness }, ahead: scheduled.slice(0, 3), sleepSuggested: suggestedSleep(ctx.sim).hours });
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -401,6 +426,8 @@ function fork(ctx: Ctx, why: string, days = 14): void {
   const b: Ctx = { ...ctx, sim: loadSave(deserialise(snap) as never), rec: clone(ctx.rec), st: clone(ctx.st), w: clone(ctx.w), prev: { ...ctx.prev }, player: { ...ctx.player } };
   if (ctx.t) { b.t = { seen: new Set(ctx.t.seen), lines: [...ctx.t.lines] }; b.player.transcript = b.t; }
   instrument(b.sim, b.rec);
+  // `--fault fork`: the comparison's own fault check, a point of energy taken from the reopened copy, which must read DIFFERENT.
+  if (arg('fault') === 'fork') b.sim.player.wellbeing.energy = Math.max(0, b.sim.player.wellbeing.energy - 1);
   const until = at + days * MS_DAY;
   while (b.sim.now < until && b.sim.universe.meta.endedAt === undefined) step(b);
   while (ctx.sim.now < until && ctx.sim.universe.meta.endedAt === undefined) step(ctx);
@@ -509,8 +536,10 @@ function coherence(sim: Simulation, rec: BRec): Record<string, { pass: boolean; 
       const t = projectById(e.projectId);
       const credit = pro!.credits.find((c) => c.engagementId === e.id);
       if (e.creditId && !credit) fails.push(`${e.role}: names a credit not on record`);
-      const due = t?.medium === 'stage' ? worked : e.status === 'finished' && worked;
-      if (due && !credit) fails.push(`${e.role} in ${t?.project}: worked${e.status === 'finished' ? ' and finished' : ''} with no credit`);
+      // A stage credit comes at the first night (a performance judged, `ProCredit`'s 'performed'), not at a rehearsal; a
+      // screen credit at the wrap.
+      const due = t?.medium === 'stage' ? e.log?.some((l) => l.status === 'worked' && l.band !== undefined) : e.status === 'finished' && worked;
+      if (due && !credit) fails.push(`${e.role} in ${t?.project}: ${t?.medium === 'stage' ? 'performed' : 'worked and finished'} with no credit`);
     }
     for (const c of pro?.credits ?? []) {
       if (c.engagementId && !(pro!.engagements.some((e) => e.id === c.engagementId) || (pro!.trimmed?.engagements ?? 0) > 0)) fails.push(`credit ${c.role} in ${c.project}: its engagement gone`);
@@ -541,17 +570,19 @@ function routes(sim: Simulation, rec: BRec, life: Life): Record<string, string[]
   const pro = p.pro;
   const lines = (rec.b20 as Extra & { transcript?: string[] }).transcript ?? [];
   const has = (re: RegExp) => lines.filter((l) => re.test(l)).map((l) => l.slice(0, 220));
+  // What the player pressed or answered at a stop, not what a notice's words mention.
+  const did = (re: RegExp) => lines.filter((l) => /\| (PRESS|STOP|REFUSED) \|/.test(l) && re.test(l)).map((l) => l.slice(0, 220));
   const notices = (re: RegExp) => rec.notices.filter((n) => re.test(n[2])).map((n) => `${n[0]} ${n[2]}`);
   const opps = pro?.opportunities ?? [];
   const rounds = opps.flatMap((o) => (o.rounds ?? []).map((r) => ({ o, r })));
   const r: Record<string, string[]> = {};
   const accepted = (pro?.agreements ?? []).filter((a) => a.status === 'accepted' || (a.status === 'ended' && a.signedAt !== undefined));
   r.represented = accepted.map((a) => `agreement with ${a.agentId} signed ${a.signedAt ? day(a.signedAt) : '?'}${a.endedAt ? `, ended ${day(a.endedAt)} (${a.endedHow})` : ''}`);
-  r.unsigned = ended(sim) && !accepted.length ? [`no agreement in ${rec.b20.schoolEnd ?? '?'} to ${stamp(sim.now)}; ${opps.filter((o) => o.via === 'open' && o.status !== 'open').length} open calls pursued`] : [];
+  r.unsigned = ended(sim) && !accepted.length ? [`no agreement in ${rec.b20.schoolEnd ?? '?'} to ${stamp(sim.now)}; ${opps.filter((o) => o.via === 'open' && o.sent !== undefined).length} open calls submitted to of those kept`] : [];
   r.success = [...(pro?.engagements ?? []).map((e) => `${e.role} in ${projectById(e.projectId)?.project}: ${e.status}, ${e.pay.filter((x) => x.received).length} payments received`), ...rounds.filter(({ r: x }) => x.casting?.yes).map(({ o, r: x }) => `${x.round} for ${o.projectId} went on (${x.band})`)];
   r.failure = [...rounds.filter(({ r: x }) => x.casting && !x.casting.yes).map(({ o, r: x }) => `${x.round} for ${o.projectId} ${x.band ?? ''}: not cast (chance ${Math.round((x.casting!.chance) * 100)}%)`), ...Object.values(pro?.relations ?? {}).filter((x) => ['passed', 'unanswered'].includes(x.stage)).map((x) => `${x.agentId}: ${x.stage}`), ...(rec.reviews as { term: number; standing: string }[]).filter((x) => x.standing !== 'good').map((x) => `term ${x.term}: ${x.standing}`)];
-  r.delay = [...rounds.filter(({ r: x }) => (x.moved ?? 0) > 0).map(({ o, r: x }) => `${x.round} for ${o.projectId} moved ${x.moved}`), ...has(/Ask To Move|Ask For Another Time/), ...notices(/Repeat|Leave|Hold/), ...(rec.b20.workDays.length === 0 && ended(sim) ? [] : [])];
-  r.decline = [...has(/Decline The (Offer|Agreement)/), ...(pro?.agreements ?? []).filter((a) => a.status === 'declined').map((a) => `agreement declined ${day(a.offeredAt)}`)];
+  r.delay = [...rounds.filter(({ r: x }) => (x.moved ?? 0) > 0).map(({ o, r: x }) => `${x.round} for ${o.projectId} moved ${x.moved}`), ...did(/Ask To Move|Ask For Another Time/), ...notices(/Repeat|Leave|Hold/), ...(rec.b20.workDays.length === 0 && ended(sim) ? [] : [])];
+  r.decline = [...did(/Decline The (Offer|Agreement)/), ...(pro?.agreements ?? []).filter((a) => a.status === 'declined').map((a) => `agreement declined ${day(a.offeredAt)}`)];
   r.interruption = [...(rec.health as { at: string; events: string[] }[]).map((h) => `${h.at.slice(0, 10)} ${h.events.join('; ')}`), ...rec.b20.workDays.filter((d) => d.status === 'missed').map((d) => `${d.at} ${d.role} missed`), ...notices(/^You Missed/), ...rounds.filter(({ r: x }) => x.status === 'missed').map(({ o }) => `${o.projectId} audition missed`)];
   // Each stretch ill, hurt or in hospital (the morning record), and the condition a week after it ended against the morning it began.
   const spells: string[] = [];
@@ -564,7 +595,7 @@ function routes(sim: Simulation, rec: BRec, life: Life): Record<string, string[]
     spells.push(`${d[k]![0]} to ${d[i - 1]![0]} ${d[i - 1]![5] ? 'ill' : d[i - 1]![6] ? 'hurt' : 'in hospital'}: condition ${d[Math.max(0, k - 1)]![3]} the morning before, ${d[k]![3]} at its start, ${week[3]} a week after its end`);
   }
   r.recovery = [...(rec.standings as { at: string; standing: string }[]).filter((x, i, all) => i > 0 && x.standing === 'good' && all[i - 1]!.standing !== 'good').map((x) => `${x.at.slice(0, 10)} back to good`), ...notices(/^The Financial Hold Is Lifted$/), ...spells];
-  r.clash = [...has(/clash|You’re booked for|holds you for/i), ...notices(/Clash/)];
+  r.clash = [...did(/clash|You’re booked for|holds you for/i), ...has(/NOTICE \|[^|]*\|[^|]*(clash|at the same time)/i).slice(0, 6), ...notices(/Clash/)];
   const monthsLow = (rec.monthly as { on: string; bank: number }[]).filter((m) => m.bank < 1000).map((m) => `${m.on} $${m.bank}`);
   r.littleMoney = [...(['nothing', 'scraping'].includes(String(life.config.wealth)) ? [`made ${life.config.wealth}`] : []), ...monthsLow.slice(0, 6), ...notices(/Declined|Overdra|Owed|Hold|Late Fee/).slice(0, 6)];
   const prepped = rounds.filter(({ o }) => o.prep && o.prep.interpretation >= 0.9);
@@ -578,7 +609,7 @@ function routes(sim: Simulation, rec: BRec, life: Life): Record<string, string[]
   const f1 = documentsOf(p).some((d) => d.kind === 'visa' && d.name.startsWith('F-1'));
   r.workAuthorization = f1 ? [
     ...documentsOf(p).filter((d) => d.kind === 'permit' || d.kind === 'visa').map((d) => `${d.name} ${d.status}${d.issuedAt ? ` issued ${day(d.issuedAt)}` : ''}${d.expiresAt ? ` to ${day(d.expiresAt)}` : ''}`),
-    ...has(/rules out work|permission|OPT|F-1/i).slice(0, 8),
+    ...did(/rules out work/i).slice(0, 6), ...has(/NOTICE \| [^|]*(OPT|Status|Work Authori|Permission)[^|]*\|/i).slice(0, 8),
     ...rec.b20.workDays.filter((d) => d.status === 'worked').slice(0, 3).map((d) => `${d.at} worked under ${d.papers.join(', ') || 'nothing in force'}`),
   ] : [];
   return r;
@@ -656,6 +687,8 @@ function playPart(life: Life, part: number, stateDir: string, outDir: string, ol
   // The journey's end: nine months past the School's end, on the first of a month (three for an older save); a year past
   // the last part's start where the School never ends.
   const journeyEnd = () => {
+    // `--end <yyyy-mm-dd>`: a journey played on to a day of the looker's choosing (for a closer look past its own end).
+    if (arg('end')) return on(Number(arg('end').slice(0, 4)), Number(arg('end').slice(5, 7)), Number(arg('end').slice(8, 10)));
     const e = ctx.sim.player.school?.endedAt;
     if (e === undefined) return older && ctx.w.ended ? monthsPast(ctx.rec.b20.startedAt!, 3) : PART_ENDS.at(-1)!;
     return older ? monthsPast(Math.max(e, ctx.rec.b20.startedAt!), 3) : monthsPast(e, 9);
@@ -718,6 +751,7 @@ function table(dir: string): void {
   const rows: Record<string, unknown>[] = [];
   for (const f of readdirSync(dir).filter((x) => /^(b20-\d|journey-|old-).*\.json$/.test(x) && !/-p\d+\.json$/.test(x)).sort()) {
     const r = JSON.parse(readFileSync(join(dir, f), 'utf8')) as { id: string; end?: Record<string, unknown>; checks?: Record<string, { pass: boolean; fails: string[] }>; b20: Extra; coherence: Record<string, { pass: boolean; fails: string[] }>; routes: Record<string, string[]> };
+    if (!r.b20 || !r.coherence) continue; // a trace or another record kept beside the journeys
     rows.push({
       id: r.id, end: `${r.end?.standing} ${r.b20.schoolEnd ?? ''}`, career: r.b20.careerFrom, transitions: `${r.b20.transitions.filter((t) => t.same).length}/${r.b20.transitions.length} same`,
       forks: r.b20.forks.map((x) => `${x.why.slice(0, 50)}: ${x.same ? 'same' : 'DIFFERENT'}`), checks: Object.fromEntries(Object.entries(r.checks ?? {}).map(([k, v]) => [k, v.pass ? 'pass' : v.fails.slice(0, 2)])),
@@ -729,7 +763,26 @@ function table(dir: string): void {
   console.log(JSON.stringify(rows, null, 1));
 }
 
-if (process.argv.includes('--table')) table(arg('table'));
+/**
+ * `--reread`: a finished journey's ten checks, coherence checks and routes worked out again from its save and record,
+ * nothing played, for a change to those reads alone; its record is written again with them.
+ */
+function reread(life: Life, stateDir: string, outDir: string): void {
+  const sim = loadSave(deserialise(readFileSync(join(stateDir, `${life.seed}.save`), 'utf8')) as never);
+  const kept = JSON.parse(readFileSync(join(stateDir, `${life.seed}.state.json`), 'utf8')) as { rec: BRec; tLines?: string[] };
+  const file = join(outDir, `${life.seed}.json`);
+  const out = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>;
+  (kept.rec.b20 as Extra & { transcript?: string[] }).transcript = kept.tLines ?? [];
+  // Brief 13's ten checks again too, for a life this runner made (an older save's weren't run).
+  if (LIVES.some((l) => l.seed === life.seed)) { kept.rec.checks = checks(specOf(life), sim, kept.rec); out.checks = kept.rec.checks; }
+  out.coherence = coherence(sim, kept.rec);
+  out.routes = routes(sim, kept.rec, life);
+  writeFileSync(file, `${JSON.stringify(out, null, 1)}\n`);
+  console.log(JSON.stringify({ id: life.seed, reread: true, coherence: Object.fromEntries(Object.entries(out.coherence as Record<string, { pass: boolean }>).map(([k, v]) => [k, v.pass])) }));
+}
+
+if (process.argv.includes('--reread')) { const id = arg('reread'); reread(LIVES.find((l) => l.seed === id) ?? olderLife(id), arg('state'), arg('out')); }
+else if (process.argv.includes('--table')) table(arg('table'));
 else if (process.argv.includes('--older')) playPart(olderLife(arg('older')), Number(arg('part', '1')), arg('state'), arg('out'), arg('older'));
 else if (process.argv.includes('--life')) {
   const life = LIVES.find((l) => l.seed === arg('life'));

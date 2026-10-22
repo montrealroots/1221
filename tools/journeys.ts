@@ -851,17 +851,22 @@ export function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     const issued = has(rec, 'OPT Approved');
     if (applied.length && !issued.length && e.on && String(e.on) > '2029-08-01') fails.push('OPT applied for and never decided');
     const outs = has(rec, 'Out Of Status');
-    if (outs.length && applied.length && issued.length) fails.push('out of status with OPT approved');
+    // An OPT ended for more than 90 days without work (`OPT Ended`, `systems/permission.ts`) ends the status with it, no
+    // grace after (from 2026-10-21, brief 20's journeys, which play nine months past the School: brief 13's ended 75 days
+    // after it, before an OPT from 31 May could reach its 91st idle day, and this failed the first two that did).
+    const optEnded = documentsOf(p).find((d) => d.kind === 'permit' && d.name.includes('OPT') && d.endedAt !== undefined)?.endedAt;
+    if (outs.length && applied.length && issued.length && optEnded === undefined) fails.push('out of status with OPT approved');
     // The day an F-1 status ends, by the rules worked here apart from the engine (8 CFR 214.2(f)(5)(iv), as
     // `STATUS_GRACE_DAYS` cites it): the program's end and sixty days after the degree, which is the visa's own end, kept
     // to the program with any leave or year again; the day itself after a dismissal; fifteen days after a withdrawal or a
-    // degree withheld; an OPT's end and sixty days where one was approved. Only where the journey ran past it.
+    // degree withheld; an OPT's end and sixty days where one was approved, or the day it ended for its days without work
+    // (from 2026-10-21). Only where the journey ran past it.
     const f1 = documentsOf(p).find((d) => d.kind === 'visa' && d.name.startsWith('F-1'));
     const opt = documentsOf(p).find((d) => d.kind === 'permit' && d.name.includes('OPT') && d.expiresAt !== undefined && d.issuedAt !== undefined);
     const endedAt = p.school?.endedAt;
     if (f1 && endedAt !== undefined) {
       const std = p.school!.standing;
-      const due = opt ? opt.expiresAt! + 60 * MS_DAY : std === 'graduated' ? f1.expiresAt! : std === 'dismissed' ? endedAt : endedAt + 15 * MS_DAY;
+      const due = opt ? (opt.endedAt ?? opt.expiresAt! + 60 * MS_DAY) : std === 'graduated' ? f1.expiresAt! : std === 'dismissed' ? endedAt : endedAt + 15 * MS_DAY;
       const outAt = p.usOutOfStatus;
       if (sim.now > due + MS_DAY && (outAt === undefined || day(outAt) !== day(due))) fails.push(`F-1 status: by the rules out on ${day(due)}, the game ${outAt === undefined ? 'never' : `on ${day(outAt)}`}`);
       if (sim.now <= due && outAt !== undefined) fails.push(`F-1 status: out on ${day(outAt)}, before its end on ${day(due)}`);

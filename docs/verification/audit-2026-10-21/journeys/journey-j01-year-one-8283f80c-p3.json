@@ -1,0 +1,32 @@
+{
+ "id": "journey-j01-year-one-8283f80c",
+ "part": 3,
+ "from": "2029-01-29",
+ "to": "2029-09-01",
+ "secs": 284,
+ "reloads": 36,
+ "done": true,
+ "standing": "graduated",
+ "schoolEnd": "2029-05-21T14:00",
+ "careerFrom": "2029-01-08T14:20",
+ "notSame": 0,
+ "transitions": [
+  "2027-06-01T11:05 opened: same",
+  "2027-12-10T22:20 term 2 reviewed: good: same",
+  "2028-01-01T12:20 the end of 2027: same",
+  "2028-04-28T21:05 term 3 reviewed: good: same",
+  "2028-12-08T22:20 term 4 reviewed: good: same",
+  "2029-01-01T12:20 the end of 2028: same",
+  "2029-04-27T21:05 term 5 reviewed: good: same",
+  "2029-05-21T14:25 the School’s end: graduated: same"
+ ],
+ "forks": [
+  "2027-09-02T01:10 a rehearsal with a partner booked for 2027-09-04T23:00 on A Game Played Through: same",
+  "2029-05-21T14:25 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
+  "2029-08-01T14:00 an audition (self-tape) set for 2029-08-05T22:00, Sam in Last Bus To Eastview: same"
+ ],
+ "workDays": 0,
+ "notices": 876,
+ "bank": 75589.18,
+ "errors": []
+}

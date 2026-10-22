@@ -1,0 +1,24 @@
+{
+ "id": "b20-2",
+ "part": 1,
+ "from": "2026-08-24",
+ "to": "2027-06-01",
+ "secs": 35,
+ "reloads": 13,
+ "done": false,
+ "standing": "good",
+ "notSame": 0,
+ "transitions": [
+  "2026-08-24T11:30 creation: same",
+  "2026-12-11T22:10 term 0 reviewed: good: same",
+  "2027-01-01T12:10 the end of 2026: same",
+  "2027-04-23T21:15 term 1 reviewed: good: same"
+ ],
+ "forks": [
+  "2026-09-01T11:15 a rehearsal with a partner booked for 2026-09-01T23:00 on Scene Study: same"
+ ],
+ "workDays": 0,
+ "notices": 313,
+ "bank": 27099.42,
+ "errors": []
+}

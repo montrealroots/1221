@@ -1,0 +1,29 @@
+{
+ "id": "old-nonfiler-086d00ca",
+ "part": 2,
+ "from": "2029-03-24",
+ "to": "2029-09-01",
+ "secs": 199,
+ "reloads": 20,
+ "done": true,
+ "standing": "graduated",
+ "schoolEnd": "2029-05-21T14:00",
+ "careerFrom": "2029-01-08T14:00",
+ "notSame": 0,
+ "transitions": [
+  "2028-05-24T11:10 opened: same",
+  "2028-12-08T22:00 term 4 reviewed: good: same",
+  "2029-01-01T12:00 the end of 2028: same",
+  "2029-04-27T21:15 term 5 reviewed: good: same",
+  "2029-05-21T14:35 the School’s end: graduated: same"
+ ],
+ "forks": [
+  "2028-09-10T19:15 a rehearsal with a partner booked for 2028-09-10T23:00 on Heightened Text Scene: same",
+  "2029-05-21T14:35 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
+  "2029-06-06T14:30 an audition (in-person) set for 2029-06-11T15:00, Felix in Paper Moons: same"
+ ],
+ "workDays": 0,
+ "notices": 785,
+ "bank": 64349.11,
+ "errors": []
+}
