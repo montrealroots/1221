@@ -217,9 +217,9 @@ In short:
 
 ## The Completion Matrix
 
-**631 of 658 rows in scope Implemented And Verified (95.8%)**: 22 Implemented, Verification Incomplete, 5 Decision
-Required, 40 Explicitly Deferred (`../integration-2026-10-16/COMPLETION-MATRIX.md`), before the gate's own figure is folded
-in (The Gate).
+**632 of 658 rows in scope Implemented And Verified (96.0%)**: 21 Implemented, Verification Incomplete, 5 Decision
+Required, 40 Explicitly Deferred (`../integration-2026-10-16/COMPLETION-MATRIX.md`). It read 631 until the gate's own
+figure was folded in (The Gate). At brief 20's close it was 634 of 658.
 - **Its course this brief:** brief 21 changed `src/engine`, `src/ui` and three files the judge watches, so every row
   measured on them read as measured before what it reads last changed. The final runs measured them again on
   `fd32e869`. Every figure but three held, each read row by row:
@@ -236,7 +236,16 @@ in (The Gate).
 
 ## The Gate
 
-PENDING_GATE
+The full gate in a clean clone, its exit read from its file:
+- **On the fold's commit, `e8e09123`** (its `src` the tested commit's): exit 0; 482 of 482 test files and 5,547 of
+  5,547 tests, none skipped; all 22 checks, the completion matrix last (`final-runs/runs/gate.txt`). Its figure was
+  folded in after it, and the matrix moved from 631 to 632.
+- **On this receipt's commit:** run again after these records were written; its figure is in
+  `final-runs/runs/gate-receipt.txt` and below.
+- **Brief 21 added:** 3 test files and 66 tests to brief 20's 479 and 5,481.
+- **Earlier full suites:**
+  - on `59e9c4af`: 5,544 of 5,545, the one failure (language-money's old sentence) fixed then;
+  - on the code before it: 12 failures, each read and brought to the rule with a dated note (`CHECKPOINT.md`).
 
 ## For The Owner
 

@@ -6,14 +6,14 @@ brief 20's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `e508
 force-pushed. It is kept out of `main` at the owner's word ("Keep the work reviewable. Do not merge or deploy without my
 instruction."): no pull request is open for it. Nothing is deployed. There is no stash and one worktree.
 
-**Completion, by the matrix:** 631 of 658 rows in scope Implemented And Verified (95.8%); 22 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 632 of 658 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
   (634 at brief 20's close. Brief 21's final runs on `fd32e869` measured every row again
-  (`docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md`). Three moved:
+  (`docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md`), and the gate's own figure was folded in after
+  it ran (631 until then). Two rows left the count:
   - **the Genre Audit, Decision Required:** a genre's own kind now counts toward it, which its "leaks into none" didn't
     allow;
-  - **genres.7-measured, Verification Incomplete:** it holds that 0, so it waits on the same decision;
-  - **INT-gate:** held until the gate's figure is folded in.)
+  - **genres.7-measured, Verification Incomplete:** it holds that 0, so it waits on the same decision.)
 
 - **Read first:** `docs/verification/genre-banking-2026-10-22/README.md` (the receipt), `criteria.md` (the items, written
   before any fix) and `CHECKPOINT.md` (the record as the work went).
@@ -42,7 +42,8 @@ instruction."): no pull request is open for it. Nothing is deployed. There is no
 - **Defects found and fixed:** 14, listed in the receipt with each one's test.
 - **Found, not fixed, for the owner:** b20-4, played again, worked 48 days of a booked run after OPT ended mid-run
   (`systems/permission.ts`, `systems/projobs.ts`, neither changed by brief 21; OPT's rules are outside this brief).
-- **The gate:** run in a clean clone after this fold (see the receipt).
+- **The gate:** in a clean clone of `e8e09123` (the fold, its `src` the tested commit's), exit 0 read from its file: 482
+  of 482 test files, 5,547 of 5,547 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`).
 - **For the owner:**
   - the Genre Audit's question (`final-runs/judge-moved.json`);
   - whether a US minimum payment due includes what's past due (SLATE's reading);

@@ -63,7 +63,9 @@ exact test results. Updated as each module lands; the criteria are `criteria.md`
 
 ## Left
 
-- The gate in a clean clone of the fold's commit, its figure folded in, and the gate again on the receipt's commit.
+- The gate again on the receipt's commit (`gate-receipt.txt`).
+- Done: the gate in a clean clone of `e8e09123`, exit 0 read from its file, 482 of 482 files, 5,547 of 5,547 tests, none
+  skipped, all 22 checks; its figure folded in, the matrix 632 of 658.
 
 ## The Final Runs (fd32e869, 09:43 to 11:54 UTC)
 
