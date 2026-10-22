@@ -1,0 +1,1068 @@
+{
+ "what": "b20-1 replayed from creation with --trace 2029-09-01 2029-09-07 (tools/b20-journeys.ts), every step from 4 PM New York on September 2, 2029, the eve of Paper Moons shoot day 1, to September 7; times UTC (New York is UTC-4); each step: what was pressed, the body before and after, what wants the player in the next twelve hours, and the hours the Sleep dialog suggested after it",
+ "steps": [
+  {
+   "from": "2029-09-02T20:00",
+   "to": "2029-09-02T21:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 61,
+    "sleepDebt": 3.1,
+    "readiness": 68.4
+   },
+   "after": {
+    "awake": true,
+    "energy": 58,
+    "sleepDebt": 3.4,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 66
+   },
+   "ahead": [],
+   "sleepSuggested": 8
+  },
+  {
+   "from": "2029-09-02T21:00",
+   "to": "2029-09-02T22:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 58,
+    "sleepDebt": 3.4,
+    "readiness": 66
+   },
+   "after": {
+    "awake": true,
+    "energy": 55,
+    "sleepDebt": 3.7,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 63.6
+   },
+   "ahead": [],
+   "sleepSuggested": 8
+  },
+  {
+   "from": "2029-09-02T22:00",
+   "to": "2029-09-02T23:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 55,
+    "sleepDebt": 3.7,
+    "readiness": 63.6
+   },
+   "after": {
+    "awake": true,
+    "energy": 52,
+    "sleepDebt": 4.1,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 61.2
+   },
+   "ahead": [],
+   "sleepSuggested": 8
+  },
+  {
+   "from": "2029-09-02T23:00",
+   "to": "2029-09-03T00:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 52,
+    "sleepDebt": 4.1,
+    "readiness": 61.2
+   },
+   "after": {
+    "awake": true,
+    "energy": 49,
+    "sleepDebt": 4.4,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 58.9
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 8
+  },
+  {
+   "from": "2029-09-03T00:00",
+   "to": "2029-09-03T01:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 49,
+    "sleepDebt": 4.4,
+    "readiness": 58.9
+   },
+   "after": {
+    "awake": true,
+    "energy": 46,
+    "sleepDebt": 4.8,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 56.6
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 7
+  },
+  {
+   "from": "2029-09-03T01:00",
+   "to": "2029-09-03T02:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 46,
+    "sleepDebt": 4.8,
+    "readiness": 56.6
+   },
+   "after": {
+    "awake": true,
+    "energy": 43,
+    "sleepDebt": 5.1,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 54.4
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 6
+  },
+  {
+   "from": "2029-09-03T02:00",
+   "to": "2029-09-03T03:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 43,
+    "sleepDebt": 5.1,
+    "readiness": 54.4
+   },
+   "after": {
+    "awake": true,
+    "energy": 40,
+    "sleepDebt": 5.4,
+    "stress": 0,
+    "condition": 91,
+    "readiness": 52.2
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 5
+  },
+  {
+   "from": "2029-09-03T03:00",
+   "to": "2029-09-03T08:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 40,
+    "sleepDebt": 5.4,
+    "readiness": 52.2
+   },
+   "after": {
+    "awake": true,
+    "energy": 89.8,
+    "sleepDebt": 1.4,
+    "stress": 0,
+    "condition": 90.2,
+    "readiness": 92.4
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-03T08:00",
+   "to": "2029-09-03T08:30",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 89.8,
+    "sleepDebt": 1.4,
+    "readiness": 92.4
+   },
+   "after": {
+    "awake": true,
+    "energy": 94.7,
+    "sleepDebt": 8.3,
+    "stress": 0,
+    "condition": 86.1,
+    "readiness": 84
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-03T08:30",
+   "to": "2029-09-03T09:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 94.7,
+    "sleepDebt": 8.3,
+    "readiness": 84
+   },
+   "after": {
+    "awake": true,
+    "energy": 98.9,
+    "sleepDebt": 15.2,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 75.2
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-03T09:00",
+   "to": "2029-09-03T10:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 98.9,
+    "sleepDebt": 15.2,
+    "readiness": 75.2
+   },
+   "after": {
+    "awake": true,
+    "energy": 95,
+    "sleepDebt": 15.5,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 72.5
+   },
+   "ahead": [
+    "2029-09-03T11:00 Paper Moons: Shoot Day 1"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-03T10:00",
+   "to": "2029-09-03T22:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 95,
+    "sleepDebt": 15.5,
+    "readiness": 72.5
+   },
+   "after": {
+    "awake": true,
+    "energy": 47.6,
+    "sleepDebt": 19.6,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 43.6
+   },
+   "ahead": [],
+   "sleepSuggested": 9
+  },
+  {
+   "from": "2029-09-03T22:00",
+   "to": "2029-09-03T23:00",
+   "did": [
+    "practice.exercise\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 47.6,
+    "sleepDebt": 19.6,
+    "readiness": 43.6
+   },
+   "after": {
+    "awake": true,
+    "energy": 40.6,
+    "sleepDebt": 19.9,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 40.3
+   },
+   "ahead": [],
+   "sleepSuggested": 9
+  },
+  {
+   "from": "2029-09-03T23:00",
+   "to": "2029-09-04T00:00",
+   "did": [
+    "practice.exercise\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 40.6,
+    "sleepDebt": 19.9,
+    "readiness": 40.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 33.7,
+    "sleepDebt": 20.3,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 37.1
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 8
+  },
+  {
+   "from": "2029-09-04T00:00",
+   "to": "2029-09-04T01:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 33.7,
+    "sleepDebt": 20.3,
+    "readiness": 37.1
+   },
+   "after": {
+    "awake": true,
+    "energy": 29.8,
+    "sleepDebt": 20.6,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 35.2
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 7
+  },
+  {
+   "from": "2029-09-04T01:00",
+   "to": "2029-09-04T02:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 29.8,
+    "sleepDebt": 20.6,
+    "readiness": 35.2
+   },
+   "after": {
+    "awake": true,
+    "energy": 25.8,
+    "sleepDebt": 20.9,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 33.2
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 6
+  },
+  {
+   "from": "2029-09-04T02:00",
+   "to": "2029-09-04T03:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 25.8,
+    "sleepDebt": 20.9,
+    "readiness": 33.2
+   },
+   "after": {
+    "awake": true,
+    "energy": 21.9,
+    "sleepDebt": 21.3,
+    "stress": 0,
+    "condition": 81.9,
+    "readiness": 31.3
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 5
+  },
+  {
+   "from": "2029-09-04T03:00",
+   "to": "2029-09-04T08:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 21.9,
+    "sleepDebt": 21.3,
+    "readiness": 31.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 52.7,
+    "sleepDebt": 16.8,
+    "stress": 0,
+    "condition": 81.3,
+    "readiness": 52.7
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-04T08:00",
+   "to": "2029-09-04T08:30",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 52.7,
+    "sleepDebt": 16.8,
+    "readiness": 52.7
+   },
+   "after": {
+    "awake": true,
+    "energy": 55.9,
+    "sleepDebt": 23.7,
+    "stress": 0,
+    "condition": 77.2,
+    "readiness": 46.6
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-04T08:30",
+   "to": "2029-09-04T09:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 55.9,
+    "sleepDebt": 23.7,
+    "readiness": 46.6
+   },
+   "after": {
+    "awake": true,
+    "energy": 58.4,
+    "sleepDebt": 30.6,
+    "stress": 0,
+    "condition": 73,
+    "readiness": 40.8
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-04T09:00",
+   "to": "2029-09-04T10:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 58.4,
+    "sleepDebt": 30.6,
+    "readiness": 40.8
+   },
+   "after": {
+    "awake": true,
+    "energy": 53.5,
+    "sleepDebt": 31,
+    "stress": 0,
+    "condition": 73,
+    "readiness": 38.9
+   },
+   "ahead": [
+    "2029-09-04T11:00 Paper Moons: Shoot Day 2"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-04T10:00",
+   "to": "2029-09-04T22:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 53.5,
+    "sleepDebt": 31,
+    "readiness": 38.9
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 35,
+    "stress": 5.2,
+    "condition": 73,
+    "readiness": 18.9
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-04T22:00",
+   "to": "2029-09-04T23:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 35,
+    "readiness": 18.9
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 35.4,
+    "stress": 6.4,
+    "condition": 73,
+    "readiness": 18.7
+   },
+   "ahead": [],
+   "sleepSuggested": 9
+  },
+  {
+   "from": "2029-09-04T23:00",
+   "to": "2029-09-05T00:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 35.4,
+    "readiness": 18.7
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 35.7,
+    "stress": 7.6,
+    "condition": 73,
+    "readiness": 18.4
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 8
+  },
+  {
+   "from": "2029-09-05T00:00",
+   "to": "2029-09-05T01:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 35.7,
+    "readiness": 18.4
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 36.1,
+    "stress": 8.9,
+    "condition": 73,
+    "readiness": 18.1
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 7
+  },
+  {
+   "from": "2029-09-05T01:00",
+   "to": "2029-09-05T02:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 36.1,
+    "readiness": 18.1
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 36.4,
+    "stress": 10.1,
+    "condition": 73,
+    "readiness": 17.9
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 6
+  },
+  {
+   "from": "2029-09-05T02:00",
+   "to": "2029-09-05T03:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 36.4,
+    "readiness": 17.9
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 36.7,
+    "stress": 11.3,
+    "condition": 73,
+    "readiness": 17.7
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 5
+  },
+  {
+   "from": "2029-09-05T03:00",
+   "to": "2029-09-05T08:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 36.7,
+    "readiness": 17.7
+   },
+   "after": {
+    "awake": true,
+    "energy": 19.8,
+    "sleepDebt": 32.5,
+    "stress": 0,
+    "condition": 72.5,
+    "readiness": 28.2
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-05T08:00",
+   "to": "2029-09-05T08:30",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 19.8,
+    "sleepDebt": 32.5,
+    "readiness": 28.2
+   },
+   "after": {
+    "awake": true,
+    "energy": 21.7,
+    "sleepDebt": 39.4,
+    "stress": 0,
+    "condition": 68.3,
+    "readiness": 27.8
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-05T08:30",
+   "to": "2029-09-05T09:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 21.7,
+    "sleepDebt": 39.4,
+    "readiness": 27.8
+   },
+   "after": {
+    "awake": true,
+    "energy": 23.5,
+    "sleepDebt": 46.3,
+    "stress": 0,
+    "condition": 64.1,
+    "readiness": 27.3
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-05T09:00",
+   "to": "2029-09-05T10:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 23.5,
+    "sleepDebt": 46.3,
+    "readiness": 27.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 17.6,
+    "sleepDebt": 46.6,
+    "stress": 0,
+    "condition": 64.1,
+    "readiness": 25.3
+   },
+   "ahead": [
+    "2029-09-05T11:00 Paper Moons: Shoot Day 3"
+   ],
+   "sleepSuggested": 0.5
+  },
+  {
+   "from": "2029-09-05T10:00",
+   "to": "2029-09-05T22:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 17.6,
+    "sleepDebt": 46.6,
+    "readiness": 25.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 50.7,
+    "stress": 14.3,
+    "condition": 64.1,
+    "readiness": 17
+   },
+   "ahead": [],
+   "sleepSuggested": 12
+  },
+  {
+   "from": "2029-09-05T22:00",
+   "to": "2029-09-05T23:00",
+   "did": [
+    "pro.update_resume\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 50.7,
+    "readiness": 17
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 51,
+    "stress": 15.6,
+    "condition": 64.1,
+    "readiness": 16.7
+   },
+   "ahead": [],
+   "sleepSuggested": 12
+  },
+  {
+   "from": "2029-09-05T23:00",
+   "to": "2029-09-06T00:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 51,
+    "readiness": 16.7
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 51.4,
+    "stress": 16.8,
+    "condition": 64.1,
+    "readiness": 16.5
+   },
+   "ahead": [],
+   "sleepSuggested": 12
+  },
+  {
+   "from": "2029-09-06T00:00",
+   "to": "2029-09-06T01:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 51.4,
+    "readiness": 16.5
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 51.7,
+    "stress": 18,
+    "condition": 64.1,
+    "readiness": 16.3
+   },
+   "ahead": [],
+   "sleepSuggested": 12
+  },
+  {
+   "from": "2029-09-06T01:00",
+   "to": "2029-09-06T02:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 51.7,
+    "readiness": 16.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 52.1,
+    "stress": 19.3,
+    "condition": 64.1,
+    "readiness": 16
+   },
+   "ahead": [],
+   "sleepSuggested": 12
+  },
+  {
+   "from": "2029-09-06T02:00",
+   "to": "2029-09-06T03:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 52.1,
+    "readiness": 16
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 52.4,
+    "stress": 20.5,
+    "condition": 64.1,
+    "readiness": 15.8
+   },
+   "ahead": [],
+   "sleepSuggested": 12
+  },
+  {
+   "from": "2029-09-06T03:00",
+   "to": "2029-09-06T15:00",
+   "did": [
+    "life.sleep\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 52.4,
+    "readiness": 15.8
+   },
+   "after": {
+    "awake": true,
+    "energy": 45.3,
+    "sleepDebt": 30.8,
+    "stress": 0,
+    "condition": 68.6,
+    "readiness": 35.1
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T15:00",
+   "to": "2029-09-06T16:00",
+   "did": [
+    "practice.exercise\u00d71"
+   ],
+   "before": {
+    "awake": true,
+    "energy": 45.3,
+    "sleepDebt": 30.8,
+    "readiness": 35.1
+   },
+   "after": {
+    "awake": true,
+    "energy": 37.4,
+    "sleepDebt": 31.2,
+    "stress": 0,
+    "condition": 68.6,
+    "readiness": 32.3
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T16:00",
+   "to": "2029-09-06T17:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 37.4,
+    "sleepDebt": 31.2,
+    "readiness": 32.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 32.4,
+    "sleepDebt": 31.5,
+    "stress": 0,
+    "condition": 68.6,
+    "readiness": 30.5
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T17:00",
+   "to": "2029-09-06T18:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 32.4,
+    "sleepDebt": 31.5,
+    "readiness": 30.5
+   },
+   "after": {
+    "awake": true,
+    "energy": 27.5,
+    "sleepDebt": 31.9,
+    "stress": 0,
+    "condition": 68.6,
+    "readiness": 28.8
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T18:00",
+   "to": "2029-09-06T19:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 27.5,
+    "sleepDebt": 31.9,
+    "readiness": 28.8
+   },
+   "after": {
+    "awake": true,
+    "energy": 22.6,
+    "sleepDebt": 32.2,
+    "stress": 0,
+    "condition": 68.6,
+    "readiness": 27
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T19:00",
+   "to": "2029-09-06T20:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 22.6,
+    "sleepDebt": 32.2,
+    "readiness": 27
+   },
+   "after": {
+    "awake": true,
+    "energy": 17.6,
+    "sleepDebt": 32.5,
+    "stress": 0,
+    "condition": 68.6,
+    "readiness": 25.3
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T20:00",
+   "to": "2029-09-06T21:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 17.6,
+    "sleepDebt": 32.5,
+    "readiness": 25.3
+   },
+   "after": {
+    "awake": true,
+    "energy": 12.7,
+    "sleepDebt": 32.9,
+    "stress": 0.6,
+    "condition": 68.6,
+    "readiness": 23.5
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T21:00",
+   "to": "2029-09-06T22:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 12.7,
+    "sleepDebt": 32.9,
+    "readiness": 23.5
+   },
+   "after": {
+    "awake": true,
+    "energy": 7.8,
+    "sleepDebt": 33.2,
+    "stress": 1.8,
+    "condition": 68.6,
+    "readiness": 21.7
+   },
+   "ahead": [],
+   "sleepSuggested": 10
+  },
+  {
+   "from": "2029-09-06T22:00",
+   "to": "2029-09-06T23:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 7.8,
+    "sleepDebt": 33.2,
+    "readiness": 21.7
+   },
+   "after": {
+    "awake": true,
+    "energy": 2.9,
+    "sleepDebt": 33.6,
+    "stress": 3.1,
+    "condition": 68.6,
+    "readiness": 20
+   },
+   "ahead": [],
+   "sleepSuggested": 10.5
+  },
+  {
+   "from": "2029-09-06T23:00",
+   "to": "2029-09-07T00:00",
+   "did": [],
+   "before": {
+    "awake": true,
+    "energy": 2.9,
+    "sleepDebt": 33.6,
+    "readiness": 20
+   },
+   "after": {
+    "awake": true,
+    "energy": 0,
+    "sleepDebt": 33.9,
+    "stress": 4.3,
+    "condition": 68.6,
+    "readiness": 18.9
+   },
+   "ahead": [],
+   "sleepSuggested": 10.5
+  }
+ ]
+}
