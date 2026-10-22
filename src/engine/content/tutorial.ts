@@ -296,6 +296,10 @@ export const CHAPTERS: readonly Chapter[] = [
     names: ['Open Calendar', 'Put Something On It and Call It Off', 'Your plans and the stretches between them, when you press them'],
     opens: ['ui.open-calendar', 'calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
   },
+  // Until 2026-10-21 (the owner's brief 20, C3) it said the weather affected two things, a workout run outdoors and the
+  // weeks the flu goes around, though the flu's weeks are read from the town's climate, its usual coldest or wettest
+  // weeks (`fluByWeek`, `systems/seasons.ts`), and never from the day's weather, as the guide's own entry on the weather
+  // said (`day.weather`). The day's weather decides the run alone (`trainingAt`, `systems/life.ts`).
   {
     id: 'weather',
     title: 'Weather',
@@ -303,7 +307,7 @@ export const CHAPTERS: readonly Chapter[] = [
     body: [
       'The Weather panel on Home shows the weather now and for the next few days. Press today’s weather, or any day, to see more: the week, each day and each hour.',
       'The weather comes from your town’s climate and the season, with some day-to-day luck, and it stays the same however often you look.',
-      'It affects two things: whether a workout is a run outdoors, and the weeks when the flu goes around.',
+      'The day’s weather decides whether a workout is a run outdoors. The weeks when the flu goes around follow your town’s climate, not the day’s weather.',
       'Read “Drama School” next: it’s where your life as an actor begins.',
     ],
     more: [
