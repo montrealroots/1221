@@ -233,7 +233,7 @@ describe('the care log', () => {
     // Ninety weekly visits, and the log holds only the 400 days' and the open bill's: the rest went. Until 2026-10-22 they
     // were counted by year in `careArchive`, which nothing read (brief 20's papers area).
     expect(h.careLog!.length).toBeLessThan(91);
-    expect((h as Record<string, unknown>).careArchive).toBeUndefined();
+    expect((h as unknown as Record<string, unknown>).careArchive).toBeUndefined();
     // FIXTURE: the last visit charged as if a cover that's since gone paid it all. Repriced, it's billed the difference
     // once; repriced again over the same days, nothing more is billed or credited.
     const last = h.careLog!.at(-1)!;

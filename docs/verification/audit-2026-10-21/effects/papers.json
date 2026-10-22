@@ -63,7 +63,7 @@
    "why": "",
    "prior": "documents.apply_idcard",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.apply_opt",
@@ -132,7 +132,7 @@
    "why": "",
    "prior": "documents.apply_opt",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.apply_passport",
@@ -194,7 +194,7 @@
    "why": "",
    "prior": "documents.apply_passport",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.apply_ssn",
@@ -255,7 +255,7 @@
    "why": "",
    "prior": "documents.apply_ssn",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.naturalize",
@@ -293,7 +293,7 @@
    "why": "Explicitly deferred by the owner's scope reset of 2026-10-09 (docs/REQUIREMENTS.md): the routes to residence abroad and the naturalizing they led to went with the career's record and moving abroad that day; a save that holds such papers keeps them, and the command says the rule and why it isn't granted.",
    "prior": "documents.naturalize",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.police_report",
@@ -334,7 +334,7 @@
    "why": "",
    "prior": "documents.police_report",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.renew_residence",
@@ -363,7 +363,7 @@
    "why": "Explicitly deferred by the owner's scope reset of 2026-10-09 (docs/REQUIREMENTS.md): the routes to residence abroad and the naturalizing they led to went with the career's record and moving abroad that day; a save that holds such papers keeps them, and the command says the rule and why it isn't granted.",
    "prior": "documents.renew_residence",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.replace_idcard",
@@ -406,7 +406,7 @@
    "why": "",
    "prior": "documents.replace_idcard",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.replace_license",
@@ -453,7 +453,7 @@
    "why": "",
    "prior": "documents.replace_license",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.report_lost",
@@ -514,7 +514,7 @@
    "why": "",
    "prior": "documents.report_lost",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.residence",
@@ -545,7 +545,7 @@
    "why": "Explicitly deferred by the owner's scope reset of 2026-10-09 (docs/REQUIREMENTS.md): the routes to residence abroad and the naturalizing they led to went with the career's record and moving abroad that day; a save that holds such papers keeps them, and the command says the rule and why it isn't granted.",
    "prior": "documents.residence",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.settle",
@@ -579,7 +579,7 @@
    "why": "Explicitly deferred by the owner's scope reset of 2026-10-09 (docs/REQUIREMENTS.md): the routes to residence abroad and the naturalizing they led to went with the career's record and moving abroad that day; a save that holds such papers keeps them, and the command says the rule and why it isn't granted.",
    "prior": "documents.settle",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.appeal",
@@ -587,22 +587,22 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Care And Its Bills: a denied claim's row, Appeal It (ui/workspaces/PapersWorkspace.tsx:703).",
-   "prerequisites": "appealRefusal (systems/health.ts:2115): the claim was denied (a marketplace insurer's denial, `DENIALS.rate`), not appealed yet, within 180 days of the denial.",
+   "where": "Papers > Health Cover > Care And Its Bills: a denied claim's row, Appeal It (ui/workspaces/PapersWorkspace.tsx:708).",
+   "prerequisites": "appealRefusal (systems/health.ts:2108): the claim was denied (a marketplace insurer's denial, `DENIALS.rate`), not appealed yet, within 180 days of the denial.",
    "reads": "The bill's denial and its day.",
    "changes": "Marks it appealed; schedules its decision 60 days on (`health.appeal_decided`).",
    "consumers": [
     {
      "what": "The decision, drawn at the share upheld",
-     "at": "src/engine/systems/health.ts:2214"
+     "at": "src/engine/systems/health.ts:2207"
     },
     {
      "what": "Overturned, the bill comes down to the plan's share",
-     "at": "src/engine/systems/health.ts:2233"
+     "at": "src/engine/systems/health.ts:2226"
     },
     {
      "what": "What was paid over the share comes back, or comes off the debt",
-     "at": "src/engine/systems/health.ts:2231"
+     "at": "src/engine/systems/health.ts:2224"
     }
    ],
    "experienced": "The toast says the day it's decided; 60 days on 'Appeal Won' or 'Appeal Lost', the row Denial Overturned or Upheld; overturned, the $138.98 paid over the $45 share comes back once, or the debt falls to the share (tests/evidence-g05-life.test.ts, tests/evidence-g02-life.test.ts).",
@@ -625,7 +625,7 @@
    "why": "",
    "prior": "health.appeal",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.apply_aid",
@@ -633,18 +633,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Care And Its Bills: a Connecticut hospital bill's row, Apply For Assistance (ui/workspaces/PapersWorkspace.tsx:703).",
-   "prerequisites": "aidRefusal (systems/health.ts:2076): a Connecticut hospital's bill, unpaid and not past its due date, not already screened or put in.",
+   "where": "Papers > Health Cover > Care And Its Bills: a Connecticut hospital bill's row, Apply For Assistance (ui/workspaces/PapersWorkspace.tsx:708).",
+   "prerequisites": "aidRefusal (systems/health.ts:2069): a Connecticut hospital's bill, unpaid and not past its due date, not already screened or put in.",
    "reads": "Last year's income against the poverty line (`incomeRatio`); Yale New Haven's charity bands (`CHARITY.connecticut`: free to 250%, two-thirds off to 550%).",
    "changes": "The bill free and settled, two-thirds off, or refused, said on its row.",
    "consumers": [
     {
      "what": "The bill's amount falls by the charity, or to nothing",
-     "at": "src/engine/systems/health.ts:2445"
+     "at": "src/engine/systems/health.ts:2438"
     },
     {
      "what": "Its due date pays what's left, or makes it debt",
-     "at": "src/engine/systems/health.ts:2190"
+     "at": "src/engine/systems/health.ts:2183"
     }
    ],
    "experienced": "The row says Charity Taken Off or Over The Limit with the rule's limit; what the bill takes on its day is the lower figure (tests/safetynet.test.ts, tests/defects-g8-6.test.ts).",
@@ -666,7 +666,7 @@
    "why": "",
    "prior": "health.apply_aid",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.apply",
@@ -674,22 +674,22 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover: Apply For HUSKY D, where Enroll can't verify its work rules (ui/workspaces/PapersWorkspace.tsx:668).",
-   "prerequisites": "applyRefusal (systems/health.ts:1187): living where the game has public cover; not applied already; no program of her own; Yale Health not covering her (but in its last 60 days); last month's income and status placing her in HUSKY D; its work rules not met by the months it reads ('…press Enroll instead.').",
+   "where": "Papers > Health Cover: Apply For HUSKY D, where Enroll can't verify its work rules (ui/workspaces/PapersWorkspace.tsx:673).",
+   "prerequisites": "applyRefusal (systems/health.ts:1185): living where the game has public cover; not applied already; no program of her own; Yale Health not covering her (but in its last 60 days); last month's income and status placing her in HUSKY D; its work rules not met by the months it reads ('…press Enroll instead.').",
    "reads": "Last month's income (`programFor`), status, Yale Health's end, the months the work rules read (`lookBack`, `engagement`).",
    "changes": "Sends a notice of noncompliance, uncovered meanwhile; schedules its decision thirty days from its receipt (`health.work_decided`).",
    "consumers": [
     {
      "what": "The decision reads the months again",
-     "at": "src/engine/systems/health.ts:2335"
+     "at": "src/engine/systems/health.ts:2328"
     },
     {
      "what": "A hardship asked for on the notice",
-     "at": "src/engine/systems/health.ts:1165"
+     "at": "src/engine/systems/health.ts:1163"
     },
     {
      "what": "The renewal look waits while a notice is answered",
-     "at": "src/engine/systems/health.ts:910"
+     "at": "src/engine/systems/health.ts:908"
     }
    ],
    "experienced": "'A Notice Of Noncompliance' with its months and its day; denied on 8 February with 'Public Cover Denied', one notice each across a reload and in one jump (tests/remaining-health-eligibility.test.ts); a stay in hospital asked to count approves it (tests/remaining-health-eligibility.test.ts).",
@@ -710,7 +710,7 @@
    "why": "",
    "prior": "health.apply",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.book",
@@ -718,7 +718,7 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Doctor: Book An Appointment, shown with a visit owed (ui/workspaces/PapersWorkspace.tsx:1121).",
+   "where": "Papers > Health Cover > Your Doctor: Book An Appointment, shown with a visit owed (ui/workspaces/PapersWorkspace.tsx:1126).",
    "prerequisites": "A visit owed (missed, called off, or not seen at a practice that no longer sees her) ('There’s nothing to see a doctor about.'); no appointment booked ('You have an appointment already.'); a wait published where she lives.",
    "reads": "`owedVisit`, the practice she's booked at (`clinicFor`: her own doctor, Yale Health's for a member, else the town's first), its own wait or the town's (`waitDays`), working days.",
    "changes": "Books the appointment for the practice's wait on a weekday morning that isn't a public holiday; on the calendar, the clock stops at it; 'A Doctor’s Appointment'; the visit no longer owed.",
@@ -733,7 +733,7 @@
     },
     {
      "what": "The week's draw doesn't book over one",
-     "at": "src/engine/systems/health.ts:2153"
+     "at": "src/engine/systems/health.ts:2146"
     }
    ],
    "experienced": "The toast says the day; booked again after sleeping through one, it's kept and billed once at 2027's $187.20 (tests/b20-papers-health.test.ts); 24 days on at Fair Haven (tests/evidence-g03-life.test.ts).",
@@ -756,7 +756,7 @@
    "why": "",
    "prior": "health.book",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.cancel_appointment",
@@ -764,7 +764,7 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Doctor: an appointment's Call It Off (ui/workspaces/PapersWorkspace.tsx:1103).",
+   "where": "Papers > Health Cover > Your Doctor: an appointment's Call It Off (ui/workspaces/PapersWorkspace.tsx:1108).",
    "prerequisites": "The appointment still booked ('That appointment isn’t booked any more.').",
    "reads": "The appointment.",
    "changes": "Takes it off the calendar and the record; the visit owed again.",
@@ -775,7 +775,7 @@
     },
     {
      "what": "The next week's draw books what's owed",
-     "at": "src/engine/systems/health.ts:2154"
+     "at": "src/engine/systems/health.ts:2147"
     }
    ],
    "experienced": "The row says the visit isn't seen yet, with Book An Appointment; the next week the draw sends her to the doctor books it, one appointment for both (tests/evidence3-lifepapers.test.ts, tests/defects-g23-1.test.ts).",
@@ -796,7 +796,7 @@
    "why": "",
    "prior": "health.cancel_appointment",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.choose_clinic",
@@ -804,7 +804,7 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Doctor: the practice select (ui/workspaces/PapersWorkspace.tsx:1076).",
+   "where": "Papers > Health Cover > Your Doctor: the practice select (ui/workspaces/PapersWorkspace.tsx:1081).",
    "prerequisites": "clinicRefusal (systems/clinics.ts:101): a practice in the town she lives in, a doctor's, and one that sees her (Yale Health's sees students it covers).",
    "reads": "The practices in town (`CLINICS`), Yale Health's cover.",
    "changes": "Her own doctor (`health.clinicId`).",
@@ -842,7 +842,7 @@
    "why": "",
    "prior": "health.choose_clinic",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.choose_pharmacy",
@@ -850,14 +850,14 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Pharmacy: the chain select (ui/workspaces/PapersWorkspace.tsx:1085).",
+   "where": "Papers > Health Cover > Your Pharmacy: the chain select (ui/workspaces/PapersWorkspace.tsx:1090).",
    "prerequisites": "A chain the game has; living in the United States.",
    "reads": "US_PHARMACIES' cash prices.",
    "changes": "Her pharmacy (`health.pharmacy`).",
    "consumers": [
     {
      "what": "A generic is filled at the chain's cash price where it's lower than the plan's copay",
-     "at": "src/engine/systems/health.ts:1619"
+     "at": "src/engine/systems/health.ts:1617"
     }
    ],
    "experienced": "High blood pressure's medicine filled at Walmart's $4 the week after diagnosis (tests/evidence-g05-life.test.ts); a chain dearer than the copay leaves the copay (tests/evidence-g03-life.test.ts).",
@@ -880,7 +880,7 @@
    "why": "",
    "prior": "health.choose_pharmacy",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.dental",
@@ -888,18 +888,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Teeth And Eyes: Buy It or Cancel It for a dental plan (ui/workspaces/PapersWorkspace.tsx:824-825).",
+   "where": "Papers > Health Cover > Teeth And Eyes: Buy It or Cancel It for a dental plan (ui/workspaces/PapersWorkspace.tsx:829-830).",
    "prerequisites": "Buying: none held; a plan sold where she is (`dentalPlanFor`: Yale's for a student, New York's, Covered California's beside its plan); the premium from the bank. Canceling: a plan held, not Yale's paid year.",
    "reads": "Where she lives, Yale Health's cover, `DENTAL_PLANS`, the bank.",
    "changes": "Yale's plan paid for its year at once, to 30 September (from August, the next year); a monthly plan's first month paid; or a monthly plan ended with the month.",
    "consumers": [
     {
      "what": "A cleaning or filling priced by the plan",
-     "at": "src/engine/systems/health.ts:1725"
+     "at": "src/engine/systems/health.ts:1723"
     },
     {
      "what": "A monthly plan's premium each month, ended unpaid",
-     "at": "src/engine/systems/health.ts:935"
+     "at": "src/engine/systems/health.ts:933"
     }
    ],
    "experienced": "Bought on 24 August, Yale's runs to 30 September a year on at the year's price, and covers a cleaning in September after Yale Health ended (tests/defects-g8-4.test.ts).",
@@ -921,7 +921,7 @@
    "why": "",
    "prior": "health.dental",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.drop",
@@ -929,18 +929,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover: Drop It, beside a plan of her own (ui/workspaces/PapersWorkspace.tsx:639).",
+   "where": "Papers > Health Cover: Drop It, beside a plan of her own (ui/workspaces/PapersWorkspace.tsx:644).",
    "prerequisites": "A plan of her own in force or ahead ('You have no plan of your own to drop.'); not dropped already.",
    "reads": "The marketplace plan or program held.",
    "changes": "Ends it with the month, marked voluntary (no special enrollment); a renewal's notice waiting goes with it.",
    "consumers": [
     {
      "what": "Coverage reads its end",
-     "at": "src/engine/systems/health.ts:310"
+     "at": "src/engine/systems/health.ts:308"
     },
     {
      "what": "A plan dropped opens no special enrollment",
-     "at": "src/engine/systems/health.ts:946"
+     "at": "src/engine/systems/health.ts:944"
     }
    ],
    "experienced": "The toast says the day it ends; nothing covers February and the marketplace waits for open enrollment, 'Your Health Cover Ended' saying so (tests/defects-g8-5.test.ts).",
@@ -960,7 +960,7 @@
    "why": "",
    "prior": "health.drop",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.enroll",
@@ -968,26 +968,26 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover: Enroll (ui/workspaces/PapersWorkspace.tsx:640).",
-   "prerequisites": "mayEnroll (systems/health.ts:659): where the game has cover; Yale Health not covering her but in its last 60 days or ended; lawfully present for the marketplace and the Essential Plan or Covered Connecticut; open or special enrollment for the marketplace, any time for HUSKY D on last month's income; not enrolled already.",
+   "where": "Papers > Health Cover: Enroll (ui/workspaces/PapersWorkspace.tsx:645).",
+   "prerequisites": "mayEnroll (systems/health.ts:657): where the game has cover; Yale Health not covering her but in its last 60 days or ended; lawfully present for the marketplace and the Essential Plan or Covered Connecticut; open or special enrollment for the marketplace, any time for HUSKY D on last month's income; not enrolled already.",
    "reads": "Last month's income and status (`programFor`), Yale Health's end, the windows, the work rules from 2027.",
    "changes": "HUSKY D or Covered Connecticut from the first of the month after Yale Health's end (or the application's month, reaching back a month with care), or the marketplace from the first of next month; its renewal date; care since a retroactive start priced again.",
    "consumers": [
     {
      "what": "Coverage reads the program",
-     "at": "src/engine/systems/health.ts:309"
+     "at": "src/engine/systems/health.ts:307"
     },
     {
      "what": "Each piece of care's share by its plan",
-     "at": "src/engine/systems/health.ts:1868"
+     "at": "src/engine/systems/health.ts:1866"
     },
     {
      "what": "The marketplace premium each month",
-     "at": "src/engine/systems/health.ts:925"
+     "at": "src/engine/systems/health.ts:923"
     },
     {
      "what": "The program's renewal",
-     "at": "src/engine/systems/health.ts:910"
+     "at": "src/engine/systems/health.ts:908"
     }
    ],
    "experienced": "Enrolled on withdrawing, HUSKY D from 1 December; the same visit at Fair Haven free under it where her uninsured twin pays $183.98 (tests/b20-papers-health.test.ts). The marketplace's $706 each month, once across a reload (tests/evidence3-lifepapers.test.ts).",
@@ -1014,7 +1014,7 @@
    "why": "",
    "prior": "health.enroll",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.extra_supply",
@@ -1022,22 +1022,22 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Conditions: Fill A Longer Supply (ui/workspaces/PapersWorkspace.tsx:797).",
-   "prerequisites": "extraSupplyRefusal (systems/health.ts:2099): a condition's medicine taken; days within the longest supply there (90 in the US); every condition's fill paid, or none.",
+   "where": "Papers > Health Cover > Your Conditions: Fill A Longer Supply (ui/workspaces/PapersWorkspace.tsx:802).",
+   "prerequisites": "extraSupplyRefusal (systems/health.ts:2092): a condition's medicine taken; days within the longest supply there (90 in the US); every condition's fill paid, or none.",
    "reads": "The conditions treated, the fill's share, the bank.",
    "changes": "Fills each condition's medicine for the days asked and charges it, or refuses the whole and changes nothing.",
    "consumers": [
     {
      "what": "The supply in hand",
-     "at": "src/engine/systems/health.ts:1354"
+     "at": "src/engine/systems/health.ts:1352"
     },
     {
      "what": "Kept up while the supply lasts",
-     "at": "src/engine/systems/health.ts:1244"
+     "at": "src/engine/systems/health.ts:1242"
     },
     {
      "what": "Depression left alone weighs on morale",
-     "at": "src/engine/systems/health.ts:2176"
+     "at": "src/engine/systems/health.ts:2169"
     }
    ],
    "experienced": "A twin whose medicine ran out on 30 September loses 3 morale on 5 October; the twin holding 90 days doesn't (tests/evidence-g03-life.test.ts).",
@@ -1059,7 +1059,7 @@
    "why": "",
    "prior": "health.extra_supply",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.pay_bill",
@@ -1067,21 +1067,21 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Owed For Medical Care: Pay It Off (ui/workspaces/PapersWorkspace.tsx:694).",
+   "where": "Papers > Health Cover > Owed For Medical Care: Pay It Off (ui/workspaces/PapersWorkspace.tsx:699).",
    "prerequisites": "Something owed for care; an amount; an account of hers that can pay it, the current account or one named ('… has only $… of the $…, so nothing was paid. Move money into it first…').",
    "reads": "The medical debt, the account named or the primary, its balance.",
    "changes": "Pays toward the debt; cleared, its bills settled and the year's clock to the record stopped.",
    "consumers": [
     {
      "what": "A debt cleared settles its bills",
-     "at": "src/engine/systems/health.ts:2041"
+     "at": "src/engine/systems/health.ts:2034"
     },
     {
-     "what": "The record's report reads the debt and its age",
-     "at": "src/engine/systems/health.ts:989"
+     "what": "The record's report reads the debt and its age, where the state doesn't bar it (never in Connecticut)",
+     "at": "src/engine/systems/health.ts:987"
     }
    ],
-   "experienced": "Settled on Papers and off Home's worries; a year and a month on, a twin who didn't pay is reported once, and the one who paid isn't (tests/evidence-g03-life.test.ts).",
+   "experienced": "Settled on Papers and off Home's worries; a year and a month on, a twin who didn't pay still owes it, and neither is reported, Connecticut barring it (tests/evidence-g03-life.test.ts).",
    "saveLoad": "The debt account's postings, debtSince, the bills' flags.",
    "evidence": {
     "tests": [
@@ -1101,7 +1101,7 @@
    "why": "",
    "prior": "health.pay_bill",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.prepay",
@@ -1110,13 +1110,13 @@
    "mechanic": true,
    "seeded": false,
    "where": "Papers > Health Cover: England's prescription prepayment certificate, three months or twelve.",
-   "prerequisites": "prepayRefusal (systems/health.ts:1606): a life in England; every life lives in New Haven, where it's refused in its words.",
+   "prerequisites": "prepayRefusal (systems/health.ts:1604): a life in England; every life lives in New Haven, where it's refused in its words.",
    "reads": "Where she lives.",
    "changes": "Pays the certificate; prescriptions free while it runs.",
    "consumers": [
     {
      "what": "A prescription's share while it runs",
-     "at": "src/engine/systems/health.ts:1615"
+     "at": "src/engine/systems/health.ts:1613"
     }
    ],
    "experienced": "Refused in New Haven; shown on a London fixture.",
@@ -1134,7 +1134,7 @@
    "why": "Explicitly deferred by the owner's scope reset of 2026-10-09 (docs/REQUIREMENTS.md): England's prescription prepayment certificate is for a life in England, and every life lives in New Haven, where it's refused in its words; a prescription free while one runs is held on a London fixture (tests/coverage-gaps-life.test.ts).",
    "prior": "health.prepay",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.request_hardship",
@@ -1142,18 +1142,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover: Request A Hardship Exception, under a notice of noncompliance (ui/workspaces/PapersWorkspace.tsx:677).",
-   "prerequisites": "hardshipRefusal (systems/health.ts:1164): a notice waiting, inside its thirty days, a renewal's program still running, and a stay in hospital in a month it checked.",
+   "where": "Papers > Health Cover: Request A Hardship Exception, under a notice of noncompliance (ui/workspaces/PapersWorkspace.tsx:682).",
+   "prerequisites": "hardshipRefusal (systems/health.ts:1162): a notice waiting, inside its thirty days, a renewal's program still running, and a stay in hospital in a month it checked.",
    "reads": "The notice, its months, the care log's stays.",
    "changes": "Deems the month met and grants the renewal or the application at once (`grantPending`).",
    "consumers": [
     {
      "what": "Coverage from the program granted",
-     "at": "src/engine/systems/health.ts:309"
+     "at": "src/engine/systems/health.ts:307"
     },
     {
      "what": "Its decision passes it by",
-     "at": "src/engine/systems/health.ts:2333"
+     "at": "src/engine/systems/health.ts:2326"
     }
    ],
    "experienced": "Renewed to 1 April 2028, said once; or 'Public Cover Approved' from 1 December, reaching back to the stay, which HUSKY D now pays (tests/remaining-09-hardship.test.ts, tests/remaining-health-eligibility.test.ts).",
@@ -1175,7 +1175,7 @@
    "why": "",
    "prior": "health.request_hardship",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.therapy",
@@ -1183,7 +1183,7 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Conditions: Depression's Begin A Course Of 8 at a therapist where she lives (ui/workspaces/PapersWorkspace.tsx:755).",
+   "where": "Papers > Health Cover > Your Conditions: Depression's Begin A Course Of 8 at a therapist where she lives (ui/workspaces/PapersWorkspace.tsx:760).",
    "prerequisites": "therapyRefusal (systems/therapy.ts:76): a therapist where she lives; Yale's only while Yale Health covers her; depression on her record; no course already.",
    "reads": "The therapists in town, Yale Health's cover, depression.",
    "changes": "A course of eight; the first session a week on (the NHS's six weeks), at five on a working day, on the calendar.",
@@ -1194,7 +1194,7 @@
     },
     {
      "what": "The month's care for depression isn't charged during a course",
-     "at": "src/engine/systems/health.ts:1232"
+     "at": "src/engine/systems/health.ts:1230"
     }
    ],
    "experienced": "Eight sessions a week apart, none on a weekend or a public holiday (tests/b20-papers-defects.test.ts); the course lifts the depression for one student and not her twin, and the week's morale toll goes with it (tests/evidence-g04-life.test.ts).",
@@ -1220,7 +1220,7 @@
    "why": "",
    "prior": "health.therapy",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.treat",
@@ -1228,26 +1228,26 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "Papers > Health Cover > Your Conditions: Keep It Up or Let It Go (ui/workspaces/PapersWorkspace.tsx:791).",
+   "where": "Papers > Health Cover > Your Conditions: Keep It Up or Let It Go (ui/workspaces/PapersWorkspace.tsx:796).",
    "prerequisites": "The condition on her record.",
    "reads": "The month's care cost (`monthCareCost`), the bank.",
    "changes": "Treated or not; switched on, the month's care paid now, or lapsed if it can't be.",
    "consumers": [
     {
      "what": "Each month's care paid, or lapsed",
-     "at": "src/engine/systems/health.ts:1213"
+     "at": "src/engine/systems/health.ts:1211"
     },
     {
      "what": "Kept up or not",
-     "at": "src/engine/systems/health.ts:1244"
+     "at": "src/engine/systems/health.ts:1242"
     },
     {
      "what": "Untreated depression takes morale each Monday",
-     "at": "src/engine/systems/health.ts:2176"
+     "at": "src/engine/systems/health.ts:2169"
     },
     {
      "what": "Untreated asthma doubles the emergencies",
-     "at": "src/engine/systems/health.ts:1766"
+     "at": "src/engine/systems/health.ts:1764"
     }
    ],
    "experienced": "Asthma let go is taken to the emergency room where its kept-up twin isn't (tests/evidence-g07-life.test.ts); depression left alone weighs on morale, kept up again once paid (tests/evidence-g04-life.test.ts).",
@@ -1270,7 +1270,7 @@
    "why": "",
    "prior": "health.treat",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "citizenship.decided",
@@ -1304,7 +1304,7 @@
    "why": "Explicitly deferred by the owner's scope reset of 2026-10-09 (docs/REQUIREMENTS.md): the routes to residence abroad and the naturalizing they led to went with the career's record and moving abroad that day; a save that holds such papers keeps them, and the command says the rule and why it isn't granted.",
    "prior": "citizenship.decided",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.decided",
@@ -1357,7 +1357,7 @@
    "why": "",
    "prior": "documents.decided",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.idcard_arrives",
@@ -1406,7 +1406,7 @@
    "why": "",
    "prior": "documents.idcard_arrives",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.opt_week",
@@ -1453,7 +1453,7 @@
    "why": "",
    "prior": "documents.opt_week",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.permission",
@@ -1509,7 +1509,7 @@
    "why": "",
    "prior": "documents.permission",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.ssn_arrives",
@@ -1560,7 +1560,7 @@
    "why": "",
    "prior": null,
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.us_status",
@@ -1579,11 +1579,11 @@
     },
     {
      "what": "A marketplace plan ends at the month's look",
-     "at": "src/engine/systems/health.ts:858"
+     "at": "src/engine/systems/health.ts:856"
     },
     {
      "what": "The state's plan for the lawfully present ends",
-     "at": "src/engine/systems/health.ts:872"
+     "at": "src/engine/systems/health.ts:870"
     },
     {
      "what": "The DMV refuses a card out of status",
@@ -1617,7 +1617,7 @@
    "why": "",
    "prior": "documents.us_status",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "documents.visit",
@@ -1654,7 +1654,7 @@
    "why": "No current life can reach it: only a save from before 2026-10-09 holds a visit booked, and tests/paper-visits.test.ts reaches its handler on visits set up as such a save left them (TEST SETUP), not by play.",
    "prior": "documents.visit",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.appointment",
@@ -1669,11 +1669,11 @@
    "consumers": [
     {
      "what": "The visit's share and bill",
-     "at": "src/engine/systems/health.ts:1868"
+     "at": "src/engine/systems/health.ts:1866"
     },
     {
      "what": "The bill paid on its due date",
-     "at": "src/engine/systems/health.ts:2190"
+     "at": "src/engine/systems/health.ts:2183"
     },
     {
      "what": "A referral booked",
@@ -1707,7 +1707,7 @@
    "why": "",
    "prior": "health.appointment",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.bill",
@@ -1715,18 +1715,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "The clock: a medical bill's due date, 30 days after the care (systems/health.ts:2184).",
+   "where": "The clock: a medical bill's due date, 30 days after the care (systems/health.ts:2177).",
    "prerequisites": "The bill unpaid and not in debt.",
    "reads": "The current account with its overdraft and linked savings (`payFromCurrent`).",
    "changes": "Paid, or medical debt: Owed For Medical Care, a loan account; the debt's date for the record.",
    "consumers": [
     {
-     "what": "The record's report reads the debt a year on",
-     "at": "src/engine/systems/health.ts:989"
+     "what": "The record's report reads the debt a year on, where the state doesn't bar it (never in Connecticut)",
+     "at": "src/engine/systems/health.ts:987"
     },
     {
      "what": "Pay It Off pays the debt",
-     "at": "src/engine/systems/health.ts:2450"
+     "at": "src/engine/systems/health.ts:2443"
     }
    ],
    "experienced": "Paid on its day from checking, once across a reload and a jump (tests/b20-papers-health.test.ts); unpaid in a drained twin, 'A Medical Bill Went Unpaid' and Owed As Debt (tests/evidence-g05-life.test.ts).",
@@ -1735,13 +1735,15 @@
     "tests": [
      "tests/b20-papers-health.test.ts",
      "tests/evidence-g05-life.test.ts",
-     "tests/evidence2-b02.test.ts"
+     "tests/evidence2-b02.test.ts",
+     "tests/b20-papers-defects.test.ts"
     ],
     "comparisons": [
      "tests/evidence-g05-life.test.ts: paid against a drained twin's debt"
     ],
     "mutations": [
-     "B20-PAPERS-18"
+     "B20-PAPERS-18",
+     "B20-PAPERS-21"
     ],
     "journeys": []
    },
@@ -1750,7 +1752,7 @@
    "why": "",
    "prior": "health.bill",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.month",
@@ -1758,45 +1760,48 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "The clock: each month's first at half past midnight (systems/health.ts:2135).",
+   "where": "The clock: each month's first at half past midnight (systems/health.ts:2128).",
    "prerequisites": "None.",
    "reads": "Onset odds by age and weight; status; cover; programs' renewals and their work rules; premiums; the dental plan; conditions' care; the medical debt and its age.",
-   "changes": "A condition may begin; out of status a marketplace or state plan ends; a program renewed or its notice sent; premiums paid or the plan ended; conditions' care paid or lapsed; cover lost said with the way back; a debt a year old reported.",
+   "changes": "A condition may begin; out of status a marketplace or state plan ends; a program renewed or its notice sent; premiums paid or the plan ended; conditions' care paid or lapsed; cover lost said with the way back; a debt a year old reported where the state doesn't bar it, which Connecticut, where every life lives, does (`MEDICAL_DEBT.barredIn`, from 2026-10-22).",
    "consumers": [
     {
      "what": "A condition's care and medicine",
-     "at": "src/engine/systems/health.ts:1213"
+     "at": "src/engine/systems/health.ts:1211"
     },
     {
      "what": "Coverage for each piece of care",
-     "at": "src/engine/systems/health.ts:306"
+     "at": "src/engine/systems/health.ts:304"
     },
     {
-     "what": "The credit record's hit",
-     "at": "src/engine/systems/health.ts:993"
+     "what": "The credit record's hit, where the state doesn't bar it (never in Connecticut)",
+     "at": "src/engine/systems/health.ts:991"
     }
    ],
-   "experienced": "'Diagnosed: High Blood Pressure' on the 1st and its medicine the next week (tests/evidence-g05-life.test.ts); the marketplace's $706 each month, once across a reload (tests/evidence3-lifepapers.test.ts); a debt reported once a year past due (tests/evidence-g05-life.test.ts).",
+   "experienced": "'Diagnosed: High Blood Pressure' on the 1st and its medicine the next week (tests/evidence-g05-life.test.ts); the marketplace's $706 each month, once across a reload (tests/evidence3-lifepapers.test.ts); a medical debt a year unpaid stays off her credit record, Connecticut barring it, and stays owed (tests/b20-papers-defects.test.ts, tests/evidence-g05-life.test.ts).",
    "saveLoad": "The next month's pending item; each month once across a reload.",
    "evidence": {
     "tests": [
      "tests/evidence-g05-life.test.ts",
      "tests/evidence3-lifepapers.test.ts",
      "tests/evidence-g07-life.test.ts",
-     "tests/scope-cover.test.ts"
+     "tests/scope-cover.test.ts",
+     "tests/b20-papers-defects.test.ts"
     ],
     "comparisons": [
      "tests/evidence-g07-life.test.ts: BMI 32 against a healthy weight, the same draw"
     ],
-    "mutations": [],
+    "mutations": [
+     "B20-PAPERS-21"
+    ],
     "journeys": []
    },
-   "missing": "None found.",
+   "missing": "None found after P3 (a medical debt a year unpaid was put on a Connecticut student's credit record, which the state has barred since July 2024; repaired 2026-10-22).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "health.month",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.therapy_session",
@@ -1811,11 +1816,11 @@
    "consumers": [
     {
      "what": "A lifted depression takes no more morale",
-     "at": "src/engine/systems/health.ts:2175"
+     "at": "src/engine/systems/health.ts:2168"
     },
     {
      "what": "Unpaid, a medical bill",
-     "at": "src/engine/systems/health.ts:2085"
+     "at": "src/engine/systems/health.ts:2078"
     }
    ],
    "experienced": "Eight sessions, none on a public holiday (tests/b20-papers-defects.test.ts); missed in hospital and held a week on; unpaid, a $240 bill (tests/evidence-g05-life.test.ts).",
@@ -1840,7 +1845,7 @@
    "why": "",
    "prior": "health.therapy_session",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.week",
@@ -1848,22 +1853,22 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "The clock: each Monday at nine (systems/health.ts:2143).",
+   "where": "The clock: each Monday at nine (systems/health.ts:2136).",
    "prerequisites": "None.",
    "reads": "The week's draws (`illnessWeek`: stays, emergencies, visits, flu by the town's season, pharmacy, dentist, optician), conditions kept up, appointments and visits owed, reviews due, the medicine's supply.",
    "changes": "Care had or a doctor booked; a review booked; medicine filled; untreated conditions' tolls on morale, condition and energy.",
    "consumers": [
     {
      "what": "A doctor's visit booked for the player",
-     "at": "src/engine/systems/health.ts:2155"
+     "at": "src/engine/systems/health.ts:2148"
     },
     {
      "what": "The flu's days",
-     "at": "src/engine/systems/health.ts:1851"
+     "at": "src/engine/systems/health.ts:1849"
     },
     {
      "what": "Medicine filled",
-     "at": "src/engine/systems/health.ts:2173"
+     "at": "src/engine/systems/health.ts:2166"
     }
    ],
    "experienced": "The same draw books three twins alike whatever their cover (tests/b20-papers-health.test.ts); the flu five days, 25 of condition and 30 of energy (tests/evidence-g05-life.test.ts).",
@@ -1885,7 +1890,7 @@
    "why": "",
    "prior": "health.week",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.work_decided",
@@ -1893,18 +1898,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "The clock: a notice of noncompliance's thirty days over (systems/health.ts:2329).",
+   "where": "The clock: a notice of noncompliance's thirty days over (systems/health.ts:2322).",
    "prerequisites": "The notice still waiting and the one this item is for.",
    "reads": "The months the work rules read, as the records stand (`engagement`).",
    "changes": "Met: granted. Not: an application denied, 'Public Cover Denied'; a renewal's program ended at the month's end ten days on, 'Your Public Cover Ends'.",
    "consumers": [
     {
      "what": "Coverage ends with the program",
-     "at": "src/engine/systems/health.ts:309"
+     "at": "src/engine/systems/health.ts:307"
     },
     {
      "what": "The ending said ahead",
-     "at": "src/engine/systems/health.ts:2347"
+     "at": "src/engine/systems/health.ts:2340"
     }
    ],
    "experienced": "Denied on 8 February, one notice each across a reload, the same in one jump as day by day (tests/remaining-health-eligibility.test.ts); a renewal decided on 5 November ends HUSKY D with November, said ten days ahead (tests/remaining-health-eligibility.test.ts).",
@@ -1926,7 +1931,7 @@
    "why": "",
    "prior": null,
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "look.document",
@@ -1962,7 +1967,7 @@
    "prior": null,
    "purpose": "A record: where one of your papers stands today, read at the moment you look (in force, approved and starting later, being decided, on its way, reported lost, canceled or run out), what it lets you do by the rules the game has, its number's last digits and its days; and the ways to the country or state that issued it, the country it's for, the passport it's on, its days, and you. It must say what the engine does with the document, nothing more.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "look.place",
@@ -1992,7 +1997,7 @@
    "prior": null,
    "purpose": "A record of a town from the gazetteer and the tables the simulation runs on: its local time, people, climate, rent, the taxes that would apply, and the ways to its region, country, currency and daylight. It must take the player where its ways say, and say what the tables hold.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "look.region",
@@ -2022,7 +2027,7 @@
    "prior": null,
    "purpose": "A record of a state or province: its country, its towns the game holds, and the ways to them and to the country. It must take the player where its ways say.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "look.country",
@@ -2053,7 +2058,7 @@
    "prior": null,
    "purpose": "A record of a country: its capital, languages, currency, calling code, and the ways to its currency and the region you're in. It must say what the gazetteer holds, in sentences, and take the player where its ways say.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/appointments#bookIn",
@@ -2084,7 +2089,7 @@
    "prior": null,
    "purpose": "Tells the player an appointment is booked: what for, at which practice, on which day, why that wait (the town's usual wait, the practice's own, the next day it's open), and that Call It Off on Papers cancels it.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/documents#issue",
@@ -2116,7 +2121,7 @@
    "prior": null,
    "purpose": "Tells the player a passport (or an old save's visa or authorization) has arrived: its number, the day it's good until, and, only where it replaced one, that the old one is canceled with any travel authorization on it.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#onsetMonth",
@@ -2124,7 +2129,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `onsetMonth` (systems/health.ts:826): 'Diagnosed: <condition>'.",
+   "where": "The notices, from `onsetMonth` (systems/health.ts:824): 'Diagnosed: <condition>'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The condition drawn.",
    "changes": "Nothing of its own.",
@@ -2147,7 +2152,7 @@
    "prior": null,
    "purpose": "Tells the player a long-term condition was found this month, that its care starts and what it costs each month, and that Let It Go on Papers stops it.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#healthMonth",
@@ -2155,12 +2160,12 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `healthMonth` (systems/health.ts:845): 'Your Marketplace Plan Has Ended' or 'Won’t Begin', 'Your Public Cover Has Ended' or 'Won’t Begin', 'Your Health Cover Ended', 'A Medical Debt Is On Your Record'.",
+   "where": "The notices, from `healthMonth` (systems/health.ts:843): 'Your Marketplace Plan Has Ended' or 'Won’t Begin', 'Your Public Cover Has Ended' or 'Won’t Begin', 'Your Health Cover Ended', 'A Medical Debt Is On Your Record'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "Status, the plans held and their days, Yale Health's end, the windows, the debt and its age.",
    "changes": "Nothing of its own.",
    "consumers": [],
-   "experienced": "'The marketplace is only for citizens and people lawfully present, and you’re out of status.' (tests/evidence2-b06.test.ts); 'You have no health cover from March 1, 2027. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.' (tests/defects3-50-70.test.ts); a debt reported once a year past due (tests/evidence-g05-life.test.ts).",
+   "experienced": "'The marketplace is only for citizens and people lawfully present, and you’re out of status.' (tests/evidence2-b06.test.ts); 'You have no health cover from March 1, 2027. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.' (tests/defects3-50-70.test.ts); 'A Medical Debt Is On Your Record' only where a state doesn't bar the report, which Connecticut does: never for a New Haven life (tests/b20-papers-defects.test.ts), and held on a Chicago fixture (tests/defects-g8-6.test.ts, tests/coverage-gaps-life.test.ts).",
    "saveLoad": "A notification row in the save, kept as sent; its Go There opens Papers (route /workspace/papers). A reload neither drops nor sends it again (each test below counts it once across one).",
    "evidence": {
     "tests": [
@@ -2168,10 +2173,15 @@
      "tests/defects3-50-70.test.ts",
      "tests/evidence-g05-life.test.ts",
      "tests/evidence3-lifepapers.test.ts",
-     "tests/defects-g8-5.test.ts"
+     "tests/defects-g8-5.test.ts",
+     "tests/b20-papers-defects.test.ts",
+     "tests/defects-g8-6.test.ts",
+     "tests/coverage-gaps-life.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-PAPERS-21"
+    ],
     "journeys": []
    },
    "missing": "None found.",
@@ -2180,7 +2190,7 @@
    "prior": null,
    "purpose": "Tells the player at the month's look what changed in their cover and why (out of status, the credit gone in 2027, Yale Health back), when they're uncovered from and the way back (the marketplace's 60 days, open enrollment, the state's program on last month's income, or none out of status), and when a debt reaches their record.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#applyRenewal",
@@ -2188,7 +2198,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `applyRenewal` (systems/health.ts:1064): 'Your Public Cover Is Renewed' and 'Your Public Cover Changed At Renewal'.",
+   "where": "The notices, from `applyRenewal` (systems/health.ts:1062): 'Your Public Cover Is Renewed' and 'Your Public Cover Changed At Renewal'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The program, the one income now places them in, the month that met the work rules.",
    "changes": "Nothing of its own.",
@@ -2211,7 +2221,7 @@
    "prior": null,
    "purpose": "Tells the player their program is renewed, to when, on what income and work, or that they're moved into the other program from today with no gap and why.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#endAhead",
@@ -2219,7 +2229,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `endAhead` (systems/health.ts:1089): 'Your Public Cover Ends'.",
+   "where": "The notices, from `endAhead` (systems/health.ts:1087): 'Your Public Cover Ends'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "Why it ends, the day, status.",
    "changes": "Nothing of its own.",
@@ -2242,7 +2252,7 @@
    "prior": null,
    "purpose": "Tells the player their program ends, why, on which day (a month's end at least ten days on), and what that opens: the marketplace's 60 days, or nothing out of status.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#noticeOfNoncompliance",
@@ -2250,7 +2260,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `noticeOfNoncompliance` (systems/health.ts:1114): 'A Notice Of Noncompliance'.",
+   "where": "The notices, from `noticeOfNoncompliance` (systems/health.ts:1112): 'A Notice Of Noncompliance'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The determination's months, its days, the program held.",
    "changes": "Nothing of its own: the pending determination is the function's.",
@@ -2273,7 +2283,7 @@
    "prior": null,
    "purpose": "Tells the player which months HUSKY D couldn't find the work rules met in, that the records are read for them, that a stay in hospital counts if asked for, the day to answer by, and what follows for cover and the premium tax credit.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#grantPending",
@@ -2281,7 +2291,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `grantPending` (systems/health.ts:1138): 'Public Cover Approved' (a renewal granted is said by applyRenewal's).",
+   "where": "The notices, from `grantPending` (systems/health.ts:1136): 'Public Cover Approved' (a renewal granted is said by applyRenewal's).",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The determination, the start, the marketplace plan.",
    "changes": "Nothing of its own.",
@@ -2303,7 +2313,7 @@
    "prior": null,
    "purpose": "Tells the player HUSKY D covers them, from when, with no premium, the month that met the work rules and how, and that a marketplace plan bought meanwhile ends as it begins.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#renewalDue",
@@ -2311,7 +2321,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `renewalDue` (systems/health.ts:1369): 'A Prescription Ran Out'.",
+   "where": "The notices, from `renewalDue` (systems/health.ts:1367): 'A Prescription Ran Out'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The condition, whether a visit was booked.",
    "changes": "Nothing of its own.",
@@ -2333,7 +2343,7 @@
    "prior": null,
    "purpose": "Tells the player a condition's prescription has run out and can't be filled until a doctor renews it, and whether the visit to renew it is booked or needs booking.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#careFor",
@@ -2341,7 +2351,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `careFor` (systems/health.ts:1837): 'A Doctor’s Visit', 'In Hospital', 'The Emergency Room', 'You Have The Flu', 'A Claim Denied'.",
+   "where": "The notices, from `careFor` (systems/health.ts:1835): 'A Doctor’s Visit', 'In Hospital', 'The Emergency Room', 'You Have The Flu', 'A Claim Denied'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The care, the practice, the share, the denial, the flu's days, being at school.",
    "changes": "Nothing of its own.",
@@ -2365,7 +2375,7 @@
    "prior": null,
    "purpose": "Tells the player what care they had, where, what it took from the body and kept them from, and what it costs: the share, the day it's taken from checking and what follows if it can't be; a claim denied says the full figure and how to appeal.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "notice.systems/health#repriceCare",
@@ -2373,7 +2383,7 @@
    "area": "papers",
    "mechanic": false,
    "seeded": false,
-   "where": "The notices, from `repriceCare` (systems/health.ts:1981): 'Care Billed Again' and 'Care Credited'.",
+   "where": "The notices, from `repriceCare` (systems/health.ts:1974): 'Care Billed Again' and 'Care Credited'.",
    "prerequisites": "Sent only to the player, by the code that changes what it reports; never on its own.",
    "reads": "The care log since the day, the cover then.",
    "changes": "Nothing of its own.",
@@ -2396,7 +2406,7 @@
    "prior": null,
    "purpose": "Tells the player that care since a day was priced again because their cover changed back to it (Yale Health canceled on withdrawing, Affiliate cover bought, HUSKY D reaching back), what they owe more on a new bill or what comes off and back to the bank.",
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "health.appeal_decided",
@@ -2404,18 +2414,18 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "The clock: a denied claim's appeal decided 60 days after it's filed (systems/health.ts:2210). A scheduled kind the inventory doesn't list: tools/inventory.mjs and tools/effects.mjs take a constant's name for one kind across the engine, and leave.ts's `APPEAL_KIND` ('school.leave_appeal') stands for health.ts's ('health.appeal_decided'); reported to the coordinator.",
+   "where": "The clock: a denied claim's appeal decided 60 days after it's filed (systems/health.ts:2203). A scheduled kind the inventory doesn't list: tools/inventory.mjs and tools/effects.mjs take a constant's name for one kind across the engine, and leave.ts's `APPEAL_KIND` ('school.leave_appeal') stands for health.ts's ('health.appeal_decided'); reported to the coordinator.",
    "prerequisites": "The bill denied and appealed.",
    "reads": "The draw at the share upheld (`DENIALS.upheld`, decider health.appeal).",
    "changes": "Upheld: the full bill stands. Overturned: the bill comes down to the share, what was paid over it comes back, what went to debt over it comes off.",
    "consumers": [
     {
      "what": "The bill's amount and the plan's part",
-     "at": "src/engine/systems/health.ts:2233"
+     "at": "src/engine/systems/health.ts:2226"
     },
     {
      "what": "The debt settled where cleared",
-     "at": "src/engine/systems/health.ts:2231"
+     "at": "src/engine/systems/health.ts:2224"
     }
    ],
    "experienced": "'Appeal Won' or 'Appeal Lost'; the $138.98 back once across a reload (tests/evidence-g05-life.test.ts).",
@@ -2437,7 +2447,7 @@
    "why": "",
    "prior": null,
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   }
  ],
  "promises": [
@@ -2463,7 +2473,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.passport-id>documents.work",
@@ -2483,7 +2493,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.passport-id>documents.work",
@@ -2505,7 +2515,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.passport-id>documents.work",
@@ -2529,7 +2539,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.passport-id>bank.accounts",
@@ -2551,7 +2561,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>school.orientation",
@@ -2573,7 +2583,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>documents.passport-id",
@@ -2593,7 +2603,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>taxes.return",
@@ -2613,7 +2623,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>taxes.plan",
@@ -2633,7 +2643,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>bank.other-banks",
@@ -2655,7 +2665,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>papers.benefits",
@@ -2679,14 +2689,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.work>papers.health-cover",
    "kind": "scheduled",
    "claim": "Your status ends on a set day. Once you’re out of status, a marketplace plan ends at the end of the month.",
    "entryFile": "src/engine/content/guide/documents.ts",
-   "holds": "documents.us_status sets usOutOfStatus at the status's end (systems/permission.ts:349), and the month's look ends a marketplace plan for somebody not lawfully present (systems/health.ts:858).",
+   "holds": "documents.us_status sets usOutOfStatus at the status's end (systems/permission.ts:349), and the month's look ends a marketplace plan for somebody not lawfully present (systems/health.ts:856).",
    "tests": [
     "tests/b20-papers-work.test.ts",
     "tests/evidence3-lifepapers.test.ts",
@@ -2703,7 +2713,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.residence>bank.accounts",
@@ -2723,7 +2733,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.residence>documents.passport-id",
@@ -2743,7 +2753,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.documents.residence>documents.work",
@@ -2765,7 +2775,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.overview>start.guide",
@@ -2787,7 +2797,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.overview>papers.health-cover",
@@ -2809,7 +2819,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.overview>taxes.return",
@@ -2829,7 +2839,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.overview>day.needs",
@@ -2855,14 +2865,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>school.leave",
    "kind": "prerequisite",
    "claim": "Yale Health covers you while you’re at the School; the degree, a withdrawal, a dismissal or a personal leave without Affiliate cover ends it. A withdrawal by the fifteenth day of a term’s classes, or such a leave, ends the cover then or back to its insurance term’s start, and Enroll waits for the first of the next month, unless it’s open enrollment or last month’s income qualifies you for HUSKY D or Covered Connecticut. Otherwise Enroll shows from ${SPECIAL} days before the cover’s end: at once after a dismissal or any other withdrawal.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "yaleUntil (systems/health.ts:270): at school, after the degree to 31 July, a withdrawal on the day by the fifteenth day or thirty days after, a dismissal thirty days; yaleLapsed for a leave without Affiliate cover (health.ts:292); mayEnroll's windows (health.ts:659).",
+   "holds": "yaleUntil (systems/health.ts:268): at school, after the degree to 31 July, a withdrawal on the day by the fifteenth day or thirty days after, a dismissal thirty days; yaleLapsed for a leave without Affiliate cover (health.ts:290); mayEnroll's windows (health.ts:657).",
    "tests": [
     "tests/b20-papers-health.test.ts",
     "tests/evidence3-lifepapers.test.ts",
@@ -2879,7 +2889,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>school.money",
@@ -2899,14 +2909,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>papers.doctor",
    "kind": "evaluation",
    "claim": "Your cover decides your share each time you have care: a visit, urgent care, an emergency or a stay.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "careFor prices each piece of care by careQuote (systems/health.ts:1868), shareOf by the plan that covers them (health.ts:1405).",
+   "holds": "careFor prices each piece of care by careQuote (systems/health.ts:1866), shareOf by the plan that covers them (health.ts:1403).",
    "tests": [
     "tests/b20-papers-health.test.ts",
     "tests/evidence-g05-life.test.ts"
@@ -2921,14 +2931,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>papers.conditions",
    "kind": "evaluation",
    "claim": "A condition’s month of care and each fill of its medicine are priced at your plan’s copays.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "monthCareCost (systems/health.ts:1231) and medicineShareOf through rxShareOf (health.ts:1299, 1615), by the plan.",
+   "holds": "monthCareCost (systems/health.ts:1229) and medicineShareOf through rxShareOf (health.ts:1297, 1613), by the plan.",
    "tests": [
     "tests/carried.test.ts",
     "tests/evidence-g05-life.test.ts"
@@ -2943,14 +2953,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>taxes.return",
    "kind": "history",
    "claim": "Each marketplace premium paid is kept for the year’s premium tax credit, which the return works out.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "Each premium paid is kept by year (systems/health.ts:926, `premiums`), and the return works the credit out from them (systems/taxreturn.ts).",
+   "holds": "Each premium paid is kept by year (systems/health.ts:924, `premiums`), and the return works the credit out from them (systems/taxreturn.ts).",
    "tests": [
     "tests/evidence3-lifepapers.test.ts",
     "tests/remaining-health-eligibility.test.ts"
@@ -2965,15 +2975,16 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>money.affairs",
    "kind": "scheduled",
-   "claim": "A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts; at ${usd(MEDICAL_DEBT.reportAt)} or more, ${MEDICAL_DEBT.reportAfterDays} days on, it marks your credit record.",
+   "claim": "A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts. Connecticut’s law keeps it off your credit record.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "health.bill makes an unpaid bill debt on Owed For Medical Care (systems/health.ts:2191), a loan account net worth counts; the month's look marks the record at $500 or more a year on (health.ts:989-993).",
+   "holds": "health.bill makes an unpaid bill debt on Owed For Medical Care (systems/health.ts:2184), a loan account net worth counts; `MEDICAL_DEBT.barredIn` holds Connecticut (content/safetynet.ts:351), so the month's look never reports it for a life in New Haven (health.ts:987-991). Until 2026-10-22 the promise said it marked the record at $500 or more a year on (P3).",
    "tests": [
+    "tests/b20-papers-defects.test.ts",
     "tests/evidence-g05-life.test.ts",
     "tests/evidence-g03-life.test.ts"
    ],
@@ -2982,19 +2993,20 @@
    "seeded": false,
    "evidence": {
     "tests": [
+     "tests/b20-papers-defects.test.ts",
      "tests/evidence-g05-life.test.ts",
      "tests/evidence-g03-life.test.ts"
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.health-cover>school.sick",
    "kind": "optional",
    "claim": "A stay in hospital excuses you from school of itself; down with the flu, Call In Sick excuses the day.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "A stay's days are in hospital (systems/health.ts:1848), which the School excuses; the flu makes Call In Sick take the day (school.call_in_sick).",
+   "holds": "A stay's days are in hospital (systems/health.ts:1846), which the School excuses; the flu makes Call In Sick take the day (school.call_in_sick).",
    "tests": [
     "tests/evidence-g05-life.test.ts"
    ],
@@ -3007,7 +3019,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.doctor>day.calendar",
@@ -3029,14 +3041,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.doctor>papers.health-cover",
    "kind": "immediate",
    "claim": "A visit you keep is billed at once for your share, and its bill joins Care And Its Bills, due in ${MEDICAL_DEBT.dueDays} days.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "careFor bills the share at once, due in MEDICAL_DEBT.dueDays (systems/health.ts:1930), and the bill joins Care And Its Bills.",
+   "holds": "careFor bills the share at once, due in MEDICAL_DEBT.dueDays (systems/health.ts:1928), and the bill joins Care And Its Bills.",
    "tests": [
     "tests/b20-papers-health.test.ts"
    ],
@@ -3049,14 +3061,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.doctor>papers.conditions",
    "kind": "evaluation",
    "claim": "Your Pharmacy’s cash price is read for every generic fill of a condition’s medicine.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "rxShareOf reads the chain chosen for a generic (systems/health.ts:1619).",
+   "holds": "rxShareOf reads the chain chosen for a generic (systems/health.ts:1617).",
    "tests": [
     "tests/evidence-g05-life.test.ts",
     "tests/evidence-g03-life.test.ts"
@@ -3071,7 +3083,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.doctor>day.needs",
@@ -3095,14 +3107,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.conditions>body.how",
    "kind": "scheduled",
    "claim": "Each Monday a long-term condition left untreated takes its toll: depression lowers morale, diabetes your condition, arthritis your energy.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "health.week's tolls on morale, condition and energy for depression, diabetes and arthritis not kept up (systems/health.ts:2175-2180).",
+   "holds": "health.week's tolls on morale, condition and energy for depression, diabetes and arthritis not kept up (systems/health.ts:2168-2173).",
    "tests": [
     "tests/evidence-g05-life.test.ts",
     "tests/costs.test.ts"
@@ -3117,7 +3129,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.conditions>day.calendar",
@@ -3139,14 +3151,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.conditions>papers.doctor",
    "kind": "scheduled",
    "claim": "A condition kept up books its review as a doctor’s appointment when it falls due.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "health.week books a review that's due (systems/health.ts:2163-2168).",
+   "holds": "health.week books a review that's due (systems/health.ts:2156-2161).",
    "tests": [
     "tests/evidence-g07-life.test.ts",
     "tests/evidence2-b02.test.ts"
@@ -3161,14 +3173,14 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.conditions>bank.accounts",
    "kind": "immediate",
    "claim": "Keep It Up pays the month’s care at once from ${FROM_CURRENT}; later months and each fill are paid the same way.",
    "entryFile": "src/engine/content/guide/papers.ts",
-   "holds": "health.treat pays the month's care at once, lapsed if it can't be (systems/health.ts:2394-2397); keepUp pays later months (health.ts:1213) and fillMedicine each fill (health.ts:1328), from the current account.",
+   "holds": "health.treat pays the month's care at once, lapsed if it can't be (systems/health.ts:2387-2390); keepUp pays later months (health.ts:1211) and fillMedicine each fill (health.ts:1326), from the current account.",
    "tests": [
     "tests/evidence-g04-life.test.ts"
    ],
@@ -3181,7 +3193,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.benefits>productions.cabaret",
@@ -3203,7 +3215,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.benefits>school.standing",
@@ -3223,7 +3235,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.benefits>taxes.return",
@@ -3243,7 +3255,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.benefits>body.look-after",
@@ -3265,7 +3277,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.benefits>school.shifts",
@@ -3289,7 +3301,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.pensions>productions.cabaret",
@@ -3311,7 +3323,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.pensions>taxes.return",
@@ -3333,7 +3345,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.pensions>bank.accounts",
@@ -3353,7 +3365,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   },
   {
    "id": "promise.papers.pensions>documents.work",
@@ -3373,7 +3385,7 @@
     ]
    },
    "readBy": "papers",
-   "readAt": "d80c17a6"
+   "readAt": "58577aea"
   }
  ]
 }
