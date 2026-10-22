@@ -47,7 +47,7 @@ import { openRefusal } from '../src/engine/systems/bankmoves';
 import { banksFor } from '../src/engine/systems/banking';
 import { homeOf } from '../src/engine/systems/earnings';
 import { accountOwed, aidReviewRefusal, repeatRefusal } from '../src/engine/systems/leave';
-import { genreSpeed } from '../src/engine/systems/engagement';
+import { genreSpeed, relatedness } from '../src/engine/systems/engagement';
 import { GENRE_DEFS } from '../src/engine/content/genres';
 import { inTheBank } from '../src/engine/systems/spending';
 import { POLICY, evening, freeHour, keepCovered, lookAfter, practiceHour } from './policy';
@@ -676,7 +676,10 @@ export function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
   for (const w of work) { if (w.ruleset !== RULESET || !w.inputs.levels) continue; const again = replay(w, TASK_PROFILES[w.task]!); if (!again) continue; kept += 1; if (again.overall !== w.overall) mismatched += 1; }
   const genres = Object.entries(p.engagement?.byGenre ?? {}).map(([g, x]) => ({ g, f: r1(x?.familiarity ?? 0), practice: r1(x?.practice ?? 0) })).filter((x) => x.f > 0 || x.practice > 0).sort((a, b) => Math.max(b.f, b.practice) - Math.max(a.f, a.practice));
   const known = genres[0]?.g;
-  const unknownGenre = Object.keys(GENRE_DEFS).find((g) => !genres.some((x) => x.g === g));
+  // An unmet genre no genre they know is directly linked to (`relatedness`), which must read nothing: from brief 22
+  // (2026-10-22), the owner's approved transfer lets a known broad genre reach its direct kinds, so the first unmet genre
+  // alone, as this was until then, could read some (J18's absurdist, a kind of the comedy it had worked in, at 1.06).
+  const unknownGenre = Object.keys(GENRE_DEFS).find((g) => !genres.some((x) => x.g === g) && !genres.some((x) => relatedness(x.g, g) > 0));
   // What of the school's is done or pending after its end (check 9).
   const ended = s?.endedAt;
   // Less what `setStanding` keeps on purpose: the class going on without them (`leaveClassBehind`), a classmate's moment's

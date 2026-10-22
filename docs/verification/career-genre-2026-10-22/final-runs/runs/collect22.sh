@@ -11,7 +11,9 @@ for L in A ADVF ADVR B C D J UI APP JR1 JR2 JR3 JRC BJ1 BJ2 BJ3 M1 M2 M3 M4 MF; 
   C="$S/f22-$L/docs/verification/career-genre-2026-10-22/final-runs"
   [ -d "$S/f22b-$L" ] && C="$S/f22b-$L/docs/verification/career-genre-2026-10-22/final-runs"
   [ -d "$C" ] || { echo "no lane $L"; continue; }
-  for d in runs advice final interface-final journeys14-final app; do [ -d "$C/$d" ] && mkdir -p "$B/$d" && cp -r "$C/$d/." "$B/$d/"; done
+  # The runs' outputs only: a clone's scripts are its commit's, and copied over the repository's they'd undo what was
+  # changed since (on 2026-10-22 its older collect22.sh overwrote this one as it ran).
+  for d in runs advice final interface-final journeys14-final app; do [ -d "$C/$d" ] && mkdir -p "$B/$d" && (cd "$C/$d" && tar cf - --exclude='*.sh' --exclude='*.py' .) | (cd "$B/$d" && tar xf -); done
 done
 mkdir -p "$B/final" "$B/journeys-final" "$B/b20-journeys"
 cp -r "$S/f22-final/." "$B/final/"
