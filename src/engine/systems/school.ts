@@ -2826,7 +2826,10 @@ export const castingPerformer = (p: Performer): Performer => ({
 export function genrePart(known: Knower | undefined, kinds: readonly string[]): { prep: Record<string, number>; required: Record<string, number> } {
   const reading = known ? relevantGenre(known, kinds) : undefined;
   if (!reading?.needs.length) return { prep: {}, required: {} };
-  return { prep: { genre: reading.total * ENGAGEMENT.genreComplete }, required: { genre: ENGAGEMENT.genreComplete } };
+  // Known against what completes it, as a taped brief's is (`genreKnown`) and a professional round's (`fitOf`): whole at
+  // 90. On the day it was written it gave the known share of 90, so a night was complete only at 100; found by brief
+  // 21's proof (tests/b21-genre-proof.test.ts) the same day.
+  return { prep: { genre: reading.total }, required: { genre: ENGAGEMENT.genreComplete } };
 }
 
 /**

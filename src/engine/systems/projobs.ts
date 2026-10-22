@@ -1211,7 +1211,7 @@ export function workContext(sim: Simulation, person: Person, e: Engagement, t: P
  * genre (`workContext`) is what knowing it does for the choices. Until 2026-10-22 (the owner's brief 21) a professional
  * rehearsal read no genre: a comedy's lines were learned as fast whether the actor had played comedy or not.
  */
-function rehearse(person: Person, e: Engagement, t: ProjectTemplate): void {
+export function rehearseDay(person: Person, e: Engagement, t: ProjectTemplate): void {
   const p = (e.prep ??= { ...ZERO });
   p.memorization = r3(clamp(p.memorization + PROCESS.call.lines * genreSpeed(person, projectGenresOf(t)) * (1 - p.memorization), 0, 1));
   p.rehearsal = r3(clamp(p.rehearsal + PROCESS.call.blocking * (1 - p.rehearsal), 0, 1));
@@ -1445,7 +1445,7 @@ export function registerProJobs(sim: Simulation): void {
     const kind = dayKindOf(t, i);
     exerts(person, WORK.met, (e.days[i]!.to - e.days[i]!.from) / MS_HOUR);
     if (kind === 'rehearsal') {
-      rehearse(person, e, t);
+      rehearseDay(person, e, t);
       // A rehearsal day is work in the project's genres, as a School call is (from 2026-10-22, the owner's brief 21).
       practiceGenres(s, person, projectGenresOf(t));
       (e.log ??= []).push({ day: i, at: item.at, status: 'worked' });
