@@ -65,6 +65,19 @@ stage before and after):
   agreement in the game gives a penalty.
 - **No new immigration category, and no route back in play.** OPT isn't granted twice and the green card is refused.
 
+**The sources and their dates:** 8 CFR 214.2(f) (eCFR, current to 2026-10-20); SEVP Policy Guidance 1004-03 (2010-04-23);
+DHS Study in the States on OPT (last updated 2025-05-19); 8 U.S.C. 1324a (current text); DOL Fact Sheet #48 (revised
+July 2008).
+
+**What SLATE assumes, said rather than invented** (`authorization-sources.md`, its last section):
+- the 20 hours averaged over an engagement, not a month;
+- a missed day inside an engagement still employed;
+- permission ending at the breach, with no hearing;
+- only acting work counted;
+- days abroad counted the same;
+- an older save's weekly count kept;
+- no route back after a breach.
+
 **Worked examples**, each a test:
 - **b20-4 (A1), from its own save of 1 September 2029:** 88 days without work counted to 29 August; 30 and 31 August
   and 1 September make 91; OPT ends at the end of 1 September; The Winter Ledger, booked to begin on 4 September, is
@@ -131,3 +144,148 @@ with brief 21's question and the owner's authorization; Genre Audit-R, in the ow
 contribution; only documented, bounded transfer across approved direct relationships", is measured over every ordered
 pair: an unrelated genre moves another's brief in 0 of 21,644; a direct one in 408 of 408, each less than the genre
 itself, at most 85% of its gain.
+
+## The Proof
+
+- **The tests:** 49 in four new files, each the gate runs: `tests/b22-authorization.test.ts` (11),
+  `tests/b22-genre-weights.test.ts` (24), `tests/b22-transfer.test.ts` (12) and `tests/b22-comparisons.test.ts` (2), all
+  passing on the tested commit. Each test whose figure brief 22 moved on purpose (a weight, a coefficient, a take, a
+  date) was read, restated and given a dated note saying what it said before; none was deleted or skipped.
+- **Fixed seeds:** `b22-proof-1` to `b22-proof-8`, named in `criteria.md` before any fix, with every intermediate figure
+  in `comparisons.md` and `comparisons.json`.
+- **The old defects:** `before/a1-on-base.txt` is A1 run on the starting commit, failing there as b20-4 failed; set brief
+  21's coefficients back by hand and `tests/b22-comparisons.test.ts` fails on the taped brief, the School night and the
+  self-tape it reports.
+
+## Deliberate Faults
+
+26 faults (`mutations/mutations.json`), each put into a clean clone of `d69ad309` by `mutations/run.py`, its tests run,
+and the fault taken out again. A fault counts as killed only where an assertion fails (`mutations/results.json`).
+- **24 killed at once.**
+- **2 survived, each a test missing, not a guard to delete:**
+  - **B22-A1b**, the work day counting OPT no further before it reads permission: a life played through settles the
+    same at midnight, but an older save opened on the morning of a booked day doesn't (defect 5).
+  - **B22-A7**, acceptance reading a day's start alone: no test split a day at OPT's end (defect 4).
+- **Both killed on the rerun:** the two tests were added and the two faults run again in a clean clone of `8aa87539`
+  (`mutations/results-rerun.json`).
+
+| Fault | What it does | Killed by |
+|---|---|---|
+| B22-A1 | the work-day guard removed | "A7, during"; "A4 to A9", the split shoot |
+| B22-A1b | the guard counts OPT no further first | "A12, an older save" (on the rerun) |
+| B22-A1c | permission ending releases nothing | "A1" |
+| B22-A2 | a booking counted as employment | "A1" |
+| B22-A3 | the boundary a day late (the 92nd day) | "A1" |
+| B22-A4 | a released engagement keeps weeks never worked | "A1" |
+| B22-A5 | a released engagement drops its worked pay | "A7, during" |
+| B22-A6 | a day counted twice | "A1" |
+| B22-A7 | acceptance reads a day's start alone | "A4 to A9", "inside a day" (on the rerun) |
+| B22-W1 | the first-listed half back | W2 and W5 |
+| B22-W1b | a play's stated set ignored | T3 |
+| B22-W2 | a class scene's own set ignored | W2 and W3 |
+| B22-W2b | a role's own set ignored | the measure |
+| B22-W2c | a part's own set ignored | W2 and W3 |
+| B22-W3 | a repeat counted twice | W2 and W5 |
+| B22-W4 | weights not normalized | T3 |
+| B22-W5 | invalid weights accepted | W2 and W5 |
+| B22-W6 | absorption removed | T2 |
+| B22-T1 | siblings related | T1 |
+| B22-T2 | chains restored | T1 |
+| B22-T3 | transfer writing practice | T2 |
+| B22-T3b | reading storing a related genre as known | T2 |
+| B22-T4 | full transfer | T1 |
+| B22-T5 | transfer summed over every related genre | T3 |
+| B22-T6 | brief 21's better of the two | T3 |
+| B22-K1 | brief 21's coefficients, 0.75 and 0.5 | T3 |
+
+## Journeys (J1, J2)
+
+Played on the tested commit with brief 20's, brief 13's and brief 19's fixed seeds and players
+(`final-runs/runs/README.md`):
+- **b20-4, the international graduate:**
+  - Accepting Hester Vane on 16 August, the offer says first that OPT's 90 days without work run out on 1 September,
+    before the run begins on the 4th.
+  - OPT ends at the end of 1 September: the "OPT Ended" notice and "Released As Hester Vane" at that midnight.
+  - Nothing of The Winter Ledger is worked, owed or credited; Paper Moons' three days in August, worked with permission,
+    stand.
+  - "Papers and work" passes, where on the starting commit 47 days were worked after OPT ended.
+- **Brief 20's eight lives and seven older saves:** saved and opened at every transition, 161 of 161 the same to the
+  byte, and 52 of 52 forks; every check passed in all 15. The career's draws moved in b20-2 and b20-4 only.
+- **Brief 13's 25 journeys:** all played to the end, all ten checks passed in each, 36 rows held.
+- **Brief 19's four lives:** only the Actor Showcase's scenes moved, in life A and V16 mid-term, where the faculty now
+  reads what each scene asks.
+
+## The Built App (J3)
+
+Built from the tested commit and walked at 1440 and 390 (`final-runs/app/`):
+- **Brief 22's walk** (`app/walk.mjs`): three saves made by `app/make-saves.ts`.
+  - **Before:** b20-4 on 1 September 2029 at 6 PM, The Winter Ledger booked. Papers says "Ends September 1, 2029" and
+    when a day counts as one with work.
+  - **Released:** the next afternoon. Papers says Out Of Status, Career's Work tab says why the run was released, and
+    the guide's Permission To Work entry says how OPT is counted.
+  - **Roles:** a new student's open roles. What It Asks names each genre once, never a broad genre beside its own kind;
+    the guide's Genres entry gives the 65% and 40% and "One step only".
+  - Each read off the screen, with no page or console error and no sideways scroll: 9, 9 and 12 steps at each width,
+    nothing found.
+- **Found there first, and fixed** (`8aa87539`): Papers said "Ends September 2, 2029" of a status that ended with 1
+  September (defect 6).
+- **As before:** the acceptance walk, 77 of 77 at each width; brief 19's career walk, 52 screens; the seven older saves;
+  brief 21's three saves. Nothing found at either width.
+
+## Saves
+
+- **The schema version stays 94.** No migration: nothing a save holds is rewritten.
+- **OPT's count:** a permit counted by the day keeps the last day counted (`countedTo`, optional). A save from before
+  brief 22 has none; its count goes on from the day its weekly count reached (`countedFrom`), nothing counted twice. The
+  weekly kind it holds on its calendar (`documents.opt_week`) is kept for it alone and only settles the count.
+- **Genres:** nothing is stored. A School casting, a credit or a booking read in an older save resolves through the same
+  rule (W9).
+- **Every fixture save opens:** the seven older saves in `tests/fixtures/` (`tests/b20-guide-startup.test.ts`, the
+  genres of brief 13's three read again by W9) and brief 22's three b20-4 saves, among them
+  `tests/fixtures/b22/b20-4-opt-2029-09-04.json.gz`, written by the build before brief 22 (A12).
+- **A deployment:** none was made. A deployment of brief 20's or 21's line accepts this line's saves, its schema the
+  same; one of the old line refuses them (§10 of the handoff).
+
+## The Completion Matrix
+
+`../integration-2026-10-16/criteria.py` folds brief 22's results into the matrix:
+- **The judge:** each row brief 21 measured moved to `16b50e07`, its figure beside brief 21's.
+- **The Genre Audit as written:** superseded at the owner's word in brief 22, its figure and history kept.
+- **Genre Audit-R:** a row of its own, verified on its own measurement.
+- **The runs:** each row the final runs measure moved to the commit it ran on.
+- **genres.7-measured, verified:** it waited on the Genre Audit's decision, which the owner made.
+- **Brief 22's own rows,** from `final-runs/judge-result.json`, `final-runs/final-result.json` and
+  `final-runs/verification-result.json`.
+
+Before the gate's own figure, the matrix read 633 of 658 Implemented And Verified (96.2%); 21 Implemented, Verification
+Incomplete; 4 Decision Required; 41 Explicitly Deferred. INT-gate waited on the gate below. The other 20 Verification
+Incomplete rows are the bank and tax commands no current life can reach, each waiting on the owner's scope decision, as
+at brief 21's close.
+
+The effects matrix (`../audit-2026-10-21/effects/`) reads brief 22's features against what they change: the release, its
+notice and its reactor; each genre consumer; the guide's promises about genres and OPT, each held by a test the gate
+runs.
+
+## For The Owner
+
+Readings made on SLATE's judgment, each for the owner to keep or change:
+- **An audition while out of status:** an audition is a try for work, not work, so b20-4 is still called to audition
+  after its OPT ended, and an offer is refused at acceptance. Closing auditions too would be a new rule.
+- **Enjoyment reads a work's tags as listed:** loving a genre makes a day of its kind better, unweighed. It's preference,
+  not what the work asks.
+- **0.65 and 0.40 are provisional:** measured by controlled comparisons against bounds written first (a kind's gain at
+  most 0.85 of the genre's own, a broad genre's at most 0.65), which are SLATE's own. No person has played them.
+- **The weights are SLATE's reading of the material:** each carries its reason (`genre-weights.md`); 13 of 31 plays read
+  otherwise than brief 21's rule read them.
+- **The tutorial:** its OPT sentence was rewritten. Its "You As An Actor" chapter says nothing of related genres: the
+  guide's Genres entry carries the rule, the 65% and 40% and "One step only".
+- **Still open from before:** the four Decision Required rows (the bank commands' scope, twice; the coverage rows reached
+  only abroad; ST6-R2.e's margins), the 20 rows they hold Verification Incomplete, and brief 21's question whether a US
+  minimum payment due includes what's past due.
+
+## Not Done, And What Limits This
+
+- **Nothing is merged or deployed,** as the brief says.
+- **No person has played this:** the journeys are played by fixed players on fixed seeds.
+- **No route back to status after a breach:** none is in the game, and the brief adds no immigration category.
+- **No blocker** stopped an item of the brief.

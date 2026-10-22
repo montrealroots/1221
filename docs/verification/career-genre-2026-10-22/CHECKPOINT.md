@@ -23,8 +23,20 @@ For the next session or the other account, beside the handoff. The tree outranks
   before that commit: 11 failures in 8 files, each a figure the weights or the coefficients moved, read and restated
   with a dated note, then all 11 files passing (194 tests).
 
+- **The faults and the built app** (`8aa87539`): 26 faults in a clean clone of `d69ad309`, 24 killed; the two that
+  survived each wanted a test, added (the older save's first work day, the shoot day split at OPT's end). The walk of the
+  built app found Papers' status a day late, fixed.
+- **The tested commit** (`16b50e07`): both survivors killed on the rerun; the final runs' lanes written.
+- **The final runs** on `16b50e07`, each lane in a clean clone (`final-runs/runs/README.md`, `final-runs/final/README.md`):
+  the judge's 36 figures brief 21's, Genre Audit-R verified, the advice, interface and acceptance as before. Brief 20's
+  and brief 13's journeys were played again on `afe751f1` and `0ae97df3`, whose `src` is the tested commit's, because
+  their runners' checks stated the rule brief 22 replaced.
+- **The fold** (`07ae403c`): 633 of 658 Implemented And Verified, INT-gate waiting on the gate.
+- **The receipt and the handoff:** `README.md`, and the handoff's top section.
+
 ## Next
 
-1. Mutations (criteria P5), the journeys and the built app (J1 to J3).
-2. The final runs: judge lanes (the Genre Audit read against its replacement, genres.7-measured) and runs lanes, the
-   matrix's fold (`criteria.py`), the gate in a clean clone, the receipt and the handoff.
+1. The full gate in a clean clone of the commit holding the receipt, its exit read from its file
+   (`final-runs/runs/gate.txt`); its figure folded (`runs/figures.py`, `criteria.py`, the matrix) and the handoff's line
+   set to the matrix's; the gate again on that commit (`gate-receipt.txt`).
+2. Nothing merged or deployed until the owner says.
