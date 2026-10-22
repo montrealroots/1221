@@ -234,8 +234,9 @@ export interface Opportunity extends HasHistory {
   status: OpportunityStatus;
   postedAt: Instant;
   submitBy: Instant;
-  auditionAt?: Instant;
-  callbackAt?: Instant;
+  // `auditionAt` and `callbackAt` went on 2026-10-21 (brief 20's D1, values written and never read): the work loop set
+  // them beside each round's own `at` (`rounds`), which everything reads, and nothing read them. A save that has them
+  // keeps them, unread.
   offer?: { at: Instant; until: Instant; rate: RateId; amount?: Money; per: 'day' | 'week'; units: number };
   /** When it was settled, booked or not, and why, in the player's words. */
   resolvedAt?: Instant;
@@ -248,6 +249,12 @@ export interface Opportunity extends HasHistory {
   agreementId?: ProId;
   /** What the submission sent, as each material stood then: its id and when it was made (F4). */
   sent?: { kind: MaterialKind; id: ProId; made: Instant }[];
+  /**
+   * The last time the part was posted to the actor, where it had been, and how that ended, copied in when it's posted
+   * again (from 2026-10-21, brief 20's D4, `systems/projobs.ts`'s `post`): until then a part passed on, declined or missed
+   * came round ten weeks on as if for the first time, and while the production that had cast it was still running.
+   */
+  again?: { postedAt: Instant; status: OpportunityStatus; outcome?: string };
   /** The sides' preparation for the audition, in a practice brief's three parts. */
   prep?: PartPrep;
   /** The audition and, where the project has one, the callback: each as it was set, how it went, and what casting made of it. */
@@ -380,7 +387,8 @@ export interface OutsideWorkRequest {
   id: ProId;
   opportunityId: ProId;
   at: Instant;
-  firstDay: Instant;
+  // `firstDay` went on 2026-10-21 (brief 20's D1, a value written and never read): the work's first day is its
+  // opportunity's (`datesOf`), which the dean's conditions read. A save that has it keeps it, unread.
   workingDays: number;
   classDays: number;
   status: 'pending' | 'approved' | 'refused';
@@ -413,8 +421,15 @@ export interface ProRecord {
   sag?: { eligibleSince?: Instant; memberSince?: Instant };
   /** The unions' bills, each charged once (`systems/propay.ts`): the unsettled, and the last `BILLS_KEPT` settled. */
   unionBills?: UnionBill[];
-  /** How many resolved opportunities and finished engagements were trimmed. */
-  trimmed?: { opportunities: number; engagements: number };
+  // `trimmed`, how many resolved opportunities and finished engagements the bounds had dropped, went on 2026-10-21
+  // (brief 20's D1, a value written and read by nothing but a test). What a dropped posting said that matters later is
+  // kept in `lastPosted`. A save that has it keeps it, unread.
+  /**
+   * The last time each part was posted to the actor, by the project's id, and how it ended, kept whole past the bounds
+   * (`OPPORTUNITIES_KEPT`) so a part posted again a year on still says what came of it before (from 2026-10-21, brief 20's
+   * D4, `systems/projobs.ts`): eleven parts at most.
+   */
+  lastPosted?: Record<string, { id: ProId; postedAt: Instant; status: OpportunityStatus; outcome?: string }>;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -521,16 +536,15 @@ export const finished = (e: Engagement): boolean => e.status === 'finished' || e
 /**
  * The record kept to its bounds: resolved opportunities to the last `OPPORTUNITIES_KEPT` by when each was settled,
  * finished engagements to the last `ENGAGEMENTS_KEPT`, each kind of material to the last `MATERIALS_KEPT`. What's live
- * is never trimmed, and the counts of what was are kept.
+ * is never trimmed. Until 2026-10-21 (brief 20) the counts of what was were kept too, and nothing read them.
  */
 export function keepBounded(pro: ProRecord): void {
-  const trimmed = (pro.trimmed ??= { opportunities: 0, engagements: 0 });
   const done = pro.opportunities.filter(resolved).sort((a, b) => (a.resolvedAt ?? a.postedAt) - (b.resolvedAt ?? b.postedAt));
   const dropO = new Set(done.slice(0, Math.max(0, done.length - OPPORTUNITIES_KEPT)));
-  if (dropO.size) { pro.opportunities = pro.opportunities.filter((o) => !dropO.has(o)); trimmed.opportunities += dropO.size; }
+  if (dropO.size) pro.opportunities = pro.opportunities.filter((o) => !dropO.has(o));
   const over = pro.engagements.filter(finished).sort((a, b) => (a.finishedAt ?? 0) - (b.finishedAt ?? 0));
   const dropE = new Set(over.slice(0, Math.max(0, over.length - ENGAGEMENTS_KEPT)));
-  if (dropE.size) { pro.engagements = pro.engagements.filter((e) => !dropE.has(e)); trimmed.engagements += dropE.size; }
+  if (dropE.size) pro.engagements = pro.engagements.filter((e) => !dropE.has(e));
   for (const kind of ['headshot', 'resume', 'reel'] as const) {
     const all = pro.materials.filter((m) => m.kind === kind).sort((a, b) => a.made - b.made);
     if (all.length <= MATERIALS_KEPT) continue;

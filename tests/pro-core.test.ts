@@ -387,7 +387,10 @@ describe('the history and the bounds', () => {
     expect(pro.opportunities.some((o) => o.id === 'o0')).toBe(false);
     expect(pro.engagements).toHaveLength(ENGAGEMENTS_KEPT + 1);
     expect(pro.engagements.some((e) => e.status === 'booked')).toBe(true);
-    expect(pro.trimmed).toEqual({ opportunities: 10, engagements: 5 });
+    // The oldest settled go first: ten postings and five engagements. Until 2026-10-21 (brief 20) this read the counts the
+    // record kept of them (`trimmed`), which nothing else read and which went.
+    expect(pro.opportunities.filter((o) => o.status === 'passed').map((o) => o.id)).toEqual(Array.from({ length: OPPORTUNITIES_KEPT }, (_, i) => `o${i + 10}`));
+    expect(pro.engagements.filter((e) => e.status === 'finished').map((e) => e.id)).toEqual(Array.from({ length: ENGAGEMENTS_KEPT }, (_, i) => `e${i + 5}`));
     expect(pro.materials.map((m) => m.id)).toEqual(['m3', 'm4', 'm5', 'm6', 'm7', 'm8']);
     expect(MATERIALS_KEPT).toBe(6);
   });
@@ -482,6 +485,10 @@ describe('the agent and the work, as data', () => {
   it('names no part as the School names a classmate, so an audition’s notice can’t read as a classmate’s (Theo, Felix since, and Owen, Callum since, until the app’s walks found them, 2026-10-21)', () => {
     const given = new Set([...GIVEN_ACTOR, ...GIVEN_ACTRESS]);
     expect(PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => given.has(first))).toEqual([]);
+    // Nor as the short form of one, or one as the short form of a part (from 2026-10-21, brief 20: Sam, Robin since, and
+    // the classmate Samuel, whose notices read "Samuel: A Request For Help" beside "A Self-Tape For Sam").
+    const near = PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => [...given].some((g) => g.startsWith(first) || first.startsWith(g)));
+    expect(near).toEqual([]);
   });
 
   it('says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him', () => {

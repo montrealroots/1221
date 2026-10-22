@@ -197,9 +197,9 @@
  },
  "src/engine/content/careerwork.ts#PROJECTS [camera]": {
   "status": "Rewritten",
-  "hash": "26ac65aa9d8c",
+  "hash": "6e3f94b53b5e",
   "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either), Felix named as no classmate is, to docs/STYLE.md and docs/GLOSSARY.md; read in tests/pro-core.test.ts ('names no part as the School names a classmate…', 'writes each part…') and tests/pro-work.test.ts",
+  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/careerwork.ts#PROJECTS [eastview]": {
@@ -456,9 +456,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
   "status": "Rewritten",
-  "hash": "b2d5447d2959",
+  "hash": "8ab248f85195",
   "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, and who a part is written for (the app's walks, the owner's word on parts), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
+  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]": {
@@ -512,9 +512,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]": {
   "status": "Rewritten",
-  "hash": "9177ac9d44d1",
+  "hash": "791e4f9fcc1b",
   "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md: Equity joined by a first day under an Equity contract as by the degree, read against tests/b20-career-defects.test.ts, which plays it",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {

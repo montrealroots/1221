@@ -6,28 +6,54 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, The Agreement: every term with its basis, then Accept The Agreement (RepresentationPane.tsx:271), grayed with answerRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1061 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also answerRefusal)",
-   "reads": "answerRefusal (proagent.ts:649): an agreement offered and still standing (fourteen days, AGREEMENT.offerStandsDays)",
-   "changes": "The agreement accepted with signedAt now and endsAt a year on, the offer’s lapse called off, the relation represented with its agreementId, accepted and represented events, and the term’s end on the clock (pro.agent_term_end) (proagent.ts:1061-1078)",
-   "consumers": [],
-   "laterText": "pro.agent_term_end | activeAgreement (pro.ts:512), the one rule for represented on a date: read by the work loop’s postings (postingsAt, projobs.ts:399: roles released to agents only), the offers he handles (makeOffer, projobs.ts:984: scale plus ten through negotiatedAmount) and the engagement’s agreementId (projobs.ts:1396), and by the pay’s commission and trust account (owedAgreement, propay.ts:259; commissionOn, propay.ts:332); sendRefusal refuses a send while represented; endRefusal reads it; the term’s end (TERM_END handler, proagent.ts:1192) | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "The Agreement’s terms, each marked A Published Rule or The Game’s Own Term; You signed it on and It runs until; the guide’s The Agreement (guide/career.ts:421)",
-   "saveLoad": "Person.pro.agreements (status, signedAt, endsAt); the relation’s stage and agreementId; the scheduled term end | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation, The Agreement: Accept The Agreement, grayed with answerRefusal's words; behind the guide's chapter \"Representation\".",
+   "prerequisites": "An agreement he offered and still standing (fourteen days, `AGREEMENT.offerStandsDays`); refused \"He hasn't offered you an agreement.\" or \"The offer stood until …\" (`answerRefusal`).",
+   "reads": "The offered agreement (`offeredAgreement`) and its standing date.",
+   "changes": "The agreement accepted, signed now and ending a year on; the offer's lapse called off; the relation represented with the agreement's id; accepted and represented in his history; the term's end on the clock (`pro.agent_term_end`).",
+   "consumers": [
+    {
+     "what": "the agreement in force on a date, the one rule the rest read",
+     "at": "src/engine/systems/pro.ts:527"
+    },
+    {
+     "what": "the week's postings: parts released to agents reach the actor through him",
+     "at": "src/engine/systems/projobs.ts:461"
+    },
+    {
+     "what": "an offer he handles is priced at scale plus ten on SAG-AFTRA work",
+     "at": "src/engine/systems/projobs.ts:1122"
+    },
+    {
+     "what": "the pay's commission and the trust account read the agreement owed on a contract",
+     "at": "src/engine/systems/propay.ts:262"
+    },
+    {
+     "what": "no approach while represented",
+     "at": "src/engine/systems/proagent.ts:504"
+    }
+   ],
+   "experienced": "At once the panel says He represents you until …; from then his breakdowns bring parts released to agents, he submits for them, and covered pay comes through the agency's trust account less commission.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/journey-career.test.ts",
      "tests/journey-agent.test.ts",
+     "tests/journey-career.test.ts",
      "tests/pro-representation-screen.test.ts",
-     "tests/pro-work.test.ts",
-     "tests/propay.test.ts"
+     "tests/b20-career-saveload.test.ts",
+     "tests/b20-career-effects.test.ts"
     ],
-    "comparisons": [],
+    "comparisons": [
+     "b20-career-effects 3: accepted against declined at the same offer: his breakdowns in the signed life only, the open-only calls the same weeks in both"
+    ],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21), tests/journey-career.test.ts"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.accept_agreement"
@@ -37,25 +63,56 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, Offers: Accept The Offer (OpportunitiesPane.tsx:195), grayed with acceptRefusal’s words, the School’s warning under it in term; and What Needs You on Home (requireDecision, projobs.ts:1006); opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1396 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: — (also acceptRefusal)",
-   "reads": "acceptRefusal (projobs.ts:724): an offer standing; usWorkAuthorized for every day of the work, said in eligibilityOf’s words; SAG-AFTRA membership from the 30th day after a first job of its (sagWorkRefusal, propay.ts:682); no other booking on its days; out of term, no School call held on them. acceptWarning (projobs.ts:750) says what work in term without approval brings",
-   "changes": "An engagement with its days, its agreement where one’s in force, the part’s preparation from half the sides’, and in term the School’s approval or none; the pay promised a week at a time, never posted (promisedPay, projobs.ts:1024), and put on the clock (schedulePay, propay.ts:550, keeping what permission to work read); each work day on the calendar, wanting the player, with its trip (bookDays, projobs.ts:1050); the offer’s lapse called off and the decision resolved; the role settled as booked | engagements (added to)",
-   "consumers": [],
-   "laterText": "booked | Each work day’s handler (WORK_DAY, projobs.ts:1276): worked or missed, judged, the part rehearsed, the credit at the first night or when shot and released later, the run or shoot finished, replaced after misses, unapproved work in term reported (setStanding); each payday (PAY handler, propay.ts:705): paid once, into the trust account less commission where owed or straight to the player, as wages recordWages reports; the School’s present() (awayAt, projobs.ts:483) | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The decision’s detail with the pay’s words and the School’s warning; Booked Work; the notices of each day, payday and credit; the guide’s Offers And Booked Work (guide/career.ts:726)",
-   "saveLoad": "Person.pro.engagements (days, pay, prep, school, eligibility, log, creditId) and credits; the scheduled work days and paydays; the ledger | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities, Offers: Accept The Offer, and What Needs You's question with the same action; grayed with acceptRefusal's words.",
+   "prerequisites": "An offer standing (`acceptRefusal`): not lapsed; permission to work on every day of the work (`usWorkAuthorized`); SAG-AFTRA membership for SAG-AFTRA work from the 30th day after a first job (`sagWorkRefusal`); no other booking on its days; out of term, no School call held on them.",
+   "reads": "The offer, its days (`datesOf`), the papers, the unions, the bookings, the School's calendar and the agreement in force.",
+   "changes": "An engagement booked: its days on the calendar as stops (`pro.work_day`), the part's preparation from half the sides', each week's pay promised and put on the clock (`schedulePay`), permission to work read and kept, the agreement in force on it, in term marked unapproved or approved; the offer settled as booked.",
+   "consumers": [
+    {
+     "what": "each work day judged on the clock",
+     "at": "src/engine/systems/projobs.ts:1414"
+    },
+    {
+     "what": "each promised payment paid on its payday",
+     "at": "src/engine/systems/propay.ts:727"
+    },
+    {
+     "what": "the School counts the actor away at work",
+     "at": "src/engine/systems/projobs.ts:545"
+    },
+    {
+     "what": "another booking on the same days refused",
+     "at": "src/engine/systems/projobs.ts:709"
+    },
+    {
+     "what": "a part booked never posted again",
+     "at": "src/engine/systems/projobs.ts:473"
+    }
+   ],
+   "experienced": "The part moves to Booked Work with its days and the pay promised; each day stops the clock; the pay comes on its Thursdays; the credit is on the record from the first night or the wrap.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-work.test.ts",
-     "tests/pro-opportunities-screen.test.ts"
+     "tests/pro-opportunities-screen.test.ts",
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-saveload.test.ts",
+     "tests/b20-career-defects.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-effects 7: an F-1 graduate on OPT accepts the part, one without OPT is refused in words; the postings, the tape and casting's word the same"
+    ],
+    "mutations": [
+     "B20-CAREER-13"
+    ],
+    "journeys": [
+     "life A (v1-21) and the older graduate, tests/journey-career*.test.ts"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.accept_offer"
@@ -65,26 +122,38 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, Your Materials For Him: Check Your Materials (RepresentationPane.tsx:148), grayed with checkRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:969 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also checkRefusal)",
-   "reads": "checkRefusal (proagent.ts:534): the notice read; no approach under way; not passed already for this approach; and materialsCheck’s blocking problems for representation (no headshots, no résumé), said in its words",
-   "changes": "One checked event keyed by the approach (checked:N), its words naming what materialsCheck says would help (a reel, newer headshots); the stage discovered → checked (proagent.ts:969-983)",
-   "consumers": [],
-   "laterText": "referralRefusal and sendRefusal (proagent.ts:564, :590) refuse a referral and a send until a check has passed; nextStep says what comes next | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "The refusal under the button; What’s Next; History With His Office; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
-   "saveLoad": "The relation’s stage, history and counts | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation, How To Reach Him: Check Your Materials, grayed with checkRefusal's words.",
+   "prerequisites": "The notice read; no approach under way; not checked already for this approach; headshots and a résumé (`materialsCheck`, blocking).",
+   "reads": "The relation's stage and history, the materials (`materialsCheck` for representation).",
+   "changes": "A checked event in his history keyed to the approach, saying what the check found; the stage from discovered to checked.",
+   "consumers": [
+    {
+     "what": "a send needs a passed check",
+     "at": "src/engine/systems/proagent.ts:602"
+    },
+    {
+     "what": "a referral needs a passed check",
+     "at": "src/engine/systems/proagent.ts:570"
+    }
+   ],
+   "experienced": "The panel moves on to How To Reach Him; History With His Office says what the check found.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/journey-agent.test.ts",
-     "tests/pro-agent.test.ts",
-     "tests/pro-representation-screen.test.ts"
+     "tests/pro-representation-screen.test.ts",
+     "tests/b20-career-effects.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.agent_check"
@@ -94,26 +163,37 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, his panel: the notice at the top and I’ve Read This (RepresentationPane.tsx:80), then Read The Notice Again; opened by the tutorial’s “Representation” (tutorial.ts:502); registered by proagent.ts:958 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also noticeRefusal)",
-   "reads": "noticeRefusal (proagent.ts:493): refused once read, saying when it was read and where to read it again",
-   "changes": "The relation begun at discovered with noticeShownAt now, and one discovered event keyed discovered (proagent.ts:958-967)",
-   "consumers": [],
-   "laterText": "checkRefusal, referralRefusal and sendRefusal (proagent.ts:534, :564, :590) refuse every other step until it’s read; nextStep and the panel (the notice moves behind Read The Notice Again; How To Reach Him and Check Your Materials appear) | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "The notice’s words (content/agents.ts), marked Fictional on the panel; History With His Office; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
-   "saveLoad": "Person.pro.relations[agentId]: stage, since, stageAt, noticeShownAt, history, counts | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation: the notice that he and his agency are invented, at the top of his panel, and I've Read This.",
+   "prerequisites": "Not read already (`noticeRefusal`).",
+   "reads": "The relation, if any.",
+   "changes": "The relation begun at discovered, the notice's reading dated, a discovered event in his history.",
+   "consumers": [
+    {
+     "what": "every other control of his panel waits on the notice",
+     "at": "src/engine/systems/proagent.ts:539"
+    },
+    {
+     "what": "the School's follow-up adds the notice's words only when it's unread",
+     "at": "src/engine/systems/proagent.ts:948"
+    }
+   ],
+   "experienced": "The panel opens its controls; Read The Notice Again keeps the notice one press away.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-agent.test.ts",
+     "tests/journey-agent.test.ts",
      "tests/pro-representation-screen.test.ts",
-     "tests/journey-agent.test.ts"
+     "tests/b20-career-effects.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.agent_notice"
@@ -123,27 +203,47 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, How To Reach Him: People You’ve Worked With and Ask For A Referral (RepresentationPane.tsx:117), each job listed with why it can’t refer you where it can’t; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:985 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also referralRefusal)",
-   "reads": "referralRefusal (proagent.ts:564) on referrersOf (proagent.ts:545): the notice read, a check passed, no approach under way or held by a cooling-off time; a finished engagement whose credit was judged Strong or better (REFERRAL_BAND, an assumption), once a job",
-   "changes": "A referral kept (engagement, by, job, band), the relation’s route set to the referral and its stage introduced, one referred event, and a notice from the person who made it, never from him (proagent.ts:985-1000)",
-   "consumers": [],
-   "laterText": "sendRefusal (proagent.ts:590) takes a send once introduced; interestOf’s Your Work (workSeen, proagent.ts:230) reads the referring job’s band; caseKeys (proagent.ts:462) counts a referral as something new; nextStep | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "The notice in the referrer’s name; History With His Office; Why It Went This Way’s Your Work; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
-   "saveLoad": "The relation’s referrals, via, stage and history; the notice | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation, How To Reach Him: Ask For A Referral beside each finished job, grayed with its reason.",
+   "prerequisites": "The notice read; materials checked; no approach under way or held (`tooSoon`); a finished job judged Strong or better (`REFERRAL_BAND`) not referred before (`referralRefusal`).",
+   "reads": "The finished engagements, their credits' bands, the referrals made.",
+   "changes": "A referral kept on the relation (once a job), the route set to that referrer, the stage introduced, a referred event; a notice from the referrer, never from him.",
+   "consumers": [
+    {
+     "what": "a send is taken only through a route",
+     "at": "src/engine/systems/proagent.ts:598"
+    },
+    {
+     "what": "the referring job's work is among what his office has to go on",
+     "at": "src/engine/systems/proagent.ts:240"
+    },
+    {
+     "what": "a referral is something new after a decision",
+     "at": "src/engine/systems/proagent.ts:470"
+    }
+   ],
+   "experienced": "At once a notice that the casting office referred you, and Send Your Materials opens; later his office's answer reads the referring job's band under Your Work.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/journey-agent.test.ts",
      "tests/journey-career-older.test.ts",
      "tests/pro-agent.test.ts",
-     "tests/pro-representation-screen.test.ts"
+     "tests/b20-career-effects.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-effects 5: the same job worked by twins at the top (Strong) and at 75 (Working): the Strong one refers her, the Working one is refused in words; a twin $10,000 richer refers her as the Strong one does"
+    ],
+    "mutations": [
+     "B20-CAREER-10"
+    ],
+    "journeys": [
+     "the older graduate, tests/journey-career-older.test.ts"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.ask_referral"
@@ -153,26 +253,38 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, The Meeting: Ask To Move (RepresentationPane.tsx:182), grayed with moveRefusal’s words; and at the meeting’s stop, declared with defineStop (proagent.ts:935); opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1045 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx TimeControls.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also moveRefusal)",
-   "reads": "moveRefusal (proagent.ts:629): a meeting set and not yet happened, moved fewer than once (AGENT_TIMES.movesAllowed, an assumption)",
-   "changes": "The meeting a week later, its moves counted, its calendar item rescheduled, one meeting-moved event; at the stop the jump carries on (proagent.ts:1045-1059)",
-   "consumers": [],
-   "laterText": "The meeting’s handler at its new time (MEETING handler, proagent.ts:1140): kept if present, the decision five days on; missed, the approach closed for a year; Reliability counts meetings kept and missed | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "The refusal under the button; The Meeting’s When and Moved; the stop’s Ask To Move and its words; the guide’s His Office’s Answers And The Meeting (guide/career.ts:348)",
-   "saveLoad": "The relation’s meeting (at, moved, status); the scheduled meeting | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The stop at his meeting: Ask To Move (`defineStop`), and the Representation tab's Ask To Move.",
+   "prerequisites": "A meeting set and still to come, not moved before (`moveRefusal`, once).",
+   "reads": "The meeting and its item on the calendar.",
+   "changes": "The meeting a week later, its item rescheduled, moved counted, a meeting-moved event.",
+   "consumers": [
+    {
+     "what": "the meeting kept or missed at its new time",
+     "at": "src/engine/systems/proagent.ts:1185"
+    },
+    {
+     "what": "a second move refused",
+     "at": "src/engine/systems/proagent.ts:637"
+    }
+   ],
+   "experienced": "The stop carries the jump on; the meeting is on the calendar a week on, and kept there.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/journey-career.test.ts",
      "tests/journey-agent.test.ts",
-     "tests/pro-representation-screen.test.ts"
+     "tests/pro-representation-screen.test.ts",
+     "tests/journey-career.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.ask_to_move"
@@ -182,26 +294,50 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Portfolio, Reel: Recorded Work To Cut From and Cut A Reel (2 Hours, $250.00) (CareerWorkspace.tsx:314), grayed with reelRefusal’s words; opened by “Your Career” (tutorial.ts:475); registered by pro.ts:997 (from 2026-10-20) | guide: Your Career | CareerWorkspace.tsx",
-   "prerequisites": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: Your bank can’t cover …, so nothing was charged. (also reelRefusal)",
-   "reads": "reelRefusal (pro.ts:923) on reelSources (pro.ts:813): something recorded; one to four pieces, each once, each among the recorded work and usable (a voice brief has no picture); not the pieces the current reel holds; two hours free; the bank covering $250.00. The recorded work is each brief’s kept self-tapes, the School’s filmed monologues once DRAM 473b is passed and posted, and a screen credit’s footage once released",
-   "changes": "$250.00 through spend as a work cost, the clock two hours on, and a reel Material with its pieces copied in (title, band, date), numbered and kept to the last six (pro.ts:997-1015)",
-   "consumers": [],
-   "laterText": "reel | materialsCheck (pro.ts:863) for screen work and representation: no reel, a reel of self-tapes only, newer recorded work since it was cut; what his office has to go on (workSeen, proagent.ts:230, by the reel’s best band) and what’s new to it (caseKeys, proagent.ts:462, a better reel); a missing reel is what his office asks for (requestable, proagent.ts:426), and supplyRefusal (proagent.ts:606) reads one cut since; a submission sends it with screen work (submit, projobs.ts:833) | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
-   "experienced": "The toast; the panel’s pieces, a line each; Worth Doing under What’s Missing; the guide’s Your Reel (guide/career.ts:244)",
-   "saveLoad": "Person.pro.materials (kind reel: made, cost, pieces, contains) | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Portfolio: Cut A Reel, choosing up to four recorded pieces; grayed with reelRefusal's words.",
+   "prerequisites": "Recorded work usable on a reel (a camera self-tape, the posted filmed monologues, a released screen credit's footage); one to four pieces, each once; not the same set again; two free hours; $250 the bank can cover.",
+   "reads": "The recorded work (`reelSources`), the current reel, the clock, the bank.",
+   "changes": "$250 spent as a work cost, two hours on the clock, a reel material with its pieces and bands.",
+   "consumers": [
+    {
+     "what": "What's Missing and his office's check read the reel",
+     "at": "src/engine/systems/pro.ts:891"
+    },
+    {
+     "what": "his office's Your Work reads the reel's best band",
+     "at": "src/engine/systems/proagent.ts:239"
+    },
+    {
+     "what": "a better reel is something new after a decision",
+     "at": "src/engine/systems/proagent.ts:469"
+    },
+    {
+     "what": "a screen submission sends it",
+     "at": "src/engine/systems/projobs.ts:958"
+    }
+   ],
+   "experienced": "At once the Portfolio lists the reel with its pieces; his office's reading and screen casting take it from then.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/journey-agent.test.ts",
      "tests/pro-core.test.ts",
-     "tests/journey-career.test.ts"
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-effects.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-effects 8: a released screen credit's footage cut into a reel, refused before the release"
+    ],
+    "mutations": [
+     "B20-CAREER-14"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.cut_reel"
@@ -211,25 +347,48 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, The Agreement: Decline The Agreement (RepresentationPane.tsx:272), grayed with answerRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1080 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also answerRefusal)",
-   "reads": "answerRefusal (proagent.ts:649): an agreement offered and still standing",
-   "changes": "The agreement declined, the offer’s lapse called off, the approach closed with a six months’ hold and what was considered kept (closeApproach, proagent.ts:479), one declined event (proagent.ts:1080-1092)",
-   "consumers": [],
-   "laterText": "sendRefusal’s tooSoon (proagent.ts:511) says the decline and its date until the six months run, then nothingNew; activeAgreement never reads a declined agreement (it has no signedAt) | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "What’s Next and the send’s refusal with the date it can come from; History With His Office; the guide’s The Agreement (guide/career.ts:421)",
-   "saveLoad": "Person.pro.agreements (status declined); the relation’s stage, cooldown, considered and history | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation, The Agreement: Decline The Agreement, grayed with answerRefusal's words.",
+   "prerequisites": "An agreement he offered, still standing (`answerRefusal`).",
+   "reads": "The offered agreement.",
+   "changes": "The agreement declined, its lapse called off, the approach closed with six months' hold and something new needed (`closeApproach`), a declined event.",
+   "consumers": [
+    {
+     "what": "a send refused while the hold runs",
+     "at": "src/engine/systems/proagent.ts:514"
+    },
+    {
+     "what": "a new approach needs something new",
+     "at": "src/engine/systems/proagent.ts:526"
+    },
+    {
+     "what": "an agreement offered again says this one was declined (from brief 20)",
+     "at": "src/engine/systems/proagent.ts:893"
+    }
+   ],
+   "experienced": "The panel says the hold and its date; a send is refused with them until it ends; an offer on a later approach says he offered one before and she declined it.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
+     "tests/journey-agent.test.ts",
      "tests/journey-career.test.ts",
-     "tests/journey-agent.test.ts"
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-history.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-effects 3: declined against accepted at the same offer: held six months, said with its date, then something new asked for; signed, his breakdowns came; the open-only calls the same"
+    ],
+    "mutations": [
+     "B20-CAREER-11",
+     "B20-CAREER-4"
+    ],
+    "journeys": [
+     "life B (v1-7), tests/journey-career.test.ts"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.decline_agreement"
@@ -239,24 +398,40 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, Offers: Decline The Offer (OpportunitiesPane.tsx:196); and What Needs You on Home (requireDecision, projobs.ts:1006); opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1428 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: There’s no offer to decline.",
-   "reads": "An offer standing, else refused: There’s no offer to decline (projobs.ts:1431). It has no refusal function, since the button is drawn only on an offer",
-   "changes": "The offer’s lapse called off, one declined event, the role settled as declined and its decision resolved (settle, projobs.ts:868)",
-   "consumers": [],
-   "laterText": "declined | Nothing booked and no lapse to come; the decision gone from What Needs You; the role under Settled; an offer through him still counts as one under Equity’s 90 days (lastOffer, proagent.ts:657) | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The toast; Settled with the outcome; the guide’s Offers And Booked Work (guide/career.ts:726)",
-   "saveLoad": "The opportunity’s status, resolvedAt, outcome and history | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities, Offers: Decline The Offer, and What Needs You's Decline action.",
+   "prerequisites": "An offer standing (\"There's no offer to decline.\" otherwise).",
+   "reads": "The opportunity's status.",
+   "changes": "The offer's lapse called off; the opportunity settled as declined, its outcome kept (`settle`), its What Needs You question resolved.",
+   "consumers": [
+    {
+     "what": "a part declined comes round again only as a new casting, saying so (from brief 20)",
+     "at": "src/engine/systems/projobs.ts:422"
+    },
+    {
+     "what": "an offer through him, declined, counts for Equity's 90 days",
+     "at": "src/engine/systems/proagent.ts:660"
+    }
+   ],
+   "experienced": "The offer moves to Settled as declined; when the part comes round again its card and record say \"You declined …\".",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/pro-work.test.ts"
+     "tests/pro-work.test.ts",
+     "tests/b20-career-history.test.ts",
+     "tests/b20-career-effects.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-career-history 2: the same offer declined, let lapse and booked: the repost says each, and the booked part never comes round"
+    ],
+    "mutations": [
+     "B20-CAREER-2"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found. No test declines an offer through him with this command and then reads Equity's 90 days from it; tests/journey-agent.test.ts reads the 90 days from an offer declined in the record's shape.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.decline_offer"
@@ -266,28 +441,38 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, The Agreement: End It By Agreement, End It: No Offer In 90 Days and End It: Under Ten Days’ Work (RepresentationPane.tsx:282), each grayed with endRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1094 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also endRefusal)",
-   "reads": "endRefusal (proagent.ts:701): an agreement in force; by agreement at any time (an assumption that his office agrees); Equity’s, 90 days with no offer of covered work through him (lastOffer, proagent.ts:657, from the opportunities), not while employed on covered work under it, from its first work day until it’s finished (workingNow, proagent.ts:689; until 9c3e6fa5 only inside a work day’s own hours, which no player is in when a command is sent); SAG-AFTRA’s, from 151 days after signing and fewer than ten days of covered work in the last 91 (coveredDays, proagent.ts:665, from the engagements)",
-   "changes": "endAgreement (proagent.ts:1203): the agreement ended now with how, its items called off, the relation ended, one ended event and a notice saying what stays owed (stillOwed, proagent.ts:723)",
-   "consumers": [],
-   "laterText": "pro.agent_decision | activeAgreement (pro.ts:512) no longer holds after it, and still holds for a date inside it; the pay’s continuing commission on contracts made while it ran (commissionOn, propay.ts:332) and Still Owed After An Agreement Ended on the Work tab (owedAfterEnding, propay.ts:756); the postings no longer bring agent-only roles | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "Each ending’s refusal with the date it can come; the notice that the agreement ended, with what stays owed (titled with his name or his agency’s since the app walk of 2026-10-21, “His Office” until then); the guide’s The Agreement (guide/career.ts:421)",
-   "saveLoad": "Person.pro.agreements (status ended, endedAt, endedHow); the relation’s stage and history | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation, The Agreement: End It By Agreement, End It: No Offer In 90 Days, End It: Too Little Work, each grayed with endRefusal's words.",
+   "prerequisites": "Represented by him; by agreement any time; Equity's 90 days with no real offer through him, extended by days employed, and not while employed on covered work; SAG-AFTRA's 151 days and fewer than ten days' covered work in the last 91 (`endRefusal`).",
+   "reads": "The agreement in force, the offers through him, the engagements under it.",
+   "changes": "The agreement ended with how; the term's item called off; the relation ended, its considered keys kept, no hold; what it leaves owed said.",
+   "consumers": [
+    {
+     "what": "the agreement no longer in force for later dates",
+     "at": "src/engine/systems/pro.ts:527"
+    },
+    {
+     "what": "commission still owed on contracts made in the term",
+     "at": "src/engine/systems/propay.ts:342"
+    }
+   ],
+   "experienced": "At once a notice of the ending and what stays owed; his breakdowns stop; pay still to come on contracts from the term keeps its commission.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/journey-career.test.ts",
      "tests/journey-agent.test.ts",
-     "tests/pro-representation-screen.test.ts",
-     "tests/propay.test.ts",
-     "tests/propay-screen.test.ts"
+     "tests/journey-career.test.ts",
+     "tests/propay.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.end_agreement"
@@ -297,27 +482,38 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Portfolio, Headshots: Book A Headshot Session (4 Hours, $700.00) (CareerWorkspace.tsx:224), grayed with headshotRefusal’s words; opened by “Your Career” (tutorial.ts:475); registered by pro.ts:968 (from 2026-10-20) | guide: Your Career | CareerWorkspace.tsx",
-   "prerequisites": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: Your bank can’t cover …, so nothing was charged. (also headshotRefusal)",
-   "reads": "headshotRefusal (pro.ts:907): four hours free (startRefusal), a session starting from 9 AM to 4 PM, the bank covering $700.00 (spendRefusal, category career); each figure the game’s estimate (HEADSHOTS, pro.ts:436)",
-   "changes": "$700.00 through spend as a work cost (memo Headshot session), the clock four hours on, and a headshot Material with its source, date and contents, numbered among its kind and kept to the last six (addMaterial, keepBounded) (pro.ts:968-983)",
-   "consumers": [],
-   "laterText": "headshot | materialsCheck (pro.ts:863): no headshots blocks every purpose, two years on they read as out of date; read by the Career screen’s What’s Missing, pro.agent_check (checkRefusal, proagent.ts:534), pro.submit (submitRefusal, projobs.ts:625) and the agent’s breakdowns (agentTries, projobs.ts:850); out of date, his office can ask for new ones (requestable, proagent.ts:426; supplyRefusal, proagent.ts:606) | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
-   "experienced": "The toast; the panel’s Taken (its date, current or out of date), Where They Came From and What’s In Them; What’s Missing; the guide’s Headshots (guide/career.ts:162)",
-   "saveLoad": "Person.pro.materials (kind headshot: made, version, cost, source, contains), pro.made; the transaction | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Portfolio: Book A Headshot Session, grayed with headshotRefusal's words.",
+   "prerequisites": "Four free hours from 9 AM to 4 PM; $700 the bank can cover (`headshotRefusal`).",
+   "reads": "The clock, the calendar, the bank.",
+   "changes": "$700 spent as a work cost, four hours on the clock, a headshot material dated now.",
+   "consumers": [
+    {
+     "what": "every submission and approach needs headshots",
+     "at": "src/engine/systems/pro.ts:882"
+    },
+    {
+     "what": "headshots over two years old read as out of date, which his office can ask for",
+     "at": "src/engine/systems/pro.ts:883"
+    }
+   ],
+   "experienced": "What's Missing stops asking for headshots until they're two years old; Submit Yourself and Check Your Materials open.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-core.test.ts",
      "tests/pro-work.test.ts",
-     "tests/journey-agent.test.ts",
-     "tests/pro-screen.test.ts"
+     "tests/journey-agent.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.headshots"
@@ -327,27 +523,47 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Work, Your Unions: Join SAG-AFTRA ($3,244.07) (WorkPane.tsx:173), grayed with joinSagRefusal’s words; opened by the tutorial’s “Your Career” (tutorial.ts:475); registered by propay.ts:739 (from 2026-10-21) | guide: Your Career | WorkPane.tsx",
-   "prerequisites": "An engagement with promised pay, written by the work system on accepting an offer, and schedulePay called then; a payment not deferred, not received and not in trust; for Join SAG-AFTRA, eligibility from a first SAG-AFTRA principal role, not yet a member, and the bank covering the fee (joinSagRefusal) | refused where: Your bank can’t cover …, so nothing was charged. (also joinSagRefusal)",
-   "reads": "joinSagRefusal (propay.ts:690): not a member already; eligible from a first SAG-AFTRA principal role’s first day (a network drama or a Low Budget film, SAG_QUALIFIES, set by the SAG_ELIGIBLE handler, propay.ts:721, and the work day’s unionsFrom, projobs.ts:1163); the bank covering the initiation fee and half a year’s base dues",
-   "changes": "The fee through payFromBank (category dues), membership from now (pro.sag.memberSince), and the next half-year’s base dues billed (addBill, duesBill) (propay.ts:739-749)",
-   "consumers": [],
-   "laterText": "sagWorkRefusal (propay.ts:682) lifts the 30th day’s refusal at acceptance (acceptRefusal, projobs.ts:724); duesOn (propay.ts:377) takes 1.575% working dues from SAG-AFTRA pay; the base dues billed each May and November (DUES handler, propay.ts:715); the résumé lists SAG-AFTRA (resumeNow, pro.ts:769), which makes the current one behind | the tax return (figuresFor): New York taxes a nonresident’s New York work, Connecticut credits it, New York City only its residents; OPT’s weekly count (daysWorkedIn): each engagement’s days are days worked; Papers’ Your US Status (optRunsOut): when OPT’s days without work run out, by the work booked; unemployment’s base period and the month’s income tests, through recordWages and the salary transactions; the Work tab, Papers’ Your Work And Your Permission, Money’s statements and net worth’s held money",
-   "experienced": "The toast; Your Unions on the Work tab; the notice You Can Join SAG-AFTRA; the guide’s Your Unions (guide/career.ts:567)",
-   "saveLoad": "Person.pro.sag.memberSince; pro.unionBills; the transaction | Person.pro: engagements[].pay[].received and inTrust, engagements[].eligibility, unionBills, sag.eligibleSince and memberSince; the OPT document’s workedDays and idleDays; earnings’ years (acting, withheldBy, commission, dues, employers, elsewhere)",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Work, Your Unions: Join SAG-AFTRA, grayed with joinSagRefusal's words.",
+   "prerequisites": "Eligible (a SAG-AFTRA principal role worked), not a member, the fee in the bank (`joinSagRefusal`).",
+   "reads": "The SAG-AFTRA eligibility and the bank.",
+   "changes": "The fee paid as dues and counted in the year's dues (from brief 20, `countDues`); a member from now; the next half-year's base dues billed.",
+   "consumers": [
+    {
+     "what": "SAG-AFTRA work from the 30th day needs membership",
+     "at": "src/engine/systems/propay.ts:704"
+    },
+    {
+     "what": "working dues taken from SAG-AFTRA pay",
+     "at": "src/engine/systems/propay.ts:383"
+    },
+    {
+     "what": "the résumé lists SAG-AFTRA",
+     "at": "src/engine/systems/pro.ts:790"
+    },
+    {
+     "what": "the fee counted in the year's dues the return reads",
+     "at": "src/engine/systems/taxreturn.ts:960"
+    }
+   ],
+   "experienced": "The fee leaves the bank at once; later SAG-AFTRA pay has its working dues taken and the résumé reads behind until it says SAG-AFTRA.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/journey-career.test.ts",
-     "tests/propay.test.ts",
-     "tests/propay-screen.test.ts",
-     "tests/pro-work.test.ts"
+     "tests/propay.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "mutations": [
+     "B20-CAREER-20"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found. The fee's count in the year's dues is read by no test of this command (B20-CAREER-20 is killed by the Equity bills' count, `countDues` shared).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.join_sag"
@@ -357,15 +573,21 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, In Progress: Ask For Another Time (OpportunitiesPane.tsx:132), grayed with moveRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1377 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: — (also moveRefusal)",
-   "reads": "moveRefusal (projobs.ts:714): an audition in person to come, not moved before (WORK.movesAllowed), at least a day ahead, and another of casting’s times in the next three weekdays clear of the calendar with the trip (otherTime, projobs.ts:680; clashesAt, projobs.ts:699)",
-   "changes": "The round’s time and the audition’s calendar item moved to that time, its moves counted, one event (projobs.ts:1377-1394)",
-   "consumers": [],
-   "laterText": "The audition’s handler at the new time (AUDITION handler, projobs.ts:1228), which judges the round only at the time it holds; the School’s present() (awayAt, projobs.ts:483), so the classes or plan it cleared are kept | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The audition’s notice naming the clash and Ask For Another Time; the round’s history; the guide’s Auditions And Callbacks (guide/career.ts:670)",
-   "saveLoad": "The round’s at and moved; the opportunity’s auditionAt or callbackAt; the scheduled audition | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities, In Progress: Ask For Another Time, grayed with moveRefusal's words.",
+   "prerequisites": "An audition in person to come, more than a day away, not moved before, and a time casting has clear of the calendar (`moveRefusal`, `otherTime`).",
+   "reads": "The round, the calendar.",
+   "changes": "The round at the other time, its item rescheduled, moved counted, the move in the record.",
+   "consumers": [
+    {
+     "what": "the audition judged or missed at its new time",
+     "at": "src/engine/systems/projobs.ts:1362"
+    }
+   ],
+   "experienced": "The audition is on the calendar at the new time and stops the clock there.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-work.test.ts"
@@ -374,7 +596,7 @@
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.move_audition"
@@ -384,26 +606,47 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, In Progress and Booked Work: Break It Down, Learn The Lines and Rehearse It On Your Feet, each with its minutes (OpportunitiesPane.tsx:159), grayed with prepareRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1352 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: — (also prepareRefusal)",
-   "reads": "prepareRefusal (projobs.ts:650): sides only once an audition or callback is set, a part only while the work is live; one of the three steps; not done (0.97); lines before rehearsing; awake; on the feet, the energy and no injury; the step’s time free (startRefusal)",
-   "changes": "prepareOn (projobs.ts:1178): the clock on by the step’s time (a part’s twice the sides’), its part of the preparation moved by the brief’s gain at the hour’s focus, halved for each repeat that day, at the ability’s speed; the body exerted; the ability practised",
-   "consumers": [],
-   "laterText": "The sides’ preparation, read by the audition’s judge (auditionContext, projobs.ts:926) into the round’s band, which casting reads; half of it carried into the part at booking (projobs.ts:1410); the part’s preparation, read by each work day’s judge (workContext, projobs.ts:1062) into its band, the credit’s best band and a referral’s bar | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The toast; Preparing the sides and the part, each step’s percent; the guide’s Auditions And Callbacks (guide/career.ts:670)",
-   "saveLoad": "Opportunity.prep and Engagement.prep (interpretation, memorization, rehearsal) | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities: Break It Down, Learn The Lines, Rehearse It On Your Feet, on the sides of an audition to come and on the part once booked.",
+   "prerequisites": "Sides sent with an audition, or live booked work; the step not done to its most; lines before rehearsal; awake; on your feet, rested and uninjured; the step's time free (`prepareRefusal`).",
+   "reads": "The preparation so far, the hour's focus, the same step done today, the ability it trains, the way you prepare.",
+   "changes": "The sides' or the part's preparation moved, the clock on by the step's time, the body exerted, the ability practiced.",
+   "consumers": [
+    {
+     "what": "the audition judged with the sides' preparation",
+     "at": "src/engine/systems/projobs.ts:1052"
+    },
+    {
+     "what": "each work day judged with the part's",
+     "at": "src/engine/systems/projobs.ts:1189"
+    },
+    {
+     "what": "the part starts from half the sides'",
+     "at": "src/engine/systems/projobs.ts:1557"
+    }
+   ],
+   "experienced": "The card says how far each part stands; the tape, the audition and each day come out higher for it.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/journey-career.test.ts",
-     "tests/pro-work.test.ts",
-     "tests/pro-opportunities-screen.test.ts"
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/pro-work.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-effects 1: the same self-tape with its sides prepared against cold, taped at the same moment: prepared 100, Exceptional; cold 35, Unready, held back by its preparation; an agreement signed changes nothing"
+    ],
+    "mutations": [
+     "B20-CAREER-6"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.prepare"
@@ -413,25 +656,34 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, In Term At The School: the School’s conditions, each said, and Ask The School (OpportunitiesPane.tsx:102), grayed with requestRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1440 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: — (also requestRefusal)",
-   "reads": "requestRefusal (projobs.ts:766): at the School; a role not settled whose days fall in term (inSessionAt, projobs.ts:437); not asked already; good standing (the Bulletin’s); not an F-1 student, whom the School can’t authorize (CPT); an hour free",
-   "changes": "The request kept (first day, working days, class days), an hour on the clock, and the dean’s decision seven days on (pro.school_answer) (projobs.ts:1440-1456)",
-   "consumers": [],
-   "laterText": "pro.school_answer; requested | The dean (SCHOOL_ANSWER handler, projobs.ts:1324): approved where every condition holds (conditionsFor, projobs.ts:557), refused with those that fail, each said; acceptance reads it (the engagement’s school approved, projobs.ts:1411) and acceptWarning says so; approved, the work’s class days excused through present() (awayAt, projobs.ts:483); without approval, the academic warning, then dismissal (reportUnapproved, projobs.ts:1152) | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The conditions under In Term At The School; the dean’s notice with each condition; the offer’s warning; the guide’s Work While You’re At The School (guide/career.ts:777)",
-   "saveLoad": "Person.pro.outsideWork (status, decidedAt, why); the engagement’s school | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities: Ask The School under In Term At The School, grayed with requestRefusal's words.",
+   "prerequisites": "A student in good standing; a part not settled whose days fall in term; not asked already; not refused by an F-1 (`requestRefusal`); an hour free.",
+   "reads": "The School's standing, the term's calendar, the papers.",
+   "changes": "A request kept with its working and class days; the dean's answer on the clock a week on.",
+   "consumers": [
+    {
+     "what": "the dean decides on the clock",
+     "at": "src/engine/systems/projobs.ts:1472"
+    },
+    {
+     "what": "approved work's class days are excused",
+     "at": "src/engine/systems/projobs.ts:1483"
+    }
+   ],
+   "experienced": "The card says the dean decides on its date; a week on a notice says approved or refused, with the conditions.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/pro-work.test.ts",
-     "tests/pro-opportunities-screen.test.ts"
+     "tests/pro-work.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found. The request's `firstDay`, written and read by nothing, went in brief 20.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.request_outside_work"
@@ -441,27 +693,43 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, Your Materials For Him: Send Your Materials (RepresentationPane.tsx:149), grayed with sendRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1002 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also sendRefusal)",
-   "reads": "sendRefusal (proagent.ts:590): the notice read; no approach under way; an introduction, the School’s follow-up or a referral, else refused in the agency’s rule (agencyOf(agent).policy.words; its published words, quoted from the real agency, until the fictional agent took his place on 2026-10-21); a check passed; no cooling-off time running (a year after a pass, six months after no answer or a declined offer, tooSoon, proagent.ts:511) and something new since the last decision (nothingNew, proagent.ts:523), both assumptions said where they apply",
-   "changes": "The approach counted (sent:N), what was considered kept by key (caseKeys), the cooling-off cleared, the stage sent, and his office’s answer on the clock (pro.agent_reply, two weeks on, a week where the School passed on a request to meet), with its no-answer date six weeks on (proagent.ts:1002-1023)",
-   "consumers": [],
-   "laterText": "pro.reply | The answer (REPLY handler, proagent.ts:1110; answer, :771): interestOf’s seven factors (:292) and the pro.agent draw keyed by the approach (drawOf, :391) decide a request for what’s missing, a meeting, a pass with a year’s hold, or no answer (waiting, then unanswered at six weeks, SILENCE handler, :1103); Why It Went This Way keeps the reasons (keepWhy, :425) | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "What’s Next with the answer’s usual time and the no-answer date; the notices that his office asked for more, asked to meet, passed, or gave no answer (titled with his name or his agency’s since the app walk of 2026-10-21, “His Office” until then), each with the line a real agent’s carried until 2026-10-21; the guide’s The Agent And How To Reach Him (guide/career.ts:290)",
-   "saveLoad": "The relation: stage, considered, cooldown, request, meeting, why, history and counts; the scheduled answer | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation: Send Your Materials, grayed with sendRefusal's words.",
+   "prerequisites": "The notice read; no approach under way; a route (the School's follow-up or a referral), else the agency's rule; checked; no hold running and something new since the last decision (`sendRefusal`).",
+   "reads": "The relation, the route, the hold, the record's case keys, the reel.",
+   "changes": "An approach sent and counted, its case keys kept, the hold cleared, the stage sent; his office's answer on the clock, a week on where the School passed on a request, two weeks otherwise.",
+   "consumers": [
+    {
+     "what": "his office answers on the clock",
+     "at": "src/engine/systems/proagent.ts:1155"
+    },
+    {
+     "what": "the approach's case kept for the next decision",
+     "at": "src/engine/systems/proagent.ts:477"
+    }
+   ],
+   "experienced": "The panel says when the answer usually comes and when no answer counts as no; the answer comes as a notice.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/journey-career.test.ts",
-     "tests/journey-career-older.test.ts",
      "tests/journey-agent.test.ts",
-     "tests/pro-agent.test.ts"
+     "tests/b20-career-saveload.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/journey-career.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-skill: twins at the top and the bottom send the same approach and are answered the same way, his reasons equal factor for factor"
+    ],
+    "mutations": [
+     "B20-CAREER-17"
+    ],
+    "journeys": [
+     "life A (v1-21), life B (v1-7)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.send_materials"
@@ -471,25 +739,35 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Portfolio, Your Profile: Professional Name and Use This Name (CareerWorkspace.tsx:166), grayed with nameRefusal’s words; opened by the tutorial’s “Your Career” (tutorial.ts:475); registered by pro.ts:956 (from 2026-10-20) | guide: Your Career | CareerWorkspace.tsx",
-   "prerequisites": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: — (also nameRefusal)",
-   "reads": "nameRefusal (pro.ts:945): 40 characters at most, letters with spaces, hyphens, apostrophes and periods between them, not the name already in use; an empty name or the display name goes back to the display name",
-   "changes": "Person.pro.name set, or deleted to go back to the display name (pro.ts:956-966); nothing on the clock, no money",
-   "consumers": [],
-   "laterText": "profileOf’s name (pro.ts:748), on the Overview and the Portfolio; resumeNow (pro.ts:769), so a résumé is made under it, and resumeBehind (pro.ts:788): a résumé made under another name reads as behind, which materialsCheck (pro.ts:863) says as what Update Your Résumé brings up to date | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
-   "experienced": "The field and its placeholder (the display name); the toast; What’s Missing’s résumé line naming your name as the new one; the guide’s Your Professional Profile (guide/career.ts:116)",
-   "saveLoad": "Person.pro.name; a résumé’s name and keys (Material.name, Material.keys) | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Portfolio, Your Professional Name: Use This Name, grayed with nameRefusal's words.",
+   "prerequisites": "Letters with spaces, hyphens, apostrophes and periods, at most 40; not the name already (`nameRefusal`).",
+   "reads": "The display name and the professional name.",
+   "changes": "The professional name set, or back to the display name.",
+   "consumers": [
+    {
+     "what": "the profile and a résumé made now carry it",
+     "at": "src/engine/systems/pro.ts:765"
+    },
+    {
+     "what": "a résumé made under another name reads as behind",
+     "at": "src/engine/systems/pro.ts:786"
+    }
+   ],
+   "experienced": "The profile says the name at once; the résumé reads as behind until it's made again.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-core.test.ts",
-     "tests/pro-screen.test.ts"
+     "tests/pro-app.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.set_name"
@@ -499,25 +777,35 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, Open Calls: Submit Yourself (OpportunitiesPane.tsx:75), grayed with submitRefusal’s words; opened by the tutorial’s “Finding Work” (tutorial.ts:530); registered by projobs.ts:1343 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: — (also submitRefusal)",
-   "reads": "submitRefusal (projobs.ts:625): an open role posted to the actor (each Monday, the pro.posting decider, postingsAt, projobs.ts:399), not one his agent submits for, one whose office takes actors’ own submissions, before its window closes; eligibilityProblems (projobs.ts:596): Equity membership for a members’ call, the playing ages, a technique the part needs, no booking on its days; materialProblems (projobs.ts:616): headshots and a résumé, and a reel where the office asks for one",
-   "changes": "submit (projobs.ts:833): what was sent kept by id and date, the status submitted, one submitted event, and the casting office’s answer on the clock two days on (pro.reply)",
-   "consumers": [],
-   "laterText": "The answer (REPLY handler, projobs.ts:1222; setRound, projobs.ts:880): an audition in person on the calendar with its trip, or a self-tape due, said in a notice with any clash; then the round, casting’s decision (CASTING handler, projobs.ts:1244), an offer or a pass | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The toast; Submitted under In Progress; the notice An Audition For or A Self-Tape For; the guide’s Finding Work And Submitting (guide/career.ts:620)",
-   "saveLoad": "Person.pro.opportunities[].sent, status and history; the scheduled answer | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities, Open Calls: Submit Yourself, grayed with submitRefusal's words.",
+   "prerequisites": "An open role taking the actor's own submission, its window open; the ages, the union of a members' call, the required skills, no booking on its days; headshots, a résumé and a reel where casting asks (`submitRefusal`).",
+   "reads": "The opportunity, the actor's eligibility and materials.",
+   "changes": "What was sent kept, the role submitted, casting's answer on the clock two days on.",
+   "consumers": [
+    {
+     "what": "casting answers with a round",
+     "at": "src/engine/systems/projobs.ts:1356"
+    }
+   ],
+   "experienced": "The role moves to In Progress; two days on a notice sets the audition or the self-tape.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-work.test.ts",
-     "tests/pro-opportunities-screen.test.ts"
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-saveload.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "the older graduate"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.submit"
@@ -527,15 +815,25 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Representation, Your Materials For Him: Send What His Office Asked For (RepresentationPane.tsx:156), grayed with supplyRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1025 (from 2026-10-21) | guide: Representation | RepresentationPane.tsx",
-   "prerequisites": "The notice read before anything else (noticeRefusal, checkRefusal). A check refused while headshots or a résumé are missing, with materialsCheck's words. A referral from a finished engagement whose credit was judged Strong or better, once a job (referralRefusal, the bar assumed). A send only after an introduction, the School's follow-up or a referral; refused with the agency's published policy otherwise, while an approach is under way, during a year after a pass or six months after no answer or a declined offer, and with nothing new since the last decision (sendRefusal, all assumed but the policy). What was asked for made first (supplyRefusal). A meeting moved once, before it happens (moveRefusal). An offer answered while it stands (answerRefusal). Ending it: by agreement at any time; under Equity's 90 days with no offer through him, not while working; under SAG-AFTRA's 151 days and fewer than ten days' covered work in 91 (endRefusal) | refused where: — (also supplyRefusal)",
-   "reads": "supplyRefusal (proagent.ts:606): a request standing; each kind asked for made since (a reel cut, headshots newer than the request, a résumé no longer behind)",
-   "changes": "The request’s due item called off, what was considered kept, one supplied event, the request cleared, the stage sent, and the answer on the clock a week on (pro.agent_reply, after the request) (proagent.ts:1025-1043)",
-   "consumers": [],
-   "laterText": "pro.reply | The answer (REPLY handler, proagent.ts:1110): interestOf with the material sent, Reliability counting what was sent when asked (interestOf, proagent.ts:371-378), a meeting or a pass; not sent by its date, REQUEST_DUE (proagent.ts:1119) notes the request missed (request-missed), which Reliability counts against once, and decides on what it had (until a483247d it noted a problem, which Reliability counted with the problems the work loop copies onto the relationship, so a missed work day counted twice) | interestOf: his office's seven factors, each against the game's bar, read at every decision and by Why It Went This Way; replyOutcome, offerOutcome and followUpAsks with drawOf: the decisions, through the pro.agent decider; rosterFor: the year's room on his list, through the pro.roster decider; activeAgreement (systems/pro.ts): what the work loop and the pay read for represented on a date; the clock's stop: Ask To Move, declared with defineStop for pro.agent_meeting",
-   "experienced": "The refusal under the button naming what to make; What’s Next; the notice that his office asked for more (titled with his name or his agency’s since the app walk of 2026-10-21, “His Office” until then); the guide’s His Office’s Answers And The Meeting (guide/career.ts:348)",
-   "saveLoad": "The relation’s request, history (supplied), stage and considered | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Representation: Send What His Office Asked For, grayed with supplyRefusal's words.",
+   "prerequisites": "A request standing; each thing asked for made since (`supplyRefusal`).",
+   "reads": "The request and the materials.",
+   "changes": "The request's due item called off, supplied in his history, the stage sent, the answer on the clock a week on.",
+   "consumers": [
+    {
+     "what": "his office answers after the request",
+     "at": "src/engine/systems/proagent.ts:1161"
+    },
+    {
+     "what": "material sent when asked counts for reliability",
+     "at": "src/engine/systems/proagent.ts:376"
+    }
+   ],
+   "experienced": "A week on his office answers; Reliability says material was sent on time.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/journey-agent.test.ts",
@@ -543,9 +841,11 @@
     ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life B (v1-7)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.supply_material"
@@ -555,24 +855,39 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Opportunities, In Progress: Tape It (OpportunitiesPane.tsx:131), grayed with tapeRefusal’s words; opened by “Finding Work” (tutorial.ts:530); registered by projobs.ts:1362 (from 2026-10-21) | guide: Finding Work | OpportunitiesPane.tsx",
-   "prerequisites": "An open role posted to the actor and not yet closed, headshots and a résumé (and a reel where the casting office asks for one), the role's playing ages, Equity membership for an Equity open call, and no other booking on its days (submitRefusal); a round to come and the time free for each step of preparation (prepareRefusal); an hour free before a self-tape is due (tapeRefusal); a day's notice, once, and a time clear of the calendar (moveRefusal); permission to work for every day, no other booking, and out of term no School call on its days (acceptRefusal); a student in good standing whose role falls in term, not an F-1 student (requestRefusal) | refused where: — (also tapeRefusal)",
-   "reads": "tapeRefusal (projobs.ts:669): a self-tape asked for and still to come, an hour free before it’s due, a craft to tape, awake, the hour free (startRefusal)",
-   "changes": "Judged at once on the taped brief’s profile with the sides’ preparation (auditionContext, projobs.ts:926), the clock an hour on, energy spent; finishRound (projobs.ts:941): the round done with its band and what held it back, kept on the work record, and casting’s decision on the clock",
-   "consumers": [],
-   "laterText": "Casting’s decision (CASTING handler, projobs.ts:1244): the round’s band, the role’s fit and the field (castingDraw, projobs.ts:422, the pro.casting decider) → a callback, an offer or a pass; the work record and the journey (recordWork); not taped by its time, the TAPE_DUE handler (projobs.ts:1238) lapses the role | materialsCheck: what a submission and the agent's try at one read; usWorkAuthorized: every day of an offer, at acceptance; awayAt: the School's present(), so a class or a call inside a work day or an audition in person is missed, and approved work's class days excused; setStanding: work in term without approval; activeAgreement: the agent's breakdowns, the offers he handles, and the opportunity's and the engagement's agentId and agreementId for the pay and the agreement's rules; the pay's negotiatedAmount: scale plus ten on a represented actor's SAG-AFTRA offer (joined at the merge of 2026-10-21); the pay's schedulePay: the promised entries (joined at the merge of 2026-10-21)",
-   "experienced": "The toast with its band; the notices; Why It Went This Way under a settled role; the guide’s Auditions And Callbacks (guide/career.ts:670)",
-   "saveLoad": "The round (status, band, overall, held, casting); person.work | Person.pro: opportunities (status, sent, prep, rounds with their casting, offer, outcome, agentId and agreementId), engagements (days, prep, log, pay promised, school, creditId), credits, outsideWork, unapproved, equity and sag eligibility from a first contract",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Opportunities, In Progress: Tape It, grayed with tapeRefusal's words.",
+   "prerequisites": "A self-tape asked for and not yet due, with its hour before the deadline; awake; the hour free (`tapeRefusal`).",
+   "reads": "The sides' preparation, the role's techniques and families, the genre known for its project, the day's condition.",
+   "changes": "The tape judged (`evaluate`), kept on the work record, the round done with its band and what held it back; casting's decision on the clock.",
+   "consumers": [
+    {
+     "what": "casting reads the round's band",
+     "at": "src/engine/systems/projobs.ts:1397"
+    }
+   ],
+   "experienced": "At once the tape's band; casting's word comes as a notice, and Settled says what went into it.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/pro-work.test.ts"
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-effects.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-career-skill: twins at the top and the bottom tape the same prepared sides: the top 100, Exceptional, the bottom Unready",
+     "b20-career-effects 2: the project's genres known or not: the tape higher known; an unrelated genre, the same"
+    ],
+    "mutations": [
+     "B20-CAREER-16"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.tape_audition"
@@ -582,27 +897,40 @@
    "kind": "command",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "Career, Portfolio, Résumé: Make Your Résumé or Update Your Résumé (1 Hour) (CareerWorkspace.tsx:257), grayed with resumeRefusal’s words; opened by “Your Career” (tutorial.ts:475); registered by pro.ts:985 (from 2026-10-20) | guide: Your Career | CareerWorkspace.tsx",
-   "prerequisites": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal) | refused where: — (also resumeRefusal)",
-   "reads": "resumeRefusal (pro.ts:916): refused while the current résumé has everything on the record (resumeBehind empty), and while there isn’t an hour free (startRefusal)",
-   "changes": "A résumé Material made from the record now (resumeNow, pro.ts:769): the name, the unions, the training in true words, the professional credits, the School’s credits as school credits, the special skills, each line with its key; the clock an hour on; numbered and kept to the last six (pro.ts:985-995)",
-   "consumers": [],
-   "laterText": "resume | materialsCheck (pro.ts:863): no résumé blocks every purpose, one behind the record says what it lacks (resumeBehind, pro.ts:788); read by the Career screen’s What’s Missing, pro.agent_check, pro.submit and the agent’s breakdowns; a résumé behind is one thing his office can ask for (requestable, proagent.ts:426) | materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions; resumeBehind: the résumé’s standing; reelSources: what a reel can be cut from; profileOf: the profile on both tabs",
-   "experienced": "The toast; the panel’s Made, Standing (up to date, or what it lacks) and What It Says, line by line; What’s Missing; the guide’s Your Résumé (guide/career.ts:205)",
-   "saveLoad": "Person.pro.materials (kind resume: made, version, name, source, contains, keys) | Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "Career, Portfolio: Make Your Résumé or Update Your Résumé, grayed with resumeRefusal's words.",
+   "prerequisites": "No résumé, or one behind the record; an hour free (`resumeRefusal`).",
+   "reads": "The record as a résumé would say it (`resumeNow`): the name, the unions, the training, the credits, the special skills.",
+   "changes": "A résumé material with its lines and the record's keys, an hour on the clock.",
+   "consumers": [
+    {
+     "what": "every submission and approach needs a résumé",
+     "at": "src/engine/systems/pro.ts:885"
+    },
+    {
+     "what": "a résumé behind the record is something his office can ask for",
+     "at": "src/engine/systems/pro.ts:802"
+    }
+   ],
+   "experienced": "What's Missing stops asking until the record moves on; a submission sends it.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
      "tests/pro-core.test.ts",
-     "tests/pro-work.test.ts",
-     "tests/journey-agent.test.ts",
-     "tests/pro-screen.test.ts"
+     "tests/b20-career-effects.test.ts",
+     "tests/journey-agent.test.ts"
     ],
-    "comparisons": [],
+    "comparisons": [
+     "b20-career-effects 5 and 6: a credit makes the résumé behind until it's updated, and then it lists the credit"
+    ],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "pro.update_resume"
@@ -612,23 +940,41 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, five weekdays after a meeting kept (`DECISION_KIND`).",
+   "prerequisites": "The relation deciding on that meeting.",
+   "reads": "His office's factors (`interestOf`) and the approach's offer draw (`drawOf`).",
+   "changes": "An agreement offered for fourteen days (`offerAgreement`), or a pass held a year; the reasons kept for Why It Went This Way.",
+   "consumers": [
+    {
+     "what": "the offered agreement read by Accept and Decline",
+     "at": "src/engine/systems/proagent.ts:642"
+    },
+    {
+     "what": "a pass held a year",
+     "at": "src/engine/systems/proagent.ts:514"
+    }
+   ],
+   "experienced": "A notice: he offered representation (from brief 20 saying so again, and what came of the last, where there was one), or his office passed, with the date it looks again.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-saveload.test.ts",
+     "tests/b20-career-history.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "mutations": [
+     "B20-CAREER-4"
+    ],
+    "journeys": [
+     "life A (v1-21), life B (v1-7)"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "Found and repaired in brief 20: an offer after one declined, let lapse or ended read word for word as the first.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -637,23 +983,40 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, three days after the showcase's last performance (`FOLLOW_UP_KIND`), put on by the showcase.",
+   "prerequisites": "A showcase performed and not followed up.",
+   "reads": "The showcase's performances, his factors and the follow-up's draw.",
+   "changes": "The follow-up recorded; for each agent the relation introduced through the School, the notice read, and a request to meet passed on or not.",
+   "consumers": [
+    {
+     "what": "a send answering the request is answered in a week with a meeting",
+     "at": "src/engine/systems/proagent.ts:583"
+    },
+    {
+     "what": "the showcase is work his office has to go on",
+     "at": "src/engine/systems/proagent.ts:237"
+    }
+   ],
+   "experienced": "A notice from the School: the showcase passed on, and his office's request to meet if it asked.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-agent.test.ts",
+     "tests/journey-career.test.ts",
+     "tests/journey-career-older.test.ts",
+     "tests/b20-career-saveload.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21), life B (v1-7), the older graduate"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -662,23 +1025,39 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock at the meeting, a stop with Go, Stand Here and Ask To Move (`MEETING_KIND`).",
+   "prerequisites": "The meeting set and its item pending.",
+   "reads": "Whether the actor is there (awake, not in hospital or laid up) and not at an audition whose trip meets it (`attendedAcross`).",
+   "changes": "Kept: deciding, the decision on the clock. Missed: the approach closed and held a year.",
+   "consumers": [
+    {
+     "what": "the decision on the clock",
+     "at": "src/engine/systems/proagent.ts:1214"
+    },
+    {
+     "what": "a meeting kept or missed counts for reliability",
+     "at": "src/engine/systems/proagent.ts:374"
+    }
+   ],
+   "experienced": "A notice: met, with the decision's date; or missed, the approach closed and the year's hold.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-saveload.test.ts",
+     "tests/pro-work.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -687,23 +1066,38 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, the agreement's last day (`OFFER_LAPSE_KIND`).",
+   "prerequisites": "The agreement still offered.",
+   "reads": "The agreement's status.",
+   "changes": "The agreement lapsed, the approach closed and held six months.",
+   "consumers": [
+    {
+     "what": "a send refused while the hold runs",
+     "at": "src/engine/systems/proagent.ts:514"
+    },
+    {
+     "what": "an agreement offered again says this one lapsed (from brief 20)",
+     "at": "src/engine/systems/proagent.ts:893"
+    }
+   ],
+   "experienced": "A notice that it lapsed, with the hold's date; a later offer says he offered one before and she let it lapse.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-history.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-CAREER-4"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -712,23 +1106,31 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, the request's last day (`REQUEST_DUE_KIND`).",
+   "prerequisites": "The request still standing.",
+   "reads": "The request and his factors.",
+   "changes": "A request-missed event, then his office decides on what it has (`answer`).",
+   "consumers": [
+    {
+     "what": "material not sent counts against reliability",
+     "at": "src/engine/systems/proagent.ts:377"
+    }
+   ],
+   "experienced": "His office's decision comes then, its reasons saying the request wasn't met.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -737,23 +1139,31 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, six weeks after a send left unanswered (`SILENCE_KIND`).",
+   "prerequisites": "The relation waiting on that approach.",
+   "reads": "The relation's stage and approach.",
+   "changes": "The approach closed as unanswered and held six months.",
+   "consumers": [
+    {
+     "what": "a send refused while the hold runs",
+     "at": "src/engine/systems/proagent.ts:514"
+    }
+   ],
+   "experienced": "A notice that no answer means no, with the date a new approach can come.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -762,23 +1172,31 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, the agreement's year's end (`TERM_END_KIND`).",
+   "prerequisites": "The agreement accepted.",
+   "reads": "The agreement.",
+   "changes": "The agreement ended at its term, the relation ended, what it leaves owed said.",
+   "consumers": [
+    {
+     "what": "no longer in force after its end",
+     "at": "src/engine/systems/pro.ts:527"
+    }
+   ],
+   "experienced": "A notice that it ended at the end of its year; his breakdowns stop.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -787,23 +1205,38 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock at an audition in person, a stop with its trip (`AUDITION_KIND`).",
+   "prerequisites": "The round set at that time.",
+   "reads": "Whether the actor is there, at a work day, or at another commitment whose trip meets it; the sides' preparation, the role's techniques, the day's condition.",
+   "changes": "Judged (`evaluate`) and kept, the round done with its band, casting's decision on the clock; or missed and the role lapsed.",
+   "consumers": [
+    {
+     "what": "casting reads the band",
+     "at": "src/engine/systems/projobs.ts:1397"
+    },
+    {
+     "what": "the School counts the actor away for its hours",
+     "at": "src/engine/systems/projobs.ts:545"
+    }
+   ],
+   "experienced": "The band shows on the card; casting's word follows as a notice.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts"
+    ],
+    "comparisons": [
+     "b20-career-skill: twins at the top and the bottom at the same audition in person, the same preparation: 100, Exceptional, against Unready"
+    ],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found. Knowing the project's genres doesn't enter an audition in person's judgment, only a self-tape's and a shoot day's (the judge's task profiles); casting reads it through the fit.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -812,23 +1245,38 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, a day after a round casting cuts from, three after the last (`CASTING_KIND`).",
+   "prerequisites": "The round done and not yet decided.",
+   "reads": "The round's band, the role's fit (genre known and techniques), the field, a booking on its days.",
+   "changes": "A callback set, an offer made (`makeOffer`), or a pass; the chance and the fit kept on the round.",
+   "consumers": [
+    {
+     "what": "the offer read by Accept, Decline and What Needs You",
+     "at": "src/engine/systems/projobs.ts:1110"
+    }
+   ],
+   "experienced": "A notice: a callback, an offer, or not cast; Settled's Why It Went This Way gives the chance.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts"
+    ],
+    "comparisons": [
+     "b20-career-skill: at the top, casting's chance stays at or under 0.8, and of the eight fixed seeds two lost the part (chances 0.696 and 0.725); at the bottom none was cast"
+    ],
+    "mutations": [
+     "B20-CAREER-16"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -837,23 +1285,34 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, the offer's last moment (`OFFER_KIND`).",
+   "prerequisites": "The offer still standing.",
+   "reads": "The opportunity.",
+   "changes": "The offer lapsed, said, settled with its outcome.",
+   "consumers": [
+    {
+     "what": "the part comes round again saying the offer lapsed (from brief 20)",
+     "at": "src/engine/systems/projobs.ts:422"
+    }
+   ],
+   "experienced": "A notice that it lapsed; the part, posted again later, says so.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-history.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-CAREER-2"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -862,23 +1321,36 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, a screen project's release, months after its wrap (`RELEASE_KIND` in projobs).",
+   "prerequisites": "A screen credit shot.",
+   "reads": "The credit.",
+   "changes": "The credit released, dated (`releaseScreenCredit`), said.",
+   "consumers": [
+    {
+     "what": "a released credit's footage is recorded work for a reel",
+     "at": "src/engine/systems/pro.ts:847"
+    }
+   ],
+   "experienced": "A notice that the project is out; Cut A Reel lists its footage, and the reel's band reaches his office.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
+    "tests": [
+     "tests/b20-career-effects.test.ts",
+     "tests/pro-core.test.ts"
+    ],
+    "comparisons": [
+     "b20-career-effects 8: the footage refused before the release day and cut into a reel after it, through the clock"
+    ],
+    "mutations": [
+     "B20-CAREER-14"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found. Until brief 20 no test ran the clock to it (tests/pro-core.test.ts calls `releaseScreenCredit` itself).",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -887,23 +1359,40 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, two days after a submission (`REPLY_KIND` in projobs).",
+   "prerequisites": "The opportunity still submitted.",
+   "reads": "The project's stages.",
+   "changes": "The audition in person or the self-tape set (`setRound`), on the calendar, said with any clash.",
+   "consumers": [
+    {
+     "what": "the audition in person on the clock",
+     "at": "src/engine/systems/projobs.ts:1362"
+    },
+    {
+     "what": "the self-tape's deadline on the clock",
+     "at": "src/engine/systems/projobs.ts:1376"
+    }
+   ],
+   "experienced": "A notice of the audition or the self-tape, with the trip and any clash.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-saveload.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
-    "journeys": []
+    "journeys": [
+     "the older graduate"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found. The opportunity's `auditionAt` and `callbackAt`, written beside each round's time and read by nothing, went in brief 20.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -912,23 +1401,31 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, a week after a request to the School (`SCHOOL_ANSWER_KIND`).",
+   "prerequisites": "The request pending.",
+   "reads": "The School's conditions at the request's date (`conditionsFor`).",
+   "changes": "Approved or refused, with the conditions; approved, the booked work's class days excused.",
+   "consumers": [
+    {
+     "what": "the School excuses approved work's class days",
+     "at": "src/engine/systems/projobs.ts:557"
+    }
+   ],
+   "experienced": "A notice from the dean with the conditions that held or failed.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-work.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -937,23 +1434,31 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, the self-tape's deadline (`TAPE_DUE_KIND`).",
+   "prerequisites": "The round still set.",
+   "reads": "The round.",
+   "changes": "The round missed and the role lapsed, said.",
+   "consumers": [
+    {
+     "what": "the part comes round again saying the tape wasn't in (from brief 20)",
+     "at": "src/engine/systems/projobs.ts:422"
+    }
+   ],
+   "experienced": "A notice that the tape wasn't in; Settled says so.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-work.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -962,23 +1467,71 @@
    "kind": "scheduled",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock at each booked day, a stop with its trip (`WORK_DAY_KIND`).",
+   "prerequisites": "Live booked work, the day not yet logged.",
+   "reads": "Whether the actor is there; the part's preparation, the role's techniques and families, the project's genres known, the day's condition; at a night, composure and extraversion; the genres loved and agreeableness; in term, the School's approval.",
+   "changes": "A rehearsal moves the part's preparation; a night on stage takes its nerves first (from brief 20); a night or a shoot day is judged and kept, practice in the project's genres, the stage credit at the first night; every day enjoyed or not, the project's kinds against the genres loved and a rehearsal by agreeableness (from brief 20); the unions a first day brings (Equity by the contract, billed from brief 20; SAG-AFTRA eligibility); in term without approval the School's warning or dismissal; the last day finishes the work, the screen credit and its release on the clock. Missed: the company's warning or replacement.",
+   "consumers": [
+    {
+     "what": "the credit's band, read by a referral",
+     "at": "src/engine/systems/proagent.ts:548"
+    },
+    {
+     "what": "Equity's bills from a contract's first day (from brief 20)",
+     "at": "src/engine/systems/propay.ts:756"
+    },
+    {
+     "what": "practice in the project's genres, read by the next fit",
+     "at": "src/engine/systems/projobs.ts:342"
+    },
+    {
+     "what": "the School counts the actor away",
+     "at": "src/engine/systems/projobs.ts:545"
+    },
+    {
+     "what": "the nerves' stress, read by readiness, which the condition of the next piece of work reads (`conditionAt`)",
+     "at": "src/engine/systems/life.ts:301"
+    },
+    {
+     "what": "the day's morale, read by readiness the same way",
+     "at": "src/engine/systems/life.ts:304"
+    },
+    {
+     "what": "composure grown by facing a house, read by the next night's nerves",
+     "at": "src/engine/systems/attributes.ts:351"
+    }
+   ],
+   "experienced": "Each day's band on Booked Work; the credit on the profile; the wrap's notice; a later referral, résumé and reel read them; the mood and the stress the day leaves.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-defects.test.ts",
+     "tests/b20-career-saveload.test.ts"
+    ],
+    "comparisons": [
+     "b20-career-skill: the same booked days, the part prepared alike: the top Strong or better every day, the bottom Unready",
+     "b20-career-effects 2: the project's genres known against not: every day higher known; an unrelated genre, the same",
+     "b20-career-defects: a horror shoot day for an actress who loves horror against one who loves romantic comedy: higher morale and lower stress, judged the same; a night on stage for an extravert against an introvert: less stress; a rehearsal day for the agreeable against the blunt: higher morale"
+    ],
+    "mutations": [
+     "B20-CAREER-7",
+     "B20-CAREER-8",
+     "B20-CAREER-3",
+     "B20-CAREER-18",
+     "B20-CAREER-19"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "Found and repaired in brief 20: a professional day read neither nerves nor enjoyment, where a School night and rehearsal read both (found by the creation area). A shoot day takes no nerves: a crew, not a house, as a School tape takes none.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -987,23 +1540,52 @@
    "kind": "reactor",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "The clock, every Monday at nine it passes (`onPassage`): the Opportunities tab's Open Calls and Through An Agent.",
+   "prerequisites": "The player's life; a part written for the actor; a way to reach them (open, or through an agent in force within his fields); not posted again until ten weeks on and the work its last posting cast is over; never once booked or credited.",
+   "reads": "The agreement in force that Monday, who each part is written for, the record's postings, bookings and credits, the week's draw (`pro.posting`).",
+   "changes": "Each part drawn posted (from brief 20, a part posted again says it's a new casting and what came of the last time); windows passed closed as lapsed; the agent tries his submissions.",
+   "consumers": [
+    {
+     "what": "Submit Yourself reads the posting",
+     "at": "src/engine/systems/projobs.ts:747"
+    },
+    {
+     "what": "the agent submits where it suits",
+     "at": "src/engine/systems/projobs.ts:973"
+    },
+    {
+     "what": "the card says what came of the last time (from brief 20)",
+     "at": "src/ui/career/OpportunitiesPane.tsx:71"
+    }
+   ],
+   "experienced": "New roles each Monday on the tab; a part posted again says so; his submissions come as notices.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts. The last posting of each part is kept past the record's bounds (`lastPosted`).",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-history.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ],
+    "comparisons": [
+     "b20-career-skill: twins at the top and the bottom posted the same parts week by week, unsigned and through him",
+     "b20-career-effects 5 and 6: a credited part never posted again, the declined twin's posted again, every other part the same weeks"
+    ],
+    "mutations": [
+     "B20-CAREER-1",
+     "B20-CAREER-2",
+     "B20-CAREER-5",
+     "B20-CAREER-15"
+    ],
+    "journeys": [
+     "life A (v1-21)"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "Found and repaired in brief 20: a part came round ten weeks on in the middle of the run that had cast it, saying nothing of the first time (D4).",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1012,23 +1594,42 @@
    "kind": "event",
    "area": "career",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "An event: said by the School at the degree (`setStanding`) and, from brief 20, by the work loop at an Equity contract's first day (`unionsFrom`).",
+   "prerequisites": "Not already a member.",
+   "reads": "The membership and the bills on record.",
+   "changes": "Equity's bills: the initiation fee in three parts, the first taken at once, the half-years' dues on the clock; each counted in the year's dues when settled (from brief 20).",
+   "consumers": [
+    {
+     "what": "the bills, each settled on its day",
+     "at": "src/engine/systems/propay.ts:737"
+    },
+    {
+     "what": "the dues counted in the year the return reads",
+     "at": "src/engine/systems/taxreturn.ts:960"
+    }
+   ],
+   "experienced": "A notice of the fee and its parts, saying how the membership came; the bills on the Work tab and Money.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts. Each bill is keyed (`addBill`), so it's charged once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/b20-career-defects.test.ts",
+     "tests/journey-career-older.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "mutations": [
+     "B20-CAREER-3",
+     "B20-CAREER-20"
+    ],
+    "journeys": [
+     "the older graduate"
+    ]
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "Found and repaired in brief 20: a member by an Equity contract was never billed; and the fee and the dues paid from the bank never reached the year's dues the return reads.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1036,24 +1637,30 @@
    "id": "notice.systems/proagent#tell",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Tells the player what his office did, in his name and his agency's, as it happens, and where to act next.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, from the agent's steps (`tell`), routed to the Representation tab.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read in order in tests/journey-agent.test.ts; the second offer's says so (tests/b20-career-history.test.ts).",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/pro-agent.test.ts",
+     "tests/b20-career-history.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1061,24 +1668,30 @@
    "id": "notice.systems/projobs#tell",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Tells the player what casting, the agent and the work did: a round set, a pass, an offer lapsed, a wrap, a release, a missed day.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, from the work loop's steps (`tell`), routed to the Career screen.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read word for word in tests/pro-work.test.ts; his submission notice says a part is posted again (tests/b20-career-history.test.ts).",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-history.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1086,24 +1699,29 @@
    "id": "notice.systems/propay#payDue",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says what the production paid, what was withheld and taken, and where it went.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, at a payday: paid, or held in the agency's trust account.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read to the cent in tests/propay.test.ts.",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/propay-screen.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1111,24 +1729,28 @@
    "id": "notice.systems/propay#release",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says what was held, the commission and what reached the bank.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, when the agency passes pay on.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read to the cent in tests/propay.test.ts.",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/propay.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1136,24 +1758,28 @@
    "id": "notice.systems/propay#settle",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says the bill was paid or owed.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, at a union bill.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read in tests/propay.test.ts.",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/propay.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1161,24 +1787,29 @@
    "id": "notice.systems/propay#equityJoined",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says the fee, its parts and dates, and how the membership came.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, when Equity's membership begins.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read in tests/propay.test.ts (the degree) and tests/b20-career-defects.test.ts (a contract, from brief 20).",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/b20-career-defects.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1186,24 +1817,29 @@
    "id": "notice.systems/propay#equityOnOpening",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says what Equity is owed and that nothing was charged for a past date.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, once, on an older graduate's first opening.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read in tests/propay.test.ts and tests/journey-career-older.test.ts.",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/journey-career-older.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1211,24 +1847,28 @@
    "id": "notice.systems/proshowcase#beginShowcase",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says the showcase's dates and what to choose by when.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, at the final term's start.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read in tests/pro-showcase.test.ts.",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-showcase.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   },
@@ -1236,24 +1876,28 @@
    "id": "notice.systems/proshowcase#decide",
    "kind": "notice",
    "area": "career",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "purpose": "Says the student is in the showcase with their scenes, or out for an Incomplete.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74",
+   "where": "What Needs You, at the fourth week's end.",
+   "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
+   "reads": "What the step that sends it decided.",
+   "changes": "A notice in What Needs You, routed to the Career screen's tab it's about.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "Read in tests/pro-showcase.test.ts.",
+   "saveLoad": "Notices are in the save; each is sent by a step that runs once.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/pro-showcase.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
    "prior": null
   }
@@ -1264,440 +1908,858 @@
    "kind": "optional",
    "claim": "What’s Missing names headshots first when you have none, since every submission starts with one.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`materialsCheck` lists the missing headshots first (src/engine/systems/pro.ts:882), and the Overview draws its list in that order.",
+   "tests": [
+    "tests/pro-screen.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-screen.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.overview>documents.work",
    "kind": "prerequisite",
    "claim": "Permission To Work on the Overview is the same permission Papers shows under Permission To Work.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The Overview's line is `eligibilityOf` (src/engine/systems/pro.ts:704), which reads `usWorkAuthorized`, as Papers does.",
+   "tests": [
+    "tests/pro-core.test.ts",
+    "tests/pro-screen.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts",
+     "tests/pro-screen.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.profile>career.resume",
    "kind": "immediate",
    "claim": "Your résumé uses your professional name, and one made under another name reads as behind.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A résumé is made under the professional name and keyed by it (src/engine/systems/pro.ts:786), so one under another name is behind.",
+   "tests": [
+    "tests/pro-core.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.profile>craft.profile",
    "kind": "history",
    "claim": "Your special skills are your techniques on the Player Profile, at the level it shows.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`skillsOf` reads the craft's techniques at their levels (src/engine/systems/pro.ts:682).",
+   "tests": [
+    "tests/pro-app.test.ts",
+    "tests/pro-core.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-app.test.ts",
+     "tests/pro-core.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.headshots>career.overview",
    "kind": "immediate",
    "claim": "Once you have headshots, What’s Missing stops asking for them, until they’re more than two years old.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`materialsCheck`: missing, then out of date past two years (src/engine/systems/pro.ts:883).",
+   "tests": [
+    "tests/pro-core.test.ts",
+    "tests/journey-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts",
+     "tests/journey-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.headshots>bank.accounts",
    "kind": "immediate",
    "claim": "The session’s price comes out of your bank as a work cost.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`pro.headshots` spends through `spend` as a career cost (src/engine/systems/pro.ts:989).",
+   "tests": [
+    "tests/pro-core.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.resume>career.overview",
    "kind": "immediate",
    "claim": "Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`resumeBehind` (src/engine/systems/pro.ts:802), read by `materialsCheck`.",
+   "tests": [
+    "tests/pro-core.test.ts",
+    "tests/b20-career-effects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.resume>productions.nights",
    "kind": "history",
    "claim": "A School production’s part goes on your résumé once its run has closed.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`schoolCreditsOf` lists a run closed (src/engine/systems/pro.ts:658), which `resumeNow` adds.",
+   "tests": [
+    "tests/pro-core.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reel>craft.brief-tape",
    "kind": "prerequisite",
    "claim": "A self-tape of a practice brief is the first recorded work a reel can be cut from.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`reelSources` offers a camera brief's takes (src/engine/systems/pro.ts:827).",
+   "tests": [
+    "tests/pro-core.test.ts",
+    "tests/journey-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts",
+     "tests/journey-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reel>career.overview",
    "kind": "immediate",
    "claim": "Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`materialsCheck`: a missing reel, then newer work since it was cut (src/engine/systems/pro.ts:899).",
+   "tests": [
+    "tests/pro-core.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-core.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent>career.headshots",
    "kind": "prerequisite",
    "claim": "A check refuses an approach with no headshots, since every submission starts with one.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`checkRefusal` refuses on the blocking materials (src/engine/systems/proagent.ts:537).",
+   "tests": [
+    "tests/journey-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent>career.resume",
    "kind": "prerequisite",
    "claim": "A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The check's blocking résumé, and `requestable` lists a résumé behind (src/engine/systems/proagent.ts:429).",
+   "tests": [
+    "tests/journey-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent>career.agent-answers",
    "kind": "scheduled",
    "claim": "Sending your materials puts his office’s answer on the way, about ${TIME_WORDS.reply} on.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`pro.send_materials` puts the answer on the clock at `AGENT_TIMES.replyDays` (src/engine/systems/proagent.ts:1065).",
+   "tests": [
+    "tests/journey-agent.test.ts",
+    "tests/b20-career-saveload.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-saveload.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent-answers>career.reasons",
    "kind": "evaluation",
    "claim": "A meeting kept or missed, and material sent when asked, are read under Reliability.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Reliability counts meetings kept and missed and material supplied or not (src/engine/systems/proagent.ts:374).",
+   "tests": [
+    "tests/journey-agent.test.ts",
+    "tests/pro-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/pro-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent-answers>day.clock",
    "kind": "scheduled",
    "claim": "A meeting stops the clock like any commitment, and offers Ask To Move at the stop.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The meeting wants the player (`requiresPlayer`, src/engine/systems/proagent.ts:872) and its stop has Ask To Move (src/engine/systems/proagent.ts:980).",
+   "tests": [
+    "tests/journey-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reasons>career.reel",
    "kind": "evaluation",
    "claim": "Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`workSeen` takes the reel's best band (src/engine/systems/proagent.ts:239), and the reel is screen work for Stage And Screen.",
+   "tests": [
+    "tests/journey-agent.test.ts",
+    "tests/b20-career-effects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reasons>career.agent",
    "kind": "history",
    "claim": "Each answer his office gives keeps its reasons here.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`keepWhy` copies each decision's reasons in (src/engine/systems/proagent.ts:447).",
+   "tests": [
+    "tests/pro-agent.test.ts",
+    "tests/pro-representation-screen.test.ts",
+    "tests/b20-career-skill.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-agent.test.ts",
+     "tests/pro-representation-screen.test.ts",
+     "tests/b20-career-skill.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agreement>documents.work",
    "kind": "optional",
    "claim": "Signing with him gives no permission to work: Papers, under Permission To Work, still says what you may do.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`usWorkAuthorized` reads no agreement (src/engine/systems/permission.ts:115).",
+   "tests": [
+    "tests/journey-agent.test.ts",
+    "tests/b20-career-effects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agreement>career.agent",
    "kind": "history",
    "claim": "Accepting, declining and the agreement’s end each go in History With His Office.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Accepted, declined and ended are each noted in his history (src/engine/systems/proagent.ts:1119, src/engine/systems/proagent.ts:1135, src/engine/systems/proagent.ts:1259).",
+   "tests": [
+    "tests/journey-agent.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.pay>bank.accounts",
    "kind": "scheduled",
    "claim": "Each payment lands in your account on its payday, or from your agency’s trust account a few business days later.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`payDue` posts to the payee account or the trust account (src/engine/systems/propay.ts:469), `release` on from it (src/engine/systems/propay.ts:520).",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/b20-career-effects.test.ts",
+    "tests/b20-career-saveload.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-saveload.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.pay>taxes.return",
    "kind": "evaluation",
    "claim": "Your tax return reads each payment’s wages, withholding, commission, dues and the town the work was done in.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`payDue` reports through `recordWages` with the employer, withholding, commission, dues and town (src/engine/systems/propay.ts:497), which the return reads.",
+   "tests": [
+    "tests/propay.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/propay.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.pay>documents.work",
    "kind": "prerequisite",
    "claim": "Each engagement’s dates are read against your permission to work when you book it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`schedulePay` keeps `eligibilityRead` for the dates (src/engine/systems/propay.ts:555); acceptance reads `usWorkAuthorized` for each day.",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/b20-career-effects.test.ts",
+    "tests/propay-screen.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-effects.test.ts",
+     "tests/propay-screen.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.commission>career.pay",
    "kind": "immediate",
    "claim": "Commission comes off your pay as it passes through your agency’s trust account.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`release` posts the commission off what the trust account holds (src/engine/systems/propay.ts:528).",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/b20-career-effects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.commission>taxes.return",
    "kind": "evaluation",
    "claim": "The year’s commission counts toward the performing artist’s deduction the return works out.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
+   "holds": "The pay records the commission into the year (src/engine/systems/earnings.ts:187), and the return's deduction takes commission and dues (src/engine/systems/taxreturn.ts:960).",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/safetynet.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/safetynet.test.ts"
+    ]
+   },
    "status": "Implemented, Verification Incomplete",
-   "why": "",
-   "seeded": true
+   "why": "Each link is tested: tests/propay.test.ts reads a played payment's commission in the year, and tests/safetynet.test.ts the deduction from wages recorded by hand. No test plays a career's commission through to a return's deduction: it needs two qualifying employers in a year, which no played life here has had.",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.unions>bank.accounts",
    "kind": "scheduled",
    "claim": "Each union bill comes out of your bank on its day.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Each bill is settled from the bank or owed (src/engine/systems/propay.ts:627).",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/b20-career-defects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/b20-career-defects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.unions>career.resume",
    "kind": "history",
    "claim": "Your résumé lists your unions once you’re a member.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`resumeNow` lists each union a member of (src/engine/systems/pro.ts:789).",
+   "tests": [
+    "tests/journey-career.test.ts",
+    "tests/pro-core.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/journey-career.test.ts",
+     "tests/pro-core.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.unions>taxes.return",
    "kind": "evaluation",
    "claim": "Dues count toward the cost of your work on the year’s return.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
+   "holds": "The pay records the working dues into the year (src/engine/systems/earnings.ts:188), each union bill and SAG-AFTRA's joining fee are counted there when settled (src/engine/systems/propay.ts:619, from brief 20), and the return's deduction takes them (src/engine/systems/taxreturn.ts:960).",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/b20-career-defects.test.ts",
+    "tests/safetynet.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/propay.test.ts",
+     "tests/b20-career-defects.test.ts",
+     "tests/safetynet.test.ts"
+    ]
+   },
    "status": "Implemented, Verification Incomplete",
-   "why": "",
-   "seeded": true
+   "why": "Each link is tested: tests/propay.test.ts reads the working dues in the year and tests/b20-career-defects.test.ts the fee and the dues paid from the bank, both played; tests/safetynet.test.ts the deduction from wages recorded by hand. No test plays a career through to a return's deduction, which needs two qualifying employers in a year. Until brief 20 only the working dues reached the year (a defect, repaired).",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.opportunities>career.headshots",
    "kind": "prerequisite",
    "claim": "A submission starts with your headshots: without them it can’t be sent.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`materialsCheck`'s missing headshots block a submission (src/engine/systems/projobs.ts:756).",
+   "tests": [
+    "tests/pro-work.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.opportunities>career.auditions",
    "kind": "scheduled",
    "claim": "A submission puts the casting office’s answer on the clock, and the answer sets an audition.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A submission puts casting's answer on the clock (src/engine/systems/projobs.ts:967), which sets the round.",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/b20-career-skill.test.ts",
+    "tests/b20-career-effects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.auditions>career.offers",
    "kind": "evaluation",
    "claim": "Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`castingDraw` reads the band, the fit and the field (src/engine/systems/projobs.ts:372).",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/b20-career-skill.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-skill.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.auditions>day.calendar",
    "kind": "scheduled",
    "claim": "An audition in person goes on your calendar with its trip, and stops the clock when it comes.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The audition in person wants the player with its trip (src/engine/systems/projobs.ts:1021).",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/pro-app.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/pro-app.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.offers>documents.work",
    "kind": "prerequisite",
    "claim": "An offer can be accepted only where your permission to work covers every one of its days.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`acceptRefusal` reads `usWorkAuthorized` for every day (src/engine/systems/projobs.ts:851).",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/b20-career-effects.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/b20-career-effects.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.offers>career.resume",
    "kind": "history",
    "claim": "The part goes on your professional credits, and your résumé reads as behind until it has it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The work day adds the credit (src/engine/systems/projobs.ts:1452) and `finish` the screen one; `resumeBehind` reads it.",
+   "tests": [
+    "tests/b20-career-effects.test.ts",
+    "tests/pro-work.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/b20-career-effects.test.ts",
+     "tests/pro-work.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.offers>day.calendar",
    "kind": "scheduled",
    "claim": "Accepting puts each work day on your calendar, and each stops the clock for you.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`bookDays` puts each day on the calendar wanting the player (src/engine/systems/projobs.ts:1176).",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/pro-opportunities-screen.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/pro-opportunities-screen.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.outside-work>school.standing",
    "kind": "immediate",
    "claim": "Work in term without approval moves your standing to academic warning, and a second time to dismissal.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`reportUnapproved` steps the standing (src/engine/systems/projobs.ts:1278).",
+   "tests": [
+    "tests/pro-work.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.outside-work>career.offers",
    "kind": "prerequisite",
    "claim": "An offer in term is accepted on the School’s approval, or against it with the warning said first.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The offer's question carries `acceptWarning` (src/engine/systems/projobs.ts:1131).",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/pro-opportunities-screen.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-work.test.ts",
+     "tests/pro-opportunities-screen.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>coursework.prepare",
    "kind": "immediate",
    "claim": "Your two scenes become pieces of coursework, each prepared with its own steps.",
    "entryFile": "src/engine/content/guide/showcase.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`setScenes` makes each scene a piece of DRAM 793b's coursework (src/engine/systems/proshowcase.ts:378).",
+   "tests": [
+    "tests/pro-showcase.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-showcase.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>coursework.feedback",
    "kind": "evaluation",
    "claim": "Each scene’s note comes at its first showcase day, and Los Angeles shows whether you took it.",
    "entryFile": "src/engine/content/guide/showcase.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`perform` shows a scene with its note at its first day and again with the note taken in Los Angeles (src/engine/systems/proshowcase.ts:472).",
+   "tests": [
+    "tests/pro-showcase.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-showcase.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>school.repeat",
    "kind": "prerequisite",
    "claim": "An Incomplete still open at the end of the ${TERM_WEEK} keeps you out of the showcase.",
    "entryFile": "src/engine/content/guide/showcase.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "`decide` keeps a student with an Incomplete out at the fourth week's end (src/engine/systems/proshowcase.ts:414).",
+   "tests": [
+    "tests/pro-showcase.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-showcase.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>career.overview",
    "kind": "history",
    "claim": "How each scene went at each showcase day stays on your professional record.",
    "entryFile": "src/engine/content/guide/showcase.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Each scene at each day is kept in `pro.showcase.performed` (src/engine/systems/proshowcase.ts:506).",
+   "tests": [
+    "tests/pro-showcase.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/pro-showcase.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "e0b60f74"
   }
  ]
 }

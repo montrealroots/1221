@@ -170,18 +170,20 @@ interface Watched { what: string; at: number; changed: string[] }
  * items are inside it. A step that takes time moves the body's day beside an hour only waited (exertion, hunger);
  * preparation trains the abilities its steps train (`ordinary`); judged work goes on the work record and the journey,
  * and a night or a shoot day is work in its genres (J6); money moves through the ledger, and wages onto the year's
- * earnings.
+ * earnings. From 2026-10-21 (brief 20): a union's fee or dues paid from the bank counts in the year's dues too, as the
+ * working dues taken from pay always did, so Join SAG-AFTRA and a union bill write the papers; and a night on stage takes
+ * its nerves, which grow composure and presence, so a work day may write the abilities.
  */
 const MAY: Readonly<Record<string, readonly string[]>> = {
   'school.choose_showcase': ['school'],
   'pro.headshots': ['body', 'ledger'], 'pro.update_resume': ['body'], 'pro.cut_reel': ['body', 'ledger'],
   'pro.agent_check': [], 'pro.send_materials': [], 'pro.supply_material': [], 'pro.accept_agreement': [], 'pro.decline_agreement': [], 'pro.end_agreement': [],
-  'pro.ask_to_move': [], 'pro.join_sag': ['ledger'],
+  'pro.ask_to_move': [], 'pro.join_sag': ['ledger', 'papers'],
   'pro.prepare': ['body', 'abilities'], 'pro.tape_audition': ['body', 'work'], 'world.take_decision_action': [],
   [FOLLOW_UP_KIND]: [], [AGENT_REPLY_KIND]: [], [MEETING_KIND]: [], [DECISION_KIND]: [],
   [REPLY_KIND]: [], [TAPE_DUE_KIND]: [], [CASTING_KIND]: [], [AUDITION_KIND]: ['work'],
-  [WORK_DAY_KIND]: ['work', 'genres', 'body'], [SAG_ELIGIBLE_KIND]: [],
-  [PAY_KIND]: ['ledger', 'papers'], [RELEASE_KIND]: ['ledger'], [DUES_KIND]: ['ledger'],
+  [WORK_DAY_KIND]: ['work', 'genres', 'body', 'abilities'], [SAG_ELIGIBLE_KIND]: [],
+  [PAY_KIND]: ['ledger', 'papers'], [RELEASE_KIND]: ['ledger'], [DUES_KIND]: ['ledger', 'papers'],
 };
 /** How many of each kind are watched: enough to see what the kind writes, few enough to play in time. */
 const WATCH_EACH = 2;

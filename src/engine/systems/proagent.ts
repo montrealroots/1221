@@ -885,8 +885,24 @@ function present(person: Person, at: Instant): boolean {
   return !asleep && !inHospital(person, at) && !laidUp(person, at);
 }
 
+/**
+ * The agreement he offered or signed before, in a sentence, where there was one: a second offer says what came of the
+ * first (from 2026-10-21, brief 20's D1: until then an offer after one declined, let lapse or ended read word for word as
+ * the first had, as if none had been).
+ */
+export function agreementBefore(sim: Simulation, person: Person, agent: Agent): string | undefined {
+  const z = sim.zone;
+  const before = (person.pro?.agreements ?? []).filter((a) => a.agentId === agent.id && a.status !== 'offered').sort((a, b) => b.offeredAt - a.offeredAt)[0];
+  if (!before) return undefined;
+  if (before.status === 'declined') return `He offered you one before, on ${formatDate(before.offeredAt, z)}, and you declined it.`;
+  if (before.status === 'lapsed') return `He offered you one before, on ${formatDate(before.offeredAt, z)}, and you let it lapse.`;
+  if (before.signedAt !== undefined) return `He represented you before, from ${formatDate(before.signedAt, z)}${before.endedAt !== undefined ? ` until ${formatDate(before.endedAt, z)}` : ''}.`;
+  return undefined;
+}
+
 function offerAgreement(sim: Simulation, person: Person, agent: Agent, rel: AgentRelation, key: string): Agreement {
   const z = sim.zone;
+  const before = agreementBefore(sim, person, agent);
   const agreement: Agreement = {
     id: sim.nextId('pro'), agentId: agent.id, offeredAt: sim.now,
     standsUntil: addDays(sim.now, AGREEMENT.offerStandsDays, officeZone(agent)), status: 'offered',
@@ -895,9 +911,9 @@ function offerAgreement(sim: Simulation, person: Person, agent: Agent, rel: Agen
   };
   ensurePro(sim, person).agreements.push(agreement);
   setStage(sim, rel, 'offered');
-  note(sim, rel, 'offer', key, `He offered you representation: an agreement for one year, standing until ${formatDate(agreement.standsUntil, z)}.`, agreement.id);
+  note(sim, rel, 'offer', key, `He offered you representation${before ? ' again' : ''}: an agreement for one year, standing until ${formatDate(agreement.standsUntil, z)}.${before ? ` ${before}` : ''}`, agreement.id);
   sim.schedule({ at: agreement.standsUntil, kind: OFFER_LAPSE_KIND, label: `Last Day Of The Offer From ${agencyOf(agent).name}`, category: 'career', priority: 40, refType: 'pro-agreement', refId: agreement.id, payload: { personId: person.id, agentId: agent.id, agreementId: agreement.id } });
-  tell(sim, person, agent, `${agent.name} Offered You Representation`, `${agent.name} has offered to represent you at ${agencyOf(agent).name}: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until ${formatDate(agreement.standsUntil, z)}.`, 75);
+  tell(sim, person, agent, `${agent.name} Offered You Representation${before ? ' Again' : ''}`, `${agent.name} has offered to represent you at ${agencyOf(agent).name}: an agreement for one year.${before ? ` ${before}` : ''} Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until ${formatDate(agreement.standsUntil, z)}.`, 75);
   return agreement;
 }
 

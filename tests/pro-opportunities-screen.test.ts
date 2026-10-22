@@ -183,14 +183,14 @@ describe('the Opportunities tab', () => {
     const o = offered(sim, t.id, at(2026, 12, 14));
     sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
     const { html, shown } = drawn(sim);
-    expect(shown).toMatch(/Booked Work .*Sam, Last Bus To Eastview Two days to come, the next \w+day, \w+ \d+, 2027 at 7:00 AM, in New York\. Each stops the clock: press Go to be there\./);
+    expect(shown).toMatch(/Booked Work .*Robin, Last Bus To Eastview Two days to come, the next \w+day, \w+ \d+, 2027 at 7:00 AM, in New York\. Each stops the clock: press Go to be there\./);
     // One week's pay is said as one (from 2026-10-21, brief 19's app walk: until then "over one week, each week due").
     expect(shown).toContain('Promised: $250.00 for one week, due the Thursday after it. It’s promised, not yet paid.');
     expect(button(html, 'Break It Down (60 Minutes)')).toHaveLength(1);
     expect(shown).toContain('No offer stands now.');
     // Settled says the booking once (from 2026-10-21, brief 19's app walk: until then the role and project came first and
     // then again in the outcome's own words, with two colons).
-    expect(shown).toMatch(/Settled How This Works You accepted Sam in Last Bus To Eastview: two work days, from \w+ \d+, 2027\./);
+    expect(shown).toMatch(/Settled How This Works You accepted Robin in Last Bus To Eastview: two work days, from \w+ \d+, 2027\./);
     expect(shown).not.toContain('Sam, Last Bus To Eastview: You accepted');
     // A day behind it: TEST SETUP, the day logged as the work day's handler logs it. The count opens its sentence.
     const e = sim.player.pro!.engagements[0]!;

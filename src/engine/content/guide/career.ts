@@ -572,20 +572,20 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['When do I join Equity?', 'What does Equity cost?', 'When can I join SAG-AFTRA?', 'Do I have to join SAG-AFTRA?', 'Why was money taken for dues?'],
     where: on('work', 'Career, Work, Your Unions'),
     available: `From the guide’s chapter “${CHAPTER}”. Join SAG-AFTRA opens once you’ve worked a SAG-AFTRA principal role.`,
-    short: `Your degree makes you a member of Actors’ Equity, as the School’s Bulletin says. Its initiation fee is ${usd(UNIONS.equity.initiation)}, paid within three years with ${usd(UNIONS.equity.down)} down, and basic dues are ${usd(UNIONS.equity.yearlyDues)} a year, billed each May and November.\n\nA SAG-AFTRA principal role on a TV show or a theatrical or Low Budget film makes you eligible to join SAG-AFTRA. From the ${SAG_DAYS}th day after that job began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA, about ${JOIN}.`,
+    short: `Your degree makes you a member of Actors’ Equity, as the School’s Bulletin says, or your first day under an Equity contract does, if that comes first. Its initiation fee is ${usd(UNIONS.equity.initiation)}, paid within three years with ${usd(UNIONS.equity.down)} down, and basic dues are ${usd(UNIONS.equity.yearlyDues)} a year, billed each May and November.\n\nA SAG-AFTRA principal role on a TV show or a theatrical or Low Budget film makes you eligible to join SAG-AFTRA. From the ${SAG_DAYS}th day after that job began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA, about ${JOIN}.`,
     steps: [
       'Open Career, then the Work tab.',
       'Under Your Unions, read Equity’s bills: each paid, owed or due, with its date.',
       'Once SAG-AFTRA says you can join, press Join SAG-AFTRA before you take SAG-AFTRA work past its 30 days.',
     ],
-    needs: ['For Equity: the degree.', 'For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank.'],
+    needs: ['For Equity: the degree, or a first day of work under an Equity contract.', 'For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank.'],
     costs: [
-      { label: 'Equity’s Initiation Fee', value: `${usd(UNIONS.equity.initiation)} within three years: ${usd(UNIONS.equity.down)} at the degree, then two parts a year apart. The two parts’ dates are estimated` },
+      { label: 'Equity’s Initiation Fee', value: `${usd(UNIONS.equity.initiation)} within three years: ${usd(UNIONS.equity.down)} when you join, then two parts a year apart. The two parts’ dates are estimated` },
       { label: 'Equity’s Dues', value: `${usd(UNIONS.equity.yearlyDues / 2)} each May and November, and 2.5% of Equity pay, taken from it. Taking it from the pay is estimated` },
       { label: 'Joining SAG-AFTRA', value: `About ${JOIN}: the initiation fee and half a year’s base dues, then half a year’s dues each May and November, and 1.575% of SAG-AFTRA pay. Read from a search engine’s copy of its pages`, estimate: true },
     ],
     reads: [
-      { label: 'The Degree', value: 'Equity’s membership date, which its first bill reads' },
+      { label: 'The Degree Or An Equity Contract', value: 'Equity’s membership date, the degree’s or a first day of work under an Equity contract’s, which its first bill reads' },
       { label: 'Your First SAG-AFTRA Role', value: `Its first day, from which you can join and after ${SAG_DAYS} days must, by federal law’s limit for a union contract` },
     ],
     now: ['Join SAG-AFTRA takes its fee from your bank and makes you a member today. Your next SAG-AFTRA work takes its working dues.'],
@@ -646,6 +646,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     interpret: [
       'Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.',
       'Each role says it’s fictional: no real production is casting.',
+      'A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.',
     ],
     unavailable: [
       'You have no headshots, and every submission starts with one.',

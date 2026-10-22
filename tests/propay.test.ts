@@ -67,7 +67,9 @@ describe('a payment promised and received once', () => {
     const y = yearOf(sim.player, 2026);
     expect(y.employers['Marrow Lane Theater Company']).toBe(1_051_00);
     expect(y.elsewhere['us-ct>us-ny-newyork']).toBe(1_051_00);
-    expect(y.dues).toBe(r.dues);
+    // The year's dues: the working dues taken from this pay, beside the $600.00 down the degree's membership paid from the
+    // bank. Until 2026-10-21 (brief 20) only the working dues reached the year, and this said the year's dues were the pay's.
+    expect(y.dues).toBe(UNIONS.equity.down + r.dues!);
     // A long jump past both other paydays: each paid once, in order.
     tended(sim, at(2026, 10, 12));
     expect(e.pay.map((p) => p.received?.at)).toEqual([at(2026, 9, 24, 12), at(2026, 10, 1, 12), at(2026, 10, 8, 12)]);

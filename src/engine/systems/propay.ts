@@ -115,7 +115,10 @@ export const RELEASE_KIND = 'pro.pay.release';
 export const DUES_KIND = 'pro.pay.dues';
 /** The first day of a first SAG-AFTRA principal job: eligible to join from it. */
 export const SAG_ELIGIBLE_KIND = 'pro.pay.sag_eligible';
-/** Said by the School when the degree makes the actor a member of Equity (`setStanding`), so its fee is charged then. */
+/**
+ * Said by the School when the degree makes the actor a member of Equity (`setStanding`), and by the work loop when an
+ * Equity contract's first day does (`unionsFrom`, `systems/projobs.ts`, from 2026-10-21), so its fee is charged then.
+ */
 export const EQUITY_JOINED = 'pro.equity_joined';
 
 /**
@@ -605,6 +608,17 @@ function duesBill(sim: Simulation, union: 'equity' | 'sag-aftra', due: Instant):
   return { key: `${union}:dues:${monthKey(due, WORK_ZONE)}`, union, what: union === 'equity' ? 'Basic dues, half a year' : 'Base dues, half a year', amount: usdIn(sim, half), due };
 }
 
+/**
+ * A union's fee or dues counted in the year's earnings record (`yearOf`'s `dues`), beside the working dues the pay counts
+ * (`recordWages`), so the return's performing artist deduction reads them (`figuresFor`, `systems/taxreturn.ts`): the
+ * guide promises that dues count toward the cost of the work. From 2026-10-21 (brief 20): until then only the working
+ * dues taken from pay reached the year, and Equity's initiation fee, its basic dues and SAG-AFTRA's joining fee, paid from
+ * the bank, never did. Counted in the year it's settled, paid or owed, as the ledger posts its expense then (`owe`).
+ */
+function countDues(s: Simulation, person: Person, amount: Money): void {
+  yearOf(person, zonedParts(s.now, s.zone).year).dues += amount;
+}
+
 /** Settles a bill once: paid from the bank, or owed in Bills Owed where it can't be, and the next half-year's dues billed. */
 function settle(s: Simulation, person: Person, bill: UnionBill): void {
   if (bill.settled) return;
@@ -613,6 +627,7 @@ function settle(s: Simulation, person: Person, bill: UnionBill): void {
   const paid = payFromBank(s, person, bill.amount, memo, 'dues');
   if (!paid) owe(s, person, bill.amount, memo, 'dues');
   bill.settled = { at: s.now, how: paid ? 'paid' : 'owed', txnId: s.universe.transactions[s.universe.transactions.length - 1]!.id };
+  countDues(s, person, bill.amount);
   if (bill.key.includes(':dues:')) addBill(s, person, duesBill(s, bill.union, nextBilling(bill.due)));
   keepBills(person);
   if (person.id === s.universe.playerId) s.notify({ category: 'career', title: paid ? `${UNION_NAME[bill.union]}: ${formatMoney(bill.amount, cur)} Paid` : `${UNION_NAME[bill.union]}: ${formatMoney(bill.amount, cur)} Owed`, body: paid ? `${bill.what}: ${formatMoney(bill.amount, cur)} was taken from your bank.` : `${bill.what}: your bank couldn’t cover ${formatMoney(bill.amount, cur)}, so it’s owed under Bills Owed and paid off the first day there’s money to pay it.`, importance: 50, route: '/workspace/career?tab=work' });
@@ -634,7 +649,11 @@ function equityParts(sim: Simulation, since: Instant): UnionBill[] {
   }));
 }
 
-/** The Equity bills a membership begun now sets up: the down payment taken at once, the rest and the dues on the clock. */
+/**
+ * The Equity bills a membership begun now sets up: the down payment taken at once, the rest and the dues on the clock.
+ * Said by the School at the degree (`setStanding`) and by the work loop at an Equity contract's first day (`unionsFrom`,
+ * from 2026-10-21, brief 20).
+ */
 export function equityJoined(sim: Simulation, person: Person): void {
   const pro = person.pro;
   if (!pro?.equity || billsOf(sim, person).some((b) => b.union === 'equity')) return;
@@ -643,7 +662,10 @@ export function equityJoined(sim: Simulation, person: Person): void {
   const firstDues = addBill(sim, person, duesBill(sim, 'equity', nextBilling(sim.now)));
   const cur = saveCurrency(sim.universe);
   const zone = sim.zone;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Your Equity Initiation Fee', body: `You’re a member of ${UNIONS.equity.name} from your degree. Its initiation fee is ${formatMoney(usdIn(sim, UNIONS.equity.initiation), cur)}, paid within three years: ${formatMoney(parts[0]!.amount, cur)} down is due now, then ${spokenList(parts.slice(1).map((b) => `${formatMoney(b.amount, cur)} on ${formatDate(b.due, zone)}`))}. Basic dues are ${formatMoney(firstDues.amount, cur)} each May and November, from ${formatDate(firstDues.due, zone)}.`, importance: 60, route: '/workspace/career?tab=work' });
+  // How the membership came, said (from 2026-10-21, brief 20): an Equity contract's first day brings it as the degree does
+  // (`unionsFrom`, `systems/projobs.ts`), and until then nothing billed that one.
+  const how = pro.equity.how === 'contract' ? `from your first day under an Equity contract, ${formatDate(pro.equity.since, sim.zone)}` : 'from your degree';
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'career', title: 'Your Equity Initiation Fee', body: `You’re a member of ${UNIONS.equity.name} ${how}. Its initiation fee is ${formatMoney(usdIn(sim, UNIONS.equity.initiation), cur)}, paid within three years: ${formatMoney(parts[0]!.amount, cur)} down is due now, then ${spokenList(parts.slice(1).map((b) => `${formatMoney(b.amount, cur)} on ${formatDate(b.due, zone)}`))}. Basic dues are ${formatMoney(firstDues.amount, cur)} each May and November, from ${formatDate(firstDues.due, zone)}.`, importance: 60, route: '/workspace/career?tab=work' });
   settle(sim, person, parts[0]!);
 }
 
@@ -742,6 +764,7 @@ export function registerProPay(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const fee = usdIn(s, sagJoinUsd());
     if (!payFromBank(s, person, fee, 'SAG-AFTRA: initiation fee and half a year’s base dues', 'dues')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, saveCurrency(s.universe))}, so nothing was charged.`);
+    countDues(s, person, fee);
     const pro = ensurePro(s, person);
     pro.sag = { ...pro.sag, memberSince: s.now };
     addBill(s, person, duesBill(s, 'sag-aftra', nextBilling(s.now)));
