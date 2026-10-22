@@ -1,0 +1,38 @@
+{
+ "B22-A1b": {
+  "claim": "the work-day guard counts OPT no further before it reads permission",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 3 passed (4)",
+   "Tests  1 failed | 68 passed (69)"
+  ],
+  "failing": [
+   "× A12, an older save: b20-4 opened from its save of 4 September 2029 at 7 AM, written by the build before brief 22, its weekly count three days behind > PLAYER JOURNEY: the run’s first day, at 10 AM before any midnight, counts OPT’s days first, finds it ended at the end of 1 September, and releases the run then; not one day of it worked 48ms"
+  ]
+ },
+ "B22-A7": {
+  "claim": "acceptance reads a day's start alone, as before brief 22",
+  "file": "src/engine/systems/permission.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 3 passed (4)",
+   "Tests  1 failed | 68 passed (69)"
+  ],
+  "failing": [
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, inside a day: OPT’s end within the first shoot day’s hours (TEST SETUP: moved there; approval sets the end at the hour OPT began, a year on, Commencement’s 2 PM or the decision’s own hour) refuses the offer while it stands, and once taken releases the shoot at that day’s start, not an hour of it worked or paid 161ms"
+  ]
+ }
+}
