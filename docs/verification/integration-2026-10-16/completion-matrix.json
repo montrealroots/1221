@@ -640,7 +640,7 @@
    "saveLoad": "ledger | HealthRecord.program, marketplace, dental, bills, debtSince; the medical debt account",
    "failure": "each refusal said in the player's words (above) | Open: The report a year on is checked only by typing debtSince back and calling healthMonth in the clock's place.; The fromId parameter (health.ts:1555-1556) is untested and never sent by the UI (PapersWorkspace.tsx:570 sends amount only). A bad id silently falls back to the primary account.; On the student, the bills' 'Settled' state after payment is not asserted.",
    "implementation": "`systems/health.ts` | PapersWorkspace.tsx:570 (Pay It Off, which sends the amount alone, never fromId). Until 2026-10-13 this said :237.",
-   "evidence": "tests/evidence-g03-life.test.ts health.pay_bill ‘PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay is reported once…’, ‘paid from a savings account named…’, ‘an account named that can’t pay a medical debt, their own credit card, is refused…’ (nothing moved, the words not read); tests/evidence2-b02.test.ts health.appeal_decided ‘PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays…’; tests/evidence-g05-life.test.ts health.bill ‘PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt… until Pay It Off settles it…’; checking less: tests/coverage-gaps-life.test.ts (the report a year on by debtSince put back and healthMonth called by hand)",
+   "evidence": "tests/evidence-g03-life.test.ts health.pay_bill ‘PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay still owes it…’, ‘paid from a savings account named…’, ‘an account named that can’t pay a medical debt, their own credit card, is refused…’ (nothing moved, the words not read); tests/evidence2-b02.test.ts health.appeal_decided ‘PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays…’; tests/evidence-g05-life.test.ts health.bill ‘PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt… until Pay It Off settles it…’; checking less: tests/coverage-gaps-life.test.ts (the report a year on by debtSince put back and healthMonth called by hand)",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -11614,7 +11614,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11689,7 +11689,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11741,7 +11741,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11817,7 +11817,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -14200,7 +14200,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14619,7 +14619,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14920,7 +14920,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14947,7 +14947,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14974,7 +14974,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15001,7 +15001,7 @@
     "commit": "4aac9a94",
     "watch": "app"
    },
-   "missing": "It was measured on 4aac9a94, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on 4aac9a94, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15284,7 +15284,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15311,7 +15311,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15338,7 +15338,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15365,7 +15365,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15392,7 +15392,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15419,7 +15419,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15446,7 +15446,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15473,7 +15473,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15500,7 +15500,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15527,7 +15527,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15554,7 +15554,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15581,7 +15581,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15608,7 +15608,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15635,7 +15635,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15662,7 +15662,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15689,7 +15689,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15716,7 +15716,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15743,7 +15743,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15770,7 +15770,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15797,7 +15797,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15824,7 +15824,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15851,7 +15851,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15878,7 +15878,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15905,7 +15905,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15932,7 +15932,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15959,7 +15959,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15986,7 +15986,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16013,7 +16013,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16062,7 +16062,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16089,7 +16089,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16116,7 +16116,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16143,7 +16143,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16170,7 +16170,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16197,7 +16197,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16224,7 +16224,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16251,7 +16251,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/money.ts, src/engine/content/guide/start.ts, src/engine/content/guide/taxes.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/money.ts, src/engine/content/guide/papers.ts, …): measure it again"
   }
  ]
 }

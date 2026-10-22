@@ -692,7 +692,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:70-82",
+    "where": "tests/coverage-gaps-life.test.ts:70-118",
     "asserts": "reported once a year on (healthMonth by hand), one mark; paid after, no trouble and the mark stays",
     "reachesAction": true,
     "checksConsequence": true,
@@ -746,7 +746,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:85-102",
+    "where": "tests/coverage-gaps-life.test.ts:121-138",
     "asserts": "London: the charge is 0 while it runs, across a reload, and charged after; a second is refused; the New Haven student is refused",
     "reachesAction": true,
     "checksConsequence": true,
@@ -1396,7 +1396,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:105 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
+    "where": "tests/coverage-gaps-life.test.ts:141 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
     "asserts": "A New Haven student's body is copied into three shallow-cloned Persons (disciplined_body, [], indulgent), and bodyDay is called directly 90 times. Asserts hungry.weight > plain > lean. bodyDay reads only appetite among these traits, so dropping the factor fails it. Then asserts body.intake is 0 after one bodyDay.",
     "reachesAction": false,
     "checksConsequence": true,
@@ -6464,7 +6464,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/life-fixes.test.ts:149-158; tests/coverage-gaps-life.test.ts:104-119",
+    "where": "tests/life-fixes.test.ts:149-158; tests/coverage-gaps-life.test.ts:140-155",
     "asserts": "a starved END survives a redraw; appetite twins",
     "reachesAction": false,
     "checksConsequence": true,
@@ -13578,7 +13578,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:43-82",
+    "where": "tests/coverage-gaps-life.test.ts:43-118",
     "asserts": "New Haven student: billCare (fixture), clock to debt, troubles include 'medical'; pay_bill and a reload clear the trouble and debtSince; the report stays once made",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13587,7 +13587,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-6.test.ts:275-288",
+    "where": "tests/defects-g8-6.test.ts:275-297",
     "asserts": "student: billCare at the reporting figure, the clock past due gives inDebt; healthMonth (direct) gives the 'or more' notice",
     "reachesAction": true,
     "checksConsequence": true,
@@ -19801,7 +19801,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:104-119 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
+    "where": "tests/coverage-gaps-life.test.ts:140-155 'moves the weight between matched twins, the hungrier heavier, a day at a time'",
     "asserts": "bodyDay called 90 times directly on shallow copies of sim.player with different traits: weight hungry > plain > lean, and intake is spent once.",
     "reachesAction": false,
     "checksConsequence": true,
@@ -21829,7 +21829,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:55-80; tests/defects-g8-6.test.ts:275-289",
+    "where": "tests/coverage-gaps-life.test.ts:55-116; tests/defects-g8-6.test.ts:275-298",
     "asserts": "medical debt reported a year on, spared when paid",
     "reachesAction": false,
     "checksConsequence": true,
@@ -22007,7 +22007,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:85-100; tests/commands-kept.test.ts:137-145",
+    "where": "tests/coverage-gaps-life.test.ts:121-136; tests/commands-kept.test.ts:137-145",
     "asserts": "health.prepay refused to the New Haven student, sold in London, prescriptions free while it runs",
     "reachesAction": true,
     "checksConsequence": true,

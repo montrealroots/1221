@@ -2410,7 +2410,7 @@
   },
   {
    "id": "health.appeal_decided",
-   "kind": "other",
+   "kind": "scheduled",
    "area": "papers",
    "mechanic": true,
    "seeded": false,
@@ -2442,7 +2442,7 @@
     "mutations": [],
     "journeys": []
    },
-   "missing": "It's missing from the generated inventory (docs/COVERAGE-MATRIX.md) by the constant-name collision above.",
+   "missing": "None found. Until 16630746 the inventory read a kind constant by its name across files, so leave.ts's APPEAL_KIND stood for health.ts's and this kind was in no table; it reads each name in its own file now.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,
@@ -2476,7 +2476,7 @@
    "readAt": "58577aea"
   },
   {
-   "id": "promise.documents.passport-id>documents.work",
+   "id": "promise.documents.passport-id>documents.work#evaluation",
    "kind": "evaluation",
    "claim": "The Social Security office asks for your passport in force before it takes an application.",
    "entryFile": "src/engine/content/guide/documents.ts",
@@ -2496,7 +2496,7 @@
    "readAt": "58577aea"
   },
   {
-   "id": "promise.documents.passport-id>documents.work",
+   "id": "promise.documents.passport-id>documents.work#prerequisite",
    "kind": "prerequisite",
    "claim": "On an F-1, Connecticut’s DMV asks for your Social Security number before it issues an ID card.",
    "entryFile": "src/engine/content/guide/documents.ts",
@@ -2518,7 +2518,7 @@
    "readAt": "58577aea"
   },
   {
-   "id": "promise.documents.passport-id>documents.work",
+   "id": "promise.documents.passport-id>documents.work#prerequisite-2",
    "kind": "prerequisite",
    "claim": "If you’re not a citizen, Connecticut’s DMV asks for your passport in force, or OPT’s card, before it issues an ID card.",
    "entryFile": "src/engine/content/guide/documents.ts",

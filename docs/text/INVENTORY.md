@@ -14,7 +14,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55971 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 765 | 6640 | 152101 | 13 | 268 | 497 | 0 | 0 |
-| Papers, Documents, Applications, Taxes And Status Notices | 475 | 4597 | 57003 | 3 | 109 | 366 | 0 | 0 |
+| Papers, Documents, Applications, Taxes And Status Notices | 475 | 4610 | 57067 | 3 | 110 | 365 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 291 | 1936 | 17737 | 0 | 274 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2564 | 15122 | 0 | 16 | 67 | 0 | 0 |
@@ -22,7 +22,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 203 | 846 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4545 | 38838 | 594588 | 316 | 1404 | 3141 | 0 | 0 |
+| **All** | 4545 | 38851 | 594652 | 316 | 1405 | 3140 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -39,7 +39,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 265 | 55131 | 110 | 155 | 0 | 0 |
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
-| papers | 475 | 57003 | 109 | 366 | 0 | 0 |
+| papers | 475 | 57067 | 110 | 365 | 0 | 0 |
 | profile | 621 | 55971 | 179 | 442 | 0 | 0 |
 | school | 638 | 67373 | 185 | 453 | 0 | 0 |
 | tutorial | 51 | 15003 | 31 | 20 | 0 | 0 |
@@ -54,7 +54,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 146 | 238 | 237 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 127 | 352 | 187 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 765 | 123 | 376 | 266 | 0 |
-| Papers, Documents, Applications, Taxes And Status Notices | 475 | 153 | 225 | 97 | 0 |
+| Papers, Documents, Applications, Taxes And Status Notices | 475 | 151 | 225 | 99 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 291 | 274 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 33 | 37 | 13 | 0 |
@@ -62,7 +62,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 14 | 27 | 4 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4545 | 988 | 2409 | 1148 | 0 |
+| **All** | 4545 | 986 | 2409 | 1150 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -2554,7 +2554,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]` | 6 | 0 | Rewritten | papers | rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects (seven weeks) | Rewritten And Verified |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [prerequisite]` | 4 | 0 | Rewritten | papers | rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects | Pending |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [immediate]` | 2 | 0 | Retained | papers | Two short lines that say a fee leaves your accounts the moment you apply, replace, settle or naturalize, which is when the bank changes. | Reviewed And Retained |
-| `src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]` | 68 | 0 | Rewritten | papers | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples | Rewritten And Verified |
+| `src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]` | 68 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P1: the Permission To Work entry's Status line says Approved, as the row does) | Pending |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [scheduled]` | 1 | 0 | Rewritten | papers | rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), Permission To Work's How It Connects | Pending |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]` | 45 | 0 | Rewritten | papers | tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples | Rewritten And Verified |
 | `src/engine/content/guide/documents.ts#DOCUMENTS [optional]` | 2 | 0 | Retained | papers | Two connections that keep residence apart from US permission to work and say your birth passport stays yours, which players otherwise ask about. | Rewritten And Verified |
@@ -2571,10 +2571,10 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/papers.ts#PAPERS [papers.overview]` | 38 | 0 | Retained | papers | Papers' entry says what the screen holds, its five tabs by name, the three ways to reach it, and that moving between tabs changes nothing. | Rewritten And Verified |
 | `src/engine/content/guide/papers.ts#PAPERS [prerequisite]` | 5 | 0 | Retained | papers | Each prerequisite says what has to be true first in one sentence: the chapter read, Yale Health ended, the stipend in the base period. | Reviewed And Retained |
 | `src/engine/content/guide/papers.ts#PAPERS [optional]` | 4 | 0 | Retained | papers | Each optional connection says what the other tab or entry holds, in the tab's own terms, so the player knows where to look. | Rewritten And Verified |
-| `src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]` | 117 | 0 | Rewritten | papers | brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check; its notice quote checked against healthMonth in systems/health.ts | Pending |
+| `src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]` | 117 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed) | Pending |
 | `src/engine/content/guide/papers.ts#PAPERS [history]` | 4 | 0 | Retained | papers | Each history connection says what's kept for later: Yale Health's bill with the School's charges, a premium for the tax credit, a claim as income. | Reviewed And Retained |
 | `src/engine/content/guide/papers.ts#PAPERS [evaluation]` | 5 | 0 | Rewritten | papers | rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (your cover decides your share each time you have care) | Pending |
-| `src/engine/content/guide/papers.ts#PAPERS [scheduled]` | 8 | 0 | Rewritten | papers | rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a long-term condition left untreated takes its toll) | Pending |
+| `src/engine/content/guide/papers.ts#PAPERS [scheduled]` | 8 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed) | Pending |
 | `src/engine/content/guide/papers.ts#PAPERS [papers.doctor]` | 78 | 0 | Rewritten | papers | tests/guide-examples-papers.test.ts ('papers.doctor…'): the booking notice quoted as the game now says it for Yale Health | Pending |
 | `src/engine/content/guide/papers.ts#PAPERS [immediate]` | 2 | 0 | Rewritten | papers | rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a visit you keep is billed for your share) | Pending |
 | `src/engine/content/guide/papers.ts#PAPERS [papers.conditions]` | 66 | 0 | Rewritten | papers | brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check | Pending |
@@ -2978,14 +2978,14 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/components/LienPanels.tsx#STATUS` | 7 | 0 | Retained | papers | A lien's seven statuses as the glossary has them, release kept apart from withdrawal, short enough to sit after its name. | Reviewed And Retained |
 | `src/ui/components/LienPanels.tsx#LienFacts` | 12 | 0 | Rewritten | papers | tests/editorial-papers.test.ts 'California’s notice of intent reads as a lien still to be filed, and one dropped as never filed'; tools/acceptance-ui.mjs reads the Filed variant | Pending |
 | `src/ui/components/LienPanels.tsx#StateLienAndPenalty` | 19 | 0 | Retained | papers | The state's effect in its own words, how it's released, and the one button the lien allows, with the refusal beside it; Oregon's penalty with its statute and waiver. | Rewritten And Verified |
-| `src/ui/components/LienPanels.tsx#FederalLien` | 9 | 0 | Retained | papers | The IRS's effect in its own words, its release days and Form 12277's condition, and a button that names the form it sends. | Rewritten And Verified |
+| `src/ui/components/LienPanels.tsx#FederalLien` | 10 | 0 | Rewritten | papers | The reason under the federal lien's button names the button it's under, Ask For Its Release As Erroneous where that's the button (brief 20, the guide area's finding); no played life reaches that state since the benefits area's lien repair, so it isn't played in a test | Pending |
 | `src/ui/looks/papers.tsx#KIND_WORD` | 7 | 0 | Retained | papers | The kind line of a document's page, Travel Document or Proof Of Identity, which says what the paper is for without repeating its own name above it. | Rewritten And Verified |
 | `src/ui/looks/papers.tsx#PLAIN_NAME` | 7 | 0 | Retained | papers | The plain fallback name, Passport or ID Card, shown only where a document's own name won't read as one, so the page always has a familiar title. | Reviewed And Retained |
 | `src/ui/looks/papers.tsx#whatItDoes` | 20 | 0 | Rewritten | papers | tests/defects-g25-1.test.ts 'names an older one, still in force, as not the one in your name' resolves the look and asserts It’s in force, but another passport … | Pending |
-| `src/ui/looks/papers.tsx#top` | 41 | 0 | Rewritten | papers | tests/editorial-papers.test.ts 'a document reported stolen says stolen on its page, and one reported lost says lost' resolves the look | Pending |
+| `src/ui/looks/papers.tsx#top` | 48 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P1: an OPT approved before the program ends reads Approved, and its page says the day it starts) | Pending |
 | `src/ui/papers/Documents.tsx#KIND_WORD` | 7 | 0 | Retained | papers | The plain name of each kind of paper as the report-lost toast says it, Passport Reported Stolen And Canceled, short and unambiguous beside each row. | Reviewed And Retained |
 | `src/ui/papers/Documents.tsx#STATUS_WORD` | 4 | 0 | Retained | papers | The glossary's four statuses for a document, Being Decided and In Force keeping applying apart from holding, exactly as the guide and the look name them. | Reviewed And Retained |
-| `src/ui/papers/Documents.tsx#DocumentList` | 31 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
+| `src/ui/papers/Documents.tsx#DocumentList` | 32 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P1: the Work tab's row reads Approved until the OPT's first day) | Pending |
 | `src/ui/papers/Documents.tsx#PassportPane` | 39 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
 | `src/ui/papers/Documents.tsx#idCardWords` | 11 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
 | `src/ui/papers/Documents.tsx#IdPanel` | 11 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts | Pending |
@@ -3009,7 +3009,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel` | 40 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390, the missed-plan save); held by tests/scope-taxpapers.test.ts (brief 17: her plan’s first payment missed, and the new tax that puts it behind) | Pending |
 | `src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace` | 6 | 0 | Retained | papers | The screen's one-line subtitle names its five tabs' subjects in the tabs' order, so a player knows what Papers holds before choosing. | Rewritten And Verified |
 | `src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane` | 74 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/scope-taxpapers.test.ts (brief 17: Papers says what File It takes, what a missed plan payment needs, and what the letters do next), tests/remaining-tax.test.ts (Catch Up drawn on Papers) and tests/editorial17-papers.test.ts | Pending |
-| `src/ui/workspaces/PapersWorkspace.tsx#HealthPane` | 79 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/scope-taxpapers.test.ts (brief 17: Papers says what File It takes, what a missed plan payment needs, and what the letters do next), tests/remaining-tax.test.ts (Catch Up drawn on Papers) and tests/editorial17-papers.test.ts | Pending |
+| `src/ui/workspaces/PapersWorkspace.tsx#HealthPane` | 83 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed) | Pending |
 | `src/ui/workspaces/PapersWorkspace.tsx#aidWord` | 3 | 0 | Retained | papers | The Assistance column's four words, Free Care, 67% Off, Over The Limit and Assistance Taken Off, each saying what the hospital did to the bill. | Rewritten And Verified |
 | `src/ui/workspaces/PapersWorkspace.tsx#TherapyRow` | 6 | 0 | Retained | papers | Therapy's progress, the therapist with each one's price or Free With Yale Health, and the button that names the course's length. | Rewritten And Verified |
 | `src/ui/workspaces/PapersWorkspace.tsx#untreatedWords` | 7 | 0 | Rewritten | papers | brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/scope-taxpapers.test.ts (brief 17: Papers says what File It takes, what a missed plan payment needs, and what the letters do next), tests/remaining-tax.test.ts (Catch Up drawn on Papers) and tests/editorial17-papers.test.ts | Pending |

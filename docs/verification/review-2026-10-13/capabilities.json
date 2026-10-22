@@ -940,7 +940,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/coverage-gaps-life.test.ts:55-80; tests/defects-g8-6.test.ts:275-289",
+    "where": "tests/coverage-gaps-life.test.ts:55-116; tests/defects-g8-6.test.ts:275-298",
     "asserts": "medical debt reported a year on, spared when paid",
     "reachesAction": false,
     "checksConsequence": true,
@@ -1120,7 +1120,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/coverage-gaps-life.test.ts:85-100; tests/commands-kept.test.ts:137-145",
+    "where": "tests/coverage-gaps-life.test.ts:121-136; tests/commands-kept.test.ts:137-145",
     "asserts": "health.prepay refused to the New Haven student, sold in London, prescriptions free while it runs",
     "reachesAction": true,
     "checksConsequence": true,
