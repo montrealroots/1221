@@ -6,12 +6,12 @@
  * skill isn't who a part is posted to).
  *
  * The brief each is taped on is the one of a sample of every seventh, the first twenty-five, on which 30 against 90
- * moved the result most, measured 2026-10-21: Emotional Depth Found Footage's (17.7 to 22.7), Presence and Listening
- * Yakuza's (18.8 to 21.1, 18.9 to 21.6), Imagination and Vocal Expression Dark Fantasy's (17.9 to 20.6, 18.4 to 20.4),
- * Focus Mystery's (18.9 to 23.0), Memory and Discipline the second Caper's (17.7 to 21.7, 17.6 to 21.0), Adaptability
- * Found Footage's (18.4 to 21.7), Composure the second Biker's (18.0 to 22.3), Physical Expression Action's (17.8 to
- * 21.0), Stamina Superhero's (18.3 to 20.8). Cold, so preparation holds every take low and alike; what moves is the
- * ability.
+ * moved the result most, chosen 2026-10-21 on a life of another seed. On this file's life the same takes came to: Emotional
+ * Depth, Found Footage's, 19.1 against 23.1; Presence, Yakuza's, 19.5 and 21.6; Listening, Yakuza's, 19.4 and 22.0;
+ * Imagination, Dark Fantasy's, 17.9 and 20.7; Focus, Mystery's, 19.3 and 23.5; Memory, the second Caper's, 18.5 and 22.1;
+ * Adaptability, Found Footage's, 19.2 and 22.6; Composure, the second Biker's, 18.1 and 22.8; Vocal Expression, Dark
+ * Fantasy's, 18.4 and 20.5; Physical Expression, Action's, 18.3 and 21.5; Discipline, the second Caper's, 18.2 and 21.4;
+ * Stamina, Superhero's, 18.7 and 21.2. Cold, so preparation holds every take low and alike; what moves is the ability.
  *
  * PLAYER JOURNEYS: a new life as creation makes it, born in New York, at Yale from 7:30 AM Monday 24 August 2026, begun
  * with "I Know SLATE." chosen, on this file's seed, b20-c-able. TEST SETUP: the ability set in the one place it's kept

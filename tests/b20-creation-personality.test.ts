@@ -72,15 +72,16 @@ function meal(sim: Simulation): { lift: number; paid: number } {
   const paid = sim.universe.transactions.filter((t) => t.memo === 'A meal').flatMap((t) => t.postings.filter((p) => p.amount > 0)).reduce((n, p) => n + p.amount, 0);
   return { lift: r.value!.changed.morale!, paid };
 }
-/** Six hours' sleep through `life.sleep` at 11 PM from the same dials: the energy it put back (`sleepQuality`, `energyRecovery`). */
-const night: Probe = (sim) => {
+/** Six hours' sleep through `life.sleep` at 11 PM from the same dials: how deep it was (`sleepQuality`) and the energy it put back (with `energyRecovery`). */
+function slept6(sim: Simulation): { quality: number; recovered: number } {
   clearCalendar(sim);
   sim.advanceTo(EDT(2026, 8, 24, 23));
   dials(sim, { energy: 30, stress: 30, sleepDebt: 10, morale: 62, condition: 88, fitness: 50, nourishment: 75, hygiene: 80 });
-  const r = sim.execute<{ recovered: number }>({ kind: 'life.sleep', payload: { hours: 6 } });
+  const r = sim.execute<{ quality: number; recovered: number }>({ kind: 'life.sleep', payload: { hours: 6 } });
   expect(r.ok, r.error).toBe(true);
-  return r.value!.recovered;
-};
+  return r.value!;
+}
+const night: Probe = (sim) => slept6(sim).recovered;
 /** A given 80 kg body at the first midnight: what the day's eating left it at (`appetite`). */
 const weighed: Probe = (sim) => { sim.advanceTo(EDT(2026, 8, 25, 0, 1)); return sim.player.body!.weightKg; };
 /** One step of preparation of a part, through `school.prepare`: how far the part moved (`readsAround`, `drills`, `skims`, `revises`). */
@@ -126,11 +127,15 @@ const BY: Record<string, { probe: Probe; knob: PersonalityKnob; seed?: string; e
   even_tempered: { probe: onEmpty, knob: 'stressGain' },
   quick_tempered: { probe: onEmpty, knob: 'stressGain' },
   highly_strung: { probe: onEmpty, knob: 'stressGain' },
-  unshakeable: { probe: onEmpty, knob: 'stressGain' },
+  // Measured by its morale from 2026-10-21's mutation run: on empty its recovery (1.2) carried it the way its gain (0.7)
+  // does, and a gain unread there survived for it (B20-CREATION-33).
+  unshakeable: { probe: mealLift, knob: 'moraleSwing' },
   sentimental: { probe: mealLift, knob: 'moraleSwing' },
   detached: { probe: onEmpty, knob: 'stressGain' },
-  early_riser: { probe: night, knob: 'energyRecovery' },
-  night_owl: { probe: night, knob: 'energyRecovery' },
+  // By the morning's sharpness, at 7:30 on the first morning, from 2026-10-21's mutation run: their nights lean on both
+  // the depth and what a night puts back, and either unread alone left them moving (B20-CREATION-10, -36).
+  early_riser: { probe: prepared('familiarity'), knob: 'morning' },
+  night_owl: { probe: prepared('familiarity'), knob: 'morning' },
   orderly: { probe: soiled, knob: 'hygieneDrift' },
   chaotic: { probe: soiled, knob: 'hygieneDrift' },
   homebody: { probe: night, knob: 'energyRecovery' },
@@ -234,10 +239,14 @@ describe('every disposition moves what it says, through the clock or a command',
     expect(onEmpty(high)).toBeGreaterThan(onEmpty(low));
   });
 
-  it('PLAYER JOURNEY: Conscientiousness: the same night puts back more for the orderly; and discipline starts by it, 32.5 at 5 and 77.5 at 95', () => {
+  // Until 2026-10-21's mutation run this held what the night put back alone, which conscientiousness leans twice (`sleepQuality`
+  // and `energyRecovery`): the night's depth unread by it survived (B20-CREATION-2). The page says "how well you sleep".
+  it('PLAYER JOURNEY: Conscientiousness: the same night is slept deeper and puts back more for the orderly; and discipline starts by it, 32.5 at 5 and 77.5 at 95', () => {
     const [low, high] = [withSlider('b20-c-p-consc', 'conscientiousness', 5), withSlider('b20-c-p-consc', 'conscientiousness', 95)];
     expect([low.player.attrs!.discipline, high.player.attrs!.discipline]).toEqual([32.5, 77.5]);
-    expect(night(high)).toBeGreaterThan(night(low));
+    const [loose, meticulous] = [slept6(low), slept6(high)];
+    expect(meticulous.quality).toBeGreaterThan(loose.quality);
+    expect(meticulous.recovered).toBeGreaterThan(loose.recovered);
   });
 
   it('PLAYER JOURNEY: Openness and Agreeableness: the Cabaret’s read-through lifts the open and the agreeable 3.6 more at 95 than at 5, the stress alike; Extraversion: its first curtain costs the introvert 7.2 more stress, the morale alike', () => {

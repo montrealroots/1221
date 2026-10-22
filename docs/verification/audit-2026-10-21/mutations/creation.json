@@ -319,5 +319,196 @@
   "tests": [
    "tests/home-account-creation.test.ts"
   ]
+ },
+ {
+  "id": "B20-CREATION-33",
+  "what": "Stress on empty reads no stressGain",
+  "file": "src/engine/systems/life.ts",
+  "find": "const onEmpty = 1.6 * personalityOf(person, 'stressGain') - recovery;",
+  "replace": "const onEmpty = 1.6 - recovery;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-34",
+  "what": "Stress clears alike for everyone awake: stressRecovery not read",
+  "file": "src/engine/systems/life.ts",
+  "find": "const recovery = 0.35 * personalityOf(person, 'stressRecovery');",
+  "replace": "const recovery = 0.35;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-35",
+  "what": "A meal, a workout or an hour unwinding moves everyone's morale alike: moraleSwing not read",
+  "file": "src/engine/systems/life.ts",
+  "find": "const swing = personalityOf(person, 'moraleSwing');",
+  "replace": "const swing = 1;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-36",
+  "what": "A night puts back the same for anyone: energyRecovery not read",
+  "file": "src/engine/systems/life.ts",
+  "find": "13.5 * banked * personalityOf(person, 'energyRecovery') * owing",
+  "replace": "13.5 * banked * 1 * owing",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-37",
+  "what": "A step on how to play a part reads no trait: readsAround not read",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "case 'interpretation': return personalityOf(person, 'readsAround');",
+  "replace": "case 'interpretation': return 1;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-38",
+  "what": "A step revising after a note reads no trait: revises not read",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "case 'revision': return personalityOf(person, 'revises');",
+  "replace": "case 'revision': return 1;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-39",
+  "what": "An ability's look says its full where its level belongs",
+  "file": "src/ui/looks/actor.tsx",
+  "find": "const level = abilityOf(sim, person, id);",
+  "replace": "const level = abilityFull(sim, person, id);",
+  "tests": [
+   "tests/b20-creation-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-40",
+  "what": "A technique's look says a level the craft doesn't keep",
+  "file": "src/ui/looks/school.tsx",
+  "find": "const mine = craft[skill];",
+  "replace": "const mine = 50;",
+  "tests": [
+   "tests/b20-creation-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-41",
+  "what": "A genre's look never says it's loved",
+  "file": "src/ui/looks/actor.tsx",
+  "find": "kind: loved ? 'A Genre You Love' : 'A Genre',",
+  "replace": "kind: 'A Genre',",
+  "tests": [
+   "tests/b20-creation-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-42",
+  "what": "The person look says the body in centimeters wherever they live",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "{`${bodyWords(person.body, bodyUnits(person.currentLocationId).imperial)}",
+  "replace": "{`${bodyWords(person.body, false)}",
+  "tests": [
+   "tests/b20-creation-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-43",
+  "what": "The start date given is dropped for the first of the month",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "{ year: config.startYear, month: config.startMonth, day: config.startDay, hour: 7, minute: 30 },",
+  "replace": "{ year: config.startYear, month: config.startMonth, day: 1, hour: 7, minute: 30 },",
+  "tests": [
+   "tests/b20-creation-twins.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-44",
+  "what": "Every save keeps its money in dollars, wherever it begins",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "currency: currencyFor(config.startLocationId),",
+  "replace": "currency: 'USD',",
+  "tests": [
+   "tests/b20-creation-twins.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-45",
+  "what": "The date of birth is kept as New Year's Day",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "{ year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },",
+  "replace": "{ year: config.birthYear, month: 1, day: 1, hour: 3 },",
+  "tests": [
+   "tests/b20-creation-twins.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-46",
+  "what": "Enrollment reads the School alone, wherever the life begins",
+  "file": "src/engine/index.ts",
+  "find": "if (config.school === YALE_DRAMA.id && config.startLocationId === YALE_DRAMA.cityId) enroll(sim, player);",
+  "replace": "if (config.school === YALE_DRAMA.id) enroll(sim, player);",
+  "tests": [
+   "tests/b20-creation-twins.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-47",
+  "what": "The traits pressed aren't kept",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "personalityTraits: cleanPersonalityTraits(config.personalityTraits),",
+  "replace": "personalityTraits: cleanPersonalityTraits([]),",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-48",
+  "what": "The genres loved aren't kept",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "genres: known(config.genres, GENRE_BY_ID),",
+  "replace": "genres: [],",
+  "tests": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/b20-creation-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-49",
+  "what": "Sharpness before noon reads no trait: morning not read",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (hour < 12) return personalityOf(person, 'morning');",
+  "replace": "if (hour < 12) return 1;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-50",
+  "what": "A step learning the lines reads no trait: drills not read",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "case 'memorization': return personalityOf(person, 'drills');",
+  "replace": "case 'memorization': return 1;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
+ },
+ {
+  "id": "B20-CREATION-51",
+  "what": "A step getting to know the play reads no trait: skims not read",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "case 'familiarity': return personalityOf(person, 'skims');",
+  "replace": "case 'familiarity': return 1;",
+  "tests": [
+   "tests/b20-creation-personality.test.ts"
+  ]
  }
 ]
