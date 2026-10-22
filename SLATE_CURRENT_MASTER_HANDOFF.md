@@ -36,6 +36,8 @@ didn't hold were kept as `refs/preserved/*` before they were deleted for disk sp
   to meet lapses on its day with a notice and a line on the record.
 - **The gate on the tested commit:** `cbec90d8`, in a clean clone, exit 0 read from its file: 479 of 479 test files,
   5,481 of 5,481 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`). Nothing under `src` changed after it.
+  Run again on the receipt's commit, `fdf6897e`, the same: exit 0, 479 of 479 and 5,481 of 5,481, none skipped, all 22
+  checks (`final-runs/runs/gate-receipt.txt`).
 - **The final runs, done on `cbec90d8`** (`final-runs/runs/README.md`, every lane's steps exit 0 but the one that records
   that brief 19's four lives no longer play line for line, each change brief 20's and said there):
   - brief 19's lanes again, every figure the same as brief 19's but the gate's;

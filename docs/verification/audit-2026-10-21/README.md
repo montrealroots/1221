@@ -170,8 +170,9 @@ Required, 40 Explicitly Deferred (`../integration-2026-10-16/COMPLETION-MATRIX.m
 The full gate in a clean clone, its exit read from its file:
 - **At the integrated commit, `cbec90d8`:** exit 0; 479 of 479 test files, 5,481 of 5,481 tests, none skipped; all 22
   checks.
-- **On this receipt's commit:** run again after the final runs were gathered and these records written; its figure is
-  folded in with the commit after (the handoff says it).
+- **On this receipt's commit, `fdf6897e`:** run again after the final runs were gathered and these records written, as
+  the brief asks after integration: exit 0; 479 of 479 test files, 5,481 of 5,481 tests, none skipped; all 22 checks
+  (`final-runs/runs/gate-receipt.txt`). Only this figure was written after it.
 
 The gate also ran three times before that:
 - **At the mid-point, `e9b3efeb`:** it failed 3 tests where merges met, and they were mended (`61b90818`).
