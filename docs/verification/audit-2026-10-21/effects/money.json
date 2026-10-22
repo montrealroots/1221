@@ -1720,9 +1720,9 @@
    "area": "money",
    "mechanic": true,
    "where": "Your Bank, Cards, the card’s panel, A Different Limit, Ask For It (src/ui/bank/BankCard.tsx:380)",
-   "prerequisites": "A card; lower is always granted, never under what’s owed; higher for a record of 700, no late payment in a year, money in the bank, a card not suspended.",
-   "reads": "The record, the late payments, the bank, the card’s state.",
-   "changes": "The card’s limit: lower to the ask, higher by a fifth at most.",
+   "prerequisites": "A card. A lower limit is always granted, never under what’s owed. A higher one waits six months from the card’s opening and from the last ask or raise (`askRefusal`, said under the button), and needs a record of 700, no late payment in a year, a card not suspended, and income or savings that carry the payments on it (`limitCarried`).",
+   "reads": "The record, the late payments, the card’s state (askedAt, raisedAt, suspended), the twelve months’ income in the earnings record, the other cards’ statements and loans’ payments, the money in the bank.",
+   "changes": "The card’s limit: lower to the ask; higher by a fifth at most, as far as the income or savings carry. askedAt, and raisedAt where raised.",
    "consumers": [
     {
      "what": "the room the day’s spending has",
@@ -1731,25 +1731,39 @@
     {
      "what": "credit used at the record’s month",
      "at": "src/engine/systems/credit.ts:1326"
+    },
+    {
+     "what": "the next ask waits six months from this one",
+     "at": "src/engine/systems/cardlife.ts:69"
     }
    ],
-   "experienced": "The new limit on the panel; a declined raise’s notice with the rule.",
-   "saveLoad": "The card’s limit.",
+   "experienced": "The new limit on the panel; a declined raise’s notice with the rule; under the button, when the next ask can be made.",
+   "saveLoad": "The card’s limit, askedAt and raisedAt; a declined ask’s wait holds across a save and a load (tests/b20-credit-limit.test.ts).",
    "evidence": {
     "tests": [
+     "tests/b20-credit-limit.test.ts",
+     "tests/cardlife.test.ts",
      "tests/evidence-g12-money.test.ts",
-     "tests/cardlife.test.ts"
+     "tests/language-crossarea-raise.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "income that carries a raise against none (b20-credit-limit)",
+     "ten asks in a row raise it once (b20-credit-limit)"
+    ],
+    "mutations": [
+     "B20-D2-6",
+     "B20-D2-7",
+     "B20-D2-8",
+     "B20-D2-10"
+    ],
     "journeys": []
    },
-   "missing": "Measured on b20-money: asked six times in a row on 24 August 2026 it raised a $65,217 limit to $194,736, a fifth each time and nothing between the asks to stop it. Not changed here. The limit’s growth is the coordinator’s (brief 20, D2): this row was read on b20-money, before the coordinator’s commit c4832549 held the review and the ask to income or savings and an ask to one in six months, and is brought up to date at integration.",
+   "missing": "None found since D2 (`c4832549`, `credit/README.md`). Read on b20-money it raised $65,217 to $194,736 in six asks in a row; the ask is held to the review's test and waits six months now. Savings count in full against the whole limit, which is the owner's to decide.",
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
    "readBy": "money",
-   "readAt": "bf632759"
+   "readAt": "bf632759, and the coordinator at 16630746"
   },
   {
    "id": "card.set_auto_raise",
@@ -2731,7 +2745,7 @@
    "where": "The clock, on the card’s statement day at 9 AM (the 20th, or the day moved to).",
    "prerequisites": "A card with a credit record.",
    "reads": "The card’s balance, the interest built day by day, whether the last statement was carried, cash interest, transfers and plans, the yearly fee’s month, the record and the late payments, the six-monthly review.",
-   "changes": "Charges the interest where the grace period was lost (and trailing interest), cash and transfer interest, a plan’s month and fee, rewards, the yearly fee in its month; cuts the statement and its minimum; schedules the due date, or with nothing owed reports the month paid as agreed; reviews the limit every six months; closes a closing card paid off; tells the player.",
+   "changes": "Charges the interest where the grace period was lost (and trailing interest), cash and transfer interest, a plan’s month and fee, rewards, the yearly fee in its month; cuts the statement and its minimum; schedules the due date, or with nothing owed reports the month paid as agreed; reviews the limit every six months, raising it a fifth or as far as the income or savings carry (`limitCarried`); closes a closing card paid off; tells the player.",
    "consumers": [
     {
      "what": "the due date judges this statement",
@@ -2744,36 +2758,49 @@
     {
      "what": "Short For A Payment watches the autopay it sets",
      "at": "src/engine/systems/obligations.ts:60"
+    },
+    {
+     "what": "a review's raise makes the next ask wait six months",
+     "at": "src/engine/systems/cardlife.ts:69"
     }
    ],
    "experienced": "“Statement Ready” with the sum, the due date, the least and what autopay will take; the interest on the statement; a raised limit’s notice.",
    "saveLoad": "The card’s state (cuts, issued, waiting) and the next statement on the calendar; `armCredit` arms one a save is missing, never a second. The save keeps it, and b20-money-clock’s save opened mid-cycle ends the same, to the byte, as the life played straight.",
    "evidence": {
     "tests": [
-     "tests/b20-money-interest.test.ts",
-     "tests/b20-money-funds.test.ts",
+     "tests/b20-credit-limit.test.ts",
      "tests/b20-money-clock.test.ts",
+     "tests/b20-money-funds.test.ts",
+     "tests/b20-money-interest.test.ts",
      "tests/evidence-g13-money.test.ts"
     ],
     "comparisons": [
      "a card carried against one paid in full: interest at each statement, 28.99%; the record, savings and School the same (b20-money-interest)",
      "limited funds, a card payment the account can’t make: late fee, interest, the record, a cut limit, a dearer card after; the savings and the School unmoved (b20-money-funds)",
      "the clock by the hour, day, week and month: the same ledger (b20-money-clock)",
-     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)"
+     "saved and opened mid-cycle against played straight: the same ledger, record and calendar to the byte (b20-money-clock)",
+     "income or savings that carry a raise against none, the same record (b20-credit-limit)",
+     "a fixed income's ceiling, review after review (b20-credit-limit)"
     ],
     "mutations": [
-     "B20-MONEY-4"
+     "B20-MONEY-4",
+     "B20-D2-1",
+     "B20-D2-2",
+     "B20-D2-3",
+     "B20-D2-4",
+     "B20-D2-5",
+     "B20-D2-9"
     ],
     "journeys": [
      "journey-money"
     ]
    },
-   "missing": "The six-monthly limit review raised a clean record’s limit a fifth every 182 days with no ceiling (life A’s to $194,736 in brief 19), not changed here. The limit’s growth is the coordinator’s (brief 20, D2): this row was read on b20-money, before the coordinator’s commit c4832549 held the review and the ask to income or savings and an ask to one in six months, and is brought up to date at integration.",
+   "missing": "None found since D2 (`c4832549`, `credit/README.md`): the review had raised a clean record's limit a fifth every 182 days with no ceiling (brief 19's life A to $194,736), and goes only as far as the holder's income or savings carry now. Savings counting in full, and the opening limit by the score alone, are the owner's.",
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
    "readBy": "money",
-   "readAt": "bf632759"
+   "readAt": "bf632759, and the coordinator at 16630746"
   },
   {
    "id": "look.bank",
@@ -3647,7 +3674,7 @@
   },
   {
    "id": "bank.transfer_arrives",
-   "kind": "other",
+   "kind": "scheduled",
    "area": "money",
    "mechanic": true,
    "where": "The clock, the day money sent between two of the player’s banks lands (systems/bankmoves.ts `ARRIVES_KIND`).",
@@ -3678,7 +3705,7 @@
     "mutations": [],
     "journeys": []
    },
-   "missing": "A scheduled kind the inventory doesn’t list: tools/inventory.mjs and tools/effects.mjs resolve kind constants by name across files, and cardlife.ts’s ARRIVES_KIND (card.arrives) shadows bankmoves.ts’s (bank.transfer_arrives), so the inventory lists card.arrives with bankmoves.ts among its files and no bank.transfer_arrives. This row is kept as `other` until the tools resolve a constant by its file; for the coordinator.",
+   "missing": "None found. Until 16630746 the inventory read a kind constant by its name across files, so cardlife.ts's ARRIVES_KIND stood for this one and it was in no table; it reads each name in its own file now.",
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
