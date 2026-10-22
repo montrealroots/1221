@@ -383,7 +383,9 @@
      "tests/language-dynamic.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-GUIDE-26"
+    ],
     "journeys": []
    },
    "missing": "None found.",
@@ -414,7 +416,9 @@
      "tests/looks.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-GUIDE-27"
+    ],
     "journeys": []
    },
    "missing": "None found.",
@@ -629,18 +633,21 @@
    "reads": "nextCommitment and upcoming(6) from the calendar.",
    "changes": "Nothing: it reads.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: “in 1 hour Classes August 31, 2026 at 9:00 AM” and the five after it; an entry pressed says when, how long, where and what missing it would cost.",
+   "experienced": "Each time Home is drawn: “in 1 hour Classes August 31, 2026 at 9:00 AM” and the five after it; an entry pressed says when, how long, where and what missing it would cost. Of a next commitment in another town that needs you there already, it says “you’re not in …”.",
    "saveLoad": "Nothing of its own: the calendar is the save’s scheduled items.",
    "evidence": {
     "tests": [
      "tests/b20-guide-chapters.test.ts",
-     "tests/b20-guide-promises.test.ts"
+     "tests/b20-guide-promises.test.ts",
+     "tests/b20-guide-screens.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-GUIDE-23"
+    ],
     "journeys": []
    },
-   "missing": "None found.",
+   "missing": "None found after the repair. Until 2026-10-21 it said “you’re not in New York”, in red, of a career meeting, audition or work day whose trip is part of it (`travelMinutes`), which its entry, its stop and its handler all say needs no being there first; repaired in src/ui/screens/Home.tsx, held by tests/b20-guide-screens.test.ts.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,
@@ -795,19 +802,22 @@
      "at": "src/app/game-context.tsx:238"
     }
    ],
-   "experienced": "The list, each with its count on the way; Skip To with the event’s name goes there, asking at each commitment on the way.",
+   "experienced": "The list, each with its count on the way; Skip To with the event’s name goes there, asking at each commitment on the way. One in another town that needs you there already is marked Elsewhere and the towns said.",
    "saveLoad": "Nothing of its own.",
    "evidence": {
     "tests": [
      "tests/b20-guide-chapters.test.ts",
+     "tests/b20-guide-screens.test.ts",
      "tests/whynot-time.test.ts",
      "tests/time-controls.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-GUIDE-24"
+    ],
     "journeys": []
    },
-   "missing": "None found.",
+   "missing": "None found after the repair. Until 2026-10-21 it marked a commitment carrying its own trip Elsewhere and said “You’re in New Haven and this is in New York.” in red, though the trip is part of it; repaired in src/ui/shell/TimeControls.tsx, held by tests/b20-guide-screens.test.ts.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,
@@ -1089,10 +1099,12 @@
      "tests/help-mechanics.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-GUIDE-25"
+    ],
     "journeys": []
    },
-   "missing": "The keys (? and /), Menu on a phone and How This Works on each panel are the shell’s and the help’s, held by tests/help-mechanics.test.ts and not followed here.",
+   "missing": "Found and repaired: until 2026-10-21 Save & Exit went to the save slots whatever the save did, so a save refused (a full device, a server’s error) lost the life played since the last one, and the toast that said so closed with the shell; from then it stays in the game, says why and offers Save Failed: Try Again (src/app/game-context.tsx, held by tests/b20-guide-startup.test.ts). Not followed here: the keys (? and /), Menu on a phone and How This Works on each panel, the shell’s and the help’s, held by tests/help-mechanics.test.ts.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,

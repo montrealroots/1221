@@ -805,13 +805,18 @@ describe('18. Money', () => {
     const sim = guided('b20-ch-money');
     readTo(sim, 'money');
     jump(sim, at(2026, 8, 29, 10));
+    // TEST SETUP: $400.00 of shopping on the card, as a day's spending on it would leave it.
+    const card = sim.ledger.accountsOf(sim.player.id).find((a) => a.kind === 'credit_card')!;
+    sim.post({ memo: 'Shopping', category: 'shopping', postings: [{ accountId: card.id, amount: -400_00 }, { accountId: sim.nominalAccount('expense', 'Shopping').id, amount: 400_00 }] });
     const primary = sim.universe.accounts[sim.player.primaryAccountId!]!;
     const worth = netWorth(sim, sim.player.id);
+    expect(worth.liabilities).toBe(400_00);
+    // What you have, less what you owe.
+    expect(worth.total).toBe(worth.cash + worth.held + worth.pension - 400_00);
+    const cur = saveCurrency(sim.universe);
     const text = drawn(sim, Home).text;
     expect(text).toContain(`Money ${primary.name}:`);
-    expect(text).toContain(`Worth ${formatMoney(worth.total, saveCurrency(sim.universe), { cents: false }).replace(/^-/, '−')}`);
-    // What you have, less what you owe.
-    expect(worth.total).toBe(worth.cash + worth.held + worth.pension - worth.liabilities);
+    expect(text).toContain(`Worth ${formatMoney(worth.total, cur, { cents: false })}, after ${formatMoney(400_00, cur, { cents: false })} owed.`);
   });
 });
 

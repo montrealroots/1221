@@ -10,14 +10,16 @@
  *   it's worth, each read again from the life itself.
  * - Continue opens it as `SaveSlots`' `load` does (`openSlot`, then `loadSave`) at the same moment, and the shell draws
  *   it; so does every older save in `tests/fixtures/`, each opened and drawn without an error, and played on a day.
- * - A save made at 2:37 in the afternoon of a class day opens at 2:37 with the same still to come, and played on to the
- *   evening it comes out the same to the byte as the life never saved.
+ * - A save made at 2:37 in the afternoon of a class day opens at 2:37 with the same still to come, and played on through
+ *   midnight to the next morning it comes out the same to the byte as the life never saved, but for the three empty
+ *   records an opening through a slot fills in (`alike`, below).
  *
  * FIXTURE: the device's storage, a map in memory behind the real adapter (`LocalSaveAdapter`); the page's address and
  * its listeners, which the shell's help reads as it draws and a node test has none of.
  */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { createElement } from 'react';
+import { act, createElement } from 'react';
+import { createRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync, readdirSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
@@ -27,7 +29,7 @@ import type { SaveUniverse } from '@/engine/domain/model';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, formatDate, formatTime, instantFromZoned } from '@/engine/core/time';
-import { deserialise, serialise, type Slot } from '@/engine/persistence/adapter';
+import { PersistenceError, deserialise, serialise, type SaveAdapter, type Slot } from '@/engine/persistence/adapter';
 import { LocalSaveAdapter, type SaveStore } from '@/engine/persistence/local';
 import { netWorth } from '@/engine/systems/finance';
 import { formatMoneyCompact, saveCurrency } from '@/engine/core/money';
@@ -35,7 +37,7 @@ import { carryOnTo } from '@/engine/world/clock';
 import { STAGES } from '@/ui/startup/StartupSequence';
 import { SaveSlots } from '@/ui/saves/SaveSlots';
 import { GameShell } from '@/ui/shell/GameShell';
-import { GameProvider } from '@/app/game-context';
+import { GameProvider, useGame, type GameContextValue } from '@/app/game-context';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, NY);
@@ -196,7 +198,7 @@ describe('the older saves in tests/fixtures', () => {
 });
 
 describe('a save made mid-day', () => {
-  it('PLAYER JOURNEY: saved at 2:37 PM in a class day, the class stood at and worked as the clock moved past it, it opens at 2:37 PM with the same still to come, and played on to the evening it is the same to the byte as the life never saved', async () => {
+  it('PLAYER JOURNEY: saved at 2:37 PM in a class day, the class stood at and worked as the clock moved past it, it opens at 2:37 PM with the same still to come, and played on through midnight to the next morning it is the same to the byte as the life never saved', async () => {
     const adapter = new LocalSaveAdapter(memory());
     const sim = await started(adapter, 1, { tutorial: false });
     // To Monday's classes, each stop gone to on the way, and Stand Here at nine; then the clock moved on to 2:37 PM, as
@@ -214,9 +216,50 @@ describe('a save made mid-day', () => {
     expect(back.now).toBe(at(2026, 8, 31, 14, 37));
     const pending = (s: Simulation) => s.universe.scheduled.filter((i) => i.status === 'pending' && i.at < at(2026, 8, 31, 23)).map((i) => [i.kind, i.at]);
     expect(pending(back)).toEqual(pending(sim));
-    for (const s of [sim, back]) s.advanceTo(at(2026, 8, 31, 22));
+    // On through the evening and the night's turn of the day to the next morning, as the clock runs with nobody at it.
+    for (const s of [sim, back]) s.advanceTo(at(2026, 9, 1, 7));
     const [opened, kept] = alike(back, sim);
     expect(opened).toBe(kept);
-    expect(back.now).toBe(at(2026, 8, 31, 22));
+    expect(back.now).toBe(at(2026, 9, 1, 7));
+  });
+});
+
+describe('Save & Exit', () => {
+  /**
+   * The real provider in a real React root, its adapter given, `onExit` written down: Save & Exit is the provider's
+   * `exitToMenu`, which the top bar's button calls. FIXTURE: the element React mounts into, and the page's timers,
+   * which the beforeEach's window gives as no-ops (autosave never fires here).
+   */
+  async function onPage(sim: Simulation, adapter: SaveAdapter) {
+    let live: GameContextValue | undefined;
+    const exits: number[] = [];
+    const Child = () => { live = useGame(); return null; };
+    const element = { nodeType: 1, tagName: 'DIV', namespaceURI: 'http://www.w3.org/1999/xhtml', textContent: '', addEventListener: () => undefined, removeEventListener: () => undefined, ownerDocument: { addEventListener: () => undefined, removeEventListener: () => undefined } };
+    const page = globalThis as Record<string, unknown>;
+    page.IS_REACT_ACT_ENVIRONMENT = true;
+    (page.window as Record<string, unknown>).HTMLIFrameElement = class {};
+    const root = createRoot(element as never);
+    act(() => root.render(createElement(GameProvider, { sim, adapter, onExit: () => { exits.push(sim.now); }, children: createElement(Child) })));
+    return { live: () => live!, exits, unmount: () => act(() => root.unmount()) };
+  }
+
+  it('PLAYER JOURNEY: Save & Exit writes the save and goes to the slots; where the save can’t be written, it stays in the game and says why, nothing lost', async () => {
+    const sim = createSave(1, 'b20-guide-exit', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    sim.advanceTo(at(2026, 8, 25, 14, 37));
+    const written: SaveUniverse[] = [];
+    const good = { save: async (u: SaveUniverse) => { written.push(u); } } as unknown as SaveAdapter;
+    const ok = await onPage(sim, good);
+    await act(async () => { ok.live().exitToMenu(); });
+    expect(written).toHaveLength(1);
+    expect(ok.exits).toEqual([sim.now]);
+    ok.unmount();
+
+    const full = { save: async () => { throw new PersistenceError('There isn’t enough storage space on this device to save, so nothing in the slot changed.', true); } } as unknown as SaveAdapter;
+    const failing = await onPage(sim, full);
+    await act(async () => { failing.live().exitToMenu(); });
+    // The game stays open, the save's failure said in its words, and Save Failed: Try Again offered (`SaveIndicator`).
+    expect(failing.exits).toEqual([]);
+    expect(failing.live().saveError).toBe('There isn’t enough storage space on this device to save, so nothing in the slot changed.');
+    failing.unmount();
   });
 });

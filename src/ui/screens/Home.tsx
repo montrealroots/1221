@@ -189,7 +189,11 @@ export function Home() {
                 {' at '}
                 {/* The call's own clock, where it names another city: until 2026-09-27 the home clock with no zone. */}
                 <Open subject={at('entry', next.id)}>{(() => { const tz = next.locationId ? CITIES.get(next.locationId)?.timeZone : undefined; return tz && tz !== sim.zone ? `${formatTime(next.at, tz)} ${zoneAbbreviation(next.at, tz)}` : formatTime(next.at, sim.zone); })()}</Open>
-                {next.locationId && next.locationId !== player.currentLocationId && (
+                {/* Only of a commitment that needs you in its town already: one that carries its own trip (`travelMinutes`, the
+                    career's meetings, auditions and work days) takes you there and back inside its time, and its handler
+                    never asks the town, as its entry and its stop say. Until 2026-10-21 (brief 20) this said "you’re not in
+                    New York" of those too, in red, under a meeting the entry said the trip was part of. */}
+                {next.locationId && next.locationId !== player.currentLocationId && sim.timeline.get(next.id)?.travelMinutes === undefined && (
                   <span className="negative">
                     {' · you’re not in '}
                     <Open subject={at('place', next.locationId)}>{CITIES.get(next.locationId)?.name ?? 'that place'}</Open>

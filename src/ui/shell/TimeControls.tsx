@@ -516,8 +516,10 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
                 {stopsBefore(entry).length > 0 && (
                   <span className="chip chip-warning">{stopsBefore(entry).length} on the way</span>
                 )}
-                {/* Until 2026-10-12 it was a Travel chip, for travel that went with the scope reset of 2026-10-09. */}
-                {entry.elsewhere && <span className="chip chip-negative">Elsewhere</span>}
+                {/* Until 2026-10-12 it was a Travel chip, for travel that went with the scope reset of 2026-10-09. Only of a
+                    commitment that needs you in its town already (from 2026-10-21, brief 20): one carrying its own trip
+                    (`travelMinutes`) takes you there inside its time, and until then was marked Elsewhere too. */}
+                {entry.elsewhere && entry.item.travelMinutes === undefined && <span className="chip chip-negative">Elsewhere</span>}
               </button>
             ))}
           </div>
@@ -535,7 +537,7 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
             <div style={{ marginTop: 'var(--s4)' }}>
               <div className="eyebrow" style={{ marginBottom: 'var(--s2) ' }}>On The Way</div>
 
-              {target.travelNote && (
+              {target.travelNote && target.item.travelMinutes === undefined && (
                 <div className="callout callout-negative" style={{ marginBottom: 'var(--s3)' }}>
                   {target.travelNote}
                 </div>

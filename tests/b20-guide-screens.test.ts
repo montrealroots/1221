@@ -45,6 +45,7 @@ import { payTermsOf } from '@/engine/systems/projobs';
 import { readiness } from '@/engine/systems/life';
 import { STANDING_LABEL, rankIn } from '@/engine/systems/school';
 import { coverLabel } from '@/engine/systems/health';
+import { MEETING_KIND } from '@/engine/systems/proagent';
 import { ordinal } from '@/engine/core/text';
 import { formatTime } from '@/engine/core/time';
 import type { Opportunity } from '@/engine/systems/pro';
@@ -106,7 +107,7 @@ const { resolveLook } = await import('@/ui/looks/registry');
 const { at: subject } = await import('@/ui/looks/subject');
 const { kept } = await import('@/ui/kept');
 const { tabKey } = await import('@/ui/shell/sections');
-const { TimeControls } = await import('@/ui/shell/TimeControls');
+const { TimeControls, SkipDialog } = await import('@/ui/shell/TimeControls');
 const { GuideProvider } = await import('@/ui/guide/Guide');
 const provider = await vi.importActual<typeof import('@/app/game-context')>('@/app/game-context');
 
@@ -182,6 +183,15 @@ function twoOffers(seed: string, extra: Partial<NewSaveConfig> = {}) {
   return { sim, first, second, rowOf };
 }
 
+/** A question's own page, as pressing its title on Home opens it: its summary and its words. */
+function decisionLook(sim: Simulation, id: string): { summary: string; text: string } {
+  h.sim = sim;
+  const look = resolveLook(sim, subject('decision', id));
+  if (!look || 'gone' in look) throw new Error('no such question');
+  const text = renderToStaticMarkup(createElement('div', null, look.body as never)).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/\s+/g, ' ');
+  return { summary: look.summary ?? '', text };
+}
+
 describe('a question’s answers on Home', () => {
   it('PLAYER JOURNEY: with two offers waiting, the second row’s Accept The Offer accepts the second offer and leaves the first standing; the first row’s Decline The Offer declines the first', () => {
     const { sim, first, second, rowOf } = twoOffers('b20-guide-two-offers');
@@ -238,11 +248,18 @@ describe('a question’s answers on Home', () => {
 
   it('PLAYER JOURNEY: Dismiss takes the row off Home; the game then refuses an answer to it and a second Dismiss, in its own words, and the offer still stands on the Career screen', () => {
     const { sim, second, rowOf } = twoOffers('b20-guide-dismiss');
+    // Its own page says what to press for it on Home, while it's among the six drawn.
+    const before = decisionLook(sim, rowOf(second).id);
+    expect(before.text).toContain('On Home, its buttons are Accept The Offer, Decline The Offer, Go There and Dismiss. Reading it here changes nothing.');
     const home = drawn(sim, Home);
     expect(home.all('Dismiss')).toHaveLength(2);
     home.press('Dismiss', 0);
     const row = rowOf(second);
     expect(row.dismissedAt).toBe(sim.now);
+    // And, dismissed, that it was, and that what it was about still stands.
+    const after = decisionLook(sim, row.id);
+    expect(after.summary).toMatch(/^You dismissed it from Home just now\. Dismissing only takes it off the list: what it was about still stands, and its date is /);
+    expect(after.text).toContain('It’s no longer on Home, so there’s nothing to press.');
     expect(row.resolvedAt).toBeUndefined();
     expect(openDecisions(sim).map((d) => d.refId)).not.toContain(second.id);
     expect(drawn(sim, Home).all('Dismiss')).toHaveLength(1);
@@ -369,6 +386,52 @@ describe('Home’s panels and the ways off them', () => {
     expect(home.press(bank).went).toEqual(['/workspace/bank']);
     expect(home.press('Yale').went).toEqual(['/workspace/school']);
     expect(home.press('Papers').went).toEqual(['/workspace/papers']);
+  });
+});
+
+describe('a commitment in another town', () => {
+  /**
+   * TEST SETUP: a meeting at an agent's office in New York, scheduled as `scheduleMeeting` schedules one, its trip each
+   * way on it (`travelMinutes`), as tests/calendar-entry-trip.test.ts makes it; and a commitment in New York with no trip
+   * of its own, which its handler would ask the town of.
+   */
+  const inNewYork = (sim: Simulation, when: number, travelMinutes?: number) => sim.schedule({
+    at: when, kind: MEETING_KIND, label: 'Meeting At Halberd Talent', category: 'career', priority: 30, requiresPlayer: true, durationMinutes: 60,
+    ...(travelMinutes !== undefined ? { travelMinutes } : {}), locationId: 'us-ny-newyork', payload: { personId: sim.player.id },
+  });
+
+  it('PLAYER JOURNEY: Home’s Calendar panel says “you’re not in New York” only of one that needs you there already, not of one whose trip is part of it', () => {
+    const trip = student('b20-guide-trip');
+    tended(trip, at(2026, 9, 6, 9));
+    inNewYork(trip, at(2026, 9, 6, 10), 120);
+    const withTrip = drawn(trip, Home).text;
+    expect(withTrip).toContain('Meeting At Halberd Talent');
+    expect(withTrip).not.toContain('you’re not in');
+    const none = student('b20-guide-trip-none');
+    tended(none, at(2026, 9, 6, 9));
+    inNewYork(none, at(2026, 9, 6, 10));
+    expect(drawn(none, Home).text).toContain('Meeting At Halberd Talent September 6, 2026 at 10:00 AM · you’re not in New York');
+  });
+
+  it('PLAYER JOURNEY: Skip To Event marks Elsewhere and says the towns only of one that needs you there already', () => {
+    const picked = (sim: Simulation) => {
+      h.sim = sim;
+      h.buttons = [];
+      return renderToStaticMarkup(createElement(SkipDialog, { onClose: () => undefined, onSkip: () => undefined })).replace(/<!-- -->/g, '');
+    };
+    const trip = student('b20-guide-skip-trip');
+    tended(trip, at(2026, 9, 6, 9));
+    inNewYork(trip, at(2026, 9, 6, 10), 120);
+    const withTrip = picked(trip);
+    expect(withTrip).toContain('Meeting At Halberd Talent');
+    expect(withTrip).not.toContain('Elsewhere');
+    expect(withTrip).not.toContain('this is in New York');
+    const none = student('b20-guide-skip-none');
+    tended(none, at(2026, 9, 6, 9));
+    inNewYork(none, at(2026, 9, 6, 10));
+    const without = picked(none);
+    expect(without).toContain('Elsewhere');
+    expect(without).toContain('You’re in New Haven and this is in New York.');
   });
 });
 

@@ -69,7 +69,8 @@ export interface GameContextValue {
   saveError?: string;
   /** Whether the world has changed since the last save (from 2026-10-12): what the save indicator reads. */
   unsaved: () => boolean;
-  saveNow: () => Promise<void>;
+  /** Writes the save; answers whether it was written (from 2026-10-21, brief 20: until then it answered nothing). */
+  saveNow: () => Promise<boolean>;
 
   exitToMenu: () => void;
 }
@@ -314,17 +315,19 @@ export function GameProvider({
     });
   }, []);
 
-  const saveNow = useCallback(async () => {
+  const saveNow = useCallback(async (): Promise<boolean> => {
     setSaving(true);
     setSaveError(undefined);
     try {
       refreshMeta(sim);
       await adapter.save(sim.universe);
       dirty.current = false;
+      return true;
     } catch (error) {
       const message = (error as Error).message;
       setSaveError(message);
       toast(message, 'negative');
+      return false;
     } finally {
       setSaving(false);
     }
@@ -450,8 +453,14 @@ export function GameProvider({
 
   // SLATE's own reduced-motion setting went on 2026-10-02: nothing could change it, and the system's preference stands.
 
+  /**
+   * Save & Exit: to the slots once the save is written. Where it can't be, the game stays open, the failure said in its
+   * own words and Save Failed: Try Again in the bar (`SaveIndicator`), so nothing played since the last save is lost.
+   * Until 2026-10-21 (brief 20) it went to the slots whatever the save did: a save refused, by a full device or a
+   * server's error, dropped the life played since the last one, and the toast that said so was in the shell it closed.
+   */
   const exitToMenu = useCallback(() => {
-    void saveNow().then(onExit);
+    void saveNow().then((saved) => { if (saved) onExit(); });
   }, [saveNow, onExit]);
 
   const value: GameContextValue = {
