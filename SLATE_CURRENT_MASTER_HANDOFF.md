@@ -1,10 +1,11 @@
-# Read First: Brief 21, Genre Integration And Banking Correctness, 2026-10-22
+# Read First: Brief 21, Genre Integration And Banking Correctness, Merged, 2026-10-22
 
 **This section is the current status, and where a new session starts.** The owner gave brief 21
 (`docs/verification/briefs-2026-10-16/21-complete-genre-integration-and-banking-correctness.txt`, kept verbatim) after
 brief 20's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `e50865df` (`main`, #51), pushed and never
-force-pushed. It is kept out of `main` at the owner's word ("Keep the work reviewable. Do not merge or deploy without my
-instruction."): no pull request is open for it. Nothing is deployed. There is no stash and one worktree.
+force-pushed. Until the owner's word it was kept out of `main` ("Keep the work reviewable. Do not merge or deploy without
+my instruction."); it went to `main` at "Merge everything." (2026-10-22), in #52, merged as `d7239165`, and this record
+of the merge followed it there. No other pull request was open. Nothing is deployed. There is no stash and one worktree.
 
 **Completion, by the matrix:** 632 of 658 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
@@ -45,6 +46,9 @@ instruction."): no pull request is open for it. Nothing is deployed. There is no
 - **The gate:** in a clean clone of `e8e09123` (the fold, its `src` the tested commit's), exit 0 read from its file: 482
   of 482 test files, 5,547 of 5,547 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`). Run again on the
   receipt's commit, `4b9cda04`, the same (`final-runs/runs/gate-receipt.txt`).
+- **Merged, not deployed:** #52 (`d7239165`). Base44 deployment waits on the gate and the owner's word (rule 14), and
+  §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of brief 20's
+  line accepts this line's saves. The next session starts from the decisions below, or from the owner's next brief.
 - **For the owner:**
   - the Genre Audit's question (`final-runs/judge-moved.json`);
   - whether a US minimum payment due includes what's past due (SLATE's reading);
