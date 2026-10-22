@@ -199,5 +199,25 @@
   "tests": [
    "tests/b20-papers-pension.test.ts"
   ]
+ },
+ {
+  "id": "B20-PAPERS-21",
+  "what": "Connecticut doesn't bar reporting medical debt, as until 2026-10-22 (P3)",
+  "file": "src/engine/content/safetynet.ts",
+  "find": "barredIn: ['us-ny', 'us-ca', 'us-ct']",
+  "replace": "barredIn: ['us-ny', 'us-ca']",
+  "tests": [
+   "tests/b20-papers-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-22",
+  "what": "the care log keeps every event, none let go (P4's pruning)",
+  "file": "src/engine/systems/health.ts",
+  "find": "  h.careLog = (h.careLog ?? []).filter((e) => e.at >= now - CARE_LOG.keepDays * MS_DAY || (e.billId && open.has(e.billId)));",
+  "replace": "  h.careLog = (h.careLog ?? []).filter((e) => e.at >= 0 || open.has(e.billId ?? ''));",
+  "tests": [
+   "tests/finance-paths.test.ts"
+  ]
  }
 ]

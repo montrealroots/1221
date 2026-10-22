@@ -193,13 +193,11 @@ export interface HealthRecord {
   fills?: { at: Instant; care: 'rx-generic' | 'rx-brand'; what: string; share: Money; billId: string; adjusted?: { at: Instant; why: string; change: Money }[] }[];
   /** A determination waiting on the person: HUSKY D's work rules unverified (from 2026-10-16). */
   pending?: PendingDetermination;
-  /**
-   * Care older than the log keeps, by year: how many events and what was charged (from 2026-10-10). The log itself keeps
-   * every event within `CARE_LOG.keepDays`, past any cover change's reach back, and any event whose bill is still
-   * open, in debt or under appeal, however old: nothing a claim, an appeal or a change of cover needs is dropped to
-   * keep the list short. Until 2026-10-10 the log kept the latest 60 events, whatever they were.
-   */
-  careArchive?: Record<string, { events: number; charged: Money }>;
+  // Care older than the log keeps was counted here by year, how many events and what was charged (`careArchive`), from
+  // 2026-10-10 until 2026-10-22, when brief 20's papers area found nothing reading it: no screen, no rule, only a test.
+  // The log itself keeps every event within `CARE_LOG.keepDays`, past any cover change's reach back, and any event whose
+  // bill is still open, in debt or under appeal, however old (`pruneCareLog`). A save that holds the counts keeps them,
+  // read by nothing.
   /** In hospital until: a stay, or an emergency department's hours. */
   inHospitalUntil?: Instant;
   /** The American pharmacy their prescriptions are filled at (`US_PHARMACIES`, from 2026-10-01). */
@@ -1939,18 +1937,13 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
 /** How long the care log keeps every event: past the furthest a cover change reaches back (a leave's insurance term, a withdrawal's term start). */
 export const CARE_LOG = { keepDays: 400 } as const;
 
-/** The log pruned to what can still matter: recent events, and any whose bill is open, in debt or under appeal; the rest counted by year. */
+/**
+ * The log pruned to what can still matter: recent events, and any whose bill is open, in debt or under appeal. The rest
+ * were counted by year in `careArchive` until 2026-10-22, which nothing read; they're let go.
+ */
 export function pruneCareLog(h: HealthRecord, now: Instant): void {
   const open = new Set(h.bills.filter((b) => !b.paid || b.inDebt || (b.denied && !b.denied.outcome)).map((b) => b.id));
-  const keep: NonNullable<HealthRecord['careLog']> = [];
-  for (const e of h.careLog ?? []) {
-    if (e.at >= now - CARE_LOG.keepDays * MS_DAY || (e.billId && open.has(e.billId))) { keep.push(e); continue; }
-    const y = String(zonedParts(e.at, HOME).year);
-    const a = ((h.careArchive ??= {})[y] ??= { events: 0, charged: 0 });
-    a.events += 1;
-    a.charged += e.share;
-  }
-  h.careLog = keep;
+  h.careLog = (h.careLog ?? []).filter((e) => e.at >= now - CARE_LOG.keepDays * MS_DAY || (e.billId && open.has(e.billId)));
 }
 
 /**

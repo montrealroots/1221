@@ -221,7 +221,7 @@ describe('an IRS payment plan', () => {
 });
 
 describe('the care log', () => {
-  it('keeps every event a cover change can reach and any whose bill is open, folds the rest into the year, and bills a change once', () => {
+  it('keeps every event a cover change can reach and any whose bill is open, lets the rest go, and bills a change once', () => {
     const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable' }, 'fp-carelog');
     const h = healthOf(sim.player);
     // FIXTURE: an old bill, open and unpaid, from long before the log's reach.
@@ -230,7 +230,10 @@ describe('the care log', () => {
     for (let i = 0; i < 90; i += 1) { sim.advanceTo(sim.now + 7 * MS_DAY); careFor(sim, sim.player, { care: 'visit', what: 'A visit' }, sim.now); }
     expect(h.careLog!.some((e) => e.billId === old.id)).toBe(true);
     expect(h.careLog!.every((e) => e.billId === old.id || e.at >= sim.now - CARE_LOG.keepDays * MS_DAY)).toBe(true);
-    expect(Object.values(h.careArchive ?? {}).reduce((s, a) => s + a.events, 0)).toBeGreaterThan(0);
+    // Ninety weekly visits, and the log holds only the 400 days' and the open bill's: the rest went. Until 2026-10-22 they
+    // were counted by year in `careArchive`, which nothing read (brief 20's papers area).
+    expect(h.careLog!.length).toBeLessThan(91);
+    expect((h as Record<string, unknown>).careArchive).toBeUndefined();
     // FIXTURE: the last visit charged as if a cover that's since gone paid it all. Repriced, it's billed the difference
     // once; repriced again over the same days, nothing more is billed or credited.
     const last = h.careLog!.at(-1)!;
