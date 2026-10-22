@@ -50,8 +50,16 @@ out['S3'] = '; '.join(f"{k} {n(v['S3revised']['differing'])} of {n(v['S3revised'
 g2 = J('genre-identity.json')['g2']['identicalCrossGenre']
 out['S4'] = f"{len(g2)} briefs of different genres identical in every number"
 audit = open(f'{D}/genre-audit.md', encoding='utf-8').read()
-own = re.search(r'helps its own brief in (\d+) of (\d+)', audit); other = re.search(r'moves another genre.s brief in (\d+)', audit)
+own = re.search(r'helps its own brief in (\d+) of (\d+)', audit)
+# The old criterion's count, the next genre over: worded "moves another genre's brief in N" until brief 22 (2026-10-22),
+# which kept the count under the criterion it superseded ("the next genre over, the old criterion's own test, ... moves in N").
+other = re.search(r'moves another genre.s brief in (\d+)', audit) or re.search(r'the\s+next\s+genre\s+over,\s+the\s+old\s+criterion.s\s+own\s+test.*?moves\s+in\s+(\d+)', audit, re.S)
 out['Genre Audit'] = f"helps its own brief in {own.group(1)} of {own.group(2)}, moves another genre’s in {other.group(1)}"
+# Brief 22's criterion, where the audit measures it: every unrelated pair, and every pair across one direct link.
+crit = re.search(r'an\s+unrelated\s+genre\s+moves\s+it\s+in\s+(\d+)\s+of\s+(\d+);\s+a\s+genre\s+one\s+direct\s+link\s+away.*?moves\s+it\s+in\s+(\d+)\s+of\s+(\d+),\s+each\s+by\s+less\s+than\s+the\s+genre\s+itself\s+in\s+(\d+)\s+of\s+(\d+),\s+the\s+most\s+(\d+)%', audit, re.S)
+if crit:
+    out['Genre Audit-R'] = (f"helps its own brief in {own.group(1)} of {own.group(2)}; an unrelated genre moves another's brief in {crit.group(1)} of {crit.group(2)} pairs; "
+                            f"a genre one direct link away in {crit.group(3)} of {crit.group(4)}, each by less than the genre itself in {crit.group(5)} of {crit.group(6)}, the most {crit.group(7)}% of its own gain")
 missing = [k for k, v in out.items() if not v]
 assert not missing, missing
 json.dump(out, open(f'{D}/figures.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
