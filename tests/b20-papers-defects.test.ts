@@ -10,16 +10,24 @@
  * anywhere: it’s out of force.", two sentences that each said what isn't so. Found reading the document look's
  * `whatItDoes`, whose out-of-force words a valid document could reach only by starting later than today.
  *
- * PLAYER JOURNEY: a new life (`createSave` with `newLifeConfig`), born in London, at Yale in New Haven from Monday 24
- * August 2026, played by the clock and the command Papers' OPT panel sends; Papers rendered to markup (react-dom/server)
- * over the save, with `useGame` standing in for the provider, which needs a browser, as tests/defects-g25-1.test.ts does.
+ * P2, a course of therapy held on a public holiday. A course's first session was put on a weekday at five
+ * (`sessionSlot`), and every session after it a week on to the minute, whatever the day: a course begun on Thursday
+ * 12 November 2026 at Yale Mental Health & Counseling met on Thanksgiving Day. The doctor's appointments have kept off
+ * a public holiday since 2026-10-13 (`appointments.ts`'s `slot`); the therapist's practice is no more open that day.
+ * Found by brief 20's papers area looking for impossible scheduling (D1).
  *
- * TEST SETUP: the body kept fed, rested and awake as the clock moves (`tended`); the F-1's program end moved to Wednesday
- * 4 November 2026 with its sixty days' grace (a life's own is 31 May 2029), so the ninety days before it fall in the
- * first term.
+ * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), at Yale in New Haven from Monday 24 August 2026,
+ * played by the clock and the commands Papers sends; Papers rendered to markup (react-dom/server) over the save, with
+ * `useGame` standing in for the provider, which needs a browser, as tests/defects-g25-1.test.ts does.
+ *
+ * TEST SETUP: the body kept fed, rested and awake as the clock moves (`tended`); for P1, the F-1's program end moved to
+ * Wednesday 4 November 2026 with its sixty days' grace (a life's own is 31 May 2029), so the ninety days before it fall
+ * in the first term; the United States' holidays read from public/holidays/us.tsv, as the app fetches them when a save
+ * opens (`loadPlacesFor`); for P2, depression on her record from 12 November, as a month's onset would put it there (which
+ * month brings it is the draw's, tested apart in tests/evidence-g07-life.test.ts).
  */
 import { describe, expect, it, vi } from 'vitest';
-import { createElement, isValidElement, type ReactNode } from 'react';
+import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
@@ -28,6 +36,11 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { documentsOf, inForce } from '@/engine/systems/documents';
 import { f1Of, programEnd, usWorkAuthorized } from '@/engine/systems/permission';
+import { healthOf } from '@/engine/systems/health';
+import { THERAPY, THERAPY_SESSION_KIND } from '@/engine/systems/therapy';
+import { addCountryHolidays, holidaysOn } from '@/engine/content/holidays';
+import { readFileSync } from 'node:fs';
+import { zonedParts } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at as subject } from '@/ui/looks/subject';
@@ -47,6 +60,9 @@ vi.mock('@/app/game-context', () => {
 
 const { WorkPane } = await import('@/ui/papers/Documents');
 
+// TEST SETUP: the holiday file the app fetches for a save's country when it opens (`loadPlacesFor`), read from disk.
+addCountryHolidays('us', readFileSync('public/holidays/us.tsv', 'utf8'));
+
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, NY);
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
@@ -60,12 +76,6 @@ function tended(sim: Simulation, until: number): void {
   }
 }
 
-function text(node: ReactNode): string {
-  if (typeof node === 'string' || typeof node === 'number') return String(node);
-  if (Array.isArray(node)) return node.map((n) => text(n as ReactNode)).join('');
-  if (!isValidElement(node)) return '';
-  return text((node.props as { children?: ReactNode }).children);
-}
 const look = (sim: Simulation, id: string): Looked => {
   const found = resolveLook(sim, subject('document', id));
   if (!found || 'gone' in found) throw new Error(`document:${id} didn’t resolve`);
@@ -115,5 +125,38 @@ describe('P1: an OPT approved before the program ends', () => {
     expect(page(sim, opt.id)).toContain(`It’s in force until ${until}, and its number ends`);
     expect(page(sim, opt.id)).toContain('It lets you work in the United States.');
     expect(workTab(sim)).toContain(`${opt.number} ${from} ${until} In Force`);
+  }, 60_000);
+});
+
+describe('P2: a course of therapy on a public holiday', () => {
+  it('PLAYER JOURNEY: a course begun on Thursday 12 November meets Thursdays at five, and the week of Thanksgiving on Friday 27 November instead; no session of the eight falls on a weekend or a public holiday, across a reload', () => {
+    const sim = createSave(1, 'b20-papers-therapy', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    tended(sim, at(2026, 11, 12, 12));
+    // TEST SETUP: depression on her record, as a month's onset would put it there.
+    (healthOf(sim.player).chronic ??= {}).depression = { treated: true, since: sim.now };
+    // Begin A Course Of 8, at Yale's counseling, which Yale Health's cover makes free.
+    const first = sim.must<{ first: number }>({ kind: 'health.therapy', payload: { therapist: 'Yale Mental Health & Counseling' } }).first;
+    expect(first).toBe(at(2026, 11, 19, 17));
+    const held: number[] = [];
+    let opened: Simulation = sim;
+    for (let n = 0; n < THERAPY.sessions; n += 1) {
+      const next = opened.universe.scheduled.find((i) => i.kind === THERAPY_SESSION_KIND && i.status === 'pending');
+      if (!next) break;
+      held.push(next.at);
+      tended(opened, next.at + MS_HOUR);
+      if (n === 2) opened = reload(opened);
+    }
+    expect(held).toHaveLength(THERAPY.sessions);
+    // Thanksgiving, Thursday 26 November, goes to the Friday; the course keeps a week between sessions from there.
+    expect(held.slice(0, 3)).toEqual([at(2026, 11, 19, 17), at(2026, 11, 27, 17), at(2026, 12, 4, 17)]);
+    for (const t of held) {
+      const p = zonedParts(t, NY);
+      expect([0, 6]).not.toContain(p.weekday);
+      expect(holidaysOn(t, NY, 'us', 'us-ct').filter((x) => x.type === 'public')).toEqual([]);
+      expect(p.hour).toBe(17);
+    }
+    // Each held once, and the course done.
+    expect(opened.universe.scheduled.filter((i) => i.kind === THERAPY_SESSION_KIND && i.status === 'done')).toHaveLength(THERAPY.sessions);
+    expect(opened.player.therapy).toBeUndefined();
   }, 60_000);
 });

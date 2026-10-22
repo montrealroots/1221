@@ -45,6 +45,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
+import { holidaysOn } from '../content/holidays';
 import type { Money } from '../core/money';
 import { inSaveMoney } from './banking';
 import { payFromBank } from './spending';
@@ -87,18 +88,24 @@ export function therapyLifts(sim: Simulation, person: Person, nhs: boolean, at: 
 }
 
 /**
- * A session's hour (from 2026-10-10): five in the afternoon, after classes, on the weekday on or after the day it's
- * due, in the practice's town. Until then a session was booked at whatever hour the course was asked for, so a course
- * asked for at breakfast met at half past seven every week, and once a session slept through stopped counting
- * (`presentForCare`) that course could never end.
+ * A session's hour (from 2026-10-10): five in the afternoon, after classes, on the practice's working day on or after
+ * the day it's due, in the practice's town. Until then a session was booked at whatever hour the course was asked for,
+ * so a course asked for at breakfast met at half past seven every week, and once a session slept through stopped
+ * counting (`presentForCare`) that course could never end.
+ *
+ * A working day is a weekday that isn't a public holiday there, as a doctor's appointment's is (`slot`,
+ * `systems/appointments.ts`), and every session is put on one, not only the first (from 2026-10-21, brief 20's papers
+ * area): until then the first alone was, and each after it, held or missed, came a week on to the minute whatever the
+ * day, so a course begun on Thursday 12 November 2026 met at Yale Mental Health & Counseling on Thanksgiving Day.
  */
 export const SESSION_HOUR = 17;
 function sessionSlot(t: Therapist, on: Instant): Instant {
-  const zone = CITIES.require(t.cityId).timeZone;
+  const city = CITIES.require(t.cityId);
+  const zone = city.timeZone;
   const p = zonedParts(on, zone);
   let at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: SESSION_HOUR, minute: 0 }, zone);
   if (at < on - MS_DAY / 2) at += MS_DAY;
-  for (let i = 0; i < 3 && [0, 6].includes(zonedParts(at, zone).weekday); i += 1) at += MS_DAY;
+  for (let i = 0; i < 7 && ([0, 6].includes(zonedParts(at, zone).weekday) || holidaysOn(at, zone, city.countryId, city.parentId).some((h) => h.type === 'public')); i += 1) at += MS_DAY;
   return at;
 }
 
@@ -126,7 +133,7 @@ export function registerTherapy(sim: Simulation): void {
     // Asleep or in hospital, the session is held next week: until 2026-10-10 only away was, and a session slept
     // through was paid, counted and could lift the depression. Away was until the journeys went on 2026-10-09; the
     // check for it read the town the course began in, the only one they could be in, and went on 2026-10-12.
-    if (!presentForCare(person, item.at)) { item.status = 'missed'; scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
+    if (!presentForCare(person, item.at)) { item.status = 'missed'; scheduleSession(s, person, t, sessionSlot(t, item.at + 7 * MS_DAY)); return; }
     // Yale's counseling sees students Yale Health covers: with the cover gone, the course ends there, and the sessions
     // had stay had (from 2026-10-10: until then it ran on after the cover ended).
     if (t.yale && coverOn(person, item.at) !== 'yale') {
@@ -141,7 +148,7 @@ export function registerTherapy(sim: Simulation): void {
     // (from 2026-10-10; until then it went to the general bills owed, which the medical debt never saw).
     if (price > 0 && !payFromBank(s, person, price, `${t.name}, a session`, 'medical')) billCare(s, person, `${t.name}, a session`, price, item.at);
     course.done += 1;
-    if (course.done < THERAPY.sessions) { scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }
+    if (course.done < THERAPY.sessions) { scheduleSession(s, person, t, sessionSlot(t, item.at + 7 * MS_DAY)); return; }
     delete person.therapy;
     const lifted = therapyLifts(s, person, t.nhs === true, item.at);
     const chronic = healthOf(person).chronic;
