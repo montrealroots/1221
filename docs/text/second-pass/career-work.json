@@ -8,10 +8,10 @@
  },
  "src/engine/systems/projobs.ts#acceptWarning": {
   "status": "Rewritten",
-  "hash": "c785220a6e4c",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "4ea5abca35eb",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#againWords": {
   "status": "Rewritten",
@@ -167,6 +167,13 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#keptWords": {
+  "status": "Rewritten",
+  "hash": "2123b1b08995",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/projobs.ts#KIND_WORDS": {
   "status": "Rewritten",
   "hash": "66419602c475",
@@ -258,6 +265,13 @@
   "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#permissionWords": {
+  "status": "Rewritten",
+  "hash": "87409ec637e8",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/projobs.ts#post": {
   "status": "Rewritten",
   "hash": "a28720469422",
@@ -342,12 +356,26 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#release": {
+  "status": "Rewritten",
+  "hash": "b3882771f720",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#release [problem]": {
+  "status": "Rewritten",
+  "hash": "b3157761e4f5",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (A1: the run's history line, released as Hester Vane, word for word)",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/projobs.ts#replace": {
   "status": "Rewritten",
-  "hash": "ae14a1c3ffab",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "73519243ecea",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#replace [problem]": {
   "status": "Rewritten",

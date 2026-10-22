@@ -330,7 +330,7 @@ describe('permission to work, for each engagement’s dates', () => {
     expect(eligibilityRead(sim.player, [{ from: sim.now + MS_DAY, to: sim.now + MS_DAY + MS_HOUR }], sim.now)).toMatchObject({ authorized: true, basis: 'green-card' });
   });
 
-  it('PLAYER JOURNEY: OPT counts each engagement’s days as days worked, so twelve days of work move its end two of its weekly counts later than none, and once its days without work run out a later engagement is refused, said where it bites', () => {
+  it('PLAYER JOURNEY: OPT counts an engagement worked as days with work, its first day to its last, so a run of twelve days over thirteen moves its end thirteen days later than none, and once its days without work run out a later engagement is refused, said where it bites', () => {
     const play = (seed: string, work: boolean) => {
       const sim = student(seed, { homeRegionId: 'uk-eng-london' });
       const f1 = f1Of(sim.player)!;
@@ -343,12 +343,15 @@ describe('permission to work, for each engagement’s dates', () => {
       tended(sim, at(2026, 10, 20, 10));
       const opt = documentsOf(sim.player).find((d) => d.kind === 'permit' && d.name.includes('OPT'))!;
       expect(opt.status).toBe('valid');
-      expect(titled(sim, 'OPT Approved')[0]!.body).toBe(`You may work in the United States from October 16, 2026 to October 16, 2027. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.`);
+      expect(titled(sim, 'OPT Approved')[0]!.body).toBe(`You may work in the United States from October 16, 2026 to October 16, 2027. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.`);
       if (work) {
         // Two weeks of six days, read as authorized for each date.
         const e = booked(sim, { project: 'calder-street', days: runDays(at(2026, 10, 26), 2), amount: 1_051_00, per: 'week' });
         schedulePay(sim, sim.player, e);
         expect(e.eligibility).toMatchObject({ authorized: true, basis: 'opt' });
+        // TEST SETUP: each day worked, as the work day logs it; `booked` puts no day on the calendar. From 2026-10-22 (the
+        // owner's brief 22) OPT counts work begun, not work booked (`employmentSpan`).
+        e.log = e.days.map((d, i) => ({ day: i, at: d.from, status: 'worked' as const }));
       }
       tended(sim, at(2027, 2, 1));
       return { sim, opt };
@@ -356,8 +359,10 @@ describe('permission to work, for each engagement’s dates', () => {
     const idle = play('opt-idle', false);
     const worked = play('opt-worked', true);
     const ended = (s: Simulation) => titled(s, 'OPT Ended')[0]!.at;
-    expect(worked.opt.workedDays).toBe(12);
-    expect(ended(worked.sim) - ended(idle.sim)).toBe(14 * MS_DAY);
+    // Monday 26 October to Saturday 7 November, its Sunday between: thirteen days with work, by the day (two weekly
+    // counts of the twelve days worked until 2026-10-22, the owner's brief 22).
+    expect(worked.opt.workedDays).toBe(13);
+    expect(ended(worked.sim) - ended(idle.sim)).toBe(13 * MS_DAY);
     // Past its days without work, the next engagement's dates aren't covered, said in its words.
     const later = [{ from: at(2027, 2, 8, 10), to: at(2027, 2, 8, 18) }];
     expect(eligibilityRead(worked.sim.player, later, worked.sim.now)).toMatchObject({ authorized: false });

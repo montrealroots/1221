@@ -67,7 +67,7 @@
    "readBy": "career",
    "readAt": "e0b60f74",
    "where": "Career, Opportunities, Offers: Accept The Offer, and What Needs You's question with the same action; grayed with acceptRefusal's words.",
-   "prerequisites": "An offer standing (`acceptRefusal`): not lapsed; permission to work on every day of the work (`usWorkAuthorized`); SAG-AFTRA membership for SAG-AFTRA work from the 30th day after a first job (`sagWorkRefusal`); no other booking on its days; out of term, no School call held on them.",
+   "prerequisites": "An offer standing (`acceptRefusal`): not lapsed; permission to work on every day of the work (`usWorkAuthorized`); SAG-AFTRA membership for SAG-AFTRA work from the 30th day after a first job (`sagWorkRefusal`); no other booking on its days; out of term, no School call held on them. Permission to work for each day whole, its start and its end (from 2026-10-22, the owner's brief 22; its start alone until then); a warning before it's pressed where OPT's days without work would run out before the work begins.",
    "reads": "The offer, its days (`datesOf`), the papers, the unions, the bookings, the School's calendar and the agreement in force.",
    "changes": "An engagement booked: its days on the calendar as stops (`pro.work_day`), the part's preparation from half the sides', each week's pay promised and put on the clock (`schedulePay`), permission to work read and kept, the agreement in force on it, in term marked unapproved or approved; the offer settled as booked.",
    "consumers": [
@@ -96,11 +96,12 @@
    "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/pro-work.test.ts",
-     "tests/pro-opportunities-screen.test.ts",
+     "tests/b20-career-defects.test.ts",
      "tests/b20-career-effects.test.ts",
      "tests/b20-career-saveload.test.ts",
-     "tests/b20-career-defects.test.ts"
+     "tests/b22-authorization.test.ts",
+     "tests/pro-opportunities-screen.test.ts",
+     "tests/pro-work.test.ts"
     ],
     "comparisons": [
      "b20-career-effects 7: an F-1 graduate on OPT accepts the part, one without OPT is refused in words; the postings, the tape and casting's word the same"
@@ -1515,9 +1516,9 @@
    "readBy": "career",
    "readAt": "e0b60f74",
    "where": "The clock at each booked day, a stop with its trip (`WORK_DAY_KIND`).",
-   "prerequisites": "Live booked work, the day not yet logged.",
+   "prerequisites": "Live booked work, the day not yet logged; from 2026-10-22 (the owner's brief 22) permission to work for the whole day, read when it comes, OPT's count brought up to it first.",
    "reads": "Whether the actor is there; the part's preparation, the role's techniques and families, the project's genres known, the day's condition; at a night, composure and extraversion; the genres loved and agreeableness; in term, the School's approval.",
-   "changes": "A rehearsal moves the part's preparation; a night on stage takes its nerves first (from brief 20); a night or a shoot day is judged and kept, practice in the project's genres, the stage credit at the first night; every day enjoyed or not, the project's kinds against the genres loved and a rehearsal by agreeableness (from brief 20); the unions a first day brings (Equity by the contract, billed from brief 20; SAG-AFTRA eligibility); in term without approval the School's warning or dismissal; the last day finishes the work, the screen credit and its release on the clock. Missed: the company's warning or replacement.",
+   "changes": "A rehearsal moves the part's preparation; a night on stage takes its nerves first (from brief 20); a night or a shoot day is judged and kept, practice in the project's genres, the stage credit at the first night; every day enjoyed or not, the project's kinds against the genres loved and a rehearsal by agreeableness (from brief 20); the unions a first day brings (Equity by the contract, billed from brief 20; SAG-AFTRA eligibility); in term without approval the School's warning or dismissal; the last day finishes the work, the screen credit and its release on the clock. Missed: the company's warning or replacement. Without permission for the day (OPT ended or run out, or none held), nothing of it happens and the work is released (`release`): called off from then, the days worked still paid, a stage credit earned kept, said with why.",
    "consumers": [
     {
      "what": "the credit's band, read by a referral",
@@ -1552,11 +1553,12 @@
    "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
    "evidence": {
     "tests": [
-     "tests/pro-work.test.ts",
-     "tests/b20-career-skill.test.ts",
-     "tests/b20-career-effects.test.ts",
      "tests/b20-career-defects.test.ts",
-     "tests/b20-career-saveload.test.ts"
+     "tests/b20-career-effects.test.ts",
+     "tests/b20-career-saveload.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b22-authorization.test.ts",
+     "tests/pro-work.test.ts"
     ],
     "comparisons": [
      "b20-career-skill: the same booked days, the part prepared alike: the top Strong or better every day, the bottom Unready",

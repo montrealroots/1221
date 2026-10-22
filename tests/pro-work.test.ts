@@ -918,7 +918,11 @@ describe('what missing a step costs', () => {
     // Promised only for the day worked.
     expect(e.pay.reduce((n, p) => n + p.promised, 0)).toBe(o.offer!.amount!);
     expect(sim.player.pro!.credits.some((c) => c.engagementId === e.id)).toBe(false);
-    expect(notices(sim).at(-1)).toBe(`Replaced As ${t.role.part} | You missed a shoot day of ${t.project}, and ${t.company} replaced you as ${t.role.part}. The one day you worked is still paid, and the rest are called off. There’s no credit for it.`);
+    expect(notices(sim).at(-1)).toBe(`Replaced As ${t.role.part} | You missed a shoot day of ${t.project}, and ${t.company} replaced you as ${t.role.part}. The one day you worked is still paid on its payday, and the rest are called off. There’s no credit for it.`);
+    // And paid on its payday, as the notice says: until 2026-10-22 (the owner's brief 22) a payment of work called off
+    // went unpaid at its payday, with a note on the engagement that it wasn't.
+    played(sim, e.pay[0]!.due + MS_HOUR);
+    expect(e.pay.map((p) => Boolean(p.received))).toEqual([true]);
   });
 
   it('PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played', () => {
@@ -934,8 +938,10 @@ describe('what missing a step costs', () => {
     sim.must({ kind: 'life.sleep', payload: { hours: 4 } });
     expect(e.status).toBe('canceled');
     expect(sim.player.pro!.credits.find((c) => c.engagementId === e.id)!.status).toBe('performed');
-    // The weekly pay: the weeks with a day worked stay promised, the rest come off.
+    // The weekly pay: the weeks with a day worked stay promised, the rest come off, and each is paid on its payday.
     expect(e.pay.length).toBe(5);
+    played(sim, Math.max(...e.pay.map((p) => p.due)) + MS_HOUR);
+    expect(e.pay.every((p) => p.received)).toBe(true);
   });
 
   it('PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked', () => {

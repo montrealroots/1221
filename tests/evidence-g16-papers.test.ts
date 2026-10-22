@@ -568,11 +568,14 @@ describe('documents.permission', () => {
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 5, 3, 15), idleDays: 0 });
     // Twelve months from the later of the program's end and the approval: the approval, 3 June 2029, to 3 June 2030.
     expect(opt.expiresAt).toBe(Date.UTC(2030, 5, 3, 15));
-    expect(titled(later, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
-    expect(pendingOf(later, 'documents.opt_week').map((i) => i.at)).toEqual([Date.UTC(2029, 5, 10, 15)]);
-    // The status’s look moves to the OPT’s expiry. Papers gives the end its days without work make: thirteen weeks
-    // counted, 91 days, on 2 September 2029, with no grace after. Until 2026-10-13 it gave the expiry’s sixty days on,
-    // 2 August 2030, which no played OPT reaches, and this test held that date.
+    expect(titled(later, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.']);
+    // Counted by the day from 3 June, at each midnight (from 2026-10-22, the owner's brief 22): until then a week at a
+    // time, its first count on the calendar for 10 June.
+    expect(pendingOf(later, 'documents.opt_week')).toEqual([]);
+    expect(opt.countedTo).toBe(Date.UTC(2029, 5, 3, 4));
+    // The status’s look moves to the OPT’s expiry. Papers gives the end its days without work make: the 91st, 1 September
+    // 2029, ended at midnight, with no grace after. Until 2026-10-13 it gave the expiry’s sixty days on, 2 August 2030,
+    // which no played OPT reaches, and this test held that date.
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);
     expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
 
@@ -581,11 +584,12 @@ describe('documents.permission', () => {
     expect(later.player.usOutOfStatus).toBeUndefined();
     expect(f1Of(later.player)!.status).toBe('valid');
     expect(titled(later, APPROVED)).toHaveLength(1);
-    // Thirteen weeks counted without work, 91 days, past its 90: ended, and the status with it, on 2 September.
+    // Its 91st day without work, 1 September, past its 90: ended at that day's end, midnight in New York, and the status
+    // with it. Until 2026-10-22 (the owner's brief 22) the thirteenth week's count ended it at 11 the next morning.
     later.advanceTo(Date.UTC(2029, 8, 2, 16));
-    expect(opt).toMatchObject({ status: 'cancelled', idleDays: 91, endedAt: Date.UTC(2029, 8, 2, 15) });
-    expect(later.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 15));
-    expect(titled(later, 'OPT Ended').map((n) => n.at)).toEqual([Date.UTC(2029, 8, 2, 15)]);
+    expect(opt).toMatchObject({ status: 'cancelled', idleDays: 91, endedAt: Date.UTC(2029, 8, 2, 4) });
+    expect(later.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 4));
+    expect(titled(later, 'OPT Ended').map((n) => n.at)).toEqual([Date.UTC(2029, 8, 2, 4)]);
   }, 60_000);
 
   it('with premium processing, $2,250 and thirty business days: decided 16 April, it runs twelve months from the program’s end, not the approval', () => {
@@ -598,7 +602,7 @@ describe('documents.permission', () => {
     sim.advanceTo(Date.UTC(2029, 3, 16, 16));
     const opt = documentsOf(sim.player).find((d) => d.kind === 'permit')!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 4, 31, 12), expiresAt: Date.UTC(2030, 4, 31, 12) });
-    expect(titled(sim, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from May 31, 2029 to May 31, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
+    expect(titled(sim, APPROVED).map((n) => n.body)).toEqual(['You may work in the United States from May 31, 2029 to May 31, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.']);
   }, 60_000);
 
   it('is refused in its words to a citizen, to a student who withdrew, to a life never on an F-1, and once its window has closed', () => {
@@ -963,9 +967,11 @@ describe('benefits.week', () => {
     expect(run(sim, 'benefits.claim')).toMatchObject({ ok: true, value: { weekly: 93_00, maxTotal: 2_418_00 } });
     expect(unemploymentOf(sim.player).claim!.basePeriod).toEqual(['2028-1', '2028-2', '2028-3', '2028-4']);
     sim.advanceTo(Date.UTC(2029, 8, 3, 1));
-    // Twelve Sundays from 10 June to 26 August; her OPT ended at 11 AM on 2 September, so that evening's week is unpaid.
+    // Twelve Sundays from 10 June to 26 August; her OPT ended at midnight starting 2 September, the end of her 91st day
+    // without work (at 11 AM that day, the thirteenth week's count, until 2026-10-22, the owner's brief 22), so that
+    // evening's week is unpaid.
     expect(memos(sim, /^Unemployment insurance/).map((t) => t.at)).toEqual(Array.from({ length: 12 }, (_, n) => Date.UTC(2029, 5, 11, 0) + n * 7 * MS_DAY));
-    expect(sim.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 15));
+    expect(sim.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 4));
     expect(unemploymentOf(sim.player).claim!.paid).toBe(12 * 93_00);
     expect(pendingOf(sim, BENEFIT_WEEK_KIND).map((i) => i.at)).toEqual([Date.UTC(2029, 8, 10, 0)]);
 

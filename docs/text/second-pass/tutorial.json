@@ -106,10 +106,10 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "e8c0e949cd89",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "1bd4fb1d54f3",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the rule the chapter says: a job's days with work from its first, the days before a booked job begins without)",
+  "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
   "status": "Rewritten",

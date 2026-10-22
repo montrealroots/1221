@@ -432,13 +432,15 @@ describe('documents.apply_opt', () => {
     tended(back, START + 90 * MS_DAY + MS_HOUR);
     const opt = held(back, 'permit')[0]!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: START + 90 * MS_DAY, expiresAt: Date.UTC(2027, 10, 22, 11, 30) });
-    expect(titled(back, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 22, 2026 to November 22, 2027. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
+    expect(titled(back, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 22, 2026 to November 22, 2027. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.']);
     expect(back.player.usOutOfStatus).toBeUndefined();
     expect(memos(back, /OPT/).map((t) => taken(back, t))).toEqual([470_00]);
-    // No work after the degree: thirteen weeks idle is 91 days, past OPT's 90, and the status ends with it, no grace.
+    // No work after the degree: its 91st day without work, from 22 November, is 20 February, past OPT's 90, so it ends at
+    // that day's end, midnight in New York, and the status with it, no grace. Counted a week at a time until 2026-10-22
+    // (the owner's brief 22), it ended at the thirteenth week's count, at the hour it began.
     tended(back, START + (90 + 92) * MS_DAY);
-    expect(opt).toMatchObject({ status: 'cancelled', endedAt: START + (90 + 91) * MS_DAY });
-    expect(back.player.usOutOfStatus).toBe(START + (90 + 91) * MS_DAY);
+    expect(opt).toMatchObject({ status: 'cancelled', idleDays: 91, endedAt: Date.UTC(2027, 1, 21, 5) });
+    expect(back.player.usOutOfStatus).toBe(Date.UTC(2027, 1, 21, 5));
     expect(titled(back, 'Out Of Status')).toHaveLength(1);
   });
 

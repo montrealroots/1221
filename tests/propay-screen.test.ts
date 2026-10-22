@@ -140,7 +140,7 @@ describe('the Work tab', () => {
     expect(shown).toContain('Robin, Last Bus To Eastview, September 14, 2026 to September 15, 2026. Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
   }, 90_000);
 
-  it('PLAYER JOURNEY: on OPT, Papers says the days counted so far and the end of its days without work, which the work booked moves two weeks later', () => {
+  it('PLAYER JOURNEY: on OPT, Papers says the days counted so far and the end of its days without work, which the work booked moves thirteen days later, its first day to its last', () => {
     const sim = student('screen-papers-opt', { homeRegionId: 'uk-eng-london' });
     // TEST SETUP: the degree conferred on 1 September 2026 and the F-1's program ending 1 October, so OPT is played in
     // months: the F-1's end moved to sixty days past the program's.
@@ -149,16 +149,20 @@ describe('the Work tab', () => {
     tended(sim, at(2026, 9, 2, 10));
     expect(sim.execute({ kind: 'documents.apply_opt', payload: { premium: true } }).ok).toBe(true);
     tended(sim, at(2026, 10, 20, 10));
-    const idle = optRunsOut(sim, sim.player)!;
+    const idle = optRunsOut(sim.player)!;
     const e = booked(sim, { project: 'calder-street', days: runDays(at(2026, 10, 26), 2), amount: 1_051_00, per: 'week' });
     schedulePay(sim, sim.player, e);
-    expect(optRunsOut(sim, sim.player)! - idle).toBe(14 * MS_DAY);
+    // Projected with the booking from its first day, Monday 26 October, to its last, Saturday 7 November: thirteen days
+    // (two weekly counts, fourteen days, until 2026-10-22, the owner's brief 22).
+    expect(optRunsOut(sim.player)! - idle).toBe(13 * MS_DAY);
+    // TEST SETUP: each day worked, as the work day logs it; `booked` puts no day on the calendar.
+    e.log = e.days.map((d, i) => ({ day: i, at: d.from, status: 'worked' as const }));
     tended(sim, at(2026, 11, 14, 10));
     h.sim = sim;
     const shown = words(renderToStaticMarkup(createElement(PapersWork)));
     const opt = documentsOf(sim.player).find((d) => d.name.includes('OPT'))!;
-    expect(shown).toContain(`So far your OPT has counted ${opt.idleDays} days without work and 12 days worked.`);
-    expect(shown).toContain(`Your US Status Ends ${formatDate(idle + 14 * MS_DAY, 'America/New_York')} When your OPT’s 90 days without work run out.`);
+    expect(shown).toContain(`So far your OPT has counted ${opt.idleDays} days without work and 13 days with work.`);
+    expect(shown).toContain(`Your US Status Ends ${formatDate(idle + 13 * MS_DAY, 'America/New_York')} When your OPT’s 90 days without work run out.`);
     expect(shown).toContain('On OPT, this is the list of your work and its dates that SEVP’s guidance asks you to keep.');
   }, 90_000);
 

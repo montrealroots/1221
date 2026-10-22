@@ -1,0 +1,58 @@
+at 69996adb, the test file tests/b22-a1-on-base.test.ts (tests/b22-authorization.test.ts's A1 and A7, its brief-22-only imports taken out), 2026-10-22T15:19:18Z
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b22-base
+
+ ❯ tests/b22-a1-on-base.test.ts (2 tests | 2 failed) 476ms
+   × A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 356ms
+     → expected [ 'cancelled', 93, 5 ] to deeply equal [ 'cancelled', 91, 3 ]
+   × A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows 118ms
+     → expected 'working' to be 'canceled' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/b22-a1-on-base.test.ts > A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited
+AssertionError: expected [ 'cancelled', 93, 5 ] to deeply equal [ 'cancelled', 91, 3 ]
+
+- Expected
++ Received
+
+  Array [
+    "cancelled",
+-   91,
+-   3,
++   93,
++   5,
+  ]
+
+ ❯ tests/b22-a1-on-base.test.ts:137:56
+    135|     // Counted on from the day its weeks reached, 30 August, nothing c…
+    136|     // the 89th, 90th and 91st days without work.
+    137|     expect([opt.status, opt.idleDays, opt.workedDays]).toEqual(['cance…
+       |                                                        ^
+    138|     expect(opt.endedAt).toBe(midnight(2029, 9, 2));
+    139|     expect(sim.player.usOutOfStatus).toBe(midnight(2029, 9, 2));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/b22-a1-on-base.test.ts > A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows
+AssertionError: expected 'working' to be 'canceled' // Object.is equality
+
+Expected: "canceled"
+Received: "working"
+
+ ❯ tests/b22-a1-on-base.test.ts:169:24
+    167| 
+    168|     played(sim, at(2029, 10, 20, 12));
+    169|     expect(run.status).toBe('canceled');
+       |                        ^
+    170|     expect(run.finishedAt).toBe(firstNight.from);
+    171|     expect(JSON.stringify(run.log)).toBe(logBefore);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  15:19:18
+   Duration  5.17s (transform 3.48s, setup 214ms, collect 4.24s, tests 476ms, environment 0ms, prepare 58ms)
+
+vitest exit=1

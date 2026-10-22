@@ -2071,7 +2071,8 @@
    "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]",
    "src/engine/content/guide/documents.ts#DOCUMENTS [scheduled]",
    "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]",
-   "src/engine/content/guide/documents.ts#DOCUMENTS [optional]"
+   "src/engine/content/guide/documents.ts#DOCUMENTS [optional]",
+   "src/engine/content/guide/documents.ts#OPT_ENDS"
   ],
   "states": [
    "ordinary",

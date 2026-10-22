@@ -883,11 +883,13 @@ PLAYS['documents.work'] = () => {
   const permit = documentsOf(sim.player).find((d) => d.kind === 'permit' && d.name.includes('OPT'))!;
   expect(permit.status).toBe('valid');
   expect(permit.issuedAt).toBe(Math.max(end, v.readyAt));
-  // Ninety days without work, counted a week at a time.
+  // More than ninety days without work, counted by the day (a week at a time until 2026-10-22, the owner's brief 22):
+  // ended at the end of the 91st, midnight in New York.
   for (let week = 0; week < 20 && permit.status === 'valid'; week += 1) tended(sim, sim.now + 7 * MS_DAY);
   expect(permit.status).toBe('cancelled');
+  expect(permit.idleDays).toBe(opt.unemploymentDays + 1);
   expect(sim.player.usOutOfStatus).toBe(permit.endedAt);
-  expect(ex.result).toBe(`${usd(v.fee)} leaves the bank. OPT is decided on ${day(v.readyAt)} and runs from ${day(permit.issuedAt!)}. With no work, it ends on ${day(permit.endedAt!)}, past its ${opt.unemploymentDays} days, and your status ends with it. Without OPT, your status would have ended on ${day(without)}.`);
+  expect(ex.result).toBe(`${usd(v.fee)} leaves the bank. OPT is decided on ${day(v.readyAt)} and runs from ${day(permit.issuedAt!)}. With no work, it ends at the end of ${day(permit.endedAt! - 1)}, its days without work past ${opt.unemploymentDays}, and your status ends with it. Without OPT, your status would have ended on ${day(without)}.`);
 };
 
 PLAYS['documents.residence'] = () => {

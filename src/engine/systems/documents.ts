@@ -85,8 +85,17 @@ export interface PersonDocument {
   /** A permission to work tied to one job, and days without work counted against it (`systems/permission.ts`). */
   bookingId?: string;
   idleDays?: number;
-  /** OPT's days of professional work counted so far, from the engagements' days (`daysWorkedIn`, from 2026-10-21). */
+  /**
+   * OPT's days with employment counted so far (from 2026-10-21; by the day from brief 22, 2026-10-22, `settleOpt` in
+   * `systems/permission.ts`: a day inside a job that has begun, where until then it was any day an engagement was booked
+   * for, `daysWorkedIn`).
+   */
   workedDays?: number;
+  /**
+   * OPT's count by the day (from 2026-10-22, the owner's brief 22): the start of the first New York day not yet counted.
+   * A save from before kept none and counted by weeks; its count goes on from the day its weeks reached (`countedTo`).
+   */
+  countedTo?: number;
   /** When a permission was ended early for a violation, which leaves no grace after it (from 2026-10-01). */
   endedAt?: number;
   /** A route to residence it was granted on (`systems/residence.ts`, from 2026-09-30). */

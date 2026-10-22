@@ -445,12 +445,13 @@ describe('documents.permission', () => {
     later.advanceTo(Date.UTC(2029, 5, 3, 16));
     const opt = documentsOf(later.player).find((d) => d.kind === 'permit')!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 5, 3, 15), expiresAt: Date.UTC(2030, 5, 3, 15), idleDays: 0 });
-    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
+    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.']);
     // The pending application held her status at the program's end: no "Your US Status Is Ending".
     expect(Object.values(later.universe.decisions).filter((d) => d.title === 'Your US Status Is Ending')).toEqual([]);
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);
-    // Papers gives the status’s end as the day the OPT’s days without work will end it: thirteen weeks of them counted
-    // from 3 June, 91 days, past its 90, 2 September, with no grace after. Until 2026-10-13 it gave the expiry’s sixty
+    // Papers gives the status’s end as the day the OPT’s days without work will end it: the 91st counted from 3 June, past
+    // its 90, is 1 September, and it ends at that day's end, 2 September, with no grace after (by the day from
+    // 2026-10-22, the owner's brief 22; until then thirteen weeks of them, at the thirteenth count). Until 2026-10-13 it gave the expiry’s sixty
     // days on, 2 August 2030, which no played OPT reaches (found by that day’s third round; this failed before the fix).
     const status = drawn(later, WorkPane);
     expect(status.text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
@@ -461,8 +462,8 @@ describe('documents.permission', () => {
     expect(later.player.usOutOfStatus).toBeUndefined();
     expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 2, 2029');
     later.advanceTo(Date.UTC(2029, 8, 2, 16));
-    expect(opt).toMatchObject({ status: 'cancelled', idleDays: 91, endedAt: Date.UTC(2029, 8, 2, 15) });
-    expect(later.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 15));
+    expect(opt).toMatchObject({ status: 'cancelled', idleDays: 91, endedAt: Date.UTC(2029, 8, 2, 4) });
+    expect(later.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 4));
     expect(drawn(later, WorkPane).text).toContain('Your US Status Out Of Status Since September 2, 2029');
   }, 60_000);
 });

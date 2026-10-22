@@ -15,10 +15,10 @@
  },
  "src/engine/systems/propay.ts#eligibilityRead": {
   "status": "Rewritten",
-  "hash": "a03b1246bde6",
-  "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
-  "first": "Rewritten And Verified"
+  "hash": "5468ef548603",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the rule the line says: a job's days with work from its first) and tests/propay.test.ts (eligibilityRead on OPT, basis opt)",
+  "first": "Pending"
  },
  "src/engine/systems/propay.ts#equityJoined": {
   "status": "Rewritten",
@@ -58,13 +58,6 @@
  "src/engine/systems/propay.ts#payDue [paid]": {
   "status": "Rewritten",
   "hash": "0bc24a0ee835",
-  "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
-  "first": "Rewritten And Verified"
- },
- "src/engine/systems/propay.ts#payDue [problem]": {
-  "status": "Rewritten",
-  "hash": "43e06d8956e4",
   "on": "2026-10-21",
   "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
   "first": "Rewritten And Verified"

@@ -63,6 +63,7 @@ import { CITIES } from '../content/geography';
 import { MASTERED, TECHNIQUE_LABEL } from '../content/abilities';
 import { TASK_PROFILES } from '../content/tasks';
 import { ENGAGEMENT } from '../content/engagement';
+import { WORK_RULES } from '../content/workrules';
 import type { Skill } from '../content/school';
 import { PROJECTS, RATES, minimumOn, projectById, type ProjectKind, type ProjectTemplate, type Rate } from '../content/careerwork';
 import { agencyOf, agentById, type AgentField } from '../content/agents';
@@ -86,7 +87,8 @@ import {
   CALL_KIND, ESTIMATE, classPeriod, conditionAt, countWords, coursesFor, focusAt, keyOf, offSick, ordinary, recessStart, schoolEnded, setStanding,
   termOf, termStart,
 } from './school';
-import { f1Of, usWorkAuthorized } from './permission';
+import { OPT_ZONE, PERMISSION_ENDED, f1Of, optRunsOut, settleOpt, usWorkAuthorized, workAuthorizedFor } from './permission';
+import { documentsOf } from './documents';
 import { EQUITY_JOINED, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
 import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
 
@@ -852,8 +854,10 @@ export function acceptRefusal(sim: Simulation, person: Person, o: Opportunity | 
   if (!o || o.status !== 'offered' || !o.offer) return 'There’s no offer to accept.';
   if (sim.now >= o.offer.until) return `The offer lapsed on ${formatDate(o.offer.until, NY)}.`;
   const days = datesOf(o);
-  // Permission to work for every one of its days (`usWorkAuthorized`, brief 19's D8): read, never worked out here.
-  const bad = days.find((d) => !usWorkAuthorized(person, d.from));
+  // Permission to work for every one of its days (`usWorkAuthorized`, brief 19's D8): read, never worked out here. Each
+  // day whole, its start and its end, as the work day reads it when it comes (`workAuthorizedFor`, from 2026-10-22, the
+  // owner's brief 22): until then its start alone.
+  const bad = days.find((d) => !workAuthorizedFor(person, d));
   if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
   // And SAG-AFTRA's membership from the 30th day after a first job of its (the pay's `sagWorkRefusal`, wired at the merge,
   // 2026-10-21). The pay's `workEligibilityRefusal` was wired here too and came out the same day: it refuses where a date
@@ -876,6 +880,11 @@ export function acceptRefusal(sim: Simulation, person: Person, o: Opportunity | 
 /** What accepting would bring with the School, said before it's pressed: work in term without approval, and the class days. */
 export function acceptWarning(sim: Simulation, person: Person, o: Opportunity): string | undefined {
   const days = datesOf(o);
+  // OPT's days without work running out before the work begins (from 2026-10-22, the owner's brief 22): a booking
+  // isn't employment until its first day (`employmentSpan`), so the days waiting for it count against OPT. Said before
+  // Accept is pressed, as the School's rule below is; the work system releases the part if it comes to that.
+  const runsOut = optRunsOut(person);
+  if (runsOut !== undefined && days[0] && runsOut <= days[0].from) return `Your OPT’s ${WORK_RULES.opt.unemploymentDays} days without work run out on ${formatDate(runsOut - 1, OPT_ZONE)}, before this work begins on ${formatDate(days[0].from, NY)}, and a job counts as work only from its first day. Unless other work begins first, your OPT ends then, and with it this part.`;
   if (!inSessionAny(person, days)) return undefined;
   const req = requestFor(person, o);
   if (req?.status === 'approved') return 'The dean approved this work in term, so its class days are excused.';
@@ -1263,8 +1272,12 @@ function missDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTempl
   replace(sim, person, e, t, what);
 }
 
-/** Replaced: the days to come called off, the pay for days never worked taken off what was promised, no credit where nothing was shot. */
-function replace(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, what: string): void {
+/**
+ * Work called off from now: the days to come taken off the calendar, the pay for days never worked taken off what was
+ * promised, and the days worked: a week with nothing worked is owed nothing, a day rate's week only its days worked.
+ * What `replace` and `release` share (from 2026-10-22, the owner's brief 22: until then `replace` did it alone).
+ */
+function callOff(sim: Simulation, e: Engagement, t: ProjectTemplate): Set<number> {
   e.status = 'canceled';
   e.finishedAt = sim.now;
   sim.timeline.cancelFor('pro.engagement', e.id, sim.now);
@@ -1280,10 +1293,49 @@ function replace(sim: Simulation, person: Person, e: Engagement, t: ProjectTempl
     if (t.schedule.kind === 'shoot' && days.length) p.promised = Math.round((p.promised / days.length) * done);
     return true;
   });
+  return worked;
+}
+
+/** What's kept of work called off, said: the days worked still paid, and the credit where a night was played. */
+function keptWords(e: Engagement, worked: Set<number>): string {
+  const paid = worked.size ? `The ${counted(worked.size, 'day')} you worked ${worked.size === 1 ? 'is' : 'are'} still paid on ${worked.size === 1 ? 'its payday' : 'their paydays'}, and the rest are called off.` : 'You hadn’t worked a day of it, so nothing is owed, and its days are off your calendar.';
+  return `${paid} ${e.creditId ? 'The part stays on your credits for the nights you played.' : 'There’s no credit for it.'}`;
+}
+
+/** Replaced: called off (`callOff`), no credit where nothing was shot. */
+function replace(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, what: string): void {
+  const worked = callOff(sim, e, t);
   noteEvent(sim, e, { kind: 'problem', key: 'replaced', words: `${t.company} replaced you as ${t.role.part} after you missed ${what}.` });
   keepBounded(ensurePro(sim, person));
-  const paid = worked.size ? `The ${counted(worked.size, 'day')} you worked ${worked.size === 1 ? 'is' : 'are'} still paid, and the rest are called off.` : 'You hadn’t worked a day of it, so nothing is owed.';
-  tell(sim, person, `Replaced As ${t.role.part}`, `You missed ${what} of ${t.project}, and ${t.company} replaced you as ${t.role.part}. ${paid} ${e.creditId ? 'The part stays on your credits for the nights you played.' : 'There’s no credit for it.'}`, 90);
+  tell(sim, person, `Replaced As ${t.role.part}`, `You missed ${what} of ${t.project}, and ${t.company} replaced you as ${t.role.part}. ${keptWords(e, worked)}`, 90);
+}
+
+/**
+ * Why permission to work no longer covers a day, in a sentence: OPT ended for its days without work, OPT run out on its
+ * end date, or what permission says otherwise (`eligibilityOf`).
+ */
+function permissionWords(person: Person, at: Instant): string {
+  const opt = documentsOf(person).filter((d) => d.kind === 'permit' && d.destination === 'US' && d.name.includes('OPT') && (d.issuedAt ?? Infinity) <= at).sort((a, b) => (b.issuedAt ?? 0) - (a.issuedAt ?? 0))[0];
+  if (opt?.endedAt !== undefined && opt.endedAt <= at) return `Your OPT ended on ${formatDate(opt.endedAt - 1, OPT_ZONE)}, after more than ${WORK_RULES.opt.unemploymentDays} days without work, and without it you can’t work in the United States`;
+  if (opt?.status === 'valid' && opt.expiresAt !== undefined && opt.expiresAt <= at) return `Your OPT ran out on ${formatDate(opt.expiresAt, OPT_ZONE)}, and without it you can’t work in the United States`;
+  return eligibilityOf(person, at).words.replace(/\.$/, '');
+}
+
+/**
+ * Released for want of permission to work (from 2026-10-22, the owner's brief 22): an employer can't go on employing
+ * someone who has become unable to work for it (8 U.S.C. 1324a(a)(2)), so the work is called off from then
+ * (`callOff`), the days worked still paid (the FLSA is enforced "without regard to whether an employee is documented",
+ * DOL Fact Sheet #48), a stage credit already earned kept, and no penalty, since no agreement in the game gives one.
+ * Until that day nothing read permission after acceptance, and b20-4 played 47 days of The Winter Ledger after its OPT
+ * ended (docs/verification/career-genre-2026-10-22/before/b20-4/).
+ */
+export function release(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, at: Instant): void {
+  const why = permissionWords(person, at);
+  const begun = (e.log ?? []).some((l) => l.status === 'worked');
+  const worked = callOff(sim, e, t);
+  noteEvent(sim, e, { kind: 'problem', key: 'released', words: `${t.company} released you as ${t.role.part} on ${formatDate(sim.now, NY)}: ${why.charAt(0).toLowerCase()}${why.slice(1)}.` });
+  keepBounded(ensurePro(sim, person));
+  tell(sim, person, `Released As ${t.role.part}`, `${why}. So ${t.company} can’t ${begun ? 'keep you on' : 'start you'} as ${t.role.part} in ${t.project}, and has released you. ${keptWords(e, worked)}`, 90);
 }
 
 /**
@@ -1433,6 +1485,16 @@ export function registerProJobs(sim: Simulation): void {
     const i = Number(item.payload.day);
     if (!person || !e || !live(e) || e.log?.some((l) => l.day === i)) return;
     const t = projectById(e.projectId)!;
+    // Permission read where the work happens (from 2026-10-22, the owner's brief 22): OPT's days counted up to the day
+    // first (`settleOpt`), which may end it and release this work (`PERMISSION_ENDED`), then the day read whole
+    // (`workAuthorizedFor`). Without it the day doesn't happen: no judgment, record, practice, attendance or credit.
+    // Until then permission was read at acceptance alone.
+    settleOpt(s, person, item.at);
+    if (!live(e)) return;
+    if (!workAuthorizedFor(person, e.days[i]!)) {
+      release(s, person, e, t, item.at);
+      return;
+    }
     if (!there(person, item.at)) {
       missDay(s, person, e, t, i, item.at);
       // The last day missed, with the work still on: it ends there.
@@ -1485,6 +1547,18 @@ export function registerProJobs(sim: Simulation): void {
     person.wellbeing.energy = clamp(person.wellbeing.energy - ESTIMATE.energy.rehearsal, 0, 100);
     if (e.log.filter((l) => l.status === 'worked').length === 1) noteEvent(s, e, { kind: 'worked', key: 'first', words: `Your first day as ${t.role.part} in ${t.project}.` });
     if (i === e.days.length - 1 && e.status === 'working') finish(s, person, e, t);
+  });
+
+  // Permission to work ended (from 2026-10-22, the owner's brief 22): every engagement with a day still to come past the
+  // end is released then (`release`), its days off the calendar at once, so the player hears of each at the moment,
+  // not at its next work day.
+  sim.onEvent(PERMISSION_ENDED, 'pro.release_unauthorized', (event, { sim: s }) => {
+    const { personId, at } = event.payload as { personId: string; at: Instant };
+    const person = s.universe.people[personId];
+    for (const e of person?.pro?.engagements ?? []) {
+      if (!live(e) || !e.days.some((d, i) => d.to > at && !e.log?.some((l) => l.day === i))) continue;
+      release(s, person!, e, projectById(e.projectId)!, at);
+    }
   });
 
   sim.onSchedule(RELEASE_KIND, (item, s) => {

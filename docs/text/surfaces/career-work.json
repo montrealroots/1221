@@ -216,7 +216,7 @@
   ]
  },
  {
-  "surface": "Career, Opportunities: Booked Work, the work days, a missed day’s consequence, the wrap and the release",
+  "surface": "Career, Opportunities: Booked Work, the work days, a missed day’s consequence, the wrap and the release, and a release for want of permission to work",
   "where": "Career, the Opportunities tab, Booked Work; the work days’ notices",
   "sources": [
    "src/ui/career/OpportunitiesPane.tsx#BookedCard",
@@ -227,6 +227,10 @@
    "src/engine/systems/projobs.ts#missDay [problem]",
    "src/engine/systems/projobs.ts#replace",
    "src/engine/systems/projobs.ts#replace [problem]",
+   "src/engine/systems/projobs.ts#keptWords",
+   "src/engine/systems/projobs.ts#release",
+   "src/engine/systems/projobs.ts#release [problem]",
+   "src/engine/systems/projobs.ts#permissionWords",
    "src/engine/systems/projobs.ts#registerProJobs [worked]"
   ],
   "states": [
@@ -240,7 +244,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19: booked work with its days and the pay promised, not yet paid, and each consequence of a missed day said as the project states it.",
-  "changes": "Written new: the days to come (“Each stops the clock: press Go to be there.”), the pay promised (“It’s promised, not yet paid.”), the written warning and the understudy, the replacement with what’s still paid, the wrap and the release with the reel. From 2026-10-21 (brief 19's app walk): one week's promised pay is said for one week, where it said over one week, each week due. From 2026-10-21 (the app's second walk): a student film's deferred pay says why it's never paid, in the offer's words, where it said only that nothing is paid.",
+  "changes": "Written new: the days to come (“Each stops the clock: press Go to be there.”), the pay promised (“It’s promised, not yet paid.”), the written warning and the understudy, the replacement with what’s still paid, the wrap and the release with the reel. From 2026-10-21 (brief 19's app walk): one week's promised pay is said for one week, where it said over one week, each week due. From 2026-10-21 (the app's second walk): a student film's deferred pay says why it's never paid, in the offer's words, where it said only that nothing is paid. From 2026-10-22 (the owner's brief 22): work permission no longer covers is released, at the end of OPT or at the work day, said with why (OPT ended for its days without work, or run out on its end date) and what's kept, and the replacement's days worked are said to be paid on their paydays, which they now are.",
   "evidence": [
    {
     "kind": "test",
@@ -257,6 +261,14 @@
    {
     "kind": "test",
     "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a student film accepted, Booked Work says why its deferred pay is never paid, in the offer’s own words (the app’s second walk, 2026-10-21)'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b22-authorization.test.ts: 'PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b22-authorization.test.ts: 'PLAYER JOURNEY, during: a two-day shoot whose second day falls after OPT’s end date (TEST SETUP: the end moved to the first day’s evening) works the first day, refuses the second at its hour, and pays the one day worked; no screen credit for a shoot not finished'"
    }
   ]
  },

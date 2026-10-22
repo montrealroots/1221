@@ -496,7 +496,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     interpret: [
       'Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.',
       'Deferred pay is shown and never paid: a student film pays its actors only if it earns money later, and no film in the game does.',
-      'On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.',
+      'On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work. If your permission to work ends with work still booked, the company releases you: the days you worked are still paid, and the rest are called off.',
     ],
     unavailable: ['“No work booked. Work you accept appears here with its dates, its calls, its pay and any commission.”'],
     mistakes: [

@@ -22,7 +22,7 @@ import type { Simulation } from '../core/simulation';
 import { leftWithout, schoolEnded } from './school';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, MS_HOUR, addDays, dateKey, formatDate, instantFromZoned, zonedParts, type Instant, type TimeZone } from '../core/time';
+import { MS_DAY, MS_HOUR, addDays, dateKey, formatDate, startOfDay, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { usBankHoliday, yaleHoliday } from '../content/usholidays';
@@ -225,42 +225,147 @@ export function scheduleUsStatus(sim: Simulation, person: Person): void {
 }
 
 // The days on a job counted against OPT's days without work (`onAJob`) until the career went on 2026-10-09, after which
-// every day was one without work. From 2026-10-21 (brief 19's D8) the days of each engagement count as days worked
-// again, read from the engagements themselves.
+// every day was one without work. From 2026-10-21 (brief 19's D8) the days of each engagement counted as days worked
+// again, a week at a time (`daysWorkedIn`): any day an engagement not called off was booked for, worked or not. From
+// 2026-10-22 (the owner's brief 22) the count is by the day, of employment (below): `daysWorkedIn` went, and with it a
+// booked day counted as worked, a 91st day found up to six days late, and an engagement called off after it began
+// losing its worked days from the count.
+
+// ---------------------------------------------------------------------------
+// OPT's days without employment, counted by the day (from 2026-10-22, the owner's brief 22)
+// ---------------------------------------------------------------------------
+
+/** OPT's days are New York's, where the School and every engagement are. */
+export const OPT_ZONE: TimeZone = 'America/New_York';
 
 /**
- * The days in a stretch on which they had professional work: each calendar day, in `zone`, that any engagement not
- * called off has work on (`Engagement.days`), counted once however many it has. SEVP's guidance lets a performing artist
- * on OPT work for "multiple short term employers (gigs)", keeping "a list of all gigs, the dates and duration"
- * (docs/research/career-2026-10-20/work.md S5); a day of an engagement counts as a day worked, an ASSUMPTION about its
- * hours (OPT asks 20 a week, S3, S6, which a gig's day isn't measured against).
+ * Permission to work in the US ended at a moment (`{ personId, at, why }`), for the work system to release what was
+ * booked past it (`systems/projobs.ts`): `why` is 'opt-idle' for OPT's days without work run out.
  */
-export function daysWorkedIn(person: Person, from: Instant, to: Instant, zone: TimeZone = 'America/New_York'): number {
-  const engagements: readonly Engagement[] = (person.pro?.engagements ?? []).filter((e) => e.status !== 'canceled');
-  let n = 0;
-  for (let d = from; d < to; d = addDays(d, 1, zone)) {
-    const p = zonedParts(d, zone);
-    const start = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 0, minute: 0 }, zone);
-    const end = addDays(start, 1, zone);
-    if (engagements.some((e) => e.days.some((x) => x.from < end && x.to > start))) n += 1;
-  }
-  return n;
+export const PERMISSION_ENDED = 'documents.work_permission_ended';
+
+/**
+ * An engagement's scheduled hours a week over its span, its first day's start to its last day's end, a span under a
+ * week counted as a week. SEVP asks "at least 20 hours per week ... If a student has a variable schedule, within a
+ * month, it should average out to at least 20 hours per week" (`WORK_RULES.opt.weeklyHours`). Averaged over the
+ * engagement, not a month, SLATE's reading: a performance's record is its two and a half hours on stage, not the calls
+ * around it, so a run's performance weeks read fifteen hours, which a month's window would take for unemployment.
+ * Every engagement the game has averages 22 or more.
+ */
+export function weeklyHours(e: Pick<Engagement, 'days'>): number {
+  if (!e.days.length) return 0;
+  const hours = e.days.reduce((a, d) => a + (d.to - d.from) / MS_HOUR, 0);
+  return hours / Math.max(1, (e.days[e.days.length - 1]!.to - e.days[0]!.from) / (7 * MS_DAY));
 }
 
 /**
- * When an OPT in force runs out of its days without work, by the weeks still to be counted and the work booked in them
- * (`daysWorkedIn`), or nothing where its twelve months end first: what Papers says the status ends on.
+ * The stretch an engagement employed them (from 2026-10-22, the owner's brief 22): from the start of its first day
+ * worked to the end of its last day, or to the moment it was called off, where its hours qualify (`weeklyHours`). None
+ * where no day of it was worked: a contract signed for work not yet begun is a booking, not employment (SEVP 4.9's
+ * "qualifying job"; DHS: a record that "lacks employer information is considered unemployed"). A day missed inside it
+ * stays employed, as leave the employer allows (SEVP 7.1.8), SLATE's reading. `planned` reads the work booked as if
+ * each day goes ahead, from its first day: what Papers projects, never what's counted.
  */
-export function optRunsOut(sim: Simulation, person: Person): Instant | undefined {
-  const doc = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'valid' && d.name.includes('OPT'));
+export function employmentSpan(e: Engagement, planned = false): { from: Instant; to: Instant } | undefined {
+  if (!e.days.length || weeklyHours(e) < WORK_RULES.opt.weeklyHours) return undefined;
+  const last = e.days[e.days.length - 1]!.to;
+  if (planned && (e.status === 'booked' || e.status === 'preparing' || e.status === 'working')) {
+    const first = e.log?.find((l) => l.status === 'worked')?.at ?? e.days[0]!.from;
+    return { from: startOfDay(first, OPT_ZONE), to: last };
+  }
+  const worked = (e.log ?? []).filter((l) => l.status === 'worked').map((l) => l.at);
+  if (!worked.length) return undefined;
+  return { from: startOfDay(Math.min(...worked), OPT_ZONE), to: e.status === 'canceled' ? Math.min(last, e.finishedAt ?? last) : last };
+}
+
+/** Whether a New York day, `from` to `to`, had employment (`employmentSpan`) in any engagement. */
+export function employedOn(person: Person, from: Instant, to: Instant, planned = false): boolean {
+  return (person.pro?.engagements ?? []).some((e) => {
+    const span = employmentSpan(e, planned);
+    return span !== undefined && span.from < to && span.to > from;
+  });
+}
+
+/** The OPT in force, valid, if they hold one. */
+const optHeld = (person: Person): PersonDocument | undefined => documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'valid' && d.name.includes('OPT'));
+
+/**
+ * Where OPT's count stands: the start of the first New York day not yet counted. A permit approved from brief 22 on
+ * keeps it (`countedTo`). One from before counted by weeks from its first day, seven days a week, its days without
+ * work and its days worked between them, so its count reached that many days on; it goes on from there, and nothing
+ * already counted is counted again.
+ */
+function countedFrom(doc: PersonDocument): Instant {
+  if (doc.countedTo !== undefined) return doc.countedTo;
+  const counted = (doc.idleDays ?? 0) + (doc.workedDays ?? 0);
+  return addDays(startOfDay(doc.issuedAt!, OPT_ZONE), counted, OPT_ZONE);
+}
+
+/**
+ * OPT's days counted up to `until` (from 2026-10-22, the owner's brief 22): each New York day from its first, once it's
+ * over, a day with employment (`employedOn`) or a day without, weekends included (SEVP 7.1.6: "Each day (including
+ * weekends) ... that the student does not have qualifying employment counts as a day of unemployment"), and none after
+ * its end date. Each day once, from where the count stopped, so a long advance counts every day, and two advances or a
+ * save opened in between count it as one. More than 90 days without work ends it at the midnight that ends the 91st:
+ * "Students may not accrue an aggregate of more than 90 days of unemployment" (8 CFR 214.2(f)(10)(ii)(E)).
+ */
+export function settleOpt(sim: Simulation, person: Person, until: Instant = sim.now): void {
+  const doc = optHeld(person);
+  if (!doc || doc.issuedAt === undefined) return;
+  let day = Math.max(countedFrom(doc), startOfDay(doc.issuedAt, OPT_ZONE));
+  for (let end = addDays(day, 1, OPT_ZONE); end <= until && (doc.expiresAt === undefined || day < doc.expiresAt); end = addDays(day, 1, OPT_ZONE)) {
+    if (employedOn(person, day, end)) doc.workedDays = (doc.workedDays ?? 0) + 1;
+    else doc.idleDays = (doc.idleDays ?? 0) + 1;
+    day = end;
+    doc.countedTo = day;
+    if (doc.idleDays! > WORK_RULES.opt.unemploymentDays) {
+      endOpt(sim, person, doc, day);
+      return;
+    }
+  }
+  doc.countedTo = day;
+}
+
+/**
+ * OPT ended for its days without work, at `at`: canceled, ended then, the status with it (no grace after: SEVP 7.4.2,
+ * "has violated his or her status"), said, and the work booked past it released by the work system, which can't go on
+ * employing them (8 U.S.C. 1324a(a)(2)) (`PERMISSION_ENDED`). Until 2026-10-22 (the owner's brief 22) nothing was said
+ * to the work booked, and b20-4 played 47 days of a run after its OPT ended.
+ */
+function endOpt(sim: Simulation, person: Person, doc: PersonDocument, at: Instant): void {
+  doc.status = 'cancelled';
+  doc.endedAt = at;
+  scheduleUsStatus(sim, person);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: 'OPT Ended', body: `You’d had more than ${WORK_RULES.opt.unemploymentDays} days without work since your OPT began, so it ended at the end of ${formatDate(at - 1, OPT_ZONE)}, and with it your permission to work in the United States. A day counts as one with work only once a job has begun, so the days waiting for booked work to start counted against it. Your US status ends with it, with no grace period.`, importance: 85, route: '/workspace/papers' });
+  sim.emit(PERMISSION_ENDED, { personId: person.id, at, why: 'opt-idle' });
+}
+
+/**
+ * When an OPT in force runs out of its days without work, if it does before its end date: the days counted so far, then
+ * each day to come with the work booked as if it goes ahead from its first day (`employedOn`, planned), a booking's
+ * days before it starting days without work. What Papers says the status ends on.
+ */
+export function optRunsOut(person: Person): Instant | undefined {
+  const doc = optHeld(person);
   if (!doc || doc.issuedAt === undefined) return undefined;
-  const next = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === OPT_WEEK_KIND && i.payload.documentId === doc.id).sort((a, b) => a.at - b.at)[0];
   let idle = doc.idleDays ?? 0;
-  for (let t = next?.at ?? doc.issuedAt + 7 * MS_DAY; t <= (doc.expiresAt ?? t); t += 7 * MS_DAY) {
-    idle += 7 - daysWorkedIn(person, t - 7 * MS_DAY, t, sim.zone);
-    if (idle > WORK_RULES.opt.unemploymentDays) return t;
+  let day = Math.max(countedFrom(doc), startOfDay(doc.issuedAt, OPT_ZONE));
+  for (let n = 0; n < 800 && (doc.expiresAt === undefined || day < doc.expiresAt); n += 1) {
+    const end = addDays(day, 1, OPT_ZONE);
+    if (!employedOn(person, day, end, true)) idle += 1;
+    if (idle > WORK_RULES.opt.unemploymentDays) return end;
+    day = end;
   }
   return undefined;
+}
+
+/**
+ * Whether permission to work in the US covers the whole of a stretch of work, its start and its end (from 2026-10-22,
+ * the owner's brief 22): what a work day reads when it comes, and acceptance reads for each day. Until then acceptance
+ * read each day's start alone, and the work day nothing.
+ */
+export function workAuthorizedFor(person: Person, day: { from: Instant; to: Instant }): boolean {
+  return usWorkAuthorized(person, day.from) && usWorkAuthorized(person, day.to - 1);
 }
 
 export function registerPermission(sim: Simulation): void {
@@ -310,11 +415,14 @@ export function registerPermission(sim: Simulation): void {
       doc.issuedAt = start;
       doc.expiresAt = addYears(start, WORK_RULES.opt.months / 12);
       doc.idleDays = 0;
-      s.schedule({ at: start + 7 * MS_DAY, kind: OPT_WEEK_KIND, label: 'OPT: A Week', category: 'system', priority: 5, payload: { personId: person.id, documentId: doc.id } });
+      // Counted by the day from its first (`settleOpt`, from 2026-10-22, the owner's brief 22), each day at the world's
+      // midnight: until then by the week, a week from its start (`OPT_WEEK_KIND`), which an older save still holds.
+      doc.countedTo = startOfDay(start, OPT_ZONE);
       scheduleUsStatus(s, person);
-      // From 2026-10-21 (brief 19's D8) the days of professional work count (`daysWorkedIn`): until then this said the
-      // game had no work after the degree, so in practice OPT ended after its 90 days.
-      tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than ${WORK_RULES.opt.unemploymentDays} days without work in total.`);
+      // From 2026-10-21 (brief 19's D8) the days of professional work counted: until then this said the game had no work
+      // after the degree, so in practice OPT ended after its 90 days. From 2026-10-22 (brief 22) it says what counts: a
+      // day of a job begun, not a day booked.
+      tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than ${WORK_RULES.opt.unemploymentDays} days without work in total.`);
       return;
     }
     // An O-1's petition and a production's Canadian permit were decided here until the career went on 2026-10-09.
@@ -352,23 +460,18 @@ export function registerPermission(sim: Simulation): void {
     if (mine) s.notify({ category: 'personal', title: 'Out Of Status', body: 'You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on.', importance: 90, route: '/workspace/papers' });
   });
 
+  // OPT's weekly count, from a save made before 2026-10-22 (the owner's brief 22), which still holds its next week on
+  // the calendar: the days to that week's end counted by the day (`settleOpt`), and no week after it, the day's count
+  // going on at each midnight. Until then each week added its seven less the days any engagement not called off was
+  // booked for, and ended OPT at the week's end once they passed 90, whatever was booked ahead.
   sim.onSchedule(OPT_WEEK_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
-    const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
-    if (!person || !doc || !inForce(doc, item.at - MS_HOUR)) return;
-    // The week's days without work: its seven less the days an engagement had work on (`daysWorkedIn`, from 2026-10-21,
-    // brief 19's D8). Until then all seven counted, every week, since the game had no work after the degree.
-    const worked = daysWorkedIn(person, item.at - 7 * MS_DAY, item.at, s.zone);
-    doc.idleDays = (doc.idleDays ?? 0) + 7 - worked;
-    if (worked) doc.workedDays = (doc.workedDays ?? 0) + worked;
-    if (doc.idleDays > WORK_RULES.opt.unemploymentDays) {
-      doc.status = 'cancelled';
-      // A violation: the status ends with it, no grace after.
-      doc.endedAt = s.now;
-      scheduleUsStatus(s, person);
-      if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'OPT Ended', body: `You’ve had more than ${WORK_RULES.opt.unemploymentDays} days without work, so your OPT has ended, and with it your permission to work in the United States. Your US status ends with it, with no grace period.`, importance: 85, route: '/workspace/papers' });
-      return;
-    }
-    if (item.at + 7 * MS_DAY < (doc.expiresAt ?? 0)) s.schedule({ at: item.at + 7 * MS_DAY, kind: OPT_WEEK_KIND, label: 'OPT: A Week', category: 'system', priority: 5, payload: { personId: person.id, documentId: doc.id } });
+    if (person) settleOpt(s, person, item.at);
+  });
+
+  // OPT's day, counted at each of the world's midnights (from 2026-10-22, the owner's brief 22): the day just over, a
+  // day with employment or without (`settleOpt`).
+  sim.onEvent('world.day_rollover', 'documents.opt_day', (_event, { sim: s }) => {
+    for (const person of Object.values(s.universe.people)) settleOpt(s, person, s.now);
   });
 }
