@@ -744,7 +744,7 @@
      "at": "src/engine/systems/cash.ts:68"
     }
    ],
-   "experienced": "Shift pay arrives at the new account after Yale’s lead days (bank-moves.test).",
+   "experienced": "Friday’s wages into checking, the next Friday’s into the account chosen once Yale’s payroll has had its seven days (evidence-g21-school); the account it leaves can close once nothing else uses it (bank-moves).",
    "saveLoad": "Person.payments.depositTo and depositChange.",
    "evidence": {
     "tests": [
@@ -872,7 +872,7 @@
      "at": "src/engine/systems/security.ts:404"
     }
    ],
-   "experienced": "The alerts in What Needs You; a stranger’s charge caught the day it happens costs $50 where learned from the statement $500 (evidence-g11).",
+   "experienced": "The alerts in What Needs You; a stranger’s charge over A Payment Over is learned of the day it happens, so Regulation E’s two business days run from then: reported four business days on it leaves $500 hers, where a twin who learned of it from the statement carries $50 (evidence-g11).",
    "saveLoad": "Person.alerts.",
    "evidence": {
     "tests": [
@@ -882,7 +882,7 @@
      "tests/journey-money.test.ts"
     ],
     "comparisons": [
-     "twins told at once against learning from the statement (evidence-g11)"
+     "twins told at once against learning from the statement: $500 against $50 carried (evidence-g11)"
     ],
     "mutations": [],
     "journeys": [
@@ -1426,7 +1426,7 @@
      "at": "src/engine/systems/security.ts:260"
     }
    ],
-   "experienced": "Refunded less the law’s share: $50 told at once, $500 learned from the statement (evidence-g11).",
+   "experienced": "Refunded less the law’s share: learned of the day it happened and reported four business days on, $500 is hers; her twin who learned of it from the statement and reported it then carries $50 (evidence-g11).",
    "saveLoad": "Person.fraud and the refund on the calendar.",
    "evidence": {
     "tests": [
@@ -1436,7 +1436,7 @@
      "tests/security.test.ts"
     ],
     "comparisons": [
-     "twins told at once against learning from the statement: $50 against $500 (evidence-g11)"
+     "twins told at once against learning from the statement: $500 against $50 carried, reported four business days on and at the statement (evidence-g11)"
     ],
     "mutations": [],
     "journeys": []
@@ -3533,7 +3533,7 @@
      "tests/security.test.ts"
     ],
     "comparisons": [
-     "twins told at once against learning from the statement (evidence-g11)"
+     "twins told at once against learning from the statement: $500 against $50 carried (evidence-g11)"
     ],
     "mutations": [],
     "journeys": []
