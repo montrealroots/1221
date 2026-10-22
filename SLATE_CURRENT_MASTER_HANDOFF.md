@@ -1,10 +1,11 @@
-# Read First: Brief 20, The Functional And Downstream-Effects Audit, Done And Waiting On The Owner, 2026-10-22
+# Read First: Brief 20, The Functional And Downstream-Effects Audit, Merged, 2026-10-22
 
 **This section is the current status, and where a new session starts.** The owner gave brief 20
 (`docs/verification/briefs-2026-10-16/20-complete-functional-and-downstream-effects-audit.txt`, kept verbatim) after
-brief 19's merge. It is worked on `claude/peaceful-hamilton-59zdbb`, from `340ce7ae` (`main`, #49), pushed and never
-force-pushed. Nothing of it is in `main`, and nothing is deployed: the owner said "Keep the work reviewable. Do not merge
-or deploy without my instruction." There is no stash and one worktree; brief 19's scratch clones with commits the branch
+brief 19's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `340ce7ae` (`main`, #49), pushed and never
+force-pushed. Until the owner's word it was kept out of `main` ("Keep the work reviewable. Do not merge or deploy without
+my instruction."); it went to `main` at "Merge everything." (2026-10-22), in #50, merged as `e78659ba`, and this record
+of the merge followed it there. No other pull request was open. Nothing is deployed. There is no stash and one worktree; brief 19's scratch clones with commits the branch
 didn't hold were kept as `refs/preserved/*` before they were deleted for disk space.
 
 **Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
@@ -48,8 +49,9 @@ didn't hold were kept as `refs/preserved/*` before they were deleted for disk sp
   - the built app at 1440 and 390: the career's 52 surfaces and the seven older saves, nothing found.
 - **The receipt:** `docs/verification/audit-2026-10-21/README.md`, with every item brief 20's section 8 asks for, and how
   to look for oneself.
-- **Waiting on the owner:** nothing is merged or deployed ("Keep the work reviewable. Do not merge or deploy without my
-  instruction."). The next session starts from the decisions below, or from the owner's next brief.
+- **Merged, not deployed:** #50 (`e78659ba`). Base44 deployment waits on the gate and the owner's word (rule 14), and
+  §10 of this file says what an older deployment refuses. The next session starts from the decisions below, or from the
+  owner's next brief.
 - **For the owner** (each area's report says more): readiness 60 as the work's knee, at about 20 hours awake; hunger
   that brings no illness (F9); a start outside the School (`livesWhereBorn`); School casting not reading genre
   experience; Amend The Return, which no played life can use; whether notices name their tab; autopay that can't be
