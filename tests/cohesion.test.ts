@@ -9,6 +9,7 @@
  */
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
@@ -74,7 +75,16 @@ describe('everything is wired to something', () => {
     for (const m of source.matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+(?:\.[a-z0-9_]+)+)'/g)) {
       named.set(m[2]!, m[1]!);
     }
-    const dead = sim.scheduleKinds().filter((kind) => {
+    // A kind only a save made before a change still holds on its calendar is no longer scheduled, and its handler stays
+    // for that save: each is named here with the save that holds it, and the save is opened to show it does, so the
+    // exception is the save's, not a blanket one. `documents.opt_week`, OPT's weekly count until 2026-10-22 (the owner's
+    // brief 22), which counts by the day from then: b20-4's save of 1 September 2029 holds one for 6 September.
+    const OLDER_SAVES_ONLY: Record<string, string> = { 'documents.opt_week': 'tests/fixtures/b22/b20-4-opt-2029-09-01.json.gz' };
+    for (const [kind, file] of Object.entries(OLDER_SAVES_ONLY)) {
+      const held = (JSON.parse(gunzipSync(readFileSync(file)).toString('utf8')) as { scheduled: { kind: string; status: string }[] }).scheduled;
+      expect(held.some((i) => i.kind === kind && i.status === 'pending'), `${file} holds ${kind}`).toBe(true);
+    }
+    const dead = sim.scheduleKinds().filter((kind) => !(kind in OLDER_SAVES_ONLY)).filter((kind) => {
       const escaped = kind.replace(/\./g, '\\.');
       const asLiteral = new RegExp(`kind: '${escaped}'`);
       const constant = named.get(kind);
