@@ -134,9 +134,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
   "status": "Rewritten",
-  "hash": "39ddc56d59eb",
-  "on": "2026-10-19",
-  "evidence": "The short says where to turn them on, ING's floor written as €20; tests/guide-examples-money.test.ts plays NatWest's example",
+  "hash": "16daf4fe1334",
+  "on": "2026-10-21",
+  "evidence": "The next step rewritten to say which credit cards round up, as the entry’s needs already said, held by tests/b20-money-promises.test.ts (round-ups and how the day is paid)",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.term]": {
@@ -176,9 +176,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [immediate]": {
   "status": "Rewritten",
-  "hash": "50fe7f01ba93",
-  "on": "2026-10-19",
-  "evidence": "Checking account in the money transfer and payments connections; tests/guide.test.ts reads every connection's target",
+  "hash": "8c4a6474f6a8",
+  "on": "2026-10-21",
+  "evidence": "The round-ups connection rewritten to say Citi, BBVA México and Santander México count their own credit card too, held by tests/b20-money-promises.test.ts (round-ups and how the day is paid); the rest read again against docs/STYLE.md and kept",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [money.affairs]": {
