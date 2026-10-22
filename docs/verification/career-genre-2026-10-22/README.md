@@ -272,7 +272,9 @@ The full gate in a clean clone, its exit read from its file:
 - **On the receipt's first commit, `cf83e61d`** (its `src` the tested commit's): exit 0; 486 of 486 test files and 5,596
   of 5,596 tests, none skipped; all 22 checks, the completion matrix last (`final-runs/runs/gate.txt`). Its figure was
   folded in after it, and the matrix moved from 633 to 634.
-- **On the commit that folds it:** run again after these records were written (`final-runs/runs/gate-receipt.txt`).
+- **On the commit that folds it, `0014aff6`:** run again after these records were written: exit 0; 486 of 486 test files
+  and 5,596 of 5,596 tests, none skipped; all 22 checks, the matrix at 634 (`final-runs/runs/gate-receipt.txt`). Only
+  this figure was written after it.
 - **Brief 22 added:** 4 test files and 49 tests to brief 21's 482 and 5,547.
 - **Earlier full suites:** on the tree before `d69ad309`, 11 failures in 8 files, each a figure the weights or the
   coefficients moved, read and restated with a dated note (`CHECKPOINT.md`); at `8aa87539`, the three Papers tests

@@ -55,7 +55,8 @@ request is open for it. Nothing is deployed. There is no stash and one worktree.
 - **The gate:** in a clean clone of `cf83e61d` (the receipt and this section, its `src` the tested commit's), exit 0
   read from its file: 486 of 486 test files, 5,596 of 5,596 tests, none skipped, all 22 checks
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate.txt`). Brief 22 added 4 test files and 49 tests to
-  brief 21's 482 and 5,547. It is run again on the commit that folds its figure (`gate-receipt.txt`).
+  brief 21's 482 and 5,547. Run again on the commit that folds its figure, `0014aff6`, the same, the matrix at 634
+  (`final-runs/runs/gate-receipt.txt`). Only that figure was written after it.
 - **Not merged, not deployed:** both wait on the owner's word. Base44 deployment waits on the gate and that word (rule
   14), and §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of
   brief 20's or 21's line accepts this line's saves.
