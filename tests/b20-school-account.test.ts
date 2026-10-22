@@ -99,7 +99,7 @@ describe('B1/B3: what a leave begun mid-term owes the School, paid and unpaid (s
 });
 
 describe('B3: a leave’s notice of return, given and not given, through the clock (seed b20-school-account)', () => {
-  const S = {} as { c: Simulation; d: Simulation; noticeBy: number };
+  const S = {} as { c: Simulation; d: Simulation; noticeBy: number; moneyC: Record<string, number>; moneyD: Record<string, number>; standingC: string; standingD: string };
   beforeAll(() => {
     const sim = play(student('b20-school-account', { wealth: 'modest' }), at(2026, 10, 5, 12));
     healthOf(sim.player).fluUntil = sim.now + 4 * MS_DAY;
@@ -110,8 +110,15 @@ describe('B3: a leave’s notice of return, given and not given, through the clo
     const raw = serialise(sim.universe);
     S.c = weeks(open(raw), at(2027, 5, 3, 12));
     S.c.must({ kind: 'school.return_notice', payload: {} });
+    // Read on the deadline's eve, for the no-leak side, before either goes on.
+    weeks(S.c, S.noticeBy - MS_DAY);
+    S.moneyC = balances(S.c);
+    S.standingC = S.c.player.school!.standing;
     weeks(S.c, at(2027, 8, 23, 12));
-    S.d = weeks(open(raw), S.noticeBy + MS_DAY);
+    S.d = weeks(open(raw), S.noticeBy - MS_DAY);
+    S.moneyD = balances(S.d);
+    S.standingD = S.d.player.school!.standing;
+    weeks(S.d, S.noticeBy + MS_DAY);
   }, 60_000);
 
   it('no notice by its date: reminded two weeks before, then dismissed at the date', () => {
@@ -121,6 +128,11 @@ describe('B3: a leave’s notice of return, given and not given, through the clo
     expect(titled(d, 'Two Weeks To Give Notice')[0]!.at).toBe(S.noticeBy - 14 * MS_DAY);
     expect(titled(d, 'Dismissed From The School')[0]!.at).toBe(S.noticeBy);
     expect(titled(d, 'Dismissed From The School')[0]!.body).toMatch(/You didn’t give notice of your return by/);
+  });
+
+  it('no leak: up to the deadline, the notice changes nothing else: the money and the standing are the same given or not', () => {
+    expect(S.moneyD).toEqual(S.moneyC);
+    expect([S.standingC, S.standingD]).toEqual(['good', 'good']);
   });
 
   it('notice given: no reminder and no dismissal; back for the fall, asked to register before classes count them', () => {
