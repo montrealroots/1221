@@ -566,7 +566,7 @@ describe('i-genres-dispositions-intact', () => {
       const sim = await opened(student('g34-card', { genres: ['comedy'], ...(personality ? { personality } : {}) }, slot));
       // The everyday spending on the card, as Payments on the Bank sets it.
       sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
-      sim.advanceTo(EDT(2026, 10, 11, 13));
+      sim.advanceTo(EDT(2026, 10, 13, 13));
       lives.push(sim);
     }
     const [away, start] = lives as [Simulation, Simulation];
@@ -574,9 +574,10 @@ describe('i-genres-dispositions-intact', () => {
     // Sunday 20 September, 9 AM: twenty-seven midnights of New Haven's $10.00 of groceries, from Tuesday 25 August; Chase's
     // minimum is 1% and the month's interest, never under $40 (its published terms).
     // The same statement for both, and what each one's autopay will pay that day (from brief 15, 2026-10-19).
-    expect(statements(away)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
-    expect(statements(start)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.']]);
-    // Sunday 11 October, 21 days on: the minimum, or the whole statement.
+    expect(statements(away)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
+    expect(statements(start)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.']]);
+    // Tuesday 13 October, Chase's due day (Sunday 11 October, 21 days on, until brief 21, 2026-10-22): the minimum, or the
+    // whole statement.
     expect(paid(away)).toEqual([40_00]);
     expect(paid(start)).toEqual([270_00]);
     expect([away.player.credit!.carrying, start.player.credit!.carrying]).toEqual([true, false]);

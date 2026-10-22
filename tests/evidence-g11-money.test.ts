@@ -453,10 +453,11 @@ describe('bank.set_alerts', () => {
     const closedOn = primary(asked).balance;
     expect(told(asked, 'Statement Ready: Chase Total Checking').map((n) => n.body)).toEqual([`It ended the month with ${formatMoney(closedOn, 'USD')} in it. The statement is on Money, under Statements.`]);
     expect(told(quiet, 'Statement Ready: Chase Total Checking')).toEqual([]);
-    // The card's statement on 20 September: owing nothing, told only where it's asked; owing, told anyway.
+    // The card's statement on 20 September: owing nothing, told only where it's asked; owing, told anyway. Due on the
+    // 13th, Chase's due day (21 days on, the 11th, until brief 21, 2026-10-22).
     for (const sim of [asked, quiet]) sim.advanceTo(at(2026, 9, 20, 9, 1));
     expect(told(asked, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual(['The card owes nothing this month.']);
-    expect(told(quiet, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual([expect.stringMatching(/^The statement comes to \$400\.00, due October 11, 2026\. The minimum payment is \$\d+\.\d\d\. Autopay pays the whole \$400\.00 from Chase Total Checking that day, if there’s enough in it\.$/)]);
+    expect(told(quiet, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual([expect.stringMatching(/^The statement comes to \$400\.00, due October 13, 2026\. The minimum payment is \$\d+\.\d\d\. Autopay pays the whole \$400\.00 from Chase Total Checking that day, if there’s enough in it\.$/)]);
     expect(told(quiet, 'Statement Ready: Chase Total Checking')).toEqual([]);
 
     // TEST SETUP: the notices read, as the player reads them. Then Statement Ready pressed Off, and October's end and

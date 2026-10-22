@@ -109,13 +109,15 @@ describe('wages reach the record, the withholding and the return, and the return
 });
 
 describe('a return not filed (B3)', () => {
-  it('COMPARISON: an heir’s 2026 return owing the IRS $1,351.47 on her savings’ interest: filed on 1 February it costs that and no more; filed 85 days after its 15 April due date it adds $555.27 of penalties and $31.00 of interest; never filed, the late notice comes on the due date, the worry of it each day from the next, the IRS’s CP2566 a year on, and its assessment 120 days after that, with $643.12 of penalties and interest from the due date on the tax and the filing share; her own return in its place, the same tax, leaves the penalty standing and says so', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “COMPARISON: an heir’s 2026 return owing the IRS $1,351.47 on her savings’ interest: filed on 1 February it costs that and no more; filed 85 days after its 15 April due date it adds $555.27 of penalties and $31.00 of interest; never filed, the late notice comes on the due date, the worry of it each day from the next, the IRS’s CP2566 a year on, and its assessment 120 days after that, with $643.12 of penalties and interest from the due date on the tax and the filing share; her own return in its place, the same tax, leaves the penalty standing and says so”. Capital One's 3.00% APY ran as the nominal rate until
+  // that day; at its nominal 2.9595% her 2026 interest is $27,396.71, and the tax on it less.
+  it('COMPARISON: an heir’s 2026 return owing the IRS $1,306.33 on her savings’ interest: filed on 1 February it costs that and no more; filed 85 days after its 15 April due date it adds $554.59 of penalties and $30.26 of interest; never filed, the late notice comes on the due date, the worry of it each day from the next, the IRS’s CP2566 a year on, and its assessment 120 days after that, with $639.51 of penalties and interest from the due date on the tax and the filing share; her own return in its place, the same tax, leaves the penalty standing and says so', () => {
     const DUE = at(2027, 4, 15, 23, 59);
-    const TAX = 1_351_47;
+    const TAX = 1_306_33;
     const onTime = heir('b20-tax-late');
     onTime.advanceTo(at(2027, 2, 1, 12));
     expect(r2026(onTime).due).toBe(DUE);
-    expect(r2026(onTime).figures.owedTo).toEqual({ irs: TAX, states: { 'us-ct': 339_41 } });
+    expect(r2026(onTime).figures.owedTo).toEqual({ irs: TAX, states: { 'us-ct': 325_02 } });
     const late = heir('b20-tax-late');
     const never = heir('b20-tax-late');
 
@@ -123,17 +125,17 @@ describe('a return not filed (B3)', () => {
     expect(postedTo(onTime, /^Federal income tax, 2026/, checkingOf(onTime).id)).toEqual([[at(2027, 2, 1, 12), -TAX]]);
     expect([r2026(onTime).penalty, r2026(onTime).owed]).toEqual([0, undefined]);
 
-    // 85 days late: three months begun. Paying late's 1.5% ($20.27), filing late's 13.5% raised past 60 days to $535;
-    // interest on the tax and the filing share, $1,886.47, for 85 days at a 365th of 7% a day: $31.00.
+    // 85 days late: three months begun. Paying late's 1.5% ($19.59), filing late's 13.5% raised past 60 days to $535;
+    // interest on the tax and the filing share, $1,841.33, for 85 days at a 365th of 7% a day: $30.26.
     late.advanceTo(DUE + 85 * MS_DAY);
     late.must({ kind: 'tax.file', payload: { year: 2026 } });
     const payLate = Math.min(0.25, 0.005 * 3) * TAX;
     const fileLate = Math.max(3 * 0.045 * TAX, Math.min(535_00, TAX));
     expect(r2026(late).penalty).toBe(Math.round(payLate + fileLate));
-    expect(r2026(late).penalty).toBe(555_27);
+    expect(r2026(late).penalty).toBe(554_59);
     const interest = Math.round((TAX + fileLate) * (grown(85, 365) - 1));
-    expect(interest).toBe(31_00);
-    expect(postedTo(late, /^Federal income tax, 2026, with late penalties and interest$/, checkingOf(late).id)).toEqual([[DUE + 85 * MS_DAY, -(TAX + 555_27 + interest)]]);
+    expect(interest).toBe(30_26);
+    expect(postedTo(late, /^Federal income tax, 2026, with late penalties and interest$/, checkingOf(late).id)).toEqual([[DUE + 85 * MS_DAY, -(TAX + 554_59 + interest)]]);
 
     // Never filed. Up to the due date it weighs on her no more than the paid return weighs on her twin; from the day after,
     // each day ends with the worry of tax owed, 4 more points of stress and 2 fewer of morale, by her temperament.
@@ -148,7 +150,7 @@ describe('a return not filed (B3)', () => {
     expect(titled(never, 'The IRS Assessed Your 2026 Return').map((n) => n.at)).toEqual([DUE + 485 * MS_DAY]);
     const r = r2026(never);
     expect([r.substitute, r.filedAt]).toEqual([true, DUE + 485 * MS_DAY]);
-    // Sixteen months begun: paying late's 8%, filing late's 22.5% raised to $535. Interest on $1,886.47 from the due date:
+    // Sixteen months begun: paying late's 8%, filing late's 22.5% raised to $535. Interest on $1,841.33 from the due date:
     // 260 days of 2027 at a 365th and 225 of 2028 at a 366th, to the minute.
     const sfrPayLate = 0.08 * TAX;
     const sfrFileLate = Math.max(5 * 0.045 * TAX, Math.min(535_00, TAX));
@@ -156,18 +158,18 @@ describe('a return not filed (B3)', () => {
     const newYear = at(2028, 1, 1, 0);
     const sfrInterest = Math.round((TAX + sfrFileLate) * (grown((newYear - DUE) / MS_DAY, 365) * grown((DUE + 485 * MS_DAY - newYear) / MS_DAY, 366) - 1));
     expect(r.parts).toEqual({ tax: TAX, penalty: Math.round(sfrPayLate + sfrFileLate), interest: sfrInterest });
-    expect(r.penalty).toBe(643_12);
+    expect(r.penalty).toBe(639_51);
     // And the IRS's collection begins: its first reminder 35 days on.
     expect(never.universe.scheduled.filter((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending').map((i) => i.at)).toEqual([DUE + 520 * MS_DAY]);
 
-    // DEFECT: her own return filed in its place two weeks on shows the same $1,351.47, the IRS's figures claiming no credit
+    // DEFECT: her own return filed in its place two weeks on shows the same $1,306.33, the IRS's figures claiming no credit
     // hers would, so the penalty and interest stand, and the notice says so. Until 2026-10-21 it said they were "reduced
     // in proportion", which they weren't.
     never.advanceTo(DUE + 499 * MS_DAY);
     never.must({ kind: 'tax.file', payload: { year: 2026 } });
     // The penalty assessed with it kept whole: its share of the tax is the same.
-    expect([r.substitute, r.reconsideredAt, r.parts!.tax, r.penalty]).toEqual([false, never.now, TAX, 643_12]);
-    expect(titled(never, 'Your 2026 Return Replaces The IRS’s').map((n) => n.body)).toEqual([`The IRS reconsidered its assessment using your own return: $1,351.47 of federal tax for the year, against its $1,351.47. You still owe $${(r.owed! / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}. Your return shows the same tax, so its penalty and interest stand.`]);
+    expect([r.substitute, r.reconsideredAt, r.parts!.tax, r.penalty]).toEqual([false, never.now, TAX, 639_51]);
+    expect(titled(never, 'Your 2026 Return Replaces The IRS’s').map((n) => n.body)).toEqual([`The IRS reconsidered its assessment using your own return: $1,306.33 of federal tax for the year, against its $1,306.33. You still owe $${(r.owed! / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}. Your return shows the same tax, so its penalty and interest stand.`]);
   }, 120_000);
 });
 
@@ -217,7 +219,8 @@ describe('a later year’s tax under a plan (B3)', () => {
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
     sim.must({ kind: 'tax.apply_plan', payload: { kind: 'long', directDebit: true } });
     sim.advanceTo(sim.now + 2 * 60_000);
-    expect(sim.player.taxPlan).toMatchObject({ status: 'active', monthly: 18_78 });
+    // $1,306.33 over 72 months, rounded up ($18.78 on $1,351.47 until brief 21, 2026-10-22).
+    expect(sim.player.taxPlan).toMatchObject({ status: 'active', monthly: 18_15 });
     // The CD broken and all but $50,000 back in her Capital One savings, earning its interest, so each payment is made.
     breakTheCd(sim);
     sim.must({ kind: 'bank.transfer', payload: { fromId: checkingOf(sim).id, toId: own(sim, 'savings').id, amount: checkingOf(sim).balance - 50_000_00 } });
@@ -228,7 +231,7 @@ describe('a later year’s tax under a plan (B3)', () => {
     const filed = sim.must<{ irs: number; paid: boolean }>({ kind: 'tax.file', payload: { year: 2027 } });
     expect(filed.paid).toBe(false);
     const added = sim.player.returns!['2027']!.owed!;
-    expect(added).toBeGreaterThan(2 * 18_78);
+    expect(added).toBeGreaterThan(2 * 18_15);
     expect(sim.player.taxPlan).toMatchObject({ status: 'default', defaultBy: at(2028, 2, 1, 12) + 30 * MS_DAY });
     expect(titled(sim, 'Notice CP523: Your Payment Plan').map((n) => [n.at, n.body])).toEqual([[at(2028, 2, 1, 12), `New tax of $${(added / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} is more than two of the plan’s monthly payments, so it can’t simply join the plan. Revise the plan on Papers by March 2, 2028, or it ends and collection resumes.`]]);
     const twin = reload(sim);

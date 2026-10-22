@@ -295,6 +295,8 @@ export interface CardStatement {
    * before then, which kept the card’s own minimum whatever it asked.
    */
   plan?: boolean;
+  /** What of that least was past due when the statement was cut (`CardState.issued`, from 2026-10-22, brief 21). */
+  pastDue?: Money;
   /** What paying only the minimum each month would take, and cost in all; and the payment that clears it in three years. */
   minimumOnly?: { months: number; total: Money; threeYears: Money; threeYearsTotal: Money } | 'never';
   /** Britain: next month's interest on the new balance, if it's carried. */
@@ -336,6 +338,7 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
     // The card's own plan months, not the everyday card's: until 2026-09-28 they were one card.
     out.minimum = kept?.minimum ?? minimumDue(sim, out.newBalance, terms, interest, owner?.credit ? stateOf(owner, card).statementPlanDue ?? 0 : 0);
     if (kept?.plan !== undefined) out.plan = kept.plan;
+    if (kept?.pastDue) out.pastDue = kept.pastDue;
     out.minimumOnly = payingTheMinimum(sim, out.newBalance, terms, kept?.at);
     const bank = card.bankId ? bankById(card.bankId) : undefined;
     if (bank?.iso === 'GB' && terms.kind === 'revolving') out.nextInterest = Math.round(out.newBalance * terms.apr / 12);

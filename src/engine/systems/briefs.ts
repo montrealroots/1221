@@ -66,7 +66,7 @@ import { sharedOf, sharedWords, type PartnerRead, type SharedResult } from './en
 import { abilityFull, abilityOf, stepSpeed } from './attributes';
 import { bandOfQuality, chiefLimit, countDirection, countTogether, performerOf, recordWork, type Evaluation } from './evaluation';
 import { noteAdvice } from './next-steps';
-import { SELF_TAPE, genreState, practiceGenres } from './engagement';
+import { SELF_TAPE, genreState, practiceGenres, relevantGenre } from './engagement';
 import { FEATURE_LABEL, featureSpeed, featuresOf, noteMaterial } from './experience';
 import type { Identity } from './artistry';
 import { inHospital } from './health';
@@ -102,7 +102,7 @@ export const BRIEF = {
    * at 0.9, as a technique is mastered at 90 (`MASTERED`), and its floor is three quarters (`EVALUATION.partFloor`):
    * the whole range to 90 reads, each point by the same share, and the gate is a third the size.
    */
-  complete: { interpretation: 0.8, memorization: 0.8, rehearsal: 0.5, mostRehearsal: 0.85, genre: 0.9 },
+  complete: { interpretation: 0.8, memorization: 0.8, rehearsal: 0.5, mostRehearsal: 0.85, genre: ENGAGEMENT.genreComplete },
   /**
    * What a take credits its genres as practice with none of it prepared, of what a fully prepared take credits (from
    * 2026-10-16). A genre's conventions are learned in the work on the scene, the breakdown of its circumstances and the
@@ -322,15 +322,18 @@ export function briefPiece(b: Brief, rec: Pick<BriefRecord, 'work' | 'book'> & {
 }
 
 /**
- * How well the brief's genres are known, 0 to 1: the best of its genres, each the better of its familiarity (studied)
- * and its practice (worked in), never their sum. A part of the take's preparation, complete at `BRIEF.complete.genre`.
+ * How well the brief's genres are known, 0 to 1: its genres weighed, each requirement credited the best related genre
+ * known, the better of its familiarity (studied) and its practice (worked in) (`relevantGenre`, from 2026-10-22, the
+ * owner's brief 21). Until then it was the best of the brief's own genres alone, so a farce brief read nothing of
+ * comedy known, nor a psychological thriller's of thrillers. A part of the take's preparation, complete at
+ * `BRIEF.complete.genre`.
  * Until a played run of 2026-10-12 it was familiarity alone, complete at 60 as a material-less self-tape's was: a student
  * spent 21 hours of a month studying one genre and taped nothing, since a session gives eight points and half again the
  * same day. Complete at 30 from then, with work in the genre counting, it was four or so sessions for a genre never met,
  * and taping in it built it. From 2026-10-16 it's complete at 90 and read over the whole of the way there, from a floor
  * of three quarters (`EVALUATION.partFloor`): about 28 sessions, or as many takes, and each one shows in the take.
  */
-export const genreKnown = (person: Person, b: Brief): number => Math.max(0, ...b.kinds.map((g) => Math.max(person.engagement?.byGenre[g]?.familiarity ?? 0, person.engagement?.byGenre[g]?.practice ?? 0) / 100));
+export const genreKnown = (person: Person, b: Brief): number => relevantGenre(person, b.kinds).total;
 
 /**
  * How much faster a step goes: the material's features met before (`featureSpeed`). Knowing the genre, studied or

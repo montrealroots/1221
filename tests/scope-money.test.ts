@@ -625,7 +625,8 @@ describe('bank.cancel_new', () => {
     expect(landed(sim, giro, arion)).toEqual([1_000_000_00]);
   });
 
-  it('FIXTURE, London: a NatWest Flexible Saver at 1.25% holding £10,000 for ten days’ ends, canceled: its interest kept, as Britain’s rule leaves it, £3.42, and £10,003.42 into the NatWest current account', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “FIXTURE, London: a NatWest Flexible Saver at 1.25% holding £10,000 for ten days’ ends, canceled: its interest kept, as Britain’s rule leaves it, £3.42, and £10,003.42 into the NatWest current account”, the 1.25% AER run as the nominal rate.
+  it('FIXTURE, London: a NatWest Flexible Saver at 1.25% AER holding £10,000 for ten days’ ends, canceled: its interest kept, as Britain’s rule leaves it, £3.40, and £10,003.40 into the NatWest current account', () => {
     const sim = abroad('uk-eng-london', 'gb-natwest', 'scope-cancel-gb-interest');
     const current = primary(sim);
     for (const a of mine(sim)) if (!a.closedAt && a.kind === 'savings' && a.category !== 'term') ok(sim, 'bank.close_savings', { accountId: a.id });
@@ -633,15 +634,16 @@ describe('bank.cancel_new', () => {
     expect(saver.bankId).toBe('gb-natwest');
     setTo(sim, saver, 10_000_00); // TEST SETUP
     sim.advanceTo(sim.now + 10 * MS_DAY);
-    // Ten day-ends at £10,000 and NatWest’s 1.25%: 10,000 × 0.0125 × 10 / 365 = £3.4246, in whole pence £3.42; Britain
-    // takes no tax from interest at the bank.
+    // Ten day-ends at £10,000 and NatWest’s 1.25% AER, credited monthly, so the nominal 12 × (1.0125^(1/12) − 1) =
+    // 1.2429%: 10,000 × 0.012429 × 10 / 365 = £3.4052, in whole pence £3.40; Britain takes no tax from interest at the
+    // bank. Until brief 21 (2026-10-22) the 1.25% ran as nominal: £3.4246, £3.42.
     const text = drawn(sim, createElement(BankAccountLife, { bankId: 'gb-natwest' }));
     expect(text).toMatch(new RegExp(`${saver.name} is new enough to cancel, until [A-Za-z]+ \\d+, 2026, its money back with its interest\\. Cancel It`));
     const before = current.balance;
     pressAfter(saver.name, 'Cancel It');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.cancel_new', ok: true });
-    expect(postedTo(sim, `Interest: ${saver.name}, on canceling`, saver.id)).toEqual([3_42]);
-    expect(current.balance - before).toBe(10_003_42);
+    expect(postedTo(sim, `Interest: ${saver.name}, on canceling`, saver.id)).toEqual([3_40]);
+    expect(current.balance - before).toBe(10_003_40);
     expect([saver.closedAt, saver.balance]).toEqual([sim.now, 0]);
   });
 
@@ -837,13 +839,15 @@ describe('bank.cancel_new', () => {
     // January and 3, 4, 5, 6, 9 and 10 February. Until 2026-10-15's recheck ten calendar days ended it on 5 February.
     const text = drawn(sim, createElement(BankAccountLife, { bankId: 'mx-bbva' }));
     expect(text).toContain(`${saver.name} is new enough to cancel, until February 10, 2026, its money back without the interest it earned, and its fees refunded.`);
-    // Five day-ends in January, 26 to 30, at MXN 1,000,000 and 0.31%: 1,000,000 × 0.0031 × 5 / 365 = MXN 42.4658,
-    // MXN 42.46 paid at January's end; Mexico's bank takes no tax off it here (its rate is 0).
-    expect(postedTo(sim, `Interest: ${saver.name}`, saver.id)).toEqual([42_46]);
+    // Five day-ends in January, 26 to 30, at MXN 1,000,000 and Banorte's 0.31% GAT, credited monthly, so the nominal
+    // 12 × (1.0031^(1/12) − 1) = 0.30956%: 1,000,000 × 0.0030956 × 5 / 365 = MXN 42.4055, MXN 42.40 paid at January's
+    // end; Mexico's bank takes no tax off it here (its rate is 0). Until brief 21 (2026-10-22) the 0.31% ran as nominal:
+    // MXN 42.4658, 42.46.
+    expect(postedTo(sim, `Interest: ${saver.name}`, saver.id)).toEqual([42_40]);
     const before = enlace.balance;
     pressAfter(saver.name, 'Cancel It');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.cancel_new', ok: true });
-    expect(postedTo(sim, `Interest returned: ${saver.name}, canceled`, saver.id)).toEqual([-42_46]);
+    expect(postedTo(sim, `Interest returned: ${saver.name}, canceled`, saver.id)).toEqual([-42_40]);
     expect(enlace.balance - before).toBe(1_000_000_00);
     expect([saver.closedAt, saver.balance, saver.accrued]).toEqual([sim.now, 0, 0]);
   });

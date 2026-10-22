@@ -420,10 +420,11 @@ describe('the insured paths, from cover to a bill paid once, the same in one jum
   }, 300_000);
 
   it('PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day', () => {
-    for (const [seed, wealth, september, cover, name] of [['rhb-husky', 'comfortable', undefined, 'medicaid', 'HUSKY D'], ['rhb-covered', 'inherited', 832_200_00, 'essential', 'Covered Connecticut']] as const) {
+    for (const [seed, wealth, september, cover, name] of [['rhb-husky', 'comfortable', undefined, 'medicaid', 'HUSKY D'], ['rhb-covered', 'inherited', 843_582_00, 'essential', 'Covered Connecticut']] as const) {
       const { sim, rig, kind } = enrolled(seed, wealth, september);
       expect(kind).toBe(cover);
-      // Covered Connecticut's month: 832,200 × 0.03 × 30 ÷ 365 = $2,052.00, over $1,835.40 and within $2,282.29.
+      // Covered Connecticut's month: 843,582 × 0.029595 × 30 ÷ 365 = $2,052.00, over $1,835.40 and within $2,282.29, the
+      // 3.00% APY's nominal rate, 12 × (1.03^(1/12) − 1) (until brief 21, 2026-10-22, $832,200 at 0.03).
       if (september !== undefined) expect(earningsOf(sim.player).months['2026-09']).toBe(2_052_00);
       const done = jumpAgainstSteps(freeze(sim), sim.now, at(2026, 12, 28, 12), rig);
       expect(coverOn(done.player, at(2026, 11, 27, 10))).toBe(cover);

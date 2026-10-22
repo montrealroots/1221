@@ -629,7 +629,7 @@
   ],
   "outcome": "Revised",
   "why": "Each paragraph is one control in the screen’s own words (Move Money’s From, To, Amount and Move It; Autopay’s button that says which and switches; Pay Card In Full turning into Pay What You Can), and the follow moved $10 at once between two Chase accounts and found every tab and button it names. But The Details said a US card’s introductory rate ends, and its penalty rate comes, with “a payment sixty days late”, where the game’s own late notice calls that moment thirty days late (the money editor’s finding).",
-  "changes": "“In the US two payments missed in a row end any introductory rate, and where the card has a penalty rate, it applies after 45 days’ notice until six payments in a row are on time.”: the second due date missed in a row, `credit.missed >= 2`, which is what the game does.",
+  "changes": "“In the US two payments missed in a row end any introductory rate, and where the card has a penalty rate, it applies after 45 days’ notice until six payments in a row are on time.”: the second due date missed in a row, `credit.missed >= 2`, which is what the game does. Brief 21 (2026-10-22) made the game count days, as Regulation Z does, and the sentence says so: “In the US a minimum payment more than 60 days late brings the bank’s notice, and 45 days later any introductory rate ends and, where the card has a penalty rate, that applies until six payments in a row are on time.”",
   "evidence": [
    {
     "kind": "walk",
@@ -645,11 +645,11 @@
    },
    {
     "kind": "test",
-    "ref": "tests/guide-chapter-facts.test.ts: 'ends it at the second payment missed in a row, not the first'"
+    "ref": "tests/guide-chapter-facts.test.ts: 'ends it 45 days after a minimum more than 60 days late, not at the second payment missed in a row'"
    },
    {
     "kind": "test",
-    "ref": "tests/guide-chapter-facts.test.ts: 'never sixty days late'"
+    "ref": "tests/guide-chapter-facts.test.ts: 'is said so: a minimum more than 60 days late, in the chapter and in the card’s entries, and never two payments missed'"
    }
   ]
  },
@@ -1285,7 +1285,7 @@
   ],
   "outcome": "Revised",
   "why": "Its first view was one sentence of 75 words, the payment plan and the plan Chase makes free folded into the list of offers in brackets.",
-  "changes": "The offers are one sentence, moving a balance another, and the payment plan has its own paragraph: “A payment plan pays off part of your purchases in equal monthly amounts, for a fixed monthly fee instead of interest. A plan made at Chase while the card’s introductory rate lasts is free for its whole life.” And The Introductory Rate and A Plan’s Fee say “two payments missed in a row” end the rate, where they said “a payment sixty days late” (the money editor’s finding; `credit.missed >= 2`).",
+  "changes": "The offers are one sentence, moving a balance another, and the payment plan has its own paragraph: “A payment plan pays off part of your purchases in equal monthly amounts, for a fixed monthly fee instead of interest. A plan made at Chase while the card’s introductory rate lasts is free for its whole life.” And The Introductory Rate and A Plan’s Fee say “two payments missed in a row” end the rate, where they said “a payment sixty days late” (the money editor’s finding; `credit.missed >= 2`). From brief 21 (2026-10-22), as the game counts days: “On a US card a minimum payment more than 60 days late ends it, 45 days after the bank’s notice, and at Barclaycard one missed minimum payment does”.",
   "evidence": [
    {
     "kind": "walk",
@@ -1313,7 +1313,7 @@
    },
    {
     "kind": "test",
-    "ref": "tests/guide-chapter-facts.test.ts: 'never sixty days late'"
+    "ref": "tests/guide-chapter-facts.test.ts: 'is said so: a minimum more than 60 days late, in the chapter and in the card’s entries, and never two payments missed'"
    }
   ]
  },
@@ -1331,7 +1331,7 @@
   ],
   "outcome": "Revised",
   "why": "It said a US card’s penalty rate comes, and its introductory rate ends, with “a payment sixty days late”, where the game’s own late notice calls that moment thirty days late and both come at the second due date missed in a row; and its first step described the panel as “its terms line by line”, which the money editor’s branch folds away.",
-  "changes": "“On a US card with a penalty rate, two payments missed in a row bring 45 days’ notice and then that rate, until six payments in a row are on time. Two missed in a row also end any introductory rate.”; the first step names the panel’s figures and “then its terms”, true of the panel as it is and as the money branch draws it, naming nothing the base doesn’t have.",
+  "changes": "“On a US card with a penalty rate, two payments missed in a row bring 45 days’ notice and then that rate, until six payments in a row are on time. Two missed in a row also end any introductory rate.”; the first step names the panel’s figures and “then its terms”, true of the panel as it is and as the money branch draws it, naming nothing the base doesn’t have. From brief 21 (2026-10-22): “On a US card, a minimum payment more than 60 days late, counted from its due date, brings the bank’s notice. 45 days later any penalty rate the card has applies, until six minimum payments in a row are on time, and any introductory rate ends. At 150 days late a default notice comes, and at 180 days the card is charged off”, its due day each month, and the example’s due date “on the same day each month, at least 25 days after its statement”.",
   "evidence": [
    {
     "kind": "walk",
@@ -1355,7 +1355,7 @@
    },
    {
     "kind": "test",
-    "ref": "tests/guide-chapter-facts.test.ts: 'ends it at the second payment missed in a row, not the first'"
+    "ref": "tests/guide-chapter-facts.test.ts: 'ends it 45 days after a minimum more than 60 days late, not at the second payment missed in a row'"
    },
    {
     "kind": "test",

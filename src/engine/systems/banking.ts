@@ -156,6 +156,48 @@ export function rateOf(sim: Simulation, account: Account): number {
   return step ?? rateOn(product, sim.now, sim.homeZone);
 }
 
+/**
+ * How many times a year an account's interest is credited: once every `creditsEvery` months from its opening, in the
+ * bank's months (`pays`), at Germany's quarterly closing, or each month's end.
+ */
+export function creditsPerYear(product: Product | undefined, account: Account): number {
+  if (product?.creditsEvery) return 12 / product.creditsEvery;
+  if (product?.pays) return product.pays.length;
+  return closesQuarterly(account) ? 4 : 12;
+}
+
+/**
+ * The nominal yearly rate a day's interest is worked from (from 2026-10-22, the owner's brief 21). A rate quoted as a
+ * yield (`Product.quoted`: an APY, AER, TAE or GAT) is what a year earns with the interest left in, so it's the nominal
+ * rate r that earns it as the account credits it, m times a year: r = m × ((1 + y)^(1/m) − 1); compounded daily, m is
+ * 365. A nominal rate is itself. Until then every rate ran as nominal, so Capital One's 3.00% APY, credited monthly,
+ * paid (1 + 0.03/12)^12 − 1 = 3.0416% a year, and Nationwide's 2.30% AER, credited monthly where the bank credits it
+ * yearly, 2.3233%.
+ */
+export function nominalRate(product: Product | undefined, account: Account, quoted: number): number {
+  return nominalOf(product, quoted, creditsPerYear(product, account));
+}
+
+/** The same, for a product credited so many times a year (`nominalRate`). */
+export function nominalOf(product: Product | undefined, quoted: number, perYear: number): number {
+  if (!product?.quoted || quoted <= 0) return quoted;
+  const m = product.compounds === 'daily' ? 365 : perYear;
+  return m * ((1 + quoted) ** (1 / m) - 1);
+}
+
+/**
+ * Whether a product credited from its opening day (`creditsEvery`) credits on a day: a whole number of its periods on,
+ * on the opening's day of the month, or the month's last day where that day doesn't exist (from 2026-10-22).
+ */
+export function creditsOn(product: Product | undefined, openedAt: Instant, at: Instant, zone: string): boolean {
+  if (!product?.creditsEvery) return false;
+  const a = zonedParts(openedAt, zone);
+  const b = zonedParts(at, zone);
+  const months = (b.year - a.year) * 12 + (b.month - a.month);
+  if (months <= 0 || months % product.creditsEvery !== 0) return false;
+  return b.day === Math.min(a.day, new Date(Date.UTC(b.year, b.month, 0)).getUTCDate());
+}
+
 /** The rate a tiered account pays on a balance, where the balance reaches a tier. */
 export function tierRate(product: Product | undefined, account: Account, balance: Money, inSave: (bankMoney: Money) => Money = (x) => x): number | undefined {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
@@ -870,13 +912,20 @@ export function registerBanking(sim: Simulation): void {
       // The floor, the cap and the tiers are the bank's own money; until 2026-09-27 they were read as the save's.
       const bankMoney = (x: Money) => inSaveMoney(s, x, bankById(account.bankId!)!.currency);
       const earning = earningBalance(product, account.balance, bankMoney);
-      const rate = tierRate(product, account, earning, bankMoney) ?? rateOf(s, account);
-      if (rate > 0 && earning > 0) account.accrued = (account.accrued ?? 0) + (earning * rate) / 365;
+      // The rate as quoted, turned into the nominal rate its crediting earns it at (`nominalRate`, from 2026-10-22), and a
+      // day's interest kept whole, to be posted in whole cents when it's credited. Compounded daily, the interest built
+      // up earns from the next day.
+      const rate = nominalRate(product, account, tierRate(product, account, earning, bankMoney) ?? rateOf(s, account));
+      const daily = product?.compounds === 'daily' ? earning + Math.max(0, account.accrued ?? 0) : earning;
+      if (rate > 0 && earning > 0) account.accrued = (account.accrued ?? 0) + (daily * rate) / 365;
       // The bonus builds too, and is kept only if the month earns it.
       if (product?.bonus && earning > 0) account.bonusAccrued = (account.bonusAccrued ?? 0) + (earning * product.bonus.rate) / 365;
       account.lowest = Math.min(account.lowest ?? account.balance, account.balance);
       account.monthSum = (account.monthSum ?? 0) + account.balance;
       account.monthDays = (account.monthDays ?? 0) + 1;
+      // Credited from its opening day where its terms say so (`creditsEvery`, from 2026-10-22): Nationwide's and Lloyds'
+      // once a year, Bankinter's every six months. The month's end leaves it be.
+      if (creditsOn(product, account.openedAt, s.now, s.homeZone)) payInterest(s, account, `Interest: ${account.name}`);
     }
   });
 
@@ -896,7 +945,7 @@ export function registerBanking(sim: Simulation): void {
       // quarter's fees beside it where the bank takes them then (`feesPostAt`:
       // from 2026-10-16 not ING's or Commerzbank's).
       const quarterly = closesQuarterly(account);
-      if ((!product?.pays || product.pays.includes(month)) && (!quarterly || month % 3 === 0)) payInterest(s, account, `Interest: ${account.name}`);
+      if (!product?.creditsEvery && (!product?.pays || product.pays.includes(month)) && (!quarterly || month % 3 === 0)) payInterest(s, account, `Interest: ${account.name}`);
       // None once a closing has settled them (`feesEndedAt`, from 2026-10-16): they end with the contract.
       const { fee, native } = account.feesEndedAt !== undefined ? { fee: 0, native: undefined } : feeFor(s, account, monthStart);
       // On an account in another currency the bank's own figure goes with it, kept beside the quarter's fees too.

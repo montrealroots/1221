@@ -75,6 +75,7 @@ import { bandOfQuality, recordWork } from './evaluation';
 import { noteMaterial } from './experience';
 import { UNPERFORMED, materialOf, rehearseChoice, sidesOf } from './material';
 import { TEMPLATE_TASK } from '../content/tasks';
+import { relevantGenre } from './engagement';
 import { rehearseWays } from './piece';
 import { nerves } from './attributes';
 import { ensurePro, type ShowcaseRecord } from './pro';
@@ -205,8 +206,12 @@ const outstandingOf = (person: Person): CourseRecord[] => Object.values(coursesO
 // The course's options, and the faculty's note on each
 // ---------------------------------------------------------------------------------------------------------------------
 
-/** How well they know a genre: the better of its familiarity and their work in it, 0 to 1 (`genreKnown`'s rule). */
-const knownOf = (person: Person, genre: string): number => Math.max(person.engagement?.byGenre[genre]?.familiarity ?? 0, person.engagement?.byGenre[genre]?.practice ?? 0) / 100;
+/**
+ * How well they know a scene's genre, 0 to 1, as every other reader takes a work's genres (`relevantGenre`, from
+ * 2026-10-22, the owner's brief 21): its own genre, or a kind of it, or its broad genre in part. Until then it was the
+ * scene's genre alone, so the faculty took a student who'd played every kind of comedy for a stranger to a farce.
+ */
+const knownOf = (person: Person, genre: string): number => relevantGenre(person, [genre]).total;
 
 /** A scene fully prepared on a good day for this actor, with no draw: the judge's own forecast, as How You’ll Play It previews one. */
 export function sceneForecast(sim: Simulation, person: Person, sceneId: string): number {

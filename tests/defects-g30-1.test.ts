@@ -81,7 +81,8 @@ describe('a genre’s look, its Preparation figure', () => {
     const prep = statsIn(look(sim, 'genre', 'drama').body).find((s) => s.label === 'Preparation')!;
     expect(prep.value).toBe(`${Math.round((genreSpeed(sim.player, ['drama']) - 1) * 100)}% Faster`);
     // What it speeds, named, and a brief's steps said to read something else.
-    expect(prep.note).toMatch(/a scene or a part from a play of its kind/i);
+    // "Of only its kind" from brief 21 (2026-10-22), when a play's several genres came to count each for its share.
+    expect(prep.note).toMatch(/a scene or a part from a play of only its kind/i);
     expect(prep.note).toMatch(/A brief’s steps speed up with material you’ve met before instead/);
     expect(prep.note).not.toMatch(/never a cap on the work$/);
   });

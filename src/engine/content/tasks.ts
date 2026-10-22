@@ -272,21 +272,30 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     },
   },
   audition: {
-    id: 'audition', label: 'An Audition', what: 'Two contrasting monologues, shown as an audition.', prepLabel: COURSEWORK_PREP,
+    // Knowing the genre reads in the room as it reads on tape (from 2026-10-22, the owner's brief 21): a professional
+    // audition's or callback's interpretation is the part's breakdown and the genre's conventions, the least of the two
+    // (`partFloor.genre`), as a self-tape's is. Until then an audition in person read no genre at all, so the same sides
+    // taped for a part read it and played in the room didn't. A context that gives no genre part (the School's own
+    // audition coursework) reads none, as before.
+    id: 'audition', label: 'An Audition', what: 'Two contrasting monologues, shown as an audition.', prepLabel: { ...COURSEWORK_PREP, genre: 'Knowing the genre' },
     dims: {
       believability: { weight: 3, inputs: [a('emotionalDepth', 2), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
-      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation'] },
+      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
       execution: { weight: 2, inputs: [a('memory', 1), a('vocal', 1), a('physical', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
       connection: { weight: 1, inputs: [a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
       consistency: { weight: 1, inputs: [a('composure', 2)], conditions: ALL },
     },
   },
   performance: {
+    // A night's interpretation reads the genre too (from 2026-10-22, the owner's brief 21): the director's notes taken
+    // and the play's conventions known, the least of the two (`partFloor.genre`), as a self-tape's and a shoot day's
+    // are. Until then a night on stage read no genre: a play of a kind known was learned faster (`genreSpeed`), and once
+    // its lines and blocking were complete, knowing its genre made no difference to the night.
     id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of an audience.',
-    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes' },
+    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes', genre: 'Knowing the genre' },
     dims: {
       believability: { weight: 3, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
-      interpretation: { weight: 2, inputs: BASE_INPUTS.night.interpretation, prep: ['notes'] },
+      interpretation: { weight: 2, inputs: BASE_INPUTS.night.interpretation, prep: ['notes', 'genre'] },
       connection: { weight: 2, inputs: BASE_INPUTS.night.connection, prep: ['blocking'], conditions: ALL },
       execution: { weight: 2, inputs: BASE_INPUTS.night.execution, prep: ['lines', 'blocking'], conditions: ['fatigue', 'illness', 'injury'] },
       consistency: { weight: 1, inputs: BASE_INPUTS.night.consistency, prep: ['lines'], conditions: ALL },

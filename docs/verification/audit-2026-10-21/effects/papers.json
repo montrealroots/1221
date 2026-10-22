@@ -90,7 +90,7 @@
     },
     {
      "what": "Acceptance of an offer reads permission for each work day",
-     "at": "src/engine/systems/projobs.ts:809"
+     "at": "src/engine/systems/projobs.ts:814"
     },
     {
      "what": "An engagement's dates read permission when it's booked",
@@ -1472,7 +1472,7 @@
     },
     {
      "what": "Acceptance reads it for each work day",
-     "at": "src/engine/systems/projobs.ts:809"
+     "at": "src/engine/systems/projobs.ts:814"
     },
     {
      "what": "The status runs to its end and sixty days",

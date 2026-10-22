@@ -1,0 +1,452 @@
+{
+ "B21-G1": {
+  "claim": "a work's first-listed genre carries half where it has two or more",
+  "file": "src/engine/content/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  15 failed | 30 passed (45)"
+  ],
+  "failing": [
+   "× the measure > weighs each material’s genres as the rule does: the first listed half, the rest sharing the other half, a broad genre beside its own kind counted as the kind 13ms",
+   "× the measure > gives each shape its share: low, medium, the most, one mastered and one weak, all mastered, and nothing for an unrelated genre at its most 2ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Blood Wedding (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 54ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, The Wild Duck (dominated): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 63ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Macbeth (three): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 48ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, A Midsummer Night’s Dream (overlapping): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 49ms"
+  ]
+ },
+ "B21-G2": {
+  "claim": "a kind known counts 0.75 toward its broad genre",
+  "file": "src/engine/content/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 44 passed (45)"
+  ],
+  "failing": [
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half 10ms"
+  ]
+ },
+ "B21-G3": {
+  "claim": "a broad genre known counts half toward its kinds",
+  "file": "src/engine/content/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 44 passed (45)"
+  ],
+  "failing": [
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half 10ms"
+  ]
+ },
+ "B21-G4": {
+  "claim": "a broad genre listed beside its own kind is absorbed into it, not counted twice",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  21 failed | 24 passed (45)"
+  ],
+  "failing": [
+   "× the measure > weighs each material’s genres as the rule does: the first listed half, the rest sharing the other half, a broad genre beside its own kind counted as the kind 13ms",
+   "× the measure > gives each shape its share: low, medium, the most, one mastered and one weak, all mastered, and nothing for an unrelated genre at its most 4ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half 1ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, The Wild Duck (dominated): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 41ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, A Midsummer Night’s Dream (overlapping): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 44ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, The Wild Duck (dominated): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 64ms"
+  ]
+ },
+ "B21-G5": {
+  "claim": "a tag listed twice counts once",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "survived",
+  "summary": [
+   " Test Files  1 passed (1)",
+   "      Tests  45 passed (45)"
+  ],
+  "failing": []
+ },
+ "B21-G6": {
+  "claim": "the weighed total is bounded at 1",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  36 failed | 9 passed (45)"
+  ],
+  "failing": [
+   "× the measure > gives each shape its share: low, medium, the most, one mastered and one weak, all mastered, and nothing for an unrelated genre at its most 7ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half 1ms",
+   "× the measure > never adds for more tags: every list in the game weighs to one, knowing every genre at 100 comes to one, and an unknown tag added never raises it 2ms",
+   "× the measure > stays between 0 and 1, and more of any genre never lowers it, over 2,000 seeded records across every list 3ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Riders To The Sea (single): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 71ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Blood Wedding (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 69ms"
+  ]
+ },
+ "B21-G7": {
+  "claim": "a School night's genre part is complete at 90, as a professional round's is (the defect the proof found)",
+  "file": "src/engine/systems/school.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  11 failed | 34 passed (45)"
+  ],
+  "failing": [
+   "× the paths, the same actor and draw, only the genres changed > school casting, Riders To The Sea (single): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 52ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, Blood Wedding (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 42ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, The Wild Duck (dominated): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 39ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, Macbeth (three): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 28ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, A Midsummer Night’s Dream (overlapping): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 32ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Riders To The Sea (single): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 42ms"
+  ]
+ },
+ "B21-G8": {
+  "claim": "a professional rehearsal day's lines are quicker for an actor who knows the genre",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 44 passed (45)"
+  ],
+  "failing": [
+   "× casting’s reading and a rehearsal day’s lines > a professional rehearsal day learns the lines faster in genres known, by a sixth of the weighed total, and no faster for an unrelated genre 14ms"
+  ]
+ },
+ "B21-G9": {
+  "claim": "a professional rehearsal day is practice in the project's genres",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b20-career-effects.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "result": "survived",
+  "summary": [
+   " Test Files  2 passed (2)",
+   "      Tests  20 passed (20)"
+  ],
+  "failing": []
+ },
+ "B21-B1": {
+  "claim": "a quoted yield is converted to the nominal rate that earns it",
+  "file": "src/engine/systems/banking.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  5 failed | 12 passed (17)"
+  ],
+  "failing": [
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Capital One’s 3.00% APY as $2,999.99 a year on $100,000, credited monthly at 12 × (1.03^(1/12) − 1) = 2.9595%, where it paid $3,041.59 until brief 21 1848ms",
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Wells Fargo’s 0.01% APY compounded daily as $1,000.00 a year on $10,000,000: each day’s interest earns from the next 1431ms",
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Lloyds’ Easy Saver its 1.00% AER once, a year after it opened, and nothing at a month’s end before it 519ms",
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Bankinter’s 5% TAE every six months from the opening, at 2 × (1.05^(1/2) − 1) = 4.939% on up to €10,000: €244.92 on 5 July, before Spain’s 19% 300ms",
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays AIB’s 0.25% AER in April and October, at 2 × (1.0025^(1/2) − 1) = 0.2498%: €33.06 and €52.92 before DIRT 371ms"
+  ]
+ },
+ "B21-B2": {
+  "claim": "Wells Fargo's interest compounds daily",
+  "file": "src/engine/systems/banking.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 16 passed (17)"
+  ],
+  "failing": [
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Wells Fargo’s 0.01% APY compounded daily as $1,000.00 a year on $10,000,000: each day’s interest earns from the next 1287ms"
+  ]
+ },
+ "B21-B3": {
+  "claim": "Lloyds, Nationwide and Bankinter credit from the opening day",
+  "file": "src/engine/systems/banking.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  2 failed | 15 passed (17)"
+  ],
+  "failing": [
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Lloyds’ Easy Saver its 1.00% AER once, a year after it opened, and nothing at a month’s end before it 410ms",
+   "× B1: a rate quoted as a yield earns that yield in a year, and a nominal one is left as it is > pays Bankinter’s 5% TAE every six months from the opening, at 2 × (1.05^(1/2) − 1) = 4.939% on up to €10,000: €244.92 on 5 July, before Spain’s 19% 227ms"
+  ]
+ },
+ "B21-B4": {
+  "claim": "the bank's notice comes on the 61st day, more than 60 days late",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/interest.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  2 failed (2)",
+   "      Tests  4 failed | 24 passed (28)"
+  ],
+  "failing": [
+   "× the US penalty rate > comes 45 days after a minimum more than 60 days late, not at the second due date missed, and comes off after six on time in a row 126ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > notices on the 61st day, not the 60th; the penalty rate 45 days on; the default notice on the 150th; the charge-off on the 180th, not the 179th 394ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > counts from the oldest minimum still short: 13 October’s paid by hand on 12 December, day 60, leaves 13 November’s, noticed on 13 January 414ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > comes to the same days and the same balance played a day at a time, jumped from due date to due date, and saved and loaded between 3137ms"
+  ]
+ },
+ "B21-B5": {
+  "claim": "the penalty rate and the end of an introductory rate come 45 days after the notice",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/interest.test.ts",
+   "tests/cardoffers.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  3 failed (3)",
+   "      Tests  3 failed | 38 passed (41)"
+  ],
+  "failing": [
+   "× an introductory rate > ends on a US card 45 days after the notice a minimum more than 60 days late brings 229ms",
+   "× the US penalty rate > comes 45 days after a minimum more than 60 days late, not at the second due date missed, and comes off after six on time in a row 140ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > notices on the 61st day, not the 60th; the penalty rate 45 days on; the default notice on the 150th; the charge-off on the 180th, not the 179th 669ms"
+  ]
+ },
+ "B21-B6": {
+  "claim": "the default notice comes on the 150th day",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  2 failed | 15 passed (17)"
+  ],
+  "failing": [
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > notices on the 61st day, not the 60th; the penalty rate 45 days on; the default notice on the 150th; the charge-off on the 180th, not the 179th 748ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > comes to the same days and the same balance played a day at a time, jumped from due date to due date, and saved and loaded between 2813ms"
+  ]
+ },
+ "B21-B7": {
+  "claim": "the charge-off comes on the 180th day (the defect: about 150)",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  4 failed | 13 passed (17)"
+  ],
+  "failing": [
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > notices on the 61st day, not the 60th; the penalty rate 45 days on; the default notice on the 150th; the charge-off on the 180th, not the 179th 869ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > comes to the same days and the same balance played a day at a time, jumped from due date to due date, and saved and loaded between 2893ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > counts the leap day: a minimum due 13 November 2026 is charged off on 12 May 2027, one due 13 November 2027 on 11 May 2028 453ms",
+   "× S: a save from before brief 21 with a US card behind > is dated on opening from its last late fee and its count, says so once, posts and charges nothing, and charges off 180 days from the first miss 980ms"
+  ]
+ },
+ "B21-B8": {
+  "claim": "a US card's due day keeps the bank's days, not the law's 21 alone",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 16 passed (17)"
+  ],
+  "failing": [
+   "× B5: a US card’s due date is one day each month, at least the bank’s days after the statement > keeps the bank’s days after a statement on the same day in every month, February the shortest; Citi and Capital One, whose days weren’t found, keep the 15th 16ms"
+  ]
+ },
+ "B21-B9": {
+  "claim": "a US card's due date is one day each month (the defect: the statement plus the days)",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  7 failed | 10 passed (17)"
+  ],
+  "failing": [
+   "× B5: a US card’s due date is one day each month, at least the bank’s days after the statement > takes a Chase card’s autopay on the 13th of every month through February, and on the 26th once its statement day is the 5th 711ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > notices on the 61st day, not the 60th; the penalty rate 45 days on; the default notice on the 150th; the charge-off on the 180th, not the 179th 207ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > sends nothing to a twin who misses 13 October and pays the whole statement at 13 November: no notice, no penalty, missed back to none 259ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > counts from the oldest minimum still short: 13 October’s paid by hand on 12 December, day 60, leaves 13 November’s, noticed on 13 January 364ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > comes to the same days and the same balance played a day at a time, jumped from due date to due date, and saved and loaded between 3103ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > counts the leap day: a minimum due 13 November 2026 is charged off on 12 May 2027, one due 13 November 2027 on 11 May 2028 328ms"
+  ]
+ },
+ "B21-B10": {
+  "claim": "a standing order from a British or EEA bank moves to the next business day",
+  "file": "src/engine/systems/payments.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/payments.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  2 failed (2)",
+   "      Tests  2 failed | 24 passed (26)"
+  ],
+  "failing": [
+   "× standing orders and payments set for a date > moves the amount into savings on its day each month, skips a month it can’t, and stops when canceled 25ms",
+   "× B6: a standing order on a day that isn’t a business day > is made on the next business day from a British bank, Good Friday and Easter Monday and May’s bank holiday passed over, and on its own day the month after 209ms"
+  ]
+ },
+ "B21-B11": {
+  "claim": "a US bank's order goes on its day",
+  "file": "src/engine/systems/payments.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 16 passed (17)"
+  ],
+  "failing": [
+   "× B6: a standing order on a day that isn’t a business day > is made on its day from a US bank, a Saturday included: no rule moving it was read, so that’s an assumption 235ms"
+  ]
+ },
+ "B21-B12": {
+  "claim": "a payment clears one minimum, the oldest first, not two",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "survived",
+  "summary": [
+   " Test Files  1 passed (1)",
+   "      Tests  17 passed (17)"
+  ],
+  "failing": []
+ },
+ "B21-B13": {
+  "claim": "a save from before brief 21 with a US card behind is dated on opening",
+  "file": "src/engine/index.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 16 passed (17)"
+  ],
+  "failing": [
+   "× S: a save from before brief 21 with a US card behind > is dated on opening from its last late fee and its count, says so once, posts and charges nothing, and charges off 180 days from the first miss 313ms"
+  ]
+ },
+ "B21-B14": {
+  "claim": "what the old rule already sent isn't sent again on an old save",
+  "file": "src/engine/index.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 16 passed (17)"
+  ],
+  "failing": [
+   "× S: a save from before brief 21 with a US card behind > is dated on opening from its last late fee and its count, says so once, posts and charges nothing, and charges off 180 days from the first miss 294ms"
+  ]
+ },
+ "B21-G10": {
+  "claim": "the Rep’s 2026–27 Seagull reads its kinds, tragicomedy and drama (the defect J2 found: none)",
+  "file": "src/engine/content/plays.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts",
+   "tests/b21-journeys.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  2 failed (2)",
+   "      Tests  4 failed | 43 passed (47)"
+  ],
+  "failing": [
+   "× the Rep’s 2026–27 Seagull, which no play catalog names > reads its kinds as Uncle Vanya’s are read, a play the Rep names by its own, and a new play none 7ms",
+   "× the Rep’s 2026–27 Seagull, which no play catalog names > a night of it as Nina’s understudy takes the genre part by the rule: none known 0, both at 45 half of complete, both at 90 complete, an unrelated genre nothing 5ms",
+   "× the Rep’s 2026–27 Seagull, which no play catalog names > a call kept there is practice in both its kinds, half a session’s worth each: 5 of what’s left to 100 5ms",
+   "× J2: continuous play and play saved and reopened end the same > PLAYER JOURNEY: a student’s first year to April at Chase, played straight through and reopened on the 1st of each month, ends with the same genres, balances, postings, notices and card 26692ms"
+  ]
+ },
+ "B21-G11": {
+  "claim": "a School call kept is practice in the play’s genres",
+  "file": "src/engine/systems/production.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 44 passed (45)"
+  ],
+  "failing": [
+   "× the Rep’s 2026–27 Seagull, which no play catalog names > a call kept there is practice in both its kinds, half a session’s worth each: 5 of what’s left to 100 17ms"
+  ]
+ },
+ "B21-B15": {
+  "claim": "a US card’s minimum payment due includes what’s past due",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 16 passed (17)"
+  ],
+  "failing": [
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > counts from the oldest minimum still short: 13 October’s paid by hand on 12 December, day 60, leaves 13 November’s, noticed on 13 January 598ms"
+  ]
+ },
+ "B21-B16": {
+  "claim": "the statement says how much of the minimum is past due",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/editorial17-money.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  2 failed (2)",
+   "      Tests  2 failed | 33 passed (35)"
+  ],
+  "failing": [
+   "× a card’s missed payments, read in the order they come > PLAYER JOURNEY: six due dates missed at Chase: each late notice names its own date and what the next miss brings, the statements between say what the due date decides, the counts are payments missed, and the day that charges the card off, 180 days after the first, sends nobody to the card 958ms",
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > notices on the 61st day, not the 60th; the penalty rate 45 days on; the default notice on the 150th; the charge-off on the 180th, not the 179th 250ms"
+  ]
+ }
+}

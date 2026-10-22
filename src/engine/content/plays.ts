@@ -13,6 +13,7 @@
  */
 
 import type { Craft } from '../systems/school';
+import { SEAGULL_2027 } from './school';
 
 export type PartSize = 'lead' | 'supporting' | 'featured';
 /** Who a part is written for: an actor, an actress, or either. */
@@ -202,4 +203,14 @@ export function genresOfPlay(title: string | undefined): readonly string[] | und
   if (!title) return undefined;
   const t = PLAY_ALIASES[title.toLowerCase()] ?? title.toLowerCase();
   return [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title.toLowerCase() === t)?.kinds;
+}
+
+/**
+ * The genres of what a School holder plays (a School casting, the Rep's, a Summer Cabaret show): its play's
+ * (`genresOfPlay`), or, for Yale Rep's 2026–27 production, which the catalog stages without a play it names
+ * (`UNNAMED_RUNNING.seagull`), The Seagull's (`SEAGULL_2027.kinds`). A new play names none.
+ */
+export function genresOfHolder(h: { play?: string; kind?: string; production?: string } | undefined): readonly string[] | undefined {
+  if (h?.play) return genresOfPlay(h.play);
+  return (h?.kind === 'role' || h?.kind === 'understudy') && h.production === SEAGULL_2027.name ? SEAGULL_2027.kinds : undefined;
 }

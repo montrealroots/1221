@@ -736,17 +736,17 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]": {
   "status": "Rewritten",
-  "hash": "9082202b72c5",
-  "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; the Yale Rep row read against coveredPart and tests/understudy-part.test.ts (An Enemy Of The People has no lead for an actress, who covers Petra Stockmann)",
-  "first": "Rewritten And Verified"
+  "hash": "9e0763ac5d97",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing; the chair's read with genre played in tests/decisions-2026-10-14.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]": {
   "status": "Rewritten",
-  "hash": "ba4a735dc562",
-  "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tests/guide-examples-productions.test.ts pass; How Hard’s understudy sentence read against partSizeOf and tests/understudy-part.test.ts (a covered supporting part judged at the Rep’s supporting difficulty, a lead at a lead’s)",
-  "first": "Rewritten And Verified"
+  "hash": "25337a4d2464",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten",
@@ -1946,11 +1946,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [audition]": {
-  "status": "Retained",
-  "hash": "e29345557183",
-  "on": "2026-10-19",
-  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "b16d73a793a6",
+  "on": "2026-10-22",
+  "evidence": "'Knowing the genre', the brief's own label for the part, now on an audition's preparation; read where a record names what held it back (evaluation.ts chiefLimit)",
+  "first": "Pending"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [camera]": {
   "status": "Retained",
@@ -1988,11 +1988,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [performance]": {
-  "status": "Retained",
-  "hash": "002dcd4bcdc2",
-  "on": "2026-10-19",
-  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "36c8f9326a9e",
+  "on": "2026-10-22",
+  "evidence": "'Knowing the genre', the brief's own label for the part, now on a night's preparation; read where a record names what held it back (evaluation.ts chiefLimit)",
+  "first": "Pending"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [scene]": {
   "status": "Retained",

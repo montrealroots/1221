@@ -185,7 +185,7 @@
       "changes": "Person.performerTitle (bootstrap.ts:303-305 decided, :345 stored); meta.careerLabel (bootstrap.ts:316; refreshMeta, index.ts:259)",
       "downstream": "systems/school.ts:2586, the casting pool’s title, read by partsFor (:2549-2559); :2632-2641, the lead-taken bond; :2699-2701, the Yale Rep role (Nina or Konstantin in 2027, then a part written for the title); companyPart :2187-2198 (title at :2192), the Summer Cabaret’s parts, from 2026-10-14 never a lead for a student outside the four the play reads best; systems/playreading.ts:77-82 partFor, a read’s part for you; index.ts:259, refreshMeta’s careerLabel; labels at Home.tsx:113, shell/GameShell.tsx:162, shell/LifeEnded.tsx:45 and ProfileWorkspace.tsx:171. Until 2026-10-13 this said school.ts:1312,1572,1614,1671, playreading.ts:80 and index.ts:245, lines the files had moved on from.",
       "explanation": "UI says 'at school you're cast in the parts a play writes for it' - engine does this.",
-      "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
+      "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Ilse and him as Melchior Gabor, and a lead written for one title, taken from somebody not in a lead, costs that bond', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
       "status": "verified",
       "issue": "",
       "review": {
@@ -283,7 +283,7 @@
           },
           {
             "file": "evidence-g27-ui.test.ts",
-            "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title",
+            "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Ilse and him as Melchior Gabor, and a lead written for one title, taken from somebody not in a lead, costs that bond",
             "kind": "command",
             "closes": "The School production casting (the pool's title) and the lead-taken bond had no title test. The second fall's Rep is checked too: Elmire and Tartuffe."
           },
@@ -1355,7 +1355,7 @@
           },
           {
             "file": "evidence-g28-ui.test.ts",
-            "title": "c-disp-riskTolerance > PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 11 October and 10 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once",
+            "title": "c-disp-riskTolerance > PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 13 October and 13 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once",
             "kind": "command",
             "closes": "'So a balance is carried' had been tested only with autopay set by hand. Here both lives are slider-made and set everyday spending to credit with bank.set_payments, and the clock runs to 21 Nov. Literal checks: statements of $270.00 / $530.00 (66) and $270 / $300 / $310 (65); payments of $40.00 twice against $270.00 and $300.00; carrying true/false; 89 identical $10.00 grocery charges; one Interest posting on 20 Nov, inside Chase's published 18.24%–27.74% bounds, matching the third statement. The run saves and loads before the first due date, and again after the interest, which is not charged twice."
           }
@@ -2769,7 +2769,7 @@
       "changes": "index.ts:182-185 openAt at startingBank’s bank: the one chosen, or else the country’s first, and for somebody born outside the US never one kept for US persons (banking.ts:88-92); card product CARDS[bank.id] (index.ts:203). Until 2026-10-13 this cited index.ts:168-170 and 189.",
       "downstream": "Fees, savings rate, statements, card terms",
       "explanation": "Selection opens accounts there.",
-      "tests": "tests/evidence-g29-ui.test.ts c-bank: 'lists the five US banks to a student born in New York, and the select’s own change opens the life at Wells Fargo', 'lists three banks to a student born in London, leaving out Capital One and Citi, and opens a Londoner’s Capital One at Chase', 'opens at Chase, the country’s first, for a bank id this build doesn’t know', 'pays savings the chosen bank’s rate: $237.64 at Capital One’s 3.00%…', 'charges the chosen bank’s monthly fees on low balances…'; tests/banking.test.ts lifeIn(..., { bankId: 'is-arion' }) etc. The card’s terms are held only through the product’s name, no APR asserted.",
+      "tests": "tests/evidence-g29-ui.test.ts c-bank: 'lists the five US banks to a student born in New York, and the select’s own change opens the life at Wells Fargo', 'lists three banks to a student born in London, leaving out Capital One and Citi, and opens a Londoner’s Capital One at Chase', 'opens at Chase, the country’s first, for a bank id this build doesn’t know', 'pays savings the chosen bank’s rate: $234.43 at Capital One’s 3.00% APY…', 'charges the chosen bank’s monthly fees on low balances…'; tests/banking.test.ts lifeIn(..., { bankId: 'is-arion' }) etc. The card’s terms are held only through the product’s name, no APR asserted.",
       "status": "verified",
       "issue": "",
       "review": {
@@ -2854,7 +2854,7 @@
           },
           {
             "file": "evidence-g29-ui.test.ts",
-            "title": "c-bank > pays savings the chosen bank’s rate: $237.64 at Capital One’s 3.00% and $0.79 at Chase’s 0.01% for August’s seven midnights",
+            "title": "c-bank > pays savings the chosen bank’s rate: $234.43 at Capital One’s 3.00% APY and $0.79 at Chase’s 0.01% APY for August’s seven midnights",
             "kind": "command",
             "closes": "Downstream savings rate, on the clock: $413,043 × rate / 365 over seven midnights, paid at the month end."
           },
@@ -6318,7 +6318,7 @@
       "changes": "world.take_decision_action, world.dismiss_decision, world.mark_read",
       "downstream": "world.ts:32-42 (world.dismiss_decision), 44-76 (world.take_decision_action), 94-104 (world.mark_read), and expireDecisions at 124-138, which closes a dated row at the world’s look after its day; what weighs is troubles() in systems/spending.ts:454-486. Until 2026-10-13 this said world.ts:33-97, which stopped short of world.mark_read’s end and left the expiry out.",
       "explanation": "All Clear reads troubles() + calendar clashes. Until 2026-10-13 a card’s line could say 'N payments behind' for two or more; no played life reaches that once a card paid off resets its count (defect 68, fixed), and the sentence went: an unsuspended card is a payment behind (Home.tsx:65-68).",
-      "tests": "tests/evidence3-home.test.ts h-needs (round three, 2026-10-14), every money sentence played: ‘PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine…’ (“You owe $1,882 that went unpaid.”), ‘PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date…’ (“nearly at its limit”, then “$1,999 is with collections.”), ‘PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run…’ (“You owe $50 for medical care.”, and at Chase $50 overdrawn instead); tests/evidence-g32-ui.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting…; Go There goes where each says’, ‘PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel…; a reload keeps it so, and the return still files’, ‘PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused…’, ‘PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…’, the calendar clash and the six-row cap, and the money sentences (‘something gone unpaid…’, ‘the current account overdrawn…’, ‘the card at nine-tenths of its limit…’, ‘the card behind: a payment, and suspended’, ‘medical care owed, and a debt with collections’, ‘income tax owed on a return filed…’), which rest on TEST SETUP and stay beside the played ones; tests/evidence2-b11.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 159…’, ‘PLAYER JOURNEY: her everyday spending put on the card… a payment behind owing $510, then suspended owing $850…, across a reload’, ‘PLAYER JOURNEY: File It pressed with nothing in the bank… You owe $166 of income tax…’; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tools/acceptance-ui.mjs:196 “home: what needs you on the first day: no decision waiting, in the panel’s own words”, on the built app, outside the gate; until 2026-10-13 it was “home: what needs you, and a decision taken from its card”, which passed with no card and asserted nothing after a press. Until 2026-10-14 unpaid, near-limit, medical and collections rested only on TEST SETUP debts; until 2026-10-13 no test rendered the panel or All Clear.",
+      "tests": "tests/evidence3-home.test.ts h-needs (round three, 2026-10-14), every money sentence played: ‘PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine…’ (“You owe $1,882 that went unpaid.”), ‘PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date…’ (“nearly at its limit”, then “$1,999 is with collections.”), ‘PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run…’ (“You owe $50 for medical care.”, and at Chase $50 overdrawn instead); tests/evidence-g32-ui.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting…; Go There goes where each says’, ‘PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel…; a reload keeps it so, and the return still files’, ‘PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused…’, ‘PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…’, the calendar clash and the six-row cap, and the money sentences (‘something gone unpaid…’, ‘the current account overdrawn…’, ‘the card at nine-tenths of its limit…’, ‘the card behind: a payment, and suspended’, ‘medical care owed, and a debt with collections’, ‘income tax owed on a return filed…’), which rest on TEST SETUP and stay beside the played ones; tests/evidence2-b11.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 159…’, ‘PLAYER JOURNEY: her everyday spending put on the card… a payment behind owing $530, then suspended owing $880…, across a reload’, ‘PLAYER JOURNEY: File It pressed with nothing in the bank… You owe $166 of income tax…’; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tools/acceptance-ui.mjs:196 “home: what needs you on the first day: no decision waiting, in the panel’s own words”, on the built app, outside the gate; until 2026-10-13 it was “home: what needs you, and a decision taken from its card”, which passed with no card and asserted nothing after a press. Until 2026-10-14 unpaid, near-limit, medical and collections rested only on TEST SETUP debts; until 2026-10-13 no test rendered the panel or All Clear.",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -6486,7 +6486,7 @@
           },
           {
             "file": "evidence2-b11.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $530, then suspended owing $880, said once the notices are read, across a reload",
             "kind": "command",
             "closes": "The card-behind and suspended sentences had rested on missed and suspended set by hand. Now everything is played: bank.set_payments credit, bank.transfer before each due date, autopay bouncing on 11 October and 10 November. Expected: 48 × $10 groceries + the Reg Z safe-harbor $30 = $510, then 78 × $10 + $30 + $40 (the repeat fee held to the $40 minimum) = $850. The Late Card Payment and Suspended notices are read, Mark N Read is pressed, and the sentence survives a reload."
           },
@@ -6504,7 +6504,7 @@
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent",
+            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,443, then at its $1,630 limit “nearly at its limit”, then charged off 180 days past the first due date missed: “$2,038 is with collections.”, the checking still named on the Money line, and gone once Pay is sent",
             "kind": "command",
             "closes": "'nearly at its limit' and '… is with collections' reached by play: a family creation offers (withFamily 'scraping'), bank.set_payments credit, bank.transfer before six due dates; $1,423 = 913 + 48×10 + 30 under 90% of $1,630 (not near), $1,630 at the limit (near); collections = the card's balance the hour before + the $40 fee, $1,999; across a reload; bank.pay_collections takes the sentence away"
           },
@@ -6995,7 +6995,7 @@
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off at the sixth … the checking still named on the Money line …",
+            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off 180 days past the first due date missed … the checking still named on the Money line …",
             "kind": "command",
             "closes": "A charge-off to collections, the one path that closes an account by the bank's hand in a played life, leaves the checking open and named: 'Money Chase Total Checking: $0.00.'"
           },

@@ -731,15 +731,22 @@ describe('bank.pay_collections', () => {
   });
 
   it('describes a card charged off as a card, not an account overdrawn; paid off, the no-card report climbs again a year on, and left unpaid it doesn’t', () => {
-    /** Autopay from an empty Citi account, the day on the card: six due dates missed by the clock. */
+    /**
+     * Autopay from an empty Citi account, the day on the card, by the clock: the first minimum short on 13 October 2026,
+     * and the card charged off 180 days later, on 11 April 2027 (`US_LATE`). Until brief 21 (2026-10-22) at the sixth due
+     * date missed, 13 March, about 150 days.
+     */
     const play = () => {
       const sim = student('g10-chargeoff');
       const { accountId } = sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
       const card = cardsOf(sim, sim.player)[0]!;
       sim.must({ kind: 'card.set_autopay_from', payload: { cardId: card.id, accountId } });
       sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
-      sim.advanceTo(at(2027, 3, 14));
-      expect(card.closedAt).toBeDefined();
+      sim.advanceTo(at(2027, 4, 10));
+      expect(card.closedAt).toBeUndefined();
+      sim.advanceTo(at(2027, 4, 12));
+      // At the day's first minute, as the day's turn counts it.
+      expect(card.closedAt).toBe(at(2027, 4, 11, 0));
       expect(notices(sim, 'Your Card Was Charged Off')).toHaveLength(1);
       return sim;
     };
@@ -761,7 +768,7 @@ describe('bank.pay_collections', () => {
     const second = lending(paid, 'us-chase', ['borrowing'], chase, { toCollections: (-toChase.balance / 100).toFixed(2) });
     // The In Collections panel's own words, from its title to its field.
     const words = second.text.slice(second.text.indexOf('In Collections'), second.text.indexOf('Pay Toward It'));
-    expect(words).toBe(`In Collections $${Math.round(-toChase.balance / 100).toLocaleString('en-US')} owed How This Works Chase closed your card after six payments in a row were missed, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you. `);
+    expect(words).toBe(`In Collections $${Math.round(-toChase.balance / 100).toLocaleString('en-US')} owed How This Works Chase closed your card after a minimum payment was 180 days late, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you. `);
     expect(words).not.toContain('overdrawn');
     second.button('Pay It').onClick!();
     expect(toChase.closedAt).toBe(paid.now);
@@ -835,14 +842,15 @@ describe('bank.reactivate', () => {
     expect(accountLife(sim, 'us-capital-one').text).not.toContain('is dormant');
     expect(refused(sim, 'bank.reactivate', { accountId: savings.id })).toBe('That account isn’t dormant.');
 
-    // Kept across a reload, and read by the clock: a day's interest at Capital One's published 3.00%, and no dormancy
-    // at the next first of the month, though nothing has touched the savings since 2026.
+    // Kept across a reload, and read by the clock: a day's interest at Capital One's published 3.00% APY, the rate that
+    // earns it credited monthly, 12 × (1.03^(1/12) − 1), over 365 (3.00% itself until brief 21, 2026-10-22), and no
+    // dormancy at the next first of the month, though nothing has touched the savings since 2026.
     const again = reload(sim);
     const s = again.universe.accounts[savings.id]!;
     expect(s.reactivatedAt).toBe(at(2028, 9, 2));
     const before = s.accrued!;
     again.advanceTo(at(2028, 9, 3));
-    expect(s.accrued! - before).toBeCloseTo((s.balance * 0.03) / 365, 6);
+    expect(s.accrued! - before).toBeCloseTo((s.balance * 12 * (1.03 ** (1 / 12) - 1)) / 365, 6);
     again.advanceTo(at(2028, 10, 1));
     expect(s.dormant).toBeUndefined();
     expect(notices(again, '360 Performance Savings Is Dormant')).toHaveLength(1);

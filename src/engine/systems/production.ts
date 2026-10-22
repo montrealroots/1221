@@ -55,8 +55,8 @@ import { CABARET_KIND, CALL_KIND, SUMMER_KIND, type Craft } from './school';
 import { courseworkOf, notesOf } from './coursework';
 import { recordNote, type NoteFocus as LedgerFocus } from './learning';
 import { develop, stepSpeed, type Target } from './attributes';
-import { genreSpeed } from './engagement';
-import { genresOfPlay } from '../content/plays';
+import { genreSpeed, practiceGenres } from './engagement';
+import { genresOfHolder } from '../content/plays';
 import { AXES, APPROACH_EFFECT } from '../content/approaches';
 import type { Axis, AxisValue } from '../content/material';
 import { choose, materialOf, misfitOf, rehearseChoice, sidesOf, type Playing } from './material';
@@ -482,6 +482,10 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
   attend(p, stage);
   // A call kept is discipline kept, a quarter of a session's worth (from 2026-10-09).
   develop(sim, person, 'discipline', { weight: 0.25, focus: 1, deliberate: false, source: 'call' });
+  // And work in the play's genres, a session's worth as a night is (`practiceGenres`, from 2026-10-22, the owner's brief
+  // 21). Until then a call was no practice in its play's kind, which cost nothing while a night read no genre; once a
+  // night came to read it, a student came to opening night knowing none of a genre rehearsed for weeks.
+  practiceGenres(sim, person, genresOfHolder(holder as { play?: string; kind?: string; production?: string }) ?? []);
   // The director's request, from the first call (from 2026-10-10).
   p.direction ??= drawDirection(sim, person, holder);
   // Every call works the part on its feet, and with it the way it's being played.
@@ -600,9 +604,9 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     const focus = focusAt(s, person, s.now);
     take(s, person);
     // A play of a kind known is learned faster (`genreSpeed`, from 2026-10-09).
-    const holder = holderFor(s, person, which) as { play?: string };
+    const holder = holderFor(s, person, which) as { play?: string; kind?: string; production?: string };
     // And by memory (`stepSpeed`, from 2026-10-16), as every step learning lines is.
-    proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay(holder.play)) * stepSpeed(s, person, 'memory') * (1 - proc.lines));
+    proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfHolder(holder)) * stepSpeed(s, person, 'memory') * (1 - proc.lines));
     // Memory, recorded on the development history from 2026-10-09 (it was grown unrecorded before, the same amount).
     if (proc.trained < PROCESS.own.trainsAtMost && person.craft) { ordinary(s, person, 'memory', focus, PROCESS.own.trainingWeight, 'learn-part'); proc.trained += 1; }
     return { lines: proc.lines };
@@ -677,7 +681,7 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     // Working a lines or blocking note is the work itself.
     // As an hour on the part moves the lines (`school.learn_part`), by the hour's focus and the play's kind known (from
     // 2026-10-12; until then the same hour on the lines moved them by a different amount from this button).
-    if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay((holderFor(s, person, which) as { play?: string } | undefined)?.play)) * stepSpeed(s, person, 'memory') * (1 - proc.lines));
+    if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfHolder(holderFor(s, person, which) as { play?: string; kind?: string; production?: string } | undefined)) * stepSpeed(s, person, 'memory') * (1 - proc.lines));
     // A blocking note given for a missed call asks the book gone back through, as Catch Up The Blocking does: worked, it
     // closes one gap (from 2026-10-12). Until then the gap stayed open, the next call counted the note taken, and the
     // next work-through gave the same note again as "Better since the last note".

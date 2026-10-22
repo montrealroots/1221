@@ -85,9 +85,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
   "status": "Rewritten",
-  "hash": "e4d3f23d310d",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt), the two-missed rule played and held by tests/guide-chapter-facts.test.ts",
+  "hash": "4682ea60b387",
+  "on": "2026-10-22",
+  "evidence": "read again on 2026-10-22 (brief 21): Your Bank's late-payment sentence says the US days the game counts (a notice past 60 days, the penalty rate 45 days on, the charge-off at 180) and six missed due dates only elsewhere; tests/b21-banking-proof.test.ts ('the tutorial and the guide say the days the game counts') holds it to US_LATE and the played timeline",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {

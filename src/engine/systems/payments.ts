@@ -40,7 +40,9 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { dateKey, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { bankById } from '../content/banks';
+import { businessDay, daysOfAccount } from '../content/bankdays';
 import { savingsDebit } from './accountlife';
 import { orderSource } from './routing';
 import { sendBetweenBanks } from './bankmoves';
@@ -148,6 +150,33 @@ function settle(person: Person): PaymentSettings {
   return person.payments;
 }
 
+/**
+ * Where a standing order dated on a day that isn't the paying bank's business day is made on the first business day
+ * after (from 2026-10-22, the owner's brief 21): Britain, by the Payment Services Regulations 2017, reg. 81(5) and (6)
+ * ("deemed to have been received on the first business day thereafter"), as Lloyds Bank and NatWest say of their own;
+ * and the EU and the EEA, by Directive (EU) 2015/2366 (PSD2), art. 78(2), which Germany's BGB §675n(2) and Iceland's
+ * Act no. 114/2021 carry. Elsewhere no bank's or payment system's rule was found for a transfer between the holder's own
+ * accounts, and it's made on its date, SLATE's assumption, as every standing order was until then
+ * (docs/verification/genre-banking-2026-10-22/banking-sources.md).
+ */
+export const NEXT_BUSINESS_DAY: ReadonlySet<string> = new Set([
+  'GB', 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
+  'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'NO', 'LI',
+]);
+
+/** The first of a paying bank's business days on or after a moment's date, at nine, where its rules move an order; else none. */
+export function orderDayOf(sim: Simulation, person: Person, from: Account, at: Instant): Instant | undefined {
+  const iso = from.bankId ? bankById(from.bankId)?.iso : undefined;
+  if (!iso || !NEXT_BUSINESS_DAY.has(iso)) return undefined;
+  const kept = daysOfAccount(from, person);
+  for (let k = 0; k < 15; k += 1) {
+    const p = zonedParts(at, sim.zone);
+    const day = instantFromZoned({ year: p.year, month: p.month, day: p.day + k, hour: 9 }, sim.zone);
+    if (businessDay(kept.countryId, dateKey(day, sim.zone), kept.regionId)) return k === 0 ? undefined : day;
+  }
+  return undefined;
+}
+
 function nextOn(sim: Simulation, day: number, after: Instant): Instant {
   const zone = sim.zone;
   const p = zonedParts(after, zone);
@@ -202,6 +231,13 @@ export function registerPayments(sim: Simulation): void {
     // From the account it was set up on (`orderSource`, from 2026-10-10: until then whichever was primary on its day).
     const source = orderSource(s, person, order);
     const current = source && !source.closedAt ? source : undefined;
+    // Not the paying bank's business day, where its rules say so: made on the next (`orderDayOf`, from 2026-10-22), the
+    // month after's on its own date again.
+    const moved = current ? orderDayOf(s, person, current, item.at) : undefined;
+    if (moved !== undefined) {
+      s.schedule({ at: moved, kind: STANDING_ORDER_KIND, label: 'Standing Order', category: 'home', priority: 37, payload: { personId: person.id, orderId: order.id } });
+      return;
+    }
     const to = s.universe.accounts[order.toId];
     const open = to && !to.closedAt ? to : undefined;
     let why: string | undefined;

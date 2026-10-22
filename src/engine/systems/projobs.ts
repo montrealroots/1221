@@ -81,7 +81,7 @@ import { enjoyWork } from './enjoyment';
 import { exerts } from './body';
 import { trainingRefusal } from './injury';
 import { SPENT, startRefusal } from './life';
-import { SELF_TAPE, practiceGenres } from './engagement';
+import { SELF_TAPE, genreSpeed, practiceGenres, relevantGenre } from './engagement';
 import {
   CALL_KIND, ESTIMATE, classPeriod, conditionAt, countWords, coursesFor, focusAt, keyOf, offSick, ordinary, recessStart, schoolEnded, setStanding,
   termOf, termStart,
@@ -334,20 +334,25 @@ export function inScope(agentId: string, t: ProjectTemplate): boolean {
 /** The role's fit: how well you know its genre, and its techniques against yours, each 0 to 1, and the two together. */
 export interface Fit { genre: number; demands: number; fit: number }
 
+/** A project's genres: the work's, never the player's own loves, which only enjoyment reads (tests/cohesion.test.ts). */
+const projectGenresOf = ({ genres }: ProjectTemplate): readonly string[] => genres;
+
 /**
- * How well the role suits the actor, from the record: genre knowledge, the better of studied and worked in, against what
- * a brief counts complete (`BRIEF.complete.genre`); and the role's techniques against the actor's, each at most
+ * How well the role suits the actor, from the record: the project's genres known, weighed (`relevantGenre`), against
+ * what a brief counts complete (`BRIEF.complete.genre`); and the role's techniques against the actor's, each at most
  * mastered (`MASTERED`), by the role's weights. The two count alike. ASSUMPTION: the game's reading of "fit".
+ *
+ * Two things read the genre part, and they're different contributions (from 2026-10-22, the owner's brief 21): casting's
+ * reading of the actor for the part (here, half the fit, which sets casting's chance with the round's band,
+ * `chanceOf`), and the work itself, where knowing the genre is a part of the take's, the room's or the day's
+ * preparation (`auditionContext`, `workContext`). The first is who casting thinks suits it; the second is how the
+ * work comes out. Until that day the genre known was the best of the project's genres: knowing `thriller` counted as
+ * knowing `psychological_thriller` in full.
  */
 export function fitOf(person: Person, t: ProjectTemplate): Fit {
   // The project's genres, never the player's own loves, which only enjoyment reads: a preference changes what doing a
   // thing gives, never how good somebody is at it (tests/cohesion.test.ts).
-  const { genres: projectGenres } = t;
-  const known = Math.max(0, ...projectGenres.map((g) => {
-    const s = person.engagement?.byGenre[g];
-    return Math.max(s?.familiarity ?? 0, s?.practice ?? 0) / 100;
-  }));
-  const genre = clamp(known / BRIEF.complete.genre, 0, 1);
+  const genre = clamp(relevantGenre(person, projectGenresOf(t)).total / BRIEF.complete.genre, 0, 1);
   const asks = Object.entries(t.role.techniques) as [Skill, number][];
   const total = asks.reduce((a, [, w]) => a + w, 0);
   const demands = total > 0 ? asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) / total : 1;
@@ -1052,7 +1057,10 @@ export function auditionContext(sim: Simulation, person: Person, o: Opportunity,
   const p = o.prep ?? ZERO;
   const prep: Record<string, number> = { interpretation: p.interpretation, memorization: p.memorization, rehearsal: p.rehearsal };
   const required: Record<string, number> = { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal };
-  if (r.form === 'self-tape') { prep.genre = fitOf(person, t).genre * BRIEF.complete.genre; required.genre = BRIEF.complete.genre; }
+  // Knowing the genre, in the room as on tape (from 2026-10-22, the owner's brief 21: until then an audition in person
+  // read none of it, `TASK_PROFILES.audition`).
+  prep.genre = fitOf(person, t).genre * BRIEF.complete.genre;
+  required.genre = BRIEF.complete.genre;
   return {
     task: r.form === 'self-tape' ? TASK_PROFILES.tape! : TASK_PROFILES.audition!,
     techniques: t.role.techniques, prep, required,
@@ -1190,14 +1198,22 @@ export function workContext(sim: Simulation, person: Person, e: Engagement, t: P
   const base = { techniques: t.role.techniques, difficulty: (t.role.stakes - 1) * BRIEF.stakes, condition: conditionAt(sim, person, sim.now), families: t.role.families, key: `pro:${person.id}:${e.id}:${i}` };
   // A night reads the part's lines, blocking and the director's notes: here the lines learned, the rehearsal on its feet
   // and the breakdown, against what completes each (`BRIEF.complete`).
-  if (dayKindOf(t, i) === 'performance') return { ...base, task: TASK_PROFILES.performance!, prep: { lines: p.memorization, blocking: p.rehearsal, notes: p.interpretation }, required: { lines: BRIEF.complete.memorization, blocking: BRIEF.complete.rehearsal, notes: BRIEF.complete.interpretation } };
+  // And the play's genres known (from 2026-10-22, the owner's brief 21), as a shoot day reads them: until then a night
+  // on stage read none (`TASK_PROFILES.performance`).
+  if (dayKindOf(t, i) === 'performance') return { ...base, task: TASK_PROFILES.performance!, prep: { lines: p.memorization, blocking: p.rehearsal, notes: p.interpretation, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { lines: BRIEF.complete.memorization, blocking: BRIEF.complete.rehearsal, notes: BRIEF.complete.interpretation, genre: BRIEF.complete.genre } };
   return { ...base, task: TASK_PROFILES.camera!, prep: { interpretation: p.interpretation, memorization: p.memorization, rehearsal: p.rehearsal, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } };
 }
 
-/** A rehearsal day attended: the lines and the blocking move as a School call's do (`PROCESS.call`), and the breakdown at the lines' rate. */
-function rehearse(e: Engagement): void {
+/**
+ * A rehearsal day attended: the lines and the blocking move as a School call's do (`PROCESS.call`), and the breakdown at
+ * the lines' rate. The lines go faster in a project of a kind known (`genreSpeed`, the project's genres weighed), as a
+ * School play's lines are (`production.ts`); the blocking and the breakdown don't, since the day's own reading of the
+ * genre (`workContext`) is what knowing it does for the choices. Until 2026-10-22 (the owner's brief 21) a professional
+ * rehearsal read no genre: a comedy's lines were learned as fast whether the actor had played comedy or not.
+ */
+export function rehearseDay(person: Person, e: Engagement, t: ProjectTemplate): void {
   const p = (e.prep ??= { ...ZERO });
-  p.memorization = r3(clamp(p.memorization + PROCESS.call.lines * (1 - p.memorization), 0, 1));
+  p.memorization = r3(clamp(p.memorization + PROCESS.call.lines * genreSpeed(person, projectGenresOf(t)) * (1 - p.memorization), 0, 1));
   p.rehearsal = r3(clamp(p.rehearsal + PROCESS.call.blocking * (1 - p.rehearsal), 0, 1));
   p.interpretation = r3(clamp(p.interpretation + PROCESS.call.lines * (1 - p.interpretation), 0, 1));
 }
@@ -1429,7 +1445,9 @@ export function registerProJobs(sim: Simulation): void {
     const kind = dayKindOf(t, i);
     exerts(person, WORK.met, (e.days[i]!.to - e.days[i]!.from) / MS_HOUR);
     if (kind === 'rehearsal') {
-      rehearse(e);
+      rehearseDay(person, e, t);
+      // A rehearsal day is work in the project's genres, as a School call is (from 2026-10-22, the owner's brief 21).
+      practiceGenres(s, person, projectGenresOf(t));
       (e.log ??= []).push({ day: i, at: item.at, status: 'worked' });
     } else {
       // Nerves before a house, as before a School night (`nerves`): stress by composure and extraversion, and composure

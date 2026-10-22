@@ -2833,7 +2833,7 @@
       "downstream": "readRuns (the next casting)",
       "persistent": "summer, credits, wages",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: joined in the first spring, its first show’s four nights go into the run record, its first Friday puts $375 on the year’s wages...’ (joined through the command and played by the clock: the second fall’s casting reads its three shows at weights 2, 4 and 4, once, through a reload; the stipend’s Friday on the year’s wages, FICA withheld), ‘PLAYER JOURNEY: a twin who never joined comes to the second fall’s casting with the Carlotta alone...’, ‘casts its parts within the company by castFit...’ (the two extremes only), ‘on the Casting tab, a student in concern is told why in words and offered nothing...’ (Join The Summer Company pressed); tests/decisions-2026-10-14.test.ts companyPart ‘PLAYER JOURNEY: an actress the Summer Cabaret reads eighth takes Cathleen, and the company’s unnamed part in the two plays whose only woman is a lead, through the summer to her credits’ (it failed before the fix: she was given Natalya Stepanovna and Yelena Popova); tests/school.test.ts ‘forms in the spring of the first and second years, for a student in good standing, by the end of April’, ‘lets a student go who misses a performance, and stops the stipend after the days of the week worked’; tests/defects-g8-1.test.ts ‘excuses the performance: not played, and the company keeps the student’; tests/coverage-gaps-runs.test.ts ‘reads a Summer show at casting, and the faculty’s evaluation doesn’t’ (a summer built by hand). Until 2026-10-13 this said no test played a summer through the command and checked the next casting reading it.",
+      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: joined in the first spring, its first show’s four nights go into the run record, its first Friday puts $375 on the year’s wages...’ (joined through the command and played by the clock: the second fall’s casting reads its three shows at weights 2, 4 and 4, once, through a reload; the stipend’s Friday on the year’s wages, FICA withheld), ‘PLAYER JOURNEY: a twin who never joined comes to the second fall’s casting with the Carlotta alone...’, ‘casts its parts within the company by castFit...’ (the two extremes only), ‘on the Casting tab, a student in concern is told why in words and offered nothing...’ (Join The Summer Company pressed); tests/decisions-2026-10-14.test.ts companyPart ‘PLAYER JOURNEY: an actress the Summer Cabaret reads second in Riders To The Sea takes Maurya, and the company’s unnamed part in the two plays whose only woman is a lead, read below their four leads, through the summer to her credits’ (it failed before the fix: she was given Natalya Stepanovna and Yelena Popova); tests/school.test.ts ‘forms in the spring of the first and second years, for a student in good standing, by the end of April’, ‘lets a student go who misses a performance, and stops the stipend after the days of the week worked’; tests/defects-g8-1.test.ts ‘excuses the performance: not played, and the company keeps the student’; tests/coverage-gaps-runs.test.ts ‘reads a Summer show at casting, and the faculty’s evaluation doesn’t’ (a summer built by hand). Until 2026-10-13 this said no test played a summer through the command and checked the next casting reading it.",
       "status": "verified",
       "issue": "Until 2026-10-13 this said a show’s nights and delivery were read by neither standing nor casting. The next casting reads them at half a School production’s weight (readRuns, school.ts:2363), played in tests/evidence-g20-school.test.ts; standing doesn’t, the summer being outside the term the faculty evaluate. Open, the owner’s call: outside the company’s top four, companyPart (school.ts:2183) gives the play’s one part for her title where it writes no supporting one, a lead (Natalya Stepanovna, Mrs Hale). Until 2026-10-13 an orphaned comment above it said a supporting part.",
       "previous": "partial",
@@ -3606,7 +3606,7 @@
           },
           {
             "file": "evidence-g20-school.test.ts",
-            "title": "PLAYER JOURNEY: one take of brief-drama, with no study, gives drama practice 10 (a tenth of what’s left, of 100), and the first read of a scene from Trifles moves 1 + 10/600 of an untaped twin’s",
+            "title": "PLAYER JOURNEY: one take of brief-drama, with no study, gives drama practice 10 (a tenth of what’s left, of 100), worth 1 + 5/600 in Trifles, half of it drama, and the first read of a scene from it moves by the better of that and the take’s material met, 1 + (1/12)/6 of an untaped twin’s",
             "kind": "command",
             "closes": "genreSpeed from a take alone, isolated and read by a class scene's step, to 9 places"
           }
@@ -3873,7 +3873,7 @@
       "downstream": "genreSpeed (engagement.ts:101): a scene for class from a play of the kind (coursework.ts:592) and a part’s lines (production.ts:527, and :602 for a lines note worked); a take of a brief’s knowing the genre (genreKnown, briefs.ts:287, from 2026-10-12). A play’s kinds are found by its title without its case, and The Proposal as A Marriage Proposal (genresOfPlay, plays.ts:201, from 2026-10-13: until then four scenes’ plays found none, and no study sped them).",
       "persistent": "engagement.byGenre",
       "explanation": "ProfileWorkspace.tsx; looks/actor.tsx",
-      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles moves 1 + 11.68/600…’, ‘PLAYER JOURNEY: a scene for class from Riders to the Sea, which the game knows as a tragedy, is sped by studies of tragedy…’, ‘finds the kinds of every scene’s play the lists know, whatever the case of its small words, and The Proposal’s as A Marriage Proposal’s’, ‘PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part…’; tests/evidence-g23-school.test.ts ‘PLAYER JOURNEY: a genre studied makes a note on the lines, worked, move them further, by the same sixth’; tests/guide-examples-craft.test.ts ‘Genres: a study, a second the same day, and once a day until the brief counts the genre known’; tests/engagement.test.ts ‘lives an action sent twice once, and refuses an hour that would run into a commitment’; tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (pressed on the rendered Profile)",
+      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600…’, ‘PLAYER JOURNEY: a scene for class from Riders to the Sea, which the game knows as a tragedy, is sped by studies of tragedy…’, ‘finds the kinds of every scene’s play the lists know, whatever the case of its small words, and The Proposal’s as A Marriage Proposal’s’, ‘PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part…’; tests/evidence-g23-school.test.ts ‘PLAYER JOURNEY: three studies of tragedy add nothing to a note on Blood Wedding’s lines, worked, once its calls have taught more of it than they do’; tests/guide-examples-craft.test.ts ‘Genres: a study, a second the same day, and once a day until the brief counts the genre known’; tests/engagement.test.ts ‘lives an action sent twice once, and refuses an hour that would run into a commitment’; tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (pressed on the rendered Profile)",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -3953,7 +3953,7 @@
         "tests": [
           {
             "file": "evidence-g20-school.test.ts",
-            "title": "PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles moves 1 + 11.68/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left",
+            "title": "PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left",
             "kind": "command",
             "closes": "genreSpeed's first consumer (coursework.ts:592) shown faster after a study through the command, to 9 places; the day's half-again count kept across a reload (13.45)"
           },
@@ -3965,7 +3965,7 @@
           },
           {
             "file": "evidence-g20-school.test.ts",
-            "title": "PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 11.68/600 of a twin’s who didn’t study",
+            "title": "PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 5.84/600 of a twin’s who didn’t study: a farce, which comedy known meets at half",
             "kind": "command",
             "closes": "genreSpeed's second consumer (production.ts:526, school.learn_part) shown faster after studies through the command, to 9 places"
           }
@@ -7245,7 +7245,7 @@
       "downstream": "genreSpeed (engagement.ts:101): school.prepare (coursework.ts:592), Learn The Part and a lines note worked (production.ts:527, :602); a take’s genre part of preparation (genreKnown, briefs.ts:287); the Profile’s Range (artistry.ts:173)",
       "persistent": "engagement",
       "explanation": "ProfileWorkspace.tsx",
-      "tests": "tests/evidence-g23-school.test.ts ‘PLAYER JOURNEY: a genre studied three times makes Read The Scene of a scene from a play of that kind move further…’, ‘PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further…’, ‘PLAYER JOURNEY: a genre studied makes a note on the lines, worked, move them further…’, ‘PLAYER JOURNEY: a night of a play practises each of its kinds…’; tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68…’, ‘PLAYER JOURNEY: one take of brief-drama, with no study, gives drama practice 10…’; tests/engagement.test.ts ‘is studied and taped by a command…’, ‘shares one session’s practice among a work’s genres…’; tests/defects-g29-1.test.ts ‘reads the better of familiarity and practice, and the brief’s own techniques’ (the take). Until 2026-10-13 this cited engagement.test.ts alone, and no test showed a studied genre moving a scene’s step or a part’s lines, or a night practising its kinds",
+      "tests": "tests/evidence-g23-school.test.ts ‘PLAYER JOURNEY: a genre studied three times makes Read The Scene of a scene from a play of that kind move further…’, ‘PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further…’, ‘PLAYER JOURNEY: three studies of tragedy add nothing to a note on Blood Wedding’s lines, worked…’, ‘PLAYER JOURNEY: each call and each night of a play practises each of its kinds…’; tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68…’, ‘PLAYER JOURNEY: one take of brief-drama, with no study, gives drama practice 10…’; tests/engagement.test.ts ‘is studied and taped by a command…’, ‘shares one session’s practice among a work’s genres…’; tests/defects-g29-1.test.ts ‘reads the better of familiarity and practice, and the brief’s own techniques’ (the take). Until 2026-10-13 this cited engagement.test.ts alone, and no test showed a studied genre moving a scene’s step or a part’s lines, or a night practising its kinds",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7316,19 +7316,19 @@
           },
           {
             "file": "evidence-g23-school.test.ts",
-            "title": "PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth",
+            "title": "PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth, of its half of Blood Wedding",
             "kind": "command",
             "closes": "Gap 1, production.ts school.learn_part on the second year's thesis (Blood Wedding: tragedy, romantic drama)"
           },
           {
             "file": "evidence-g23-school.test.ts",
-            "title": "PLAYER JOURNEY: a genre studied makes a note on the lines, worked, move them further, by the same sixth",
+            "title": "PLAYER JOURNEY: three studies of tragedy add nothing to a note on Blood Wedding’s lines, worked, once its calls have taught more of it than they do",
             "kind": "command",
             "closes": "Gap 1, the lines note (school.work_note on a director's lines note)"
           },
           {
             "file": "evidence-g23-school.test.ts",
-            "title": "PLAYER JOURNEY: a night of a play practises each of its kinds, one night’s worth shared between them, half again of what’s left the next",
+            "title": "PLAYER JOURNEY: each call and each night of a play practises each of its kinds, a session’s worth shared between them, 5% of what’s left each",
             "kind": "command",
             "closes": "Gap 2, practice from a night: 5 and 5 after the first night, 9.75 and 9.75 after the second"
           }
@@ -7938,7 +7938,7 @@
         "tests": [
           {
             "file": "evidence-g24-school.test.ts",
-            "title": "casting (castFit/castScore) > reads a Carlotta closing night slept through as delivered at nothing, the run at its nights’ mean, and casts the twin a featured part where the one who played it keeps a lead",
+            "title": "casting (castFit/castScore) > reads a Carlotta closing night slept through as delivered at nothing, the run at its nights’ mean, and casts the twin a smaller part where the one who played it keeps a lead",
             "kind": "command",
             "closes": "a run played by the clock read at the next casting: the closing night slept through adds nothing to the delivered sum and one to the nights (run record 4 nights, 1 missed, delivered = the first three nights'), lastWork.delivery = round((Seagull + Carlotta delivered)/5, 3) (0.967 vs 0.775), each run read once; castRead's You row = fit×(0.8+0.2×delivery)−2 to a tenth; the read 2+ points lower; Samuel Park (same read in both) above the player in the twin, and the part lead vs featured in Major Barbara"
           },

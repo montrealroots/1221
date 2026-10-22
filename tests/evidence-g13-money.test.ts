@@ -185,9 +185,11 @@ describe('finance.pay_card', () => {
     const again = reload(paid);
     for (const sim of [again, unpaid]) {
       expect(sim.player.credit!.score).toBe(795);
-      sim.advanceTo(edt(2026, 10, 11, 11, 59));
+      sim.advanceTo(edt(2026, 10, 13, 11, 59));
       emptyTheBank(sim); // TEST SETUP: only what was paid by hand stands between the card and a late fee
-      sim.advanceTo(edt(2026, 10, 11, 13)); // the due date, 21 days after the statement, at noon
+      // The due date, a day each month keeping Chase's 21 days after a statement on the 20th: the 13th at noon (the 11th,
+      // 21 days on, until brief 21, 2026-10-22).
+      sim.advanceTo(edt(2026, 10, 13, 13));
     }
     // Paid by hand: nothing asked, nothing bounced, nothing late, and the month paid as agreed, +3.
     expect(stateOf(again.player, card(again)).paidSinceStatement).toBe(40_00);
@@ -203,7 +205,7 @@ describe('finance.pay_card', () => {
     expect(notes(unpaid, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited’s autopay of $40.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.']);
     expect(txns(unpaid, 'Late fee').map((t) => on(t, card(unpaid)))).toEqual([-30_00]);
     expect(txns(unpaid, 'Returned payment fee')).toEqual([]);
-    expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.']);
+    expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.']);
     expect(stateOf(unpaid.player, card(unpaid)).missed).toBe(1);
     expect(unpaid.player.credit!.score).toBe(795);
   });
@@ -220,16 +222,17 @@ describe('finance.pay_card', () => {
     }
     const since = full.now;
     expect(run<{ paid: number }>(full, 'finance.pay_card', { amount: 'full' })).toEqual({ paid: 2_000_00 });
-    for (const sim of [full, minimum]) sim.advanceTo(est(2026, 12, 11, 13)); // the due date
+    for (const sim of [full, minimum]) sim.advanceTo(est(2026, 12, 13, 13)); // the due date (the 11th until brief 21, 2026-10-22)
     expect(stateOf(full.player, card(full)).carrying).toBe(false);
     expect(stateOf(minimum.player, card(minimum)).carrying).toBe(true);
     for (const sim of [full, minimum]) sim.advanceTo(est(2026, 12, 20, 10)); // the next statement
     expect(txns(full, 'Interest', since).filter((t) => on(t, card(full)) !== 0)).toEqual([]);
     expect(card(full).balance).toBe(0);
-    // $2,000 from the midnight of 21 October to that of 11 December, 52 days, and $1,960 for the 9 after autopay's $40,
-    // each day's interest at 18.46%/365 on what's owed with the interest before it: $62.465, charged on the statement.
+    // $2,000 from the midnight of 21 October to that of 13 December, 54 days, and $1,960 for the 7 after autopay's $40,
+    // each day's interest at 18.46%/365 on what's owed with the interest before it: $62.506, charged on the statement.
+    // Until brief 21 (2026-10-22) the due date was 11 December: 52 days and 9, $62.465, $62.47.
     const charged = txns(minimum, 'Interest', since).map((t) => -on(t, card(minimum)));
-    expect(charged).toEqual([6_247]);
+    expect(charged).toEqual([6_251]);
   });
 
   it('is refused in its own words: nothing owed, nothing to pay, nothing in the bank, no card; and a refusal moves nothing', () => {
@@ -282,9 +285,10 @@ describe('finance.pay_card', () => {
     expect(stateOf(most.player, card(most)).cashOwed).toBe(0);
     expect(stateOf(least.player, card(least)).cashOwed).toBe(204_26);
     for (const sim of [most, least]) sim.advanceTo(edt(2026, 10, 20, 10));
-    // Autopay took the rest of each statement on 11 October; until then the cash left drew: $204.26 for 21 midnights, $3.37.
+    // Autopay took the rest of each statement on 13 October; until then the cash left drew: $204.26 for 23 midnights,
+    // $3.70 (on 11 October, 21 midnights and $3.37, until brief 21, 2026-10-22, when the due date became Chase's 13th).
     expect(txns(most, 'Cash advance interest', edt(2026, 9, 21, 0))).toEqual([]);
-    expect(txns(least, 'Cash advance interest', edt(2026, 9, 21, 0)).map((t) => -on(t, card(least)))).toEqual([3_37]);
+    expect(txns(least, 'Cash advance interest', edt(2026, 9, 21, 0)).map((t) => -on(t, card(least)))).toEqual([3_70]);
   });
 
   it('paid from Capital One, made primary, the credit it frees is held for Chase’s 15 days, across a save and a load, and Left To Spend says so; then given back', () => {
@@ -582,11 +586,13 @@ describe('credit score', () => {
     const cutsOf = (sim: Simulation) => stateOf(sim.player, card(sim)).cuts!;
     expect(cutsOf(mover)).toEqual([edt(2026, 9, 4, 9), edt(2026, 10, 16, 9), est(2026, 12, 2, 9)]);
     expect(cutsOf(still)).toEqual([edt(2026, 9, 20, 9), edt(2026, 10, 20, 9), est(2026, 11, 20, 9), est(2026, 12, 20, 9)]);
-    // Interest: none in the 0% months; on 2 December, $460 for the 17 midnights to 6 November and $420 for the 26
-    // after it, a day at a time at 18.46%: $9.58.
-    expect(txns(mover, 'Interest').map((t) => [t.at, -on(t, card(mover))])).toEqual([[est(2026, 12, 2, 9), 958]]);
-    // The twin: $460 for 21 midnights and $420 for 10, $7.06 on 20 November; $427.06 for 21 and $387.06 for 9, $6.34.
-    expect(txns(still, 'Interest').map((t) => [t.at, -on(t, card(still))])).toEqual([[est(2026, 11, 20, 9), 7_06], [est(2026, 12, 20, 9), 6_34]]);
+    // Interest: none in the 0% months; on 2 December, $460 for the 20 midnights to 9 November, the due date that keeps
+    // Chase's 21 days after the 16th, and $420 for the 23 after it, a day at a time at 18.46%: $9.64.
+    expect(txns(mover, 'Interest').map((t) => [t.at, -on(t, card(mover))])).toEqual([[est(2026, 12, 2, 9), 964]]);
+    // The twin, due the 13th: $460 for 24 midnights and $420 for 7, $7.13 on 20 November; $427.13 for 23 and $387.13 for
+    // 7, $6.39. Until brief 21 (2026-10-22) a due date was 21 days on, 6 November for the mover and the 10th and 11th for
+    // the twin: $9.58, $7.06 and $6.34.
+    expect(txns(still, 'Interest').map((t) => [t.at, -on(t, card(still))])).toEqual([[est(2026, 11, 20, 9), 7_13], [est(2026, 12, 20, 9), 6_39]]);
     // Three due dates passed for each, each paid as agreed: 795 and three times 3.
     expect(mover.player.credit!.score).toBe(804);
     expect(still.player.credit!.score).toBe(804);
@@ -629,7 +635,7 @@ describe('credit score', () => {
     run(light, 'finance.set_autopay', { mode: 'minimum' });
     purchases(heavy, card(heavy), 52_173_60); // TEST SETUP: 80% of the $65,217 limit
     purchases(light, card(light), 13_043_40); // TEST SETUP: 20% of it
-    for (const sim of [heavy, light]) sim.advanceTo(edt(2026, 10, 11, 13)); // past the first due date
+    for (const sim of [heavy, light]) sim.advanceTo(edt(2026, 10, 13, 13)); // past the first due date (the 11th until brief 21, 2026-10-22)
     // Autopay's minimum, 1%, leaves $51,651.86 owed, 79.2% of the limit: 49.2 points over 30%, a point a 5%, 10 off the
     // month's 3. The light twin's $12,912.97 is 19.8%, under 30%: the month's 3 whole.
     expect(card(heavy).balance).toBe(-51_651_86);
@@ -695,13 +701,14 @@ describe('statements', () => {
     // The transition charge, under the statement of 5 January and no other.
     const shown = periodsOf(sim, card(sim)).map((_, i) => words(statementsScreen(sim, id, i)));
     expect(shown.map((one) => one.includes('TEST SETUP: in the transition'))).toEqual(shown.map((_, i) => i === 1));
-    // The statement of 20 November: $2,000 spent, Chase's $40 minimum due 21 days on, and Reg Z's warning, worked by hand
+    // The statement of 20 November: $2,000 spent, Chase's $40 minimum due the 13th (21 days on, the 11th, until brief 21,
+    // 2026-10-22), and Reg Z's warning, worked by hand
     // at 18.46% with 1% plus the month's interest never under $40: 85 months and $3,507.30; $72.77 a month for three years.
     const november = shown[2]!;
     expect(november).toContain('Brought Forward $0.00');
     expect(november).toContain('Spending $2,000.00');
     expect(november).toContain('New Balance $2,000.00');
-    expect(november).toContain('The minimum payment is $40.00, due December 11, 2026. Pay the whole $2,000.00, and none of it is charged interest.');
+    expect(november).toContain('The minimum payment is $40.00, due December 13, 2026. Pay the whole $2,000.00, and none of it is charged interest.');
     expect(november).toContain('Paying only the minimum, and spending nothing more, takes 7 years and a month and $3,507.30 in all. $72.77 a month pays it off in three years, $2,619.72 in all.');
     expect(november).toContain('TEST SETUP: purchases');
     expect(november).toContain('Charged / Paid Owed After');

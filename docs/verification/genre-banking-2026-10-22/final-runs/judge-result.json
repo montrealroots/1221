@@ -1,0 +1,129 @@
+{
+ "rows": [
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 21: the judge",
+   "status": "Implemented, Verification Incomplete",
+   "exercised": "The same commands and seeds on brief 21's tested commit, fd32e869 (measure.sh genres-a, genres-b, stage, ag): signature.json, signature-fresh.json, signature-validate.json, genre-identity.json, ag-baseline.json the same as brief 19's in every number; moved: genre-audit.md. The audit's leaks moved: knowing a genre now moves its own kind's or its broad genre's brief, which the Genre Audit row puts to the owner (Decision Required, judge-moved.json); this item's 'moves another genre's in 0' waits on it",
+   "measured": {
+    "commit": "fd32e869",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/signature.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/signature-fresh.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/signature-validate.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/genre-identity.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/ag-baseline.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/genre-audit.md",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ],
+   "missing": "The same commands and seeds on brief 21's tested commit, fd32e869 (measure.sh genres-a, genres-b, stage, ag): signature.json, signature-fresh.json, signature-validate.json, genre-identity.json, ag-baseline.json the same as brief 19's in every number; moved: genre-audit.md. The audit's leaks moved: knowing a genre now moves its own kind's or its broad genre's brief, which the Genre Audit row puts to the owner (Decision Required, judge-moved.json); this item's 'moves another genre's in 0' waits on it"
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 21: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "measure.sh journeys-a, journeys-b and l3r on brief 21's tested commit, fd32e869, seeds bj-0 and bj-1, all four profiles: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) met, growth 1.253 at least; L3-R met: True; l3r.json moved from brief 19's (taped briefs' practice shared by weight), the verdict read from it here",
+   "measured": {
+    "commit": "fd32e869",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/l3r.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ]
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 21: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "Every part of measure.sh but the two mutation runs on brief 21's tested commit, fd32e869 (23 parts, every one exit 0): 29 of 35 outputs brief 19's in every number; moved, by a taped brief's practice shared by weight (a journey's takes, their traces): journey-developing-bj-0.json, journey-specialist-bj-1.json, l3-trace-developing-bj-0.json, l3-trace-generalist-bj-0.json, l3-trace-specialist-bj-1.json, l3r.json, and L3-R's verdict as brief 19's (True). So every criterion that held holds and those that failed fail as before.",
+   "measured": {
+    "commit": "fd32e869",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/figures.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/exits.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ]
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 21: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "tools/ag-baseline.ts and tools/ag-criteria.mjs on brief 21's tested commit, fd32e869 (measure.sh ag): F2 as written FAILS named 2.43 against 1.14 (2.13×); unread 0; the largest gain in 308 of 447 (68.9%) [2×; 0; 80%]; the line and ag-baseline.json brief 19's, reported beside F2-A10 and not counted for the advice",
+   "measured": {
+    "commit": "fd32e869",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/criteria.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/ag-baseline.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/genre-banking-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ]
+  }
+ ]
+}

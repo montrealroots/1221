@@ -109,9 +109,10 @@ describe('the family, and the means it starts with', () => {
     expect(postings(lives.modest).length).toBeGreaterThan(0);
   });
 
-  it('PLAYER JOURNEY: a Scraping family’s card carries $913 into the life and the autopay clears it on 11 October; a Modest one’s $457 likewise, and the Nothing family has no card to pay', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: a Scraping family’s card carries $913 into the life and the autopay clears it on 11 October; a Modest one’s $457 likewise, and the Nothing family has no card to pay”; Chase's due day became the 13th.
+  it('PLAYER JOURNEY: a Scraping family’s card carries $913 into the life and the autopay clears it on 13 October; a Modest one’s $457 likewise, and the Nothing family has no card to pay', () => {
     const lives = families();
-    for (const w of ['scraping', 'modest', 'nothing'] as const) lives[w].advanceTo(EDT(2026, 10, 12, 12));
+    for (const w of ['scraping', 'modest', 'nothing'] as const) lives[w].advanceTo(EDT(2026, 10, 14, 12));
     const paid = (sim: Simulation) => sim.universe.transactions.filter((t) => t.memo.startsWith('Paid ') && t.postings.some((p) => mine(sim, 'credit_card').some((c) => c.id === p.accountId)))
       .map((t) => t.postings.find((p) => mine(sim, 'credit_card').some((c) => c.id === p.accountId))!.amount);
     expect(paid(lives.scraping)).toEqual([913_00]);

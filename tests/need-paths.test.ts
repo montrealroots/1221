@@ -22,22 +22,23 @@
  *   term's scholarship on the rebate schedule, $7,600.25 (the Bulletin's schedule, as tests/evidence-g25-school.test.ts
  *   reaches the same day);
  * - Connecticut's marketplace line is 175% of 2025's poverty line, $15,650, a twelfth of it a month, $2,282.29; and a
- *   Capital One 360 Performance Savings account earns 3.00% a year, a 365th a day on the day's balance, paid at the
- *   month's end: $2,608,696 for August's last seven days is $1,500.89, and that much more for September's thirty
- *   $6,436.10.
+ *   Capital One 360 Performance Savings account earns 3.00% APY, credited monthly, which is the nominal
+ *   12 × (1.03^(1/12) − 1) = 2.9595% a year, a 365th a day on the day's balance, paid at the month's end: $2,608,696
+ *   for August's last seven days is 2,608,696 × 0.029595 × 7 ÷ 365 = $1,480.64, and that much more for September's
+ *   thirty $6,349.21 (until brief 21, 2026-10-22, the 3.00% ran as the nominal rate: $1,500.89 and $6,436.10).
  *
  * The marketplace, and whether a life with need reaches it. Every played income a life with need has is under the
  * line: work-study is the only pay a student has in a term, at most 19 hours a week across Yale's jobs in the class
  * period (a six-hour Saturday and three four-hour evenings, eighteen, $414), paid each Friday, and electives are offered
  * only in the class period, so a month of five Fridays pays at most $2,070; the Summer Cabaret's $375 a week, five
  * Fridays at most in a month, $1,875; and savings interest, which for the richest family with need (Comfortable, all
- * of it moved to Capital One's 3.00%, with the first term's $13,318.50 beside it, about $78,500) is about $196 a month
- * in the first fall. $2,070 and $196 is $2,266, under 2026's $2,282.29, and from 2027 the line is $2,327.50 (2026's
+ * of it moved to Capital One's 3.00% APY, with the first term's $13,318.50 beside it, about $78,500) is about $194 a
+ * month in the first fall ($196 until brief 21). $2,070 and $194 is $2,264, under 2026's $2,282.29, and from 2027 the line is $2,327.50 (2026's
  * $15,960). A third year's October, with five Fridays, every free evening worked and every scholarship saved at 3.00%,
  * might pass it by some fifty dollars; that wasn't played, and isn't claimed here. What does pass it is a family whose
- * means rule need out: Inherited, its savings at Capital One, earns $6,436.10 of interest in September, and the
+ * means rule need out: Inherited, its savings at Capital One, earns $6,349.21 of interest in September, and the
  * marketplace is what Papers' Enroll gives on 1 October, where a Comfortable family's student at the same bank, with
- * $112.63, is given HUSKY D. That life's claim is denied (TEST SETUP: the draws forced) and appealed, and the appeal
+ * $111.11 ($6,436.10 and $112.63 until brief 21), is given HUSKY D. That life's claim is denied (TEST SETUP: the draws forced) and appealed, and the appeal
  * overturned gives back what was paid over the plan's share.
  *
  * And the units (the owner's rule of 2026-10-14, `bodyUnits`): a body is said in the units of where the person lives,
@@ -495,17 +496,18 @@ function withdrawnAtCapitalOne(seed: string, family: StartingWealth): Simulation
 }
 
 describe('the marketplace, offered on income the clock paid (health.enroll, health.appeal_decided)', () => {
-  it('PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10 in September, over Connecticut’s line, and Enroll on Papers gives the marketplace; a Comfortable family’s student at the same bank, with $112.63, is given HUSKY D', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10 in September, over Connecticut’s line, and Enroll on Papers gives the marketplace; a Comfortable family’s student at the same bank, with $112.63, is given HUSKY D”, the 3.00% APY run as the nominal rate.
+  it('PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,349.21 in September, over Connecticut’s line, and Enroll on Papers gives the marketplace; a Comfortable family’s student at the same bank, with $111.11, is given HUSKY D', () => {
     const sim = withdrawnAtCapitalOne('need-m1', 'inherited');
     const interest = memos(sim, /^Interest: 360 Performance Savings$/);
-    expect(interest.map((t) => [t.at, into(t, mine(sim, 'savings')[0]!.id)])).toEqual([[at(2026, 8, 31, 23), 1_500_89], [at(2026, 9, 30, 23), 6_436_10]]);
-    expect(earningsOf(sim.player).months['2026-09']).toBe(6_436_10);
+    expect(interest.map((t) => [t.at, into(t, mine(sim, 'savings')[0]!.id)])).toEqual([[at(2026, 8, 31, 23), 1_480_64], [at(2026, 9, 30, 23), 6_349_21]]);
+    expect(earningsOf(sim.player).months['2026-09']).toBe(6_349_21);
     drawn(sim, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
     expect(press('health.enroll')).toEqual(['Enrolled in the marketplace, from November 1, 2026.']);
     sim.advanceTo(at(2026, 11, 1, 8));
     expect(coverOn(sim.player, sim.now)).toBe('marketplace');
     const twin = withdrawnAtCapitalOne('need-m2', 'comfortable');
-    expect(earningsOf(twin.player).months['2026-09']).toBe(112_63);
+    expect(earningsOf(twin.player).months['2026-09']).toBe(111_11);
     drawn(twin, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
     // From the first of the month she enrolls in, 1 October (Connecticut's UPM § 1560.10(B)), from 2026-10-16 (brief 09's
     // journeys): until then from 1 November, the marketplace's rule. August and September had no care with nothing
@@ -637,17 +639,19 @@ describe('health.enroll: a program’s renewal, reached by the clock', () => {
  *
  * Played by a life without need, the Inherited family's, since only interest moves a withdrawn life's income and only
  * its savings earn enough of it: the student moves money between 360 Checking, which pays nothing, and 360 Performance
- * Savings at 3.00%, a 365th a day on each day's closing balance, paid at the month's end at 11 at night. Set at half past
- * eleven on a month's last day, a balance earns the next month on itself alone (the cent's fraction carried is under a
- * cent, and these balances earn whole cents):
- * - $832,200 for September 2026's 30 days: 832,200 × 0.03 × 30 ÷ 365 = $2,052.00, over HUSKY D's 138% of 2026's
+ * Savings at 3.00% APY, credited monthly, which is the nominal 12 × (1.03^(1/12) − 1) = 2.9595% a year, a 365th a day on each day's closing
+ * balance, paid at the month's end at 11 at night. Set at half past eleven on a month's last day, a balance earns the
+ * next month on itself alone, each set a fifth of a cent or less over its figure, and the cent's fraction carried from
+ * the month before, added to it, leaves it whole in each month below (until brief 21, 2026-10-22, the 3.00% ran as the nominal rate, and $832,200, $365,000
+ * and $803,000 earned these figures at 0.03):
+ * - $843,582 for September 2026's 30 days: 843,582 × 0.029595 × 30 ÷ 365 = $2,052.00, over HUSKY D's 138% of 2026's
  *   $15,960 a month (1,835.40) and within Covered Connecticut's 175% of 2025's $15,650 (2,282.29): Covered Connecticut;
- * - $365,000 for September 2026: 365,000 × 0.03 × 30 ÷ 365 = $900.00, under 1,835.40: HUSKY D;
+ * - $369,992 for September 2026: 369,992 × 0.029595 × 30 ÷ 365 = $900.00, under 1,835.40: HUSKY D;
  * - from 1 November 2026, either is renewed on 1 November 2027 (enrolled in 2026: twelve months), on October's income
  *   against 2027's lines, which read 2026's $15,960 for HUSKY D (1,835.40) and for Covered Connecticut (175% of it ÷
  *   12, 2,327.50);
- * - $365,000 for October 2027's 31 days: 365,000 × 0.03 × 31 ÷ 365 = $930.00, under 1,835.40: HUSKY D's;
- * - $803,000 for October 2027: 803,000 × 0.03 × 31 ÷ 365 = $2,046.00, over 1,835.40 and within 2,327.50: Covered
+ * - $369,992 for October 2027's 31 days: 369,992 × 0.029595 × 31 ÷ 365 = $930.00, under 1,835.40: HUSKY D's;
+ * - $813,983 for October 2027: 813,983 × 0.029595 × 31 ÷ 365 = $2,046.00, over 1,835.40 and within 2,327.50: Covered
  *   Connecticut's;
  * - renewed in 2027, from 1 November, a Connecticut program renews in six months: 1 May 2028.
  *
@@ -691,19 +695,20 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
   // Its title kept whole inside the new one, for what cites it. Until 2026-10-16 the twin with no work was ended at the
   // renewal: her $930.00 of interest didn't count toward the work rules. Since then a month's income of any kind counts
   // toward the $580 (42 CFR 435.552(f)(2)), so $930.00 meets them and she's renewed into HUSKY D too. The work test's
-  // refusal is played on a third twin who moves her savings down on 30 April 2027 to $182,500, so May to October each
-  // earn about 182,500 × 0.03 × 31 ÷ 365 = $465.00 (or × 30 ÷ 365 = $450.00), under $580: a notice of noncompliance, her
+  // refusal is played on a third twin who moves her savings down on 30 April 2027 to $184,996 ($182,500 at 0.03 until
+  // brief 21, 2026-10-22), so May to October each earn about 184,996 × 0.029595 × 31 ÷ 365 = $465.00 (or × 30 ÷ 365 =
+  // $450.00), under $580: a notice of noncompliance, her
   // Covered Connecticut kept while she answers, and ended with December, said on 6 December.
   it('PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with $600 of October’s wages posted by hand she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over', () => {
     const twin = (work: boolean | 'low') => {
-      const sim = enrolled(work === true ? 'need-r2' : work === false ? 'need-r3' : 'need-r5', 832_200_00, 'Enrolled in Covered Connecticut, from November 1, 2026.');
+      const sim = enrolled(work === true ? 'need-r2' : work === false ? 'need-r3' : 'need-r5', 843_582_00, 'Enrolled in Covered Connecticut, from November 1, 2026.');
       expect(interest(sim, 2026, 9)).toEqual([2_052_00]);
       expect(earningsOf(sim.player).months['2026-09']).toBe(2_052_00);
       sim.advanceTo(at(2026, 11, 1, 8));
       expect(coverOn(sim.player, sim.now)).toBe('essential');
-      if (work === 'low') { sim.advanceTo(at(2027, 4, 30, 23, 30)); setSavings(sim, 182_500_00); }
+      if (work === 'low') { sim.advanceTo(at(2027, 4, 30, 23, 30)); setSavings(sim, 184_996_00); }
       sim.advanceTo(at(2027, 9, 30, 23, 30));
-      setSavings(sim, work === 'low' ? 182_500_00 : 365_000_00);
+      setSavings(sim, work === 'low' ? 184_996_00 : 369_992_00);
       const back = thaw(freeze(sim));
       if (work === true) wagesPosted(back, at(2027, 10, 22, 17), 600_00, 80); // TEST SETUP: October's work, which no withdrawn life has
       back.advanceTo(at(2027, 11, 1, 0, 10));
@@ -739,8 +744,9 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
 
     const low = twin('low');
     // Each of May to October under $580: the interest compounds on itself, so past May it's a little over $465.00 or
-    // $450.00, and while the balance stays under $190,000 under 190,000 × 0.03 × 31 ÷ 365 = $484.11.
-    for (const m of [5, 6, 7, 8, 9, 10]) { const [paid] = interest(low, 2027, m); expect(paid).toBeGreaterThanOrEqual(450_00); expect(paid).toBeLessThan(484_11); expect(earningsOf(low.player).months[`2027-${String(m).padStart(2, '0')}`]).toBe(paid); }
+    // $450.00, and while the balance stays under $190,000 under 190,000 × 0.029595 × 31 ÷ 365 = $477.57 ($484.11 at 0.03
+    // until brief 21, 2026-10-22).
+    for (const m of [5, 6, 7, 8, 9, 10]) { const [paid] = interest(low, 2027, m); expect(paid).toBeGreaterThanOrEqual(450_00); expect(paid).toBeLessThan(477_57); expect(earningsOf(low.player).months[`2027-${String(m).padStart(2, '0')}`]).toBe(paid); }
     expect(coverOn(low.player, low.now)).toBe('essential');
     expect(healthOf(low.player).program).toMatchObject({ kind: 'essential', from: at(2026, 11, 1, 0) });
     expect(healthOf(low.player).program!.until).toBeUndefined();
@@ -754,15 +760,15 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
 
   // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked”): HUSKY D begins on the first
   // of the month of application, 1 October 2026 (Connecticut's UPM § 1560.10(B); no care before it with nothing covering
-  // her), so it renews on 1 October 2027, reading September: her savings set to $803,000 at half past eleven on 31 August
-  // earn 803,000 × 0.03 × 30 ÷ 365 = $1,980.00 in September's thirty days, over HUSKY D's $1,835.40 and within Covered
+  // her), so it renews on 1 October 2027, reading September: her savings set to $813,983 at half past eleven on 31 August
+  // earn 813,983 × 0.029595 × 30 ÷ 365 = $1,980.00 in September's thirty days, over HUSKY D's $1,835.40 and within Covered
   // Connecticut's $2,327.50, renewed six months, to 1 April 2028. Until then her October earned 31 days' $2,046.00.
   it('PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 October 2027 with no gap, and no work is asked', () => {
-    const sim = enrolled('need-r4', 365_000_00, 'Enrolled in HUSKY D, from October 1, 2026.', at(2027, 10, 1, 0));
+    const sim = enrolled('need-r4', 369_992_00, 'Enrolled in HUSKY D, from October 1, 2026.', at(2027, 10, 1, 0));
     expect(interest(sim, 2026, 9)).toEqual([900_00]);
     sim.advanceTo(at(2027, 8, 31, 23, 30));
     expect(coverOn(sim.player, sim.now)).toBe('medicaid');
-    setSavings(sim, 803_000_00);
+    setSavings(sim, 813_983_00);
     const back = thaw(freeze(sim));
     back.advanceTo(at(2027, 10, 1, 0, 10));
     expect(coverOn(back.player, back.now)).toBe('medicaid');

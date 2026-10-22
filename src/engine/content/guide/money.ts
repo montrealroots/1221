@@ -17,7 +17,10 @@
  * plan Chase makes free inside its list of offers: the plan has a paragraph of its own now, with the same figures.
  * The same day, from the money editor's finding: a US card's penalty rate and the end of its introductory rate were
  * said to come with "a payment sixty days late", where the game's own late notice calls that moment thirty days late;
- * both come at the second due date missed in a row (`credit.missed >= 2`, `systems/credit.ts`), and the entries say so.
+ * both came at the second due date missed in a row (`credit.missed >= 2`, `systems/credit.ts`), and the entries said so.
+ * From brief 21 (2026-10-22) they come by days, as Reg Z counts them (`US_LATE`): the notice once a minimum is more
+ * than 60 days late, both 45 days after it; and a US card's charge-off at 180 days past due, where it came at the sixth
+ * due date missed, about 150.
  * A Credit Card's first step names the panel's figures and then its terms, without saying how the terms are drawn.
  */
 
@@ -754,6 +757,7 @@ export const MONEY: readonly GuideEntry[] = [
     later: [
       'On a standing order’s day, the whole amount moves if the account it pays from has it. The order doesn’t go at all if that account is short, either account is dormant or closing, the account it pays from is blocked after a switch because it owes money, or (in a save from before this was ruled out) it pays into a term deposit. What Needs You then says “A Standing Order Didn’t Go” and why, and the order tries again next month.',
       'An order on the 29th, 30th or 31st goes on the last day of a shorter month.',
+      'From a bank in Britain, the EU, Iceland, Norway or Liechtenstein, an order whose day is a weekend or a bank holiday there goes on the next working day, as the payment rules there say, and the next month’s goes on its own day again. Elsewhere it goes on its day.',
       'On a payment’s date it moves if the From account has it, and from savings with its withdrawal fee and within any monthly allowance. It doesn’t go, and “A Scheduled Payment Didn’t Go” says why, when the account is short, either account is closed, dormant or closing, the From account is blocked after a switch because it owes money, or (in an older save) either is a term deposit.',
       'Between two of your banks, a standing order or a payment set for a date leaves on its day and arrives as Move Money’s would, shown under On Its Way until then. Sent from Citi, it has to fit Citi’s daily and monthly limits, and doesn’t go if it doesn’t.',
       'With savings linked, a payment a checking account can’t make takes the rest from easy-access savings at that account’s bank, as far as the savings allows, with any withdrawal fee: your primary account’s bank for the day’s spending, the bank of the account a card’s autopay is set on for that autopay, and a loan’s repayment account’s bank for the loan.',
@@ -945,8 +949,9 @@ export const MONEY: readonly GuideEntry[] = [
       'On its statement day at 9 AM: interest is charged if the last statement wasn’t paid in full, any yearly fee is charged in the month the card opened, and the statement is written. With nothing owed, the month is reported as paid as agreed.',
       'On the due date at noon, autopay takes its amount from the account it’s set on, and from easy-access savings at that bank if savings is linked. If that isn’t enough for all of it, the payment comes back unpaid, and unless you paid the minimum yourself, the payment is late. A returned payment fee is charged, except on a US card, where the late fee covers the same missed payment.',
       'If you pay less than the minimum (on a hardship plan, the plan’s payment), you’re charged the late fee. Outside the US it goes on your credit record at once, and the limit is cut to 70%, but never below what you owe. In the US it goes on your record if it’s still short at the next due date, thirty days late.',
-      'Two due dates missed in a row: the card is suspended until a payment is on time. Five: a default notice. Six: it’s charged off to collections and closed, and 100 points come off your score.',
-      'On a US card with a penalty rate, two payments missed in a row bring 45 days’ notice and then that rate, until six payments in a row are on time. Two missed in a row also end any introductory rate.',
+      'Two due dates missed in a row: the card is suspended until a payment is on time. Outside the US, five bring a default notice, and six, about 150 days late, it’s charged off to collections and closed, and 100 points come off your score.',
+      'On a US card, a minimum payment more than 60 days late, counted from its due date, brings the bank’s notice. 45 days later any penalty rate the card has applies, until six minimum payments in a row are on time, and any introductory rate ends. At 150 days late a default notice comes, and at 180 days the card is charged off to collections and closed, and 100 points come off your score. Paying what’s short before each of those days stops it.',
+      'A US card’s payment is due on the same day every month, at least as many days after the statement as the bank gives: the 13th for Chase, the 17th for Bank of America and Wells Fargo, the 15th for Citi and Capital One, with the statement on the 20th.',
       'After you move the statement day, the next statement comes on the new day, as long as that’s far enough after the last one. You can’t change it again before the next statement.',
       'With Going Over The Limit allowed on a US card, spending can go a little past the limit, with no fee.',
       'A credit balance left on a US card for six months is sent back to your account.',
@@ -995,7 +1000,7 @@ export const MONEY: readonly GuideEntry[] = [
     example: {
       setup: `A student at Chase with a credit score of ${RECORD}, holding the ${CHASE_CARD.name}, applies for the ${WF_CARD.name}.`,
       steps: ['Under Another Card, choose Wells Fargo and press Apply For This Card.', 'A week later it arrives; press Make It The Everyday Card on it.', `Its first statement asks for ${usd(WF_STATEMENT)}, with Autopay on The Whole Statement.`],
-      result: `The score drops ${INQUIRY} points to ${AFTER_APPLYING}, still over the ${APPROVE_FROM} a bank approves at, and the card comes with a $2,500 limit at ${pct(WF_RATE)}, and ${pct(WF_CARD.introApr ?? 0)} on purchases for its first ${WF_CARD.introMonths} months. The statement’s minimum payment is ${usd(WF_MINIMUM)}: ${pct(WF_CARD.minimumShare ?? 0)} of ${usd(WF_STATEMENT)} is ${usd(WF_SHARE)}, with no interest to add in the introductory months, and the card’s floor is ${usd(WF_CARD.minimumFloor ?? 0)}. It’s due ${WF_CARD.graceDays} days later, when autopay pays the whole ${usd(WF_STATEMENT)} and the month goes on your record as paid on time.`,
+      result: `The score drops ${INQUIRY} points to ${AFTER_APPLYING}, still over the ${APPROVE_FROM} a bank approves at, and the card comes with a $2,500 limit at ${pct(WF_RATE)}, and ${pct(WF_CARD.introApr ?? 0)} on purchases for its first ${WF_CARD.introMonths} months. The statement’s minimum payment is ${usd(WF_MINIMUM)}: ${pct(WF_CARD.minimumShare ?? 0)} of ${usd(WF_STATEMENT)} is ${usd(WF_SHARE)}, with no interest to add in the introductory months, and the card’s floor is ${usd(WF_CARD.minimumFloor ?? 0)}. It’s due on the same day each month, at least ${WF_CARD.graceDays} days after its statement, when autopay pays the whole ${usd(WF_STATEMENT)} and the month goes on your record as paid on time.`,
     },
   },
   {
@@ -1031,7 +1036,7 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'Rewards', value: 'Earned on purchases only. Cash advances, transfers, fees and interest earn none' },
     ],
     reads: [
-      { label: 'The Introductory Rate', value: 'Lasts for the card’s number of months from the day it opened. On a US card two payments missed in a row end it, and at Barclaycard one missed minimum payment does' },
+      { label: 'The Introductory Rate', value: 'Lasts for the card’s number of months from the day it opened. On a US card a minimum payment more than 60 days late ends it, 45 days after the bank’s notice, and at Barclaycard one missed minimum payment does' },
       { label: 'Where A Payment Goes', value: 'To the highest-rate balance first and a plan’s balance last. On a US card, the minimum payment goes to the lowest-rate balance first' },
       { label: 'A Plan’s Fee', value: `Set when the plan is made, at the most the bank says it charges, and kept to its last month${PLAN_FREE_AT.length ? `. There’s none on a plan made at ${andList(PLAN_FREE_AT)} while the card’s introductory rate lasts, unless two payments missed in a row have ended it` : ''}` },
       { label: 'Bonus Categories', value: 'Groceries earn a grocery bonus, up to its cap where it has one, on the cards of Bank of America, RBC, TD, Scotiabank, BMO, CIBC and Santander Mexico. Everything else earns the card’s base rate, or the bank’s own rate for it where it sets one' },

@@ -177,11 +177,11 @@
     },
     {
      "what": "a class, a lab or a rehearsal builds by readiness (focusAt)",
-     "at": "src/engine/systems/school.ts:950"
+     "at": "src/engine/systems/school.ts:960"
     },
     {
      "what": "judged work reads readiness as its condition (conditionAt)",
-     "at": "src/engine/systems/school.ts:967"
+     "at": "src/engine/systems/school.ts:977"
     },
     {
      "what": "the meal is paid through spend, the way How You Pay pays the day",
@@ -248,11 +248,11 @@
     },
     {
      "what": "a class finds the student asleep (present)",
-     "at": "src/engine/systems/school.ts:1573"
+     "at": "src/engine/systems/school.ts:1588"
     },
     {
      "what": "a work day finds the actor asleep (there)",
-     "at": "src/engine/systems/projobs.ts:1035"
+     "at": "src/engine/systems/projobs.ts:1040"
     },
     {
      "what": "a plan finds them asleep",
@@ -260,7 +260,7 @@
     },
     {
      "what": "classes build by the readiness the night left (focusAt)",
-     "at": "src/engine/systems/school.ts:3511"
+     "at": "src/engine/systems/school.ts:3593"
     }
    ],
    "experienced": "At once: the clock at the wake, the dials on How You Are, the notice naming what was slept through. Later: the classes and the judged work of the day, read through readiness; the next night’s quality and owing; sleep debt carried.",
@@ -717,7 +717,7 @@
     },
     {
      "what": "a work day takes a School rehearsal call’s energy",
-     "at": "src/engine/systems/projobs.ts:1400"
+     "at": "src/engine/systems/projobs.ts:1416"
     }
    ],
    "experienced": "How You Are and readiness; the refusals; the judged work and the classes through readiness.",
@@ -924,7 +924,7 @@
     },
     {
      "what": "a sick day excused under the line",
-     "at": "src/engine/systems/school.ts:185"
+     "at": "src/engine/systems/school.ts:186"
     },
     {
      "what": "the year’s chance of ending",

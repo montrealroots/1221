@@ -302,15 +302,15 @@
     },
     {
      "what": "the bank’s day",
-     "at": "src/engine/systems/banking.ts:836"
+     "at": "src/engine/systems/banking.ts:878"
     },
     {
      "what": "a card’s interest for the day",
-     "at": "src/engine/systems/credit.ts:1092"
+     "at": "src/engine/systems/credit.ts:1179"
     },
     {
      "what": "no card at all: the score’s slow rise",
-     "at": "src/engine/systems/credit.ts:1087"
+     "at": "src/engine/systems/credit.ts:1167"
     },
     {
      "what": "the day’s alerts",

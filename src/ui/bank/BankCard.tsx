@@ -23,7 +23,7 @@ import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateKey, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { said } from '@/ui/looks/words';
-import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
+import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, stateOf, statementDayOf, statementDayRefusal, US_LATE, usCard, usDueDay, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
@@ -213,13 +213,20 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   if (due && ask) {
     const statement = state.statementBalance;
     const paid = state.paidSinceStatement;
-    const least = ask.due >= statement ? `The whole ${money(statement)} statement is due then` : `The statement is ${money(statement)}, and ${plan ? 'the plan’s payment' : 'the minimum payment'} is ${money(ask.due)}`;
+    // What's past due is in the minimum payment due, and said (from 2026-10-22, brief 21).
+    const least = ask.due >= statement ? `The whole ${money(statement)} statement is due then` : `The statement is ${money(statement)}, and ${plan ? 'the plan’s payment' : 'the minimum payment'} is ${money(ask.due)}${ask.pastDue > 0 ? `, ${money(ask.pastDue)} of it past due` : ''}`;
     const covered = ask.due < statement && paid >= ask.due ? ` You’ve paid ${money(paid)} since the statement, which covers it.` : paid > 0 && paid < ask.due ? ` You’ve paid ${money(paid)} of it since the statement.` : '';
     now.push(`The next payment is due ${formatDate(due.at, sim.zone)}. ${least}.${covered}`);
   }
   // What lifts a suspension, as the due date and the statement lift it (from 2026-10-20, brief 17): until then “It works
   // again once you make a payment on time.”
-  if (state.suspended === 'late') now.push(`Suspended: you’ve missed ${said(state.missed ?? 0, 'payment')} in a row. It works again once you pay at least the minimum by a due date, or pay the card off. Miss six in a row, and what’s owed is charged off to collections.`);
+  // A US card is charged off by its days past due, the day named (from 2026-10-22, brief 21): until then every card said
+  // "Miss six in a row", which a US card's charge-off no longer counts.
+  const oldest = usCard(card) ? state.pastDue?.[0] : undefined;
+  const offWords = oldest
+    ? ` The oldest minimum still short was due ${formatDate(oldest.at, sim.zone)}. Pay it before ${formatDate(oldest.at + US_LATE.chargeOff * 86_400_000, sim.zone)}, ${US_LATE.chargeOff} days after it was due, or what’s owed is charged off to collections.`
+    : usCard(card) ? ` If a minimum payment goes unpaid for ${US_LATE.chargeOff} days after its due date, what’s owed is charged off to collections.` : ' Miss six in a row, and what’s owed is charged off to collections.';
+  if (state.suspended === 'late') now.push(`Suspended: you’ve missed ${said(state.missed ?? 0, 'payment')} in a row. It works again once you pay at least the minimum by a due date, or pay the card off.${offWords}`);
   // Until 2026-10-13 this said the card couldn’t be used until it was cleared. A plan ends, and its suspension with it,
   // only at the first statement or due date after it’s paid off (`systems/credit.ts`), as the guide says. This statement’s
   // payment is the next payment’s line, above: until 2026-10-20 (brief 17) the plan’s line said it again.
@@ -259,10 +266,10 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
     const fee = rule ? `${rule.fixed ? `${money(rule.fixed)} and ` : ''}${pct(rule.share)} of ${rule.of === 'minimum' ? asks : rule.of === 'balance' ? 'the balance' : 'what went unpaid'}${rule.min !== undefined ? `, at least ${money(rule.min)}` : ''}${rule.max !== undefined ? `, at most ${money(rule.max)}` : ''}${rule.notOverMinimum ? `, never more than ${asks}` : ''}` : money(terms.lateFee);
     costs.push(`Paying less than ${short} by the due date costs ${fee}. It also goes on your credit record, and the limit is cut.${bankIso === 'GB' ? ` ${bankName} then takes what was missed from your other accounts with it.` : ''}`);
   }
-  // The penalty rule in the game's own count of payments missed (from 2026-10-20, brief 17): until then “If a payment is
-  // sixty days late”, where the rate comes at the second missed due date, which the late fee’s line calls thirty days late
-  // (`SUSPEND_AFTER` in `systems/credit.ts`).
-  if (terms.penaltyApr && !terms.penaltyInForce) costs.push(canadian ? `Miss two minimum payments in twelve months, and the rate goes up to ${pct(terms.penaltyApr)} at once, for at least twelve payments on time.` : `Miss two payments in a row, and the rate goes up to ${pct(terms.penaltyApr)} after 45 days’ notice.`);
+  // The penalty rule as the game counts it. From 2026-10-20 (brief 17) until 2026-10-22 (brief 21) it said “Miss two
+  // payments in a row”, the second missed due date then bringing it; from brief 21 a US card's minimum more than 60 days
+  // late does (Reg Z §1026.55(b)(4)), 45 days after the bank's notice.
+  if (terms.penaltyApr && !terms.penaltyInForce) costs.push(canadian ? `Miss two minimum payments in twelve months, and the rate goes up to ${pct(terms.penaltyApr)} at once, for at least twelve payments on time.` : `A minimum payment more than 60 days late raises the rate to ${pct(terms.penaltyApr)}, 45 days after the bank’s notice, until six minimum payments in a row are on time.`);
   // A fee the research didn't find isn't a fee of none; until 2026-09-26 the Barclaycard said it had none.
   // In a US card's first year the law holds its fees to a quarter of the limit (Reg Z §1026.52(a)), as the statement charges it.
   const firstYearFee = bankIso === 'US' && sim.now - card.openedAt < 365 * 86_400_000 ? Math.min(terms.annualFee, Math.round(limit * 0.25)) : undefined;
@@ -282,7 +289,14 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   }
   if (!charge) rules.push('Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.');
   // The next due date is the first line now (from 2026-10-20, brief 17); until then it closed this one.
-  rules.push(`Statements come on the ${statementDayOf(person, card)}${ordinal(statementDayOf(person, card))}, and payment is due ${terms.graceDays !== undefined ? `${terms.graceDays} days after each one` : 'on the 15th of the next month'}.`);
+  // A US card's one day each month (`usDueDay`), from 2026-10-22 (brief 21): until then every card said its days after
+  // each statement, which a US card's due date no longer is.
+  const statementDay = statementDayOf(person, card);
+  const usDue = usCard(card) ? usDueDay(statementDay, terms.graceDays) : undefined;
+  const dueWords = usDue
+    ? `on the ${usDue.day}${ordinal(usDue.day)} of ${usDue.next ? 'the next month' : 'the same month'}${terms.graceDays !== undefined ? `, at least ${terms.graceDays} days after each one` : ''}`
+    : terms.graceDays !== undefined ? `${terms.graceDays} days after each one` : 'on the 15th of the next month';
+  rules.push(`Statements come on the ${statementDay}${ordinal(statementDay)}, and payment is due ${dueWords}.`);
   // This statement’s minimum is the next payment’s line, above (from 2026-10-20, brief 17): until then each rule ended
   // “On this statement it’s …”.
   if (!charge) {

@@ -1,0 +1,25 @@
+{
+ "id": "journey-j01-degree-8283f80c",
+ "part": 1,
+ "from": "2029-08-04",
+ "to": "2029-12-01",
+ "secs": 73,
+ "reloads": 5,
+ "done": true,
+ "standing": "graduated",
+ "careerFrom": "2029-08-04T14:15",
+ "notSame": 0,
+ "transitions": [
+  "2029-08-04T14:15 opened: same",
+  "2029-11-29T22:45 the first booking: Ivy in Paper Moons: same"
+ ],
+ "forks": [
+  "2029-08-04T18:15 a union bill due 2029-11-01T13:00: Initiation fee, part 1 of 3, the down payment: same",
+  "2029-08-18T19:45 an audition (in-person) set for 2029-08-20T15:00, Hester Vane in The Winter Ledger: same",
+  "2029-11-15T22:30 an offer standing: An Offer For Ivy: same"
+ ],
+ "workDays": 0,
+ "notices": 513,
+ "bank": 72228.18,
+ "errors": []
+}

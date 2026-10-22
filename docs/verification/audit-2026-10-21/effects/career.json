@@ -20,11 +20,11 @@
     },
     {
      "what": "the week's postings: parts released to agents reach the actor through him",
-     "at": "src/engine/systems/projobs.ts:461"
+     "at": "src/engine/systems/projobs.ts:466"
     },
     {
      "what": "an offer he handles is priced at scale plus ten on SAG-AFTRA work",
-     "at": "src/engine/systems/projobs.ts:1122"
+     "at": "src/engine/systems/projobs.ts:1130"
     },
     {
      "what": "the pay's commission and the trust account read the agreement owed on a contract",
@@ -73,7 +73,7 @@
    "consumers": [
     {
      "what": "each work day judged on the clock",
-     "at": "src/engine/systems/projobs.ts:1414"
+     "at": "src/engine/systems/projobs.ts:1430"
     },
     {
      "what": "each promised payment paid on its payday",
@@ -81,15 +81,15 @@
     },
     {
      "what": "the School counts the actor away at work",
-     "at": "src/engine/systems/projobs.ts:545"
+     "at": "src/engine/systems/projobs.ts:550"
     },
     {
      "what": "another booking on the same days refused",
-     "at": "src/engine/systems/projobs.ts:709"
+     "at": "src/engine/systems/projobs.ts:714"
     },
     {
      "what": "a part booked never posted again",
-     "at": "src/engine/systems/projobs.ts:473"
+     "at": "src/engine/systems/projobs.ts:478"
     }
    ],
    "experienced": "The part moves to Booked Work with its days and the pay promised; each day stops the clock; the pay comes on its Thursdays; the credit is on the record from the first night or the wrap.",
@@ -316,7 +316,7 @@
     },
     {
      "what": "a screen submission sends it",
-     "at": "src/engine/systems/projobs.ts:958"
+     "at": "src/engine/systems/projobs.ts:963"
     }
    ],
    "experienced": "At once the Portfolio lists the reel with its pieces; his office's reading and screen casting take it from then.",
@@ -408,7 +408,7 @@
    "consumers": [
     {
      "what": "a part declined comes round again only as a new casting, saying so (from brief 20)",
-     "at": "src/engine/systems/projobs.ts:422"
+     "at": "src/engine/systems/projobs.ts:427"
     },
     {
      "what": "an offer through him, declined, counts for Equity's 90 days",
@@ -583,7 +583,7 @@
    "consumers": [
     {
      "what": "the audition judged or missed at its new time",
-     "at": "src/engine/systems/projobs.ts:1362"
+     "at": "src/engine/systems/projobs.ts:1378"
     }
    ],
    "experienced": "The audition is on the calendar at the new time and stops the clock there.",
@@ -616,15 +616,15 @@
    "consumers": [
     {
      "what": "the audition judged with the sides' preparation",
-     "at": "src/engine/systems/projobs.ts:1052"
+     "at": "src/engine/systems/projobs.ts:1057"
     },
     {
      "what": "each work day judged with the part's",
-     "at": "src/engine/systems/projobs.ts:1189"
+     "at": "src/engine/systems/projobs.ts:1197"
     },
     {
      "what": "the part starts from half the sides'",
-     "at": "src/engine/systems/projobs.ts:1557"
+     "at": "src/engine/systems/projobs.ts:1575"
     }
    ],
    "experienced": "The card says how far each part stands; the tape, the audition and each day come out higher for it.",
@@ -666,11 +666,11 @@
    "consumers": [
     {
      "what": "the dean decides on the clock",
-     "at": "src/engine/systems/projobs.ts:1472"
+     "at": "src/engine/systems/projobs.ts:1490"
     },
     {
      "what": "approved work's class days are excused",
-     "at": "src/engine/systems/projobs.ts:1483"
+     "at": "src/engine/systems/projobs.ts:1501"
     }
    ],
    "experienced": "The card says the dean decides on its date; a week on a notice says approved or refused, with the conditions.",
@@ -787,7 +787,7 @@
    "consumers": [
     {
      "what": "casting answers with a round",
-     "at": "src/engine/systems/projobs.ts:1356"
+     "at": "src/engine/systems/projobs.ts:1372"
     }
    ],
    "experienced": "The role moves to In Progress; two days on a notice sets the audition or the self-tape.",
@@ -865,7 +865,7 @@
    "consumers": [
     {
      "what": "casting reads the round's band",
-     "at": "src/engine/systems/projobs.ts:1397"
+     "at": "src/engine/systems/projobs.ts:1413"
     }
    ],
    "experienced": "At once the tape's band; casting's word comes as a notice, and Settled says what went into it.",
@@ -1259,11 +1259,11 @@
    "consumers": [
     {
      "what": "casting reads the band",
-     "at": "src/engine/systems/projobs.ts:1397"
+     "at": "src/engine/systems/projobs.ts:1413"
     },
     {
      "what": "the School counts the actor away for its hours",
-     "at": "src/engine/systems/projobs.ts:545"
+     "at": "src/engine/systems/projobs.ts:550"
     }
    ],
    "experienced": "The band shows on the card; casting's word follows as a notice.",
@@ -1299,7 +1299,7 @@
    "consumers": [
     {
      "what": "the offer read by Accept, Decline and What Needs You",
-     "at": "src/engine/systems/projobs.ts:1110"
+     "at": "src/engine/systems/projobs.ts:1118"
     }
    ],
    "experienced": "A notice: a callback, an offer, or not cast; Settled's Why It Went This Way gives the chance.",
@@ -1339,7 +1339,7 @@
    "consumers": [
     {
      "what": "the part comes round again saying the offer lapsed (from brief 20)",
-     "at": "src/engine/systems/projobs.ts:422"
+     "at": "src/engine/systems/projobs.ts:427"
     }
    ],
    "experienced": "A notice that it lapsed; the part, posted again later, says so.",
@@ -1413,11 +1413,11 @@
    "consumers": [
     {
      "what": "the audition in person on the clock",
-     "at": "src/engine/systems/projobs.ts:1362"
+     "at": "src/engine/systems/projobs.ts:1378"
     },
     {
      "what": "the self-tape's deadline on the clock",
-     "at": "src/engine/systems/projobs.ts:1376"
+     "at": "src/engine/systems/projobs.ts:1392"
     }
    ],
    "experienced": "A notice of the audition or the self-tape, with the trip and any clash.",
@@ -1455,7 +1455,7 @@
    "consumers": [
     {
      "what": "the School excuses approved work's class days",
-     "at": "src/engine/systems/projobs.ts:557"
+     "at": "src/engine/systems/projobs.ts:562"
     }
    ],
    "experienced": "A notice from the dean with the conditions that held or failed.",
@@ -1488,7 +1488,7 @@
    "consumers": [
     {
      "what": "the part comes round again saying the tape wasn't in (from brief 20)",
-     "at": "src/engine/systems/projobs.ts:422"
+     "at": "src/engine/systems/projobs.ts:427"
     }
    ],
    "experienced": "A notice that the tape wasn't in; Settled says so.",
@@ -1529,11 +1529,11 @@
     },
     {
      "what": "practice in the project's genres, read by the next fit",
-     "at": "src/engine/systems/projobs.ts:342"
+     "at": "src/engine/systems/projobs.ts:352"
     },
     {
      "what": "the School counts the actor away",
-     "at": "src/engine/systems/projobs.ts:545"
+     "at": "src/engine/systems/projobs.ts:550"
     },
     {
      "what": "the nerves' stress, read by readiness, which the condition of the next piece of work reads (`conditionAt`)",
@@ -1594,11 +1594,11 @@
    "consumers": [
     {
      "what": "Submit Yourself reads the posting",
-     "at": "src/engine/systems/projobs.ts:747"
+     "at": "src/engine/systems/projobs.ts:752"
     },
     {
      "what": "the agent submits where it suits",
-     "at": "src/engine/systems/projobs.ts:973"
+     "at": "src/engine/systems/projobs.ts:978"
     },
     {
      "what": "the card says what came of the last time (from brief 20)",

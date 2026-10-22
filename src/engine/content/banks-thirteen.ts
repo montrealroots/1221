@@ -73,17 +73,17 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'us-chase', name: 'Chase', iso: 'US', currency: 'USD', format: 'us', code: '021000021',
         current: p('Chase Total Checking', 'chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts', { deposits: 'electronic', monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00 } }),
-        savings: p('Chase Savings', 'chase.com: $5 a month, waived with a $300 balance; 0.01% APY', { rate: 0.0001, monthlyFee: 5_00, waiver: { balanceAtLeast: 300_00 } }),
+        savings: p('Chase Savings', 'chase.com: $5 a month, waived with a $300 balance; 0.01% APY, compounded and credited monthly on the daily collected balance (chase.com savings page, read October 22, 2026)', { rate: 0.0001, quoted: 'APY', monthlyFee: 5_00, waiver: { balanceAtLeast: 300_00 } }),
       },
       {
         id: 'us-bank-of-america', name: 'Bank of America', iso: 'US', currency: 'USD', format: 'us', code: '026009593',
         current: p('Advantage Plus Banking', 'NerdWallet review of Bank of America: $12 a month, waived with a $250 direct deposit or a $1,500 daily balance', { deposits: 'electronic', monthlyFee: 12_00, waiver: { depositsAtLeast: 250_00, balanceAtLeast: 1_500_00 } }),
-        savings: p('Advantage Savings', 'NerdWallet review of Bank of America: 0.01%', { rate: 0.0001 }),
+        savings: p('Advantage Savings', 'NerdWallet review of Bank of America: 0.01% APY; a daily periodic rate, compounded and paid monthly (bankofamerica.com savings FAQ and Clarity Statement, read October 22, 2026)', { rate: 0.0001, quoted: 'APY' }),
       },
       {
         id: 'us-wells-fargo', name: 'Wells Fargo', iso: 'US', currency: 'USD', format: 'us', code: '121000248',
         current: p('Everyday Checking', 'wellsfargo.com: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, $5,000 in linked Wells Fargo accounts (the game takes it as an average), or ages 17 to 24; the military direct-deposit waiver applies to no one in the game', { deposits: 'electronic', monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00, ageBelow: 25 } }),
-        savings: p('Way2Save Savings', 'wellsfargo.com: 0.01% APY', { rate: 0.0001 }),
+        savings: p('Way2Save Savings', 'wellsfargo.com: 0.01% APY, compounded daily and paid monthly, on a 365-day year (Way2Save page and consumer disclosures, read October 22, 2026)', { rate: 0.0001, quoted: 'APY', compounds: 'daily' }),
       },
       {
         id: 'us-citi', name: 'Citi', iso: 'US', currency: 'USD', format: 'us', code: '021000089',
@@ -94,7 +94,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'us-capital-one', name: 'Capital One', iso: 'US', currency: 'USD', format: 'us', code: '031176110',
         current: p('360 Checking', 'capitalone.com: no monthly fee'),
-        savings: p('360 Performance Savings', '3.00% APY variable, as a rate aggregator had it on September 24, 2026', { rate: 0.03 }),
+        savings: p('360 Performance Savings', '3.00% APY variable, as a rate aggregator had it on September 24, 2026; compounded and credited monthly, by the daily balance method (capitalone.com disclosure, dated July 15, 2026)', { rate: 0.03, quoted: 'APY' }),
         overdraft: 'Capital One charges no overdraft fees.',
       },
     ],
@@ -144,7 +144,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'mx-banorte', name: 'Banorte', iso: 'MX', currency: 'MXN', format: 'mx', code: '072',
         current: p('Cuenta Enlace Personal', 'banorte.com: a MXN 5,000 minimum average, waived with payroll; the fee itself was not found'),
-        savings: p('Inversión Enlace', 'banorte.com Enlace Personal brochure, July 3, 2026: GAT nominal 0.31% (GAT real −3.50%) before tax', { rate: 0.0031 }),
+        savings: p('Inversión Enlace', 'banorte.com Enlace Personal brochure, July 3, 2026: GAT nominal 0.31% (GAT real −3.50%) before tax; a GAT is a net yearly yield (Banco de México, Circular 35/2010); when it’s credited wasn’t found, so monthly is estimated', { rate: 0.0031, quoted: 'GAT' }),
       },
       {
         id: 'mx-santander', quietMonth: { fee: 11_48, minTransactions: 2, unlessWages: true, source: 'santander.com.mx: MXN 9.90 plus 16% VAT in a month with fewer than two transactions and no payroll' }, name: 'Santander México', iso: 'MX', currency: 'MXN', format: 'mx', code: '014',
@@ -166,32 +166,32 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'gb-barclays', name: 'Barclays', iso: 'GB', currency: 'GBP', format: 'gb', code: '20',
         current: p('Barclays Bank Account', 'barclays.co.uk: no monthly fee'),
-        savings: p('Everyday Saver', 'barclays.co.uk: 1.00% AER from March 11, 2026', { rate: 0.01 }),
+        savings: p('Everyday Saver', 'barclays.co.uk: 1.00% AER from March 11, 2026; paid monthly, as DepositScout lists it', { rate: 0.01, quoted: 'AER' }),
       },
       {
         id: 'gb-lloyds', name: 'Lloyds Bank', iso: 'GB', currency: 'GBP', format: 'gb', code: '30',
         current: p('Classic Account', 'lloydsbank.com: no monthly fee'),
-        savings: p('Easy Saver', 'lloydsbank.com: up to 1.00% AER variable', { rate: 0.01 }),
+        savings: p('Easy Saver', 'lloydsbank.com: up to 1.00% AER variable; interest paid 12 months after the account opens (lloydsbank.com Easy Saver page, read October 22, 2026)', { rate: 0.01, quoted: 'AER', creditsEvery: 12 }),
       },
       {
         id: 'gb-natwest', name: 'NatWest', iso: 'GB', currency: 'GBP', format: 'gb', code: '60',
         current: p('Select Account', 'natwest.com: no monthly fee'),
-        savings: p('Flexible Saver', 'natwest.com: 1.25% AER up to £10,000, 1.00% above (the game pays 1.25% on all of it)', { rate: 0.0125 }),
+        savings: p('Flexible Saver', 'natwest.com: 1.25% AER up to £10,000, 1.00% above (the game pays 1.25% on all of it); when it’s paid wasn’t found, so monthly is estimated', { rate: 0.0125, quoted: 'AER' }),
       },
       {
         id: 'gb-hsbc', name: 'HSBC UK', iso: 'GB', currency: 'GBP', format: 'gb', code: '40',
         current: p('HSBC Bank Account', 'hsbc.co.uk: no monthly fee'),
-        savings: p('Flexible Saver', 'hsbc.co.uk: 1.05% AER from March 12, 2026', { rate: 0.0105 }),
+        savings: p('Flexible Saver', 'hsbc.co.uk: 1.05% AER, 1.04% gross, from March 12, 2026, calculated daily and credited monthly', { rate: 0.0105, quoted: 'AER' }),
       },
       {
         id: 'gb-santander', name: 'Santander UK', iso: 'GB', currency: 'GBP', format: 'gb', code: '09',
         current: p('Everyday Current Account', 'santander.co.uk: no monthly fee'),
-        savings: p('Easy Access Saver', 'santander.co.uk Issue 31 key facts, July 17, 2026: 2.00% AER for 12 months, then moved to the Everyday Saver at 0.90% (rates at August 4, 2026)', { rate: 0.009, intro: [{ months: 12, rate: 0.02 }] }),
+        savings: p('Easy Access Saver', 'santander.co.uk Issue 31 key facts, July 17, 2026: 2.00% AER for 12 months (1.98% gross paid monthly), then moved to the Everyday Saver at 0.90% (rates at August 4, 2026)', { rate: 0.009, quoted: 'AER', intro: [{ months: 12, rate: 0.02 }] }),
       },
       {
         id: 'gb-nationwide', name: 'Nationwide Building Society', iso: 'GB', currency: 'GBP', format: 'gb', code: '07',
         current: p('FlexAccount', 'nationwide.co.uk: no monthly fee'),
-        savings: p('Flex Instant Saver', 'nationwide.co.uk: 2.30% AER', { rate: 0.023 }),
+        savings: p('Flex Instant Saver', 'nationwide.co.uk: 2.30% AER/gross, calculated daily and credited once a year (read October 22, 2026)', { rate: 0.023, quoted: 'AER', creditsEvery: 12 }),
       },
     ],
   },
@@ -203,12 +203,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'ie-aib', name: 'AIB', iso: 'IE', currency: 'EUR', format: 'ie', code: 'AIBK93',
         current: p('Personal Current Account', 'aib.ie: €6 a month from July 1, 2026; the game leaves out its exemptions for students, graduates, over-66s and mortgage holders', { monthlyFee: 6_00 }),
-        savings: p('Demand Deposit Account', 'aib.ie: 0.25% AER (rates dated May 2025)', { rate: 0.0025 }),
+        savings: p('Demand Deposit Account', 'aib.ie: 0.25% AER (rates dated May 2025); interest put in each April and October', { rate: 0.0025, quoted: 'AER', pays: [4, 10] }),
       },
       {
         id: 'ie-bank-of-ireland', name: 'Bank of Ireland', iso: 'IE', currency: 'EUR', format: 'ie', code: 'BOFI90',
         current: p('Personal Current Account', 'bankofireland.com: €6 a month flat', { monthlyFee: 6_00 }),
-        savings: p('Demand Deposit Account', 'bankofireland.com rate table, September 14, 2026: 0.10% AER', { rate: 0.001 }),
+        savings: p('Demand Deposit Account', 'bankofireland.com rate table, September 14, 2026: 0.10% AER; when it’s paid wasn’t found, so monthly is estimated', { rate: 0.001, quoted: 'AER' }),
       },
       {
         id: 'ie-ptsb', name: 'PTSB', iso: 'IE', currency: 'EUR', format: 'ie', code: 'IPBS99',
@@ -348,7 +348,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'es-bankinter', name: 'Bankinter', iso: 'ES', currency: 'EUR', format: 'es', code: '0128',
-        current: p('Cuenta Nómina', 'bankinter.com: 5% TAE in the first year and 2% in the second, on up to €10,000 (no rate after that was found); €22.50 a half-year (€3.75 a month in the game) without a nómina of €800', { intro: [{ months: 12, rate: 0.05 }, { months: 12, rate: 0.02 }], rateUpTo: 10_000_00, monthlyFee: 3_75, waiver: { depositsAtLeast: 800_00 } }),
+        current: p('Cuenta Nómina', 'bankinter.com: 5% TAE in the first year and 2% in the second (4.94% and 1.99% TIN), interest settled every six months from opening, on up to €10,000 (no rate after that was found); €22.50 a half-year (€3.75 a month in the game) without a nómina of €800', { intro: [{ months: 12, rate: 0.05 }, { months: 12, rate: 0.02 }], quoted: 'TAE', creditsEvery: 6, rateUpTo: 10_000_00, monthlyFee: 3_75, waiver: { depositsAtLeast: 800_00 } }),
         savings: p('Cuenta Nómina', NOT_FOUND),
       },
     ],

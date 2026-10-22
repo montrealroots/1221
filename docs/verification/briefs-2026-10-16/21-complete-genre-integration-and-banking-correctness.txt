@@ -1,0 +1,149 @@
+Execution And Token Budget
+
+Complete this work primarily in one agent/session. Multiple agents are not required. Do not launch parallel agents by default; use delegation only if there is a specific, justified benefit that outweighs the duplicated context and usage.
+
+Preserve every requirement, implementation detail, and verification obligation in this brief. Save usage by avoiding redundant work—not by reducing quality or leaving features unfinished.
+
+* Read the handoff and relevant code first, then inspect additional files only as needed.
+* Reuse valid research and existing test evidence when the source, tested code, and applicable rules remain unchanged.
+* Search narrowly and read relevant sections instead of repeatedly loading entire files or large logs.
+* Run targeted tests while developing. Run the required full regression gate after integration; repeat it when subsequent changes or failures justify doing so.
+* Avoid repeated broad audits, unnecessary rewrites, and duplicate research.
+* Keep progress messages concise. Save detailed findings, calculations, sources, and test results in the repository.
+* Maintain a compact checkpoint recording completed work, remaining work, decisions, and exact test results so an interruption does not require starting over.
+* Finish with a clear summary and links to the complete evidence, including every unresolved item.
+
+Do not omit meaningful tests, weaken acceptance criteria, or claim completion to conserve tokens. I want the same complete result, delivered with less duplicated effort and context.
+
+Complete Genre Integration And Banking Correctness In The Current SLATE Build.
+
+Start from the latest main branch. Read the current handoff, Brief 20’s audit, the feature-to-effect matrix, and repository instructions. Preserve existing work and inspect the implementation before making changes.
+
+This brief authorizes fixing the genre and banking issues below. Keep the UI redesign, OPT policy decisions, and previously deferred systems outside this task.
+
+1. Connect Relevant Genres To Acting Outcomes
+
+Audit and complete genre integration across school casting, professional in-person auditions, self-tapes, callbacks, rehearsals, shoot days, and stage performances.
+
+Relevant genre experience must meaningfully contribute wherever the work calls for it. Preserve working connections and repair missing ones.
+
+Support multiple genres:
+
+* Determine the relevant genres from the actual project, scene, and role.
+* Weight them according to their importance to the material.
+* Use normalized weights so additional genre tags cannot inflate the total available bonus.
+* Prevent duplicate or closely related tags from counting the same expertise twice.
+* Unrelated genre experience must provide no benefit.
+* Mastering one relevant genre helps its contribution; mastering all relevant genres provides the strongest genre contribution.
+
+Attributes and techniques remain the foundation. Preparation, role demands, health, fatigue, and relevant circumstances must still matter. Genre preference is distinct from genre expertise.
+
+Inspect existing formulas before adding modifiers. Avoid counting genre experience twice through preparation and a second bonus for the same effect. Explain and document any separate contributions.
+
+High relevant mastery should improve suitability or work quality under otherwise identical conditions. It must not guarantee casting, available jobs, or representation.
+
+Make explanations and tutorials accurately describe the resulting mechanics using the game’s existing interface and natural language. This is not a UI redesign.
+
+2. Fix Existing Banking Calculation And Timing Issues
+
+Investigate the audit’s findings against the actual implementation and authoritative, dated sources for each applicable bank, product, and jurisdiction:
+
+* APY being treated as a nominal interest rate.
+* Penalty interest being triggered at 30 days.
+* Charge-off occurring at 150 days.
+* Payment due dates shifting incorrectly with the month.
+* Standing orders processing on weekends without the appropriate product or payment-system rule.
+
+Do not assume one rule applies to every country, bank, card, or transfer type. Distinguish calendar days, business days, statement cycles, grace periods, notice periods, delinquency age, and processing dates.
+
+Correct confirmed defects. Where the implementation is already correct for a particular product, preserve it and document the evidence.
+
+Use appropriate financial mathematics:
+
+* Convert quoted yields to the correct periodic rate for the product’s compounding convention.
+* Distinguish APR from APY.
+* Preserve precision during calculations and round at the documented posting stage.
+* Keep accrued interest, posted interest, fees, balances, and statements consistent.
+* Preserve money conservation across transfers and payments.
+
+Check due dates through short months, leap years, holidays, weekends, and year boundaries. Handle time advancement and save/load without skipping or duplicating charges, notices, or payments.
+
+Do not invent a bank’s terms when research is unavailable. Record the uncertainty and clearly distinguish simulation assumptions from verified rules.
+
+3. Protect Existing Saves And Connected Systems
+
+Preserve school history, career progress, genre development, agreements, credits, account balances, and transaction history.
+
+Define how corrected calculations apply to existing saves. Do not silently rewrite historical transactions or retroactively charge the player. Add and test migrations only where necessary.
+
+Verify that changes flow correctly into assessments, casting, work records, feedback, bank statements, available funds, debt, and any other actual consumers.
+
+4. Prove The Genre Behavior
+
+Write controlled comparisons using identical actors, conditions, preparation, and random seeds, changing only the relevant genre input.
+
+Cover:
+
+* Low, medium, and maximum relevant mastery.
+* A single-genre role.
+* An evenly mixed two-genre role.
+* A role dominated by one genre.
+* A production with three or more genres.
+* One mastered genre and one weak genre.
+* All relevant genres mastered.
+* High unrelated genre mastery.
+* Duplicate and overlapping genre tags.
+* School casting and each affected professional evaluation path.
+
+Show the numerical contribution and resulting outcome differences. Check intermediate scores as well as final scores so caps do not hide a broken connection.
+
+Verify that the calculation remains bounded, relevant mastery does not reduce its own contribution, and additional tags cannot exploit the formula.
+
+Do not tune the system solely to make a few chosen examples pass. Use documented seed sets and report the spread of outcomes.
+
+5. Prove The Banking Behavior
+
+Use independently calculated expected amounts and dated timelines. Do not derive test expectations by calling the same production function being tested.
+
+Cover relevant account types, compounding conventions, payment timing, notice requirements, partial and missed payments, recovery, leap years, holidays, long time advances, and save/load.
+
+Test both when a charge or rate change should occur and when it must not occur.
+
+For every repaired defect, add a regression test that fails on the old behavior. Use deliberate fault checks to show that critical tests detect broken genre connections and incorrect financial calculations.
+
+6. Run Integrated Journeys And Final Verification
+
+Play multiple complete journeys through existing player commands, including:
+
+* School progression into professional work.
+* Single-genre and mixed-genre work.
+* Different levels of expertise and preparation.
+* Banking activity across the corrected deadlines.
+* Older saves continued through affected transitions.
+* Equivalent continuous play and save/reopen play.
+
+Inspect the affected screens in the built application. Confirm that explanations, amounts, dates, feedback, and records match the underlying behavior.
+
+Preserve continuity and contextual variety. Do not introduce duplicate first-time events, repeated completed opportunities, or generic feedback that ignores the player’s actual work.
+
+Run the required full regression gate after integrating the changes. Resolve failures caused by this work, then rerun the affected checks and final gate.
+
+7. Deliver Proof And An Honest Status
+
+Update the feature-to-effect matrix, tutorials, and handoff.
+
+Report:
+
+* The exact tested commit.
+* Each confirmed defect and its fix.
+* Genre formulas, weights, and before/after comparisons.
+* Banking sources, effective dates, assumptions, and calculation examples.
+* Save compatibility and migration behavior.
+* Journey and mutation-test results.
+* Full test totals, failures, skips, and remaining uncertainties.
+
+Continue through implementation, debugging, and verification until all acceptance criteria in this brief pass or a concrete blocker prevents further progress. Complete all unblocked work before reporting a blocker.
+
+Do not weaken tests, replace failing seeds with favorable ones, hide incomplete items, or claim universal perfection. Demonstrate that these specific systems function cohesively and logically, with meaningful downstream effects.
+
+Keep the work reviewable. Do not merge or deploy without my instruction.

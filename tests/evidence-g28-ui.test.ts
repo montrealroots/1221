@@ -293,20 +293,22 @@ describe('c-disp-riskTolerance', () => {
     }
   });
 
-  it('PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 11 October and 10 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 11 October and 10 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once”, Chase's due dates 21 days after each statement.
+  it('PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 13 October and 13 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once', () => {
     const lives = { 66: slidTo('g28-risk', 'riskTolerance', 66).sim, 65: slidTo('g28-risk', 'riskTolerance', 65).sim } as Record<66 | 65, Simulation>;
     expect(lives[66].player.credit!.autopay).toBe('minimum');
     expect(lives[65].player.credit!.autopay).toBe('full');
     for (const sim of Object.values(lives)) sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
     // Saved and loaded between the first statement and its due date: what autopay pays is the save's.
     for (const risk of [66, 65] as const) { lives[risk].advanceTo(EDT(2026, 10, 1, 12)); lives[risk] = reload(lives[risk]); }
-    for (const sim of Object.values(lives)) sim.advanceTo(EDT(2026, 10, 11, 13));
+    for (const sim of Object.values(lives)) sim.advanceTo(EDT(2026, 10, 13, 13));
     // Sunday 20 September, 9 AM: twenty-seven midnights of New Haven's $10.00 of groceries, and Chase's minimum, 1% and
     // the month's interest, never under $40 (its published terms): $40.00.
     // The same statement for both, and what each one's autopay will pay that day (from brief 15, 2026-10-19).
-    expect(statements(lives[66])).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
-    expect(statements(lives[65])).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.']]);
-    // Noon on Sunday 11 October, 21 days on: autopay pays the minimum, or the whole statement.
+    expect(statements(lives[66])).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
+    expect(statements(lives[65])).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.']]);
+    // Noon on Tuesday 13 October, Chase's due day (Sunday 11 October, 21 days on, until brief 21, 2026-10-22): autopay pays
+    // the minimum, or the whole statement.
     expect(onCard(lives[66], 'Paid Chase Freedom Unlimited')).toEqual([40_00]);
     expect(onCard(lives[65], 'Paid Chase Freedom Unlimited')).toEqual([270_00]);
     expect(lives[66].player.credit!.carrying).toBe(true);
@@ -316,9 +318,9 @@ describe('c-disp-riskTolerance', () => {
     // Tuesday 20 October: $270 − $40 + thirty more days of groceries, with no interest yet (the card's introductory 0%,
     // Chase's fifteen months, from an account opened before the first morning, ran to that day); the life at 65, the
     // thirty days alone. Friday 20 November: the life at 65, thirty-one days of groceries.
-    expect(statements(lives[66]).slice(0, 2)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.'], [EDT(2026, 10, 20, 9), 'The statement comes to $530.00, due November 10, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
+    expect(statements(lives[66]).slice(0, 2)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.'], [EDT(2026, 10, 20, 9), 'The statement comes to $530.00, due November 13, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
     expect(statements(lives[65])).toEqual([
-      [EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.'], [EDT(2026, 10, 20, 9), 'The statement comes to $300.00, due November 10, 2026. The minimum payment is $40.00. Autopay pays the whole $300.00 from Chase Total Checking that day, if there’s enough in it.'], [EST(2026, 11, 20, 9), 'The statement comes to $310.00, due December 11, 2026. The minimum payment is $40.00. Autopay pays the whole $310.00 from Chase Total Checking that day, if there’s enough in it.'],
+      [EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.'], [EDT(2026, 10, 20, 9), 'The statement comes to $300.00, due November 13, 2026. The minimum payment is $40.00. Autopay pays the whole $300.00 from Chase Total Checking that day, if there’s enough in it.'], [EST(2026, 11, 20, 9), 'The statement comes to $310.00, due December 13, 2026. The minimum payment is $40.00. Autopay pays the whole $310.00 from Chase Total Checking that day, if there’s enough in it.'],
     ]);
     expect(onCard(lives[66], 'Paid Chase Freedom Unlimited')).toEqual([40_00, 40_00]);
     expect(onCard(lives[65], 'Paid Chase Freedom Unlimited')).toEqual([270_00, 300_00]);
@@ -336,7 +338,7 @@ describe('c-disp-riskTolerance', () => {
     const charged = -interest[0]![1];
     expect(charged).toBeGreaterThan(Math.floor(530_00 * 0.1824 * 30 / 365));
     expect(charged).toBeLessThan(Math.ceil(800_00 * ((1 + 0.2774 / 365) ** 31 - 1)));
-    expect(statements(lives[66])[2]).toEqual([EST(2026, 11, 20, 9), `The statement comes to $${((530_00 - 40_00 + 310_00 + charged) / 100).toFixed(2)}, due December 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.`]);
+    expect(statements(lives[66])[2]).toEqual([EST(2026, 11, 20, 9), `The statement comes to $${((530_00 - 40_00 + 310_00 + charged) / 100).toFixed(2)}, due December 13, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.`]);
     expect(lives[66].player.credit!.carrying).toBe(true);
     expect(interestOn(lives[65])).toEqual([]);
     expect(lives[65].player.credit!.carrying).toBe(false);

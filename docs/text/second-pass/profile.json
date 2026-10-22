@@ -3529,10 +3529,10 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten",
-  "hash": "5f2816d034b8",
-  "on": "2026-10-21",
-  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing",
-  "first": "Rewritten And Verified"
+  "hash": "f5bdc527257f",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten",
@@ -3564,9 +3564,9 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [evaluation]": {
   "status": "Rewritten",
-  "hash": "b6a8a490f744",
-  "on": "2026-10-19",
-  "evidence": "The entries' evaluation connections rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: practice's line names the abilities and techniques where practice left them, the genre's says it counts toward the take's interpretation, and the reader's says your own result counts nothing the reader brings",
+  "hash": "5fc33285c15f",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [history]": {
@@ -4222,10 +4222,10 @@
  },
  "src/ui/looks/actor.tsx#top": {
   "status": "Rewritten",
-  "hash": "e0b0b3c7da9e",
-  "on": "2026-10-21",
-  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing",
-  "first": "Rewritten And Verified"
+  "hash": "f58f0eefc2ea",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing; the genre's look reads its own record (tests/defects-g30-1.test.ts)",
+  "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel": {
   "status": "Rewritten",
@@ -4250,9 +4250,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
   "status": "Rewritten",
-  "hash": "8ed02b1c9e34",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app's Genres at 1440 and 390 (workload, health and missed-plan saves, docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt) and held by tests/whynot-profile.test.ts",
+  "hash": "ba5d7a77182c",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel": {

@@ -231,7 +231,8 @@ describe('h-needs', () => {
     expect(needs(played(false))).toBe(ALL_CLEAR);
   });
 
-  it('PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent”.
+  it('PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,443, then at its $1,630 limit “nearly at its limit”, then charged off 180 days past the first due date missed: “$2,038 is with collections.”, the checking still named on the Money line, and gone once Pay is sent', () => {
     const sim = ada('r3-coll', 'scraping');
     const card = cardsOf(sim, sim.player)[0]!;
     // The Scraping profile's card: a 1,500 € limit and 840 € owed, at SLATE's 0.92 € to the dollar, to the dollar
@@ -250,13 +251,15 @@ describe('h-needs', () => {
     };
     const past = (due: number) => sim.advanceTo(due + 60_000);
 
-    // The first: 48 midnights of $10.00 groceries on the card from 25 August to 11 October, on the $913 carried, and
-    // Regulation Z's safe-harbor $30 for a first late payment: $1,423, under nine-tenths of $1,630, $1,467.
-    past(toDue());
+    // The first: 50 midnights of $10.00 groceries on the card from 25 August to 13 October, Chase's due day, on the $913
+    // carried, and Regulation Z's safe-harbor $30 for a first late payment: $1,443, under nine-tenths of $1,630, $1,467.
+    // Until brief 21 (2026-10-22) the due date was 11 October, 48 midnights and $1,423.
+    const first = toDue();
+    past(first);
     markRead(sim);
-    expect(-card.balance).toBe(913_00 + 48 * 10_00 + 30_00);
+    expect(-card.balance).toBe(913_00 + 50 * 10_00 + 30_00);
     expect(-card.balance).toBeLessThan(0.9 * 1_630_00);
-    expect(needs(sim)).toBe(`${WAITING} Your card is a payment behind, owing $1,423.`);
+    expect(needs(sim)).toBe(`${WAITING} Your card is a payment behind, owing $1,443.`);
 
     // The second, an hour before: the groceries have taken the card to its limit and no further, $1,630, past $1,467.
     const second = toDue();
@@ -265,19 +268,23 @@ describe('h-needs', () => {
     expect(needs(sim)).toBe(`${WAITING} Your card is nearly at its limit, owing $1,630. Your card is a payment behind, owing $1,630.`);
     past(second);
 
-    // The third to the sixth missed the same way: at the sixth (CHARGE_OFF_AFTER, the FFIEC's 180 days) the card is
-    // closed and what it owed, its balance the hour before and that due date's $40 fee, is with collections.
-    for (let k = 3; k <= 6; k++) {
-      const due = toDue();
-      if (k === 6) {
-        const owing = -card.balance;
-        past(due);
-        expect(titled(sim, 'Your Card Was Charged Off')).toHaveLength(1);
-        const debt = sim.ledger.accountsOf(sim.player.id).find((a) => a.category === 'collections')!;
-        expect(-debt.balance).toBe(owing + 40_00);
-        expect(dollars(owing + 40_00)).toBe('$1,999');
-      } else past(due);
-    }
+    // The third to the sixth missed the same way, and the card still open: a US card is charged off 180 days past the due
+    // date of the oldest minimum unpaid (the FFIEC's policy), from 2026-10-22 (brief 21), 13 October's on 11 April 2027,
+    // and what it owed, its balance then, is with collections. Until then at the sixth missed due date, about 150 days
+    // past due, the hour before's balance and that due date's $40 fee, $1,999. On 11 April: the $913 carried, $687 of
+    // groceries to the limit, the late fees ($30 and five of $40) and five statements' interest, $208.00, the last two at
+    // Chase's penalty 29.99% from 27 January, 45 days after the 13 December notice (26.44% before): $2,038.
+    for (let k = 3; k <= 6; k++) past(toDue());
+    expect(card.closedAt).toBeUndefined();
+    expect(first).toBe(at(2026, 10, 13, 12));
+    sim.advanceTo(at(2027, 4, 10, 23));
+    expect(card.closedAt).toBeUndefined();
+    const owing = -card.balance;
+    sim.advanceTo(at(2027, 4, 11, 1));
+    expect(titled(sim, 'Your Card Was Charged Off')).toHaveLength(1);
+    const owedThen = sim.ledger.accountsOf(sim.player.id).find((a) => a.category === 'collections')!;
+    expect(-owedThen.balance).toBe(owing);
+    expect(dollars(owing)).toBe('$2,038');
     expect(card.closedAt).toBeDefined();
     // The 2026 return raised on 1 February, Connecticut's $3.35, filed from the panel and paid out of savings, so What
     // Needs You has nothing to decide.
@@ -285,11 +292,13 @@ describe('h-needs', () => {
     if (openDecisions(sim).some((d) => d.title === 'Your 2026 Tax Return')) expect(press(button('File It'))).toMatchObject({ ok: true });
     expect(openDecisions(sim)).toEqual([]);
     markRead(sim);
-    const said = `${WAITING} $1,999 you owe is with a collection agency.`;
+    const said = `${WAITING} $2,038 you owe is with a collection agency.`;
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
     // h-money: the card closed to collections, the checking stays, and the Money line names it.
-    expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/^Your Affairs (How This Works )?Money Chase Total Checking: \$0\.00\. Worth /);
+    // What it holds isn't the point: read on 11 April, money has come into it since the last due date emptied it
+    // (until brief 21, 2026-10-22, read at that due date, $0.00).
+    expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/^Your Affairs (How This Works )?Money Chase Total Checking: \$[\d,]+\.\d{2}\. Worth /);
     // Paid from the checking, the money brought back from savings: the debt settled, and the sentence gone.
     const debt = sim.ledger.accountsOf(sim.player.id).find((a) => a.category === 'collections')!;
     const owed = -debt.balance;

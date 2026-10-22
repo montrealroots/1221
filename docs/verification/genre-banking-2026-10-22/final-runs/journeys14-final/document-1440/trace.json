@@ -1,0 +1,735 @@
+{
+ "playthrough": "document",
+ "width": 1440,
+ "base": "http://localhost:4217",
+ "commit": "fd32e869",
+ "uncommitted": 0,
+ "startedAt": "2026-10-22T11:41:26.615Z",
+ "startingPoint": {
+  "kind": "save",
+  "file": "brief.json",
+  "bytes": 109633,
+  "sha256": "8141b7dc06fc3f1037aabbbc40413ee47434dc726862a0dfdaaa046112e6e2e7",
+  "seed": "sc-0",
+  "command": "npx vite-node tools/scenarios.ts -- --scenario brief --seed sc-0 --save SAVEDIR/brief.json"
+ },
+ "steps": [
+  {
+   "n": 1,
+   "name": "[save: brief scenario] Papers by the rail, Passport And ID: Your ID names the card, none held, Get offered",
+   "exercises": [
+    "navigation"
+   ],
+   "pressed": [
+    "Continue",
+    "Money",
+    "Accounts (tab)",
+    "Papers",
+    "Passport And ID (tab)"
+   ],
+   "said": [
+    "Non-Driver Identification Card; Chase Total Checking $90,297 before"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 2,
+   "name": "Your ID’s How This Works: its entry, a connected entry and Back, closed with the tab and the clock as they were",
+   "exercises": [
+    "drill-down"
+   ],
+   "pressed": [
+    "How This Works: Passport And ID",
+    "How It Connects",
+    "Permission To Work",
+    "Back",
+    "Escape"
+   ],
+   "said": [
+    "Passport And ID → Permission To Work → Back; trail “Contents › Passport And ID › Permission To Work”"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 3,
+   "name": "applied: the toast names the card, its fee, the day it comes and the day it’s good until; the fee off the current account",
+   "exercises": [],
+   "pressed": [
+    "Get Non-Driver Identification Card",
+    "Money",
+    "Accounts (tab)"
+   ],
+   "said": [
+    "You applied for the Non-Driver Identification Card and paid $28.00. The card comes October 9, 2026, and it’s good until June 14, 2034."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 4,
+   "name": "applied isn’t held: the row not in force and not issued; Get grayed, its reason on the screen; the card’s look gives the day it comes and isn’t issued",
+   "exercises": [
+    "unavailable",
+    "drill-down"
+   ],
+   "pressed": [
+    "Papers",
+    "Passport And ID (tab)",
+    "Get Non-Driver Identification Card (grayed, forced)",
+    "Non-Driver Identification Card",
+    "Close Non-Driver Identification Card"
+   ],
+   "said": [
+    "row: Non-Driver Identification Card | — | June 14, 2034 | On Its Way",
+    "look “Non-Driver Identification Card” (PROOF OF IDENTITY): You’ve applied and paid, and the card is on its way. It should arrive by October 9, 2026.",
+    "On Its Way; refused: One is already on its way.; look: You’ve applied and paid, and the card is on its way. It should arrive by October 9, 2026."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 5,
+   "name": "Save & Exit; Delete asked and kept; Continue: the same moment, the row, the look’s day and Get’s refusal as they were",
+   "exercises": [
+    "confirmation",
+    "save-continue"
+   ],
+   "pressed": [
+    "Save & Exit",
+    "Delete",
+    "Keep It",
+    "Continue",
+    "Papers",
+    "Passport And ID (tab)",
+    "Non-Driver Identification Card",
+    "Close Non-Driver Identification Card"
+   ],
+   "said": [
+    "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 12, 2026 LOCATION New Haven NET WORTH $503K PLAYED 14s Version 1.1.0 · Save Format 94 · 30 KB Backup from an unknown date Continue Restore Backu",
+    "look “Non-Driver Identification Card” (PROOF OF IDENTITY): You’ve applied and paid, and the card is on its way. It should arrive by October 9, 2026.",
+    "September 12, 2026 4:05 PM; still On Its Way"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 6,
+   "name": "One Week, asked: On The Way names the week’s commitments, Cancel leaves the clock",
+   "exercises": [
+    "confirmation"
+   ],
+   "pressed": [
+    "Advance",
+    "One Week",
+    "Cancel"
+   ],
+   "said": [
+    "On The Way: ✕ Moving the clock to One Week (September 19, 2026 at 4:05 PM) passes 11 commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. Classes — September 14, 2026 at 9:00 AM, not on your calendar yet Drama 50: The Theatrical Event — September 14, 2026 at 3:00 PM Classes — September 15, 2026 at 9:00 AM, not on your calendar ye"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "4:05 PM"
+  },
+  {
+   "n": 7,
+   "name": "the days to its coming, each stop gone to: Home lists its arrival, naming the card, on the day the toast gave",
+   "exercises": [
+    "notification"
+   ],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "Home",
+    "Show All 27",
+    "Advance",
+    "Tomorrow Morning",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Home",
+    "Home"
+   ],
+   "said": [
+    "notice “Non-Driver Identification Card Arrived”: It’s arrived, and you can use it from today.",
+    "28 mornings; on October 10, 2026: “Non-Driver Identification Card Arrived”: It’s arrived, and you can use it from today."
+   ],
+   "ok": true,
+   "date": "October 10, 2026",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 8,
+   "name": "held: Go There opens Papers; the row in force from the day it came, to the day the toast gave; Get grayed with its reason on the screen; the look says so",
+   "exercises": [
+    "navigation",
+    "unavailable"
+   ],
+   "pressed": [
+    "Home",
+    "Go There",
+    "Passport And ID (tab)",
+    "Get Non-Driver Identification Card (grayed, forced)",
+    "Non-Driver Identification Card",
+    "Close Non-Driver Identification Card"
+   ],
+   "said": [
+    "row: Non-Driver Identification Card | October 9, 2026 | June 14, 2034 | In Force",
+    "look “Non-Driver Identification Card” (PROOF OF IDENTITY): It’s in force until June 14, 2034, and its number ends 5846.",
+    "In Force from October 9, 2026 to June 14, 2034; refused: You already hold one in force.; look: It’s in force until June 14, 2034, and its number ends 5846."
+   ],
+   "ok": true,
+   "date": "October 10, 2026",
+   "clock": "7:00 AM"
+  }
+ ],
+ "milestones": [
+  {
+   "file": "01-applied.jpg",
+   "step": 3,
+   "at": "September 12, 2026 4:05 PM"
+  },
+  {
+   "file": "02-on-its-way.jpg",
+   "step": 4,
+   "at": "September 12, 2026 4:05 PM"
+  },
+  {
+   "file": "03-confirm-deletion.jpg",
+   "step": 5,
+   "at": ""
+  },
+  {
+   "file": "04-arrived.jpg",
+   "step": 7,
+   "at": "October 10, 2026 7:00 AM"
+  },
+  {
+   "file": "05-held.jpg",
+   "step": 8,
+   "at": "October 10, 2026 7:00 AM"
+  }
+ ],
+ "dialogs": [
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 14, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 14, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 15, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 15, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 15, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 16, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 16, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 16, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 17, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 17, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 17, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 18, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 18, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 18, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 19, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 19, 2026 10:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 20, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 21, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 21, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 22, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 22, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 22, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 23, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 23, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 23, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 24, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 24, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 24, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 25, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 25, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 25, 2026 3:00 PM"
+  },
+  {
+   "step": 7,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 26, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 26, 2026 10:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 27, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 28, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 29, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 29, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 30, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 1, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 2, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 2, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 3, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 3, 2026 10:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "October 4, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 5, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 6, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 6, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 7, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 7, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 8, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 8, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 9, 2026 7:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "October 9, 2026 9:00 AM"
+  },
+  {
+   "step": 7,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "October 10, 2026 7:00 AM"
+  }
+ ],
+ "errors": [],
+ "overflows": [],
+ "exercised": {
+  "navigation": [
+   1,
+   8
+  ],
+  "drill-down": [
+   2,
+   4
+  ],
+  "unavailable": [
+   4,
+   8
+  ],
+  "confirmation": [
+   5,
+   6
+  ],
+  "notification": [
+   7
+  ],
+  "save-continue": [
+   5
+  ]
+ },
+ "summary": {
+  "steps": 8,
+  "passed": 8,
+  "failed": 0,
+  "sixMissing": [],
+  "errors": 0,
+  "overflows": 0,
+  "languageFails": 0,
+  "languageRecorded": 3
+ },
+ "language": {
+  "fails": [],
+  "recorded": [
+   {
+    "kind": "long text",
+    "step": 7,
+    "where": "after step 7",
+    "what": "94 words in one div: “You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, cho…”"
+   },
+   {
+    "kind": "long text",
+    "step": 7,
+    "where": "after step 7",
+    "what": "96 words in one div: “So far this term, 4 of the 10 pieces you’ve shown were Unready. This is a warning. The term review is on Decem…”"
+   },
+   {
+    "kind": "long text",
+    "step": 7,
+    "where": "after step 7",
+    "what": "89 words in one div: “You met the acting faculty, with the chair, Tamilla Woodard. First-year courses are taught by Gregory Wallace,…”"
+   }
+  ]
+ },
+ "finishedAt": "2026-10-22T11:44:07.203Z"
+}

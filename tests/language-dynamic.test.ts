@@ -372,7 +372,9 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     for (const [missed, words] of [[2, 'two'], [5, 'five']] as const) {
       Object.assign(state, { suspended: 'late', missed });
       const line = cardText().split('\n').find((l) => l.startsWith('Suspended:'))!;
-      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. Miss six in a row, and what’s owed is charged off to collections.`);
+      // A US card's charge-off by days (from 2026-10-22, brief 21: until then "Miss six in a row, and what’s owed is charged
+      // off to collections."); this record, set by hand, keeps no due dates, so the rule is said without them.
+      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. If a minimum payment goes unpaid for 180 days after its due date, what’s owed is charged off to collections.`);
       sound(line);
     }
     delete state.suspended; state.missed = 0;
@@ -616,8 +618,9 @@ describe('missing optional information: each part absent, and the sentence still
     expect(panel).toContain('At Citi, not open yet');
     expect(panel).toContain('No published rate was found for it, so it earns no interest in the game.');
     expect(panel).toContain('It costs $4.50 a month');
-    // Chase's own savings, open, says its rate.
-    expect(text).toMatch(/Pays \d+(?:\.\d+)?% a year/);
+    // Chase's own savings, open, says its rate: as the bank quotes it, a yield, and the rate a day's interest is worked
+    // from beside it (from 2026-10-22, brief 21: until then "Pays 0.01% a year").
+    expect(text).toMatch(/Pays \d+(?:\.\d+)?% APY \(\d+(?:\.\d+)?% a year before compounding\)/);
     sound(text);
   });
 
@@ -911,19 +914,24 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     const cardText = () => drawn(sim, (() => createElement(BankCard, { bankId: card.bankId! })) as FunctionComponent);
     // The next payment first, with this statement’s minimum, and the cycle under The Card’s Terms (from 2026-10-20, brief
     // 17): until then the due date closed the cycle’s line, and the minimum’s rule ended “On this statement it’s $40.”
-    expect(cardText()).toContain('Statements come on the 20th, and payment is due 21 days after each one.');
-    expect(cardText()).toMatch(/The next payment is due October 11, 2026\. The statement is \$[\d,]+, and the minimum payment is \$\d+\./);
-    // TEST SETUP: the money spent before the autopay day; the warning comes the day before.
-    spendAll(sim);
+    // A US card's due date one day each month, Chase's the 13th (from 2026-10-22, brief 21: until then "payment is due
+    // 21 days after each one", and the next on 11 October).
+    expect(cardText()).toContain('Statements come on the 20th, and payment is due on the 13th of the next month, at least 21 days after each one.');
+    expect(cardText()).toMatch(/The next payment is due October 13, 2026\. The statement is \$[\d,]+, and the minimum payment is \$\d+\./);
+    // TEST SETUP: the money spent before the autopay day; the warning comes within three days of it. Spent on 10 October,
+    // after Friday's pay: until brief 21 (2026-10-22) the due date was the 11th and it was spent on 21 September, before
+    // a payday reached the warning's three days.
     tended(sim, on(2026, 10, 10, 12));
-    const short = sim.universe.notifications.find((n) => n.title === 'Short For A Payment: Chase Total Checking')!;
-    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it has \$\d+\.\d{2} available\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
-    expect(drawn(sim, Home)).toContain('Card Payment Due in ');
     spendAll(sim);
     tended(sim, on(2026, 10, 12, 12));
+    const short = sim.universe.notifications.find((n) => n.title === 'Short For A Payment: Chase Total Checking')!;
+    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 13, 2026, and it has (\$\d+\.\d{2} available|nothing available)\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
+    expect(drawn(sim, Home)).toContain('Card Payment Due in ');
+    spendAll(sim);
+    tended(sim, on(2026, 10, 14, 12));
     const late = titled(sim, 'A Late Card Payment')[0]!;
     // Its due date named, and the suspension the next miss brings, from 2026-10-20 (brief 17).
-    expect(late.body).toMatch(/^The minimum payment on the Chase Freedom Unlimited, \$\d+\.\d{2}, was due October 11, 2026, and (only \$\d+\.\d{2} was paid|nothing was paid)\. That costs a \$\d+\.\d{2} late fee\. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card\. Pay the card on Money, under Cards\.$/);
+    expect(late.body).toMatch(/^The minimum payment on the Chase Freedom Unlimited, \$\d+\.\d{2}, was due October 13, 2026, and (only \$\d+\.\d{2} was paid|nothing was paid)\. That costs a \$\d+\.\d{2} late fee\. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card\. Pay the card on Money, under Cards\.$/);
     for (const s of [short.body, late.body]) { sound(s); whole(s); dated(s); }
   });
 });

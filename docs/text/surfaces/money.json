@@ -571,6 +571,7 @@
    "src/engine/systems/credit.ts#registerCredit",
    "src/engine/systems/credit.ts#statementWords",
    "src/engine/systems/credit.ts#afterMissed",
+   "src/engine/systems/credit.ts#delinquency",
    "src/engine/systems/credit.ts#chargeOff",
    "src/engine/systems/credit.ts#persistentDebt",
    "src/engine/systems/credit.ts#scheduleStatement",
@@ -588,7 +589,7 @@
   ],
   "outcome": "Revised",
   "why": "Read in order over six missed due dates: the late notice named no due date, so the third to the sixth said the second’s words, and an unread one was brought up to the day in its place: one notice for four late fees. The suspension the next miss brings was said only once it had come, and the statement between gave the minimum, not what that due date would decide. The penalty notice said “A payment is sixty days late.” on the day the late notice said thirty, the default notice “150 days behind” at 120, and at the sixth miss both notices sent the player to pay a card that was already charged off.",
-  "changes": "“The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card.” The statement after a miss adds “The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.”, and one while suspended “The card works again if at least $40.00 is paid by then.” The penalty and default notices count the payments missed (“You’ve missed two payments in a row.”, “You’ve missed five payments in a row on the …”), the suspension says what lifts it, and the sixth miss’s notices send nobody to the card.",
+  "changes": "“The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card.” The statement after a miss adds “The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.”, and one while suspended “The card works again if at least $40.00 is paid by then.” The penalty and default notices count the payments missed (“You’ve missed two payments in a row.”, “You’ve missed five payments in a row on the …”), the suspension says what lifts it, and the sixth miss’s notices send nobody to the card. From 2026-10-22 (brief 21) a US card’s days past due are counted, as Regulation Z and the FFIEC count them: “A Penalty Rate Is Coming” or “Your Introductory Rate Is Ending” on the 61st day (“The Chase Freedom Unlimited’s minimum payment, due October 13, 2026, is more than 60 days late. From January 27, 2027, the card charges 29.99% on what’s owed. Six minimum payments on time in a row take the penalty rate off.”), “A Default Notice” on the 150th, which names what’s still unpaid and the day it’s charged off, and the charge-off on the 180th; the late notices stop saying a sixth miss charges it off.",
   "evidence": [
    {
     "kind": "test",
@@ -609,6 +610,10 @@
    {
     "kind": "test",
     "ref": "tests/evidence2-b11.test.ts: 'her everyday spending put on the card'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'six due dates missed at Chase'"
    }
   ]
  },
@@ -667,7 +672,7 @@
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/editorial17-money.test.ts: 'Chase: two payments missed in a row'"
+    "ref": "tests/editorial17-money.test.ts: 'Chase: a minimum more than 60 days late, 45 days after the notice'"
    },
    {
     "kind": "test",

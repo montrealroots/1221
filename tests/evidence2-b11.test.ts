@@ -652,7 +652,8 @@ describe('h-needs', () => {
     expect(h.went).toEqual(['/workspace/school']);
   });
 
-  it('PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload”, the due dates the 11th and the 10th.
+  it('PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $530, then suspended owing $880, said once the notices are read, across a reload', () => {
     const sim = ada('b11-card');
     const card = cardsOf(sim, sim.player)[0]!;
     expect(card.balance).toBe(0);
@@ -672,19 +673,20 @@ describe('h-needs', () => {
       return due.at;
     };
     const first = toDue();
-    expect(written(first)).toBe('October 11, 2026');
-    expect(needs(sim)).toContain('A Late Card Payment The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.');
+    // Chase's due day, the 13th, from 2026-10-22 (brief 21): until then 21 days on, 11 October and 10 November.
+    expect(written(first)).toBe('October 13, 2026');
+    expect(needs(sim)).toContain('A Late Card Payment The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.');
     markRead(sim);
-    // New Haven's $10.00 of groceries on the card each midnight from 25 August to 11 October, 48 of them, and the late
+    // New Haven's $10.00 of groceries on the card each midnight from 25 August to 13 October, 50 of them, and the late
     // fee: Regulation Z's safe harbor, $30 for a first, never over the $40 minimum it was late on.
-    expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
+    expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${50 * 10 + 30}.`);
     const second = toDue();
-    expect(written(second)).toBe('November 10, 2026');
+    expect(written(second)).toBe('November 13, 2026');
     expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you pay at least the minimum by a due date, or pay the card off.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
-    // 78 days of groceries to 10 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
+    // 81 days of groceries to 13 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.
-    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is suspended, owing $${78 * 10 + 30 + 40}.`;
+    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is suspended, owing $${81 * 10 + 30 + 40}.`;
     expect(needs(sim)).toBe(said);
     expect(stateOf(sim.player, card)).toMatchObject({ missed: 2, suspended: 'late' });
     expect(needs(reload(sim))).toBe(said);

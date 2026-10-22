@@ -23,7 +23,8 @@ import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, targetId } from '@/engine/systems/attributes';
 import { classesGrow, reachOf } from '@/engine/systems/school';
 import { EVERYDAY_FITNESS, FITNESS } from '@/engine/systems/life';
-import { genreSpeed, playOfGenre } from '@/engine/systems/engagement';
+import { knownOf, playOfGenre } from '@/engine/systems/engagement';
+import { ENGAGEMENT } from '@/engine/content/engagement';
 import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
 import { workloadWords } from '@/engine/systems/workload';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
@@ -170,7 +171,9 @@ defineLook<TheGenre>('genre', {
     const def = GENRE_DEFS[id]!;
     const g = person.engagement?.byGenre[id];
     const loved = (person.genres ?? []).includes(id);
-    const speed = genreSpeed(person, [id]);
+    // This genre’s own record, the better of the two (from 2026-10-22, brief 21, when `genreSpeed` came to credit a
+    // related genre too and so would have shown a speed beside “You haven’t studied it”).
+    const speed = 1 + ENGAGEMENT.genreSpeed * knownOf(person, id);
     const play = playOfGenre(id);
     // Its briefs' takes (from 2026-10-12: until then this looked for keys a self-tape stopped writing when briefs came, and listed nothing).
     // A take of a brief retired on 2026-10-16 is still the genre’s (`briefKinds`): until then only a brief offered now was looked up.
@@ -179,16 +182,16 @@ defineLook<TheGenre>('genre', {
     return {
       name: GENRE_BY_ID[id]!.label,
       kind: loved ? 'A Genre You Love' : 'A Genre',
-      summary: g ? `Familiarity ${one(g.familiarity)}, work in it ${one(g.practice)}. The better of the two is how well you know the genre: it makes a scene or a part from a play of its kind ${Math.round((speed - 1) * 100)}% quicker to prepare, and it counts as Knowing The Genre when you prepare a brief in it.` : 'You haven’t studied it or worked in it yet. Study it, or tape its brief, to get to know it.',
+      summary: g ? `Familiarity ${one(g.familiarity)}, work in it ${one(g.practice)}. The better of the two is how well you know the genre: it makes a scene or a part from a play of only its kind ${Math.round((speed - 1) * 100)}% quicker to prepare, and a play in other genres too by its share. It counts as Knowing The Genre in a brief in it, and in an audition, a self-tape, a shoot day or a night on stage in work of its kind.` : 'You haven’t studied it or worked in it yet. Study it, or tape its brief, to get to know it.',
       body: (
         <>
           <div className="grid grid-3">
             <Stat label="Familiarity" value={one(g?.familiarity ?? 0)} note="Films watched and plays read" />
-            <Stat label="Work In It" value={one(g?.practice ?? 0)} note="Nights on stage, shoot days and self-tapes in it" />
+            <Stat label="Work In It" value={one(g?.practice ?? 0)} note="Rehearsals, nights on stage, shoot days and self-tapes in it" />
             {/* What it speeds, said (from 2026-10-12: until then "The best of the two, never a cap on the work", beside a
                 summary saying a brief in it reads knowing it, so it read as speeding the brief; a brief’s steps read the
                 material met before, `prepSpeed`, and never this). */}
-            <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="For a scene or a part from a play of its kind, by the better of the two. A brief’s steps speed up with material you’ve met before instead." />
+            <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="For a scene or a part from a play of only its kind, by the better of the two, and less where the play is in other genres too. A brief’s steps speed up with material you’ve met before instead." />
           </div>
           <p className="small"><strong>Its conventions.</strong> {def.conventions}</p>
           {demand && (

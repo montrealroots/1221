@@ -497,7 +497,7 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['How do I get to know a genre?', 'What does studying a genre do?', 'Why does a genre’s scene play differently from another’s?', 'Does loving a genre make me better at it?', 'What does a genre ask of an actor?', 'Why is Knowing The Genre short on my brief?'],
     where: { route: PROFILE, label: 'Player Profile, Genres' },
     available: `${OPENED}.`,
-    short: `Each of the ${FILM_GENRES.length} genres keeps two figures of yours: Familiarity, from studying it, and Work In It, from nights on stage, shoot days and self-tapes in it. Press Study It beside a genre, under Genres on your Player Profile, to spend ${plural(ENGAGEMENT.genre.minutes, 'minute')} reading a play of its kind the game has, or watching a film of the kind where it has none. The better of the two is how well you know the genre: a taped brief in it counts that as part of its preparation, every point up to ${pct(BRIEF.complete.genre)} showing in the take, and a scene or a part from a play of its kind is prepared up to ${pct(ENGAGEMENT.genreSpeed)} faster. Loving a genre makes a day of its work a better day; it doesn’t make the work any better.`,
+    short: `Each of the ${FILM_GENRES.length} genres keeps two figures of yours: Familiarity, from studying it, and Work In It, from rehearsals, nights on stage, shoot days and self-tapes in it. Press Study It beside a genre, under Genres on your Player Profile, to spend ${plural(ENGAGEMENT.genre.minutes, 'minute')} reading a play of its kind the game has, or watching a film of the kind where it has none. The better of the two is how well you know the genre. Work in more than one genre counts each for its share, and another genre counts only where it’s the same line: a kind of the genre, or the broader genre of a kind. Knowing a work’s genres is part of its preparation in a taped brief, a self-tape, an audition, a shoot day and a night on stage, every point up to ${pct(BRIEF.complete.genre)} showing in the work; casting reads it in how well you suit a part; and a scene or a part’s lines in work of its kind are prepared up to ${pct(ENGAGEMENT.genreSpeed)} faster. Loving a genre makes a day of its work a better day; it doesn’t make the work any better.`,
     steps: [
       'On the Player Profile, Genres lists every genre with what It Asks For, your Familiarity and your Work In It, and Study It and Open Its Brief.',
       'Find narrows the list by name, and Show picks All, Loved, Studied Or Worked In or With Requirements; the button under the list shows more.',
@@ -512,9 +512,10 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Familiarity', value: `Each study adds ${pct(ENGAGEMENT.genre.study)} of what’s left to 100; the same genre again the same day adds half the one before`, estimate: true },
-      { label: 'Work In It', value: `A take in it, a night of a play of its kind, or a day’s shooting of a film or series of its kind, adds ${pct(ENGAGEMENT.genre.practice)} of what’s left, shared among the work’s genres; a take by how far it was prepared, ${pct(BRIEF.practiceUnprepared)} of that taped cold; a take that’s the same again adds half`, estimate: true },
-      { label: 'Knowing The Genre', value: `The better of Familiarity and Work In It, in the brief’s best-known genre, counted toward a take’s interpretation: with none, ${pct(EVALUATION.partFloor.genre!)} of it stands, and every point to ${pct(BRIEF.complete.genre)} adds its share, complete there`, estimate: true },
-      { label: 'Faster Preparation', value: `Up to ${pct(ENGAGEMENT.genreSpeed)} at 100: a scene for class from a play of the kind, and a part’s lines in one. A brief’s own steps speed up with material you’ve met before instead` },
+      { label: 'Work In It', value: `A take in it, a rehearsal or a night of a play of its kind, or a rehearsal or shoot day of a production of its kind, adds ${pct(ENGAGEMENT.genre.practice)} of what’s left, shared among the work’s genres by their share of it; a take by how far it was prepared, ${pct(BRIEF.practiceUnprepared)} of that taped cold; a take that’s the same again adds half`, estimate: true },
+      { label: 'Knowing The Genre', value: `The better of Familiarity and Work In It, for each genre of the work by its share: one genre is all of it; with more, the first named is half and the rest share the other half, and a broad genre named beside one of its own kinds counts as that kind. It counts toward the interpretation of a taped brief, a self-tape, an audition, a shoot day and a night on stage: with none, ${pct(EVALUATION.partFloor.genre!)} of it stands, and every point to ${pct(BRIEF.complete.genre)} adds its share, complete there`, estimate: true },
+      { label: 'Related Genres', value: `A kind of a genre the work names counts at ${pct(ENGAGEMENT.related.kindToParent)}: Psychological Horror known counts toward Horror. The broader genre of a kind it names counts at ${pct(ENGAGEMENT.related.parentToKind)}: Comedy known counts toward Farce. The best of what you know counts, once. Any other genre counts for nothing, however well you know it`, estimate: true },
+      { label: 'Faster Preparation', value: `Up to ${pct(ENGAGEMENT.genreSpeed)} with every genre of the work known to 100, each counting for its share as Knowing The Genre does: a scene for class from a play of the kind, a part’s lines in one, and a professional part’s lines on its rehearsal days. A brief’s own steps speed up with material you’ve met before instead` },
       // A take of its brief reads it; a play’s night or a class scene reads its own material’s (until 2026-10-13 this said
       // “their work reads it”, which a farce’s night, reading no clown, didn’t).
       // From 2026-10-16 (`content/genre-register.ts`): every genre's scenes are played in a register.
@@ -532,7 +533,7 @@ export const CRAFT: readonly GuideEntry[] = [
     interpret: [
       'It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research holds it with low confidence”, or “No more than any self-tape asks”.',
       'A genre’s look gives Familiarity, Work In It and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps speed up with material you’ve met before instead. It gives what the research found the genre asks, and how sure it is.',
-      `Knowing The Genre, inside a brief, is the better of the first two against the ${pct(BRIEF.complete.genre)} that completes it.`,
+      `Knowing The Genre, inside a brief, is the better of the first two against the ${pct(BRIEF.complete.genre)} that completes it. Every brief is in one genre.`,
       'The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what a self-tape in it is judged more on and calls on, and which part of preparation answers it. A tape held back most by an ability one of those concerns asks for says so: “Your … held back … by … points: …’s … asks for it.”, as when your Composure held back Consistency by 4.2 points and Nordic Noir’s Feeling Held In asks for it.',
       '“You love it” on a genre’s look means a day of its work is a better day: loving it doesn’t make the work faster or limit it.',
     ],
@@ -546,6 +547,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'Playing every genre’s scene the same way: two scenes can stage the same features and still ask different things, since each genre’s register judges the take its own way. A way of playing it that leans where the genre does puts more of the take on what that genre asks.',
       `Studying on past ${pct(BRIEF.complete.genre)} for a take: past that it adds to a take no more, though it still speeds a scene or a part from a play of the kind.`,
       'Expecting a brief’s steps to go faster in a genre you know: they speed up with the material’s features you’ve met before, and the genre is its own part of the take.',
+      'Studying a genre the work isn’t in: a genre that isn’t one of the work’s, a kind of one or the broader genre of one adds nothing to it, however well you know it.',
       `Taping cold to learn a genre: a take taped with nothing prepared counts ${pct(BRIEF.practiceUnprepared)} as much toward your work in it as a prepared take.`,
     ],
     next: [
@@ -557,6 +559,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'craft.profile', kind: 'prerequisite', why: 'Genres is a panel of the Player Profile.' },
       { to: 'craft.brief-tape', kind: 'evaluation', why: `Knowing the genre is part of a take’s preparation: it counts toward the take’s interpretation, and is complete at ${pct(BRIEF.complete.genre)}.` },
       { to: 'coursework.prepare', kind: 'immediate', why: 'A scene from a play of a kind you know is prepared faster, by the better of Familiarity and Work In It.' },
+      { to: 'career.auditions', kind: 'evaluation', why: `Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at ${pct(BRIEF.complete.genre)}, and half of how well casting thinks you suit the role.` },
       { to: 'productions.part', kind: 'immediate', why: 'A part in a play of a kind you know is learned faster.' },
       { to: 'craft.brief-prepare', kind: 'optional', why: 'Open Its Brief, beside each genre, opens the practice brief written for it.' },
       { to: 'craft.identity', kind: 'history', why: 'The genres you’ve worked in are counted in Range.' },
@@ -564,7 +567,7 @@ export const CRAFT: readonly GuideEntry[] = [
     example: {
       setup: `A genre never studied, its brief open, Knowing The Genre at ${pct(UNSTUDIED / 100)} of the ${pct(BRIEF.complete.genre)} that completes it.`,
       steps: ['Press Study It.', 'Press it again the same evening.'],
-      result: `The first study takes familiarity to ${one(FIRST_STUDY)}, and the second the same day only to ${one(SECOND_STUDY)}. Studied once a day from the start instead, it passes ${pct(BRIEF.complete.genre)} on day ${DAYS_TO_KNOW.days}, at ${one(DAYS_TO_KNOW.at)}: the brief’s Knowing The Genre is complete, and the genre’s look says it makes a scene or a part from a play of its kind ${pct(SPEED_KNOWN)} quicker to prepare.`,
+      result: `The first study takes familiarity to ${one(FIRST_STUDY)}, and the second the same day only to ${one(SECOND_STUDY)}. Studied once a day from the start instead, it passes ${pct(BRIEF.complete.genre)} on day ${DAYS_TO_KNOW.days}, at ${one(DAYS_TO_KNOW.at)}: the brief’s Knowing The Genre is complete, and the genre’s look says it makes a scene or a part from a play of only its kind ${pct(SPEED_KNOWN)} quicker to prepare.`,
     },
   },
   {

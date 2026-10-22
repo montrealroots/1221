@@ -31,11 +31,15 @@
  *   `TOGETHER_BOND`, 1, and nobody else's, where a twin taped with the recording moves none; taped unprepared, the
  *   classmate slips and is covered, and her trust rises by `TOGETHER_COVERED`, 2, with no bond for a take under Strong;
  *   the callback earned, answered as its note asks, ends, across a save and a load; screen, voiceover and a staged
- *   technique grow under `self-tape`; and a take alone gives drama practice 10, which speeds a scene from Trifles by
- *   1 + 10/600.
+ *   technique grow under `self-tape`; and a take alone gives drama practice 10, which sped a scene from Trifles by
+ *   1 + 10/600 until brief 21 (2026-10-22). From then drama is half of Trifles (a mystery and a drama, `genreNeeds`), so
+ *   the practice is worth 1 + 5/600 there, below what the take's material met gives the scene (one of its two features
+ *   met once of six, 1 + (1/12)/6), and the better of the two counts (`coursework.prepare`), as it did.
  * - `genre.study`: two studies the same day come to 8 and 11.68 (100 × 0.08, then half of it on what's left), and
- *   speed a scene from Trifles and A Marriage Proposal's lines by 1 + 11.68/600, each against a twin who didn't
- *   study; and a third that day, after a save and a load, adds a quarter of the first's on what's left. A scene from
+ *   sped a scene from Trifles and A Marriage Proposal's lines by 1 + 11.68/600 until brief 21, each against a twin who
+ *   didn't study. From then by 1 + 5.84/600 in each: drama is half of Trifles, and A Marriage Proposal, a comedy and a
+ *   farce, is one requirement, a farce, which comedy known (the broader genre) meets at half (`relatedness`). A third
+ *   study that day, after a save and a load, adds a quarter of the first's on what's left. A scene from
  *   Riders to the Sea, a tragedy by the game's own list, is sped by studies of tragedy. Until 2026-10-13 it wasn't at
  *   all: its title's small "to" missed the list's "Riders To The Sea" (`genresOfPlay`). Found by this pass, that test
  *   failed until the titles were compared without their case, the same day.
@@ -77,6 +81,7 @@ import { healthOf } from '@/engine/systems/health';
 import { BRIEF_BY_ID } from '@/engine/content/briefs';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 import { genresOfPlay } from '@/engine/content/plays';
+import { genreSpeed } from '@/engine/systems/engagement';
 import { sceneById } from '@/engine/content/coursework';
 import { MASTERED } from '@/engine/content/abilities';
 
@@ -748,7 +753,7 @@ describe('practice.self_tape', () => {
     expect(sim.player.craft!.voiceover).toBe(c1.voiceover);
   });
 
-  it('PLAYER JOURNEY: one take of brief-drama, with no study, gives drama practice 10 (a tenth of what’s left, of 100), and the first read of a scene from Trifles moves 1 + 10/600 of an untaped twin’s', () => {
+  it('PLAYER JOURNEY: one take of brief-drama, with no study, gives drama practice 10 (a tenth of what’s left, of 100), worth 1 + 5/600 in Trifles, half of it drama, and the first read of a scene from it moves by the better of that and the take’s material met, 1 + (1/12)/6 of an untaped twin’s', () => {
     const ada = life('g20-genre-2'), twin = life('g20-genre-2');
     for (const one of [ada, twin]) one.advanceTo(at(2026, 9, 5, 16, 5));
     const drama = BRIEF_BY_ID['brief-drama']!;
@@ -761,7 +766,10 @@ describe('practice.self_tape', () => {
     expect(say(ada, 'practice.self_tape', { genre: 'drama', brief: drama.id }).ok).toBe(true);
     expect(ada.player.engagement!.byGenre.drama).toMatchObject({ familiarity: 0, practice: 10 });
     expect(twin.player.engagement?.byGenre.drama).toBeUndefined();
-    expect(sceneRead(ada) / sceneRead(twin)).toBeCloseTo(1 + 10 / 600, 9);
+    // Until brief 21 (2026-10-22) the whole 1 + 10/600, drama the better known of Trifles' two genres; from then its half.
+    expect(genreSpeed(ada.player, genresOfPlay('Trifles'))).toBeCloseTo(1 + 5 / 600, 12);
+    // The scene's two features, one met once by the take, of the six that make one full: 1/12 familiar, and the better.
+    expect(sceneRead(ada) / sceneRead(twin)).toBeCloseTo(1 + 1 / 12 / 6, 9);
   });
 });
 
@@ -798,12 +806,13 @@ describe('genre.study', () => {
   };
   const studyTwice = (sim: Simulation, genre: string) => studies(sim, genre, [8, FAMILIAR]);
 
-  it('PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles moves 1 + 11.68/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left', () => {
+  it('PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left', () => {
     const ada = life('g20-genre-2'), twin = life('g20-genre-2');
     for (const one of [ada, twin]) one.advanceTo(at(2026, 9, 5, 16, 5));
     studyTwice(ada, 'drama');
     expect(twin.player.engagement?.byGenre.drama).toBeUndefined();
-    expect(sceneRead(ada) / sceneRead(twin)).toBeCloseTo(1 + FAMILIAR / 600, 9);
+    // Until brief 21 (2026-10-22), 1 + 11.68/600: drama the better known of Trifles' two; from then its half.
+    expect(sceneRead(ada) / sceneRead(twin)).toBeCloseTo(1 + (0.5 * FAMILIAR) / 600, 9);
     // The day's count survives a reload: 2 × (1 − 0.1168) = 1.7664 more, to 13.45 at two places.
     const back = reload(ada);
     dials(back); // TEST SETUP
@@ -851,7 +860,7 @@ describe('genre.study', () => {
     expect(genresOfPlay('The Proposal')).toEqual(['comedy', 'farce']);
   });
 
-  it('PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 11.68/600 of a twin’s who didn’t study', () => {
+  it('PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 5.84/600 of a twin’s who didn’t study: a farce, which comedy known meets at half', () => {
     const lines = (study: boolean) => {
       const sim = life('g20-summer');
       tended(sim, at(2027, 3, 20));
@@ -868,7 +877,10 @@ describe('genre.study', () => {
       expect(processOf(show).lines).toBe(r.value!.lines);
       return r.value!.lines;
     };
-    expect(lines(true) / lines(false)).toBeCloseTo(1 + FAMILIAR / 600, 9);
+    // A comedy and a farce, one requirement, the farce (`genreNeeds`); comedy, the broader, meets a farce at half
+    // (`ENGAGEMENT.related.parentToKind`). Until brief 21 (2026-10-22), comedy listed met it whole: 1 + 11.68/600.
+    expect(genresOfPlay('A Marriage Proposal')).toEqual(['comedy', 'farce']);
+    expect(lines(true) / lines(false)).toBeCloseTo(1 + (0.5 * FAMILIAR) / 600, 9);
   });
 });
 

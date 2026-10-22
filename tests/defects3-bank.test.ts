@@ -175,7 +175,8 @@ describe('a loan payment returned unpaid is charged where it was drawn', () => {
 describe('a card paid off before its statement owes no missed payment', () => {
   /*
    * The life’s Chase card owing $4,800, its statement of 20 September asking it all; the bank emptied the minute before
-   * the due date of Sunday 11 October at noon, so it’s late once ($48 the minimum, the safe harbor’s $30 fee), and then
+   * the due date of Tuesday 13 October at noon (Sunday 11 October until brief 21, 2026-10-22, when a US card's due date
+   * became one day each month, Chase's the 13th), so it’s late once ($48 the minimum, the safe harbor’s $30 fee), and then
    * on a hardship plan. Paid off, $4,830, before the 20 October statement, that statement owes nothing.
    * Break tried: the statement’s nothing-owed branch without `credit.missed = 0`: the card stayed a payment behind,
    * troubles() held card_behind at $0, and Home said “Your card is a payment behind, owing $0.”
@@ -187,10 +188,10 @@ describe('a card paid off before its statement owes no missed payment', () => {
     purchases(sim, card, 4_800_00); // TEST SETUP
     sim.advanceTo(edt(9, 20, 9, 1));
     expect(stateOf(sim.player, card).statementBalance).toBe(4_800_00);
-    sim.advanceTo(edt(10, 11, 11, 59));
+    sim.advanceTo(edt(10, 13, 11, 59));
     setBalance(sim, checking, 0); // TEST SETUP: the bank emptied the minute before the due date
     setBalance(sim, mine(sim, 'savings', 'us-chase'), 0); // TEST SETUP
-    sim.advanceTo(edt(10, 11, 12, 5));
+    sim.advanceTo(edt(10, 13, 12, 5));
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
     expect(stateOf(sim.player, card).missed).toBe(1);
     expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 101_00 });
@@ -217,17 +218,19 @@ describe('a card paid off before its statement owes no missed payment', () => {
 
 describe('a card’s due date across a month’s end comes at noon', () => {
   /*
-   * Chase’s 21 days from the 20 October statement: Tuesday 10 November, at noon, Eastern Standard Time.
+   * Chase’s due date from the 20 October statement: Friday 13 November, at noon, Eastern Standard Time, the day that keeps
+   * Chase’s 21 days after a statement on the 20th in every month (Reg Z §1026.7(b)(11), from brief 21, 2026-10-22: until
+   * then the statement plus 21 days, Tuesday 10 November).
    * Break tried: `dueAt` passing the 41st of October to `instantFromZoned` again: it came at 12:01.
    */
-  it('PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November', () => {
+  it('PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 13 November', () => {
     const sim = settled('d3-due-noon');
     const card = mine(sim, 'credit_card', 'us-chase');
     sim.advanceTo(edt(10, 1, 9, 0));
     purchases(sim, card, 200_00); // TEST SETUP
     sim.advanceTo(edt(10, 20, 9, 1));
     const due = sim.universe.scheduled.filter((i) => i.kind === 'card.due' && i.status === 'pending' && i.payload.accountId === card.id).map((i) => i.at);
-    expect(due).toEqual([est(11, 10, 12, 0)]);
+    expect(due).toEqual([est(11, 13, 12, 0)]);
   });
 });
 

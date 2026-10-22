@@ -28,7 +28,7 @@ import { SUMMER_PLAYS } from '@/engine/content/plays';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { KNOB_READS, PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { courseworkOf } from '@/engine/systems/coursework';
-import { castFit, classmatePerformer } from '@/engine/systems/school';
+import { castFit, classGenres, classmatePerformer, termNow } from '@/engine/systems/school';
 import { performerOf } from '@/engine/systems/evaluation';
 import { KNOB_LIMITS, personalityOf } from '@/engine/systems/personality';
 
@@ -112,28 +112,36 @@ describe('every decision has a date', () => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 describe('companyPart', () => {
-  it('PLAYER JOURNEY: an actress the Summer Cabaret reads eighth takes Cathleen, and the company’s unnamed part in the two plays whose only woman is a lead, through the summer to her credits', () => {
+  it('PLAYER JOURNEY: an actress the Summer Cabaret reads second in Riders To The Sea takes Maurya, and the company’s unnamed part in the two plays whose only woman is a lead, read below their four leads, through the summer to her credits', () => {
     const sim = student('dec14-cab-7');
     sim.advanceTo(on(2027, 1, 4, 9, 1));
     // Joined the way the School tab joins it.
     expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
     const shows = sim.player.school!.summer!.shows!;
-    // Where the company reads her against her classmates, as `companyPart` reads it: below the four leads in each.
+    // Where the company reads her against her classmates, as `companyPart` reads it. From brief 21 (2026-10-22) with the
+    // play's genres as each knows them: hers from her own record, the class's from the School's productions so far
+    // (`classGenres`), none of either yet in her first January.
+    const theirs = classGenres(sim, sim.player, termNow(sim), sim.player.school!.offset ?? 0);
     const place = (title: string) => {
       const play = SUMMER_PLAYS.find((p) => p.title === title)!;
-      const mine = castFit(sim, performerOf(sim, sim.player), play.reads, [], `company:${sim.player.id}`, play.title);
-      return 1 + sim.player.school!.classmates.filter((_m, i) => castFit(sim, classmatePerformer(sim, sim.player, i), play.reads, [], `company:${i}`, play.title) > mine).length;
+      const mine = castFit(sim, performerOf(sim, sim.player), play.reads, [], `company:${sim.player.id}`, play.title, sim.player);
+      return 1 + sim.player.school!.classmates.filter((_m, i) => castFit(sim, classmatePerformer(sim, sim.player, i), play.reads, [], `company:${i}`, play.title, theirs) > mine).length;
     };
     // Sixth, eighth and eighth until later on 2026-10-16, when a stage's house came to weigh the voice and the body
     // (`STAGE_LEAN`); sixth, sixth and seventh until the integration pass of 2026-10-16, when a result came to be rounded
     // once (evaluation-9) and classmates read within a tenth of her fell either side; sixth, eighth and seventh until later
     // still that day (brief 10), when a night before a house came to ride on more than a class scene (`NIGHT_STAKES`) and
     // casting's read of a part with it, so composure counts for more and one classmate read above her in A Marriage
-    // Proposal fell below her: below the four leads in each, then and now.
-    expect(shows.map((s) => [s.play, place(s.play!)])).toEqual([['Riders To The Sea', 6], ['A Marriage Proposal', 7], ['The Bear', 7]]);
-    // Riders to the Sea writes three parts for a woman below its lead; the other two write her a lead and nothing else.
-    // Until 2026-10-14 she was given Natalya Stepanovna and Yelena Popova, leads she hadn't earned.
-    expect(shows.map((s) => [s.role, s.size])).toEqual([['Cathleen', 'supporting'], ['In The Company', 'featured'], ['In The Company', 'featured']]);
+    // Proposal fell below her: below the four leads in each, then. Second, sixth and fifth from brief 21 (2026-10-22), when
+    // the chair came to read each play's genre as the night will: nobody in her class has yet played a tragedy, a farce
+    // or a comedy, so for each of them the play's genre holds the choices they can show to the same three quarters
+    // (`partFloor.genre`), and those whose reading leaned most on the choices lost the most of it. Hers lost less than
+    // most in Riders To The Sea, and she reads above all but one there.
+    expect(shows.map((s) => [s.play, place(s.play!)])).toEqual([['Riders To The Sea', 2], ['A Marriage Proposal', 6], ['The Bear', 5]]);
+    // Riders to the Sea writes three parts for a woman below its lead, and one lead; the other two write her a lead and
+    // nothing else. Until 2026-10-14 she was given Natalya Stepanovna and Yelena Popova, leads she hadn't earned; until
+    // brief 21 she read sixth in Riders To The Sea and took Cathleen, and from then she reads among its leads and takes Maurya.
+    expect(shows.map((s) => [s.role, s.size])).toEqual([['Maurya', 'lead'], ['In The Company', 'featured'], ['In The Company', 'featured']]);
     for (const title of ['A Marriage Proposal', 'The Bear']) {
       const forHer = SUMMER_PLAYS.find((p) => p.title === title)!.parts.filter((p) => p.for !== 'actor');
       expect(forHer.map((p) => p.size), title).toEqual(['lead']);
@@ -142,7 +150,7 @@ describe('companyPart', () => {
     sim.advanceTo(on(2027, 8, 31));
     const credits = (sim.player.school!.credits ?? []).filter((c) => c.kind === 'summer').map((c) => [c.production, c.role]);
     expect(credits).toEqual([
-      ['Riders To The Sea, Yale Summer Cabaret 2027', 'Cathleen'],
+      ['Riders To The Sea, Yale Summer Cabaret 2027', 'Maurya'],
       ['A Marriage Proposal, Yale Summer Cabaret 2027', 'In The Company'],
       ['The Bear, Yale Summer Cabaret 2027', 'In The Company'],
     ]);

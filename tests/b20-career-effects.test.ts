@@ -101,8 +101,11 @@ describe('B1 and B3: the career’s inputs, each changed alone', () => {
     days(k).forEach((q, i) => expect(q).toBeGreaterThan(days(n)[i]!));
     expect(days(x)).toEqual(days(k));
     // And the days themselves are practice in the project's genres (`practiceGenres`), so the twin who didn't know them
-    // knows them a little now, and no other genre moved.
-    expect(genreState(n.player, 'horror').practice).toBeGreaterThan(0);
+    // knows them a little now, and no other genre moved. Until brief 21 (2026-10-22) the practice was split between both
+    // tags, horror with it; from then the broad tag listed beside its own kind is one requirement, the kind's, so the
+    // practice is psychological horror's and horror itself is where it was, read through its kind (`relatedness`).
+    expect(genreState(n.player, 'psychological_horror').practice).toBeGreaterThan(0);
+    expect(genreState(n.player, 'horror').practice).toBe(genreState(offered.sim.player, 'horror').practice);
     expect(genreState(n.player, 'romantic_comedy').practice).toBe(genreState(offered.sim.player, 'romantic_comedy').practice);
   }, 180_000);
 

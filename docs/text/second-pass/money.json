@@ -85,9 +85,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
   "status": "Rewritten",
-  "hash": "ed34c15a105f",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), its two-missed rule played by tests/guide-chapter-facts.test.ts and its example by tests/guide-examples-money.test.ts",
+  "hash": "ca95f10c442d",
+  "on": "2026-10-22",
+  "evidence": "tests/cardoffers.test.ts and tests/guide-chapter-facts.test.ts play the introductory rate ending 45 days after the bank's notice, as the entry says",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
@@ -99,9 +99,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten",
-  "hash": "a98233d0680a",
-  "on": "2026-10-21",
-  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
+  "hash": "6e4e7ffb578b",
+  "on": "2026-10-22",
+  "evidence": "tests/guide-examples-money.test.ts plays the card example's due day and tests/guide-chapter-facts.test.ts the 60, 150 and 180 days the entry says",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
@@ -127,9 +127,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.payments]": {
   "status": "Rewritten",
-  "hash": "761ebb8b96af",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: the standing order's reasons said before its notice, no vague 'That happens'",
+  "hash": "fb44e30cf717",
+  "on": "2026-10-22",
+  "evidence": "tests/guide-chapter-facts.test.ts and tests/payments.test.ts play the standing order's next working day the guide says; read against docs/STYLE.md",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
@@ -748,6 +748,13 @@
   "evidence": "tests/editorial-money.test.ts, it('a card charged off says how long it stays on the record, paid or not, and where to pay the debt')",
   "first": "Pending"
  },
+ "src/engine/systems/credit.ts#delinquency": {
+  "status": "Rewritten",
+  "hash": "c97b22b06e75",
+  "on": "2026-10-22",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' and tests/guide-chapter-facts.test.ts hold the 61-day and 150-day notices word for word, read against docs/STYLE.md",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/credit.ts#persistentDebt": {
   "status": "Retained",
   "hash": "6e47e1c10e3d",
@@ -764,9 +771,9 @@
  },
  "src/engine/systems/credit.ts#registerCredit": {
   "status": "Rewritten",
-  "hash": "1f746b293b7d",
-  "on": "2026-10-21",
-  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
+  "hash": "7f8aaba04c15",
+  "on": "2026-10-22",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' reads each late notice's minimum payment due with what's past due, word for word",
   "first": "Pending"
  },
  "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {
@@ -827,9 +834,9 @@
  },
  "src/engine/systems/credit.ts#statementWords": {
   "status": "Rewritten",
-  "hash": "66d0e425c83d",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' holds the statement after a miss and while suspended, exact, and 'Britain: Barclays …' the British one; read in order in docs/verification/continuity-2026-10-20/money/card-missed-six.txt",
+  "hash": "f7e7e5e226de",
+  "on": "2026-10-22",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' reads each statement's minimum payment with what's past due, and tests/b21-banking-proof.test.ts the 20 October statement's",
   "first": "Pending"
  },
  "src/engine/systems/earnings.ts#ukTaxYear": {
@@ -1177,9 +1184,9 @@
  },
  "src/engine/systems/payments.ts#registerPayments": {
   "status": "Rewritten",
-  "hash": "05090255e845",
-  "on": "2026-10-19",
-  "evidence": "tests/remaining-banking.test.ts standing order journey, tests/evidence-g13-money.test.ts scheduled payment cases and tests/evidence2-b05.test.ts read the notices",
+  "hash": "fad86c9631ba",
+  "on": "2026-10-22",
+  "evidence": "tests/payments.test.ts 'moves the amount into savings on its day each month' plays the Icelandic order moved to Monday 12 January; the label added is the order's own, Standing Order",
   "first": "Pending"
  },
  "src/engine/systems/payments.ts#registerPayments <bank.add_standing_order>": {
@@ -1492,9 +1499,9 @@
  },
  "src/ui/bank/BankCard.tsx#CardPanel": {
   "status": "Rewritten",
-  "hash": "54e092a7e2b4",
-  "on": "2026-10-21",
-  "evidence": "tests/b20-credit-limit.test.ts: the review and the ask held to income or savings, the notice, the decline and the wait in their words (brief 20's D2)",
+  "hash": "276ec44a712d",
+  "on": "2026-10-22",
+  "evidence": "tests/editorial17-money.test.ts reads the suspended card's charge-off day and the 60-day penalty rule; docs/verification/genre-banking-2026-10-22/app/walk.mjs reads them on the built app's Cards tab at 1440 and 390",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
@@ -1527,9 +1534,9 @@
  },
  "src/ui/bank/BankCardOffers.tsx#CardOffers": {
   "status": "Rewritten",
-  "hash": "2c981e579c79",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-money.test.ts 'Chase: two payments missed in a row' and 'Barclaycard: one minimum payment missed' render the introductory rate's words",
+  "hash": "cf82fa05674f",
+  "on": "2026-10-22",
+  "evidence": "tests/cardoffers.test.ts reads the introductory rate's end, 45 days after the 61st day's notice, on the card's offers screen",
   "first": "Pending"
  },
  "src/ui/bank/BankCash.tsx#BankCash": {
@@ -1541,9 +1548,9 @@
  },
  "src/ui/bank/BankLending.tsx#BankLending": {
   "status": "Rewritten",
-  "hash": "d3f713cd892e",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-money.test.ts 'Chase: the fee and its cap', 'an account left overdrawn names the day', 'Chase’s CD', 'RBC: it can’t be broken'; tests/evidence-g10-money.test.ts In Collections; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json",
+  "hash": "fdde339e0d29",
+  "on": "2026-10-22",
+  "evidence": "tests/evidence-g10-money.test.ts reads In Collections' 'closed your card after a minimum payment was 180 days late' on the Borrowing screen",
   "first": "Pending"
  },
  "src/ui/bank/BankLending.tsx#SWITCH_OUTCOME": {
@@ -1618,9 +1625,9 @@
  },
  "src/ui/bank/BankStatements.tsx#CardStatementView": {
   "status": "Rewritten",
-  "hash": "974ec452b0e1",
-  "on": "2026-10-19",
-  "evidence": "tests/statements-hardship.test.ts, it('asks the plan’s payment, which the due date judges …') and tests/hardship-plan-minimum.test.ts render the minimum line",
+  "hash": "82f3b9c8e29b",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/app/walk.mjs reads the November statement's minimum with what's past due on the built app's Statements tab at 1440 and 390; tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/ui/bank/BankStatements.tsx#Lines": {
@@ -1827,11 +1834,11 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/BankWorkspace.tsx#interestWords": {
-  "status": "Retained",
-  "hash": "ec6b5087b591",
-  "on": "2026-10-19",
-  "reason": "What an account pays, said the way a bank's terms say it: the rate and APY, steps, tiers, bonus, when it's paid and the tax kept back",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "68fa0138e5f5",
+  "on": "2026-10-22",
+  "evidence": "tests/home-account-screens.test.ts reads 'Pays 1.05% AER (1.045% a year before compounding).' and tests/language-dynamic.test.ts Chase's APY sentence on the bank screen",
+  "first": "Pending"
  },
  "src/ui/workspaces/BankWorkspace.tsx#MONTH_NAMES": {
   "status": "Retained",

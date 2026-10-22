@@ -1,0 +1,12 @@
+at fd32e869, 0 tracked files uncommitted, 2026-10-22T11:25:14Z
+app-build exit=0 secs=18 cmd: npm run build
+app-saves exit=0 secs=31 cmd: npx vite-node docs/verification/career-2026-10-20/app/make-saves.ts -- /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f21-APP-work/app-saves
+preview-4221 exit=0 secs=6 cmd: this clone's dist/index.html served
+app-walk-1440 exit=0 secs=178 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-2026-10-20/app/app-walk.mjs docs/verification/genre-banking-2026-10-22/final-runs/app/walk 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f21-APP-work/app-saves
+app-walk-390 exit=0 secs=181 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-2026-10-20/app/app-walk.mjs docs/verification/genre-banking-2026-10-22/final-runs/app/walk 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f21-APP-work/app-saves
+older-walk-1440 exit=0 secs=140 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/audit-2026-10-21/app/older-walk.mjs docs/verification/genre-banking-2026-10-22/final-runs/app/older 1440
+older-walk-390 exit=0 secs=172 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/audit-2026-10-21/app/older-walk.mjs docs/verification/genre-banking-2026-10-22/final-runs/app/older 390
+b21-saves exit=0 secs=6 cmd: npx vite-node docs/verification/genre-banking-2026-10-22/app/make-saves.ts
+b21-walk-1440 exit=0 secs=58 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/genre-banking-2026-10-22/app/walk.mjs docs/verification/genre-banking-2026-10-22/final-runs/app/b21 1440
+b21-walk-390 exit=0 secs=61 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/genre-banking-2026-10-22/app/walk.mjs docs/verification/genre-banking-2026-10-22/final-runs/app/b21 390
+DONE 2026-10-22T11:39:25Z

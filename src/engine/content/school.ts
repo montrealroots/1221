@@ -292,6 +292,11 @@ export const SEAGULL_2027 = {
   rehearsals: { from: '2027-01-19', to: '2027-02-25' },
   run: { from: '2027-03-05', to: '2027-03-27' },
   roles: { actor: 'Konstantin', actress: 'Nina' },
+  // Its kinds, as Uncle Vanya's in the Rep's catalog (`REP_PLAYS`): Chekhov called it a comedy in four acts, and it's
+  // staged as a drama. Until 2026-10-22 (the owner's brief 21) it had none, being in no play catalog, so the only stage
+  // work of a first year read no genre and taught none, rehearsed or played (`genresOfHolder`; found by
+  // tests/b21-journeys.test.ts's J2, whose student went on as Nina twice and came to April knowing no genre).
+  kinds: ['tragicomedy', 'drama'],
   source: 'https://yalerep.org/about/2026-27-season/; Equity audition notice (https://www.broadwayworld.com/equity-audition/Yale-Repertory-Theatre-2026-27-Season-Yale-Repertory-Theatre-2026-51081)',
 } as const;
 

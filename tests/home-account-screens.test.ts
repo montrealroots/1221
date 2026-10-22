@@ -113,7 +113,9 @@ describe('an account kept at home, in its own money on every screen', () => {
     expect(s.bank).toContain(`Balance ${held(saver.held!)} About $${(saver.balance / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} at an estimated exchange rate`);
     expect(s.bank).toContain('Balance £100.00 About $126.58 at an estimated exchange rate');
     expect(s.bank).toContain('Its debit card costs 2.75% of each purchase in dollars, and 2.75% and 2% (at least £1.75, at most £5.00) of the cash at another bank’s machine here, with the machine’s own fee.');
-    expect(s.bank).toContain('Pays 1.05% a year (1.055% APY).');
+    // HSBC's 1.05% AER, said as the bank quotes it, with the rate a day's interest is worked from, credited monthly:
+    // 12 × (1.0105^(1/12) − 1) = 1.045% (from 2026-10-22, brief 21: until then "Pays 1.05% a year (1.055% APY).").
+    expect(s.bank).toContain('Pays 1.05% AER (1.045% a year before compounding).');
     expect(s.bank).toMatch(/at your other banks, £5,\d{3} of it at HSBC UK\./);
     // Home's money line.
     expect(s.home).toContain(`and ${held(saver.held! + current.held!)} at HSBC UK. Worth`);
@@ -122,7 +124,8 @@ describe('an account kept at home, in its own money on every screen', () => {
     expect(s.currentLook).toContain('You have £100.00 ($126.58) in it at HSBC UK');
     expect(s.bankLook).toContain(`You have ${held(saver.held! + current.held!)} ($`);
     // August's statement, in pounds: the split brought in on the first morning, £100 out, its interest in (139¢ for the
-    // seven nights on 693,798¢ at 1.05%, 109.81p, so 110p).
+    // seven nights on 693,798¢ at the nominal 1.045%, 139.04¢, and 139.71¢ at the 1.05% that ran as nominal until brief
+    // 21, 2026-10-22; 109.81p, so 110p).
     expect(s.statement).toContain('Figures are in GBP, as HSBC UK keeps them, with each one’s value in dollars under it, at an estimated exchange rate.');
     expect(s.statement).toContain('Opening Balance £0.00 $0.00 in dollars Money In £5,582.10 $7,065.95 in dollars Money Out £100.00 $126.58 in dollars');
     expect([paid.amount, paid.native]).toEqual([139, 110]);

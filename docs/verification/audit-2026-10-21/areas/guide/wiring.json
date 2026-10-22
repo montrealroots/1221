@@ -79,7 +79,7 @@
    "kind": "finance.pay_card",
    "payload": "{ amount: 'full', accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1127"
+   "handler": "src/engine/systems/credit.ts:1216"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -109,7 +109,7 @@
    "kind": "finance.set_autopay",
    "payload": "{ mode: state.autopay === 'full' ? 'minimum' : 'full', accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1146"
+   "handler": "src/engine/systems/credit.ts:1235"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -149,7 +149,7 @@
    "kind": "card.set_everyday",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1158"
+   "handler": "src/engine/systems/credit.ts:1247"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -169,7 +169,7 @@
    "kind": "card.refund_credit",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1120"
+   "handler": "src/engine/systems/credit.ts:1209"
   },
   {
    "file": "src/ui/bank/BankCardOffers.tsx",
@@ -409,7 +409,7 @@
    "kind": "bank.cancel_scheduled",
    "payload": "{ id: item.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:307"
+   "handler": "src/engine/systems/payments.ts:343"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -419,7 +419,7 @@
    "kind": "bank.cancel_standing_order",
    "payload": "{ id: order.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:280"
+   "handler": "src/engine/systems/payments.ts:316"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -429,7 +429,7 @@
    "kind": "bank.set_payments",
    "payload": "{ linkSavings: !pay.linkSavings }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:247"
+   "handler": "src/engine/systems/payments.ts:283"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -439,7 +439,7 @@
    "kind": "bank.schedule_payment",
    "payload": "{ fromId: from, toId: to, amount: cents(spAmount), at }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:290"
+   "handler": "src/engine/systems/payments.ts:326"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -449,7 +449,7 @@
    "kind": "bank.add_standing_order",
    "payload": "{ toId: soTo || savings[0]?.id, amount: cents(soAmount), day: Number(soDay) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:264"
+   "handler": "src/engine/systems/payments.ts:300"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -458,7 +458,7 @@
    "kind": "bank.set_payments",
    "payload": "{ everyday: e.target.value }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:247",
+   "handler": "src/engine/systems/payments.ts:283",
    "note": "A select, its options cash, credit and debit, sending the one chosen."
   },
   {
@@ -519,7 +519,7 @@
    "kind": "bank.set_alerts",
    "payload": "{ lowBalance: cents(low), largePayment: cents(large) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/statements.ts:517"
+   "handler": "src/engine/systems/statements.ts:520"
   },
   {
    "file": "src/ui/bank/BankStatements.tsx",
@@ -529,7 +529,7 @@
    "kind": "bank.set_alerts",
    "payload": "{ upcoming: alerts.upcoming === false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/statements.ts:517"
+   "handler": "src/engine/systems/statements.ts:520"
   },
   {
    "file": "src/ui/bank/BankStatements.tsx",
@@ -539,7 +539,7 @@
    "kind": "bank.set_alerts",
    "payload": "{ statements: !alerts.statements }",
    "verdict": "Right",
-   "handler": "src/engine/systems/statements.ts:517"
+   "handler": "src/engine/systems/statements.ts:520"
   },
   {
    "file": "src/ui/bank/RoundUps.tsx",
@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1506"
+   "handler": "src/engine/systems/projobs.ts:1524"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1549"
+   "handler": "src/engine/systems/projobs.ts:1567"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1531"
+   "handler": "src/engine/systems/projobs.ts:1549"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1593"
+   "handler": "src/engine/systems/projobs.ts:1611"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1581"
+   "handler": "src/engine/systems/projobs.ts:1599"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1497"
+   "handler": "src/engine/systems/projobs.ts:1515"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1516"
+   "handler": "src/engine/systems/projobs.ts:1534"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -730,7 +730,7 @@
    "kind": "school.choose_showcase",
    "payload": "{ options: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proshowcase.ts:647"
+   "handler": "src/engine/systems/proshowcase.ts:652"
   },
   {
    "file": "src/ui/career/WorkPane.tsx",
@@ -750,7 +750,7 @@
    "kind": "brief.choose",
    "payload": "{ brief: b.id, reading: rec.reading, ...c }",
    "verdict": "Right",
-   "handler": "src/engine/systems/briefs.ts:837",
+   "handler": "src/engine/systems/briefs.ts:840",
    "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It once a way is chosen (PlayingChooser.tsx), locked by brief.choose; it sends the brief, its reading and the way chosen."
   },
   {
@@ -761,7 +761,7 @@
    "kind": "brief.prepare",
    "payload": "{ brief: b.id, step: s }",
    "verdict": "Right",
-   "handler": "src/engine/systems/briefs.ts:830"
+   "handler": "src/engine/systems/briefs.ts:833"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -771,7 +771,7 @@
    "kind": "brief.choose",
    "payload": "{ brief: b.id, reading: draftReading, ...(rec?.playing ? { pace: rec.playing.pace, scale: rec.playing.scale, structure: rec.playing.structure } : {}) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/briefs.ts:837"
+   "handler": "src/engine/systems/briefs.ts:840"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -781,7 +781,7 @@
    "kind": "brief.reader",
    "payload": "{ brief: b.id, mate: draft === 'alone' ? 'alone' : Number(draft) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/briefs.ts:844"
+   "handler": "src/engine/systems/briefs.ts:847"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -791,7 +791,7 @@
    "kind": "genre.study",
    "payload": "{ genre }",
    "verdict": "Right",
-   "handler": "src/engine/systems/engagement.ts:123"
+   "handler": "src/engine/systems/engagement.ts:242"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -801,7 +801,7 @@
    "kind": "practice.self_tape",
    "payload": "{ genre, brief: b.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/briefs.ts:850"
+   "handler": "src/engine/systems/briefs.ts:853"
   },
   {
    "file": "src/ui/components/ClassMoments.tsx",
@@ -821,7 +821,7 @@
    "kind": "school.choose_playing",
    "payload": "{ assignmentId: a.id, ...c }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1946",
+   "handler": "src/engine/systems/coursework.ts:1947",
    "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It, locked by school.choose_playing; it sends the scene's assignment and the way chosen."
   },
   {
@@ -832,7 +832,7 @@
    "kind": "school.prepare",
    "payload": "{ assignmentId: a.id, activity: act.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1925"
+   "handler": "src/engine/systems/coursework.ts:1926"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -842,7 +842,7 @@
    "kind": "school.approach",
    "payload": "{ assignmentId: a.id, kind: k }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1933"
+   "handler": "src/engine/systems/coursework.ts:1934"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -851,7 +851,7 @@
    "kind": "school.choose",
    "payload": "{ assignmentId: a.id, question: q.id, option: e.target.value }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1962"
+   "handler": "src/engine/systems/coursework.ts:1963"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -861,7 +861,7 @@
    "kind": "school.ask_partner",
    "payload": "{ assignmentId: a.id, at: when }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1988"
+   "handler": "src/engine/systems/coursework.ts:1989"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -871,7 +871,7 @@
    "kind": "school.cancel_rehearsal",
    "payload": "{ assignmentId: a.id, rehearsalId: r.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2030"
+   "handler": "src/engine/systems/coursework.ts:2031"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -881,7 +881,7 @@
    "kind": "school.orientation",
    "payload": "{ task: o.task }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1914"
+   "handler": "src/engine/systems/coursework.ts:1915"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -901,7 +901,7 @@
    "kind": "school.read_feedback",
    "payload": "{ assignmentId: a.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1980"
+   "handler": "src/engine/systems/coursework.ts:1981"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -911,7 +911,7 @@
    "kind": "school.answer_partner",
    "payload": "{ assignmentId: a.id, askId: k.id, yes: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2000"
+   "handler": "src/engine/systems/coursework.ts:2001"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -921,7 +921,7 @@
    "kind": "school.answer_partner",
    "payload": "{ assignmentId: a.id, askId: k.id, yes: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2000"
+   "handler": "src/engine/systems/coursework.ts:2001"
   },
   {
    "file": "src/ui/components/LienPanels.tsx",
@@ -972,7 +972,7 @@
    "kind": "school.choose_part_playing",
    "payload": "{ which, ...c }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:624",
+   "handler": "src/engine/systems/production.ts:628",
    "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It, locked by school.choose_part_playing; it sends the production (`which`) and the way chosen."
   },
   {
@@ -983,7 +983,7 @@
    "kind": "school.work_note",
    "payload": "{ which, ...(chosen ? { solution: chosen.adjustment, ...(chosen.option ? { option: chosen.option } : {}) } : {}) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:640"
+   "handler": "src/engine/systems/production.ts:644"
   },
   {
    "file": "src/ui/components/RehearsalProcess.tsx",
@@ -993,7 +993,7 @@
    "kind": "school.review_blocking",
    "payload": "{ which }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:610"
+   "handler": "src/engine/systems/production.ts:614"
   },
   {
    "file": "src/ui/components/RehearsalProcess.tsx",
@@ -1003,7 +1003,7 @@
    "kind": "school.learn_part",
    "payload": "{ which }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:593"
+   "handler": "src/engine/systems/production.ts:597"
   },
   {
    "file": "src/ui/components/StudyPlanPanels.tsx",
@@ -1043,7 +1043,7 @@
    "kind": "school.request_conversion",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3614"
+   "handler": "src/engine/systems/school.ts:3696"
   },
   {
    "file": "src/ui/components/StudyPlanPanels.tsx",
@@ -1400,7 +1400,7 @@
    "kind": "bank.close_savings",
    "payload": "{ accountId: account.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/banking.ts:1013"
+   "handler": "src/engine/systems/banking.ts:1062"
   },
   {
    "file": "src/ui/workspaces/BankWorkspace.tsx",
@@ -1410,7 +1410,7 @@
    "kind": "bank.transfer",
    "payload": "{ fromId, toId, amount: cents, ...(moving?.currency ? { in: moving.currency } : {}) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/banking.ts:953"
+   "handler": "src/engine/systems/banking.ts:1002"
   },
   {
    "file": "src/ui/workspaces/BankWorkspace.tsx",
@@ -1420,7 +1420,7 @@
    "kind": "bank.open_savings",
    "payload": "{ bankId: there.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/banking.ts:1000"
+   "handler": "src/engine/systems/banking.ts:1049"
   },
   {
    "file": "src/ui/workspaces/CalendarWorkspace.tsx",
@@ -1836,7 +1836,7 @@
    "kind": "genre.study",
    "payload": "{ genre: g.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/engagement.ts:123"
+   "handler": "src/engine/systems/engagement.ts:242"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1865,7 +1865,7 @@
    "kind": "school.buy_ppe",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3545"
+   "handler": "src/engine/systems/school.ts:3627"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1875,7 +1875,7 @@
    "kind": "school.call_in_sick",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4309"
+   "handler": "src/engine/systems/school.ts:4391"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1885,7 +1885,7 @@
    "kind": "school.cabaret",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3964"
+   "handler": "src/engine/systems/school.ts:4046"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1895,7 +1895,7 @@
    "kind": "school.summer_cabaret",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4040"
+   "handler": "src/engine/systems/school.ts:4122"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1924,7 +1924,7 @@
    "kind": "school.take_shift",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4318"
+   "handler": "src/engine/systems/school.ts:4400"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1934,7 +1934,7 @@
    "kind": "school.withdraw",
    "payload": "{ confirm: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4270"
+   "handler": "src/engine/systems/school.ts:4352"
   }
  ],
  "decisionAnswers": [
@@ -1968,7 +1968,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1549"
+   "handler": "src/engine/systems/projobs.ts:1567"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -1976,7 +1976,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1581"
+   "handler": "src/engine/systems/projobs.ts:1599"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -2013,7 +2013,7 @@
    "kind": "school.cancel_rehearsal",
    "payload": "(item) => ({ assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2030"
+   "handler": "src/engine/systems/coursework.ts:2031"
   }
  ]
 }

@@ -497,11 +497,13 @@ describe('casting (castFit/castScore)', () => {
   const row = (s: Simulation, name: string) => s.player.school!.castRead!.rows.find((r) => r.name === name)!;
   /**
    * A night's six dimensions as content/tasks.ts writes a performance: the parts of preparation each reads, and whether
-   * the day's fatigue reaches it (every one but interpretation).
+   * the day's fatigue reaches it (every one but interpretation). Interpretation reads the genre too, from 2026-10-22 (the
+   * owner's brief 21): this listed the notes alone until then, which held while no night here read a genre (the Carlotta's
+   * new plays name none) and stopped holding when the Rep's Seagull came to read its kinds.
    */
   const NIGHT: readonly { prep: readonly string[]; fatigue: boolean }[] = [
     { prep: ['lines', 'notes'], fatigue: true }, // believability
-    { prep: ['notes'], fatigue: false }, // interpretation
+    { prep: ['notes', 'genre'], fatigue: false }, // interpretation
     { prep: ['blocking'], fatigue: true }, // connection
     { prep: ['lines', 'blocking'], fatigue: true }, // execution
     { prep: ['lines'], fatigue: true }, // consistency
@@ -509,7 +511,8 @@ describe('casting (castFit/castScore)', () => {
   ];
   /**
    * How much of themselves a night delivered, by the rule, from the night's own record: each dimension's preparation,
-   * the least of its parts at 0.35 and 0.65 more by the part against what completes it, to 1 (`prepFloor`), times the
+   * the least of its parts at 0.35 and 0.65 more by the part against what completes it, to 1 (`prepFloor`; knowing the
+   * genre at 0.75 and 0.25 more, `partFloor.genre`), times the
    * day, which a readiness under 60 brings to 0.6 and 0.4 more by readiness over 60 (`fatigueFloor`) where fatigue
    * reaches; averaged over the six.
    */
@@ -522,7 +525,8 @@ describe('casting (castFit/castScore)', () => {
     expect(w.inputs.piece!.own).toBeUndefined();
     const day = condition.readiness < 60 ? 0.6 + 0.4 * (condition.readiness / 60) : 1;
     return NIGHT.reduce((sum, d) => {
-      const prepared = d.prep.filter((p) => prep[p] !== undefined).reduce((m, p) => Math.min(m, 0.35 + 0.65 * Math.min(1, prep[p]! / (required[p] ?? 1))), 1);
+      const floor = (p: string) => (p === 'genre' ? 0.75 : 0.35);
+      const prepared = d.prep.filter((p) => prep[p] !== undefined).reduce((m, p) => Math.min(m, floor(p) + (1 - floor(p)) * Math.min(1, prep[p]! / (required[p] ?? 1))), 1);
       return sum + prepared * (d.fatigue ? day : 1);
     }, 0) / NIGHT.length;
   };
@@ -567,10 +571,16 @@ describe('casting (castFit/castScore)', () => {
     slept.player.wellbeing.fitness = played.player.wellbeing.fitness;
     const [K, M] = [working(reload(played)), working(reload(slept))];
     for (const s of [K, M]) s.advanceTo(at(2027, 8, 23, 9, 1));
-    // The Seagull's understudy run-through, the one Rep night, at a readiness over 60 with its parts complete: whole.
+    // The Seagull's understudy run-through, the one Rep night, at a readiness over 60 with its lines, blocking and notes
+    // complete, and its kinds known in part: whole but for the genre. Until 2026-10-22 (the owner's brief 21) the Seagull
+    // read no genre, and the night was whole; now its interpretation reads what a first year knows of tragicomedy and
+    // drama, practised at its own calls, under the 90 that completes it.
     const [seagull] = nightsOf(K, 'The Seagull');
     expect(seagull!.inputs.condition.readiness).toBeGreaterThanOrEqual(60);
-    expect(deliveredBy(seagull!)).toBe(1);
+    expect(seagull!.inputs.prep.genre).toBeGreaterThan(0);
+    expect(seagull!.inputs.prep.genre).toBeLessThan(0.9);
+    expect(deliveredBy(seagull!)).toBeLessThan(1);
+    expect(deliveredBy(seagull!)).toBeCloseTo((5 + 0.75 + 0.25 * seagull!.inputs.prep.genre! / 0.9) / 6, 12);
     // A School night and a Rep night weigh one each: the share is the five nights' delivery over five.
     const dK = round3((deliveredBy(seagull!) + sum(four)) / 5);
     const dM = round3((deliveredBy(seagull!) + sum(three)) / 5);
@@ -591,10 +601,12 @@ describe('casting (castFit/castScore)', () => {
     expect(row(M, 'Samuel Park').score).toBe(row(K, 'Samuel Park').score);
     expect(you(K).score).toBeGreaterThan(row(K, 'Samuel Park').score);
     expect(you(M).score).toBeLessThan(row(M, 'Samuel Park').score);
-    // The parts as partsFor's rule gives them, by title in the order read: Barbara Undershaft, then a featured part.
+    // The parts as partsFor's rule gives them, by title in the order read: Barbara Undershaft, then a supporting part.
+    // A featured one until brief 21 (2026-10-22), when the chair came to read the play's genres as each student knows
+    // them and the reads around hers moved (`classGenres`).
     for (const s of [K, M]) expect(s.player.school!.castRead!.rows.map((r) => ({ part: r.part, size: r.size }))).toEqual(partsByRule(s));
     expect(K.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft', size: 'lead' });
-    expect(M.player.school!.casting).toMatchObject({ play: 'Major Barbara', size: 'featured' });
+    expect(M.player.school!.casting).toMatchObject({ play: 'Major Barbara', size: 'supporting' });
   }, 60_000);
 
   it('gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first', () => {

@@ -73,6 +73,9 @@ import { replay, type Evaluation } from '@/engine/systems/evaluation';
 import { drainOf, eveningCost, segmentShares } from '@/engine/systems/workload';
 import { PLAYREADING } from '@/engine/systems/playreading';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
+import { genresOfPlay } from '@/engine/content/plays';
+import { genreState } from '@/engine/systems/engagement';
+import { ENGAGEMENT } from '@/engine/content/engagement';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, zone);
@@ -393,6 +396,9 @@ const PLAY: Record<string, () => void> = {
     a.adaptability = recover * 100;
     Object.assign(proc(), { lines: 1, blocking: 1, blockingMissed: 0 });
     for (const n of proc().notes) n.taken = true;
+    // And the play's genres known to what completes them, the rest of a complete part from brief 21 (2026-10-22), when a
+    // night came to read them (`genrePart`). TEST SETUP.
+    for (const g of genresOfPlay(title) ?? []) genreState(sim.player, g).familiarity = 100 * ENGAGEMENT.genreComplete;
     const mates = sim.player.school!.classmates;
     for (const c of run.cast ?? []) {
       const i = mates.findIndex((m) => m.name === c.name);

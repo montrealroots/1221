@@ -10,15 +10,46 @@
  *
  * - a genre is studied for an hour and a half (a film of the kind, or a play of it the game has), its familiarity
  *   rising a share of what's left, half again the same day;
- * - work done in it (a night of a play of the kind, a self-tape) is practice, one session's worth shared among a
- *   work's genres so two tags don't count twice;
+ * - work done in it (a night of a play of the kind, a self-tape, a shoot day, and from 2026-10-22 a rehearsal call or
+ *   day) is practice, one session's worth shared among a work's genres so two tags don't count twice: evenly until
+ *   2026-10-22, by the work's weights from then (below). A rehearsal counted none until brief 21, harmless while no
+ *   night read the genre; once one did, a student came to opening night knowing none of a genre rehearsed for weeks,
+ *   and a life played straight through the School (tests/remaining-school.test.ts, `ur-1`) was dismissed for nights
+ *   that fell short by it;
  * - familiarity and practice speed the preparation of work in the genre by at most a sixth (`genreSpeed`), the best of
- *   a work's genres and never their sum, and never cap what the work can reach;
+ *   a work's genres and never their sum until 2026-10-22, its genres weighed from then (below), and never cap what the
+ *   work can reach;
  * - an hour of either at a desk costs a little energy.
+ *
+ * From 2026-10-22 (the owner's brief 21) a work's genres are weighed, not taken at their best
+ * (`systems/engagement.ts`, `genreNeeds` and `relevantGenre`). Until then every reader took the best-known of a work's
+ * genres, so knowing one of two counted as knowing both, and knowing both added nothing. Now:
+ *
+ * - `weights.primary`: a work's first-listed genre is its main one and carries half the weight where there are two
+ *   or more, the rest sharing the other half; one alone carries all of it. The lists were written main genre first
+ *   (a play's register is read from its first kind, `GENRE_REGISTER[kinds[0]]`). SLATE's estimate of importance.
+ * - A genre listed beside one of its own kinds (`drama` beside `domestic_drama`, `thriller` beside
+ *   `psychological_thriller`) is the same requirement said twice, broad and narrow: it's absorbed into the kind, which
+ *   takes its weight, so one expertise isn't counted twice.
+ * - `related`: what knowing one genre is worth toward another. A kind of a genre carries most of it
+ *   (`kindToParent`: a domestic drama's actor knows drama's conventions and some); the broad genre carries half of
+ *   one of its kinds (`parentToKind`: drama's conventions without the domestic drama's own). Any other genre is worth
+ *   nothing, two kinds of one broad genre included: the owner's briefs 01, 05 and 21 ask that an unrelated genre give
+ *   no bonus, and with `drama` among most genres' families, kinds crediting each other would have been near
+ *   universal. SLATE's estimates; a genre's kinds are read from the families its source gives it
+ *   (`content/genres.ts`), a family that's a genre of its own (`drama`, `comedy`, `thriller` …) being the broad genre.
  */
 
 export const ENGAGEMENT = {
   energy: { desk: 2 },
   genre: { study: 0.08, practice: 0.1, minutes: 90 },
   genreSpeed: 1 / 6,
+  weights: { primary: 0.5 },
+  related: { kindToParent: 0.75, parentToKind: 0.5 },
+  /**
+   * Where knowing a work's genres counts complete, as a part of its preparation: 0.9, as a technique is mastered at 90.
+   * `BRIEF.complete.genre` was the one place it lived until 2026-10-22 (brief 21), when the School's nights and its
+   * casting came to read it too, and `systems/school.ts` can't import `systems/briefs.ts`, which imports it.
+   */
+  genreComplete: 0.9,
 } as const;

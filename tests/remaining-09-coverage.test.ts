@@ -412,7 +412,10 @@ describe('tax.federal_lien_withdraw: an Inherited family’s student who files n
   const RELEASED = LEVY + 30 * MS_DAY;
   const life = (wealth: 'inherited' | 'wealthy') => createSave(1, 'r09-lien', newLifeFrom({ homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth, bankId: 'us-capital-one' } as Partial<NewSaveConfig>));
 
-  it('PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released 30 days on, Form 12277 is refused while 2028’s return is unfiled and pressed on the lien panel once it’s filed, and the lien is withdrawn 30 days on, said once across a reload; the Wealthy family’s twin, its LT11 under $10,000, has no lien', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released 30 days on, Form 12277 is refused while 2028’s return is unfiled and pressed on the lien panel once it’s filed, and the lien is withdrawn 30 days on, said once across a reload; the Wealthy family’s twin, its LT11 under $10,000, has no lien”. From that day the 3.00% APY runs as its nominal 2.9595%,
+  // and the Wealthy family's 2027, $12,521.41 of interest and $3,450 of work-study, is under the standard deduction: no
+  // federal tax, so no return the IRS makes and no LT11 to compare. The twin is now hers, with less of it earning.
+  it('PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released 30 days on, Form 12277 is refused while 2028’s return is unfiled and pressed on the lien panel once it’s filed, and the lien is withdrawn 30 days on, said once across a reload; her twin who moved all but $600,000 of it into checking on 1 January 2027, its LT11 under $10,000, has no lien', () => {
     const sim = life('inherited');
     const r = () => returnsOf(sim.player)['2027']!;
     sim.advanceTo(ASSESSED + MS_HOUR);
@@ -466,12 +469,19 @@ describe('tax.federal_lien_withdraw: an Inherited family’s student who files n
     expect(titled(back, 'Your Federal Tax Lien Is Withdrawn').map((n) => n.body)).toEqual(['The IRS withdrew the notice of federal tax lien on your 2027 return. A withdrawn notice is treated as if it had never been filed.']);
     expect(back.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2027 } }).error).toBe('The lien has already been withdrawn.');
 
-    // The Wealthy family's twin: the same calendar, an LT11 on 2027 under $10,000, and no lien.
-    const twin = life('wealthy');
+    // Her twin: the same calendar, all but $600,000 moved from savings into 360 Checking, which pays nothing, before 2027's
+    // first day ends; about $17,800 of interest, an LT11 on 2027 under $10,000, and no lien.
+    const twin = life('inherited');
+    twin.advanceTo(at(2027, 1, 1, 9));
+    const accounts = twin.ledger.accountsOf(twin.player.id).filter((a) => !a.closedAt && a.category !== 'term');
+    const saved = accounts.find((a) => a.kind === 'savings')!;
+    twin.must({ kind: 'bank.transfer', payload: { fromId: saved.id, toId: twin.player.primaryAccountId!, amount: saved.balance - 600_000_00 } });
     twin.advanceTo(LT11 + MS_HOUR);
     const t = returnsOf(twin.player)['2027']!;
     expect(t.substitute).toBe(true);
     expect(titled(twin, 'Final Notice Of Intent To Levy').filter((n) => n.at === LT11)).toHaveLength(1);
+    expect(t.owed).toBeGreaterThan(0);
+    expect(t.owed).toBeLessThan(10_000_00);
     expect(t.lien).toBeUndefined();
     expect(titled(twin, 'The IRS Filed A Notice Of Federal Tax Lien')).toEqual([]);
   }, 300_000);

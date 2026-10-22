@@ -587,17 +587,18 @@ describe('benefits.assistance_month', () => {
     expect(run(sim, 'benefits.assistance')).toMatchObject({ ok: true, value: { scheme: 'snap', firstPaymentAt: Date.UTC(2028, 1, 8, 17) } });
     sim.advanceTo(Date.UTC(2028, 4, 8, 18));
     // January, February and March 2028 each had four Sundays at $93, and April five; and the bank’s interest: $3.51,
-    // $3.28, $3.51, $3.40.
+    // $3.28, $3.51, $3.39 (April's $3.40 until brief 21, 2026-10-22, when Chase's 0.01% APY came to be worked from its
+    // nominal rate, 12 × (1.0001^(1/12) − 1), a twenty-thousandth less).
     expect(['2028-01', '2028-02', '2028-03', '2028-04'].map((m) => ledgerMonth(sim, m))).toEqual([
       { ui: 372_00, interest: 3_51, workStudy: 0, wages: 0 },
       { ui: 372_00, interest: 3_28, workStudy: 0, wages: 0 },
       { ui: 372_00, interest: 3_51, workStudy: 0, wages: 0 },
-      { ui: 465_00, interest: 3_40, workStudy: 0, wages: 0 },
+      { ui: 465_00, interest: 3_39, workStudy: 0, wages: 0 },
     ]);
     // FY2027 (USDA, from 1 October 2026): $306 less 30% of the month’s income over the $217 standard deduction, all of it
     // unearned, the 30% rounded up to the dollar. January’s: 30% × ($375.51 − $217) = $47.553, so $48, and $258;
-    // February’s: 30% × $158.28 = $47.484, so $48, and $258; March’s as January’s; April’s: 30% × ($468.40 − $217) =
-    // $75.42, so $76, and $230.
+    // February’s: 30% × $158.28 = $47.484, so $48, and $258; March’s as January’s; April’s: 30% × ($468.39 − $217) =
+    // $75.417, so $76, and $230.
     const paid = memos(sim, /^SNAP, the month/);
     expect(paid.map((t) => [t.at, own(sim, t)[0]!.amount])).toEqual([[Date.UTC(2028, 1, 8, 17), 258_00], [Date.UTC(2028, 2, 9, 17), 258_00], [Date.UTC(2028, 3, 8, 17), 258_00], [Date.UTC(2028, 4, 8, 17), 230_00]]);
     // Said each time; a notice in the same words while the last is unread is brought up to now, not said twice.

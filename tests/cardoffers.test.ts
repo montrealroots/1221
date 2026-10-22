@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, startOfNextDay } from '@/engine/core/time';
 import { cardOf, cardTerms, DUE_KIND, minimumDue, STATEMENT_KIND } from '@/engine/systems/credit';
 import { allocatePayment } from '@/engine/systems/cash';
 import { planLeftOf } from '@/engine/systems/cardoffers';
@@ -60,7 +60,8 @@ describe('an introductory rate', () => {
     expect(sim.player.credit!.statementInterest ?? 0).toBe(0);
   });
 
-  it('ends on a US card for a payment sixty days late', () => {
+  /** Until brief 21 (2026-10-22) at the second due date missed, about 30 days late, with no notice. */
+  it('ends on a US card 45 days after the notice a minimum more than 60 days late brings', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'scraping' }, 'co-intro-late');
     const c = card(sim);
     // A new card, its fifteen months ahead of it.
@@ -71,8 +72,15 @@ describe('an introductory rate', () => {
       while (due === undefined) { sim.advanceTo(nextStatement(sim) + 1000); due = nextDue(sim); }
       broke(sim);
       sim.advanceTo(due + 1000);
-      if (i === 0) expect(sim.player.credit!.introLost).toBeUndefined();
+      expect(sim.player.credit!.introLost).toBeUndefined();
     }
+    const first = sim.player.credit!.pastDue![0]!.at;
+    const to = (days: number) => { while (sim.now < first + days * MS_DAY) { broke(sim); sim.advanceTo(Math.min(first + days * MS_DAY, sim.now + MS_DAY)); } };
+    to(61);
+    const ends = sim.player.credit!.introEndsAt!;
+    expect(ends - startOfNextDay(first + 60 * MS_DAY, sim.homeZone)).toBe(45 * MS_DAY);
+    expect(cardTerms(sim, c, sim.player.credit!.score).apr).toBe(0);
+    sim.advanceTo(ends + 1000);
     expect(sim.player.credit!.introLost).toBe(true);
     expect(cardTerms(sim, c, sim.player.credit!.score).apr).toBeGreaterThan(0.18);
   });

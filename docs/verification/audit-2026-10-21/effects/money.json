@@ -13,7 +13,7 @@
    "consumers": [
     {
      "what": "the order’s monthly handler finds it and pays it from its account",
-     "at": "src/engine/systems/payments.ts:200"
+     "at": "src/engine/systems/payments.ts:229"
     },
     {
      "what": "Short For A Payment lists it against the account it pays from",
@@ -21,7 +21,7 @@
     },
     {
      "what": "closing the savings it pays into calls it off",
-     "at": "src/engine/systems/banking.ts:493"
+     "at": "src/engine/systems/banking.ts:535"
     },
     {
      "what": "the account it pays from can’t be closed while it does (What Pays From Where)",
@@ -96,7 +96,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, Personal Loan, Borrow It (its quote, or why not, said first) (src/ui/bank/BankLending.tsx:383)",
+   "where": "Your Bank, Borrowing, Personal Loan, Borrow It (its quote, or why not, said first) (src/ui/bank/BankLending.tsx:384)",
    "prerequisites": "A bank of the player’s that lends (Citi, Wells Fargo, Capital One through Discover; Chase and Bank of America lend nothing in SLATE), its customer conditions, a record of 580 or more, the bank’s amounts and months, wages paid in over the last 30 days with every loan’s payment within 35% of them, no loan there already; not a bank abroad. Each refused in its words.",
    "reads": "`loanOffer`: the bank’s terms, the record (the rate within its range), wages in the last 30 days, loans held.",
    "changes": "Opens the loan, pays the proceeds into the account named or the checking account there, records its repayment account, and puts its first payment on the calendar on the day it was taken a month on.",
@@ -193,7 +193,7 @@
    "consumers": [
     {
      "what": "its standing orders and payments end with it",
-     "at": "src/engine/systems/banking.ts:490"
+     "at": "src/engine/systems/banking.ts:532"
     }
    ],
    "experienced": "The account gone with its money back.",
@@ -264,7 +264,7 @@
    "consumers": [
     {
      "what": "the monthly handler finds no order and pays nothing",
-     "at": "src/engine/systems/payments.ts:201"
+     "at": "src/engine/systems/payments.ts:230"
     },
     {
      "what": "the calendar skips a cancelled date",
@@ -296,7 +296,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, Switch Bank, Call It Off (src/ui/bank/BankLending.tsx:421)",
+   "where": "Your Bank, Borrowing, Switch Bank, Call It Off (src/ui/bank/BankLending.tsx:422)",
    "prerequisites": "A switch under way, within the service’s right to call it off.",
    "reads": "The switch’s items.",
    "changes": "Cancels them; the history says it was called off.",
@@ -406,11 +406,11 @@
    "consumers": [
     {
      "what": "the standing orders into it are called off",
-     "at": "src/engine/systems/banking.ts:490"
+     "at": "src/engine/systems/banking.ts:532"
     },
     {
      "what": "the link finds no savings there any more",
-     "at": "src/engine/systems/payments.ts:133"
+     "at": "src/engine/systems/payments.ts:135"
     }
    ],
    "experienced": "Gone from Accounts with what it held in checking; Savings Covers The Checking Account refuses On without it.",
@@ -576,7 +576,7 @@
     },
     {
      "what": "it earns the bank’s rate each midnight",
-     "at": "src/engine/systems/banking.ts:872"
+     "at": "src/engine/systems/banking.ts:914"
     }
    ],
    "experienced": "The account appears on Accounts, Savings Covers The Checking Account can go On, and money moved in earns at the month’s end.",
@@ -651,7 +651,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, In Collections, Pay It (src/ui/bank/BankLending.tsx:303)",
+   "where": "Your Bank, Borrowing, In Collections, Pay It (src/ui/bank/BankLending.tsx:304)",
    "prerequisites": "A debt in collections and money in checking.",
    "reads": "The debt and the checking account.",
    "changes": "Pays it down or off.",
@@ -666,7 +666,7 @@
     },
     {
      "what": "the record with no card ages back only once it’s paid",
-     "at": "src/engine/systems/credit.ts:1114"
+     "at": "src/engine/systems/credit.ts:1201"
     }
    ],
    "experienced": "Owed down; once paid, a card can be approved and the bank opens again (evidence-g10).",
@@ -703,7 +703,7 @@
     },
     {
      "what": "Move Money takes it again",
-     "at": "src/engine/systems/banking.ts:974"
+     "at": "src/engine/systems/banking.ts:1023"
     }
    ],
    "experienced": "Move Money and cash work again; the money doesn’t go to the state (b20-money-clock’s twin who pressed Keep The Account).",
@@ -768,7 +768,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, Personal Loan, Pay It Off (src/ui/bank/BankLending.tsx:334)",
+   "where": "Your Bank, Borrowing, Personal Loan, Pay It Off (src/ui/bank/BankLending.tsx:335)",
    "prerequisites": "A loan; its repayment account able to cover what’s owed with the days’ interest since the last payment day.",
    "reads": "The loan, the next payment’s date (a month before it, the last payment day), the repayment account.",
    "changes": "Charges the days’ interest, pays the loan off, closes it and calls off its payments.",
@@ -811,7 +811,7 @@
    "consumers": [
     {
      "what": "on the day it moves the money, at once at one bank or in the sending bank’s days at another, or says why it didn’t",
-     "at": "src/engine/systems/payments.ts:222"
+     "at": "src/engine/systems/payments.ts:258"
     },
     {
      "what": "Short For A Payment lists it against the account it comes from",
@@ -854,7 +854,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Statements, Alerts, Save Alerts (src/ui/bank/BankStatements.tsx:224)",
+   "where": "Your Bank, Statements, Alerts, Save Alerts (src/ui/bank/BankStatements.tsx:226)",
    "prerequisites": "None; an amount, or blank for off.",
    "reads": "Person.alerts.",
    "changes": "The low-balance line, the large-payment line, Statement Ready, Short For A Payment.",
@@ -901,7 +901,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, Personal Loan, Repay From There (src/ui/bank/BankLending.tsx:333)",
+   "where": "Your Bank, Borrowing, Personal Loan, Repay From There (src/ui/bank/BankLending.tsx:334)",
    "prerequisites": "An open loan and an open checking account of the player’s not closing.",
    "reads": "The loan and the account.",
    "changes": "The loan’s repayment account.",
@@ -941,7 +941,7 @@
    "consumers": [
     {
      "what": "the order pays from it",
-     "at": "src/engine/systems/payments.ts:203"
+     "at": "src/engine/systems/payments.ts:232"
     }
    ],
    "experienced": "The order from the new account in its bank’s days (evidence-g14).",
@@ -983,7 +983,7 @@
     },
     {
      "what": "a card’s autopay draws linked savings",
-     "at": "src/engine/systems/credit.ts:629"
+     "at": "src/engine/systems/credit.ts:675"
     },
     {
      "what": "Short For A Payment counts the linked savings a card or loan payment draws",
@@ -1143,7 +1143,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, Switch Bank, Keep The Balance (src/ui/bank/BankLending.tsx:418)",
+   "where": "Your Bank, Borrowing, Switch Bank, Keep The Balance (src/ui/bank/BankLending.tsx:419)",
    "prerequisites": "A switch under way, until close of business the working day before.",
    "reads": "The switch item.",
    "changes": "The switch keeps the old account’s balance where it is.",
@@ -1176,7 +1176,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, Switch Bank (drawn only where the country has a switching service) (src/ui/bank/BankLending.tsx:447)",
+   "where": "Your Bank, Borrowing, Switch Bank (drawn only where the country has a switching service) (src/ui/bank/BankLending.tsx:448)",
    "prerequisites": "A country with a switching service; another bank there that takes the player; a photo ID; no overdraft; no switch under way.",
    "reads": "SWITCHING, the banks, ChexSystems, collections, the ID.",
    "changes": "Schedules the new bank’s first look and the completion on the service’s working days.",
@@ -1210,7 +1210,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Borrowing, A Loan For The Overrun (src/ui/bank/BankLending.tsx:313)",
+   "where": "Your Bank, Borrowing, A Loan For The Overrun (src/ui/bank/BankLending.tsx:314)",
    "prerequisites": "A French bank’s offer of credit after three months past an arranged limit.",
    "reads": "The offer on the account.",
    "changes": "A loan that clears the overrun.",
@@ -1284,7 +1284,7 @@
    "consumers": [
     {
      "what": "each midnight’s interest is built on what the account holds",
-     "at": "src/engine/systems/banking.ts:872"
+     "at": "src/engine/systems/banking.ts:914"
     },
     {
      "what": "the day’s spending and every payment draw on the account it left or reached",
@@ -1374,22 +1374,22 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Close This Card (src/ui/bank/BankCard.tsx:345)",
+   "where": "Your Bank, Cards, the card’s panel, Close This Card (src/ui/bank/BankCard.tsx:353)",
    "prerequisites": "A card not already closing.",
    "reads": "What the card owes.",
    "changes": "Owing nothing it closes now; otherwise it takes nothing new and closes at the statement once paid off.",
    "consumers": [
     {
      "what": "a closing card has no room",
-     "at": "src/engine/systems/credit.ts:578"
+     "at": "src/engine/systems/credit.ts:624"
     },
     {
      "what": "the statement closes it once paid off",
-     "at": "src/engine/systems/credit.ts:847"
+     "at": "src/engine/systems/credit.ts:924"
     },
     {
      "what": "credit used is counted on the cards still open",
-     "at": "src/engine/systems/credit.ts:1324"
+     "at": "src/engine/systems/credit.ts:1460"
     }
    ],
    "experienced": "The day’s groceries no longer on it; “Card Closed”; Credit Used across fewer limits.",
@@ -1460,7 +1460,7 @@
    "consumers": [
     {
      "what": "a locked credit card has no room",
-     "at": "src/engine/systems/credit.ts:582"
+     "at": "src/engine/systems/credit.ts:628"
     },
     {
      "what": "a locked debit card buys nothing: the day goes on the credit card or in cash",
@@ -1505,14 +1505,14 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, The Card’s Offers, Money Transfer (src/ui/bank/BankCardOffers.tsx:100)",
+   "where": "Your Bank, Cards, The Card’s Offers, Money Transfer (src/ui/bank/BankCardOffers.tsx:102)",
    "prerequisites": "A card whose terms offer a money transfer: NatWest’s, Santander España’s and Bankinter’s alone.",
    "reads": "The card’s terms, its room, the primary account.",
    "changes": "The card owes the amount and its fee as a transfer at its rate; the checking account holds the amount.",
    "consumers": [
     {
      "what": "each night the transfer builds interest at its own rate",
-     "at": "src/engine/systems/credit.ts:1038"
+     "at": "src/engine/systems/credit.ts:1121"
     }
    ],
    "experienced": "Checking up, the card owing more; the transfer’s interest at each statement.",
@@ -1538,7 +1538,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, The Card’s Offers, Pay A Purchase In Equal Months (src/ui/bank/BankCardOffers.tsx:126)",
+   "where": "Your Bank, Cards, The Card’s Offers, Pay A Purchase In Equal Months (src/ui/bank/BankCardOffers.tsx:128)",
    "prerequisites": "A card whose terms offer a plan, a purchase on it to plan, months the bank offers.",
    "reads": "The card’s plan terms and room.",
    "changes": "A plan: what’s left, the month and the fee, asked in the minimum, drawing no interest.",
@@ -1571,7 +1571,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, The Card’s Offers, Redeem (src/ui/bank/BankCardOffers.tsx:91)",
+   "where": "Your Bank, Cards, The Card’s Offers, Redeem (src/ui/bank/BankCardOffers.tsx:93)",
    "prerequisites": "Rewards earned on the card.",
    "reads": "The card’s rewards, built at each statement on what was spent on it.",
    "changes": "Posts the rewards onto the card as a credit and sets them to nothing.",
@@ -1609,7 +1609,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Send The Credit Back (src/ui/bank/BankCard.tsx:339)",
+   "where": "Your Bank, Cards, the card’s panel, Send The Credit Back (src/ui/bank/BankCard.tsx:347)",
    "prerequisites": "A card holding a credit balance.",
    "reads": "The card’s balance.",
    "changes": "Posts the credit back to the primary account.",
@@ -1649,7 +1649,7 @@
    "consumers": [
     {
      "what": "the stopped card buys nothing until the new one comes",
-     "at": "src/engine/systems/credit.ts:582"
+     "at": "src/engine/systems/credit.ts:628"
     },
     {
      "what": "the new card arrives once with a new number",
@@ -1681,18 +1681,18 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Ask For Help With Payments (src/ui/bank/BankCard.tsx:348)",
+   "where": "Your Bank, Cards, the card’s panel, Ask For Help With Payments (src/ui/bank/BankCard.tsx:356)",
    "prerequisites": "A card owing something, no plan already, and a bank that couldn’t clear it today (“You could pay it off today…”).",
    "reads": "What’s owed, what the bank holds.",
    "changes": "A plan: interest frozen, a forty-eighth of what’s owed a month, the card suspended; a statement still to come due judged on the plan’s payment.",
    "consumers": [
     {
      "what": "no interest builds on a plan",
-     "at": "src/engine/systems/credit.ts:1028"
+     "at": "src/engine/systems/credit.ts:1111"
     },
     {
      "what": "the due date asks the plan’s payment",
-     "at": "src/engine/systems/credit.ts:1189"
+     "at": "src/engine/systems/credit.ts:1276"
     }
    ],
    "experienced": "The plan on the panel; no interest at the statement where a twin is charged; the plan ends once paid off (evidence-g12).",
@@ -1719,18 +1719,18 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, A Different Limit, Ask For It (src/ui/bank/BankCard.tsx:380)",
+   "where": "Your Bank, Cards, the card’s panel, A Different Limit, Ask For It (src/ui/bank/BankCard.tsx:388)",
    "prerequisites": "A card. A lower limit is always granted, never under what’s owed. A higher one waits six months from the card’s opening and from the last ask or raise (`askRefusal`, said under the button), and needs a record of 700, no late payment in a year, a card not suspended, and income or savings that carry the payments on it (`limitCarried`).",
    "reads": "The record, the late payments, the card’s state (askedAt, raisedAt, suspended), the twelve months’ income in the earnings record, the other cards’ statements and loans’ payments, the money in the bank.",
    "changes": "The card’s limit: lower to the ask; higher by a fifth at most, as far as the income or savings carry. askedAt, and raisedAt where raised.",
    "consumers": [
     {
      "what": "the room the day’s spending has",
-     "at": "src/engine/systems/credit.ts:586"
+     "at": "src/engine/systems/credit.ts:632"
     },
     {
      "what": "credit used at the record’s month",
-     "at": "src/engine/systems/credit.ts:1326"
+     "at": "src/engine/systems/credit.ts:1462"
     },
     {
      "what": "the next ask waits six months from this one",
@@ -1770,14 +1770,14 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Raise The Limit Unasked (src/ui/bank/BankCard.tsx:386)",
+   "where": "Your Bank, Cards, the card’s panel, Raise The Limit Unasked (src/ui/bank/BankCard.tsx:394)",
    "prerequisites": "A credit record.",
    "reads": "Nothing but the card.",
    "changes": "The card’s noAutoRaise.",
    "consumers": [
     {
      "what": "the six-monthly review leaves the limit where it is",
-     "at": "src/engine/systems/credit.ts:813"
+     "at": "src/engine/systems/credit.ts:890"
     }
    ],
    "experienced": "At the review the limit stays, where a twin’s rises (evidence-g13 card.statement).",
@@ -1810,7 +1810,7 @@
    "consumers": [
     {
      "what": "autopay draws it and the savings linked at its bank",
-     "at": "src/engine/systems/credit.ts:623"
+     "at": "src/engine/systems/credit.ts:669"
     },
     {
      "what": "Short For A Payment watches it",
@@ -1842,14 +1842,14 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Make It The Everyday Card (src/ui/bank/BankCard.tsx:342)",
+   "where": "Your Bank, Cards, the card’s panel, Make It The Everyday Card (src/ui/bank/BankCard.tsx:350)",
    "prerequisites": "A card of the player’s, not closing.",
    "reads": "The cards’ states.",
    "changes": "Swaps the card into the record’s fields as the everyday card.",
    "consumers": [
     {
      "what": "the day’s spending goes on the everyday card",
-     "at": "src/engine/systems/credit.ts:590"
+     "at": "src/engine/systems/credit.ts:636"
     }
    ],
    "experienced": "The next groceries on it, and somebody else’s use lands on it (evidence-g12).",
@@ -1878,14 +1878,14 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Going Over The Limit (src/ui/bank/BankCard.tsx:390)",
+   "where": "Your Bank, Cards, the card’s panel, Going Over The Limit (src/ui/bank/BankCard.tsx:398)",
    "prerequisites": "A US card (“Only a US card lets you opt in…”).",
    "reads": "The card’s bank.",
    "changes": "The card’s overLimitOptIn.",
    "consumers": [
     {
      "what": "a tenth more room",
-     "at": "src/engine/systems/credit.ts:584"
+     "at": "src/engine/systems/credit.ts:630"
     }
    ],
    "experienced": "A meal behind a locked debit card bought a tenth over the limit; no over-limit fee, no researched card charging one (evidence-g12).",
@@ -1911,14 +1911,14 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Statement Day (src/ui/bank/BankCard.tsx:369)",
+   "where": "Your Bank, Cards, the card’s panel, Statement Day (src/ui/bank/BankCard.tsx:377)",
    "prerequisites": "A card; a day from the 1st to the 28th; once a statement cycle (“You’ve moved the statement day since the last statement…”).",
    "reads": "The card’s last statement.",
    "changes": "The statement day; the next statement no sooner than 27 days after the last (`MIN_CYCLE_DAYS`), which moves the due date with it.",
    "consumers": [
     {
      "what": "the next statement comes on the new day",
-     "at": "src/engine/systems/credit.ts:720"
+     "at": "src/engine/systems/credit.ts:777"
     }
    ],
    "experienced": "The next statement and its due date on the new day (evidence-g13: moved each morning, still once a cycle).",
@@ -1996,7 +1996,7 @@
     },
     {
      "what": "a cash advance draws its rate each night from the day it’s taken",
-     "at": "src/engine/systems/credit.ts:1035"
+     "at": "src/engine/systems/credit.ts:1118"
     },
     {
      "what": "a payment to the card goes to the cash first, the dearest balance",
@@ -2038,22 +2038,22 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Pay Card In Full / Pay What You Can (src/ui/bank/BankCard.tsx:335)",
+   "where": "Your Bank, Cards, the card’s panel, Pay Card In Full / Pay What You Can (src/ui/bank/BankCard.tsx:343)",
    "prerequisites": "A card with something owed (or any sum, which the card holds as a credit) and money in the bank. Refused: “You don’t have a card.”, “You don’t owe anything on it.”, “Enter an amount to pay.”, “Your bank accounts have nothing available to pay it with, so nothing was paid.”",
    "reads": "The card, its statement and minimum (a hardship plan’s payment on a plan), the primary account and its savings (`payCard`, by hand, draws savings at the primary’s bank whatever the link).",
    "changes": "Posts the payment, adds it to what’s paid since the statement and to a statement still waiting for its due date, holds the freed credit where the card’s bank does for a payment from another bank, and puts it to the dearest balance first (`allocatePayment`).",
    "consumers": [
     {
      "what": "the due date asks autopay only what’s still owed after it",
-     "at": "src/engine/systems/credit.ts:1191"
+     "at": "src/engine/systems/credit.ts:1278"
     },
     {
      "what": "paid in full by the due date the grace period holds and the cycle’s interest is dropped",
-     "at": "src/engine/systems/credit.ts:911"
+     "at": "src/engine/systems/credit.ts:989"
     },
     {
      "what": "a month paid as agreed raises the record",
-     "at": "src/engine/systems/credit.ts:984"
+     "at": "src/engine/systems/credit.ts:1063"
     }
    ],
    "experienced": "The card’s balance down at once; at the due date no bounce and no late fee; the next statement charges no interest where the statement was paid in full.",
@@ -2086,18 +2086,18 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Cards, the card’s panel, Autopay: The Whole Statement / The Minimum (src/ui/bank/BankCard.tsx:354)",
+   "where": "Your Bank, Cards, the card’s panel, Autopay: The Whole Statement / The Minimum (src/ui/bank/BankCard.tsx:362)",
    "prerequisites": "A card; a charge card can’t be set to the minimum (“… takes the whole statement from your account each month.”). There is no Off: SLATE’s autopay always pays the minimum or the whole statement where the account can.",
    "reads": "The card’s terms.",
    "changes": "The card’s autopay mode.",
    "consumers": [
     {
      "what": "the due date asks the whole statement or the minimum",
-     "at": "src/engine/systems/credit.ts:1190"
+     "at": "src/engine/systems/credit.ts:1277"
     },
     {
      "what": "the statement’s notice says what autopay will take",
-     "at": "src/engine/systems/credit.ts:1166"
+     "at": "src/engine/systems/credit.ts:1253"
     }
    ],
    "experienced": "On the minimum the card carries: interest at each statement after the first due date; on the whole statement none (b20-money-interest).",
@@ -2271,7 +2271,7 @@
    "consumers": [
     {
      "what": "a mark lowers the record the next card or loan is priced on",
-     "at": "src/engine/systems/credit.ts:358"
+     "at": "src/engine/systems/credit.ts:404"
     },
     {
      "what": "a late payment blocks a raise for a year",
@@ -2314,7 +2314,7 @@
    "consumers": [
     {
      "what": "the year’s interest for the return",
-     "at": "src/engine/systems/banking.ts:824"
+     "at": "src/engine/systems/banking.ts:866"
     },
     {
      "what": "the statement page reads the month",
@@ -2322,7 +2322,7 @@
     },
     {
      "what": "a mark off the record lifts the score a card application reads",
-     "at": "src/engine/systems/credit.ts:371"
+     "at": "src/engine/systems/credit.ts:417"
     }
    ],
    "experienced": "Interest and fees on the statement once a month, on a Saturday 31 October and on Memorial Day as on any day (b20-money-clock), the gap a $50,000 move makes worked by hand (b20-money-interest).",
@@ -2363,7 +2363,7 @@
    "consumers": [
     {
      "what": "the standing orders into it end with it",
-     "at": "src/engine/systems/banking.ts:490"
+     "at": "src/engine/systems/banking.ts:532"
     }
    ],
    "experienced": "A notice on the day, “… Closed”, and the money in the account it names.",
@@ -2396,7 +2396,7 @@
    "consumers": [
     {
      "what": "the account it reached earns on it at midnight",
-     "at": "src/engine/systems/banking.ts:872"
+     "at": "src/engine/systems/banking.ts:914"
     }
    ],
    "experienced": "The money moved on the day, once; or “A Scheduled Payment Didn’t Go” with the reason.",
@@ -2438,7 +2438,7 @@
    "consumers": [
     {
      "what": "the savings then earn on it each midnight",
-     "at": "src/engine/systems/banking.ts:872"
+     "at": "src/engine/systems/banking.ts:914"
     },
     {
      "what": "a move counts as using both accounts",
@@ -2516,7 +2516,7 @@
    "consumers": [
     {
      "what": "the old account is blocked to Move Money until then",
-     "at": "src/engine/systems/banking.ts:970"
+     "at": "src/engine/systems/banking.ts:1019"
     }
    ],
    "experienced": "The old account closed once paid.",
@@ -2613,11 +2613,11 @@
    "consumers": [
     {
      "what": "the card’s rate is held from here",
-     "at": "src/engine/systems/credit.ts:475"
+     "at": "src/engine/systems/credit.ts:521"
     },
     {
      "what": "the day’s spending can go on it",
-     "at": "src/engine/systems/credit.ts:586"
+     "at": "src/engine/systems/credit.ts:632"
     }
    ],
    "experienced": "“Your New Card Arrived” with its limit; its panel on Cards with its rate.",
@@ -2657,11 +2657,11 @@
    "consumers": [
     {
      "what": "the grace period is kept or lost for the next statement",
-     "at": "src/engine/systems/credit.ts:779"
+     "at": "src/engine/systems/credit.ts:836"
     },
     {
      "what": "a suspended card has no room for the day’s spending",
-     "at": "src/engine/systems/credit.ts:578"
+     "at": "src/engine/systems/credit.ts:624"
     },
     {
      "what": "a card application reads the record it moved",
@@ -2716,7 +2716,7 @@
    "consumers": [
     {
      "what": "the card buys again",
-     "at": "src/engine/systems/credit.ts:582"
+     "at": "src/engine/systems/credit.ts:628"
     }
    ],
    "experienced": "“Your New Card Arrived”; groceries back on it (evidence-g13).",
@@ -2749,7 +2749,7 @@
    "consumers": [
     {
      "what": "the due date judges this statement",
-     "at": "src/engine/systems/credit.ts:871"
+     "at": "src/engine/systems/credit.ts:948"
     },
     {
      "what": "the statement page shows it as cut",
@@ -3121,7 +3121,7 @@
    "consumers": [
     {
      "what": "a dormant account refuses Move Money",
-     "at": "src/engine/systems/banking.ts:974"
+     "at": "src/engine/systems/banking.ts:1023"
     },
     {
      "what": "Claim It Back reads what went",
@@ -3200,7 +3200,7 @@
    "consumers": [
     {
      "what": "the transfer builds its own rate each night",
-     "at": "src/engine/systems/credit.ts:1038"
+     "at": "src/engine/systems/credit.ts:1121"
     }
    ],
    "experienced": "“Your Balance Moved” with the fee, the rate and its end (editorial-money, cardoffers).",
@@ -3229,11 +3229,11 @@
    "where": "A due date short of the minimum (`afterMissed`).",
    "prerequisites": "What sends it, as `where` says.",
    "reads": "The payments missed in a row, the bank.",
-   "changes": "Britain’s set-off; the card suspended at two; the default notice at five; the charge-off at six.",
+   "changes": "Britain’s set-off; the card suspended at two; outside the US the default notice at five and the charge-off at six (a US card’s by its days past due from 2026-10-22, brief 21: `delinquency`).",
    "consumers": [
     {
      "what": "a suspended card has no room",
-     "at": "src/engine/systems/credit.ts:578"
+     "at": "src/engine/systems/credit.ts:624"
     }
    ],
    "experienced": "“Your Card Is Suspended” at the second miss (b20-money-funds).",
@@ -3258,6 +3258,60 @@
    "seeded": false,
    "readBy": "money",
    "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/credit#delinquency",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "Each night, on a US card with a minimum short at a due date (`delinquency`, from 2026-10-22, brief 21).",
+   "prerequisites": "A US card's minimum short at its due date (`CardState.pastDue`), what's paid going to the oldest first.",
+   "reads": "The days since the due date of the oldest minimum still short, the card's penalty rate and introductory rate, and what's still unpaid of that minimum.",
+   "changes": "On the 61st day the bank's notice, and 45 days on the penalty rate where the card has one and the end of its introductory rate; on the 150th the default notice; on the 180th the charge-off to collections.",
+   "consumers": [
+    {
+     "what": "the penalty rate on what's owed, in the card's terms and each statement's interest",
+     "at": "src/engine/systems/credit.ts:591"
+    },
+    {
+     "what": "the introductory rate ended",
+     "at": "src/engine/systems/credit.ts:596"
+    },
+    {
+     "what": "the charge-off to collections",
+     "at": "src/engine/systems/credit.ts:1450"
+    }
+   ],
+   "experienced": "“A Penalty Rate Is Coming” on the 61st day, “A Default Notice” on the 150th and “Your Card Was Charged Off” on the 180th, each dated (editorial17-money, b21-banking-proof).",
+   "saveLoad": "`pastDue`, `towardPastDue`, `noticedFor`, `introEndsAt` and `defaultNoticedFor` in the card's state; a save from before brief 21 with a US card behind is dated on opening from its last late fee (`migrate`), nothing charged for the days before.",
+   "evidence": {
+    "tests": [
+     "tests/b21-banking-proof.test.ts",
+     "tests/editorial17-money.test.ts",
+     "tests/interest.test.ts",
+     "tests/cardoffers.test.ts",
+     "tests/evidence3-home.test.ts"
+    ],
+    "comparisons": [
+     "day 60 against day 61, 149 against 150, 179 against 180; a twin who pays the whole statement at the next due date; the oldest minimum paid on day 60 (b21-banking-proof)"
+    ],
+    "mutations": [
+     "B21-B4",
+     "B21-B5",
+     "B21-B6",
+     "B21-B7",
+     "B21-B12"
+    ],
+    "journeys": [
+     "played a day at a time, jumped from due date to due date, and saved and loaded between: the same days (b21-banking-proof)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "brief 21"
   },
   {
    "id": "notice.systems/credit#chargeOff",
@@ -3304,7 +3358,7 @@
    "consumers": [
     {
      "what": "the plan’s payment at the due date",
-     "at": "src/engine/systems/credit.ts:1189"
+     "at": "src/engine/systems/credit.ts:1276"
     }
    ],
    "experienced": "“Persistent Debt”, then “A Plan To Clear The Card”.",
@@ -3402,7 +3456,7 @@
    "consumers": [
     {
      "what": "the year’s tax the bank took, as the refund reads it",
-     "at": "src/engine/systems/banking.ts:424"
+     "at": "src/engine/systems/banking.ts:466"
     }
    ],
    "experienced": "A Reykjavík-raised student keeping Arion from New Haven is given nothing back, her 12% taken as a customer abroad’s (b20-money-defects); a resident’s refund is a fixture’s (bank-fees).",
@@ -3509,7 +3563,7 @@
    "consumers": [
     {
      "what": "the savings then earn on it",
-     "at": "src/engine/systems/banking.ts:872"
+     "at": "src/engine/systems/banking.ts:914"
     }
    ],
    "experienced": "The change in savings the next day (b20-money-promises, evidence-g11).",
