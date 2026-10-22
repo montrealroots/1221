@@ -594,6 +594,28 @@ if FIG19R and FIG17R:
         r['failure'] = f"{r['failure']}; brief 19 ({r['measured']['commit']}): {'the same' if FIG19R[r['id']] == FIG17R.get(r['id']) else FIG19R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B19R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B19R}/figures.json'}] + ([{'file': f'{B19R}/gate.txt'}] if gate else [])
+# Brief 20's runs (audit-2026-10-21/final-runs/, from 2026-10-22), as brief 19's: a pass that changed what the game does
+# in money, the career, the School, papers, benefits and life, files the measurements watch, so each measurement brief 19
+# held is made again on brief 20's tested commit, the same ways. The judge's rows aren't among them unless the judge's
+# files moved (its lanes weren't run, and a judge row brief 19 measured stays brief 19's).
+B20R = 'docs/verification/audit-2026-10-21/final-runs/runs'
+FIG20R = json.load(open(f'{B20R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B20R}/figures.json') else {}
+if FIG20R and FIG19R:
+    lane20 = lambda name: re.search(r'^at (\w+)', open(f'{B20R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R20 = {'app': lane20('A'), 'engine': lane20('B')}
+    GATE20 = re.search(r'^at (\w+)', open(f'{B20R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG20R and os.path.exists(f'{B20R}/gate.txt') else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG19R and (gate or m.get('commit') == R19.get(m.get('watch')))):
+            continue
+        if gate and not GATE20:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG20R, r['id']
+        r['measured'] = {'commit': GATE20, 'watch': 'app'} if gate else {'commit': R20[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 20 ({r['measured']['commit']}): {'the same' if FIG20R[r['id']] == FIG19R.get(r['id']) else FIG20R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B20R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B20R}/figures.json'}] + ([{'file': f'{B20R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -621,7 +643,10 @@ B17 = 'docs/verification/continuity-2026-10-20'
 # Brief 19's (career-2026-10-20/final-runs/, from 2026-10-21) after brief 17's, the same way: its verify.py restates
 # brief 17's held rows on brief 19's runs, and its advice/close.py the advice's four rows.
 B19 = 'docs/verification/career-2026-10-20/final-runs'
-PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else []) + ([(B19, 'Brief 19')] if os.path.exists(f'{B19}/verification-result.json') else [])
+# Brief 20's (audit-2026-10-21/final-runs/, from 2026-10-22) after brief 19's, the same way: its verify.py restates brief
+# 19's held rows on brief 20's runs, and its advice/close.py the advice's four rows.
+B20 = 'docs/verification/audit-2026-10-21/final-runs'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else []) + ([(B19, 'Brief 19')] if os.path.exists(f'{B19}/verification-result.json') else []) + ([(B20, 'Brief 20')] if os.path.exists(f'{B20}/verification-result.json') else [])
 for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
     result = json.load(open(f'{d}/{f}', encoding='utf-8'))
