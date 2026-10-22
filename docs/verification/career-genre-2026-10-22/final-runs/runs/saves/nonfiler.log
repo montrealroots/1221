@@ -1,0 +1,50 @@
+{
+ "scenario": "nonfiler",
+ "seed": "sc-0",
+ "ended": "2027-10-18",
+ "log": [
+  "2026-09-10 TEST SETUP: W-2"
+ ],
+ "school": {
+  "standing": "good",
+  "classOf": 2029,
+  "offset": 0,
+  "leaves": [],
+  "welfares": [],
+  "formerClasses": [],
+  "classmates": 15,
+  "terms": [
+   "0:good",
+   "1:good"
+  ],
+  "conferred": [],
+  "credits": [
+   "2027 carlotta lead"
+  ],
+  "joinedHistory": [],
+  "firstClassGraduated": [],
+  "duringLeave": []
+ },
+ "accounts": [
+  "Chase checking",
+  "Chase savings"
+ ],
+ "owedIrs": 0,
+ "irsSubstitute": [
+  "2026: unfiled"
+ ],
+ "states": {
+  "2026 us-ct": {
+   "balance": 134116,
+   "owed": 155574,
+   "payments": [],
+   "notices": 1,
+   "assessed": true,
+   "replaced": false
+  }
+ },
+ "statePlans": {},
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 13
+}

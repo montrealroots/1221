@@ -1026,17 +1026,18 @@
    "kind": "immediate",
    "claim": "A scene from a play of a kind you know is prepared faster, by the better of Familiarity and Work In It.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "A step is sped by the better of the genre's familiarity and practice and the material's features (`genreSpeed`, src/engine/systems/engagement.ts:101; src/engine/systems/coursework.ts:680).",
+   "holds": "A step is sped by the better of the scene's genres known, weighed as the scene asks (`requirementOfScene`: its own, else its play's, from brief 22, 2026-10-22), and the material's features (`genreSpeed`, src/engine/systems/engagement.ts:133; src/engine/systems/coursework.ts:682).",
    "tests": [
     "tests/b20-craft-bite.test.ts",
     "tests/evidence-g20-school.test.ts",
-    "tests/evidence-g23-school.test.ts"
+    "tests/evidence-g23-school.test.ts",
+    "tests/b22-genre-weights.test.ts"
    ],
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
    "readBy": "craft",
-   "readAt": "12c04ee1",
+   "readAt": "brief 22, uncommitted on 34b748ee",
    "mutations": [
     "B20-CRAFT-1"
    ]
@@ -1046,7 +1047,7 @@
    "kind": "immediate",
    "claim": "A part in a play of a kind you know is learned faster.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "Learn The Part is sped by `genreSpeed` (src/engine/systems/production.ts:605), as a lines note worked is (src/engine/systems/production.ts:680).",
+   "holds": "Learn The Part is sped by `genreSpeed` of the part's genres as its play or production states them (`requirementOfHolder`, from brief 22; src/engine/systems/production.ts:608), as a lines note worked is (src/engine/systems/production.ts:683).",
    "tests": [
     "tests/evidence-g23-school.test.ts",
     "tests/evidence-g20-school.test.ts"
@@ -1055,7 +1056,7 @@
    "why": "",
    "seeded": false,
    "readBy": "craft",
-   "readAt": "12c04ee1"
+   "readAt": "brief 22, uncommitted on 34b748ee"
   },
   {
    "id": "promise.craft.genre>craft.brief-prepare",
@@ -1363,16 +1364,17 @@
    "kind": "immediate",
    "claim": "A take is practice in the brief’s genres, one session’s worth shared among them.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "`practiceGenres` shares one session among the brief's kinds, by how far the take was prepared (src/engine/systems/briefs.ts:653; src/engine/systems/engagement.ts:81-94).",
+   "holds": "`practiceGenres` shares one session among the brief's resolved genres by their weights (from brief 22, `requirementOfBrief`), by how far the take was prepared (src/engine/systems/briefs.ts:656; src/engine/systems/engagement.ts:96-119).",
    "tests": [
     "tests/briefs.test.ts",
-    "tests/evidence-g31-ui.test.ts"
+    "tests/evidence-g31-ui.test.ts",
+    "tests/b22-genre-weights.test.ts"
    ],
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
    "readBy": "craft",
-   "readAt": "12c04ee1"
+   "readAt": "brief 22, uncommitted on 34b748ee"
   },
   {
    "id": "promise.craft.brief-tape>craft.profile",
@@ -2358,15 +2360,17 @@
    "kind": "evaluation",
    "claim": "Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at ${pct(BRIEF.complete.genre)}, and half of how well casting thinks you suit the role.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "From brief 21: the project's genres, weighed (`relevantGenre`), are half of the role's fit (`fitOf`, src/engine/systems/projobs.ts:352), which sets casting's chance; and a part of every round's preparation, in the room as on tape, complete at `BRIEF.complete.genre` (`auditionContext`, src/engine/systems/projobs.ts:1062), read by interpretation (src/engine/content/tasks.ts `audition`, `tape`).",
+   "holds": "From brief 21: the project's genres, weighed (`relevantGenre`), are half of the role's fit (`fitOf`, src/engine/systems/projobs.ts:359), which sets casting's chance; and a part of every round's preparation, in the room as on tape, complete at `BRIEF.complete.genre` (`auditionContext`, src/engine/systems/projobs.ts:1069), read by interpretation (src/engine/content/tasks.ts `audition`, `tape`). From brief 22 (2026-10-22) the genres are the role's as stated (`projectGenresOf`, `requirementOfRole`: its own, else its project's), and a related genre counts across one direct link only, at 0.65 or 0.40 (`ENGAGEMENT.related`, measured in docs/verification/career-genre-2026-10-22/comparisons.md).",
    "tests": [
-    "tests/b20-career-effects.test.ts"
+    "tests/b20-career-effects.test.ts",
+    "tests/b22-genre-weights.test.ts",
+    "tests/b22-comparisons.test.ts"
    ],
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
    "readBy": "craft",
-   "readAt": "brief 21, uncommitted on 6d3d9374"
+   "readAt": "brief 22, uncommitted on 34b748ee"
   }
  ]
 }

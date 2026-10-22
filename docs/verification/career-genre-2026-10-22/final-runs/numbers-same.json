@@ -1,0 +1,958 @@
+{
+ "final": {
+  "before": "docs/verification/genre-banking-2026-10-22/final-runs/final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/final",
+  "held": false,
+  "files": 35,
+  "same": 22,
+  "explained": {},
+  "unexplained": {
+   "journey-beginner-bj-0.json": {
+    "differences": 7,
+    "first": [
+     ".lastTakes[1].overall: 51.8 before, 51.9 after",
+     ".lastTakes[3].overall: 54 before, 54.3 after",
+     ".lastTakes[4].overall: 60.4 before, 60.7 after",
+     ".lastTakes[5].overall: 52.8 before, 53 after",
+     ".quality.m3.max: 60.4 before, 60.7 after",
+     ".quality.m3.mean: 55.2 before, 55.3 after"
+    ]
+   },
+   "journey-beginner-bj-1.json": {
+    "differences": 2,
+    "first": [
+     ".lastTakes[2].overall: 55.2 before, 55.6 after",
+     ".quality.m3.mean: 54.2 before, 54.3 after"
+    ]
+   },
+   "journey-developing-bj-0.json": {
+    "differences": 2,
+    "first": [
+     ".lastTakes[1].overall: 60.9 before, 61.5 after",
+     ".quality.m3.mean: 59.3 before, 59.4 after"
+    ]
+   },
+   "journey-specialist-bj-1.json": {
+    "differences": 4,
+    "first": [
+     ".lastTakes[0].overall: 59.5 before, 59.6 after",
+     ".lastTakes[3].overall: 61.8 before, 61.9 after",
+     ".lastTakes[4].overall: 61.6 before, 61.7 after",
+     ".lastTakes[5].overall: 66.8 before, 66.9 after"
+    ]
+   },
+   "l3-trace-beginner-bj-0.json": {
+    "differences": 82,
+    "first": [
+     ".byMonth.m3.atEndLevels: 56.16 before, 56.26 after",
+     ".byMonth.m3.atStartLevels: 52.86 before, 52.92 after",
+     ".byMonth.m3.noDraw: 55.46 before, 55.54 after",
+     ".byMonth.m3.overall: 55.22 before, 55.3 after",
+     ".controlled[0].meanOfEveryTake: 53.19 before, 53.25 after",
+     ".controlled[1].meanOfEveryTake: 53.93 before, 53.98 after"
+    ]
+   },
+   "l3-trace-beginner-bj-1.json": {
+    "differences": 49,
+    "first": [
+     ".byMonth.m3.atEndLevels: 54.94 before, 55.01 after",
+     ".byMonth.m3.atStartLevels: 52.19 before, 52.24 after",
+     ".byMonth.m3.noDraw: 54.38 before, 54.44 after",
+     ".byMonth.m3.overall: 54.24 before, 54.29 after",
+     ".controlled[0].meanOfEveryTake: 52.36 before, 52.41 after",
+     ".controlled[1].meanOfEveryTake: 53.01 before, 53.06 after"
+    ]
+   },
+   "l3-trace-developing-bj-0.json": {
+    "differences": 50,
+    "first": [
+     ".byMonth.m3.atEndLevels: 59.95 before, 60.03 after",
+     ".byMonth.m3.atStartLevels: 56.75 before, 56.82 after",
+     ".byMonth.m3.noDraw: 59.46 before, 59.53 after",
+     ".byMonth.m3.overall: 59.31 before, 59.38 after",
+     ".controlled[0].meanOfEveryTake: 56.68 before, 56.73 after",
+     ".controlled[1].meanOfEveryTake: 57.82 before, 57.87 after"
+    ]
+   },
+   "l3-trace-developing-bj-1.json": {
+    "differences": 39,
+    "first": [
+     ".byMonth.m3.atEndLevels: 58.86 before, 58.88 after",
+     ".byMonth.m3.atStartLevels: 55.86 before, 55.89 after",
+     ".byMonth.m3.noDraw: 58.39 before, 58.41 after",
+     ".byMonth.m3.overall: 58.29 before, 58.32 after",
+     ".controlled[0].meanOfEveryTake: 55.88 before, 55.89 after",
+     ".controlled[1].meanOfEveryTake: 57.03 before, 57.05 after"
+    ]
+   },
+   "l3-trace-generalist-bj-0.json": {
+    "differences": 43,
+    "first": [
+     ".byMonth.m3.atEndLevels: 62.57 before, 62.59 after",
+     ".byMonth.m3.atStartLevels: 60.69 before, 60.71 after",
+     ".byMonth.m3.noDraw: 62.09 before, 62.11 after",
+     ".byMonth.m3.overall: 61.81 before, 61.83 after",
+     ".controlled[0].meanOfEveryTake: 60.84 before, 60.86 after",
+     ".controlled[1].meanOfEveryTake: 61.24 before, 61.26 after"
+    ]
+   },
+   "l3-trace-generalist-bj-1.json": {
+    "differences": 40,
+    "first": [
+     ".byMonth.m3.atEndLevels: 63.23 before, 63.25 after",
+     ".byMonth.m3.atStartLevels: 61.34 before, 61.36 after",
+     ".byMonth.m3.noDraw: 62.73 before, 62.75 after",
+     ".byMonth.m3.overall: 62.78 before, 62.8 after",
+     ".controlled[0].meanOfEveryTake: 61.38 before, 61.4 after",
+     ".controlled[1].meanOfEveryTake: 61.75 before, 61.77 after"
+    ]
+   },
+   "l3-trace-specialist-bj-0.json": {
+    "differences": 15,
+    "first": [
+     ".takes[0].prep.genre: 0.1168 before, 0.11680000000000001 after",
+     ".takes[1].prep.genre: 0.1168 before, 0.11680000000000001 after",
+     ".takes[2].prep.genre: 0.1168 before, 0.11680000000000001 after",
+     ".takes[3].prep.genre: 0.1168 before, 0.11680000000000001 after",
+     ".takes[4].prep.genre: 0.1168 before, 0.11680000000000001 after",
+     ".takes[5].prep.genre: 0.1168 before, 0.11680000000000001 after"
+    ]
+   },
+   "l3-trace-specialist-bj-1.json": {
+    "differences": 84,
+    "first": [
+     ".byMonth.m3.atEndLevels: 63.41 before, 63.46 after",
+     ".byMonth.m3.atStartLevels: 60.39 before, 60.42 after",
+     ".byMonth.m3.noDraw: 62.89 before, 62.94 after",
+     ".byMonth.m3.overall: 62.79 before, 62.84 after",
+     ".controlled[0].meanOfEveryTake: 60.83 before, 60.86 after",
+     ".controlled[1].meanOfEveryTake: 61.62 before, 61.65 after"
+    ]
+   },
+   "l3r.json": {
+    "differences": 19,
+    "first": [
+     ".journeys[0].journeyMetric.lastMonth.max: 60.4 before, 60.7 after",
+     ".journeys[0].journeyMetric.lastMonth.mean: 55.2 before, 55.3 after",
+     ".journeys[0].journeyMetric.lastMonth.min: 51.8 before, 51.9 after",
+     ".journeys[0].replayedTakes.end: 56.46 before, 56.54 after",
+     ".journeys[0].replayedTakes.start: 53.19 before, 53.25 after",
+     ".journeys[1].journeyMetric.lastMonth.mean: 54.2 before, 54.3 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "runs": {
+  "before": "docs/verification/genre-banking-2026-10-22/final-runs/runs",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/runs",
+  "held": false,
+  "files": 17,
+  "same": 7,
+  "explained": {
+   "a measure of words: freshness finds a suggestion by its phrases": 1
+  },
+  "unexplained": {
+   "freshness.json": {
+    "differences": 2,
+    "first": [
+     ".results[0].bestLeanShare: 0.692 before, 0.667 after",
+     ".results[4].bestLeanShare: 0.447 before, 0.5 after"
+    ]
+   },
+   "lives.jsonl": {
+    "differences": 373,
+    "first": [
+     "[0].cast.delivery: 0.994 before, 0.995 after",
+     "[0].casts[1].fit: 58.5 before, 58.4 after",
+     "[0].casts[1].groupFit: 55.2 before, 55.1 after",
+     "[0].casts[1].margin: 4.1 before, 4 after",
+     "[0].casts[1].score: 58.4 before, 58.3 after",
+     "[0].casts[2].delivery: 0.987 before, 0.991 after"
+    ]
+   },
+   "plan-musical-m-0.json": {
+    "differences": 113,
+    "first": [
+     ".hours: 36144 before, 36168 after",
+     ".masteredOn: '2030-10-03' before, '2030-10-04' after",
+     ".payoff[0].date: '2030-10-05' before, '2030-10-06' after",
+     ".payoff[1].date: '2030-10-06' before, '2030-10-07' after",
+     ".payoff[1].readiness: 96 before, 82 after",
+     ".payoff[2].date: '2030-10-07' before, '2030-10-08' after"
+    ]
+   },
+   "plan-nordic_noir-m-0.json": {
+    "differences": 48,
+    "first": [
+     ".payoff[0].readiness: 84 before, 94 after",
+     ".progress.adaptability.full.date: '2029-11-09' before, '2029-11-08' after",
+     ".progress.adaptability.full.day: 1173 before, 1172 after",
+     ".progress.adaptability.full.sessions: 309 before, 310 after",
+     ".progress.adaptability.sessions: 309 before, 310 after",
+     ".progress.composure.full.date: '2029-11-10' before, '2029-11-09' after"
+    ]
+   },
+   "plan-nordic_noir-m-1.json": {
+    "differences": 4,
+    "first": [
+     ".progress.emotionalDepth.full.sessions: 283 before, 281 after",
+     ".progress.emotionalDepth.sessions: 283 before, 281 after",
+     ".progress.presence.full.sessions: 231 before, 233 after",
+     ".progress.presence.sessions: 231 before, 233 after"
+    ]
+   },
+   "plan-slapstick-m-0.json": {
+    "differences": 98,
+    "first": [
+     ".hours: 38017 before, 38041 after",
+     ".payoff[0].date: '2030-12-22' before, '2030-12-23' after",
+     ".payoff[0].readiness: 73 before, 69 after",
+     ".payoff[1].date: '2030-12-23' before, '2030-12-24' after",
+     ".payoff[2].date: '2030-12-24' before, '2030-12-25' after",
+     ".progress.adaptability.full.date: '2030-12-21' before, '2030-12-20' after"
+    ]
+   },
+   "plan-social_realism-m-0.json": {
+    "differences": 28,
+    "first": [
+     ".progress.adaptability.full.date: '2029-11-09' before, '2029-11-10' after",
+     ".progress.adaptability.full.day: 1173 before, 1174 after",
+     ".progress.composure.full.date: '2029-11-10' before, '2029-11-09' after",
+     ".progress.composure.full.day: 1174 before, 1173 after",
+     ".progress.emotionalDepth.full.date: '2029-11-08' before, '2029-11-09' after",
+     ".progress.emotionalDepth.full.day: 1172 before, 1173 after"
+    ]
+   },
+   "workload-london-lives-1-attentive.json": {
+    "differences": 11,
+    "first": [
+     ".terms[3].partsShortAtShowing.interpretation: 6 before, 5 after",
+     ".terms[3].partsShortAtShowing.rehearsal: 19 before, 20 after",
+     ".terms[3].supply.idle:other: 638 before, 642 after",
+     ".terms[3].supply.idle:working-hours: 358 before, 356 after",
+     ".terms[3].supply.prepare:familiarity: 48.5 before, 49.8 after",
+     ".terms[3].supply.prepare:interpretation: 93 before, 93.8 after"
+    ]
+   },
+   "workload-london-lives-2-attentive.json": {
+    "differences": 2,
+    "first": [
+     ".terms[3].supply.idle:working-hours: 291.8 before, 290.8 after",
+     ".terms[3].supply.school.learn_part: 25 before, 26 after"
+    ]
+   },
+   "workload-london-lives-3-attentive.json": {
+    "differences": 11,
+    "first": [
+     ".hours: 12264.3 before, 12264.5 after",
+     ".terms[3].partsShortAtShowing.interpretation: 2 before, 1 after",
+     ".terms[3].supply.at:school.study_session: 2 before, 3 after",
+     ".terms[3].supply.idle:working-hours: 296 before, 300 after",
+     ".terms[3].supply.prepare:interpretation: 111.6 before, 108.6 after",
+     ".terms[3].supply.prepare:memorization: 98 before, 98.3 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "advice": {
+  "before": "docs/verification/genre-banking-2026-10-22/final-runs/advice",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/advice",
+  "held": false,
+  "files": 31,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 61
+  },
+  "unexplained": {
+   "f2a-adv-0-9.json": {
+    "differences": 5,
+    "first": [
+     ".cases[7].advice[1].forecast: 0.8281581148033509 before, 0.8281581148033487 after",
+     ".cases[7].advice[2].forecast: 0.5974274862562142 before, 0.5974274862562119 after",
+     ".cases[7].advice[3].forecast: 0.5675480319825799 before, 0.5675480319825775 after",
+     ".cases[7].advice[4].forecast: 0.5225524456766817 before, 0.5225524456766794 after",
+     ".cases[7].f.leastDrop: 0.1899979019814353 before, 0.18999790198143413 after"
+    ]
+   },
+   "f2a-adv-10-19.json": {
+    "differences": 7,
+    "first": [
+     ".cases[0].advice[0].forecast: 0.6489079050549975 before, 0.6489079050549951 after",
+     ".cases[0].advice[1].forecast: 0.6198695498128354 before, 0.619869549812833 after",
+     ".cases[0].advice[2].forecast: 0.5833982260823032 before, 0.5833982260823009 after",
+     ".cases[0].advice[3].forecast: 0.5570813711402327 before, 0.5570813711402316 after",
+     ".cases[0].advice[4].forecast: 0.4999563533804867 before, 0.4999563533804855 after",
+     ".cases[0].f.leastDrop: 0.08690388115248265 before, 0.08690388115248388 after"
+    ]
+   },
+   "f2a-adv-20-29.json": {
+    "differences": 15,
+    "first": [
+     ".cases[4].advice[0].forecast: 1.208715051421265 before, 1.2087150514212606 after",
+     ".cases[4].advice[1].forecast: 0.6751697796542981 before, 0.6751697796542934 after",
+     ".cases[4].advice[2].forecast: 0.5173553240271502 before, 0.5173553240271455 after",
+     ".cases[4].advice[3].forecast: 0.4691635380115097 before, 0.4691635380115049 after",
+     ".cases[4].advice[4].forecast: 0.4047332206327638 before, 0.40473322063275907 after",
+     ".cases[4].f.leastDrop: 0.38222844245183163 before, 0.3822284424518272 after"
+    ]
+   },
+   "f2a-adv-30-39.json": {
+    "differences": 88,
+    "first": [
+     ".cases[0].advice[1].forecast: 0.7383336031404835 before, 0.7383336031404846 after",
+     ".cases[1].advice[0].forecast: 0.9632948023902431 before, 0.9607534720309847 after",
+     ".cases[1].advice[1].forecast: 0.7047564455543782 before, 0.705452176703151 after",
+     ".cases[1].advice[2].forecast: 0.6101026534536113 before, 0.605020413151923 after",
+     ".cases[1].advice[3].forecast: 0.47657423229957985 before, 0.47726996344835365 after",
+     ".cases[1].advice[4].forecast: 0.4174406759686242 before, 0.41813640711740396 after"
+    ]
+   },
+   "fresh-adv-v-10-19.json": {
+    "differences": 87,
+    "first": [
+     ".cases[0].f12.cold.attention.genres: 2.308 before, 2.299 after",
+     ".cases[0].f12.cold.attention.own: 6.432 before, 6.438 after",
+     ".cases[0].h12.reads[17].changes[0].by: -0.880438 before, -0.881258 after",
+     ".cases[0].h12.reads[17].changes[1].by: -0.326989 before, -0.327809 after",
+     ".cases[1].f.leastDrop: 0.06557469762947221 before, 0.06557469762947121 after",
+     ".cases[2].advice[0].forecast: 0.7983576536131568 before, 0.7983576536131554 after"
+    ]
+   },
+   "fresh-adv-v-100-109.json": {
+    "differences": 203,
+    "first": [
+     ".cases[1].advice[0].points: 5.6 before, 5.5 after",
+     ".cases[1].advice[2].forecast: 0.41326325679853326 before, 0.4141932149588615 after",
+     ".cases[1].advice[3].forecast: 0.24842145396405563 before, 0.24842145396405407 after",
+     ".cases[1].advice[4].forecast: 0.24816745400206436 before, 0.2481674540020638 after",
+     ".cases[1].bestGain: 0.612 before, 0.614 after",
+     ".cases[1].c.firstGain: 0.612 before, 0.614 after"
+    ]
+   },
+   "fresh-adv-v-110-119.json": {
+    "differences": 445,
+    "first": [
+     ".cases[0].advice[0].points: 3.3 before, 3.2 after",
+     ".cases[0].advice[2].forecast: 0.45536444953616295 before, 0.45658701198887414 after",
+     ".cases[0].advice[3].forecast: 0.30438137440176516 before, 0.30438137440175767 after",
+     ".cases[0].advice[4].forecast: 0.2924611358859816 before, 0.2924611358859847 after",
+     ".cases[0].bestGain: 0.615 before, 0.613 after",
+     ".cases[0].c.firstGain: 0.615 before, 0.613 after"
+    ]
+   },
+   "fresh-adv-v-20-29.json": {
+    "differences": 396,
+    "first": [
+     ".cases[0].advice[0].forecast: 0.7380500969702314 before, 0.7466563806117967 after",
+     ".cases[0].advice[0].points: 0.7 before, 0.8 after",
+     ".cases[0].advice[1].forecast: 0.6850354514029355 before, 0.685137313213807 after",
+     ".cases[0].advice[2].forecast: 0.6645759379995249 before, 0.6633009927882446 after",
+     ".cases[0].advice[2].target: 'imagination' before, 'composure' after",
+     ".cases[0].advice[3].forecast: 0.6631991309773732 before, 0.6591997984446119 after"
+    ]
+   },
+   "fresh-adv-v-40-49.json": {
+    "differences": 215,
+    "first": [
+     ".cases[0].advice[0].forecast: 0.6583243445785545 before, 0.6544017529367888 after",
+     ".cases[0].advice[1].forecast: 0.6033572228282984 before, 0.613428210411785 after",
+     ".cases[0].advice[2].forecast: 0.46369933176485667 before, 0.4636993317648519 after",
+     ".cases[0].advice[3].forecast: 0.42630485139745644 before, 0.42630485139745167 after",
+     ".cases[0].advice[4].forecast: 0.3800932236964126 before, 0.3806976863222119 after",
+     ".cases[0].bestGain: 0.734 before, 0.725 after"
+    ]
+   },
+   "fresh-adv-v-50-59.json": {
+    "differences": 325,
+    "first": [
+     ".cases[0].advice[0].forecast: 0.5821357993563271 before, 0.5821357993563361 after",
+     ".cases[0].advice[1].forecast: 0.5788314766482838 before, 0.5788314766482908 after",
+     ".cases[0].advice[2].forecast: 0.5540322093459233 before, 0.5687160109031026 after",
+     ".cases[0].advice[3].forecast: 0.46486026183149953 before, 0.45006725684051146 after",
+     ".cases[0].advice[4].forecast: 0.44531585833020204 before, 0.4453158583302074 after",
+     ".cases[0].bestGain: 0.658 before, 0.677 after"
+    ]
+   },
+   "fresh-adv-v-60-69.json": {
+    "differences": 3,
+    "first": [
+     ".cases[4].f12.cold.attention.genres: 4.091 before, 4.077 after",
+     ".cases[4].f12.cold.attention.own: 19.053 before, 19.059 after",
+     ".cases[4].h12.reads[17].changes[0].by: -0.103919 before, -0.103704 after"
+    ]
+   },
+   "fresh-adv-v-70-79.json": {
+    "differences": 156,
+    "first": [
+     ".cases[6].f12.cold.attention.genres: 2.486 before, 2.468 after",
+     ".cases[6].f12.cold.attention.own: 10.899 before, 10.908 after",
+     ".cases[6].h12.reads[15].changes[0].by: 0.05866 before, 0.055997 after",
+     ".cases[6].h12.reads[15].changes[1].by: 0.004435 before, 0.001772 after",
+     ".cases[8].advice[1].forecast: 0.5011375875666059 before, 0.5033412388858096 after",
+     ".cases[8].advice[2].forecast: 0.3255167282970947 before, 0.3280222521039191 after"
+    ]
+   },
+   "fresh-adv-v-80-89.json": {
+    "differences": 493,
+    "first": [
+     ".cases[1].advice[1].forecast: 0.5510381772396291 before, 0.5523669877355928 after",
+     ".cases[1].advice[2].forecast: 0.28529500540233627 before, 0.285295005402335 after",
+     ".cases[1].advice[3].forecast: 0.2370014036393966 before, 0.23719393148746581 after",
+     ".cases[1].advice[4].forecast: 0.23041684737928136 before, 0.23041684737928192 after",
+     ".cases[1].bestGain: 0.759 before, 0.761 after",
+     ".cases[1].c.firstGain: 0.759 before, 0.761 after"
+    ]
+   },
+   "fresh-adv-v-90-99.json": {
+    "differences": 2,
+    "first": [
+     ".cases[1].f12.cold.attention.genres: 5.146 before, 5.12 after",
+     ".cases[1].f12.cold.attention.own: 22.379 before, 22.395 after"
+    ]
+   },
+   "fresh-summary.json": {
+    "differences": 83,
+    "first": [
+     ".groups.fresh.c.firstMean: 0.751 before, 0.752 after",
+     ".groups.fresh.c.randomMean: 0.375 before, 0.376 after",
+     ".groups.fresh.c.ratio: 2 before, 2.002 after",
+     ".groups.fresh.h.changedWhereLed: 45 before, 46 after",
+     ".groups.fresh.h.explained: 6 before, 5 after",
+     ".groups.fresh.h.fell: 115 before, 116 after"
+    ]
+   },
+   "regression-adv-h-0-9.json": {
+    "differences": 2,
+    "first": [
+     ".cases[4].f12.cold.attention.genres: 0.974 before, 0.968 after",
+     ".cases[4].f12.cold.attention.own: 10.423 before, 10.426 after"
+    ]
+   },
+   "regression-adv-h-10-19.json": {
+    "differences": 304,
+    "first": [
+     ".cases[1].advice[0].forecast: 1.2655303644718676 before, 1.2697473264143881 after",
+     ".cases[1].advice[1].forecast: 1.0359462367453485 before, 1.0359462367453443 after",
+     ".cases[1].advice[2].forecast: 0.6662939274296007 before, 0.6662939274295956 after",
+     ".cases[1].advice[3].forecast: 0.6242213830442499 before, 0.6242213830442473 after",
+     ".cases[1].advice[4].forecast: 0.6231161346539613 before, 0.62311613465396 after",
+     ".cases[1].bestGain: 1.361 before, 1.371 after"
+    ]
+   },
+   "regression-adv-h-100-109.json": {
+    "differences": 187,
+    "first": [
+     ".cases[1].advice[1].forecast: 0.40340989633035207 before, 0.4034098963303551 after",
+     ".cases[1].f.leastDrop: 0.0015876611391872908 before, 0.001587661139190344 after",
+     ".cases[2].f12.cold.attention.genres: 3.31 before, 3.311 after",
+     ".cases[2].f12.cold.attention.own: 9.243 before, 9.234 after",
+     ".cases[3].advice[0].points: 6 before, 5.7 after",
+     ".cases[3].advice[1].forecast: 0.465971561255568 before, 0.4701209451266496 after"
+    ]
+   },
+   "regression-adv-h-110-119.json": {
+    "differences": 360,
+    "first": [
+     ".cases[0].advice[1].forecast: 0.4516912746941251 before, 0.45266467954384115 after",
+     ".cases[0].advice[2].forecast: 0.2902283832615244 before, 0.29022838326152645 after",
+     ".cases[0].advice[3].forecast: 0.2075956801678554 before, 0.20759568016785943 after",
+     ".cases[0].advice[4].forecast: 0.20230362631022247 before, 0.2023036263102245 after",
+     ".cases[0].bestGain: 0.613 before, 0.614 after",
+     ".cases[0].c.firstGain: 0.613 before, 0.614 after"
+    ]
+   },
+   "regression-adv-h-20-29.json": {
+    "differences": 521,
+    "first": [
+     ".cases[0].advice[0].forecast: 0.8382179462522799 before, 0.8348963858113383 after",
+     ".cases[0].advice[1].forecast: 0.6405357107670665 before, 0.6405357107670658 after",
+     ".cases[0].advice[2].forecast: 0.6230857284527519 before, 0.6230857284527512 after",
+     ".cases[0].advice[3].forecast: 0.5822214465263138 before, 0.5824569803186299 after",
+     ".cases[0].advice[4].forecast: 0.5662268893103393 before, 0.5662268893103386 after",
+     ".cases[0].bestGain: 0.9 before, 0.897 after"
+    ]
+   },
+   "regression-adv-h-30-39.json": {
+    "differences": 99,
+    "first": [
+     ".cases[9].advice[0].forecast: only in after",
+     ".cases[9].advice[0].target: 'prep:genre' before, 'adaptability' after",
+     ".cases[9].advice[1].forecast: only in before",
+     ".cases[9].advice[1].points: 0.7 before, 0.8 after",
+     ".cases[9].advice[1].target: 'adaptability' before, 'prep:genre' after",
+     ".cases[9].advice[2].forecast: 0.4941872207265329 before, 0.5494639214682687 after"
+    ]
+   },
+   "regression-adv-h-40-49.json": {
+    "differences": 6,
+    "first": [
+     ".cases[8].advice[0].forecast: 0.6301130141198987 before, 0.6301130141198994 after",
+     ".cases[8].advice[1].forecast: 0.44063934718642633 before, 0.44063934718642694 after",
+     ".cases[8].advice[2].forecast: 0.3649726258316592 before, 0.3649726258316599 after",
+     ".cases[8].advice[3].forecast: 0.36123671341464675 before, 0.3612367134146477 after",
+     ".cases[8].advice[4].forecast: 0.34867685232033924 before, 0.34867685232033985 after",
+     ".cases[8].f.leastDrop: 0.06547139163479954 before, 0.0654713916348007 after"
+    ]
+   },
+   "regression-adv-h-50-59.json": {
+    "differences": 416,
+    "first": [
+     ".cases[2].advice[0].forecast: 0.6737284851675824 before, 0.6725700473995034 after",
+     ".cases[2].advice[1].forecast: 0.5374895284185657 before, 0.5374895284185646 after",
+     ".cases[2].advice[2].forecast: 0.5252422232854328 before, 0.5261199243534886 after",
+     ".cases[2].advice[3].forecast: 0.4839547426931672 before, 0.48395474269316685 after",
+     ".cases[2].advice[4].forecast: 0.46603829820873444 before, 0.46485381186193453 after",
+     ".cases[2].bestGain: 0.717 before, 0.716 after"
+    ]
+   },
+   "regression-adv-h-60-69.json": {
+    "differences": 7,
+    "first": [
+     ".cases[2].advice[1].forecast: 0.4946808850058678 before, 0.49468088500587726 after",
+     ".cases[2].advice[2].forecast: 0.3320523605216816 before, 0.33205236052169107 after",
+     ".cases[2].advice[3].forecast: 0.3116748075858453 before, 0.31167480758585475 after",
+     ".cases[2].advice[4].forecast: 0.27042526252731136 before, 0.27042526252731613 after",
+     ".cases[2].f.leastDrop: 0.06800845117472443 before, 0.06800845117473386 after",
+     ".cases[6].f.leastDrop: 0.0025256145821591636 before, 0.002525614582161495 after"
+    ]
+   },
+   "regression-adv-h-70-79.json": {
+    "differences": 55,
+    "first": [
+     ".cases[0].advice[4].forecast: 0.3005838426296255 before, 0.3005838426296252 after",
+     ".cases[0].f.leastDrop: 0.006170270485838791 before, 0.006170270485838181 after",
+     ".cases[1].f.leastDrop: 0.03038026035258712 before, 0.030380260352591282 after",
+     ".cases[4].advice[1].forecast: 0.411375017560666 before, 0.4113750175606676 after",
+     ".cases[4].advice[2].forecast: 0.37168097004675477 before, 0.3716809700467563 after",
+     ".cases[4].advice[3].forecast: 0.35220866273992385 before, 0.35220866273992535 after"
+    ]
+   },
+   "regression-adv-h-80-89.json": {
+    "differences": 424,
+    "first": [
+     ".cases[0].advice[0].forecast: only in after",
+     ".cases[0].advice[0].target: 'prep:genre' before, 'composure' after",
+     ".cases[0].advice[1].forecast: only in before",
+     ".cases[0].advice[1].target: 'composure' before, 'prep:genre' after",
+     ".cases[0].advice[2].forecast: 0.4132063325678497 before, 0.42319532712156716 after",
+     ".cases[0].advice[3].forecast: 0.3963136913388608 before, 0.40630268589258023 after"
+    ]
+   },
+   "regression-adv-h-90-99.json": {
+    "differences": 4,
+    "first": [
+     ".cases[4].advice[1].forecast: 0.34193384521427106 before, 0.34193384521427816 after",
+     ".cases[4].advice[2].forecast: 0.2220864065489465 before, 0.22208640654896072 after",
+     ".cases[4].advice[3].forecast: 0.22046730873582968 before, 0.2204673087358439 after",
+     ".cases[4].advice[4].forecast: 0.20194649376703921 before, 0.20194649376704632 after"
+    ]
+   },
+   "regression-summary.json": {
+    "differences": 79,
+    "first": [
+     ".groups.regression.c.firstMean: 0.811 before, 0.813 after",
+     ".groups.regression.c.randomMean: 0.402 before, 0.403 after",
+     ".groups.regression.c.ratio: 2.016 before, 2.019 after",
+     ".groups.regression.f.prepLimited: 57 before, 56 after",
+     ".groups.regression.f.prepSame: 17 before, 16 after",
+     ".groups.regression.h.ownFell: 146 before, 145 after"
+    ]
+   },
+   "tuning-final.json": {
+    "differences": 281,
+    "first": [
+     ".cases[7].advice[1].forecast: 0.8281581148033509 before, 0.8281581148033487 after",
+     ".cases[7].advice[2].forecast: 0.5974274862562142 before, 0.5974274862562119 after",
+     ".cases[7].advice[3].forecast: 0.5675480319825799 before, 0.5675480319825775 after",
+     ".cases[7].advice[4].forecast: 0.5225524456766817 before, 0.5225524456766794 after",
+     ".cases[7].f.leastDrop: 0.1899979019814353 before, 0.18999790198143413 after",
+     ".cases[16].f12.cold.attention.genres: 2.035 before, 2.023 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "journeys-final": {
+  "before": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
+  "held": false,
+  "files": 102,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 199,
+   "a measure of words: the journeys’ continuity counts text": 33,
+   "a count of notices: a rewrite changes which merge; the events are compared apart": 842
+  },
+  "unexplained": {
+   "F1-p4.json": {
+    "differences": 51,
+    "first": [
+     ".advice[84][2]: 61.65 before, 61.64 after",
+     ".advice[85][2]: 61.87 before, 61.86 after",
+     ".advice[107][2]: 62.62 before, 62.61 after",
+     ".advice[140][3]: 1.04 before, 1.03 after",
+     ".advice[141][3]: 1.12 before, 1.11 after",
+     ".advice[142][3]: 1.12 before, 1.11 after"
+    ]
+   },
+   "F2-p4.json": {
+    "differences": 96,
+    "first": [
+     ".advice[67][2]: 58.02 before, 58.03 after",
+     ".advice[68][2]: 58.02 before, 58.03 after",
+     ".advice[69][2]: 58.02 before, 58.03 after",
+     ".advice[70][2]: 58.02 before, 58.03 after",
+     ".advice[71][2]: 58.02 before, 58.03 after",
+     ".advice[72][2]: 58.05 before, 58.07 after"
+    ]
+   },
+   "J01-p4.json": {
+    "differences": 127,
+    "first": [
+     ".advice[73][2]: 48.12 before, 48.15 after",
+     ".advice[74][2]: 49.94 before, 49.97 after",
+     ".advice[75][2]: 49.94 before, 49.97 after",
+     ".advice[77][2]: 49.94 before, 49.97 after",
+     ".advice[78][2]: 49.94 before, 49.97 after",
+     ".advice[79][2]: 49.94 before, 49.97 after"
+    ]
+   },
+   "J02-p4.json": {
+    "differences": 75,
+    "first": [
+     ".advice[73][3]: 0.73 before, 0.83 after",
+     ".advice[74][3]: 1.85 before, 1.83 after",
+     ".advice[75][3]: 1.23 before, 1.22 after",
+     ".advice[78][2]: 54.52 before, 54.51 after",
+     ".advice[93][3]: 1.03 before, 1.02 after",
+     ".advice[126][3]: 0.87 before, 0.86 after"
+    ]
+   },
+   "J03-p4.json": {
+    "differences": 79,
+    "first": [
+     ".advice[125][2]: 74.64 before, 74.62 after",
+     ".advice[126][2]: 74.65 before, 74.63 after",
+     ".advice[128][2]: 74.69 before, 74.68 after",
+     ".advice[135][2]: 64.77 before, 64.85 after",
+     ".advice[137][2]: 66.28 before, 66.36 after",
+     ".advice[141][2]: 73.41 before, 73.43 after"
+    ]
+   },
+   "J04-p4.json": {
+    "differences": 66,
+    "first": [
+     ".advice[124][2]: 94.41 before, 94.5 after",
+     ".advice[134][2]: 67.06 before, 66.98 after",
+     ".advice[138][2]: 67.62 before, 67.55 after",
+     ".commands.practice.exercise: 2061 before, 2062 after",
+     ".commands.school.learn_part: 86 before, 85 after",
+     ".continuity.variety.exercises.concentration: 121 before, 120 after"
+    ]
+   },
+   "J05-p4.json": {
+    "differences": 124,
+    "first": [
+     ".advice[117][2]: 56.49 before, 56.51 after",
+     ".advice[118][2]: 56.54 before, 56.55 after",
+     ".advice[118][3]: 0.52 before, 0.51 after",
+     ".advice[129][2]: 64.65 before, 64.66 after",
+     ".advice[140][2]: 56.71 before, 56.72 after",
+     ".advice[140][3]: 0.53 before, 0.55 after"
+    ]
+   },
+   "J06-p4.json": {
+    "differences": 18,
+    "first": [
+     ".end.genres[0].practice: 96.9 before, 97.2 after",
+     ".end.genres[1].practice: 94.6 before, 97.1 after",
+     ".end.genres[2].practice: 81.6 before, 74 after",
+     ".end.genres[5].practice: 62.3 before, 54 after",
+     ".end.genres[6].practice: 35 before, 29.1 after",
+     ".end.genres[7].practice: 35 before, 29.1 after"
+    ]
+   },
+   "J07-p4.json": {
+    "differences": 65,
+    "first": [
+     ".advice[140][3]: 0.43 before, 0.42 after",
+     ".advice[141][3]: 0.55 before, 0.54 after",
+     ".advice[142][3]: 0.53 before, 0.52 after",
+     ".advice[143][3]: 0.51 before, 0.5 after",
+     ".advice[144][3]: 0.45 before, 0.44 after",
+     ".advice[145][3]: 0.41 before, 0.4 after"
+    ]
+   },
+   "J08-p4.json": {
+    "differences": 58,
+    "first": [
+     ".advice[58][3]: 0.49 before, 0.5 after",
+     ".advice[59][3]: 0.56 before, 0.61 after",
+     ".advice[60][3]: 0.54 before, 0.57 after",
+     ".advice[75][3]: 0.48 before, 0.49 after",
+     ".advice[128][3]: 0.37 before, 0.39 after",
+     ".advice[129][3]: 0.36 before, 0.37 after"
+    ]
+   },
+   "J09-p4.json": {
+    "differences": 98,
+    "first": [
+     ".advice[31][2]: 73.44 before, 73.48 after",
+     ".advice[31][3]: 0.4 before, 0.39 after",
+     ".advice[35][2]: 75.66 before, 75.67 after",
+     ".advice[36][2]: 74.89 before, 74.92 after",
+     ".advice[37][2]: 75.9 before, 75.93 after",
+     ".advice[38][2]: 77.33 before, 77.37 after"
+    ]
+   },
+   "J10-p4.json": {
+    "differences": 130,
+    "first": [
+     ".advice[133][2]: 79.1 before, 79.09 after",
+     ".advice[137][2]: 71.36 before, 71.25 after",
+     ".advice[137][3]: 0.21 before, 0.22 after",
+     ".advice[138][3]: 0.23 before, 0.29 after",
+     ".advice[139][3]: 0.21 before, 0.27 after",
+     ".advice[140][1]: 'listening' before, 'focus' after"
+    ]
+   },
+   "J11-p4.json": {
+    "differences": 175,
+    "first": [
+     ".advice[131][2]: 75.82 before, 75.91 after",
+     ".advice[132][2]: 76.26 before, 76.35 after",
+     ".advice[133][2]: 77.68 before, 77.77 after",
+     ".advice[134][2]: 78.3 before, 78.39 after",
+     ".advice[135][2]: 78.53 before, 78.62 after",
+     ".advice[136][2]: 79.4 before, 79.49 after"
+    ]
+   },
+   "J12-p4.json": {
+    "differences": 111,
+    "first": [
+     ".advice[140][3]: 0.22 before, 0.25 after",
+     ".advice[141][3]: 0.29 before, 0.32 after",
+     ".advice[142][3]: 0.29 before, 0.31 after",
+     ".advice[143][3]: 0.24 before, 0.28 after",
+     ".advice[144][1]: 'composure' before, 'listening' after",
+     ".advice[144][2]: 70.5 before, 79.98 after"
+    ]
+   },
+   "J13-p4.json": {
+    "differences": 8,
+    "first": [
+     ".end.genres[0].practice: 97 before, 99 after",
+     ".end.genres[1].practice: 95.4 before, 91.4 after",
+     ".end.genres[2].practice: 93.6 before, 91.3 after",
+     ".end.genres[4].g: 'romance' before, 'political_drama' after",
+     ".end.genres[4].practice: 58.2 before, 54 after",
+     ".end.genres[5].g: 'political_drama' before, 'romance' after"
+    ]
+   },
+   "J14-p4.json": {
+    "differences": 3,
+    "first": [
+     ".end.genres[1].practice: 98 before, 98.6 after",
+     ".end.genres[2].practice: 81.6 before, 74 after",
+     ".end.genres[5].practice: 35 before, 29.1 after"
+    ]
+   },
+   "J15-p2.json": {
+    "differences": 3,
+    "first": [
+     ".end.genreSpeed.speed: 1.15 before, 1.14 after",
+     ".end.genres[0].practice: 88.7 before, 82.3 after",
+     ".end.genres[1].practice: 50.8 before, 68.1 after"
+    ]
+   },
+   "J15-p3.json": {
+    "differences": 3,
+    "first": [
+     ".end.genreSpeed.speed: 1.15 before, 1.14 after",
+     ".end.genres[0].practice: 88.7 before, 82.3 after",
+     ".end.genres[1].practice: 50.8 before, 68.1 after"
+    ]
+   },
+   "J15-p4.json": {
+    "differences": 3,
+    "first": [
+     ".end.genreSpeed.speed: 1.15 before, 1.14 after",
+     ".end.genres[0].practice: 88.7 before, 82.3 after",
+     ".end.genres[1].practice: 50.8 before, 68.1 after"
+    ]
+   },
+   "J16-p2.json": {
+    "differences": 3,
+    "first": [
+     ".end.genreSpeed.speed: 1.13 before, 1.14 after",
+     ".end.genres[0].practice: 76.2 before, 82.3 after",
+     ".end.genres[1].practice: 76.2 before, 68.1 after"
+    ]
+   },
+   "J16-p3.json": {
+    "differences": 3,
+    "first": [
+     ".end.genreSpeed.speed: 1.13 before, 1.14 after",
+     ".end.genres[0].practice: 76.2 before, 82.3 after",
+     ".end.genres[1].practice: 76.2 before, 68.1 after"
+    ]
+   },
+   "J16-p4.json": {
+    "differences": 3,
+    "first": [
+     ".end.genreSpeed.speed: 1.13 before, 1.14 after",
+     ".end.genres[0].practice: 76.2 before, 82.3 after",
+     ".end.genres[1].practice: 76.2 before, 68.1 after"
+    ]
+   },
+   "J17-p4.json": {
+    "differences": 42,
+    "first": [
+     ".advice[140][3]: 1.07 before, 1.05 after",
+     ".advice[141][3]: 1.17 before, 1.13 after",
+     ".advice[142][3]: 1.17 before, 1.13 after",
+     ".advice[143][3]: 1.17 before, 1.13 after",
+     ".advice[144][3]: 1.17 before, 1.13 after",
+     ".advice[145][3]: 1.17 before, 1.13 after"
+    ]
+   },
+   "J18-p4.json": {
+    "differences": 180,
+    "first": [
+     ".advice[75][3]: 0.82 before, 0.84 after",
+     ".advice[78][3]: 0.6 before, 0.59 after",
+     ".advice[79][1]: 'composure' before, 'adaptability' after",
+     ".advice[79][2]: 49.68 before, 54.33 after",
+     ".advice[79][3]: 0.63 before, 0.62 after",
+     ".advice[80][1]: 'composure' before, 'adaptability' after"
+    ]
+   },
+   "J19-p4.json": {
+    "differences": 17,
+    "first": [
+     ".end.genres[0].practice: 96.4 before, 97.3 after",
+     ".end.genres[2].practice: 93.7 before, 89 after",
+     ".end.genres[3].practice: 76.2 before, 82.3 after",
+     ".end.genres[4].practice: 73.4 before, 65.1 after",
+     ".end.genres[5].practice: 35 before, 50.1 after",
+     ".reviews[2].prepReplay.exact: 63.91252066588868 before, 63.91252022040887 after"
+    ]
+   },
+   "J20-p4.json": {
+    "differences": 139,
+    "first": [
+     ".advice[126][2]: 50.98 before, 50.95 after",
+     ".advice[126][3]: 1.12 before, 1.01 after",
+     ".advice[127][2]: 51.48 before, 51.45 after",
+     ".advice[127][3]: 1.05 before, 0.97 after",
+     ".advice[128][3]: 0.65 before, 0.64 after",
+     ".advice[129][3]: 0.64 before, 0.65 after"
+    ]
+   },
+   "J21-p3.json": {
+    "differences": 17,
+    "first": [
+     ".end.genreSpeed.speed: 1.15 before, 1.16 after",
+     ".end.genres[0].practice: 92.7 before, 93.2 after",
+     ".end.genres[1].practice: 67.5 before, 76.8 after",
+     ".end.genres[2].g: 'drama' before, 'political_drama' after",
+     ".end.genres[2].practice: 58.2 before, 54 after",
+     ".end.genres[3].g: 'domestic_drama' before, 'drama' after"
+    ]
+   },
+   "J21-p4.json": {
+    "differences": 17,
+    "first": [
+     ".end.genreSpeed.speed: 1.15 before, 1.16 after",
+     ".end.genres[0].practice: 92.7 before, 93.2 after",
+     ".end.genres[1].practice: 67.5 before, 76.8 after",
+     ".end.genres[2].g: 'drama' before, 'political_drama' after",
+     ".end.genres[2].practice: 58.2 before, 54 after",
+     ".end.genres[3].g: 'domestic_drama' before, 'drama' after"
+    ]
+   },
+   "J22-p4.json": {
+    "differences": 60,
+    "first": [
+     ".advice[189][3]: 0.8 before, 0.81 after",
+     ".advice[192][3]: 1.09 before, 1.03 after",
+     ".advice[193][3]: 1.2 before, 1.12 after",
+     ".advice[194][3]: 1.2 before, 1.12 after",
+     ".advice[195][3]: 1.2 before, 1.12 after",
+     ".advice[196][3]: 1.2 before, 1.12 after"
+    ]
+   },
+   "J23-p2.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 135 before, 161 after",
+     ".work: 180 before, 213 after"
+    ]
+   },
+   "J23-p3.json": {
+    "differences": 2,
+    "first": [
+     ".showings: 215 before, 241 after",
+     ".work: 282 before, 315 after"
+    ]
+   },
+   "J23-p4.json": {
+    "differences": 1056,
+    "first": [
+     ".acts: 117 items before, 79 after",
+     ".advice[58][2]: 45.79 before, 45.73 after",
+     ".advice[59][2]: 47.29 before, 47.23 after",
+     ".advice[59][3]: 1.07 before, 1.08 after",
+     ".advice[60][2]: 47.56 before, 47.23 after",
+     ".advice[60][3]: 1.17 before, 1.08 after"
+    ]
+   },
+   "compare.json": {
+    "differences": 189,
+    "first": [
+     ".J03 J04 J05.byInput.emotionalDepth.ignores: 45.1 before, 45 after",
+     ".J03 J04 J05.byInput.listening.ignores: 30.5 before, 30.6 after",
+     ".J03 J04 J05.byInput.vocal.partly: 49.8 before, 49.9 after",
+     ".J03 J04 J05.followersLastTwelve.atFollowers: 78.07 before, 78.06 after",
+     ".J03 J04 J05.followersLastTwelve.atIgnorers: 72.53 before, 72.54 after",
+     ".J03 J04 J05.risesOfTheAdvised.partly: 185.2 before, 185.3 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "interface-final": {
+  "before": "docs/verification/genre-banking-2026-10-22/final-runs/interface-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/interface-final",
+  "held": false,
+  "files": 1,
+  "same": 0,
+  "explained": {},
+  "unexplained": {
+   "summary.json": {
+    "differences": 52,
+    "first": [
+     ".exits: 21 items before, 22 after",
+     ".runs[0].commit: 'fd32e869' before, '16b50e07' after",
+     ".runs[0].log: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after",
+     ".runs[0].screenshots[0]: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after",
+     ".runs[0].screenshots[1]: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after",
+     ".runs[0].screenshots[2]: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "journeys14-final": {
+  "before": "docs/verification/genre-banking-2026-10-22/final-runs/journeys14-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys14-final",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ }
+}

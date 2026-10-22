@@ -200,10 +200,18 @@ const PLAY_ALIASES: Readonly<Record<string, string>> = { 'the proposal': 'a marr
  * Proposal.
  */
 export function genresOfPlay(title: string | undefined): readonly string[] | undefined {
+  return catalogPlay(title)?.kinds;
+}
+
+/** The catalog's play of a title, its case and its aliases aside. */
+const catalogPlay = (title: string | undefined): Play | undefined => {
   if (!title) return undefined;
   const t = PLAY_ALIASES[title.toLowerCase()] ?? title.toLowerCase();
-  return [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title.toLowerCase() === t)?.kinds;
-}
+  return [...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].find((p) => p.title.toLowerCase() === t);
+};
+
+/** The title as the catalog writes it, or none for a play the catalog doesn't hold (`content/genre-weights.ts` reads it). */
+export const catalogTitle = (title: string | undefined): string | undefined => catalogPlay(title)?.title;
 
 /**
  * The genres of what a School holder plays (a School casting, the Rep's, a Summer Cabaret show): its play's

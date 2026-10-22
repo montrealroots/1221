@@ -1,0 +1,8 @@
+at 69996adb, 0 tracked files uncommitted, 2026-10-22T14:58:10Z
+p1 exit=0 secs=34
+p2 exit=0 secs=79
+p3 exit=0 secs=97
+p4a exit=0 secs=24
+p4 exit=0 secs=13
+done
+p5 exit=0 secs=21

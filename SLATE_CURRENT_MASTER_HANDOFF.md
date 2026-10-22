@@ -1,6 +1,75 @@
-# Read First: Brief 21, Genre Integration And Banking Correctness, Merged, 2026-10-22
+# Read First: Brief 22, The Three Remaining Career And Genre Issues, Not Merged, 2026-10-22
 
-**This section is the current status, and where a new session starts.** The owner gave brief 21
+**This section is the current status, and where a new session starts.** The owner gave brief 22
+(`docs/verification/briefs-2026-10-16/22-finish-the-three-remaining-career-and-genre-issues.txt`, kept verbatim) after
+brief 21's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `46822660` (`main`, #53), pushed and never
+force-pushed. It is not merged: "Keep the changes reviewable. Do not merge or deploy without my instruction." No pull
+request is open for it. Nothing is deployed. There is no stash and one worktree.
+
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (632 at brief 21's close. Brief 22's final runs measured every row again on its tested commit
+  (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`):
+  - **the Genre Audit as written:** superseded at the owner's word, so Explicitly Deferred, its figure and history kept;
+  - **Genre Audit-R, its replacement,** and **genres.7-measured:** both verified;
+  - **INT-gate:** verified by the gate below, and folded in after it ran (633 until then).)
+
+- **Read first:** `docs/verification/career-genre-2026-10-22/README.md` (the receipt), `criteria.md` (the items, written
+  before any fix), `CHECKPOINT.md` (the record as the work went), `authorization-trace.md` (each stage of an engagement,
+  before and after) and `decision-history.md` (the Genre Audit's old criterion, the question and the owner's word).
+- **The tested commit:** `16b50e07`. Every later commit changes documents and the runs' scripts only, nothing under `src`.
+- **Permission to work:**
+  - **OPT counted by the day:** each New York day once it's over, a day with work only inside an engagement begun and not
+    ended (`settleOpt`, `employmentSpan`). A booking isn't employment.
+  - **Read at each work day,** its start and its end, after counting OPT up to it. Without permission the day doesn't
+    happen and the work is released (`release`, "Released As {part}").
+  - **Permission ending** (`PERMISSION_ENDED`) releases every engagement with a day still to come, at that moment.
+  - **Pay for days worked is kept** and paid on its payday. `payDue` used to skip every engagement called off, so those
+    days were never paid; that was older than brief 22.
+  - **b20-4:** on the starting commit it worked 47 days after OPT ended. Now Accept warns on 16 August, OPT ends at the
+    end of 1 September, and The Winter Ledger is released at that midnight, not a day of it worked.
+  - **The sources:** `authorization-sources.md`, read 2026-10-22, with SLATE's seven assumptions said.
+- **Genres:**
+  - **Every work states its weights** (`content/genre-weights.ts`), read at the most precise level: a class scene's own,
+    a part's or role's own, then the play's or project's. Tags are read evenly where nothing is stated. The set is
+    normalized, order-free and deduplicated, a broad genre beside its own kind folded in. The first-listed half is gone.
+  - **Every consumer reads the same set** (`resolveGenres`): School casting and nights, calls, rehearsal days, class
+    scenes, taped briefs, self-tapes, auditions, callbacks, work days, casting's fit, the showcase, the Profile and What
+    It Asks. Enjoyment still reads tags, as preference.
+- **Related genres:**
+  - **One direct link only:** a kind toward its broad genre at 0.65, a broad genre toward its kind at 0.40; no
+    siblings, no chains, nothing unrelated.
+  - **Counted with the genre's own knowledge:** `1 − (1 − own) × (1 − related)`. Nothing is stored by reading.
+  - **The coefficients are provisional,** set by controlled comparisons (`comparisons.md`): 0.75/0.5 and 0.70/0.45
+    failed the bounds written first.
+  - **The Genre Audit's "leaks into none"** is superseded by Genre Audit-R in the owner's words. Measured over every
+    ordered pair: unrelated 0 of 21,644; direct 408 of 408, each less than the genre itself, at most 85%.
+- **Saves:** the schema version stays 94, no migration. An older save's weekly OPT count is kept and goes on by the day.
+- **Defects found and fixed:** 13, listed in the receipt with each one's test.
+- **Mutations:** 26. Two survived the first run, each a missing test; both were added and both killed on the rerun.
+- **Journeys:**
+  - **Brief 20's:** 161 of 161 transitions and 52 of 52 forks the same, every check passed.
+  - **Brief 13's:** 25 of 25 with all checks passed.
+  - **Brief 19's lives:** only the showcase's scenes moved.
+  - **The built app,** at 1440 and 390: brief 22's walk and every earlier walk, nothing found.
+- **The gate:** in a clean clone of `cf83e61d` (the receipt and this section, its `src` the tested commit's), exit 0
+  read from its file: 486 of 486 test files, 5,596 of 5,596 tests, none skipped, all 22 checks
+  (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate.txt`). Brief 22 added 4 test files and 49 tests to
+  brief 21's 482 and 5,547. Run again on the commit that folds its figure, `0014aff6`, the same, the matrix at 634
+  (`final-runs/runs/gate-receipt.txt`). Only that figure was written after it.
+- **Not merged, not deployed:** both wait on the owner's word. Base44 deployment waits on the gate and that word (rule
+  14), and §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of
+  brief 20's or 21's line accepts this line's saves.
+- **For the owner:** the readings in the receipt's For The Owner:
+  - auditions while out of status;
+  - enjoyment read from tags;
+  - the provisional coefficients and SLATE's weights;
+  - the tutorial's silence on related genres;
+  - the four Decision Required rows and brief 21's minimum-payment question.
+
+# Earlier: Brief 21, Genre Integration And Banking Correctness, Merged, 2026-10-22
+
+**This section was the current status until brief 22.** The owner gave brief 21
 (`docs/verification/briefs-2026-10-16/21-complete-genre-integration-and-banking-correctness.txt`, kept verbatim) after
 brief 20's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `e50865df` (`main`, #51), pushed and never
 force-pushed. Until the owner's word it was kept out of `main` ("Keep the work reviewable. Do not merge or deploy without

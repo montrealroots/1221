@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 632 of 658 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 ## Totals
 
@@ -37,7 +37,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: tax | 18 | 16 |  |  |  |  |  | 2 |
 | Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
 | Brief 09 Area: coverage | 14 | 13 |  |  |  |  | 1 |  |
-| Brief 09 Area: genres | 21 | 20 | 1 |  |  |  |  |  |
+| Brief 09 Area: genres | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 4 |  |  |  |  |  | 6 |
 | Brief 10 Area: advice | 14 | 14 |  |  |  |  |  |  |
@@ -49,13 +49,14 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Attributes | 25 | 22 |  |  |  |  |  | 3 |
 | Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  |  | 1 |
 | Criteria: Mastery Through Play | 8 | 8 |  |  |  |  |  |  |
-| Criteria: The Genres | 5 | 4 |  |  |  |  | 1 |  |
+| Criteria: The Genres | 5 | 4 |  |  |  |  |  | 1 |
 | Integration | 9 | 9 |  |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 | 4 |  |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 33 |  |  |  |  |  |  |
-| **All** | **698** | **632** | **21** | **0** | **0** | **0** | **5** | **40** |
+| Brief 22: Replacement Criteria | 1 | 1 |  |  |  |  |  |  |
+| **All** | **699** | **634** | **20** | **0** | **0** | **0** | **4** | **41** |
 
 ## Life, Health And Time
 
@@ -295,7 +296,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `brief.prepare` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Read It Through, Learn The Lines … | Implemented And Verified | verified | tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (30 minutes a step, the take improved by the prepara… |
 | `brief.choose` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Choose It sets the reading a take… | Implemented And Verified | verified | tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (a change of reading keeps half the breakdown, the t… |
 | `brief.reader` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Read With chooses who reads the o… | Implemented And Verified | verified | tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (5/9 of the way’s rehearsal at the f… |
-| `genre.study` | Practice an exercise for an hour, at a tier and with a focus, and study a genre / Study It (ProfileWorkspace.tsx:416) and Study The Genre (… | Implemented And Verified | verified | tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half… |
+| `genre.study` | Practice an exercise for an hour, at a tier and with a focus, and study a genre / Study It (ProfileWorkspace.tsx:416) and Study The Genre (… | Implemented And Verified | verified | tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, thre… |
 | `school.term` | TERM_KIND (scheduled at enrollment and by each term for the next) runs followFormerClasses and the leave start or return. It sets termsBegu… | Implemented And Verified | verified | tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carrie… |
 | `school.week` | planWeek runs at enrollment, at an additional term's start, and every Sunday at 18:00 through WEEK_KIND, for the day after. For each day up… | Implemented And Verified | verified | tests/evidence-g21-school.test.ts ‘school.week’: ‘PLAYER JOURNEY: books the first year’s 24 class-week Saturdays and the second year’s 25 to Yale’s 150 assigne… |
 | `school.classes` | CLASSES_KIND (booked by planWeek) adds a class day to the tally. Classmates in class grow craft, and abilities by their kin. Each course's … | Implemented And Verified | verified | tests/evidence-g21-school.test.ts ‘school.classes’: ‘PLAYER JOURNEY: grows the abilities of each classmate in the room by the courses’ kin, never composure, an… |
@@ -603,7 +604,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `genres.4-kept` | The 41 genres kept as they were, each with its reason | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09.md ‘§4, the per-genre table’ (static) |
 | `genres.5-saves` | An older save that prepared or taped a retired brief | Implemented And Verified | older-save compatibility kept and tested | tests/remaining-genres.test.ts ‘a save that prepared a retired brief > keeps its record as it was across a reload, and nothing offers it or reads it as the new… |
 | `genres.6-table` | The per-genre table, before and after | Implemented And Verified | implemented | docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json ‘npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …’ (static) |
-| `genres.7-measured` | Measured again after the changes | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
+| `genres.7-measured` | Measured again after the changes | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
 | `genres.8-docs` | docs/GENRE-COVERAGE.md and guide text that names a brief’s scene | Implemented And Verified | verified as it stands | tests/genre-coverage.test.ts ‘the coverage record > is what the tables say, and accounts for every genre once’ (static) |
 
 ## Brief 09 Area: journeys
@@ -826,7 +827,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `S2` | Contrasting genres differ and related ones overlap (revised) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
 | `S3` | Contrasting genres change outcomes on the same scene (revised), on all four samples | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
 | `S4` | No two briefs of different genres identical in every number a take reads (G2) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Decision Required | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.m… |
+| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Explicitly Deferred | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.m… |
 
 ## Integration
 
@@ -910,11 +911,17 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `journeys.7-ledger` | Ledger balance. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-… |
 | `journeys.7-save` | Save compatibility and historical results. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-… |
 
+## Brief 22: Replacement Criteria
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `Genre Audit-R` | Every genre in the code (149): knowing it helps its own work; no unrelated-genre contribution; only documented, bounded transfer across app… | Implemented And Verified | docs/verification/career-genre-2026-10-… | docs/verification/career-genre-2026-10-22/final-runs/final/genre-audit.md ‘the criterion and the direct pairs’; docs/verification/career-genre-2026-10-22/decis… |
+
 ## What's Left
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (21)
+### Implemented, Verification Incomplete (20)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -936,7 +943,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
-- **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
 
 ### Partially Implemented (0)
 
@@ -950,15 +956,14 @@ None.
 
 None.
 
-### Decision Required (5)
+### Decision Required (4)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
-- **`Genre Audit`** (Criteria: The Genres): The Genre Audit's threshold (the owner's genre acceptance brief, 2026-10-16) says knowing a genre helps its own work and transfers to no other. Brief 21 asked that unrelated genres give nothing and that overlapping tags count once, and its measure credits a genre's own kind toward it at 0.75 and its broad genre at 0.5. Should a kind and its broad genre count toward each other, or should the audit's 'leaks into none' stand and both credits be 0? Evidence: docs/verification/genre-banking-2026-10-22/final-runs/final/genre-audit.md (the nine, each a genre and its own kind); tests/b21-genre-proof.…
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
 - **`ST6-R2.e`** (Brief 12: Replacement Criteria): Should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged with the scene's grain at nothing, with the margins as played kept as the record; and should (e3.5) on stage be read on the size counterparts' own opportunities (varied on every actor) with their 10 gains reported, rather than the gains alone? Evidence: As in results; acting/st6r2-13-e.json (verdict.e2, verdict.e3, atNoGrain, and per actor extraNotOver005 and otherSideNotBehind), and the trace of romantic_drama-2/plan above.. Recommended: Accept both and close ST6-R2.e. The specialist advantage th…
 
-### Explicitly Deferred (40)
+### Explicitly Deferred (41)
 
 - `health.prepay` (Life, Health And Time): Deferred: England’s certificate, which the New Haven student is refused. A prescription free while it runs is shown on a London fixture (tests/coverage-gaps-life.test.ts ‘makes prescriptions free while it runs…’, rxShareOf read, not a fill…
 - `documents.naturalize` (Papers): Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
@@ -1000,3 +1005,4 @@ None.
 - `F2` (Criteria: The Attributes): Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447 on brief 09’s integrated tree; 68.9%, 308 o…
 - `G1` (Criteria: The Attributes): Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, …
 - `L3` (Criteria: Long-Term Continuity): L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; failing on 2 of brief 10’s 8 journeys on its final code (integrated/after/l3r.json); superseded by L3-R, approved by the own…
+- `Genre Audit` (Criteria: The Genres): Superseded by Genre Audit-R at the owner's word in brief 22 ("Explicitly supersede the old 'no transfer to any other genre' criterion with: 'No unrelated-genre contribution; only documented, bounded transfer across approved direct relation…

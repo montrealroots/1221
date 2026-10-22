@@ -106,7 +106,7 @@ import { familiesOf } from '../content/genres';
 import { materialContext, materialOf, sidesOf, type Playing } from './material';
 import { noteMaterial } from './experience';
 import { PLAYING } from '../content/approaches';
-import { creditPractice, practiceGenres, relevantGenre, type Engagement, type Knower } from './engagement';
+import { creditPractice, practiceGenres, relevantGenre, requirementOfHolder, requirementOfPlay, type Engagement, type Knower, type Work } from './engagement';
 import { ENGAGEMENT } from '../content/engagement';
 import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
@@ -1251,7 +1251,7 @@ function formerRun(sim: Simulation, person: Person, c: NonNullable<SchoolRecord[
   // the owner's brief 21): a run played forward after the student left reads the term it was in, not the clock's.
   // With the run's own calls (`atOpening`).
   const offset = c.offset ?? (person.school!.offset ?? 0) - 2 * ((person.school!.classOf ?? 0) - c.classOf);
-  const genre = genrePart(atOpening(classGenres(sim, asClassOf(person, c.classOf), termAt(last), offset), genresOfPlay(shown), rehearsals), genresOfPlay(shown) ?? []);
+  const genre = genrePart(atOpening(classGenres(sim, asClassOf(person, c.classOf), termAt(last), offset), requirementOfPlay(shown), rehearsals), requirementOfPlay(shown));
   const e = judge(sim.universe.meta.seed, formerPerformer(sim, person, mate, i), {
     task: TASK_PROFILES.performance!, techniques: reads, prep: { lines: kept, blocking: kept, notes: kept, ...genre.prep }, required: { lines: 1, blocking: 1, notes: 1, ...genre.required },
     difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 75 }, key: `former:${c.classOf}:${i}:${shown}`,
@@ -2524,8 +2524,9 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
   const playing = proc?.playing;
-  // The play's genres known (from 2026-10-22, the owner's brief 21: until then a night read none, `genrePart`).
-  const genre = genrePart(person, genresOfHolder(holder) ?? []);
+  // The play's genres known (from 2026-10-22, the owner's brief 21: until then a night read none, `genrePart`), as the
+  // part asks them (`requirementOfHolder`, brief 22): a part's own where the play gives one, else the play's.
+  const genre = genrePart(person, requirementOfHolder(holder));
   const prepWith: Record<string, number> = { ...prep, ...genre.prep };
   Object.assign(required, genre.required);
   const read = material || playing ? materialContext(E, material && withPart(material, piece.night!), playing, proc?.direction) : undefined;
@@ -2582,8 +2583,9 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
   const piece = playPiece(holder, 'supporting');
   const read = materialContext(E, material && withPart(material, piece.night!), chosen, proc?.direction);
-  // The play's genres as known now (from 2026-10-22, the owner's brief 21): rehearsal completes the rest, not that.
-  const genre = genrePart(person, genresOfHolder(holder) ?? []);
+  // The play's genres as known now (from 2026-10-22, the owner's brief 21), as the part asks them (brief 22):
+  // rehearsal completes the rest, not that.
+  const genre = genrePart(person, requirementOfHolder(holder));
   const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1, ...genre.prep }, required: { lines: 1, blocking: 1, notes: 1, approach: 1, ...genre.required }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `preview:${holder.play ?? ''}`, expected: true };
   // A supporting part's workload and text, as its difficulty is (from 2026-10-16, brief 10): the same for every choice compared.
   return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece);
@@ -2779,7 +2781,7 @@ export function classmateRun(sim: Simulation, person: Person, i: number, reads: 
   const kept = reliabilityOf(sim, person, i);
   // The play's genres as the class knows them with the run's own calls (from 2026-10-22, the owner's brief 21), as the
   // player's night reads theirs.
-  const genre = genrePart(atOpening(classGenres(sim, person, termAt(at), person.school!.offset ?? 0), genresOfPlay(production), rehearsals), genresOfPlay(production) ?? []);
+  const genre = genrePart(atOpening(classGenres(sim, person, termAt(at), person.school!.offset ?? 0), requirementOfPlay(production), rehearsals), requirementOfPlay(production));
   const e = judge(sim.universe.meta.seed, classmatePerformer(sim, person, i), {
     task: TASK_PROFILES.performance!, techniques: reads, prep: { lines: kept, blocking: kept, notes: kept, ...genre.prep }, required: { lines: 1, blocking: 1, notes: 1, ...genre.required },
     difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 75 }, key: `mate:${i}:${production}`,
@@ -2823,8 +2825,8 @@ export const castingPerformer = (p: Performer): Performer => ({
  * that interpretation reads (`TASK_PROFILES.performance`). A play with no genre the game knows (a new play), or no record
  * to read, gives none, and the night reads none, as before.
  */
-export function genrePart(known: Knower | undefined, kinds: readonly string[]): { prep: Record<string, number>; required: Record<string, number> } {
-  const reading = known ? relevantGenre(known, kinds) : undefined;
+export function genrePart(known: Knower | undefined, work: Work): { prep: Record<string, number>; required: Record<string, number> } {
+  const reading = known ? relevantGenre(known, work) : undefined;
   if (!reading?.needs.length) return { prep: {}, required: {} };
   // Known against what completes it, as a taped brief's is (`genreKnown`) and a professional round's (`fitOf`): whole at
   // 90. On the day it was written it gave the known share of 90, so a night was complete only at 100; found by brief
@@ -2853,19 +2855,20 @@ export function classGenres(sim: Simulation, as: Person, term: number, offset: n
     for (let rank = 1; rank <= size; rank += 1) {
       const production = schoolProduction(a + offset, rank, a);
       if (!production) continue;
-      const kinds = playOf(sim, as, production).kinds;
-      if (!kinds?.length) continue;
+      const play = playOf(sim, as, production);
+      const asked = requirementOfPlay(play.title, undefined, play.kinds);
+      if (!asked.needs.length) continue;
       const key = `${a}:${production.name}`;
       if (!calls.has(key)) calls.set(key, rehearsalDays(a + offset, production.runs[0]!, production.weeks).length + production.runs.length);
-      for (let n = 0; n < calls.get(key)!; n += 1) creditPractice(record, kinds, 1 / size);
+      for (let n = 0; n < calls.get(key)!; n += 1) creditPractice(record, asked, 1 / size);
     }
   }
   return { engagement: record };
 }
 
 /** A class's record with a run's own calls in its play's genres, as a member of its cast comes to its first night. */
-function atOpening(known: Knower, kinds: readonly string[] | undefined, calls: number): Knower {
-  for (let n = 0; n < calls; n += 1) creditPractice(known.engagement!, kinds ?? [], 1);
+function atOpening(known: Knower, work: Work, calls: number): Knower {
+  for (let n = 0; n < calls; n += 1) creditPractice(known.engagement!, work, 1);
   return known;
 }
 
@@ -2883,7 +2886,7 @@ export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>,
   // The play's genres as the student knows them (from 2026-10-22, the owner's brief 21), the one part of a night that
   // rehearsal doesn't complete: the chair reads it as the night will (`genrePart`). Until then casting read no genre.
   const ctx = {
-    task: TASK_PROFILES.performance!, techniques: reads, ...genrePart(known, genresOfPlay(title) ?? kinds), difficulty: 0,
+    task: TASK_PROFILES.performance!, techniques: reads, ...genrePart(known, requirementOfPlay(title, undefined, kinds)), difficulty: 0,
     condition: { readiness: 100 }, ...(read ? { lean: read.lean, inputs: read.inputs } : { families: familiesOf(kinds) }), key, expected: true,
   };
   // Judged in its movements as a night is (from 2026-10-12).
@@ -3766,9 +3769,9 @@ export function registerSchool(sim: Simulation): void {
     // And in the record of runs the next casting reads, whatever kind of run (`noteRun`, from 2026-10-10).
     if (person.school) noteRun(person.school, casting, rep, item.at, { delivery: tonight, quality: evaluation.overall });
     // A house answered night after night: listening grows by it (`content/abilities.ts`), and the play's kinds are
-    // practiced, one night's worth shared among them (`practiceGenres`).
+    // practiced, one night's worth shared among them as the part asks them (`practiceGenres`, `requirementOfHolder`).
     ordinary(s, person, 'listening', focusAt(s, person, item.at), 0.5, 'night');
-    practiceGenres(s, person, genresOfHolder(casting) ?? []);
+    practiceGenres(s, person, requirementOfHolder(casting));
     (casting.nights ??= {})[night] = (casting.nights[night] ?? 0) + 1;
     // The night together (from 2026-10-12, `systems/ensemble.ts`): your own night is the band and the record; how the
     // show went as a whole, with the company, is the mood it leaves you in.

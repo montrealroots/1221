@@ -7,11 +7,13 @@
  * and Mexico's residence and naturalizing (`systems/residence.ts`, `systems/citizenship.ts`). The OPT example's dates are
  * worked from them for the class that began in 2026, whose program ends May 31, 2029.
  *
- * One figure is written as text because its rule doesn't export it: OPT's days without work counted a week at a time
- * (`OPT_WEEK_KIND`). From 2026-10-21 (brief 19's D8) a week's days of professional work come off its seven
- * (`daysWorkedIn`): until then Permission To Work said the game had no work after the degree, so OPT ended after its 90
- * days without work. A residence card's renewal in its last 30 days was the second until 2026-10-16, when Mexico's
- * papers stopped being sold and the renewal's refusal came to say it (`MEXICO_RENEWAL`).
+ * One figure was written as text because its rule didn't export it: OPT's days without work counted a week at a time
+ * (`OPT_WEEK_KIND`), until 2026-10-22 (the owner's brief 22), when they came to be counted by the day, each New York day
+ * from OPT's first (`settleOpt`), and the worked example's end came to be worked out the same way. From 2026-10-21 (brief
+ * 19's D8) a week's days of professional work came off its seven (`daysWorkedIn`): until then Permission To Work said the
+ * game had no work after the degree, so OPT ended after its 90 days without work. A residence card's renewal in its
+ * last 30 days was the second until 2026-10-16, when Mexico's papers stopped being sold and the renewal's refusal came
+ * to say it (`MEXICO_RENEWAL`).
  *
  * Residence Abroad's entry told, until 2026-10-16 (brief 09's journeys), how to buy Mexico's temporary residence on the
  * savings test, about $674.93, renew it, settle and naturalize, and that nothing but this tab read it; from then it
@@ -69,7 +71,7 @@ import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '../replacements';
 import { WORK_RULES } from '../workrules';
 import { exchange } from '../currency';
 import { formatMoney } from '../../core/money';
-import { MS_DAY, formatDate } from '../../core/time';
+import { MS_DAY, addDays, formatDate, startOfDay } from '../../core/time';
 import { STARTING } from '../../systems/documents';
 import { NONCITIZEN_ID } from '../../systems/identity';
 import { STATUS_GRACE_DAYS } from '../../systems/permission';
@@ -121,12 +123,13 @@ const NY_MAILS = NY_LICENSE.byMail
   : '';
 
 // OPT for the class that began in 2026: applied for the day after its window opens, decided at the standard pace, and
-// ended by its days without work, counted a week at a time; against the status's grace without it.
+// ended by its days without work, counted by the day from its first (a week at a time until 2026-10-22, the owner's
+// brief 22), at the end of the 91st; against the status's grace without it.
 const PROGRAM_END = Date.UTC(2029, 4, 31, 12);
 const OPT_APPLIED = PROGRAM_END - (OPT.windowBeforeDays - 1) * MS_DAY;
 const OPT_DECIDED = OPT_APPLIED + OPT.standardDays * MS_DAY;
 const OPT_START = Math.max(PROGRAM_END, OPT_DECIDED);
-const OPT_ENDS = OPT_START + (Math.floor(OPT.unemploymentDays / 7) + 1) * 7 * MS_DAY;
+const OPT_ENDS = addDays(startOfDay(OPT_START, 'America/New_York'), OPT.unemploymentDays + 1, 'America/New_York');
 const STATUS_WITHOUT = PROGRAM_END + STATUS_GRACE_DAYS.f1 * MS_DAY;
 
 // Mexico's residence: its savings and income tests, and the savings in the save's dollars at SLATE's exchange rates.
@@ -244,7 +247,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     questions: ['How do I get a Social Security number?', 'Can I work after I graduate?', 'When can I apply for OPT?', 'What happens when my F-1 status ends?', 'Is premium processing worth it?'],
     where: on('work', 'Papers, Permission To Work, Social Security Number And OPT'),
     available: `From the guide’s chapter “${CHAPTER}”. It’s for a student on an F-1: a US citizen already has a Social Security number, and OPT is only for F-1 students.`,
-    short: `On an F-1, you make two applications here. The first, while you’re registered for your program, is a Social Security number, which you apply for in person at New Haven’s office: with it, the IRS decides a payment plan at once, some banks open your account online, Connecticut’s DMV can issue you an ID card, and a 1040-NR doesn’t wait on an ITIN.\n\nThe second, after your degree, is OPT, which lets you work in your field and keeps your US status going past its ${STARTING.graceDays}-day grace period. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than ${OPT.unemploymentDays} days without work in total.`,
+    short: `On an F-1, you make two applications here. The first, while you’re registered for your program, is a Social Security number, which you apply for in person at New Haven’s office: with it, the IRS decides a payment plan at once, some banks open your account online, Connecticut’s DMV can issue you an ID card, and a 1040-NR doesn’t wait on an ITIN.\n\nThe second, after your degree, is OPT, which lets you work in your field and keeps your US status going past its ${STARTING.graceDays}-day grace period. Every day from a job’s first day to its last counts as a day with work, and every other day as one without, the days before a booked job begins among them. OPT ends once you’ve had more than ${OPT.unemploymentDays} days without work in total.`,
     steps: [
       'Open Papers, then the Permission To Work tab. The Permission To Work panel shows Your Program Ends and Your US Status.',
       `Once you’re registered at the School and have your passport in force, press Apply At The Social Security Office under Social Security Number. It takes ${SSN_VISIT} there.`,
@@ -279,7 +282,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     later: [
       'The card arrives on its day. A bank that opens accounts online for people with a number can now open one for you.',
       `If OPT is approved, it runs for ${OPT.months} months from the later of your program’s end and the approval.`,
-      `On OPT, each week’s days without work count, and the days of an engagement count as days worked. After ${OPT.unemploymentDays} days without work in total, OPT ends, and your status with it, with no grace period.`,
+      `On OPT, each day is counted once it’s over: a day with work from a job’s first day to its last, its days off included, and a day without work otherwise. After ${OPT.unemploymentDays} days without work in total, OPT ends at the end of the next, your status with it, with no grace period, and work you’d booked after it is released: the days you worked are still paid.`,
       'When your permission has run out and only the grace period is left, What Needs You says Your US Status Is Ending, with its date.',
       'If you stay past it, you’re out of status. In the game, that cancels your F-1 visa, ends a marketplace plan at the end of the month, closes Covered Connecticut and the DMV’s ID card to you, and closes the Visa Waiver Program to you from then on.',
     ],
@@ -303,7 +306,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     mistakes: [
       'Waiting for the card before working shifts: work-study pays without it, because the IRS lets an employer report the number as applied for.',
       'Leaving the number until after your degree: once school is over the office refuses it, and without it Connecticut’s DMV won’t issue you an ID card, even on OPT. One applied for in your program’s last weeks still comes.',
-      `Counting on OPT’s ${OPT.months} months without booking work: it ends once its days without work pass ${OPT.unemploymentDays}, months before its end date. Each day of an engagement counts as a day worked, so work keeps it, and your status, going.`,
+      `Counting on OPT’s ${OPT.months} months without work: it ends once its days without work pass ${OPT.unemploymentDays}, months before its end date. A job counts only from its first day, so a booking weeks ahead doesn’t stop the count, and OPT can end before the work begins, the part with it.`,
       `Paying for premium processing to keep your status: your status holds while either kind is being decided, so the ${dollars(OPT.premiumFee)} only buys an earlier answer. If that answer comes after your program’s end, OPT starts sooner, and with no work its days run out sooner too.`,
     ],
     related: ['documents.passport-id', 'documents.residence', 'taxes.return', 'taxes.plan', 'papers.benefits', 'papers.health-cover', 'school.shifts'],
@@ -319,7 +322,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     example: {
       setup: `An F-1 student in the class that began in 2026, whose program ends ${day(PROGRAM_END)}, with no work lined up.`,
       steps: [`On ${day(OPT_APPLIED)}, press Apply For OPT.`, 'Graduate, and stay in New Haven.'],
-      result: `${dollars(OPT.fee)} leaves the bank. OPT is decided on ${day(OPT_DECIDED)} and runs from ${day(OPT_START)}. With no work, it ends on ${day(OPT_ENDS)}, past its ${OPT.unemploymentDays} days, and your status ends with it. Without OPT, your status would have ended on ${day(STATUS_WITHOUT)}.`,
+      result: `${dollars(OPT.fee)} leaves the bank. OPT is decided on ${day(OPT_DECIDED)} and runs from ${day(OPT_START)}. With no work, it ends at the end of ${day(OPT_ENDS - 1)}, its days without work past ${OPT.unemploymentDays}, and your status ends with it. Without OPT, your status would have ended on ${day(STATUS_WITHOUT)}.`,
     },
   },
   {

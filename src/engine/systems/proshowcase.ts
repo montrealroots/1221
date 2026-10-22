@@ -75,7 +75,7 @@ import { bandOfQuality, recordWork } from './evaluation';
 import { noteMaterial } from './experience';
 import { UNPERFORMED, materialOf, rehearseChoice, sidesOf } from './material';
 import { TEMPLATE_TASK } from '../content/tasks';
-import { relevantGenre } from './engagement';
+import { relevantGenre, requirementOfScene, requirementWords } from './engagement';
 import { rehearseWays } from './piece';
 import { nerves } from './attributes';
 import { ensurePro, type ShowcaseRecord } from './pro';
@@ -207,11 +207,22 @@ const outstandingOf = (person: Person): CourseRecord[] => Object.values(coursesO
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
- * How well they know a scene's genre, 0 to 1, as every other reader takes a work's genres (`relevantGenre`, from
- * 2026-10-22, the owner's brief 21): its own genre, or a kind of it, or its broad genre in part. Until then it was the
- * scene's genre alone, so the faculty took a student who'd played every kind of comedy for a stranger to a farce.
+ * How well they know what a scene asks of the genres, 0 to 1, as every other reader takes a work's genres
+ * (`relevantGenre`, from 2026-10-22, the owner's brief 21): its own genre, or a kind of it, or its broad genre in part.
+ * Until then it was the scene's genre alone, so the faculty took a student who'd played every kind of comedy for a
+ * stranger to a farce. From brief 22 what the scene asks is its own requirement where it states one, else its play's,
+ * else its filed genre (`requirementOfScene`), as its preparation reads it: until then the filed genre (comedy, drama
+ * or tragedy) alone, coarser than the play's kinds.
  */
-const knownOf = (person: Person, genre: string): number => relevantGenre(person, [genre]).total;
+const knownOf = (person: Person, sceneId: string): number => relevantGenre(person, requirementOfScene(sceneId)).total;
+
+/** What a scene asks, in the faculty's words: "Hamlet is a tragedy", or "This scene of Julius Caesar is mostly political drama, with some tragedy". */
+export function askedWords(scene: Scene): { words: string; one: boolean } {
+  const asked = requirementOfScene(scene.id);
+  const words = (requirementWords(asked) ?? scene.genre).toLowerCase();
+  if (asked.needs.length <= 1) return { words: `${scene.play} is ${/^[aeiou]/.test(words) ? 'an' : 'a'} ${words}`, one: true };
+  return { words: `This scene of ${scene.play} is ${words}`, one: false };
+}
 
 /** A scene fully prepared on a good day for this actor, with no draw: the judge's own forecast, as How You’ll Play It previews one. */
 export function sceneForecast(sim: Simulation, person: Person, sceneId: string): number {
@@ -246,7 +257,7 @@ function ranked(sim: Simulation, person: Person): Ranked[] {
   const pool = scenesFor(t, SHOWCASE_COURSE, courseworkOf(sim, person)?.assignments ?? [], targetDifficulty(3, person.craft ? actingOf(person.craft) : 50));
   return pool.map((scene) => {
     const forecast = sceneForecast(sim, person, scene.id);
-    const known = knownOf(person, scene.genre);
+    const known = knownOf(person, scene.id);
     const before = bestBefore(sim, person, scene.id);
     const score = forecast + SHOWCASE.genrePoints * known + (before && (before.band === 'strong' || before.band === 'exceptional') ? SHOWCASE.strongBefore : 0);
     return { scene, forecast, known, ...(before ? { before } : {}), score };
@@ -292,8 +303,9 @@ export function showcaseOptions(sim: Simulation, person: Person): ShowcaseOption
     const forecast = forecasts.get(o.scene) ?? sceneForecast(sim, person, o.scene);
     forecasts.set(o.scene, forecast);
     const band = bandOfQuality(forecast);
-    const known = knownOf(person, scene.genre);
-    const genre = `${scene.play} is ${/^[aeiou]/.test(scene.genre) ? 'an' : 'a'} ${scene.genre}${known >= 0.6 ? ', a genre you know well' : known >= 0.25 ? ', a genre you know a little' : ', a genre you haven’t studied or worked in much yet'}.`;
+    const known = knownOf(person, scene.id);
+    const asked = askedWords(scene);
+    const genre = `${asked.words}${asked.one ? (known >= 0.6 ? ', a genre you know well' : known >= 0.25 ? ', a genre you know a little' : ', a genre you haven’t studied or worked in much yet') : (known >= 0.6 ? ': genres you know well' : known >= 0.25 ? ': genres you know a little' : ': genres you haven’t studied or worked in much yet')}.`;
     const sceneNote = `${genre} Fully prepared, it would come to about ${Math.round(forecast)} of 100 for you, ${BAND_LABEL[band]}.`;
     // A piece performed: a written analysis of the scene (Table Work's own course) wasn't played in either part.
     const past = (scenePast(cw?.assignments ?? [], o.scene) as Assignment[]).filter((a) => a.shown && a.role !== undefined && performed(a));

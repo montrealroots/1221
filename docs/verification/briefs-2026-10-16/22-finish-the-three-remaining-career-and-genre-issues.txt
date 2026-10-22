@@ -1,0 +1,165 @@
+Finish The Three Remaining Career And Genre Issues
+
+Work from the latest main branch. Read the current handoff, Brief 21’s report, the relevant source code, and the outstanding genre benchmark decision.
+
+This brief authorizes:
+
+1. Fixing work continuing after work authorization ends.
+2. Replacing generic genre ordering with explicit, material-specific genre weights.
+3. Allowing justified transfer between related genres and updating the conflicting benchmark.
+
+Implement and verify all three. Do not stop at recommendations or an audit.
+
+Use one primary agent by default. Reuse valid research and tests, inspect relevant files narrowly, run targeted tests during development, and run the full required gate after integration. Preserve detailed evidence in the repository and keep progress messages concise. Do not reduce scope or weaken verification to save tokens.
+
+1. Fix Work Authorization Throughout An Engagement
+
+Reproduce the recorded journey in which an actor worked 48 days after OPT authorization ended during a booked production.
+
+Trace the complete lifecycle: eligibility, accepting an offer, preparation, rehearsals, workdays, authorization changes, payments, credits, and completion.
+
+Authorization must be checked when an activity requiring it occurs—not only when the player accepts the job.
+
+Research authoritative, dated guidance for the applicable authorization and OPT employment/unemployment rules. Distinguish:
+
+* A future booking from qualifying employment.
+* Actual qualifying employment from merely having an active contract.
+* Authorization expiration from an unemployment-limit breach.
+* A restriction on future work from payment owed for previously completed work.
+
+Do not automatically count every day between bookings as employment, or every day without filming as unemployment. Implement the supported rule using the employment information the game actually records. Clearly identify any remaining uncertainty rather than inventing a legal rule.
+
+When authorization no longer permits work:
+
+* Prevent the affected work from occurring.
+* Give the player a timely, understandable notice explaining why.
+* Update the engagement and calendar coherently.
+* Do not award performance results, practice, attendance, or credits for work that never happened.
+* Preserve earned compensation and legitimate historical records.
+* Apply contract consequences only where supported by the agreement and implemented rules.
+* Allow recovery or resumption only through a valid supported route.
+
+Handle the exact boundary time, time skipping, repeated advances, saving and reopening, and authorization restored later where supported.
+
+Do not add new immigration categories or unrelated career systems.
+
+2. Replace Generic Genre Ordering With Explicit Weights
+
+Remove the assumption that the first genre always receives half the weight.
+
+Define genre requirements from the material being performed, using explicit, documented weights at the appropriate level:
+
+* Project defaults.
+* Role-specific requirements where they differ.
+* Scene, audition, or assessment requirements where more precise information exists.
+
+Define clear inheritance and override rules. Every calculation must resolve to one explainable set of requirements.
+
+For example, a comedy-drama might be evenly balanced overall, while a particular dramatic scene could weigh drama more heavily. These are design examples, not mandatory universal ratios.
+
+For existing material:
+
+* Review and assign justified weights.
+* Label authored weights as simulation design choices, not researched objective facts.
+* Do not claim scene-specific precision where the game has no scene data.
+* Use a documented neutral fallback for older content missing weights.
+* Ensure tag ordering cannot change the result.
+
+Weights must be nonnegative, normalized, and bounded. Duplicate tags must not increase influence. Parent/subgenre overlap must not double-count the same requirement. Distinct material demands must remain distinguishable.
+
+Use the resolved requirements consistently across:
+
+* School and professional casting.
+* Self-tapes, in-person auditions, and callbacks.
+* Rehearsal and preparation where genre knowledge matters.
+* Shoot days and stage performances.
+* Relevant genre development, recommendations, and explanations.
+
+Inspect current consumers rather than adding an extra modifier everywhere. Avoid counting the same benefit twice through preparation and final judgment.
+
+Attributes and techniques remain foundational. Preparation, difficulty, health, fatigue, and other established factors still matter. Better relevant genre mastery must not reduce its own contribution, but it must not guarantee a booking or improve unrelated outcomes.
+
+3. Approve Related-Genre Transfer And Reconcile The Benchmark
+
+I approve partial transfer between a broad genre and its direct subgenres. Unrelated genres must contribute zero. Do not add automatic sibling-to-sibling transfer or chains of transfer without a separately justified design.
+
+Distinguish effective familiarity from earned progression:
+
+* Related knowledge may help meet a requirement.
+* It must not silently award stored mastery in another genre.
+* Actual practice must develop only the genres the activity legitimately trains.
+
+Retain Brief 21’s 0.75 subgenre-to-parent and 0.50 parent-to-subgenre coefficients provisionally. Evaluate them with controlled comparisons before finalizing. They are tunable simulation choices, not real-world facts.
+
+Keep exact-genre mastery fully effective. Related knowledge must provide a bounded partial benefit and must not make specialist development pointless.
+
+Explicitly supersede the old “no transfer to any other genre” criterion with:
+“No unrelated-genre contribution; only documented, bounded transfer across approved direct relationships.”
+
+Preserve the old criterion and this authorization in the decision history. Do not merely lower a threshold to obtain a passing result.
+
+Reconcile the Genre Audit, genres.7-measured, tutorials, explanations, completion matrix, and feature-to-effect matrix with the approved behavior. Mark the outstanding rows verified only after the new criteria are demonstrated.
+
+4. Required Proof
+
+Authorization:
+
+* Reproduce the original 48-day defect.
+* Show that prohibited work is now stopped at the correct boundary.
+* Show that legitimately authorized work still proceeds.
+* Verify earned pay, credits, notices, calendar state, and recovery behavior.
+* Cover authorization ending before, during, and after an engagement.
+* Compare continuous play, long time advances, and save/reopen play.
+
+Genre weighting:
+
+* Single genre.
+* Even and uneven two-genre combinations.
+* Three or more genres.
+* Different scenes within the same project.
+* Role overrides and inherited defaults.
+* Reordered and duplicated tags.
+* Missing weights and invalid weights.
+* Parent/subgenre overlap.
+* Older saves and existing material.
+
+Related transfer:
+
+* Exact mastery, partial mastery, and no mastery.
+* Parent-to-subgenre and subgenre-to-parent.
+* Unrelated and sibling genres.
+* Multiple relevant genres with uneven expertise.
+* No recursive transfer amplification.
+* No unintended stored progression.
+* Bounded, monotonic contributions.
+* No changes to irrelevant outcomes.
+
+Use identical actors, conditions, preparation, and random seeds for comparisons. Report intermediate contributions and final results so score caps cannot conceal a broken connection.
+
+Use a fixed seed set selected before inspecting outcomes. Do not replace unfavorable seeds.
+
+Add regression tests that fail on the previous defects and deliberate fault checks proving that the critical tests detect broken authorization, weighting, and transfer behavior.
+
+5. Integration And Completion
+
+Run multiple integrated school-to-career journeys, including an international graduate and older saves. Confirm that work, money, papers, development, history, and calendar consequences remain connected.
+
+Verify relevant controls and explanations in the built application. Preserve natural language, contextual variety, and continuity. Do not undertake the separate UI redesign or add real-show, director, festival, or awards expansion here.
+
+Run the full required regression gate after integration. Resolve failures introduced by this work and rerun the affected checks.
+
+Deliver:
+
+* The exact tested commit.
+* Each defect and its fix.
+* Authorization sources, effective dates, and remaining assumptions.
+* The genre weighting and transfer rules with worked examples.
+* Before/after evidence for the original failing journey.
+* Test, journey, and deliberate-fault results.
+* Save compatibility details.
+* Updated matrices and handoff.
+* Any genuine remaining blocker or limitation.
+
+Continue until every acceptance criterion in this brief passes or a concrete blocker prevents completion. Complete all unblocked work before reporting a blocker. Do not disguise unresolved issues, weaken requirements, or claim that passing tests proves no possible bugs exist.
+
+Keep the changes reviewable. Do not merge or deploy without my instruction.

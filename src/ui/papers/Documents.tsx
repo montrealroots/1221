@@ -258,16 +258,21 @@ export function WorkPane() {
   const usd = (n: number) => money(inSaveMoney(sim, Math.round(n * 100), 'USD'));
   const end = programEnd(person);
   const opt = WORK_RULES.opt;
-  // An OPT in force ends the week its days without work pass its 90, and the status with it (`optRunsOut`). From
-  // 2026-10-21 (brief 19's D8) the weeks still to be counted read the work booked in them, so an OPT with enough work
-  // reaches its twelve months and the sixty days after them, which `usStatusEnds` gives it. Until then every week counted
-  // seven days without work, the game having no work after the degree, and this was always the thirteenth week from its
-  // start. Until 2026-10-13 Your US Status showed the twelve months' date, fourteen months on, while the OPT panel below
-  // said the status ended with the 90 days (found by that day’s third round).
+  // An OPT in force ends the day its days without work pass its 90, and the status with it (`optRunsOut`): the days to
+  // come read the work booked from its first day, the days before it days without work (from 2026-10-22, the owner's
+  // brief 22; until then it ended the week they passed 90, a booked day counting as worked). From 2026-10-21 (brief 19's
+  // D8) the work booked was read, so an OPT with enough work reaches its twelve months and the sixty days after them,
+  // which `usStatusEnds` gives it. Until then every week counted seven days without work, the game having no work after
+  // the degree, and this was always the thirteenth week from its start. Until 2026-10-13 Your US Status showed the twelve
+  // months' date, fourteen months on, while the OPT panel below said the status ended with the 90 days (found by that
+  // day’s third round).
   const optHeld = documentsOf(person).find((d) => d.kind === 'permit' && d.destination === 'US' && d.status === 'valid' && d.name.includes('OPT'));
-  const idleEnds = optRunsOut(sim, person);
+  const idleEnds = optRunsOut(person);
   const statusEnds = usStatusEnds(person);
   const status = statusEnds !== undefined && idleEnds !== undefined ? Math.min(statusEnds, idleEnds) : statusEnds;
+  // Said as the last day in status: an end at a midnight is the end of the day before (`status - 1`), as the OPT Ended
+  // notice and the guide say it. From brief 22 (2026-10-22) OPT's days without work end it at a midnight, and until this
+  // was found on the built app the same day, Papers said "Ends September 2, 2029" of a status that ended with 1 September.
   const optNo = optRefusal(sim, person);
   // The window to apply by their own program's end, as `optRefusal` reads it, said first (from 2026-10-20, brief 16): for
   // a student on an F-1, not one who left without the degree, whom OPT refuses whatever the day.
@@ -286,7 +291,7 @@ export function WorkPane() {
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? `You can apply for OPT from ${opt.windowBeforeDays} days before it to ${opt.windowAfterDays} days after` : 'For a student on an F-1'} />
-            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? `Since ${formatDate(person.usOutOfStatus, sim.zone)}. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you` : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out. There’s no grace period after it, and staying past it puts you out of status` : 'Including the grace period after your permission ends. Staying past it puts you out of status') : end ? 'While you study, or while an application is being decided' : 'For a student on an F-1'} />
+            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status - 1, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? `Since ${formatDate(person.usOutOfStatus, sim.zone)}. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you` : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out. There’s no grace period after it, and staying past it puts you out of status` : 'Including the grace period after your permission ends. Staying past it puts you out of status') : end ? 'While you study, or while an application is being decided' : 'For a student on an F-1'} />
           </div>
           <DocumentList kinds={['permit', 'visa']} none="You don’t hold a work permit or a visa." />
         </div>
@@ -303,9 +308,11 @@ export function WorkPane() {
               five sentences opened on the twelve months, the window was only in Your Program Ends' note, in days, and a
               degree not finished, which denies OPT and keeps its fee, went unsaid. From 2026-10-21 (brief 19's D8) the
               days of professional work count: until then this said the game had no work after the degree, so an approved
-              OPT ended about 90 days from its start, which no played OPT then outlived. */}
-          <p className="small" style={{ margin: 0 }}>{applyBy}OPT is permission to work in your field after your degree, and it keeps your US status going. Each day of professional work you’re booked for counts as a day worked. An approved OPT ends once you’ve had more than {opt.unemploymentDays} days without work in total, and your US status ends with it.</p>
-          {optHeld && <p className="small" style={{ margin: 0 }}>{`So far your OPT has counted ${plural(optHeld.idleDays ?? 0, 'day')} without work and ${plural(optHeld.workedDays ?? 0, 'day')} worked.`}</p>}
+              OPT ended about 90 days from its start, which no played OPT then outlived. From 2026-10-22 (the owner's brief
+              22) it says what counts, a day of a job begun, where it said "Each day of professional work you’re booked for
+              counts as a day worked". */}
+          <p className="small" style={{ margin: 0 }}>{applyBy}OPT is permission to work in your field after your degree, and it keeps your US status going. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. An approved OPT ends once you’ve had more than {opt.unemploymentDays} days without work in total, and your US status ends with it.</p>
+          {optHeld && <p className="small" style={{ margin: 0 }}>{`So far your OPT has counted ${plural(optHeld.idleDays ?? 0, 'day')} without work and ${plural(optHeld.workedDays ?? 0, 'day')} with work.`}</p>}
           <p className="small" style={{ margin: 0 }}>It costs {usd(opt.fee)}. Premium processing costs {usd(opt.premiumFee)} more and gets you a decision within {opt.premiumBusinessDays} business days. OPT follows a completed degree: if school ends without yours, it’s denied when it’s decided, and the fee isn’t refunded.</p>
           <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>

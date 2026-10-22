@@ -27,7 +27,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { PROJECTS, projectById } from '@/engine/content/careerwork';
 import { fitOf } from '@/engine/systems/projobs';
-import { genreNeeds, relevantGenre } from '@/engine/systems/engagement';
+import { relevantGenre, requirementOfRole } from '@/engine/systems/engagement';
 import { playTo, unsignedActor } from '../tools/career-player';
 
 const NY = 'America/New_York';
@@ -51,7 +51,7 @@ describe('J1: the School’s genres carried into professional work', () => {
     let known = 0;
     let unknown = 0;
     for (const t of PROJECTS) {
-      const reading = relevantGenre(sim.player, t.genres);
+      const reading = relevantGenre(sim.player, requirementOfRole(t));
       const [hers, theirs] = [fitOf(sim.player, t), fitOf(twin.player, t)];
       expect(theirs.genre, t.id).toBe(0);
       if (reading.total > 0) {
@@ -75,7 +75,7 @@ describe('J1: the School’s genres carried into professional work', () => {
     const t = projectById(e!.projectId)!;
     const practice = (id: string, record: typeof before) => record[id]?.practice ?? 0;
     const after = sim.player.engagement!.byGenre;
-    const grew = genreNeeds(t.genres).filter((n) => practice(n.id, after) > practice(n.id, before));
+    const grew = requirementOfRole(t).needs.filter((n) => practice(n.id, after) > practice(n.id, before));
     expect(grew.length, `practice in ${t.genres.join(', ')}`).toBeGreaterThan(0);
   }, 1_200_000);
 });
@@ -107,7 +107,10 @@ describe('J2: continuous play and play saved and reopened end the same', () => {
     // The Seagull's kinds, practised at its calls and nights, and nothing else this year taught a genre.
     expect(Object.keys(a.genres ?? {}).sort()).toEqual(['drama', 'tragicomedy']);
     expect(a.genres!.tragicomedy!.practice).toBeGreaterThan(0);
-    expect(a.genres!.drama!.practice).toBe(a.genres!.tragicomedy!.practice);
+    // Practised by The Seagull's stated weights, tragicomedy 3 and drama 2 (brief 22): drama less. Until brief 22 its
+    // two tags were read evenly here (the first listed half of two), and the two were practised alike.
+    expect(a.genres!.drama!.practice).toBeGreaterThan(0);
+    expect(a.genres!.drama!.practice).toBeLessThan(a.genres!.tragicomedy!.practice);
     expect(a.postings.some(([, memo]) => memo === 'Interest: Chase Savings')).toBe(true);
     expect(b).toEqual(a);
   }, 1_200_000);

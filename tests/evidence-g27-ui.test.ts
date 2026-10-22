@@ -273,11 +273,15 @@ describe('c-performerTitle', () => {
     // understudied as Nina in the spring, came to teach its kinds, tragicomedy and drama, at its calls and the nights
     // she went on; the drama she knows from it reads half of the play's genres (`relevantGenre`), and lifts her a part.
     // Until then the Seagull taught nothing, and she was Frau Gabor. His is Melchior Gabor, a lead written for an actor,
-    // for the same reason: Konstantin's understudy, he knows the drama too. He was Hänschen Rilow until then.
-    expect(school(her.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Ilse', size: 'supporting' });
+    // for the same reason: Konstantin's understudy, he knows the drama too. He was Hänschen Rilow until then. Hers is Frau
+    // Bergmann, another supporting part written for an actress, from brief 22 (2026-10-22): the play asks a coming of age
+    // alone, drama folded into it as its broad genre, and drama known came to count toward it at 0.4, not half
+    // (`ENGAGEMENT.related`, measured), while the Seagull, tragicomedy 3 and drama 2 as stated, came to teach drama a
+    // two-fifths share, not half. His Melchior holds.
+    expect(school(her.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Frau Bergmann', size: 'supporting' });
     expect(school(him.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Melchior Gabor', size: 'lead' });
     for (const s of [her.sim, him.sim]) expect(s.player.engagement!.byGenre.drama!.practice).toBeGreaterThan(0);
-    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Ilse')).toMatchObject({ size: 'supporting', for: 'actress' });
+    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Frau Bergmann')).toMatchObject({ size: 'supporting', for: 'actress' });
     const castOf = (sim: Simulation) => Object.fromEntries((school(sim).casting!.cast ?? []).map((c) => [c.name, c.part]));
     // Who takes each lead is casting's read of the class; until later on 2026-10-16 (`STAGE_LEAN`) Grace Patel took
     // Wendla in both lives, as Daniel Walsh and Theo Rivera took Melchior and Moritz. The same classmate takes Wendla in
@@ -301,7 +305,7 @@ describe('c-performerTitle', () => {
     expect([wendla, holder(her.sim, 'Melchior Gabor')!, moritz].map((n) => r3(her.moved[n]!))).toEqual([-2, 10, 10]);
     expect([wendla, holder(him.sim, 'Moritz Stiefel')!].map((n) => r3(him.moved[n]!))).toEqual([10, 10]);
     const SPRING = THESIS_PLAYS.find((p) => p.title === 'Spring Awakening')!;
-    for (const [life, mine, title] of [[her, 'Ilse', 'actress'], [him, 'Melchior Gabor', 'actor']] as const) {
+    for (const [life, mine, title] of [[her, 'Frau Bergmann', 'actress'], [him, 'Melchior Gabor', 'actor']] as const) {
       const me = partOf(THESIS_PLAYS, 'Spring Awakening', mine);
       for (const [name, part] of Object.entries(castOf(life.sim))) {
         // A part the play names, or one of the company's unnamed parts, none of them a lead; and the classmate's own title.

@@ -46,6 +46,12 @@ export const WORK_RULES = {
     windowAfterDays: 60,
     months: 12,
     unemploymentDays: 90,
+    /**
+     * The hours a week a job must average to be employment on OPT (from 2026-10-22, the owner's brief 22): SEVP Policy
+     * Guidance 1004-03 (2010-04-23), 7.1.5, "at least 20 hours per week", and DHS's Study in the States page (updated
+     * 2025-05-19), "at least 20 hours per week or full-time" (docs/verification/career-genre-2026-10-22/authorization-sources.md).
+     */
+    weeklyHours: 20,
     currency: 'USD',
     source: 'https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students; https://www.uscis.gov/g-1055',
   },

@@ -11,7 +11,8 @@
    "src/engine/systems/proshowcase.ts#showcaseCalendar",
    "src/engine/systems/proshowcase.ts#showcaseOptions",
    "src/engine/systems/proshowcase.ts#choiceRefusal",
-   "src/engine/systems/proshowcase.ts#callWords"
+   "src/engine/systems/proshowcase.ts#callWords",
+   "src/engine/systems/proshowcase.ts#askedWords"
   ],
   "states": [
    "first use",
@@ -25,7 +26,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19: the Actor Showcase came back as DRAM 793b's own, and nothing on the School screen said anything of it before.",
-  "changes": "Written new to docs/STYLE.md: each day said with its date, its hours and its showings (“Monday, April 30, 2029, from 1 PM to 11 PM, for the showings at 5 PM and 7:30 PM”); taking part said with the date and the course still incomplete, or that there's none; each option's note in sentences from the record (“Office Hours is a drama, a genre you know a little. Fully prepared, it would come to about 61 of 100 for you, Working.”, “You played Lorraine in it for Acting I on April 5, 2027, and it came out Unready.”); the command's refusal under its button; the Bulletin's guests named only as the Bulletin names them.",
+  "changes": "Written new to docs/STYLE.md: each day said with its date, its hours and its showings (“Monday, April 30, 2029, from 1 PM to 11 PM, for the showings at 5 PM and 7:30 PM”); taking part said with the date and the course still incomplete, or that there's none; each option's note in sentences from the record (“Office Hours is a drama, a genre you know a little. Fully prepared, it would come to about 61 of 100 for you, Working.”, “You played Lorraine in it for Acting I on April 5, 2027, and it came out Unready.”); the command's refusal under its button; the Bulletin's guests named only as the Bulletin names them. From 2026-10-22 (the owner’s brief 22) a scene’s note says what the scene asks of the genres, its own where it states one, else its play’s, as its preparation reads it: “This scene of Julius Caesar is mostly political drama, with some tragedy and historical drama: genres you know well.” Until then it said the scene’s filed genre alone, comedy, drama or tragedy.",
   "evidence": [
    {
     "kind": "test",
@@ -38,6 +39,10 @@
    {
     "kind": "test",
     "ref": "tests/pro-showcase.test.ts: 'PLAYER JOURNEY: an Incomplete still open at the end of the fourth week keeps her out'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b22-genre-weights.test.ts: 'the Actor Showcase’s faculty say what a scene asks: a scene of one genre names it, one asking several says which most'"
    }
   ]
  },

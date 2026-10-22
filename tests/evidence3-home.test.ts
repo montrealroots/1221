@@ -519,7 +519,7 @@ describe('the graduate, played', () => {
     expect(later.player.usOutOfStatus).toBeUndefined();
     later.advanceTo(at(2029, 8, 30, 13));
     expect(optPermits(later)[0]).toMatchObject({ status: 'valid', issuedAt: at(2029, 8, 30, 12), expiresAt: at(2030, 8, 30, 12) });
-    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
+    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.']);
   });
 
   it('p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says every part she was on stage in once, The Seagull’s Nina among them, as her credits keep them', () => {

@@ -56,9 +56,11 @@
  * **Permission to work** (`eligibilityRead`): `usWorkAuthorized` for each date of an engagement, read when it's booked
  * and kept on it, so Papers says what was read then. A citizen or a green-card holder may work; an F-1 student may work
  * only on campus, since Yale grants CPT only for training the whole program requires and none is found for Acting
- * (`yale.md` §6); after the degree OPT covers its twelve months, each engagement's days counted as days worked against
- * its ninety without work (`daysWorkedIn`, `systems/permission.ts`; 8 CFR 214.2, SEVP's 2010 guidance allowing gigs,
- * `work.md` S1, S5). Signing with an agent changes none of it.
+ * (`yale.md` §6); after the degree OPT covers its twelve months, an engagement begun counting as days with work, its
+ * first day to its last, against its ninety without (`settleOpt`, `systems/permission.ts`, by the day from 2026-10-22,
+ * the owner's brief 22; until then each day booked counted as a day worked, `daysWorkedIn`; 8 CFR 214.2, SEVP's 2010
+ * guidance allowing gigs, `work.md` S1, S5). From that day the work system reads permission again at each work day
+ * (`workAuthorizedFor`) and releases what permission no longer covers. Signing with an agent changes none of it.
  *
  * **The unions' money.** Equity at the degree (the Bulletin, as `setStanding` dates it): its initiation fee, "$1,800 paid
  * within a maximum three-year period", $600 down (S27), charged when the membership begins, and the other $1,200 in two
@@ -227,7 +229,9 @@ export function eligibilityRead(person: Person, days: readonly { from: Instant; 
   if (citizenOf(person, 'US')) return { ...base, basis: 'citizen', words: 'You’re a US citizen, so you can work for any employer in the US.' };
   if (dates.some((d) => residenceIn(person, 'US', d)?.route === 'us-green-card')) return { ...base, basis: 'green-card', words: refused === undefined ? 'With your green card you can work for any employer in the US.' : `From ${formatDate(refused, zone)}, this work isn’t covered by your green card.` };
   if (opt && (opt.issuedAt ?? Infinity) <= (dates[0] ?? at) + 12 * MS_HOUR) {
-    if (refused === undefined) return { ...base, basis: 'opt', words: `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Each day of this work counts as a day worked, not one of OPT’s days without work.` };
+    // What counts for OPT said as it's counted (from 2026-10-22, the owner's brief 22): until then "Each day of this work
+    // counts as a day worked", whether or not the work began.
+    if (refused === undefined) return { ...base, basis: 'opt', words: `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Once this work begins, every day to its last counts as a day with work, not one of OPT’s days without work.` };
     return { ...base, basis: 'opt', words: `This work runs to ${formatDate(last ?? refused, zone)}, past the end of your OPT on ${formatDate(opt.expiresAt ?? refused, zone)}.` };
   }
   const studying = person.school !== undefined && !schoolEnded(person.school.standing);
@@ -470,10 +474,10 @@ function payDue(s: Simulation, person: Person, e: Engagement, p: ProPayment, pro
   // GUARD: once. A payment already received, already in trust or deferred is never paid again (a reload, a jump or a
   // second firing finds it so).
   if (p.received || p.inTrust || p.deferred) return;
-  if (e.status === 'canceled') {
-    noteEvent(s, e, { kind: 'problem', key: `unpaid:${p.key}`, words: `${formatMoney(p.promised, p.currency)} for ${weekWords(p)} wasn’t paid: the engagement was called off.` });
-    return;
-  }
+  // Work called off is paid for the days worked: the work system keeps only those payments (`callOff`,
+  // `systems/projobs.ts`). Until 2026-10-22 (the owner's brief 22) a payment of an engagement called off went unpaid
+  // here, with a note that it wasn't, while the notice of the replacement said the days worked were still paid; found
+  // by brief 22's release of work for want of permission (tests/b22-authorization.test.ts).
   const cur = saveCurrency(s.universe);
   const money = (c: Money) => formatMoney(c, cur);
   const gross = inSaveMoney(s, p.promised, p.currency);

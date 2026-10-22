@@ -693,7 +693,11 @@ const secondYear = () => from('second-year', () => { const sim = student('g23-pr
 /** The same year, cast and not yet called: Monday 6 September 2027, two days before the first call. */
 const beforeCalls = () => from('second-year-cast', () => { const sim = student('g23-probe'); tended(sim, at(2027, 9, 6, 8)); return sim; });
 /** Practice after so many sessions in a work of two genres, half each: 5% of what's left a session, to two places. */
-const sessions = (n: number) => { let p = 0; for (let k = 0; k < n; k += 1) p = Math.round((p + 100 * 0.1 * 0.5 * (1 - p / 100)) * 100) / 100; return p; };
+/**
+ * A genre's practice after `n` sessions of Blood Wedding, at its share of each: tragedy 0.6 and romantic drama 0.4, as
+ * the play states them (brief 22). Until then each took half.
+ */
+const sessions = (n: number, share = 0.6) => { let p = 0; for (let k = 0; k < n; k += 1) p = Math.round((p + 100 * 0.1 * share * (1 - p / 100)) * 100) / 100; return p; };
 
 describe('genre familiarity/practice', () => {
   it('PLAYER JOURNEY: a genre studied three times makes Read The Scene of a scene from a play of that kind move further, by a sixth of the familiarity it left', () => {
@@ -717,11 +721,13 @@ describe('genre familiarity/practice', () => {
   /**
    * Blood Wedding, a tragedy and a romantic drama, two genres neither of which is a kind of the other. Until brief 21
    * (2026-10-22) the better known of a play's genres sped its lines whole, so a study of tragedy alone moved them by the
-   * full sixth of its familiarity; from then each genre counts for its weight in the play (`genreNeeds`: the first listed
-   * half, the rest sharing the other half), so tragedy known moves them by half of that, and romantic drama known as well
+   * full sixth of its familiarity; from then each genre counted for its weight in the play, the first listed half, the
+   * rest sharing the other half (brief 21's `genreNeeds`), and from brief 22 as the play states it (`requirementOfPlay`:
+   * tragedy 3, romantic drama 2), so tragedy known moves them by three-fifths of that, and romantic drama known as well
    * would make up the rest.
    */
-  it('PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth, of its half of Blood Wedding', () => {
+  // Renamed on 2026-10-22 (brief 22): until then “PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth, of its half of Blood Wedding”: the material's stated weights and the measured coefficients moved its figures.
+  it('PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth, of its three-fifths of Blood Wedding', () => {
     // Cast and not yet called (from brief 21: once the calls begin, they teach the play's genres too, below).
     const base = beforeCalls();
     freeFor(base, 330);
@@ -740,7 +746,7 @@ describe('genre familiarity/practice', () => {
       const before = processOf(sim.player.school!.casting!).lines;
       return sim.must<{ lines: number }>({ kind: 'school.learn_part', payload: {} }).lines - before;
     };
-    expect(moved(known) / moved(plain)).toBeCloseTo(1 + 0.5 * familiarity / 100 / 6, 9);
+    expect(moved(known) / moved(plain)).toBeCloseTo(1 + 0.6 * familiarity / 100 / 6, 9);
   });
 
   /**
@@ -766,7 +772,7 @@ describe('genre familiarity/practice', () => {
     // The evening can run past midnight, where a study is a new day's and isn't halved: the days are read as they come.
     const familiarity = studiedOn(studyThrice(known, genre));
     expect(known.player.engagement!.byGenre[genre]!.familiarity).toBe(familiarity);
-    // The calls kept, each a session's practice, half of it tragedy's: more than the studies.
+    // The calls kept, each a session's practice, three-fifths of it tragedy's (half until brief 22): more than the studies.
     const calls = processOf(known.player.school!.casting!).calls;
     expect(known.player.engagement!.byGenre[genre]!.practice).toBe(sessions(calls));
     expect(sessions(calls)).toBeGreaterThan(familiarity);
@@ -785,7 +791,8 @@ describe('genre familiarity/practice', () => {
    * Until brief 21 (2026-10-22) only the nights practised the play's kinds, so it came to opening night at none: 5 each
    * after the first night, 9.75 after the second. From then each call kept is a session too.
    */
-  it('PLAYER JOURNEY: each call and each night of a play practises each of its kinds, a session’s worth shared between them, 5% of what’s left each', () => {
+  // Renamed on 2026-10-22 (brief 22): until then “PLAYER JOURNEY: each call and each night of a play practises each of its kinds, a session’s worth shared between them, 5% of what’s left each”: the material's stated weights and the measured coefficients moved its figures.
+  it('PLAYER JOURNEY: each call and each night of a play practises each of its kinds, a session’s worth shared between them by the play’s weights, 6% and 4% of what’s left', () => {
     const sim = beforeCalls();
     const casting = sim.player.school!.casting!;
     const kinds = genresOfPlay(casting.play)!;
@@ -793,22 +800,23 @@ describe('genre familiarity/practice', () => {
     const practice = () => kinds.map((g) => sim.player.engagement?.byGenre[g]?.practice ?? 0);
     expect(practice()).toEqual([0, 0]);
     const sessionsNow = () => processOf(sim.player.school!.casting!).calls + (sim.player.school!.casting!.performed ?? 0);
-    // The first call: 10% of a session, shared by two kinds, 5 each from none.
+    // The first call: 10% of a session, shared by two kinds by the play's weights, tragedy 3 and romantic drama 2, 6 and
+    // 4 from none. Until brief 22 they shared it evenly, 5 each.
     const [first] = schoolCalls(sim, 'rehearsal');
     tended(sim, first!.at + 6 * MS_HOUR);
     expect(sessionsNow()).toBe(1);
-    expect(practice()).toEqual([5, 5]);
-    // Eight calls on, 1 − 0.95⁸ of it: 33.66.
+    expect(practice()).toEqual([6, 4]);
+    // Eight calls on, about 1 − 0.94⁸ and 1 − 0.96⁸ of it, each step rounded: 39.03 and 27.87 (33.66 each until brief 22).
     tended(sim, at(2027, 9, 18, 8));
     expect(sessionsNow()).toBe(8);
-    expect(practice()).toEqual([33.66, 33.66]);
+    expect(practice()).toEqual([39.03, 27.87]);
     const shows = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.status === 'pending' && i.payload.call === 'performance' && i.payload.which !== 'rep').sort((a, b) => a.at - b.at);
     tended(sim, shows[0]!.at + MS_HOUR);
-    expect(practice()).toEqual([sessions(sessionsNow()), sessions(sessionsNow())]);
+    expect(practice()).toEqual([sessions(sessionsNow()), sessions(sessionsNow(), 0.4)]);
     const opening = sessionsNow();
     tended(sim, shows[1]!.at + MS_HOUR);
     expect(sessionsNow()).toBe(opening + 1);
-    expect(practice()).toEqual([sessions(opening + 1), sessions(opening + 1)]);
+    expect(practice()).toEqual([sessions(opening + 1), sessions(opening + 1, 0.4)]);
   });
 });
 

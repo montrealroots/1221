@@ -54,12 +54,11 @@
   ]
  },
  {
-  "surface": "The pay's notices and its lines in Money: paid straight to you, held in the agency's client trust account, passed on less commission, and a payment called off",
+  "surface": "The pay's notices and its lines in Money: paid straight to you, held in the agency's client trust account, passed on less commission, and the days worked of work called off",
   "where": "Home's notices and What Needs You, with Go There to the Work tab; Money, the account's statement",
   "sources": [
    "src/engine/systems/propay.ts#payDue",
    "src/engine/systems/propay.ts#payDue [paid]",
-   "src/engine/systems/propay.ts#payDue [problem]",
    "src/engine/systems/propay.ts#release",
    "src/engine/systems/propay.ts#release [paid]",
    "src/engine/systems/propay.ts#schedulePay",
@@ -73,7 +72,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19's pay: each payment is told as it's paid and as it's passed on, and the statement's line says what was taken from it.",
-  "changes": "Written new: what happened first, then what it means (“Stewart Talent passes it on to you by October 6, 2026, less $256.60 commission.”), the commission named on the deposit's line in Money (“… paid on from Stewart Talent’s client trust account, less $256.60 commission”), the money held named where it's held in what you're worth.",
+  "changes": "Written new: what happened first, then what it means (“Stewart Talent passes it on to you by October 6, 2026, less $256.60 commission.”), the commission named on the deposit's line in Money (“… paid on from Stewart Talent’s client trust account, less $256.60 commission”), the money held named where it's held in what you're worth. From 2026-10-22 (the owner's brief 22): the line that a payment wasn't paid because the engagement was called off went with the rule that wrote it: the days worked of work called off are paid on their payday.",
   "evidence": [
    {
     "kind": "test",
@@ -86,6 +85,10 @@
    {
     "kind": "transcript",
     "ref": "docs/verification/career-2026-10-20/pay/played.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-work.test.ts: 'PLAYER JOURNEY: a shoot day slept through replaces the actor, the days never worked come off the promised pay, and there’s no credit'"
    }
   ]
  },

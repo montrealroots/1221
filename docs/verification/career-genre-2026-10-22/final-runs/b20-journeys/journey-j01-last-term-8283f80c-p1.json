@@ -1,0 +1,30 @@
+{
+ "id": "journey-j01-last-term-8283f80c",
+ "part": 1,
+ "from": "2029-03-01",
+ "to": "2029-09-01",
+ "secs": 102,
+ "reloads": 10,
+ "done": true,
+ "standing": "graduated",
+ "schoolEnd": "2029-05-21T14:00",
+ "careerFrom": "2029-03-01T12:05",
+ "notSame": 0,
+ "transitions": [
+  "2029-03-01T12:05 opened: same",
+  "2029-04-27T21:15 term 5 reviewed: good: same",
+  "2029-05-21T14:35 the School’s end: graduated: same",
+  "2029-06-04T15:30 a signing: same",
+  "2029-08-30T22:00 the first booking: Ivy in Paper Moons: same"
+ ],
+ "forks": [
+  "2029-03-01T13:05 a rehearsal with a partner booked for 2029-03-04T00:00 on Your Showcase Scene: same",
+  "2029-05-21T14:35 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
+  "2029-06-13T14:30 an audition (self-tape) set for 2029-06-17T22:00, Wren in Gull Season: same",
+  "2029-08-16T21:30 an offer standing: An Offer For Ivy: same"
+ ],
+ "workDays": 0,
+ "notices": 597,
+ "bank": 75584.18,
+ "errors": []
+}

@@ -1211,6 +1211,24 @@
   "on": "2026-10-17",
   "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
  },
+ "src/engine/content/genre-weights.ts#PLAY_GENRES": {
+  "status": "Reviewed And Retained",
+  "hash": "01cd324ef3d5",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (PLAY_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these"
+ },
+ "src/engine/content/genre-weights.ts#PROJECT_GENRES": {
+  "status": "Reviewed And Retained",
+  "hash": "e1946fd36e70",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (PROJECT_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these"
+ },
+ "src/engine/content/genre-weights.ts#SCENE_GENRES": {
+  "status": "Reviewed And Retained",
+  "hash": "15b20e59264a",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (SCENE_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these"
+ },
  "src/engine/content/genres.ts#GENRE_DEFS .absurdist": {
   "status": "Reviewed And Retained",
   "hash": "14ef426d62ea",
@@ -2131,9 +2149,9 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten And Verified",
-  "hash": "5f2816d034b8",
-  "on": "2026-10-21",
-  "evidence": "tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing"
+  "hash": "7949ad84d83b",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22); tests/b22-genre-weights.test.ts ('the guide says the rule the game reads')"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten And Verified",
@@ -2471,6 +2489,12 @@
   "on": "2026-10-17",
   "reason": "The shared refusals for an hour away from the work (Not from a hospital bed., You’re asleep., You’re at … until ….): seven systems say them word for word and five guides quote them, so a change belongs to all of them at once; for the coordinator. Each already names the obstacle and nothing was spent."
  },
+ "src/engine/systems/engagement.ts#requirementWords": {
+  "status": "Rewritten And Verified",
+  "hash": "bcaa387df5c7",
+  "on": "2026-10-22",
+  "evidence": "Written 2026-10-22 (the owner's brief 22); tests/b22-genre-weights.test.ts ('one genre, about even and uneven, never a weight or a share')"
+ },
  "src/engine/systems/engagement.ts#study": {
   "status": "Rewritten And Verified",
   "hash": "9190801211ff",
@@ -2482,6 +2506,12 @@
   "hash": "d022072acab0",
   "on": "2026-10-17",
   "reason": "'There’s no such genre.': a payload naming no genre, reached by no press of Study It; plain."
+ },
+ "src/engine/systems/engagement.ts#weightsProblem": {
+  "status": "Reviewed And Retained",
+  "hash": "044d40c35639",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: why a level's stated genre weights were skipped (a genre the game doesn't have, a weight not a number or below 0, none above 0), kept on the requirement for tests/b22-genre-weights.test.ts ('W2: weights missing read the tags evenly; invalid weights are skipped, said…') and the weights review, never on a screen"
  },
  "src/engine/systems/experience.ts#FEATURE_LABEL": {
   "status": "Reviewed And Retained",
@@ -2713,9 +2743,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
   "status": "Rewritten And Verified",
-  "hash": "85dd2fae6827",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g23-school.test.ts (Absurdist: Not established: the research holds it with low confidence); json area D1. Its one take is a brief's self-tape, the glossary's word"
+  "hash": "494de328ce51",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22); tests/evidence-g31-ui.test.ts ('…casts her in Major Barbara, of what the part asks, where study would help most')"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel": {
   "status": "Rewritten And Verified",

@@ -105,7 +105,7 @@
      "at": "src/engine/systems/identity.ts:162"
     }
    ],
-   "experienced": "Pressed: the toast says the fee and the decision's day; the Work tab lists it Being Decided and Your US Status reads Held. On its day 'OPT Approved' with its dates, the row Approved until its first day then In Force; the same offer refused before is accepted (tests/b20-papers-work.test.ts). Each week counts days without work; past 90 'OPT Ended', and 'Out Of Status'.",
+   "experienced": "Pressed: the toast says the fee and the decision's day; the Work tab lists it Being Decided and Your US Status reads Held. On its day 'OPT Approved' with its dates, the row Approved until its first day then In Force; the same offer refused before is accepted (tests/b20-papers-work.test.ts). Each day counts, with work or without; past 90 'OPT Ended', the work booked past it released, and 'Out Of Status'.",
    "saveLoad": "Person.documents (the permit: status, appliedAt, readyAt, issuedAt, expiresAt, idleDays, workedDays, endedAt), the fee's posting, the pending `documents.permission` and `documents.opt_week` items; saved and opened between approval and its end, it ends on the same day with the same notices (tests/b20-papers-work.test.ts).",
    "evidence": {
     "tests": [
@@ -1414,10 +1414,10 @@
    "area": "papers",
    "mechanic": true,
    "seeded": false,
-   "where": "The clock: each week of an OPT in force (systems/permission.ts:355); 'OPT Ended' when its days without work pass 90.",
+   "where": "The clock: a save from before brief 22 holds its next week on the calendar (systems/permission.ts, `OPT_WEEK_KIND`); from 2026-10-22 OPT is counted by the day (`settleOpt`, at each midnight, `documents.opt_day` on the world's day), and this item only counts the days to its time, no week after it.",
    "prerequisites": "The OPT in force at the week's end.",
-   "reads": "The week's days of professional work (`daysWorkedIn`, engagements not called off), the OPT's idle days, its expiry.",
-   "changes": "Adds the week's days without work (seven less the days worked) and the days worked; past 90 cancels it, ended now (no grace), and looks at the status; otherwise the next week.",
+   "reads": "The OPT in force, its count so far (`idleDays`, `workedDays`, and where it stopped, `countedTo`, or for an older save the days its weeks reached), and each day's employment: a day inside an engagement begun, its first day worked to its last or the moment it was called off, its hours averaging at least 20 a week (`employmentSpan`).",
+   "changes": "Each New York day once it's over, a day with work or without; past 90 without, OPT canceled at the end of the 91st, the status with it (no grace), 'OPT Ended' said, and `documents.work_permission_ended` raised so the work booked past it is released. Until 2026-10-22 (the owner's brief 22) it counted seven days a week less any day an engagement was booked for, worked or not, and ended OPT at the week's end whatever was booked ahead.",
    "consumers": [
     {
      "what": "The status ends with an OPT ended for idle days",
@@ -1425,30 +1425,34 @@
     },
     {
      "what": "Papers' OPT panel counts its days",
-     "at": "src/ui/papers/Documents.tsx:267"
+     "at": "src/ui/papers/Documents.tsx:270"
     },
     {
-     "what": "When the status ends, as Papers says it",
-     "at": "src/engine/systems/permission.ts:254"
+     "what": "the work booked past the end released",
+     "at": "src/engine/systems/projobs.ts:1555"
     }
    ],
-   "experienced": "The OPT panel counts days without work and days worked; past 90 'OPT Ended' and 'Out Of Status'. Two days of work moved the end a week, Monday 22 February 2027 against the 15th when the work was missed (tests/b20-papers-work.test.ts); twelve days moved it two weeks (tests/propay.test.ts).",
-   "saveLoad": "The permit's idleDays and workedDays and the next week's pending item; saved and opened mid-OPT it ends on the same day, said once (tests/b20-papers-work.test.ts).",
+   "experienced": "The OPT panel counts days without work and days with work; past 90 'OPT Ended', 'Released As …' for each part booked past it, and 'Out Of Status'. b20-4's save of 1 September 2029 ends at the end of 1 September, the run due on the 4th released, none of it worked (tests/b22-authorization.test.ts); a run begun on the 90th day carries OPT through its ten weeks, dark days included.",
+   "saveLoad": "The permit's idleDays, workedDays and countedTo; one long advance, six-hour steps and a save opened the day before the end come to the same end and the same state to the byte (tests/b22-authorization.test.ts, A12). An older save's weekly count is kept and goes on from the day its weeks reached (A1).",
    "evidence": {
     "tests": [
      "tests/b20-papers-work.test.ts",
-     "tests/propay.test.ts",
-     "tests/permission.test.ts"
+     "tests/b22-authorization.test.ts",
+     "tests/evidence-g16-papers.test.ts",
+     "tests/evidence2-b06.test.ts",
+     "tests/permission.test.ts",
+     "tests/propay.test.ts"
     ],
     "comparisons": [
-     "tests/propay.test.ts: an OPT with twelve days of work against one with none: its end two weekly counts later"
+     "tests/propay.test.ts: an OPT with a run worked from 26 October to 7 November against one with none: its end thirteen days later",
+     "tests/b22-authorization.test.ts: the same run booked to begin on the 90th day (worked whole) and on the 97th (released before it)"
     ],
     "mutations": [
      "B20-PAPERS-7"
     ],
     "journeys": []
    },
-   "missing": "None found. A day of an engagement counts as a day worked: an assumption about its hours, said in permission.ts.",
+   "missing": "None found. The averaging window (SEVP's month, SLATE's engagement) and the rest of what's uncertain are said in docs/verification/career-genre-2026-10-22/authorization-sources.md.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "documents.opt_week",
@@ -2448,6 +2452,79 @@
    "prior": null,
    "readBy": "papers",
    "readAt": "58577aea"
+  },
+  {
+   "id": "documents.work_permission_ended",
+   "kind": "event",
+   "area": "papers",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "papers",
+   "readAt": "brief 22",
+   "where": "An event (`PERMISSION_ENDED`, systems/permission.ts): raised when OPT ends for its days without work (`endOpt`), at that moment.",
+   "prerequisites": "An OPT in force whose days without work pass 90.",
+   "reads": "Who, and the moment permission ended.",
+   "changes": "The work system releases every engagement with a day still to come past it (`release`, systems/projobs.ts): called off from then, its days off the calendar, the days worked still paid, a stage credit earned kept, a notice saying why and what's kept.",
+   "consumers": [
+    {
+     "what": "the engagements booked past the end released",
+     "at": "src/engine/systems/projobs.ts:1555"
+    },
+    {
+     "what": "a released engagement's pay for its days worked, paid on its payday",
+     "at": "src/engine/systems/propay.ts:473"
+    }
+   ],
+   "experienced": "'Released As Hester Vane' at the midnight b20-4's OPT ends, before the run's first day, nothing owed and no credit; Booked Work shows it Called Off with the release in its history (tests/b22-authorization.test.ts).",
+   "saveLoad": "Raised and handled in the same moment; what it changes is the engagement's status, pay and history and the calendar, all in the save. A save opened the day before comes to the same state to the byte (A12).",
+   "evidence": {
+    "tests": [
+     "tests/b22-authorization.test.ts"
+    ],
+    "comparisons": [
+     "tests/b22-authorization.test.ts: the same run booked to begin before OPT's end (released) and on its 90th day (worked whole)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b20-4"
+    ]
+   },
+   "missing": "None found. Until 2026-10-22 (the owner's brief 22) nothing told the work booked that OPT had ended, and b20-4 worked 47 days of a run after it.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "notice.systems/permission#endOpt",
+   "kind": "notice",
+   "area": "papers",
+   "mechanic": false,
+   "seeded": false,
+   "readBy": "papers",
+   "readAt": "brief 22",
+   "where": "What Needs You and the notices, from `endOpt` (systems/permission.ts): 'OPT Ended'.",
+   "prerequisites": "Sent only to the player, by the count that ends OPT; never on its own.",
+   "reads": "The day it ended and OPT's ninety days.",
+   "changes": "Nothing of its own: the end is `endOpt`'s.",
+   "consumers": [],
+   "experienced": "'You’d had more than 90 days without work since your OPT began, so it ended at the end of September 1, 2029, and with it your permission to work in the United States. A day counts as one with work only once a job has begun, so the days waiting for booked work to start counted against it. Your US status ends with it, with no grace period.' (tests/b22-authorization.test.ts, A1).",
+   "saveLoad": "A notification row in the save, kept as sent; its Go There opens Papers. Said once across a save and a load (A12).",
+   "evidence": {
+    "tests": [
+     "tests/b22-authorization.test.ts",
+     "tests/b20-papers-work.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "b20-4"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "documents.opt_week",
+   "purpose": "Tells the player OPT has ended, the day, why, what counted against it, and that the status ends with it with no grace."
   }
  ],
  "promises": [

@@ -82,7 +82,7 @@ import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readines
 import { inTheBank } from '@/engine/systems/spending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { coverOn } from '@/engine/systems/health';
-import { genresOfPlay } from '@/engine/content/plays';
+import { relevantGenre, requirementOfHolder, type GenreReading } from '@/engine/systems/engagement';
 import { journeyOf, WORK_KEPT } from '@/engine/systems/evaluation';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
@@ -108,15 +108,17 @@ const dayWords = (sim: Simulation, day: string): string => { const [year, month,
 
 
 /**
- * A genre to study, and why: the next part's play's kind least known, else a loved one least known. The why came
- * with it from 2026-10-10: until then a loved genre offered for want of a part was said to be what the next work asks.
+ * A genre to study, and why: of what the next part asks (`requirementOfHolder`), the genre study would help most, its
+ * weight by what's left of it to know, related genres counted (`relevantGenre`); else a loved one least known. The why
+ * came with it from 2026-10-10: until then a loved genre offered for want of a part was said to be what the next work
+ * asks. Until 2026-10-22 (the owner's brief 22) it was the play's kind least known, whatever its share of the play.
  */
 export function nextGenre(person: Person): { id: string; why: 'part' | 'loved' } | undefined {
   const fam = (id: string) => person.engagement?.byGenre[id]?.familiarity ?? 0;
-  const casting = person.school?.casting as { play?: string } | undefined;
-  const play = (genresOfPlay(casting?.play) ?? []).filter((g) => GENRE_BY_ID[g]);
+  const casting = person.school?.casting as { play?: string; kind?: string; production?: string; role?: string } | undefined;
   const loved = (person.genres ?? []).filter((g) => GENRE_BY_ID[g]);
-  const forPart = [...play].sort((a, b) => fam(a) - fam(b))[0];
+  const gain = (n: GenreReading['needs'][number]) => n.weight * (1 - n.related) * (1 - n.own);
+  const forPart = casting ? [...relevantGenre(person, requirementOfHolder(casting)).needs].filter((n) => GENRE_BY_ID[n.id] && gain(n) > 0).sort((a, b) => gain(b) - gain(a) || (a.id < b.id ? -1 : 1))[0]?.id : undefined;
   if (forPart) return { id: forPart, why: 'part' };
   const fromLoved = [...loved].sort((a, b) => fam(a) - fam(b))[0];
   return fromLoved ? { id: fromLoved, why: 'loved' } : undefined;
@@ -453,7 +455,7 @@ function GenresPanel() {
         {/* In a region of its own, so a genre named here opens under it once the chapter that opens a genre is read (from
             2026-10-12: until then it stood outside any region and Open drew the loved genres and the one suggested as
             plain names, so none of them opened, whatever was read). */}
-        <LookRegion><p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.' : 'is worth studying next: of the genres you love, it’s the one you know least.'}</> : null}</p></LookRegion>
+        <LookRegion><p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is worth studying next: your next part asks for it, and of what the part asks, it’s where study would help most.' : 'is worth studying next: of the genres you love, it’s the one you know least.'}</> : null}</p></LookRegion>
         {open && (
           <div className="card col gap-2" style={{ padding: 'var(--space-3, 12px)' }}>
             <div className="row gap-2" style={{ justifyContent: 'space-between', alignItems: 'center' }}>

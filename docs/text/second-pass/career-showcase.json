@@ -41,6 +41,13 @@
   "evidence": "tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/proshowcase.ts#askedWords": {
+  "status": "Rewritten",
+  "hash": "7dca604cee5d",
+  "on": "2026-10-22",
+  "evidence": "Written 2026-10-22 (the owner's brief 22): what a class scene asks of the genres, in the faculty's words, never a weight ('This scene of A Midsummer Night’s Dream is mostly farce, with some romantic comedy'); tests/b22-genre-weights.test.ts ('the Actor Showcase’s faculty say what a scene asks…') and tests/pro-showcase.test.ts on the Coursework tab",
+  "first": "Pending"
+ },
  "src/engine/systems/proshowcase.ts#beginShowcase": {
   "status": "Rewritten",
   "hash": "bf2cab54e114",
@@ -120,10 +127,10 @@
  },
  "src/engine/systems/proshowcase.ts#showcaseOptions": {
   "status": "Rewritten",
-  "hash": "8ccaaf92e768",
-  "on": "2026-10-21",
-  "evidence": "tests/pro-showcase.test.ts reads each notice, refusal and screen line as the player meets them in a played last term (the panel rendered with react-dom/server); read against docs/STYLE.md and docs/GLOSSARY.md",
-  "first": "Rewritten And Verified"
+  "hash": "339b5e27eedc",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): a scene's note says what it asks of the genres, its own where it states one ('This scene of Julius Caesar is mostly political drama, with some tragedy and historical drama: genres you know well.'), else its play's, as its preparation reads it; read in tests/b22-genre-weights.test.ts ('the Actor Showcase’s faculty say what a scene asks…') and on the Coursework tab in tests/pro-showcase.test.ts ('shows the faculty’s options on the Coursework tab…')",
+  "first": "Pending"
  },
  "src/ui/career/SchoolShowcase.tsx#EarlyDegree": {
   "status": "Rewritten",

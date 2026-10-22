@@ -14,7 +14,6 @@ import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatTime, formatWeekdayDate } from '@/engine/core/time';
-import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { PROJECTS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import { agentById } from '@/engine/content/agents';
 import { BAND_LABEL } from '@/engine/systems/coursework';
@@ -23,8 +22,9 @@ import { activeAgreement, type Engagement, type Opportunity } from '@/engine/sys
 import {
   DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, chanceWords, conditionsFor, counted, datesOf, decidesAt,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
-  prepareRefusal, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes, writtenFor, writtenForWords,
+  prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes, writtenFor, writtenForWords,
 } from '@/engine/systems/projobs';
+import { requirementWords } from '@/engine/systems/engagement';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -48,7 +48,9 @@ function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'project
     <dl className="col gap-2 small" style={{ margin: 0 }}>
       <div><dt className="strong">The Project</dt><dd style={{ margin: 0 }}>{`${t.project}, a fictional ${KIND_WORDS[t.kind]} by ${t.company}, cast by ${t.casting}. ${t.contract}.`}</dd></div>
       <div><dt className="strong">The Part</dt><dd style={{ margin: 0 }}>{`${t.role.part}: ${t.role.about}`}</dd></div>
-      <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${t.genres.map((g) => GENRE_BY_ID[g]?.label ?? g).join(', ')}. ${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
+      {/* What the part asks of the genres, in words (`requirementWords`, from 2026-10-22, the owner's brief 22): until then
+          its project's tags, a broad genre beside its own kind ("Domestic Drama, Drama"), the order deciding nothing said. */}
+      <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${requirementWords(projectGenresOf(t)) ?? 'No genre the game names'}. ${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
       <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(t.schedule.kind === 'run' ? `${counted(t.schedule.rehearsalWeeks, 'week')} of rehearsal and ${counted(t.schedule.performanceWeeks, 'week')} of performances` : counted(days.length, 'shoot day'))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. Getting there takes about ${counted(Math.round(trip / 60), 'hour')} each way from where you live.`}</dd></div>
       <div><dt className="strong">Pay</dt><dd style={{ margin: 0 }}>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
       <div><dt className="strong">The Audition</dt><dd style={{ margin: 0 }}>{`${t.stages.audition === 'in-person' ? 'In person' : 'A self-tape'}${t.stages.callback ? ', then a callback for those casting wants to see again' : ''}.`}</dd></div>

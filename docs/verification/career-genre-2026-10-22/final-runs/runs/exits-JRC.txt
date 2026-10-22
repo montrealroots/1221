@@ -1,0 +1,7 @@
+at 0ae97df3, 0 tracked files uncommitted, 2026-10-22T19:55:46Z
+journeys-compare exit=0 secs=5 cmd: npx vite-node tools/journeys.ts -- --compare /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22c-jstate --out /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22c-journeys/compare.json
+journeys-summarize exit=0 secs=5 cmd: npx vite-node tools/journeys.ts -- --summarize /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22c-journeys
+b20-journeys-table exit=0 secs=5 cmd: npx vite-node tools/b20-journeys.ts -- --table /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys
+b19-lives exit=0 secs=245 cmd: npx vite-node docs/verification/career-2026-10-20/playthroughs/play.ts -- lives /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys/b19-lives
+b19-lives-diff exit=1 secs=0 cmd: diff -r docs/verification/career-2026-10-20/playthroughs/transcripts /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys/b19-lives
+DONE 2026-10-22T20:00:07Z

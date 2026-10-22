@@ -477,10 +477,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]": {
   "status": "Rewritten",
-  "hash": "c52ff6a7dff4",
-  "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "9e952a73d8a5",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (the rule the entry says: a booking counted as days without work, released work paid for the days worked)",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]": {
   "status": "Rewritten",

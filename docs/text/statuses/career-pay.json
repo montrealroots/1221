@@ -53,12 +53,6 @@
   "on": "2026-10-21",
   "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
  },
- "src/engine/systems/propay.ts#payDue [problem]": {
-  "status": "Rewritten And Verified",
-  "hash": "43e06d8956e4",
-  "on": "2026-10-21",
-  "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt"
- },
  "src/engine/systems/propay.ts#registerProPay": {
   "status": "Rewritten And Verified",
   "hash": "b55f1339aca3",

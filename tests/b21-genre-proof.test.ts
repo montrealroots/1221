@@ -13,12 +13,16 @@
  * - Casting's reading of suitability, and a professional rehearsal day's lines: each moved by the genres and by nothing
  *   unrelated; and casting never made certain.
  *
- * Every expected figure is worked from the rule's own numbers, written in the setup module as literals.
+ * Every expected figure is worked from the rule's own numbers, written in the setup module as literals. From brief 22
+ * (2026-10-22) the rule is brief 22's: a work's requirement stated by the material, not by the order of its tags; a
+ * related genre across one direct link only; the genre's own knowledge and the best related credit together. Each
+ * figure brief 21's rule gave differently is said beside the one that replaced it; tests/b22-genre-weights.test.ts and
+ * tests/b22-transfer.test.ts prove the new rule's own clauses.
  */
 
 import { describe, expect, it } from 'vitest';
-import { genreNeeds, relevantGenre } from '@/engine/systems/engagement';
-import { genresOfHolder, genresOfPlay } from '@/engine/content/plays';
+import { relevantGenre, requirementOf, requirementOfHolder, requirementOfPlay, requirementOfRole } from '@/engine/systems/engagement';
+import { genresOfHolder } from '@/engine/content/plays';
 import { SEAGULL_2027 } from '@/engine/content/school';
 import { nightEvaluation } from '@/engine/systems/school';
 import { callAnswered } from '@/engine/systems/production';
@@ -34,7 +38,8 @@ import {
 
 const COMPLETE = 0.9;
 const FLOOR = 0.75;
-const kindsOf = (m: Material): readonly string[] => m.genres ?? (m.play ? genresOfPlay(m.play)! : projectById(m.project!)!.genres);
+/** What a material asks, resolved as the game resolves it: a play's, or a role's (its own set by hand where the material gives one). */
+const kindsOf = (m: Material) => (m.play ? requirementOfPlay(m.play) : listed(m, () => requirementOfRole(projectById(m.project!)!)));
 const knower = (known: Known) => ({ engagement: { byGenre: Object.fromEntries(Object.entries(known).map(([g, v]) => [g, { familiarity: v, practice: 0 }])) } });
 /** The records the comparisons read: the levels, one mastered and the rest weak, all mastered, and an unrelated genre at its most. */
 const RECORDS = (m: Material): Record<string, Known> => ({
@@ -53,9 +58,12 @@ function rng(seed: number): () => number {
 }
 
 describe('the measure', () => {
-  it('weighs each material’s genres as the rule does: the first listed half, the rest sharing the other half, a broad genre beside its own kind counted as the kind', () => {
+  it('weighs each material’s genres as the material states them (brief 22; the first listed half until then), a broad genre beside its own kind counted as the kind', () => {
+    const byId = (xs: readonly (readonly [string, number])[]) => [...xs].sort(([a], [b]) => (a < b ? -1 : 1));
     for (const m of [...PLAYS, ...PROJECTS_READ]) {
-      expect(genreNeeds(kindsOf(m)).map((n) => [n.id, n.weight]), m.name).toEqual(m.needs.map(([g, w]) => [g, w]));
+      const needs = kindsOf(m).needs.map((n) => [n.id, n.weight] as const);
+      expect(needs.map(([g]) => g), m.name).toEqual(byId(m.needs).map(([g]) => g));
+      for (const [i, [, w]] of byId(m.needs).entries()) expect(needs[i]![1], m.name).toBeCloseTo(w, 12);
     }
   });
 
@@ -72,35 +80,37 @@ describe('the measure', () => {
     }
   });
 
-  it('counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half', () => {
+  it('counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at 0.4 (half until brief 22’s measurement)', () => {
     const both = (known: Known, kinds: readonly string[]) => relevantGenre(knower(known), kinds).total;
     expect(both({ comedy: 80 }, ['comedy', 'comedy'])).toBe(both({ comedy: 80 }, ['comedy']));
     expect(both({ comedy: 80 }, ['comedy', 'comedy'])).toBeCloseTo(0.8, 12);
-    // And with another between: thriller first at half, comedy the other half, the second thriller nothing of its own,
-    // so 0.5 × 0.8 = 0.4. Counted again, the three would share 0.25 each and comedy come to 0.2 (mutation B21-G5, which
-    // the pair above couldn't tell: two halves of one genre are its whole).
+    // And with another between: tags read evenly, thriller and comedy half each, the second thriller nothing of its own,
+    // so 0.5 × 0.8 = 0.4. Counted again, the three would share a third each and comedy come to 0.27 (mutation B21-G5,
+    // which the pair above couldn't tell: two halves of one genre are its whole). Brief 21's first-listed half gave
+    // the same halves here.
     expect(both({ comedy: 80 }, ['thriller', 'comedy', 'thriller'])).toBeCloseTo(0.4, 12);
-    expect(genreNeeds(['thriller', 'comedy', 'thriller'])).toEqual([{ id: 'thriller', weight: 0.5, from: ['thriller'] }, { id: 'comedy', weight: 0.5, from: ['comedy'] }]);
+    expect(requirementOf(['thriller', 'comedy', 'thriller']).needs).toEqual([{ id: 'comedy', weight: 0.5, from: ['comedy'] }, { id: 'thriller', weight: 0.5, from: ['thriller'] }]);
     const route = projectById('route-nine')!.genres;
     expect(route).toEqual(['psychological_horror', 'horror']);
     expect(both({ psychological_horror: 90 }, route)).toBeCloseTo(0.9, 12);
-    expect(both({ horror: 90 }, route)).toBeCloseTo(0.45, 12);
-    // Both known: still 0.9, never 0.9 + 0.45.
-    expect(both({ psychological_horror: 90, horror: 90 }, route)).toBeCloseTo(0.9, 12);
-    // A kind toward its broad genre: 0.75 of what it's known at.
-    expect(both({ psychological_horror: 80 }, ['horror'])).toBeCloseTo(0.6, 12);
+    expect(both({ horror: 90 }, route)).toBeCloseTo(0.36, 12);
+    // Both known: the kind's own 0.9 and horror's 0.36 together, 1 − 0.1 × 0.64 = 0.936 (brief 22), never 0.9 + 0.36.
+    // Brief 21 took the better of the two, 0.9; at its 0.5, horror alone was 0.45.
+    expect(both({ psychological_horror: 90, horror: 90 }, route)).toBeCloseTo(0.936, 12);
+    // A kind toward its broad genre: 0.65 of what it's known at (0.75 until brief 22's measurement).
+    expect(both({ psychological_horror: 80 }, ['horror'])).toBeCloseTo(0.52, 12);
   });
 
   it('never adds for more tags: every list in the game weighs to one, knowing every genre at 100 comes to one, and an unknown tag added never raises it', () => {
     const lists = [
       ...PROJECTS.map((p) => p.genres),
       ...BRIEFS.map((b) => b.kinds),
-      ...PLAYS.map((m) => kindsOf(m)),
+      ...PLAYS.map((m) => kindsOf(m).needs.map((n) => n.id)),
       ...[...new Set(BRIEFS.flatMap((b) => b.kinds))].map((g) => [g]),
     ];
     const everything = knower(Object.fromEntries(Object.keys(GENRE_DEFS).map((g) => [g, 100])));
     for (const kinds of lists) {
-      expect(genreNeeds(kinds).reduce((a, n) => a + n.weight, 0), kinds.join(',')).toBeCloseTo(1, 12);
+      expect(requirementOf(kinds).needs.reduce((a, n) => a + n.weight, 0), kinds.join(',')).toBeCloseTo(1, 12);
       expect(relevantGenre(everything, kinds).total, kinds.join(',')).toBeCloseTo(1, 12);
     }
     const draw = rng(21);
@@ -116,7 +126,7 @@ describe('the measure', () => {
 
   it('stays between 0 and 1, and more of any genre never lowers it, over 2,000 seeded records across every list', () => {
     const draw = rng(2026_10_22);
-    const lists = [...PROJECTS.map((p) => p.genres), ...BRIEFS.map((b) => b.kinds), ...PLAYS.map((m) => kindsOf(m))];
+    const lists = [...PROJECTS.map((p) => p.genres), ...BRIEFS.map((b) => b.kinds), ...PLAYS.map((m) => kindsOf(m).needs.map((n) => n.id))];
     const genres = Object.keys(GENRE_DEFS);
     for (let k = 0; k < 2000; k += 1) {
       const kinds = lists[Math.floor(draw() * lists.length)]!;
@@ -258,7 +268,8 @@ describe('the Rep’s 2026–27 Seagull, which no play catalog names', () => {
       const sim = actor(seed);
       const night = (known: Known) => knowing(sim.player, known, () => nightEvaluation(sim, sim.player, 'proof:seagull', seagull('understudy'), sim.now, 'lead', 'rep'));
       const [none, medium, max, unrelated] = [night({}), night({ tragicomedy: 45, drama: 45 }), night({ tragicomedy: 90, drama: 90 }), night({ [UNRELATED]: 100 })];
-      // Tragicomedy listed first carries half, drama the other half: 0.5 × 0.45 + 0.5 × 0.45 = 0.45; at 90, 0.9.
+      // Tragicomedy 3 and drama 2, as stated (brief 22; half each by the first-listed rule until then): 0.6 × 0.45 +
+      // 0.4 × 0.45 = 0.45; at 90, 0.9.
       expect(none.inputs.prep.genre, seed).toBe(0);
       expect(medium.inputs.prep.genre, seed).toBeCloseTo(0.45, 12);
       expect(max.inputs.prep.genre, seed).toBeCloseTo(COMPLETE, 12);
@@ -269,13 +280,15 @@ describe('the Rep’s 2026–27 Seagull, which no play catalog names', () => {
     }
   }, 120_000);
 
-  it('a call kept there is practice in both its kinds, half a session’s worth each: 5 of what’s left to 100', () => {
+  it('a call kept there is practice in both its kinds, by their shares of the play: 6 and 4 of what’s left to 100', () => {
     const sim = actor(SEEDS[0]);
     sim.player.engagement = { byGenre: {} };
     callAnswered(sim, sim.player, seagull('understudy'), 'understudy', 1, 11, {}, 'rep');
     const g = sim.player.engagement!.byGenre;
-    // 100 × 0.1 (a session's practice) × 0.5 (each kind's weight) × (1 − 0/100) = 5.
-    expect([g.tragicomedy?.practice, g.drama?.practice]).toEqual([5, 5]);
+    // 100 × 0.1 (a session's practice) × 0.6 or 0.4 (each kind's share, brief 22) × (1 − 0/100) = 6 and 4. By the
+    // first-listed rule until then, half each, 5 and 5.
+    expect([g.tragicomedy?.practice, g.drama?.practice]).toEqual([6, 4]);
+    expect(requirementOfHolder(seagull('understudy')).needs.map((n) => n.id)).toEqual(['drama', 'tragicomedy']);
   });
 });
 
@@ -290,8 +303,9 @@ describe('a professional rehearsal day, played', () => {
     const e = sim.player.pro!.engagements.find((x) => x.id === engagementId)!;
     const t = projectById('calder-street')!;
     expect(t.genres).toEqual(['domestic_drama', 'drama']);
-    // Drama, its broad genre listed beside it, is absorbed into domestic drama: one requirement, the whole session.
-    expect(genreNeeds(t.genres)).toEqual([{ id: 'domestic_drama', weight: 1, from: ['domestic_drama', 'drama'] }]);
+    // One requirement, the whole session: domestic drama, as the project states it (brief 22); its tags list drama, its
+    // broad genre, beside it, which brief 21's rule folded into it.
+    expect(requirementOfRole(t).needs).toEqual([{ id: 'domestic_drama', weight: 1, from: ['domestic_drama'] }]);
     const rehearsals = e.days.flatMap((d, i) => (dayKindOf(t, i) === 'rehearsal' ? [d] : []));
     const first = e.days.findIndex((_, i) => dayKindOf(t, i) !== 'rehearsal');
     expect(rehearsals.length).toBeGreaterThan(0);

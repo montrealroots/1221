@@ -1,0 +1,5086 @@
+{
+ "criterion": "ST6-R2.c and ST6-R2.e clarified (docs/verification/playthroughs-2026-10-17/acting-criteria.md)",
+ "cases": 784,
+ "e": {
+  "verdict": {
+   "e1": {
+    "met": true,
+    "failing": []
+   },
+   "e2": {
+    "met": false,
+    "failingCount": 33,
+    "failing": [
+     "even brief-espionage/father: extra margin 0.021",
+     "even brief-romantic_drama-2/plan: extra margin -0.2101",
+     "even brief-disaster-2/listener: the other side's margin 2.464 against 1.9432",
+     "even brief-gothic_horror-3/door: the other side's margin 2.3928 against 1.6402",
+     "even brief-military-2/reach: the other side's margin 1.1647 against 0.6359",
+     "beginner brief-romantic_drama-2/plan: extra margin 0.0028",
+     "beginner brief-gothic_horror-3/door: the other side's margin 2.078 against 1.9386",
+     "beginner brief-military-2/reach: the other side's margin 0.7479 against 0.707",
+     "V1 brief-espionage/father: extra margin -0.3464",
+     "V1 brief-film_noir-3/tired: extra margin 0.0295",
+     "V1 brief-psychological_thriller-3/detail: extra margin -0.0676",
+     "V2 brief-espionage/father: extra margin -0.0068",
+     "V2 brief-true_crime/guilt: extra margin -0.159",
+     "V2 brief-western/neighbor: extra margin 0.0203",
+     "V2 brief-film_noir-3/tired: extra margin -0.0502",
+     "V2 brief-psychological_thriller-3/detail: extra margin -0.3115",
+     "V3 brief-espionage/still: extra margin -0.014",
+     "V3 brief-espionage/father: extra margin -0.691",
+     "V3 brief-neo_noir/tempted: extra margin -0.1165",
+     "V3 brief-political_thriller/still: extra margin -0.0919"
+    ],
+    "byMedium": {
+     "stage": {
+      "freshWithRoom": [
+       "V1",
+       "V2",
+       "V3",
+       "V4"
+      ],
+      "gained": {
+       "count": 30,
+       "works": 20,
+       "families": 6,
+       "mostFromOneWork": 3
+      }
+     },
+     "tape": {
+      "freshWithRoom": [
+       "V1",
+       "V2",
+       "V3",
+       "V4",
+       "V5"
+      ],
+      "gained": {
+       "count": 200,
+       "works": 149,
+       "families": 99,
+       "mostFromOneWork": 3
+      }
+     }
+    },
+    "actors": [
+     {
+      "name": "even",
+      "budget": 600,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 66,
+        "S": 66,
+        "ceiling": true,
+        "gained": 0,
+        "otherSide": {
+         "suitable": 57,
+         "C": 57,
+         "S": 43
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 363,
+        "S": 369,
+        "ceiling": false,
+        "gained": 6,
+        "otherSide": {
+         "suitable": 280,
+         "C": 217,
+         "S": 57
+        }
+       }
+      },
+      "leastExtra": -0.2101,
+      "leastDrawsPart": 0.2444,
+      "leastOtherSideFall": -0.7526,
+      "extraNotOver005": [
+       {
+        "id": "brief-espionage/father",
+        "extra": 0.021,
+        "marginC": 5.5665,
+        "marginS": 5.5875,
+        "extraAtNoGrain": 1.7747
+       },
+       {
+        "id": "brief-romantic_drama-2/plan",
+        "extra": -0.2101,
+        "marginC": 3.7396,
+        "marginS": 3.5295,
+        "extraAtNoGrain": 1.3272
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-disaster-2/listener",
+        "marginC": 1.9432,
+        "marginS": 2.464,
+        "fallAtNoGrain": 1.1697
+       },
+       {
+        "id": "brief-gothic_horror-3/door",
+        "marginC": 1.6402,
+        "marginS": 2.3928,
+        "fallAtNoGrain": 1.0915
+       },
+       {
+        "id": "brief-military-2/reach",
+        "marginC": 0.6359,
+        "marginS": 1.1647,
+        "fallAtNoGrain": 1.3027
+       }
+      ]
+     },
+     {
+      "name": "beginner",
+      "budget": 420,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 66,
+        "S": 66,
+        "ceiling": true,
+        "gained": 0,
+        "otherSide": {
+         "suitable": 57,
+         "C": 57,
+         "S": 44
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 368,
+        "S": 369,
+        "ceiling": false,
+        "gained": 1,
+        "otherSide": {
+         "suitable": 280,
+         "C": 215,
+         "S": 61
+        }
+       }
+      },
+      "leastExtra": 0.0028,
+      "leastDrawsPart": 0.2525,
+      "leastOtherSideFall": -0.1394,
+      "extraNotOver005": [
+       {
+        "id": "brief-romantic_drama-2/plan",
+        "extra": 0.0028,
+        "marginC": 4.1833,
+        "marginS": 4.1861,
+        "extraAtNoGrain": 1.3737
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-gothic_horror-3/door",
+        "marginC": 1.9386,
+        "marginS": 2.078,
+        "fallAtNoGrain": 1.1155
+       },
+       {
+        "id": "brief-military-2/reach",
+        "marginC": 0.707,
+        "marginS": 0.7479,
+        "fallAtNoGrain": 1.3344
+       }
+      ]
+     },
+     {
+      "name": "V1",
+      "budget": 600,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 55,
+        "S": 66,
+        "ceiling": false,
+        "gained": 11,
+        "otherSide": {
+         "suitable": 57,
+         "C": 57,
+         "S": 49
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 268,
+        "S": 369,
+        "ceiling": false,
+        "gained": 101,
+        "otherSide": {
+         "suitable": 280,
+         "C": 269,
+         "S": 107
+        }
+       }
+      },
+      "leastExtra": -0.3464,
+      "leastDrawsPart": 0.2911,
+      "leastOtherSideFall": 0.2942,
+      "extraNotOver005": [
+       {
+        "id": "brief-espionage/father",
+        "extra": -0.3464,
+        "marginC": 4.909,
+        "marginS": 4.5626,
+        "extraAtNoGrain": 1.8095
+       },
+       {
+        "id": "brief-film_noir-3/tired",
+        "extra": 0.0295,
+        "marginC": 2.2994,
+        "marginS": 2.3289,
+        "extraAtNoGrain": 1.2491
+       },
+       {
+        "id": "brief-psychological_thriller-3/detail",
+        "extra": -0.0676,
+        "marginC": 2.8796,
+        "marginS": 2.812,
+        "extraAtNoGrain": 1.2659
+       }
+      ],
+      "otherSideNotBehind": []
+     },
+     {
+      "name": "V2",
+      "budget": 600,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 36,
+        "S": 65,
+        "ceiling": false,
+        "gained": 29,
+        "otherSide": {
+         "suitable": 57,
+         "C": 57,
+         "S": 57
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 169,
+        "S": 366,
+        "ceiling": false,
+        "gained": 197,
+        "otherSide": {
+         "suitable": 280,
+         "C": 277,
+         "S": 185
+        }
+       }
+      },
+      "leastExtra": -0.3115,
+      "leastDrawsPart": 0.3441,
+      "leastOtherSideFall": 0.0251,
+      "extraNotOver005": [
+       {
+        "id": "brief-espionage/father",
+        "extra": -0.0068,
+        "marginC": 4.3978,
+        "marginS": 4.391,
+        "extraAtNoGrain": 1.8505
+       },
+       {
+        "id": "brief-true_crime/guilt",
+        "extra": -0.159,
+        "marginC": 2.8244,
+        "marginS": 2.6654,
+        "extraAtNoGrain": 1.9091
+       },
+       {
+        "id": "brief-western/neighbor",
+        "extra": 0.0203,
+        "marginC": 2.3822,
+        "marginS": 2.4025,
+        "extraAtNoGrain": 1.8417
+       },
+       {
+        "id": "brief-film_noir-3/tired",
+        "extra": -0.0502,
+        "marginC": 2.1207,
+        "marginS": 2.0705,
+        "extraAtNoGrain": 1.4057
+       },
+       {
+        "id": "brief-psychological_thriller-3/detail",
+        "extra": -0.3115,
+        "marginC": 2.8883,
+        "marginS": 2.5768,
+        "extraAtNoGrain": 1.3994
+       }
+      ],
+      "otherSideNotBehind": []
+     },
+     {
+      "name": "V3",
+      "budget": 780,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 50,
+        "S": 66,
+        "ceiling": false,
+        "gained": 16,
+        "otherSide": {
+         "suitable": 57,
+         "C": 57,
+         "S": 47
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 252,
+        "S": 369,
+        "ceiling": false,
+        "gained": 117,
+        "otherSide": {
+         "suitable": 280,
+         "C": 266,
+         "S": 90
+        }
+       }
+      },
+      "leastExtra": -0.691,
+      "leastDrawsPart": 0.2788,
+      "leastOtherSideFall": 0.1472,
+      "extraNotOver005": [
+       {
+        "id": "brief-espionage/still",
+        "extra": -0.014,
+        "marginC": 2.5434,
+        "marginS": 2.5294,
+        "extraAtNoGrain": 1.5115
+       },
+       {
+        "id": "brief-espionage/father",
+        "extra": -0.691,
+        "marginC": 3.9218,
+        "marginS": 3.2308,
+        "extraAtNoGrain": 1.7801
+       },
+       {
+        "id": "brief-neo_noir/tempted",
+        "extra": -0.1165,
+        "marginC": 2.7065,
+        "marginS": 2.59,
+        "extraAtNoGrain": 1.6063
+       },
+       {
+        "id": "brief-political_thriller/still",
+        "extra": -0.0919,
+        "marginC": 2.3571,
+        "marginS": 2.2653,
+        "extraAtNoGrain": 1.5815
+       },
+       {
+        "id": "brief-true_crime/guilt",
+        "extra": -0.1744,
+        "marginC": 2.4057,
+        "marginS": 2.2313,
+        "extraAtNoGrain": 1.6651
+       },
+       {
+        "id": "brief-western/neighbor",
+        "extra": -0.0179,
+        "marginC": 2.1258,
+        "marginS": 2.1078,
+        "extraAtNoGrain": 1.5984
+       },
+       {
+        "id": "brief-dystopian-2/sent",
+        "extra": 0.0176,
+        "marginC": 2.3144,
+        "marginS": 2.332,
+        "extraAtNoGrain": 1.4174
+       },
+       {
+        "id": "brief-espionage-2/trust",
+        "extra": -0.001,
+        "marginC": 2.7032,
+        "marginS": 2.7022,
+        "extraAtNoGrain": 1.6218
+       },
+       {
+        "id": "brief-film_noir-3/tired",
+        "extra": -0.1327,
+        "marginC": 1.9168,
+        "marginS": 1.7841,
+        "extraAtNoGrain": 1.2306
+       },
+       {
+        "id": "brief-psychological_thriller-3/detail",
+        "extra": -0.2488,
+        "marginC": 2.4285,
+        "marginS": 2.1797,
+        "extraAtNoGrain": 1.2436
+       },
+       {
+        "id": "brief-western-2/street",
+        "extra": 0.023,
+        "marginC": 2.1668,
+        "marginS": 2.1898,
+        "extraAtNoGrain": 1.5369
+       }
+      ],
+      "otherSideNotBehind": []
+     },
+     {
+      "name": "V4",
+      "budget": 420,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 56,
+        "S": 66,
+        "ceiling": false,
+        "gained": 10,
+        "otherSide": {
+         "suitable": 57,
+         "C": 57,
+         "S": 50
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 287,
+        "S": 369,
+        "ceiling": false,
+        "gained": 82,
+        "otherSide": {
+         "suitable": 280,
+         "C": 264,
+         "S": 111
+        }
+       }
+      },
+      "leastExtra": 0.0284,
+      "leastDrawsPart": 0.3069,
+      "leastOtherSideFall": 0.1828,
+      "extraNotOver005": [
+       {
+        "id": "brief-psychological_thriller-3/detail",
+        "extra": 0.0284,
+        "marginC": 3.2473,
+        "marginS": 3.2757,
+        "extraAtNoGrain": 1.2693
+       }
+      ],
+      "otherSideNotBehind": []
+     },
+     {
+      "name": "V5",
+      "budget": 780,
+      "media": {
+       "stage": {
+        "suitable": 66,
+        "C": 66,
+        "S": 66,
+        "ceiling": true,
+        "gained": 0,
+        "otherSide": {
+         "suitable": 57,
+         "C": 56,
+         "S": 35
+        }
+       },
+       "tape": {
+        "suitable": 369,
+        "C": 362,
+        "S": 369,
+        "ceiling": false,
+        "gained": 7,
+        "otherSide": {
+         "suitable": 280,
+         "C": 213,
+         "S": 42
+        }
+       }
+      },
+      "leastExtra": -0.2956,
+      "leastDrawsPart": 0.2364,
+      "leastOtherSideFall": -0.503,
+      "extraNotOver005": [
+       {
+        "id": "brief-espionage/father",
+        "extra": -0.2631,
+        "marginC": 4.3195,
+        "marginS": 4.0564,
+        "extraAtNoGrain": 1.7495
+       },
+       {
+        "id": "brief-romantic_drama-2/plan",
+        "extra": -0.2956,
+        "marginC": 2.9104,
+        "marginS": 2.6148,
+        "extraAtNoGrain": 1.2969
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-disaster-2/listener",
+        "marginC": 1.6103,
+        "marginS": 1.9287,
+        "fallAtNoGrain": 1.1707
+       },
+       {
+        "id": "brief-gothic_horror-3/door",
+        "marginC": 1.3058,
+        "marginS": 1.8088,
+        "fallAtNoGrain": 1.0766
+       },
+       {
+        "id": "brief-military-2/reach",
+        "marginC": 0.4902,
+        "marginS": 0.768,
+        "fallAtNoGrain": 1.281
+       }
+      ]
+     }
+    ],
+    "atNoGrain": {
+     "extraNotOver005": 0,
+     "leastExtra": 0.4668,
+     "otherSideNotBehind": 0,
+     "leastFall": 0.4978,
+     "of": 3045,
+     "weakOf": 2359
+    }
+   },
+   "e3": {
+    "met": false,
+    "failingCount": 606,
+    "failing": [
+     "V1′ caesar-3-2: extra margin -0.4603",
+     "V1′ oedipus-1: extra margin -0.6948",
+     "V1′ dream-5-1: extra margin -0.083",
+     "V1′ enemy-4: extra margin -0.3873",
+     "V1′ strife-2-2: extra margin -0.4048",
+     "V1′ night:Blood Wedding: extra margin -0.0472",
+     "V1′ night:Major Barbara: extra margin -0.3415",
+     "V1′ night:The Winter’s Tale: extra margin 0.0478",
+     "V1′ night:The Playboy Of The Western World: extra margin -0.325",
+     "V1′ night:The Bear: extra margin -0.0887",
+     "V1′ night:A Marriage Proposal: extra margin -0.072",
+     "V1′ night:Salomé: extra margin -0.0485",
+     "V1′ brief-animated/brag: extra margin -0.6084",
+     "V1′ brief-anime/sync: extra margin -1.012",
+     "V1′ brief-anime/laugh: extra margin -0.6306",
+     "V1′ brief-backstage_musical/number: extra margin 0.0221",
+     "V1′ brief-dark_fantasy/bargainer: extra margin 0.0281",
+     "V1′ brief-dark_fantasy/mother: extra margin -0.1465",
+     "V1′ brief-documentary/letters: extra margin -0.2474",
+     "V1′ brief-documentary/narration: extra margin -0.0575"
+    ],
+    "byMedium": {
+     "stage": {
+      "freshWithRoom": [
+       "V1′",
+       "V2′",
+       "V3′",
+       "V4′",
+       "V5"
+      ],
+      "gained": {
+       "count": 10,
+       "works": 8,
+       "families": 4,
+       "mostFromOneWork": 3
+      }
+     },
+     "tape": {
+      "freshWithRoom": [
+       "V1′",
+       "V2′",
+       "V3′",
+       "V4′",
+       "V5"
+      ],
+      "gained": {
+       "count": 130,
+       "works": 98,
+       "families": 71,
+       "mostFromOneWork": 3
+      }
+     }
+    },
+    "actors": [
+     {
+      "name": "even",
+      "budget": 600,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 57,
+        "S": 57,
+        "ceiling": true,
+        "gained": 0,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 29
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 217,
+        "S": 279,
+        "ceiling": false,
+        "gained": 62,
+        "otherSide": {
+         "suitable": 369,
+         "C": 363,
+         "S": 161
+        }
+       }
+      },
+      "leastExtra": 0.0934,
+      "leastDrawsPart": 0.1935,
+      "leastOtherSideFall": 0.5734,
+      "extraNotOver005": [],
+      "otherSideNotBehind": []
+     },
+     {
+      "name": "beginner",
+      "budget": 420,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 57,
+        "S": 57,
+        "ceiling": true,
+        "gained": 0,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 34
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 215,
+        "S": 279,
+        "ceiling": false,
+        "gained": 64,
+        "otherSide": {
+         "suitable": 369,
+         "C": 368,
+         "S": 163
+        }
+       }
+      },
+      "leastExtra": 0.1795,
+      "leastDrawsPart": 0.2012,
+      "leastOtherSideFall": 0.667,
+      "extraNotOver005": [],
+      "otherSideNotBehind": []
+     },
+     {
+      "name": "V1′",
+      "budget": 600,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 54,
+        "S": 57,
+        "ceiling": false,
+        "gained": 3,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 46
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 208,
+        "S": 267,
+        "ceiling": false,
+        "gained": 64,
+        "otherSide": {
+         "suitable": 369,
+         "C": 361,
+         "S": 274
+        }
+       }
+      },
+      "leastExtra": -1.6987,
+      "leastDrawsPart": 0.2269,
+      "leastOtherSideFall": -0.4984,
+      "extraNotOver005": [
+       {
+        "id": "caesar-3-2",
+        "extra": -0.4603,
+        "marginC": 3.633,
+        "marginS": 3.1727,
+        "extraAtNoGrain": 1.2992
+       },
+       {
+        "id": "oedipus-1",
+        "extra": -0.6948,
+        "marginC": 4.8806,
+        "marginS": 4.1858,
+        "extraAtNoGrain": 1.6137
+       },
+       {
+        "id": "dream-5-1",
+        "extra": -0.083,
+        "marginC": 2.2209,
+        "marginS": 2.1379,
+        "extraAtNoGrain": 1.4871
+       },
+       {
+        "id": "enemy-4",
+        "extra": -0.3873,
+        "marginC": 3.5053,
+        "marginS": 3.118,
+        "extraAtNoGrain": 1.5753
+       },
+       {
+        "id": "strife-2-2",
+        "extra": -0.4048,
+        "marginC": 3.6372,
+        "marginS": 3.2324,
+        "extraAtNoGrain": 1.6528
+       },
+       {
+        "id": "night:Blood Wedding",
+        "extra": -0.0472,
+        "marginC": 3.6412,
+        "marginS": 3.594,
+        "extraAtNoGrain": 1.6239
+       },
+       {
+        "id": "night:Major Barbara",
+        "extra": -0.3415,
+        "marginC": 3.4325,
+        "marginS": 3.091,
+        "extraAtNoGrain": 1.7717
+       },
+       {
+        "id": "night:The Winter’s Tale",
+        "extra": 0.0478,
+        "marginC": 1.7623,
+        "marginS": 1.8101,
+        "extraAtNoGrain": 1.3767
+       },
+       {
+        "id": "night:The Playboy Of The Western World",
+        "extra": -0.325,
+        "marginC": 2.7928,
+        "marginS": 2.4677,
+        "extraAtNoGrain": 1.5246
+       },
+       {
+        "id": "night:The Bear",
+        "extra": -0.0887,
+        "marginC": 1.9784,
+        "marginS": 1.8897,
+        "extraAtNoGrain": 1.4236
+       },
+       {
+        "id": "night:A Marriage Proposal",
+        "extra": -0.072,
+        "marginC": 2.0938,
+        "marginS": 2.0218,
+        "extraAtNoGrain": 1.5495
+       },
+       {
+        "id": "night:Salomé",
+        "extra": -0.0485,
+        "marginC": 3.1627,
+        "marginS": 3.1142,
+        "extraAtNoGrain": 1.5313
+       },
+       {
+        "id": "brief-animated/brag",
+        "extra": -0.6084,
+        "marginC": 2.5422,
+        "marginS": 1.9339,
+        "extraAtNoGrain": 1.2051
+       },
+       {
+        "id": "brief-anime/sync",
+        "extra": -1.012,
+        "marginC": 2.767,
+        "marginS": 1.755,
+        "extraAtNoGrain": 1.1475
+       },
+       {
+        "id": "brief-anime/laugh",
+        "extra": -0.6306,
+        "marginC": 2.2834,
+        "marginS": 1.6528,
+        "extraAtNoGrain": 1.3421
+       },
+       {
+        "id": "brief-backstage_musical/number",
+        "extra": 0.0221,
+        "marginC": 1.1983,
+        "marginS": 1.2205,
+        "extraAtNoGrain": 1.0574
+       },
+       {
+        "id": "brief-dark_fantasy/bargainer",
+        "extra": 0.0281,
+        "marginC": 1.252,
+        "marginS": 1.2801,
+        "extraAtNoGrain": 1.4282
+       },
+       {
+        "id": "brief-dark_fantasy/mother",
+        "extra": -0.1465,
+        "marginC": 0.3288,
+        "marginS": 0.1823,
+        "extraAtNoGrain": 1.4105
+       },
+       {
+        "id": "brief-documentary/letters",
+        "extra": -0.2474,
+        "marginC": 0.3033,
+        "marginS": 0.0559,
+        "extraAtNoGrain": 1.395
+       },
+       {
+        "id": "brief-documentary/narration",
+        "extra": -0.0575,
+        "marginC": 0.7553,
+        "marginS": 0.6978,
+        "extraAtNoGrain": 1.2738
+       },
+       {
+        "id": "brief-epic/courtier",
+        "extra": -0.3953,
+        "marginC": 1.7572,
+        "marginS": 1.3619,
+        "extraAtNoGrain": 1.1937
+       },
+       {
+        "id": "brief-epic/son",
+        "extra": -0.1844,
+        "marginC": 1.4308,
+        "marginS": 1.2464,
+        "extraAtNoGrain": 1.3914
+       },
+       {
+        "id": "brief-farce/panic",
+        "extra": -0.4046,
+        "marginC": 1.4113,
+        "marginS": 1.0067,
+        "extraAtNoGrain": 0.9792
+       },
+       {
+        "id": "brief-isekai/audit",
+        "extra": -0.9116,
+        "marginC": 2.8327,
+        "marginS": 1.9211,
+        "extraAtNoGrain": 1.1696
+       },
+       {
+        "id": "brief-isekai/nobody",
+        "extra": -0.7575,
+        "marginC": 2.2111,
+        "marginS": 1.4536,
+        "extraAtNoGrain": 1.2767
+       },
+       {
+        "id": "brief-jidaigeki/forms",
+        "extra": -0.2585,
+        "marginC": 1.447,
+        "marginS": 1.1885,
+        "extraAtNoGrain": 1.1533
+       },
+       {
+        "id": "brief-jidaigeki/grief",
+        "extra": -0.438,
+        "marginC": 1.1544,
+        "marginS": 0.7164,
+        "extraAtNoGrain": 1.1684
+       },
+       {
+        "id": "brief-jukebox_musical/dare",
+        "extra": -0.6765,
+        "marginC": 2.1403,
+        "marginS": 1.4638,
+        "extraAtNoGrain": 1.1085
+       },
+       {
+        "id": "brief-jukebox_musical/apology",
+        "extra": -0.3006,
+        "marginC": 0.9969,
+        "marginS": 0.6963,
+        "extraAtNoGrain": 1.1003
+       },
+       {
+        "id": "brief-melodrama/full",
+        "extra": -0.653,
+        "marginC": 2.3538,
+        "marginS": 1.7008,
+        "extraAtNoGrain": 1.2049
+       },
+       {
+        "id": "brief-melodrama/held",
+        "extra": -0.2876,
+        "marginC": 0.6823,
+        "marginS": 0.3947,
+        "extraAtNoGrain": 1.2562
+       },
+       {
+        "id": "brief-musical/persuade",
+        "extra": -0.7315,
+        "marginC": 2.3803,
+        "marginS": 1.6488,
+        "extraAtNoGrain": 0.9726
+       },
+       {
+        "id": "brief-musical/farewell",
+        "extra": -0.1532,
+        "marginC": 1.2987,
+        "marginS": 1.1455,
+        "extraAtNoGrain": 0.9913
+       },
+       {
+        "id": "brief-nature_documentary/observer",
+        "extra": 0.0022,
+        "marginC": 0.5851,
+        "marginS": 0.5873,
+        "extraAtNoGrain": 1.1774
+       },
+       {
+        "id": "brief-nature_documentary/story",
+        "extra": -0.5346,
+        "marginC": 1.7334,
+        "marginS": 1.1988,
+        "extraAtNoGrain": 1.3728
+       },
+       {
+        "id": "brief-parody/deadpan",
+        "extra": -0.1366,
+        "marginC": -0.0096,
+        "marginS": -0.1462,
+        "extraAtNoGrain": 1.2153
+       },
+       {
+        "id": "brief-parody/size",
+        "extra": -0.7579,
+        "marginC": 1.4345,
+        "marginS": 0.6766,
+        "extraAtNoGrain": 1.1454
+       },
+       {
+        "id": "brief-silent_film/clown",
+        "extra": -0.4824,
+        "marginC": 1.8684,
+        "marginS": 1.386,
+        "extraAtNoGrain": 1.1582
+       },
+       {
+        "id": "brief-silent_film/heart",
+        "extra": -0.0298,
+        "marginC": 0.612,
+        "marginS": 0.5822,
+        "extraAtNoGrain": 1.2352
+       },
+       {
+        "id": "brief-space_opera/grand",
+        "extra": -0.2696,
+        "marginC": 2.0659,
+        "marginS": 1.7963,
+        "extraAtNoGrain": 1.522
+       },
+       {
+        "id": "brief-swashbuckler/play",
+        "extra": -0.7255,
+        "marginC": 2.2822,
+        "marginS": 1.5567,
+        "extraAtNoGrain": 1.2087
+       },
+       {
+        "id": "brief-swashbuckler/stall",
+        "extra": -0.363,
+        "marginC": 1.3926,
+        "marginS": 1.0296,
+        "extraAtNoGrain": 1.1934
+       },
+       {
+        "id": "brief-alternate_history-2/calm",
+        "extra": -1.2384,
+        "marginC": 2.5022,
+        "marginS": 1.2638,
+        "extraAtNoGrain": 0.8385
+       },
+       {
+        "id": "brief-alternate_history-2/world",
+        "extra": -1.2214,
+        "marginC": 1.9546,
+        "marginS": 0.7332,
+        "extraAtNoGrain": 0.9039
+       },
+       {
+        "id": "brief-alternate_history-2/names",
+        "extra": -0.3045,
+        "marginC": 2.1109,
+        "marginS": 1.8065,
+        "extraAtNoGrain": 1.0949
+       },
+       {
+        "id": "brief-animated-3/weight",
+        "extra": -0.2728,
+        "marginC": 1.6047,
+        "marginS": 1.3319,
+        "extraAtNoGrain": 1.0096
+       },
+       {
+        "id": "brief-animated-3/teacher",
+        "extra": 0.0295,
+        "marginC": 1.7152,
+        "marginS": 1.7447,
+        "extraAtNoGrain": 1.1429
+       },
+       {
+        "id": "brief-animated-3/proud",
+        "extra": -0.2397,
+        "marginC": 1.2976,
+        "marginS": 1.0578,
+        "extraAtNoGrain": 1.1012
+       },
+       {
+        "id": "brief-anime-2/strain",
+        "extra": -1.1229,
+        "marginC": 3.0025,
+        "marginS": 1.8795,
+        "extraAtNoGrain": 0.8465
+       },
+       {
+        "id": "brief-anime-2/sister",
+        "extra": -0.3816,
+        "marginC": 2.632,
+        "marginS": 2.2504,
+        "extraAtNoGrain": 1.1371
+       },
+       {
+        "id": "brief-avant_garde-2/score",
+        "extra": -0.8041,
+        "marginC": 1.7694,
+        "marginS": 0.9652,
+        "extraAtNoGrain": 0.8627
+       },
+       {
+        "id": "brief-avant_garde-2/freed",
+        "extra": -0.8473,
+        "marginC": 1.8192,
+        "marginS": 0.9718,
+        "extraAtNoGrain": 0.8821
+       },
+       {
+        "id": "brief-backstage_musical-2/sell",
+        "extra": -0.162,
+        "marginC": 1.5307,
+        "marginS": 1.3686,
+        "extraAtNoGrain": 0.9489
+       },
+       {
+        "id": "brief-backstage_musical-2/hers",
+        "extra": -0.0516,
+        "marginC": 0.9393,
+        "marginS": 0.8877,
+        "extraAtNoGrain": 1.0159
+       },
+       {
+        "id": "brief-backstage_musical-2/company",
+        "extra": -0.2365,
+        "marginC": 1.6141,
+        "marginS": 1.3776,
+        "extraAtNoGrain": 0.9111
+       },
+       {
+        "id": "brief-chanbara-2/painter",
+        "extra": -0.5971,
+        "marginC": 1.1692,
+        "marginS": 0.5722,
+        "extraAtNoGrain": 0.9531
+       },
+       {
+        "id": "brief-concert_film-2/pro",
+        "extra": -1.1045,
+        "marginC": 2.7515,
+        "marginS": 1.647,
+        "extraAtNoGrain": 1.0285
+       },
+       {
+        "id": "brief-concert_film-2/song",
+        "extra": -0.9841,
+        "marginC": 1.8649,
+        "marginS": 0.8808,
+        "extraAtNoGrain": 1.1035
+       },
+       {
+        "id": "brief-concert_film-2/wings",
+        "extra": -0.7264,
+        "marginC": 3.0369,
+        "marginS": 2.3105,
+        "extraAtNoGrain": 1.2343
+       },
+       {
+        "id": "brief-cosmic_horror-2/record",
+        "extra": -0.5011,
+        "marginC": 0.8515,
+        "marginS": 0.3504,
+        "extraAtNoGrain": 0.8586
+       },
+       {
+        "id": "brief-cosmic_horror-2/tomas",
+        "extra": -0.6835,
+        "marginC": 0.4703,
+        "marginS": -0.2132,
+        "extraAtNoGrain": 0.9938
+       },
+       {
+        "id": "brief-cosmic_horror-2/peace",
+        "extra": -0.3418,
+        "marginC": 0.9432,
+        "marginS": 0.6014,
+        "extraAtNoGrain": 0.8883
+       },
+       {
+        "id": "brief-dark_fantasy-2/mercy",
+        "extra": -0.7657,
+        "marginC": 2.0589,
+        "marginS": 1.2932,
+        "extraAtNoGrain": 1.1683
+       },
+       {
+        "id": "brief-dark_fantasy-2/voices",
+        "extra": -1.1162,
+        "marginC": 2.8587,
+        "marginS": 1.7426,
+        "extraAtNoGrain": 1.0297
+       },
+       {
+        "id": "brief-disaster-2/anchor",
+        "extra": 0.0013,
+        "marginC": 1.3208,
+        "marginS": 1.3221,
+        "extraAtNoGrain": 1.3364
+       },
+       {
+        "id": "brief-epic-2/soldier",
+        "extra": -0.0839,
+        "marginC": 0.815,
+        "marginS": 0.7311,
+        "extraAtNoGrain": 0.8742
+       },
+       {
+        "id": "brief-epic-2/orchard",
+        "extra": -0.2094,
+        "marginC": 0.8179,
+        "marginS": 0.6085,
+        "extraAtNoGrain": 1.0592
+       },
+       {
+        "id": "brief-experimental-2/list",
+        "extra": -1.2151,
+        "marginC": 2.1958,
+        "marginS": 0.9807,
+        "extraAtNoGrain": 0.7752
+       },
+       {
+        "id": "brief-experimental-2/her",
+        "extra": -0.9342,
+        "marginC": 1.5982,
+        "marginS": 0.664,
+        "extraAtNoGrain": 0.8421
+       },
+       {
+        "id": "brief-exploitation-2/cool",
+        "extra": -0.207,
+        "marginC": 2.0599,
+        "marginS": 1.8528,
+        "extraAtNoGrain": 1.2914
+       },
+       {
+        "id": "brief-exploitation-2/afraid",
+        "extra": 0.0152,
+        "marginC": 1.3211,
+        "marginS": 1.3363,
+        "extraAtNoGrain": 1.3164
+       },
+       {
+        "id": "brief-fairy_tale-2/vain",
+        "extra": -1.2709,
+        "marginC": 3.365,
+        "marginS": 2.094,
+        "extraAtNoGrain": 0.943
+       },
+       {
+        "id": "brief-fairy_tale-2/keeper",
+        "extra": -0.9837,
+        "marginC": 2.7973,
+        "marginS": 1.8136,
+        "extraAtNoGrain": 1.0845
+       },
+       {
+        "id": "brief-fairy_tale-2/bell",
+        "extra": -1.2346,
+        "marginC": 3.1259,
+        "marginS": 1.8914,
+        "extraAtNoGrain": 0.9531
+       },
+       {
+        "id": "brief-farce-3/ledger",
+        "extra": -0.2555,
+        "marginC": 1.0556,
+        "marginS": 0.8001,
+        "extraAtNoGrain": 0.8933
+       },
+       {
+        "id": "brief-farce-3/doors",
+        "extra": -0.2544,
+        "marginC": 1.1023,
+        "marginS": 0.8479,
+        "extraAtNoGrain": 0.9
+       },
+       {
+        "id": "brief-farce-3/believer",
+        "extra": -0.4762,
+        "marginC": 1.2536,
+        "marginS": 0.7774,
+        "extraAtNoGrain": 0.9781
+       },
+       {
+        "id": "brief-giallo-2/story",
+        "extra": -0.2453,
+        "marginC": 1.0924,
+        "marginS": 0.8471,
+        "extraAtNoGrain": 1.3059
+       },
+       {
+        "id": "brief-giallo-2/next",
+        "extra": -0.3222,
+        "marginC": 0.2313,
+        "marginS": -0.0909,
+        "extraAtNoGrain": 1.3157
+       },
+       {
+        "id": "brief-gothic_horror-3/record",
+        "extra": -1.639,
+        "marginC": 3.7594,
+        "marginS": 2.1204,
+        "extraAtNoGrain": 0.9415
+       },
+       {
+        "id": "brief-gothic_horror-3/door",
+        "extra": -1.6058,
+        "marginC": 3.3255,
+        "marginS": 1.7197,
+        "extraAtNoGrain": 1.0389
+       },
+       {
+        "id": "brief-gothic_horror-3/hand",
+        "extra": -1.6694,
+        "marginC": 3.9015,
+        "marginS": 2.2321,
+        "extraAtNoGrain": 0.9003
+       },
+       {
+        "id": "brief-grindhouse-2/calm",
+        "extra": -0.3456,
+        "marginC": 1.6388,
+        "marginS": 1.2931,
+        "extraAtNoGrain": 1.07
+       },
+       {
+        "id": "brief-grindhouse-2/stunt",
+        "extra": -0.7243,
+        "marginC": 2.2815,
+        "marginS": 1.5573,
+        "extraAtNoGrain": 0.9343
+       },
+       {
+        "id": "brief-horror-2/steady",
+        "extra": -0.658,
+        "marginC": 2.0246,
+        "marginS": 1.3666,
+        "extraAtNoGrain": 1.0683
+       },
+       {
+        "id": "brief-horror-2/eli",
+        "extra": -0.5052,
+        "marginC": 1.5581,
+        "marginS": 1.0529,
+        "extraAtNoGrain": 1.2151
+       },
+       {
+        "id": "brief-isekai-2/fan",
+        "extra": -0.5737,
+        "marginC": 2.3841,
+        "marginS": 1.8105,
+        "extraAtNoGrain": 1.0685
+       },
+       {
+        "id": "brief-isekai-2/author",
+        "extra": -0.5679,
+        "marginC": 1.9002,
+        "marginS": 1.3323,
+        "extraAtNoGrain": 1.0909
+       },
+       {
+        "id": "brief-isekai-2/word",
+        "extra": -0.2004,
+        "marginC": 2.6434,
+        "marginS": 2.443,
+        "extraAtNoGrain": 1.1724
+       },
+       {
+        "id": "brief-jidaigeki-2/rule",
+        "extra": -0.4183,
+        "marginC": 1.5116,
+        "marginS": 1.0934,
+        "extraAtNoGrain": 1.0155
+       },
+       {
+        "id": "brief-jidaigeki-2/face",
+        "extra": -0.0623,
+        "marginC": 1.6162,
+        "marginS": 1.5539,
+        "extraAtNoGrain": 1.0992
+       },
+       {
+        "id": "brief-jidaigeki-2/spear",
+        "extra": -0.3152,
+        "marginC": 1.4826,
+        "marginS": 1.1674,
+        "extraAtNoGrain": 1.0197
+       },
+       {
+        "id": "brief-jukebox_musical-3/floor",
+        "extra": -0.6545,
+        "marginC": 1.79,
+        "marginS": 1.1355,
+        "extraAtNoGrain": 0.8308
+       },
+       {
+        "id": "brief-jukebox_musical-3/chair",
+        "extra": -0.6239,
+        "marginC": 1.2875,
+        "marginS": 0.6635,
+        "extraAtNoGrain": 0.9263
+       },
+       {
+        "id": "brief-jukebox_musical-3/uncle",
+        "extra": -0.8026,
+        "marginC": 2.0269,
+        "marginS": 1.2243,
+        "extraAtNoGrain": 0.8555
+       },
+       {
+        "id": "brief-melodrama-2/storm",
+        "extra": -0.7986,
+        "marginC": 2.3993,
+        "marginS": 1.6006,
+        "extraAtNoGrain": 0.9148
+       },
+       {
+        "id": "brief-melodrama-2/child",
+        "extra": -0.5006,
+        "marginC": 1.2341,
+        "marginS": 0.7335,
+        "extraAtNoGrain": 1.0041
+       },
+       {
+        "id": "brief-melodrama-2/pride",
+        "extra": -0.5209,
+        "marginC": 1.6659,
+        "marginS": 1.145,
+        "extraAtNoGrain": 0.9551
+       },
+       {
+        "id": "brief-military-2/light",
+        "extra": -0.192,
+        "marginC": 0.5709,
+        "marginS": 0.3789,
+        "extraAtNoGrain": 1.1883
+       },
+       {
+        "id": "brief-military-2/reach",
+        "extra": -0.443,
+        "marginC": 1.444,
+        "marginS": 1.0009,
+        "extraAtNoGrain": 1.3155
+       },
+       {
+        "id": "brief-musical-2/number",
+        "extra": -0.6604,
+        "marginC": 1.9664,
+        "marginS": 1.306,
+        "extraAtNoGrain": 0.8036
+       },
+       {
+        "id": "brief-musical-2/love",
+        "extra": -0.5492,
+        "marginC": 1.4885,
+        "marginS": 0.9393,
+        "extraAtNoGrain": 0.8731
+       },
+       {
+        "id": "brief-mystery-2/student",
+        "extra": -0.2821,
+        "marginC": 0.397,
+        "marginS": 0.1149,
+        "extraAtNoGrain": 1.1245
+       },
+       {
+        "id": "brief-nature_documentary-2/storyteller",
+        "extra": -0.2092,
+        "marginC": 1.1049,
+        "marginS": 0.8957,
+        "extraAtNoGrain": 1.0735
+       },
+       {
+        "id": "brief-occult-2/business",
+        "extra": -0.4121,
+        "marginC": 1.8028,
+        "marginS": 1.3908,
+        "extraAtNoGrain": 1.138
+       },
+       {
+        "id": "brief-occult-2/pulled",
+        "extra": -0.464,
+        "marginC": 2.3508,
+        "marginS": 1.8868,
+        "extraAtNoGrain": 1.1303
+       },
+       {
+        "id": "brief-parody-2/straight",
+        "extra": -1.1479,
+        "marginC": 1.741,
+        "marginS": 0.5932,
+        "extraAtNoGrain": 1.0686
+       },
+       {
+        "id": "brief-parody-2/epic",
+        "extra": -1.3166,
+        "marginC": 2.3217,
+        "marginS": 1.0051,
+        "extraAtNoGrain": 0.9792
+       },
+       {
+        "id": "brief-picaresque-2/raconteur",
+        "extra": -1.1189,
+        "marginC": 2.095,
+        "marginS": 0.9761,
+        "extraAtNoGrain": 0.9015
+       },
+       {
+        "id": "brief-picaresque-2/tired",
+        "extra": -0.4027,
+        "marginC": 0.5538,
+        "marginS": 0.1511,
+        "extraAtNoGrain": 0.911
+       },
+       {
+        "id": "brief-picaresque-2/breath",
+        "extra": -0.4034,
+        "marginC": 0.8983,
+        "marginS": 0.4949,
+        "extraAtNoGrain": 0.8747
+       },
+       {
+        "id": "brief-political_drama-2/orator",
+        "extra": -1.1139,
+        "marginC": 2.1823,
+        "marginS": 1.0684,
+        "extraAtNoGrain": 0.945
+       },
+       {
+        "id": "brief-political_drama-2/conscience",
+        "extra": -0.856,
+        "marginC": 0.3974,
+        "marginS": -0.4586,
+        "extraAtNoGrain": 0.9912
+       },
+       {
+        "id": "brief-political_drama-2/walt",
+        "extra": -0.7873,
+        "marginC": 1.2666,
+        "marginS": 0.4793,
+        "extraAtNoGrain": 0.9863
+       },
+       {
+        "id": "brief-psychological_horror-2/together",
+        "extra": -0.5387,
+        "marginC": 1.488,
+        "marginS": 0.9494,
+        "extraAtNoGrain": 1.1753
+       },
+       {
+        "id": "brief-psychological_horror-2/loop",
+        "extra": -0.3988,
+        "marginC": 1.3192,
+        "marginS": 0.9204,
+        "extraAtNoGrain": 1.1937
+       },
+       {
+        "id": "brief-psychological_horror-2/awake",
+        "extra": -0.4488,
+        "marginC": 0.5437,
+        "marginS": 0.0949,
+        "extraAtNoGrain": 1.2181
+       },
+       {
+        "id": "brief-satire-2/company",
+        "extra": -1.1124,
+        "marginC": 2.3783,
+        "marginS": 1.266,
+        "extraAtNoGrain": 1.2026
+       },
+       {
+        "id": "brief-satire-2/sees",
+        "extra": -0.8147,
+        "marginC": 1.8205,
+        "marginS": 1.0058,
+        "extraAtNoGrain": 1.2127
+       },
+       {
+        "id": "brief-science_fantasy-2/letter",
+        "extra": -0.3938,
+        "marginC": 1.8465,
+        "marginS": 1.4527,
+        "extraAtNoGrain": 1.3246
+       },
+       {
+        "id": "brief-science_fantasy-2/surety",
+        "extra": -0.4616,
+        "marginC": 1.4028,
+        "marginS": 0.9412,
+        "extraAtNoGrain": 1.2699
+       },
+       {
+        "id": "brief-science_fiction-2/sister",
+        "extra": -0.3271,
+        "marginC": 0.9928,
+        "marginS": 0.6657,
+        "extraAtNoGrain": 1.353
+       },
+       {
+        "id": "brief-sea_adventure-2/command",
+        "extra": -0.3885,
+        "marginC": 0.8224,
+        "marginS": 0.4339,
+        "extraAtNoGrain": 0.9937
+       },
+       {
+        "id": "brief-sea_adventure-2/shipmate",
+        "extra": -0.2199,
+        "marginC": 0.5408,
+        "marginS": 0.321,
+        "extraAtNoGrain": 1.1304
+       },
+       {
+        "id": "brief-silent_film-3/eyes",
+        "extra": -0.1724,
+        "marginC": 0.5781,
+        "marginS": 0.4058,
+        "extraAtNoGrain": 1.0718
+       },
+       {
+        "id": "brief-slapstick-2/sport",
+        "extra": 0.0364,
+        "marginC": 0.8416,
+        "marginS": 0.878,
+        "extraAtNoGrain": 0.9423
+       },
+       {
+        "id": "brief-slapstick-2/father",
+        "extra": -0.0401,
+        "marginC": 1.0785,
+        "marginS": 1.0384,
+        "extraAtNoGrain": 1.0373
+       },
+       {
+        "id": "brief-space_opera-2/order",
+        "extra": -1.6572,
+        "marginC": 3.9264,
+        "marginS": 2.2692,
+        "extraAtNoGrain": 0.819
+       },
+       {
+        "id": "brief-space_opera-2/goodnight",
+        "extra": -1.6987,
+        "marginC": 3.7959,
+        "marginS": 2.0972,
+        "extraAtNoGrain": 0.9972
+       },
+       {
+        "id": "brief-space_opera-2/enemy",
+        "extra": -1.6507,
+        "marginC": 3.9376,
+        "marginS": 2.2869,
+        "extraAtNoGrain": 0.8404
+       },
+       {
+        "id": "brief-surrealist-2/home",
+        "extra": 0.0001,
+        "marginC": 0.5859,
+        "marginS": 0.586,
+        "extraAtNoGrain": 1.0756
+       },
+       {
+        "id": "brief-swashbuckler-2/blade",
+        "extra": -0.5441,
+        "marginC": 1.7707,
+        "marginS": 1.2266,
+        "extraAtNoGrain": 1.0271
+       },
+       {
+        "id": "brief-swashbuckler-2/rogue",
+        "extra": -0.9506,
+        "marginC": 2.6615,
+        "marginS": 1.7109,
+        "extraAtNoGrain": 1.0945
+       },
+       {
+        "id": "brief-swashbuckler-2/respect",
+        "extra": -0.5658,
+        "marginC": 1.5636,
+        "marginS": 0.9978,
+        "extraAtNoGrain": 1.0998
+       },
+       {
+        "id": "brief-sword_and_sandal-2/devout",
+        "extra": -0.1379,
+        "marginC": 0.1078,
+        "marginS": -0.0301,
+        "extraAtNoGrain": 1.2027
+       },
+       {
+        "id": "brief-sword_and_sandal-2/shrewd",
+        "extra": -0.1318,
+        "marginC": 0.522,
+        "marginS": 0.3902,
+        "extraAtNoGrain": 1.2272
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/word",
+        "extra": -0.4384,
+        "marginC": 0.797,
+        "marginS": 0.3585,
+        "extraAtNoGrain": 1.0004
+       },
+       {
+        "id": "brief-teen-2/hustle",
+        "extra": -0.3951,
+        "marginC": 0.7179,
+        "marginS": 0.3229,
+        "extraAtNoGrain": 1.2124
+       },
+       {
+        "id": "brief-time_travel-2/sister",
+        "extra": -0.0364,
+        "marginC": 0.67,
+        "marginS": 0.6335,
+        "extraAtNoGrain": 1.3757
+       },
+       {
+        "id": "brief-time_travel-2/clock",
+        "extra": -0.7952,
+        "marginC": 1.4305,
+        "marginS": 0.6352,
+        "extraAtNoGrain": 1.1363
+       },
+       {
+        "id": "brief-tokusatsu-2/hero",
+        "extra": -1.2482,
+        "marginC": 3.2732,
+        "marginS": 2.025,
+        "extraAtNoGrain": 1.0828
+       },
+       {
+        "id": "brief-tokusatsu-2/cadets",
+        "extra": -0.8179,
+        "marginC": 1.946,
+        "marginS": 1.1281,
+        "extraAtNoGrain": 1.1999
+       },
+       {
+        "id": "brief-tokusatsu-2/suit",
+        "extra": -1.136,
+        "marginC": 2.7947,
+        "marginS": 1.6587,
+        "extraAtNoGrain": 1.0849
+       },
+       {
+        "id": "brief-tragedy-2/knows",
+        "extra": 0.0173,
+        "marginC": 0.7746,
+        "marginS": 0.7918,
+        "extraAtNoGrain": 1.1577
+       },
+       {
+        "id": "brief-tragicomedy-3/half",
+        "extra": -0.7159,
+        "marginC": 1.5014,
+        "marginS": 0.7855,
+        "extraAtNoGrain": 0.7679
+       },
+       {
+        "id": "brief-tragicomedy-3/listeners",
+        "extra": -1.0375,
+        "marginC": 1.7573,
+        "marginS": 0.7198,
+        "extraAtNoGrain": 0.8354
+       },
+       {
+        "id": "brief-tragicomedy-3/line",
+        "extra": -0.6016,
+        "marginC": 0.632,
+        "marginS": 0.0304,
+        "extraAtNoGrain": 0.8522
+       },
+       {
+        "id": "brief-vampire-2/gentleman",
+        "extra": 0.0392,
+        "marginC": 0.3449,
+        "marginS": 0.3841,
+        "extraAtNoGrain": 1.3949
+       },
+       {
+        "id": "brief-whodunit-2/ear",
+        "extra": -0.6315,
+        "marginC": 2.3135,
+        "marginS": 1.6819,
+        "extraAtNoGrain": 0.9502
+       },
+       {
+        "id": "brief-whodunit-2/help",
+        "extra": -0.9501,
+        "marginC": 2.9981,
+        "marginS": 2.0479,
+        "extraAtNoGrain": 0.9105
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-chanbara-2/line",
+        "marginC": -0.3181,
+        "marginS": -0.2625,
+        "fallAtNoGrain": 0.8024
+       },
+       {
+        "id": "brief-neo_noir-2/cool",
+        "marginC": 0.0306,
+        "marginS": 0.3682,
+        "fallAtNoGrain": 0.9275
+       },
+       {
+        "id": "brief-neo_noir-2/confession",
+        "marginC": 1.0329,
+        "marginS": 1.3307,
+        "fallAtNoGrain": 0.9636
+       },
+       {
+        "id": "brief-political_thriller-2/neutral",
+        "marginC": 0.0669,
+        "marginS": 0.4318,
+        "fallAtNoGrain": 0.9121
+       },
+       {
+        "id": "brief-political_thriller-2/defiance",
+        "marginC": 0.4503,
+        "marginS": 0.8106,
+        "fallAtNoGrain": 0.977
+       },
+       {
+        "id": "brief-spy-2/breath",
+        "marginC": 0.9555,
+        "marginS": 0.998,
+        "fallAtNoGrain": 1.3671
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/faith",
+        "marginC": 0.2434,
+        "marginS": 0.7418,
+        "fallAtNoGrain": 1.0586
+       },
+       {
+        "id": "brief-teen-2/poet",
+        "marginC": 0.5613,
+        "marginS": 0.7222,
+        "fallAtNoGrain": 1.2585
+       },
+       {
+        "id": "brief-yakuza-3/room",
+        "marginC": -0.1543,
+        "marginS": -0.1131,
+        "fallAtNoGrain": 1.0213
+       }
+      ]
+     },
+     {
+      "name": "V2′",
+      "budget": 600,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 47,
+        "S": 57,
+        "ceiling": false,
+        "gained": 10,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 65
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 150,
+        "S": 182,
+        "ceiling": false,
+        "gained": 43,
+        "otherSide": {
+         "suitable": 369,
+         "C": 369,
+         "S": 368
+        }
+       }
+      },
+      "leastExtra": -3.6748,
+      "leastDrawsPart": 0.2658,
+      "leastOtherSideFall": -0.9189,
+      "extraNotOver005": [
+       {
+        "id": "pygmalion-4",
+        "extra": -0.0084,
+        "marginC": 1.8963,
+        "marginS": 1.888,
+        "extraAtNoGrain": 2.3814
+       },
+       {
+        "id": "antigone-441",
+        "extra": -0.0478,
+        "marginC": 4.7788,
+        "marginS": 4.731,
+        "extraAtNoGrain": 2.5586
+       },
+       {
+        "id": "oedipus-300",
+        "extra": -0.238,
+        "marginC": 5.0665,
+        "marginS": 4.8285,
+        "extraAtNoGrain": 2.5387
+       },
+       {
+        "id": "proposal",
+        "extra": 0.0442,
+        "marginC": 1.5663,
+        "marginS": 1.6105,
+        "extraAtNoGrain": 2.0792
+       },
+       {
+        "id": "dream-3-2",
+        "extra": -0.0382,
+        "marginC": 1.6072,
+        "marginS": 1.569,
+        "extraAtNoGrain": 1.9692
+       },
+       {
+        "id": "caesar-3-2",
+        "extra": -1.427,
+        "marginC": 3.9529,
+        "marginS": 2.526,
+        "extraAtNoGrain": 1.4346
+       },
+       {
+        "id": "oedipus-1",
+        "extra": -1.7299,
+        "marginC": 5.165,
+        "marginS": 3.435,
+        "extraAtNoGrain": 1.761
+       },
+       {
+        "id": "dream-5-1",
+        "extra": -0.5165,
+        "marginC": 2.2271,
+        "marginS": 1.7106,
+        "extraAtNoGrain": 1.8976
+       },
+       {
+        "id": "enemy-4",
+        "extra": -0.767,
+        "marginC": 3.2377,
+        "marginS": 2.4707,
+        "extraAtNoGrain": 1.7227
+       },
+       {
+        "id": "strife-2-2",
+        "extra": -0.5125,
+        "marginC": 3.0504,
+        "marginS": 2.538,
+        "extraAtNoGrain": 1.802
+       },
+       {
+        "id": "Major Barbara",
+        "extra": -0.8052,
+        "marginC": 3.8766,
+        "marginS": 3.0714,
+        "extraAtNoGrain": 2.5537
+       },
+       {
+        "id": "Julius Caesar",
+        "extra": 0.0045,
+        "marginC": 3.7136,
+        "marginS": 3.7181,
+        "extraAtNoGrain": 2.0407
+       },
+       {
+        "id": "The Playboy Of The Western World",
+        "extra": -0.345,
+        "marginC": 2.7159,
+        "marginS": 2.3709,
+        "extraAtNoGrain": 2.1545
+       },
+       {
+        "id": "The Bear",
+        "extra": -0.0233,
+        "marginC": 1.5552,
+        "marginS": 1.532,
+        "extraAtNoGrain": 1.9348
+       },
+       {
+        "id": "A Marriage Proposal",
+        "extra": 0.0442,
+        "marginC": 1.5663,
+        "marginS": 1.6105,
+        "extraAtNoGrain": 2.0792
+       },
+       {
+        "id": "night:Woyzeck",
+        "extra": 0.0493,
+        "marginC": 2.4236,
+        "marginS": 2.4728,
+        "extraAtNoGrain": 1.789
+       },
+       {
+        "id": "night:Blood Wedding",
+        "extra": -0.3545,
+        "marginC": 3.3653,
+        "marginS": 3.0108,
+        "extraAtNoGrain": 1.7868
+       },
+       {
+        "id": "night:Major Barbara",
+        "extra": -0.7303,
+        "marginC": 3.1166,
+        "marginS": 2.3863,
+        "extraAtNoGrain": 1.9365
+       },
+       {
+        "id": "night:Julius Caesar",
+        "extra": -0.5655,
+        "marginC": 3.7281,
+        "marginS": 3.1626,
+        "extraAtNoGrain": 1.6377
+       },
+       {
+        "id": "night:The Playboy Of The Western World",
+        "extra": -0.8256,
+        "marginC": 2.7339,
+        "marginS": 1.9082,
+        "extraAtNoGrain": 1.7047
+       },
+       {
+        "id": "night:The Bear",
+        "extra": 0.0445,
+        "marginC": 1.2968,
+        "marginS": 1.3413,
+        "extraAtNoGrain": 1.6043
+       },
+       {
+        "id": "night:Salomé",
+        "extra": -0.2789,
+        "marginC": 2.8811,
+        "marginS": 2.6022,
+        "extraAtNoGrain": 1.6939
+       },
+       {
+        "id": "brief-animated/brag",
+        "extra": -1.3405,
+        "marginC": 2.8195,
+        "marginS": 1.479,
+        "extraAtNoGrain": 1.3204
+       },
+       {
+        "id": "brief-anime/sync",
+        "extra": -1.2906,
+        "marginC": 2.5468,
+        "marginS": 1.2561,
+        "extraAtNoGrain": 1.2491
+       },
+       {
+        "id": "brief-anime/laugh",
+        "extra": -1.2127,
+        "marginC": 2.3229,
+        "marginS": 1.1102,
+        "extraAtNoGrain": 1.4826
+       },
+       {
+        "id": "brief-backstage_musical/number",
+        "extra": -0.2283,
+        "marginC": 1.0794,
+        "marginS": 0.8511,
+        "extraAtNoGrain": 1.3238
+       },
+       {
+        "id": "brief-dark_fantasy/bargainer",
+        "extra": -0.1738,
+        "marginC": 0.9452,
+        "marginS": 0.7714,
+        "extraAtNoGrain": 1.8383
+       },
+       {
+        "id": "brief-dark_fantasy/mother",
+        "extra": -0.4585,
+        "marginC": 0.1405,
+        "marginS": -0.318,
+        "extraAtNoGrain": 1.8206
+       },
+       {
+        "id": "brief-documentary/letters",
+        "extra": -0.2228,
+        "marginC": -0.2734,
+        "marginS": -0.4962,
+        "extraAtNoGrain": 1.4821
+       },
+       {
+        "id": "brief-documentary/narration",
+        "extra": -0.0344,
+        "marginC": 0.1643,
+        "marginS": 0.13,
+        "extraAtNoGrain": 1.3288
+       },
+       {
+        "id": "brief-epic/courtier",
+        "extra": -1.0258,
+        "marginC": 1.9524,
+        "marginS": 0.9265,
+        "extraAtNoGrain": 1.3733
+       },
+       {
+        "id": "brief-epic/son",
+        "extra": -0.5744,
+        "marginC": 1.3404,
+        "marginS": 0.7661,
+        "extraAtNoGrain": 1.5971
+       },
+       {
+        "id": "brief-farce/panic",
+        "extra": -0.293,
+        "marginC": 0.8833,
+        "marginS": 0.5903,
+        "extraAtNoGrain": 1.1515
+       },
+       {
+        "id": "brief-isekai/audit",
+        "extra": -1.8104,
+        "marginC": 3.2761,
+        "marginS": 1.4657,
+        "extraAtNoGrain": 1.281
+       },
+       {
+        "id": "brief-isekai/nobody",
+        "extra": -1.5962,
+        "marginC": 2.5351,
+        "marginS": 0.9389,
+        "extraAtNoGrain": 1.3879
+       },
+       {
+        "id": "brief-jidaigeki/forms",
+        "extra": -0.1033,
+        "marginC": 0.8335,
+        "marginS": 0.7302,
+        "extraAtNoGrain": 1.4317
+       },
+       {
+        "id": "brief-jidaigeki/grief",
+        "extra": -0.5299,
+        "marginC": 0.7494,
+        "marginS": 0.2195,
+        "extraAtNoGrain": 1.3563
+       },
+       {
+        "id": "brief-jukebox_musical/dare",
+        "extra": -1.1904,
+        "marginC": 2.209,
+        "marginS": 1.0186,
+        "extraAtNoGrain": 1.2405
+       },
+       {
+        "id": "brief-jukebox_musical/apology",
+        "extra": -0.4198,
+        "marginC": 0.6698,
+        "marginS": 0.25,
+        "extraAtNoGrain": 1.2864
+       },
+       {
+        "id": "brief-melodrama/full",
+        "extra": -1.4685,
+        "marginC": 2.6821,
+        "marginS": 1.2136,
+        "extraAtNoGrain": 1.3309
+       },
+       {
+        "id": "brief-melodrama/held",
+        "extra": -0.7754,
+        "marginC": 0.6439,
+        "marginS": -0.1315,
+        "extraAtNoGrain": 1.4461
+       },
+       {
+        "id": "brief-musical/persuade",
+        "extra": -1.4682,
+        "marginC": 2.7696,
+        "marginS": 1.3014,
+        "extraAtNoGrain": 1.1317
+       },
+       {
+        "id": "brief-musical/farewell",
+        "extra": -0.563,
+        "marginC": 1.3536,
+        "marginS": 0.7906,
+        "extraAtNoGrain": 1.264
+       },
+       {
+        "id": "brief-nature_documentary/observer",
+        "extra": 0.0289,
+        "marginC": 0.0061,
+        "marginS": 0.035,
+        "extraAtNoGrain": 1.2309
+       },
+       {
+        "id": "brief-nature_documentary/story",
+        "extra": -0.6046,
+        "marginC": 1.2525,
+        "marginS": 0.6479,
+        "extraAtNoGrain": 1.467
+       },
+       {
+        "id": "brief-parody/deadpan",
+        "extra": 0.0341,
+        "marginC": -0.6413,
+        "marginS": -0.6072,
+        "extraAtNoGrain": 1.4615
+       },
+       {
+        "id": "brief-parody/size",
+        "extra": -0.7755,
+        "marginC": 0.986,
+        "marginS": 0.2104,
+        "extraAtNoGrain": 1.3032
+       },
+       {
+        "id": "brief-silent_film/clown",
+        "extra": -0.4417,
+        "marginC": 1.3176,
+        "marginS": 0.8759,
+        "extraAtNoGrain": 1.2463
+       },
+       {
+        "id": "brief-silent_film/heart",
+        "extra": 0.0339,
+        "marginC": -0.0146,
+        "marginS": 0.0194,
+        "extraAtNoGrain": 1.3431
+       },
+       {
+        "id": "brief-space_opera/grand",
+        "extra": -0.2185,
+        "marginC": 1.3575,
+        "marginS": 1.139,
+        "extraAtNoGrain": 1.7049
+       },
+       {
+        "id": "brief-swashbuckler/play",
+        "extra": -1.3771,
+        "marginC": 2.5223,
+        "marginS": 1.1452,
+        "extraAtNoGrain": 1.3335
+       },
+       {
+        "id": "brief-swashbuckler/stall",
+        "extra": -0.2578,
+        "marginC": 0.8113,
+        "marginS": 0.5534,
+        "extraAtNoGrain": 1.3722
+       },
+       {
+        "id": "brief-alternate_history-2/calm",
+        "extra": -2.6192,
+        "marginC": 3.5686,
+        "marginS": 0.9494,
+        "extraAtNoGrain": 0.9551
+       },
+       {
+        "id": "brief-alternate_history-2/world",
+        "extra": -2.5624,
+        "marginC": 2.9598,
+        "marginS": 0.3974,
+        "extraAtNoGrain": 1.021
+       },
+       {
+        "id": "brief-alternate_history-2/names",
+        "extra": -1.0534,
+        "marginC": 2.5162,
+        "marginS": 1.4628,
+        "extraAtNoGrain": 1.3449
+       },
+       {
+        "id": "brief-animated-3/weight",
+        "extra": -0.6801,
+        "marginC": 1.6806,
+        "marginS": 1.0005,
+        "extraAtNoGrain": 1.2843
+       },
+       {
+        "id": "brief-animated-3/teacher",
+        "extra": -0.0544,
+        "marginC": 1.4207,
+        "marginS": 1.3664,
+        "extraAtNoGrain": 1.4256
+       },
+       {
+        "id": "brief-animated-3/proud",
+        "extra": -0.6845,
+        "marginC": 1.345,
+        "marginS": 0.6605,
+        "extraAtNoGrain": 1.3746
+       },
+       {
+        "id": "brief-anime-2/strain",
+        "extra": -2.0895,
+        "marginC": 3.6758,
+        "marginS": 1.5864,
+        "extraAtNoGrain": 0.9414
+       },
+       {
+        "id": "brief-anime-2/sister",
+        "extra": -0.5509,
+        "marginC": 2.4432,
+        "marginS": 1.8922,
+        "extraAtNoGrain": 1.3473
+       },
+       {
+        "id": "brief-avant_garde-2/score",
+        "extra": -1.3854,
+        "marginC": 2.0106,
+        "marginS": 0.6252,
+        "extraAtNoGrain": 0.923
+       },
+       {
+        "id": "brief-avant_garde-2/freed",
+        "extra": -1.2376,
+        "marginC": 1.8484,
+        "marginS": 0.6108,
+        "extraAtNoGrain": 0.942
+       },
+       {
+        "id": "brief-backstage_musical-2/sell",
+        "extra": -0.3461,
+        "marginC": 1.4207,
+        "marginS": 1.0746,
+        "extraAtNoGrain": 1.2057
+       },
+       {
+        "id": "brief-backstage_musical-2/hers",
+        "extra": -0.2857,
+        "marginC": 0.8279,
+        "marginS": 0.5422,
+        "extraAtNoGrain": 1.2735
+       },
+       {
+        "id": "brief-backstage_musical-2/company",
+        "extra": -0.4664,
+        "marginC": 1.5707,
+        "marginS": 1.1042,
+        "extraAtNoGrain": 1.1674
+       },
+       {
+        "id": "brief-chanbara-2/painter",
+        "extra": -0.5622,
+        "marginC": 0.7912,
+        "marginS": 0.2291,
+        "extraAtNoGrain": 1.0761
+       },
+       {
+        "id": "brief-concert_film-2/pro",
+        "extra": -1.7251,
+        "marginC": 2.9657,
+        "marginS": 1.2406,
+        "extraAtNoGrain": 1.1252
+       },
+       {
+        "id": "brief-concert_film-2/song",
+        "extra": -1.4128,
+        "marginC": 1.8417,
+        "marginS": 0.429,
+        "extraAtNoGrain": 1.2003
+       },
+       {
+        "id": "brief-concert_film-2/wings",
+        "extra": -1.6901,
+        "marginC": 3.5694,
+        "marginS": 1.8793,
+        "extraAtNoGrain": 1.3776
+       },
+       {
+        "id": "brief-cosmic_horror-2/record",
+        "extra": -0.4989,
+        "marginC": 0.4572,
+        "marginS": -0.0417,
+        "extraAtNoGrain": 0.9066
+       },
+       {
+        "id": "brief-cosmic_horror-2/tomas",
+        "extra": -0.6752,
+        "marginC": 0.0655,
+        "marginS": -0.6097,
+        "extraAtNoGrain": 1.076
+       },
+       {
+        "id": "brief-cosmic_horror-2/peace",
+        "extra": -0.3234,
+        "marginC": 0.5005,
+        "marginS": 0.177,
+        "extraAtNoGrain": 0.9376
+       },
+       {
+        "id": "brief-dark_fantasy-2/mercy",
+        "extra": -1.7209,
+        "marginC": 2.5661,
+        "marginS": 0.8452,
+        "extraAtNoGrain": 1.3306
+       },
+       {
+        "id": "brief-dark_fantasy-2/voices",
+        "extra": -2.1751,
+        "marginC": 3.5245,
+        "marginS": 1.3494,
+        "extraAtNoGrain": 1.1539
+       },
+       {
+        "id": "brief-disaster-2/anchor",
+        "extra": -0.3467,
+        "marginC": 1.1905,
+        "marginS": 0.8438,
+        "extraAtNoGrain": 1.7447
+       },
+       {
+        "id": "brief-epic-2/soldier",
+        "extra": 0.0495,
+        "marginC": 0.3439,
+        "marginS": 0.3934,
+        "extraAtNoGrain": 1.0403
+       },
+       {
+        "id": "brief-epic-2/orchard",
+        "extra": -0.2308,
+        "marginC": 0.4381,
+        "marginS": 0.2073,
+        "extraAtNoGrain": 1.2507
+       },
+       {
+        "id": "brief-experimental-2/list",
+        "extra": -1.2999,
+        "marginC": 1.9791,
+        "marginS": 0.6792,
+        "extraAtNoGrain": 0.8262
+       },
+       {
+        "id": "brief-experimental-2/her",
+        "extra": -0.9873,
+        "marginC": 1.2938,
+        "marginS": 0.3065,
+        "extraAtNoGrain": 0.8933
+       },
+       {
+        "id": "brief-exploitation-2/cool",
+        "extra": -0.4555,
+        "marginC": 1.7597,
+        "marginS": 1.3042,
+        "extraAtNoGrain": 1.5839
+       },
+       {
+        "id": "brief-exploitation-2/afraid",
+        "extra": -0.6037,
+        "marginC": 1.3629,
+        "marginS": 0.7592,
+        "extraAtNoGrain": 1.6049
+       },
+       {
+        "id": "brief-fairy_tale-2/vain",
+        "extra": -2.6059,
+        "marginC": 4.3638,
+        "marginS": 1.7578,
+        "extraAtNoGrain": 1.0414
+       },
+       {
+        "id": "brief-fairy_tale-2/keeper",
+        "extra": -2.2277,
+        "marginC": 3.6508,
+        "marginS": 1.4231,
+        "extraAtNoGrain": 1.2119
+       },
+       {
+        "id": "brief-fairy_tale-2/bell",
+        "extra": -2.4963,
+        "marginC": 4.0298,
+        "marginS": 1.5336,
+        "extraAtNoGrain": 1.0513
+       },
+       {
+        "id": "brief-farce-3/ledger",
+        "extra": -0.0196,
+        "marginC": 0.5111,
+        "marginS": 0.4915,
+        "extraAtNoGrain": 1.1682
+       },
+       {
+        "id": "brief-farce-3/doors",
+        "extra": -0.0164,
+        "marginC": 0.5561,
+        "marginS": 0.5397,
+        "extraAtNoGrain": 1.1763
+       },
+       {
+        "id": "brief-farce-3/believer",
+        "extra": -0.4053,
+        "marginC": 0.8509,
+        "marginS": 0.4455,
+        "extraAtNoGrain": 1.2545
+       },
+       {
+        "id": "brief-giallo-2/story",
+        "extra": -0.3936,
+        "marginC": 0.8205,
+        "marginS": 0.4268,
+        "extraAtNoGrain": 1.7156
+       },
+       {
+        "id": "brief-giallo-2/next",
+        "extra": -0.3782,
+        "marginC": -0.1008,
+        "marginS": -0.4791,
+        "extraAtNoGrain": 1.7269
+       },
+       {
+        "id": "brief-gothic_horror-3/record",
+        "extra": -3.1175,
+        "marginC": 4.9278,
+        "marginS": 1.8103,
+        "extraAtNoGrain": 0.9859
+       },
+       {
+        "id": "brief-gothic_horror-3/door",
+        "extra": -3.0358,
+        "marginC": 4.3926,
+        "marginS": 1.3569,
+        "extraAtNoGrain": 1.084
+       },
+       {
+        "id": "brief-gothic_horror-3/hand",
+        "extra": -3.0933,
+        "marginC": 5.0428,
+        "marginS": 1.9496,
+        "extraAtNoGrain": 0.9448
+       },
+       {
+        "id": "brief-grindhouse-2/calm",
+        "extra": -0.4265,
+        "marginC": 1.2929,
+        "marginS": 0.8664,
+        "extraAtNoGrain": 1.3431
+       },
+       {
+        "id": "brief-grindhouse-2/stunt",
+        "extra": -1.0512,
+        "marginC": 2.2298,
+        "marginS": 1.1785,
+        "extraAtNoGrain": 1.1155
+       },
+       {
+        "id": "brief-horror-2/steady",
+        "extra": -1.3212,
+        "marginC": 2.223,
+        "marginS": 0.9018,
+        "extraAtNoGrain": 1.1939
+       },
+       {
+        "id": "brief-horror-2/eli",
+        "extra": -1.198,
+        "marginC": 1.755,
+        "marginS": 0.5571,
+        "extraAtNoGrain": 1.3791
+       },
+       {
+        "id": "brief-isekai-2/fan",
+        "extra": -1.7209,
+        "marginC": 3.1493,
+        "marginS": 1.4284,
+        "extraAtNoGrain": 1.3428
+       },
+       {
+        "id": "brief-isekai-2/author",
+        "extra": -1.5922,
+        "marginC": 2.505,
+        "marginS": 0.9128,
+        "extraAtNoGrain": 1.364
+       },
+       {
+        "id": "brief-isekai-2/word",
+        "extra": -1.1019,
+        "marginC": 3.1492,
+        "marginS": 2.0473,
+        "extraAtNoGrain": 1.4589
+       },
+       {
+        "id": "brief-jidaigeki-2/rule",
+        "extra": -0.3348,
+        "marginC": 1.0529,
+        "marginS": 0.7181,
+        "extraAtNoGrain": 1.2968
+       },
+       {
+        "id": "brief-jidaigeki-2/face",
+        "extra": -0.483,
+        "marginC": 1.6444,
+        "marginS": 1.1614,
+        "extraAtNoGrain": 1.3745
+       },
+       {
+        "id": "brief-jidaigeki-2/spear",
+        "extra": -0.4656,
+        "marginC": 1.2737,
+        "marginS": 0.8081,
+        "extraAtNoGrain": 1.3042
+       },
+       {
+        "id": "brief-jukebox_musical-3/floor",
+        "extra": -1.1475,
+        "marginC": 1.9819,
+        "marginS": 0.8344,
+        "extraAtNoGrain": 1.0092
+       },
+       {
+        "id": "brief-jukebox_musical-3/chair",
+        "extra": -0.9609,
+        "marginC": 1.2636,
+        "marginS": 0.3027,
+        "extraAtNoGrain": 1.1049
+       },
+       {
+        "id": "brief-jukebox_musical-3/uncle",
+        "extra": -1.5767,
+        "marginC": 2.4693,
+        "marginS": 0.8926,
+        "extraAtNoGrain": 0.9859
+       },
+       {
+        "id": "brief-melodrama-2/storm",
+        "extra": -1.4925,
+        "marginC": 2.7576,
+        "marginS": 1.2651,
+        "extraAtNoGrain": 1.0357
+       },
+       {
+        "id": "brief-melodrama-2/child",
+        "extra": -1.1055,
+        "marginC": 1.4331,
+        "marginS": 0.3275,
+        "extraAtNoGrain": 1.1833
+       },
+       {
+        "id": "brief-melodrama-2/pride",
+        "extra": -1.1155,
+        "marginC": 1.878,
+        "marginS": 0.7626,
+        "extraAtNoGrain": 1.1338
+       },
+       {
+        "id": "brief-military-2/light",
+        "extra": -0.0263,
+        "marginC": -0.0713,
+        "marginS": -0.0975,
+        "extraAtNoGrain": 1.4136
+       },
+       {
+        "id": "brief-military-2/reach",
+        "extra": -0.5774,
+        "marginC": 1.0648,
+        "marginS": 0.4875,
+        "extraAtNoGrain": 1.563
+       },
+       {
+        "id": "brief-musical-2/number",
+        "extra": -1.3265,
+        "marginC": 2.402,
+        "marginS": 1.0754,
+        "extraAtNoGrain": 1.0704
+       },
+       {
+        "id": "brief-musical-2/love",
+        "extra": -0.8357,
+        "marginC": 1.4801,
+        "marginS": 0.6444,
+        "extraAtNoGrain": 1.1395
+       },
+       {
+        "id": "brief-mystery-2/student",
+        "extra": -0.1331,
+        "marginC": -0.1745,
+        "marginS": -0.3076,
+        "extraAtNoGrain": 1.4128
+       },
+       {
+        "id": "brief-nature_documentary-2/storyteller",
+        "extra": -0.1877,
+        "marginC": 0.6195,
+        "marginS": 0.4317,
+        "extraAtNoGrain": 1.1536
+       },
+       {
+        "id": "brief-occult-2/business",
+        "extra": -1.1115,
+        "marginC": 2.0101,
+        "marginS": 0.8985,
+        "extraAtNoGrain": 1.4121
+       },
+       {
+        "id": "brief-occult-2/pulled",
+        "extra": -1.1058,
+        "marginC": 2.5249,
+        "marginS": 1.4191,
+        "extraAtNoGrain": 1.4067
+       },
+       {
+        "id": "brief-parody-2/straight",
+        "extra": -1.223,
+        "marginC": 1.3581,
+        "marginS": 0.1351,
+        "extraAtNoGrain": 1.1142
+       },
+       {
+        "id": "brief-parody-2/epic",
+        "extra": -1.4038,
+        "marginC": 1.982,
+        "marginS": 0.5782,
+        "extraAtNoGrain": 1.0249
+       },
+       {
+        "id": "brief-picaresque-2/raconteur",
+        "extra": -1.1495,
+        "marginC": 1.7896,
+        "marginS": 0.6401,
+        "extraAtNoGrain": 0.9331
+       },
+       {
+        "id": "brief-picaresque-2/tired",
+        "extra": -0.4063,
+        "marginC": 0.182,
+        "marginS": -0.2244,
+        "extraAtNoGrain": 0.947
+       },
+       {
+        "id": "brief-picaresque-2/breath",
+        "extra": -0.3989,
+        "marginC": 0.5182,
+        "marginS": 0.1194,
+        "extraAtNoGrain": 0.9109
+       },
+       {
+        "id": "brief-political_drama-2/orator",
+        "extra": -2.3849,
+        "marginC": 3.1485,
+        "marginS": 0.7636,
+        "extraAtNoGrain": 1.0652
+       },
+       {
+        "id": "brief-political_drama-2/conscience",
+        "extra": -1.2486,
+        "marginC": 0.4836,
+        "marginS": -0.765,
+        "extraAtNoGrain": 1.2077
+       },
+       {
+        "id": "brief-political_drama-2/walt",
+        "extra": -1.1624,
+        "marginC": 1.2963,
+        "marginS": 0.1339,
+        "extraAtNoGrain": 1.2037
+       },
+       {
+        "id": "brief-psychological_horror-2/together",
+        "extra": -0.5277,
+        "marginC": 0.9125,
+        "marginS": 0.3849,
+        "extraAtNoGrain": 1.219
+       },
+       {
+        "id": "brief-psychological_horror-2/loop",
+        "extra": -0.3814,
+        "marginC": 0.7086,
+        "marginS": 0.3272,
+        "extraAtNoGrain": 1.2371
+       },
+       {
+        "id": "brief-psychological_horror-2/awake",
+        "extra": -0.4528,
+        "marginC": 0.0052,
+        "marginS": -0.4476,
+        "extraAtNoGrain": 1.2611
+       },
+       {
+        "id": "brief-satire-2/company",
+        "extra": -1.1169,
+        "marginC": 1.8731,
+        "marginS": 0.7562,
+        "extraAtNoGrain": 1.2544
+       },
+       {
+        "id": "brief-satire-2/sees",
+        "extra": -0.8027,
+        "marginC": 1.2933,
+        "marginS": 0.4906,
+        "extraAtNoGrain": 1.265
+       },
+       {
+        "id": "brief-science_fantasy-2/letter",
+        "extra": -0.7748,
+        "marginC": 1.6738,
+        "marginS": 0.8991,
+        "extraAtNoGrain": 1.6052
+       },
+       {
+        "id": "brief-science_fantasy-2/surety",
+        "extra": -0.73,
+        "marginC": 1.1279,
+        "marginS": 0.3979,
+        "extraAtNoGrain": 1.5487
+       },
+       {
+        "id": "brief-science_fiction-2/sister",
+        "extra": -0.2658,
+        "marginC": 0.367,
+        "marginS": 0.1012,
+        "extraAtNoGrain": 1.4394
+       },
+       {
+        "id": "brief-screwball_comedy-2/caught",
+        "extra": -0.1335,
+        "marginC": 0.6685,
+        "marginS": 0.535,
+        "extraAtNoGrain": 1.449
+       },
+       {
+        "id": "brief-sea_adventure-2/command",
+        "extra": -0.5164,
+        "marginC": 0.5732,
+        "marginS": 0.0568,
+        "extraAtNoGrain": 1.2259
+       },
+       {
+        "id": "brief-sea_adventure-2/shipmate",
+        "extra": -0.6959,
+        "marginC": 0.6181,
+        "marginS": -0.0778,
+        "extraAtNoGrain": 1.3718
+       },
+       {
+        "id": "brief-silent_film-3/eyes",
+        "extra": -0.0532,
+        "marginC": -0.0219,
+        "marginS": -0.0751,
+        "extraAtNoGrain": 1.2404
+       },
+       {
+        "id": "brief-slapstick-2/father",
+        "extra": -0.0838,
+        "marginC": 0.749,
+        "marginS": 0.6652,
+        "extraAtNoGrain": 1.3114
+       },
+       {
+        "id": "brief-space_opera-2/order",
+        "extra": -3.4889,
+        "marginC": 5.4813,
+        "marginS": 1.9923,
+        "extraAtNoGrain": 0.8574
+       },
+       {
+        "id": "brief-space_opera-2/goodnight",
+        "extra": -3.6748,
+        "marginC": 5.4608,
+        "marginS": 1.786,
+        "extraAtNoGrain": 1.0322
+       },
+       {
+        "id": "brief-space_opera-2/enemy",
+        "extra": -3.6307,
+        "marginC": 5.6307,
+        "marginS": 2.0001,
+        "extraAtNoGrain": 0.8796
+       },
+       {
+        "id": "brief-swashbuckler-2/blade",
+        "extra": -1.0451,
+        "marginC": 1.9002,
+        "marginS": 0.8551,
+        "extraAtNoGrain": 1.2115
+       },
+       {
+        "id": "brief-swashbuckler-2/rogue",
+        "extra": -1.9129,
+        "marginC": 3.2746,
+        "marginS": 1.3617,
+        "extraAtNoGrain": 1.2206
+       },
+       {
+        "id": "brief-swashbuckler-2/respect",
+        "extra": -0.8704,
+        "marginC": 1.4616,
+        "marginS": 0.5912,
+        "extraAtNoGrain": 1.2846
+       },
+       {
+        "id": "brief-sword_and_sandal-2/devout",
+        "extra": -0.4823,
+        "marginC": 0.0345,
+        "marginS": -0.4478,
+        "extraAtNoGrain": 1.4444
+       },
+       {
+        "id": "brief-sword_and_sandal-2/shrewd",
+        "extra": -0.4828,
+        "marginC": 0.4354,
+        "marginS": -0.0474,
+        "extraAtNoGrain": 1.469
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/word",
+        "extra": -1.055,
+        "marginC": 1.0811,
+        "marginS": 0.0261,
+        "extraAtNoGrain": 1.2332
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/silence",
+        "extra": 0.0487,
+        "marginC": 0.1681,
+        "marginS": 0.2168,
+        "extraAtNoGrain": 1.4523
+       },
+       {
+        "id": "brief-teen-2/hustle",
+        "extra": -0.2841,
+        "marginC": 0.0983,
+        "marginS": -0.1859,
+        "extraAtNoGrain": 1.4018
+       },
+       {
+        "id": "brief-time_travel-2/sister",
+        "extra": -0.831,
+        "marginC": 0.9765,
+        "marginS": 0.1455,
+        "extraAtNoGrain": 1.6352
+       },
+       {
+        "id": "brief-time_travel-2/clock",
+        "extra": -0.7465,
+        "marginC": 0.9002,
+        "marginS": 0.1537,
+        "extraAtNoGrain": 1.2589
+       },
+       {
+        "id": "brief-tokusatsu-2/hero",
+        "extra": -2.1899,
+        "marginC": 3.9052,
+        "marginS": 1.7153,
+        "extraAtNoGrain": 1.1522
+       },
+       {
+        "id": "brief-tokusatsu-2/cadets",
+        "extra": -1.5776,
+        "marginC": 2.2683,
+        "marginS": 0.6907,
+        "extraAtNoGrain": 1.2809
+       },
+       {
+        "id": "brief-tokusatsu-2/suit",
+        "extra": -1.7986,
+        "marginC": 3.0636,
+        "marginS": 1.265,
+        "extraAtNoGrain": 1.1638
+       },
+       {
+        "id": "brief-tragedy-2/certain",
+        "extra": -0.1998,
+        "marginC": 1.2444,
+        "marginS": 1.0446,
+        "extraAtNoGrain": 1.4249
+       },
+       {
+        "id": "brief-tragedy-2/knows",
+        "extra": -0.0246,
+        "marginC": 0.2956,
+        "marginS": 0.2711,
+        "extraAtNoGrain": 1.443
+       },
+       {
+        "id": "brief-tragedy-2/teacher",
+        "extra": 0.0328,
+        "marginC": 1.5251,
+        "marginS": 1.5579,
+        "extraAtNoGrain": 1.4963
+       },
+       {
+        "id": "brief-tragicomedy-3/half",
+        "extra": -0.7155,
+        "marginC": 1.1617,
+        "marginS": 0.4462,
+        "extraAtNoGrain": 0.8024
+       },
+       {
+        "id": "brief-tragicomedy-3/listeners",
+        "extra": -1.047,
+        "marginC": 1.4093,
+        "marginS": 0.3622,
+        "extraAtNoGrain": 0.8659
+       },
+       {
+        "id": "brief-tragicomedy-3/line",
+        "extra": -0.6091,
+        "marginC": 0.274,
+        "marginS": -0.3351,
+        "extraAtNoGrain": 0.8872
+       },
+       {
+        "id": "brief-whodunit-2/ear",
+        "extra": -1.434,
+        "marginC": 2.8109,
+        "marginS": 1.3769,
+        "extraAtNoGrain": 1.2218
+       },
+       {
+        "id": "brief-whodunit-2/help",
+        "extra": -2.258,
+        "marginC": 4.0026,
+        "marginS": 1.7447,
+        "extraAtNoGrain": 1.0646
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-neo_noir-2/cool",
+        "marginC": 0.3891,
+        "marginS": 0.7274,
+        "fallAtNoGrain": 0.9736
+       },
+       {
+        "id": "brief-neo_noir-2/confession",
+        "marginC": 1.3317,
+        "marginS": 1.6423,
+        "fallAtNoGrain": 1.0093
+       },
+       {
+        "id": "brief-political_thriller-2/neutral",
+        "marginC": 0.4617,
+        "marginS": 0.7615,
+        "fallAtNoGrain": 1.0287
+       },
+       {
+        "id": "brief-political_thriller-2/defiance",
+        "marginC": 0.8239,
+        "marginS": 1.1261,
+        "fallAtNoGrain": 1.0949
+       },
+       {
+        "id": "brief-spy-2/breath",
+        "marginC": 1.3897,
+        "marginS": 1.4232,
+        "fallAtNoGrain": 1.4083
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/faith",
+        "marginC": 0.1477,
+        "marginS": 1.0667,
+        "fallAtNoGrain": 1.2922
+       }
+      ]
+     },
+     {
+      "name": "V3′",
+      "budget": 780,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 49,
+        "S": 57,
+        "ceiling": false,
+        "gained": 8,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 40
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 196,
+        "S": 269,
+        "ceiling": false,
+        "gained": 78,
+        "otherSide": {
+         "suitable": 369,
+         "C": 361,
+         "S": 252
+        }
+       }
+      },
+      "leastExtra": -1.8251,
+      "leastDrawsPart": 0.2178,
+      "leastOtherSideFall": -0.5082,
+      "extraNotOver005": [
+       {
+        "id": "caesar-3-2",
+        "extra": -0.4811,
+        "marginC": 2.7975,
+        "marginS": 2.3164,
+        "extraAtNoGrain": 1.2393
+       },
+       {
+        "id": "oedipus-1",
+        "extra": -0.6494,
+        "marginC": 3.6727,
+        "marginS": 3.0233,
+        "extraAtNoGrain": 1.5225
+       },
+       {
+        "id": "dream-5-1",
+        "extra": 0.0156,
+        "marginC": 1.6729,
+        "marginS": 1.6885,
+        "extraAtNoGrain": 1.4165
+       },
+       {
+        "id": "enemy-4",
+        "extra": -0.2603,
+        "marginC": 2.6312,
+        "marginS": 2.3709,
+        "extraAtNoGrain": 1.4884
+       },
+       {
+        "id": "strife-2-2",
+        "extra": -0.2504,
+        "marginC": 2.7277,
+        "marginS": 2.4773,
+        "extraAtNoGrain": 1.5596
+       },
+       {
+        "id": "night:Blood Wedding",
+        "extra": 0.0046,
+        "marginC": 2.937,
+        "marginS": 2.9416,
+        "extraAtNoGrain": 1.6659
+       },
+       {
+        "id": "night:Major Barbara",
+        "extra": -0.4563,
+        "marginC": 3.0089,
+        "marginS": 2.5525,
+        "extraAtNoGrain": 1.8186
+       },
+       {
+        "id": "night:Julius Caesar",
+        "extra": -0.0676,
+        "marginC": 3.199,
+        "marginS": 3.1314,
+        "extraAtNoGrain": 1.5221
+       },
+       {
+        "id": "night:The Playboy Of The Western World",
+        "extra": -0.279,
+        "marginC": 2.3303,
+        "marginS": 2.0513,
+        "extraAtNoGrain": 1.5671
+       },
+       {
+        "id": "night:The Bear",
+        "extra": -0.0299,
+        "marginC": 1.6257,
+        "marginS": 1.5959,
+        "extraAtNoGrain": 1.4535
+       },
+       {
+        "id": "night:Salomé",
+        "extra": -0.0477,
+        "marginC": 2.5581,
+        "marginS": 2.5103,
+        "extraAtNoGrain": 1.568
+       },
+       {
+        "id": "brief-animated/brag",
+        "extra": -0.5264,
+        "marginC": 1.984,
+        "marginS": 1.4576,
+        "extraAtNoGrain": 1.1651
+       },
+       {
+        "id": "brief-anime/sync",
+        "extra": -0.9701,
+        "marginC": 2.3269,
+        "marginS": 1.3568,
+        "extraAtNoGrain": 1.1047
+       },
+       {
+        "id": "brief-anime/laugh",
+        "extra": -0.6829,
+        "marginC": 1.9534,
+        "marginS": 1.2706,
+        "extraAtNoGrain": 1.295
+       },
+       {
+        "id": "brief-dark_fantasy/mother",
+        "extra": -0.0631,
+        "marginC": 0.2038,
+        "marginS": 0.1407,
+        "extraAtNoGrain": 1.3669
+       },
+       {
+        "id": "brief-documentary/letters",
+        "extra": -0.17,
+        "marginC": 0.2315,
+        "marginS": 0.0615,
+        "extraAtNoGrain": 1.3552
+       },
+       {
+        "id": "brief-documentary/narration",
+        "extra": 0.0109,
+        "marginC": 0.5598,
+        "marginS": 0.5707,
+        "extraAtNoGrain": 1.233
+       },
+       {
+        "id": "brief-epic/courtier",
+        "extra": -0.3298,
+        "marginC": 1.3862,
+        "marginS": 1.0564,
+        "extraAtNoGrain": 1.1609
+       },
+       {
+        "id": "brief-epic/son",
+        "extra": -0.1328,
+        "marginC": 1.0877,
+        "marginS": 0.9548,
+        "extraAtNoGrain": 1.3536
+       },
+       {
+        "id": "brief-farce/panic",
+        "extra": -0.2461,
+        "marginC": 1.0536,
+        "marginS": 0.8076,
+        "extraAtNoGrain": 0.9542
+       },
+       {
+        "id": "brief-isekai/audit",
+        "extra": -0.7933,
+        "marginC": 2.2414,
+        "marginS": 1.4481,
+        "extraAtNoGrain": 1.1385
+       },
+       {
+        "id": "brief-isekai/nobody",
+        "extra": -0.6692,
+        "marginC": 1.7405,
+        "marginS": 1.0713,
+        "extraAtNoGrain": 1.2408
+       },
+       {
+        "id": "brief-jidaigeki/forms",
+        "extra": -0.1232,
+        "marginC": 1.099,
+        "marginS": 0.9757,
+        "extraAtNoGrain": 1.1205
+       },
+       {
+        "id": "brief-jidaigeki/grief",
+        "extra": -0.3613,
+        "marginC": 0.941,
+        "marginS": 0.5797,
+        "extraAtNoGrain": 1.137
+       },
+       {
+        "id": "brief-jukebox_musical/dare",
+        "extra": -0.5991,
+        "marginC": 1.7423,
+        "marginS": 1.1432,
+        "extraAtNoGrain": 1.0853
+       },
+       {
+        "id": "brief-jukebox_musical/apology",
+        "extra": -0.2425,
+        "marginC": 0.8145,
+        "marginS": 0.572,
+        "extraAtNoGrain": 1.0825
+       },
+       {
+        "id": "brief-melodrama/full",
+        "extra": -0.5602,
+        "marginC": 1.8698,
+        "marginS": 1.3096,
+        "extraAtNoGrain": 1.1726
+       },
+       {
+        "id": "brief-melodrama/held",
+        "extra": -0.2241,
+        "marginC": 0.5431,
+        "marginS": 0.319,
+        "extraAtNoGrain": 1.2181
+       },
+       {
+        "id": "brief-musical/persuade",
+        "extra": -0.6515,
+        "marginC": 1.9369,
+        "marginS": 1.2854,
+        "extraAtNoGrain": 0.9558
+       },
+       {
+        "id": "brief-musical/farewell",
+        "extra": -0.0865,
+        "marginC": 1.015,
+        "marginS": 0.9285,
+        "extraAtNoGrain": 0.9731
+       },
+       {
+        "id": "brief-nature_documentary/story",
+        "extra": -0.4674,
+        "marginC": 1.386,
+        "marginS": 0.9186,
+        "extraAtNoGrain": 1.3327
+       },
+       {
+        "id": "brief-parody/deadpan",
+        "extra": -0.0304,
+        "marginC": -0.0546,
+        "marginS": -0.0851,
+        "extraAtNoGrain": 1.183
+       },
+       {
+        "id": "brief-parody/size",
+        "extra": -0.6149,
+        "marginC": 1.1466,
+        "marginS": 0.5317,
+        "extraAtNoGrain": 1.1112
+       },
+       {
+        "id": "brief-silent_film/clown",
+        "extra": -0.334,
+        "marginC": 1.4284,
+        "marginS": 1.0944,
+        "extraAtNoGrain": 1.1239
+       },
+       {
+        "id": "brief-space_opera/grand",
+        "extra": -0.1244,
+        "marginC": 1.563,
+        "marginS": 1.4386,
+        "extraAtNoGrain": 1.4648
+       },
+       {
+        "id": "brief-swashbuckler/play",
+        "extra": -0.6892,
+        "marginC": 1.8633,
+        "marginS": 1.1741,
+        "extraAtNoGrain": 1.1847
+       },
+       {
+        "id": "brief-swashbuckler/stall",
+        "extra": -0.2346,
+        "marginC": 1.0597,
+        "marginS": 0.8251,
+        "extraAtNoGrain": 1.1695
+       },
+       {
+        "id": "brief-alternate_history-2/calm",
+        "extra": -1.2839,
+        "marginC": 2.2794,
+        "marginS": 0.9955,
+        "extraAtNoGrain": 0.8407
+       },
+       {
+        "id": "brief-alternate_history-2/world",
+        "extra": -1.3167,
+        "marginC": 1.8721,
+        "marginS": 0.5555,
+        "extraAtNoGrain": 0.9068
+       },
+       {
+        "id": "brief-alternate_history-2/names",
+        "extra": -0.3952,
+        "marginC": 1.7836,
+        "marginS": 1.3884,
+        "extraAtNoGrain": 1.1013
+       },
+       {
+        "id": "brief-animated-3/weight",
+        "extra": -0.2045,
+        "marginC": 1.2784,
+        "marginS": 1.0739,
+        "extraAtNoGrain": 0.9991
+       },
+       {
+        "id": "brief-animated-3/proud",
+        "extra": -0.1728,
+        "marginC": 1.0337,
+        "marginS": 0.8609,
+        "extraAtNoGrain": 1.0938
+       },
+       {
+        "id": "brief-anime-2/strain",
+        "extra": -1.0524,
+        "marginC": 2.5407,
+        "marginS": 1.4882,
+        "extraAtNoGrain": 0.8486
+       },
+       {
+        "id": "brief-anime-2/sister",
+        "extra": -0.3107,
+        "marginC": 2.0596,
+        "marginS": 1.7488,
+        "extraAtNoGrain": 1.1401
+       },
+       {
+        "id": "brief-avant_garde-2/score",
+        "extra": -0.7272,
+        "marginC": 1.4671,
+        "marginS": 0.74,
+        "extraAtNoGrain": 0.8377
+       },
+       {
+        "id": "brief-avant_garde-2/freed",
+        "extra": -0.7585,
+        "marginC": 1.5044,
+        "marginS": 0.7459,
+        "extraAtNoGrain": 0.8543
+       },
+       {
+        "id": "brief-backstage_musical-2/sell",
+        "extra": -0.0938,
+        "marginC": 1.211,
+        "marginS": 1.1172,
+        "extraAtNoGrain": 0.9556
+       },
+       {
+        "id": "brief-backstage_musical-2/hers",
+        "extra": -0.0036,
+        "marginC": 0.7319,
+        "marginS": 0.7283,
+        "extraAtNoGrain": 1.0227
+       },
+       {
+        "id": "brief-backstage_musical-2/company",
+        "extra": -0.1637,
+        "marginC": 1.2896,
+        "marginS": 1.1259,
+        "extraAtNoGrain": 0.9174
+       },
+       {
+        "id": "brief-chanbara-2/painter",
+        "extra": -0.5049,
+        "marginC": 0.9878,
+        "marginS": 0.4829,
+        "extraAtNoGrain": 0.9645
+       },
+       {
+        "id": "brief-concert_film-2/pro",
+        "extra": -1.0249,
+        "marginC": 2.3211,
+        "marginS": 1.2962,
+        "extraAtNoGrain": 1.0229
+       },
+       {
+        "id": "brief-concert_film-2/song",
+        "extra": -0.9188,
+        "marginC": 1.6065,
+        "marginS": 0.6878,
+        "extraAtNoGrain": 1.1002
+       },
+       {
+        "id": "brief-concert_film-2/wings",
+        "extra": -0.7724,
+        "marginC": 2.5731,
+        "marginS": 1.8007,
+        "extraAtNoGrain": 1.2326
+       },
+       {
+        "id": "brief-cosmic_horror-2/record",
+        "extra": -0.3891,
+        "marginC": 0.6923,
+        "marginS": 0.3033,
+        "extraAtNoGrain": 0.8506
+       },
+       {
+        "id": "brief-cosmic_horror-2/tomas",
+        "extra": -0.5728,
+        "marginC": 0.4147,
+        "marginS": -0.158,
+        "extraAtNoGrain": 0.9851
+       },
+       {
+        "id": "brief-cosmic_horror-2/peace",
+        "extra": -0.2363,
+        "marginC": 0.7454,
+        "marginS": 0.509,
+        "extraAtNoGrain": 0.8821
+       },
+       {
+        "id": "brief-dark_fantasy-2/mercy",
+        "extra": -0.7772,
+        "marginC": 1.7554,
+        "marginS": 0.9782,
+        "extraAtNoGrain": 1.153
+       },
+       {
+        "id": "brief-dark_fantasy-2/voices",
+        "extra": -1.0031,
+        "marginC": 2.3551,
+        "marginS": 1.352,
+        "extraAtNoGrain": 1.0145
+       },
+       {
+        "id": "brief-epic-2/soldier",
+        "extra": 0.0135,
+        "marginC": 0.6135,
+        "marginS": 0.627,
+        "extraAtNoGrain": 0.8662
+       },
+       {
+        "id": "brief-epic-2/orchard",
+        "extra": -0.1653,
+        "marginC": 0.6847,
+        "marginS": 0.5194,
+        "extraAtNoGrain": 1.0541
+       },
+       {
+        "id": "brief-experimental-2/list",
+        "extra": -0.9744,
+        "marginC": 1.7493,
+        "marginS": 0.7749,
+        "extraAtNoGrain": 0.7483
+       },
+       {
+        "id": "brief-experimental-2/her",
+        "extra": -0.7411,
+        "marginC": 1.2641,
+        "marginS": 0.523,
+        "extraAtNoGrain": 0.814
+       },
+       {
+        "id": "brief-exploitation-2/cool",
+        "extra": -0.0701,
+        "marginC": 1.5826,
+        "marginS": 1.5125,
+        "extraAtNoGrain": 1.2643
+       },
+       {
+        "id": "brief-exploitation-2/afraid",
+        "extra": 0.0236,
+        "marginC": 1.0592,
+        "marginS": 1.0828,
+        "extraAtNoGrain": 1.2922
+       },
+       {
+        "id": "brief-fairy_tale-2/vain",
+        "extra": -1.2407,
+        "marginC": 2.8684,
+        "marginS": 1.6277,
+        "extraAtNoGrain": 0.926
+       },
+       {
+        "id": "brief-fairy_tale-2/keeper",
+        "extra": -1.0544,
+        "marginC": 2.4435,
+        "marginS": 1.3891,
+        "extraAtNoGrain": 1.0698
+       },
+       {
+        "id": "brief-fairy_tale-2/bell",
+        "extra": -1.2775,
+        "marginC": 2.7492,
+        "marginS": 1.4717,
+        "extraAtNoGrain": 0.9401
+       },
+       {
+        "id": "brief-farce-3/ledger",
+        "extra": -0.0954,
+        "marginC": 0.7925,
+        "marginS": 0.6971,
+        "extraAtNoGrain": 0.9012
+       },
+       {
+        "id": "brief-farce-3/doors",
+        "extra": -0.0923,
+        "marginC": 0.8285,
+        "marginS": 0.7362,
+        "extraAtNoGrain": 0.9061
+       },
+       {
+        "id": "brief-farce-3/believer",
+        "extra": -0.4189,
+        "marginC": 1.0838,
+        "marginS": 0.6649,
+        "extraAtNoGrain": 0.987
+       },
+       {
+        "id": "brief-giallo-2/story",
+        "extra": -0.2914,
+        "marginC": 1.006,
+        "marginS": 0.7145,
+        "extraAtNoGrain": 1.2974
+       },
+       {
+        "id": "brief-giallo-2/next",
+        "extra": -0.4023,
+        "marginC": 0.3618,
+        "marginS": -0.0405,
+        "extraAtNoGrain": 1.3046
+       },
+       {
+        "id": "brief-gothic_horror-3/record",
+        "extra": -1.6333,
+        "marginC": 3.223,
+        "marginS": 1.5897,
+        "extraAtNoGrain": 0.9269
+       },
+       {
+        "id": "brief-gothic_horror-3/door",
+        "extra": -1.522,
+        "marginC": 2.7992,
+        "marginS": 1.2772,
+        "extraAtNoGrain": 1.0233
+       },
+       {
+        "id": "brief-gothic_horror-3/hand",
+        "extra": -1.6389,
+        "marginC": 3.3199,
+        "marginS": 1.681,
+        "extraAtNoGrain": 0.887
+       },
+       {
+        "id": "brief-grindhouse-2/calm",
+        "extra": -0.2536,
+        "marginC": 1.3221,
+        "marginS": 1.0685,
+        "extraAtNoGrain": 1.0575
+       },
+       {
+        "id": "brief-grindhouse-2/stunt",
+        "extra": -0.6239,
+        "marginC": 1.8872,
+        "marginS": 1.2633,
+        "extraAtNoGrain": 0.9247
+       },
+       {
+        "id": "brief-horror-2/steady",
+        "extra": -0.5611,
+        "marginC": 1.652,
+        "marginS": 1.0909,
+        "extraAtNoGrain": 1.0561
+       },
+       {
+        "id": "brief-horror-2/eli",
+        "extra": -0.4267,
+        "marginC": 1.2454,
+        "marginS": 0.8187,
+        "extraAtNoGrain": 1.2015
+       },
+       {
+        "id": "brief-isekai-2/fan",
+        "extra": -0.5763,
+        "marginC": 2.0503,
+        "marginS": 1.474,
+        "extraAtNoGrain": 1.0507
+       },
+       {
+        "id": "brief-isekai-2/author",
+        "extra": -0.5879,
+        "marginC": 1.6643,
+        "marginS": 1.0764,
+        "extraAtNoGrain": 1.0736
+       },
+       {
+        "id": "brief-isekai-2/word",
+        "extra": -0.2151,
+        "marginC": 2.1809,
+        "marginS": 1.9658,
+        "extraAtNoGrain": 1.1555
+       },
+       {
+        "id": "brief-jidaigeki-2/rule",
+        "extra": -0.3234,
+        "marginC": 1.2399,
+        "marginS": 0.9165,
+        "extraAtNoGrain": 1.0042
+       },
+       {
+        "id": "brief-jidaigeki-2/face",
+        "extra": -0.0065,
+        "marginC": 1.2879,
+        "marginS": 1.2814,
+        "extraAtNoGrain": 1.0907
+       },
+       {
+        "id": "brief-jidaigeki-2/spear",
+        "extra": -0.227,
+        "marginC": 1.1988,
+        "marginS": 0.9719,
+        "extraAtNoGrain": 1.005
+       },
+       {
+        "id": "brief-jukebox_musical-3/floor",
+        "extra": -0.583,
+        "marginC": 1.5061,
+        "marginS": 0.9231,
+        "extraAtNoGrain": 0.8261
+       },
+       {
+        "id": "brief-jukebox_musical-3/chair",
+        "extra": -0.5696,
+        "marginC": 1.1108,
+        "marginS": 0.5411,
+        "extraAtNoGrain": 0.9236
+       },
+       {
+        "id": "brief-jukebox_musical-3/uncle",
+        "extra": -0.7349,
+        "marginC": 1.7182,
+        "marginS": 0.9833,
+        "extraAtNoGrain": 0.8513
+       },
+       {
+        "id": "brief-melodrama-2/storm",
+        "extra": -0.7468,
+        "marginC": 2.0108,
+        "marginS": 1.264,
+        "extraAtNoGrain": 0.9201
+       },
+       {
+        "id": "brief-melodrama-2/child",
+        "extra": -0.4581,
+        "marginC": 1.0433,
+        "marginS": 0.5852,
+        "extraAtNoGrain": 1.0127
+       },
+       {
+        "id": "brief-melodrama-2/pride",
+        "extra": -0.4583,
+        "marginC": 1.3824,
+        "marginS": 0.9241,
+        "extraAtNoGrain": 0.9627
+       },
+       {
+        "id": "brief-military-2/light",
+        "extra": -0.0592,
+        "marginC": 0.3953,
+        "marginS": 0.3361,
+        "extraAtNoGrain": 1.1612
+       },
+       {
+        "id": "brief-military-2/reach",
+        "extra": -0.3375,
+        "marginC": 1.1515,
+        "marginS": 0.8139,
+        "extraAtNoGrain": 1.2884
+       },
+       {
+        "id": "brief-musical-2/number",
+        "extra": -0.5752,
+        "marginC": 1.621,
+        "marginS": 1.0458,
+        "extraAtNoGrain": 0.7879
+       },
+       {
+        "id": "brief-musical-2/love",
+        "extra": -0.4734,
+        "marginC": 1.2413,
+        "marginS": 0.768,
+        "extraAtNoGrain": 0.8564
+       },
+       {
+        "id": "brief-mystery-2/student",
+        "extra": -0.1974,
+        "marginC": 0.321,
+        "marginS": 0.1236,
+        "extraAtNoGrain": 1.1206
+       },
+       {
+        "id": "brief-nature_documentary-2/storyteller",
+        "extra": -0.0902,
+        "marginC": 0.817,
+        "marginS": 0.7268,
+        "extraAtNoGrain": 1.0283
+       },
+       {
+        "id": "brief-occult-2/business",
+        "extra": -0.3032,
+        "marginC": 1.4297,
+        "marginS": 1.1265,
+        "extraAtNoGrain": 1.1241
+       },
+       {
+        "id": "brief-occult-2/pulled",
+        "extra": -0.3371,
+        "marginC": 1.8551,
+        "marginS": 1.518,
+        "extraAtNoGrain": 1.1125
+       },
+       {
+        "id": "brief-parody-2/straight",
+        "extra": -0.9295,
+        "marginC": 1.3576,
+        "marginS": 0.4281,
+        "extraAtNoGrain": 1.0258
+       },
+       {
+        "id": "brief-parody-2/epic",
+        "extra": -1.0564,
+        "marginC": 1.8046,
+        "marginS": 0.7482,
+        "extraAtNoGrain": 0.9392
+       },
+       {
+        "id": "brief-picaresque-2/raconteur",
+        "extra": -0.9224,
+        "marginC": 1.7055,
+        "marginS": 0.7831,
+        "extraAtNoGrain": 0.8878
+       },
+       {
+        "id": "brief-picaresque-2/tired",
+        "extra": -0.3176,
+        "marginC": 0.4635,
+        "marginS": 0.1459,
+        "extraAtNoGrain": 0.8976
+       },
+       {
+        "id": "brief-picaresque-2/breath",
+        "extra": -0.3026,
+        "marginC": 0.7209,
+        "marginS": 0.4183,
+        "extraAtNoGrain": 0.8617
+       },
+       {
+        "id": "brief-political_drama-2/orator",
+        "extra": -1.2178,
+        "marginC": 2.0486,
+        "marginS": 0.8308,
+        "extraAtNoGrain": 0.9489
+       },
+       {
+        "id": "brief-political_drama-2/conscience",
+        "extra": -0.9076,
+        "marginC": 0.5446,
+        "marginS": -0.363,
+        "extraAtNoGrain": 0.9938
+       },
+       {
+        "id": "brief-political_drama-2/walt",
+        "extra": -0.7984,
+        "marginC": 1.1939,
+        "marginS": 0.3955,
+        "extraAtNoGrain": 0.987
+       },
+       {
+        "id": "brief-psychological_horror-2/together",
+        "extra": -0.3958,
+        "marginC": 1.1512,
+        "marginS": 0.7555,
+        "extraAtNoGrain": 1.1502
+       },
+       {
+        "id": "brief-psychological_horror-2/loop",
+        "extra": -0.272,
+        "marginC": 1.0076,
+        "marginS": 0.7356,
+        "extraAtNoGrain": 1.1681
+       },
+       {
+        "id": "brief-psychological_horror-2/awake",
+        "extra": -0.3574,
+        "marginC": 0.4383,
+        "marginS": 0.0809,
+        "extraAtNoGrain": 1.1926
+       },
+       {
+        "id": "brief-satire-2/company",
+        "extra": -0.9107,
+        "marginC": 1.8743,
+        "marginS": 0.9637,
+        "extraAtNoGrain": 1.1717
+       },
+       {
+        "id": "brief-satire-2/sees",
+        "extra": -0.6533,
+        "marginC": 1.4341,
+        "marginS": 0.7809,
+        "extraAtNoGrain": 1.1858
+       },
+       {
+        "id": "brief-science_fantasy-2/letter",
+        "extra": -0.4181,
+        "marginC": 1.6063,
+        "marginS": 1.1883,
+        "extraAtNoGrain": 1.3067
+       },
+       {
+        "id": "brief-science_fantasy-2/surety",
+        "extra": -0.5008,
+        "marginC": 1.2681,
+        "marginS": 0.7672,
+        "extraAtNoGrain": 1.2562
+       },
+       {
+        "id": "brief-science_fiction-2/sister",
+        "extra": -0.2209,
+        "marginC": 0.7704,
+        "marginS": 0.5495,
+        "extraAtNoGrain": 1.3349
+       },
+       {
+        "id": "brief-sea_adventure-2/command",
+        "extra": -0.3321,
+        "marginC": 0.7046,
+        "marginS": 0.3725,
+        "extraAtNoGrain": 0.9933
+       },
+       {
+        "id": "brief-sea_adventure-2/shipmate",
+        "extra": -0.1843,
+        "marginC": 0.4521,
+        "marginS": 0.2678,
+        "extraAtNoGrain": 1.1334
+       },
+       {
+        "id": "brief-silent_film-3/eyes",
+        "extra": -0.0564,
+        "marginC": 0.408,
+        "marginS": 0.3516,
+        "extraAtNoGrain": 1.0529
+       },
+       {
+        "id": "brief-slapstick-2/father",
+        "extra": 0.0325,
+        "marginC": 0.8255,
+        "marginS": 0.858,
+        "extraAtNoGrain": 1.0045
+       },
+       {
+        "id": "brief-space_opera-2/order",
+        "extra": -1.7338,
+        "marginC": 3.5028,
+        "marginS": 1.769,
+        "extraAtNoGrain": 0.8212
+       },
+       {
+        "id": "brief-space_opera-2/goodnight",
+        "extra": -1.8251,
+        "marginC": 3.3962,
+        "marginS": 1.571,
+        "extraAtNoGrain": 1.0006
+       },
+       {
+        "id": "brief-space_opera-2/enemy",
+        "extra": -1.7289,
+        "marginC": 3.5092,
+        "marginS": 1.7803,
+        "extraAtNoGrain": 0.8456
+       },
+       {
+        "id": "brief-swashbuckler-2/blade",
+        "extra": -0.4786,
+        "marginC": 1.4568,
+        "marginS": 0.9783,
+        "extraAtNoGrain": 1.0131
+       },
+       {
+        "id": "brief-swashbuckler-2/rogue",
+        "extra": -0.9114,
+        "marginC": 2.2277,
+        "marginS": 1.3163,
+        "extraAtNoGrain": 1.0889
+       },
+       {
+        "id": "brief-swashbuckler-2/respect",
+        "extra": -0.5036,
+        "marginC": 1.3028,
+        "marginS": 0.7992,
+        "extraAtNoGrain": 1.0853
+       },
+       {
+        "id": "brief-sword_and_sandal-2/devout",
+        "extra": -0.091,
+        "marginC": 0.0996,
+        "marginS": 0.0087,
+        "extraAtNoGrain": 1.1848
+       },
+       {
+        "id": "brief-sword_and_sandal-2/shrewd",
+        "extra": -0.0835,
+        "marginC": 0.4134,
+        "marginS": 0.3299,
+        "extraAtNoGrain": 1.2051
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/word",
+        "extra": -0.408,
+        "marginC": 0.7087,
+        "marginS": 0.3008,
+        "extraAtNoGrain": 1.0079
+       },
+       {
+        "id": "brief-teen-2/hustle",
+        "extra": -0.2416,
+        "marginC": 0.5093,
+        "marginS": 0.2677,
+        "extraAtNoGrain": 1.1733
+       },
+       {
+        "id": "brief-time_travel-2/sister",
+        "extra": -0.1459,
+        "marginC": 0.6048,
+        "marginS": 0.4589,
+        "extraAtNoGrain": 1.3453
+       },
+       {
+        "id": "brief-time_travel-2/clock",
+        "extra": -0.6008,
+        "marginC": 1.107,
+        "marginS": 0.5062,
+        "extraAtNoGrain": 1.1085
+       },
+       {
+        "id": "brief-tokusatsu-2/hero",
+        "extra": -1.2271,
+        "marginC": 2.7177,
+        "marginS": 1.4906,
+        "extraAtNoGrain": 1.0729
+       },
+       {
+        "id": "brief-tokusatsu-2/cadets",
+        "extra": -0.7913,
+        "marginC": 1.6386,
+        "marginS": 0.8473,
+        "extraAtNoGrain": 1.1858
+       },
+       {
+        "id": "brief-tokusatsu-2/suit",
+        "extra": -1.0751,
+        "marginC": 2.3341,
+        "marginS": 1.259,
+        "extraAtNoGrain": 1.0716
+       },
+       {
+        "id": "brief-tragicomedy-3/half",
+        "extra": -0.5766,
+        "marginC": 1.2369,
+        "marginS": 0.6603,
+        "extraAtNoGrain": 0.77
+       },
+       {
+        "id": "brief-tragicomedy-3/listeners",
+        "extra": -0.8694,
+        "marginC": 1.4555,
+        "marginS": 0.5861,
+        "extraAtNoGrain": 0.8367
+       },
+       {
+        "id": "brief-tragicomedy-3/line",
+        "extra": -0.512,
+        "marginC": 0.5553,
+        "marginS": 0.0433,
+        "extraAtNoGrain": 0.8537
+       },
+       {
+        "id": "brief-whodunit-2/ear",
+        "extra": -0.6288,
+        "marginC": 1.989,
+        "marginS": 1.3602,
+        "extraAtNoGrain": 0.9243
+       },
+       {
+        "id": "brief-whodunit-2/help",
+        "extra": -0.9624,
+        "marginC": 2.5825,
+        "marginS": 1.6201,
+        "extraAtNoGrain": 0.8917
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-chanbara-2/line",
+        "marginC": -0.2535,
+        "marginS": -0.2464,
+        "fallAtNoGrain": 0.8057
+       },
+       {
+        "id": "brief-neo_noir-2/cool",
+        "marginC": -0.0171,
+        "marginS": 0.2655,
+        "fallAtNoGrain": 0.9097
+       },
+       {
+        "id": "brief-neo_noir-2/confession",
+        "marginC": 0.7217,
+        "marginS": 1.0127,
+        "fallAtNoGrain": 0.9459
+       },
+       {
+        "id": "brief-political_thriller-2/neutral",
+        "marginC": 0.0199,
+        "marginS": 0.3135,
+        "fallAtNoGrain": 0.9051
+       },
+       {
+        "id": "brief-political_thriller-2/defiance",
+        "marginC": 0.2958,
+        "marginS": 0.6061,
+        "fallAtNoGrain": 0.9699
+       },
+       {
+        "id": "brief-spy-2/breath",
+        "marginC": 0.6625,
+        "marginS": 0.7338,
+        "fallAtNoGrain": 1.3536
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/faith",
+        "marginC": 0.0818,
+        "marginS": 0.59,
+        "fallAtNoGrain": 1.0677
+       },
+       {
+        "id": "brief-teen-2/poet",
+        "marginC": 0.47,
+        "marginS": 0.5343,
+        "fallAtNoGrain": 1.2165
+       }
+      ]
+     },
+     {
+      "name": "V4′",
+      "budget": 420,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 54,
+        "S": 57,
+        "ceiling": false,
+        "gained": 3,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 49
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 203,
+        "S": 267,
+        "ceiling": false,
+        "gained": 68,
+        "otherSide": {
+         "suitable": 369,
+         "C": 364,
+         "S": 283
+        }
+       }
+      },
+      "leastExtra": -1.5277,
+      "leastDrawsPart": 0.2416,
+      "leastOtherSideFall": -0.2551,
+      "extraNotOver005": [
+       {
+        "id": "caesar-3-2",
+        "extra": -0.1404,
+        "marginC": 4.0287,
+        "marginS": 3.8883,
+        "extraAtNoGrain": 1.3978
+       },
+       {
+        "id": "oedipus-1",
+        "extra": -0.2437,
+        "marginC": 5.4883,
+        "marginS": 5.2446,
+        "extraAtNoGrain": 1.7557
+       },
+       {
+        "id": "strife-2-2",
+        "extra": -0.1185,
+        "marginC": 3.9878,
+        "marginS": 3.8694,
+        "extraAtNoGrain": 1.7979
+       },
+       {
+        "id": "night:Major Barbara",
+        "extra": -0.1712,
+        "marginC": 3.4799,
+        "marginS": 3.3088,
+        "extraAtNoGrain": 1.7181
+       },
+       {
+        "id": "night:The Playboy Of The Western World",
+        "extra": -0.0416,
+        "marginC": 2.6853,
+        "marginS": 2.6437,
+        "extraAtNoGrain": 1.4762
+       },
+       {
+        "id": "brief-animated/brag",
+        "extra": -0.3178,
+        "marginC": 2.6208,
+        "marginS": 2.303,
+        "extraAtNoGrain": 1.2686
+       },
+       {
+        "id": "brief-anime/sync",
+        "extra": -0.9965,
+        "marginC": 3.065,
+        "marginS": 2.0685,
+        "extraAtNoGrain": 1.2145
+       },
+       {
+        "id": "brief-anime/laugh",
+        "extra": -0.5478,
+        "marginC": 2.5107,
+        "marginS": 1.9629,
+        "extraAtNoGrain": 1.4167
+       },
+       {
+        "id": "brief-documentary/letters",
+        "extra": -0.0442,
+        "marginC": 0.1239,
+        "marginS": 0.0797,
+        "extraAtNoGrain": 1.4607
+       },
+       {
+        "id": "brief-epic/courtier",
+        "extra": -0.1629,
+        "marginC": 1.7645,
+        "marginS": 1.6016,
+        "extraAtNoGrain": 1.2502
+       },
+       {
+        "id": "brief-farce/panic",
+        "extra": -0.3949,
+        "marginC": 1.5267,
+        "marginS": 1.1318,
+        "extraAtNoGrain": 1.0237
+       },
+       {
+        "id": "brief-isekai/audit",
+        "extra": -0.6484,
+        "marginC": 2.9207,
+        "marginS": 2.2723,
+        "extraAtNoGrain": 1.2225
+       },
+       {
+        "id": "brief-isekai/nobody",
+        "extra": -0.4637,
+        "marginC": 2.22,
+        "marginS": 1.7563,
+        "extraAtNoGrain": 1.3365
+       },
+       {
+        "id": "brief-jidaigeki/forms",
+        "extra": -0.1238,
+        "marginC": 1.4602,
+        "marginS": 1.3363,
+        "extraAtNoGrain": 1.2103
+       },
+       {
+        "id": "brief-jidaigeki/grief",
+        "extra": -0.2577,
+        "marginC": 1.0826,
+        "marginS": 0.8249,
+        "extraAtNoGrain": 1.2228
+       },
+       {
+        "id": "brief-jukebox_musical/dare",
+        "extra": -0.501,
+        "marginC": 2.1975,
+        "marginS": 1.6966,
+        "extraAtNoGrain": 1.1524
+       },
+       {
+        "id": "brief-jukebox_musical/apology",
+        "extra": -0.1287,
+        "marginC": 0.9199,
+        "marginS": 0.7912,
+        "extraAtNoGrain": 1.1389
+       },
+       {
+        "id": "brief-melodrama/full",
+        "extra": -0.436,
+        "marginC": 2.4307,
+        "marginS": 1.9948,
+        "extraAtNoGrain": 1.2608
+       },
+       {
+        "id": "brief-melodrama/held",
+        "extra": -0.0491,
+        "marginC": 0.5067,
+        "marginS": 0.4575,
+        "extraAtNoGrain": 1.3194
+       },
+       {
+        "id": "brief-musical/persuade",
+        "extra": -0.5831,
+        "marginC": 2.4855,
+        "marginS": 1.9023,
+        "extraAtNoGrain": 1.0075
+       },
+       {
+        "id": "brief-musical/farewell",
+        "extra": -0.0265,
+        "marginC": 1.3174,
+        "marginS": 1.2909,
+        "extraAtNoGrain": 1.029
+       },
+       {
+        "id": "brief-nature_documentary/story",
+        "extra": -0.2168,
+        "marginC": 1.6535,
+        "marginS": 1.4367,
+        "extraAtNoGrain": 1.4384
+       },
+       {
+        "id": "brief-parody/deadpan",
+        "extra": -0.0664,
+        "marginC": -0.1232,
+        "marginS": -0.1896,
+        "extraAtNoGrain": 1.2709
+       },
+       {
+        "id": "brief-parody/size",
+        "extra": -0.6477,
+        "marginC": 1.4375,
+        "marginS": 0.7898,
+        "extraAtNoGrain": 1.2023
+       },
+       {
+        "id": "brief-silent_film/clown",
+        "extra": -0.4297,
+        "marginC": 2.0344,
+        "marginS": 1.6047,
+        "extraAtNoGrain": 1.2149
+       },
+       {
+        "id": "brief-space_opera/grand",
+        "extra": -0.02,
+        "marginC": 2.0822,
+        "marginS": 2.0622,
+        "extraAtNoGrain": 1.6116
+       },
+       {
+        "id": "brief-swashbuckler/play",
+        "extra": -0.4722,
+        "marginC": 2.327,
+        "marginS": 1.8549,
+        "extraAtNoGrain": 1.2544
+       },
+       {
+        "id": "brief-swashbuckler/stall",
+        "extra": -0.1668,
+        "marginC": 1.344,
+        "marginS": 1.1772,
+        "extraAtNoGrain": 1.2392
+       },
+       {
+        "id": "brief-alternate_history-2/calm",
+        "extra": -1.1235,
+        "marginC": 2.5585,
+        "marginS": 1.435,
+        "extraAtNoGrain": 0.8438
+       },
+       {
+        "id": "brief-alternate_history-2/world",
+        "extra": -1.0917,
+        "marginC": 1.9646,
+        "marginS": 0.8729,
+        "extraAtNoGrain": 0.9089
+       },
+       {
+        "id": "brief-alternate_history-2/names",
+        "extra": -0.1449,
+        "marginC": 2.2368,
+        "marginS": 2.092,
+        "extraAtNoGrain": 1.0977
+       },
+       {
+        "id": "brief-animated-3/weight",
+        "extra": -0.1112,
+        "marginC": 1.6112,
+        "marginS": 1.5,
+        "extraAtNoGrain": 1.0346
+       },
+       {
+        "id": "brief-animated-3/proud",
+        "extra": -0.0712,
+        "marginC": 1.2605,
+        "marginS": 1.1893,
+        "extraAtNoGrain": 1.1239
+       },
+       {
+        "id": "brief-anime-2/strain",
+        "extra": -0.9128,
+        "marginC": 3.0319,
+        "marginS": 2.1191,
+        "extraAtNoGrain": 0.8519
+       },
+       {
+        "id": "brief-anime-2/sister",
+        "extra": -0.1326,
+        "marginC": 2.7137,
+        "marginS": 2.5811,
+        "extraAtNoGrain": 1.1438
+       },
+       {
+        "id": "brief-avant_garde-2/score",
+        "extra": -0.6437,
+        "marginC": 1.7925,
+        "marginS": 1.1488,
+        "extraAtNoGrain": 0.9079
+       },
+       {
+        "id": "brief-avant_garde-2/freed",
+        "extra": -0.6919,
+        "marginC": 1.8462,
+        "marginS": 1.1543,
+        "extraAtNoGrain": 0.9308
+       },
+       {
+        "id": "brief-backstage_musical-2/sell",
+        "extra": -0.0076,
+        "marginC": 1.5211,
+        "marginS": 1.5135,
+        "extraAtNoGrain": 0.9504
+       },
+       {
+        "id": "brief-backstage_musical-2/company",
+        "extra": -0.0845,
+        "marginC": 1.6055,
+        "marginS": 1.5211,
+        "extraAtNoGrain": 0.9128
+       },
+       {
+        "id": "brief-chanbara-2/painter",
+        "extra": -0.406,
+        "marginC": 1.0546,
+        "marginS": 0.6486,
+        "extraAtNoGrain": 0.9492
+       },
+       {
+        "id": "brief-concert_film-2/pro",
+        "extra": -0.8874,
+        "marginC": 2.7646,
+        "marginS": 1.8772,
+        "extraAtNoGrain": 1.0433
+       },
+       {
+        "id": "brief-concert_film-2/song",
+        "extra": -0.6664,
+        "marginC": 1.6956,
+        "marginS": 1.0292,
+        "extraAtNoGrain": 1.1166
+       },
+       {
+        "id": "brief-concert_film-2/wings",
+        "extra": -0.5448,
+        "marginC": 3.1941,
+        "marginS": 2.6493,
+        "extraAtNoGrain": 1.2467
+       },
+       {
+        "id": "brief-cosmic_horror-2/record",
+        "extra": -0.4315,
+        "marginC": 0.8306,
+        "marginS": 0.3991,
+        "extraAtNoGrain": 0.8782
+       },
+       {
+        "id": "brief-cosmic_horror-2/tomas",
+        "extra": -0.5388,
+        "marginC": 0.3205,
+        "marginS": -0.2183,
+        "extraAtNoGrain": 1.0157
+       },
+       {
+        "id": "brief-cosmic_horror-2/peace",
+        "extra": -0.2825,
+        "marginC": 0.951,
+        "marginS": 0.6684,
+        "extraAtNoGrain": 0.9063
+       },
+       {
+        "id": "brief-dark_fantasy-2/mercy",
+        "extra": -0.607,
+        "marginC": 2.1433,
+        "marginS": 1.5363,
+        "extraAtNoGrain": 1.1998
+       },
+       {
+        "id": "brief-dark_fantasy-2/voices",
+        "extra": -0.9206,
+        "marginC": 2.937,
+        "marginS": 2.0163,
+        "extraAtNoGrain": 1.0596
+       },
+       {
+        "id": "brief-epic-2/soldier",
+        "extra": -0.0505,
+        "marginC": 0.8533,
+        "marginS": 0.8029,
+        "extraAtNoGrain": 0.8947
+       },
+       {
+        "id": "brief-epic-2/orchard",
+        "extra": -0.0413,
+        "marginC": 0.7215,
+        "marginS": 0.6801,
+        "extraAtNoGrain": 1.0785
+       },
+       {
+        "id": "brief-experimental-2/list",
+        "extra": -1.143,
+        "marginC": 2.2912,
+        "marginS": 1.1482,
+        "extraAtNoGrain": 0.8219
+       },
+       {
+        "id": "brief-experimental-2/her",
+        "extra": -0.9289,
+        "marginC": 1.7154,
+        "marginS": 0.7864,
+        "extraAtNoGrain": 0.8909
+       },
+       {
+        "id": "brief-exploitation-2/cool",
+        "extra": -0.0649,
+        "marginC": 2.1199,
+        "marginS": 2.055,
+        "extraAtNoGrain": 1.3382
+       },
+       {
+        "id": "brief-fairy_tale-2/vain",
+        "extra": -1.178,
+        "marginC": 3.5868,
+        "marginS": 2.4088,
+        "extraAtNoGrain": 0.9738
+       },
+       {
+        "id": "brief-fairy_tale-2/keeper",
+        "extra": -0.8561,
+        "marginC": 2.977,
+        "marginS": 2.1209,
+        "extraAtNoGrain": 1.1144
+       },
+       {
+        "id": "brief-fairy_tale-2/bell",
+        "extra": -1.1729,
+        "marginC": 3.3442,
+        "marginS": 2.1713,
+        "extraAtNoGrain": 0.9795
+       },
+       {
+        "id": "brief-farce-3/ledger",
+        "extra": -0.2642,
+        "marginC": 1.1101,
+        "marginS": 0.8459,
+        "extraAtNoGrain": 0.8934
+       },
+       {
+        "id": "brief-farce-3/doors",
+        "extra": -0.2649,
+        "marginC": 1.1647,
+        "marginS": 0.8998,
+        "extraAtNoGrain": 0.9021
+       },
+       {
+        "id": "brief-farce-3/believer",
+        "extra": -0.3739,
+        "marginC": 1.217,
+        "marginS": 0.8431,
+        "extraAtNoGrain": 0.9778
+       },
+       {
+        "id": "brief-giallo-2/story",
+        "extra": -0.1775,
+        "marginC": 1.1177,
+        "marginS": 0.9402,
+        "extraAtNoGrain": 1.3272
+       },
+       {
+        "id": "brief-giallo-2/next",
+        "extra": -0.1707,
+        "marginC": 0.0699,
+        "marginS": -0.1008,
+        "extraAtNoGrain": 1.3397
+       },
+       {
+        "id": "brief-gothic_horror-3/record",
+        "extra": -1.5016,
+        "marginC": 4.0069,
+        "marginS": 2.5052,
+        "extraAtNoGrain": 0.969
+       },
+       {
+        "id": "brief-gothic_horror-3/door",
+        "extra": -1.3609,
+        "marginC": 3.4171,
+        "marginS": 2.0562,
+        "extraAtNoGrain": 1.0687
+       },
+       {
+        "id": "brief-gothic_horror-3/hand",
+        "extra": -1.5203,
+        "marginC": 4.1479,
+        "marginS": 2.6276,
+        "extraAtNoGrain": 0.9262
+       },
+       {
+        "id": "brief-grindhouse-2/calm",
+        "extra": -0.2352,
+        "marginC": 1.6588,
+        "marginS": 1.4236,
+        "extraAtNoGrain": 1.0979
+       },
+       {
+        "id": "brief-grindhouse-2/stunt",
+        "extra": -0.6117,
+        "marginC": 2.3456,
+        "marginS": 1.7339,
+        "extraAtNoGrain": 0.9572
+       },
+       {
+        "id": "brief-horror-2/steady",
+        "extra": -0.4604,
+        "marginC": 2.0095,
+        "marginS": 1.549,
+        "extraAtNoGrain": 1.0954
+       },
+       {
+        "id": "brief-horror-2/eli",
+        "extra": -0.2474,
+        "marginC": 1.4759,
+        "marginS": 1.2286,
+        "extraAtNoGrain": 1.2455
+       },
+       {
+        "id": "brief-isekai-2/fan",
+        "extra": -0.5458,
+        "marginC": 2.5542,
+        "marginS": 2.0084,
+        "extraAtNoGrain": 1.1028
+       },
+       {
+        "id": "brief-isekai-2/author",
+        "extra": -0.522,
+        "marginC": 2.0182,
+        "marginS": 1.4961,
+        "extraAtNoGrain": 1.1246
+       },
+       {
+        "id": "brief-isekai-2/word",
+        "extra": -0.1541,
+        "marginC": 2.8906,
+        "marginS": 2.7365,
+        "extraAtNoGrain": 1.2067
+       },
+       {
+        "id": "brief-jidaigeki-2/rule",
+        "extra": -0.321,
+        "marginC": 1.5173,
+        "marginS": 1.1963,
+        "extraAtNoGrain": 1.0416
+       },
+       {
+        "id": "brief-jidaigeki-2/face",
+        "extra": 0.0366,
+        "marginC": 1.6806,
+        "marginS": 1.7173,
+        "extraAtNoGrain": 1.1231
+       },
+       {
+        "id": "brief-jidaigeki-2/spear",
+        "extra": -0.204,
+        "marginC": 1.4923,
+        "marginS": 1.2883,
+        "extraAtNoGrain": 1.0498
+       },
+       {
+        "id": "brief-jukebox_musical-3/floor",
+        "extra": -0.5311,
+        "marginC": 1.8007,
+        "marginS": 1.2696,
+        "extraAtNoGrain": 0.8471
+       },
+       {
+        "id": "brief-jukebox_musical-3/chair",
+        "extra": -0.4741,
+        "marginC": 1.2272,
+        "marginS": 0.7531,
+        "extraAtNoGrain": 0.9415
+       },
+       {
+        "id": "brief-jukebox_musical-3/uncle",
+        "extra": -0.6706,
+        "marginC": 2.0502,
+        "marginS": 1.3797,
+        "extraAtNoGrain": 0.8713
+       },
+       {
+        "id": "brief-melodrama-2/storm",
+        "extra": -0.5971,
+        "marginC": 2.4059,
+        "marginS": 1.8088,
+        "extraAtNoGrain": 0.9174
+       },
+       {
+        "id": "brief-melodrama-2/child",
+        "extra": -0.3002,
+        "marginC": 1.137,
+        "marginS": 0.8368,
+        "extraAtNoGrain": 1.0041
+       },
+       {
+        "id": "brief-melodrama-2/pride",
+        "extra": -0.3478,
+        "marginC": 1.6238,
+        "marginS": 1.2759,
+        "extraAtNoGrain": 0.9556
+       },
+       {
+        "id": "brief-military-2/light",
+        "extra": -0.1425,
+        "marginC": 0.5686,
+        "marginS": 0.4261,
+        "extraAtNoGrain": 1.2334
+       },
+       {
+        "id": "brief-military-2/reach",
+        "extra": -0.1423,
+        "marginC": 1.2874,
+        "marginS": 1.1451,
+        "extraAtNoGrain": 1.3619
+       },
+       {
+        "id": "brief-musical-2/number",
+        "extra": -0.5806,
+        "marginC": 2.0583,
+        "marginS": 1.4776,
+        "extraAtNoGrain": 0.8356
+       },
+       {
+        "id": "brief-musical-2/love",
+        "extra": -0.4689,
+        "marginC": 1.5249,
+        "marginS": 1.0559,
+        "extraAtNoGrain": 0.9074
+       },
+       {
+        "id": "brief-mystery-2/student",
+        "extra": -0.145,
+        "marginC": 0.2721,
+        "marginS": 0.1271,
+        "extraAtNoGrain": 1.1389
+       },
+       {
+        "id": "brief-nature_documentary-2/storyteller",
+        "extra": -0.1721,
+        "marginC": 1.2138,
+        "marginS": 1.0418,
+        "extraAtNoGrain": 1.1468
+       },
+       {
+        "id": "brief-occult-2/business",
+        "extra": -0.2835,
+        "marginC": 1.8312,
+        "marginS": 1.5477,
+        "extraAtNoGrain": 1.1682
+       },
+       {
+        "id": "brief-occult-2/pulled",
+        "extra": -0.3469,
+        "marginC": 2.4536,
+        "marginS": 2.1066,
+        "extraAtNoGrain": 1.165
+       },
+       {
+        "id": "brief-parody-2/straight",
+        "extra": -1.1264,
+        "marginC": 1.8666,
+        "marginS": 0.7402,
+        "extraAtNoGrain": 1.1368
+       },
+       {
+        "id": "brief-parody-2/epic",
+        "extra": -1.3117,
+        "marginC": 2.5335,
+        "marginS": 1.2218,
+        "extraAtNoGrain": 1.0433
+       },
+       {
+        "id": "brief-picaresque-2/raconteur",
+        "extra": -1.0665,
+        "marginC": 2.1959,
+        "marginS": 1.1294,
+        "extraAtNoGrain": 0.9281
+       },
+       {
+        "id": "brief-picaresque-2/tired",
+        "extra": -0.3086,
+        "marginC": 0.4924,
+        "marginS": 0.1838,
+        "extraAtNoGrain": 0.9372
+       },
+       {
+        "id": "brief-picaresque-2/breath",
+        "extra": -0.3329,
+        "marginC": 0.8984,
+        "marginS": 0.5655,
+        "extraAtNoGrain": 0.8999
+       },
+       {
+        "id": "brief-political_drama-2/orator",
+        "extra": -0.9708,
+        "marginC": 2.2141,
+        "marginS": 1.2433,
+        "extraAtNoGrain": 0.9494
+       },
+       {
+        "id": "brief-political_drama-2/conscience",
+        "extra": -0.6807,
+        "marginC": 0.2001,
+        "marginS": -0.4806,
+        "extraAtNoGrain": 0.9976
+       },
+       {
+        "id": "brief-political_drama-2/walt",
+        "extra": -0.6683,
+        "marginC": 1.2197,
+        "marginS": 0.5514,
+        "extraAtNoGrain": 0.9947
+       },
+       {
+        "id": "brief-psychological_horror-2/together",
+        "extra": -0.4602,
+        "marginC": 1.5543,
+        "marginS": 1.094,
+        "extraAtNoGrain": 1.2165
+       },
+       {
+        "id": "brief-psychological_horror-2/loop",
+        "extra": -0.3172,
+        "marginC": 1.3732,
+        "marginS": 1.056,
+        "extraAtNoGrain": 1.2354
+       },
+       {
+        "id": "brief-psychological_horror-2/awake",
+        "extra": -0.3151,
+        "marginC": 0.4475,
+        "marginS": 0.1324,
+        "extraAtNoGrain": 1.2601
+       },
+       {
+        "id": "brief-satire-2/company",
+        "extra": -1.029,
+        "marginC": 2.5366,
+        "marginS": 1.5076,
+        "extraAtNoGrain": 1.2509
+       },
+       {
+        "id": "brief-satire-2/sees",
+        "extra": -0.7201,
+        "marginC": 1.9082,
+        "marginS": 1.1881,
+        "extraAtNoGrain": 1.2565
+       },
+       {
+        "id": "brief-science_fantasy-2/letter",
+        "extra": -0.3251,
+        "marginC": 1.9358,
+        "marginS": 1.6107,
+        "extraAtNoGrain": 1.3558
+       },
+       {
+        "id": "brief-science_fantasy-2/surety",
+        "extra": -0.3794,
+        "marginC": 1.4273,
+        "marginS": 1.048,
+        "extraAtNoGrain": 1.2958
+       },
+       {
+        "id": "brief-science_fiction-2/sister",
+        "extra": -0.2017,
+        "marginC": 0.9852,
+        "marginS": 0.7835,
+        "extraAtNoGrain": 1.3842
+       },
+       {
+        "id": "brief-sea_adventure-2/command",
+        "extra": -0.214,
+        "marginC": 0.7007,
+        "marginS": 0.4868,
+        "extraAtNoGrain": 1.0033
+       },
+       {
+        "id": "brief-sea_adventure-2/shipmate",
+        "extra": 0.0105,
+        "marginC": 0.3763,
+        "marginS": 0.3867,
+        "extraAtNoGrain": 1.1374
+       },
+       {
+        "id": "brief-silent_film-3/eyes",
+        "extra": -0.1222,
+        "marginC": 0.5747,
+        "marginS": 0.4525,
+        "extraAtNoGrain": 1.1061
+       },
+       {
+        "id": "brief-slapstick-2/sport",
+        "extra": 0.0437,
+        "marginC": 0.9494,
+        "marginS": 0.9931,
+        "extraAtNoGrain": 1.0013
+       },
+       {
+        "id": "brief-space_opera-2/order",
+        "extra": -1.5277,
+        "marginC": 4.0994,
+        "marginS": 2.5717,
+        "extraAtNoGrain": 0.8238
+       },
+       {
+        "id": "brief-space_opera-2/goodnight",
+        "extra": -1.494,
+        "marginC": 3.9534,
+        "marginS": 2.4594,
+        "extraAtNoGrain": 1.002
+       },
+       {
+        "id": "brief-space_opera-2/enemy",
+        "extra": -1.5259,
+        "marginC": 4.1151,
+        "marginS": 2.5892,
+        "extraAtNoGrain": 0.8422
+       },
+       {
+        "id": "brief-swashbuckler-2/blade",
+        "extra": -0.3712,
+        "marginC": 1.7758,
+        "marginS": 1.4046,
+        "extraAtNoGrain": 1.0556
+       },
+       {
+        "id": "brief-swashbuckler-2/rogue",
+        "extra": -0.7198,
+        "marginC": 2.7181,
+        "marginS": 1.9983,
+        "extraAtNoGrain": 1.1143
+       },
+       {
+        "id": "brief-swashbuckler-2/respect",
+        "extra": -0.3794,
+        "marginC": 1.5289,
+        "marginS": 1.1495,
+        "extraAtNoGrain": 1.1298
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/word",
+        "extra": -0.2403,
+        "marginC": 0.6582,
+        "marginS": 0.4179,
+        "extraAtNoGrain": 1.0017
+       },
+       {
+        "id": "brief-teen-2/hustle",
+        "extra": -0.3373,
+        "marginC": 0.7156,
+        "marginS": 0.3783,
+        "extraAtNoGrain": 1.2759
+       },
+       {
+        "id": "brief-time_travel-2/clock",
+        "extra": -0.7493,
+        "marginC": 1.5058,
+        "marginS": 0.7565,
+        "extraAtNoGrain": 1.181
+       },
+       {
+        "id": "brief-tokusatsu-2/hero",
+        "extra": -0.9254,
+        "marginC": 3.3579,
+        "marginS": 2.4325,
+        "extraAtNoGrain": 1.1065
+       },
+       {
+        "id": "brief-tokusatsu-2/cadets",
+        "extra": -0.5238,
+        "marginC": 1.8837,
+        "marginS": 1.36,
+        "extraAtNoGrain": 1.2298
+       },
+       {
+        "id": "brief-tokusatsu-2/suit",
+        "extra": -0.8862,
+        "marginC": 2.8421,
+        "marginS": 1.9559,
+        "extraAtNoGrain": 1.1124
+       },
+       {
+        "id": "brief-tragicomedy-3/half",
+        "extra": -0.6549,
+        "marginC": 1.5232,
+        "marginS": 0.8684,
+        "extraAtNoGrain": 0.7725
+       },
+       {
+        "id": "brief-tragicomedy-3/listeners",
+        "extra": -0.9598,
+        "marginC": 1.7788,
+        "marginS": 0.819,
+        "extraAtNoGrain": 0.8412
+       },
+       {
+        "id": "brief-tragicomedy-3/line",
+        "extra": -0.4876,
+        "marginC": 0.5372,
+        "marginS": 0.0496,
+        "extraAtNoGrain": 0.8579
+       },
+       {
+        "id": "brief-whodunit-2/ear",
+        "extra": -0.6341,
+        "marginC": 2.5286,
+        "marginS": 1.8945,
+        "extraAtNoGrain": 0.9968
+       },
+       {
+        "id": "brief-whodunit-2/help",
+        "extra": -0.9309,
+        "marginC": 3.2661,
+        "marginS": 2.3353,
+        "extraAtNoGrain": 0.9475
+       }
+      ],
+      "otherSideNotBehind": [
+       {
+        "id": "brief-neo_noir-2/cool",
+        "marginC": 0.1891,
+        "marginS": 0.4042,
+        "fallAtNoGrain": 0.9583
+       },
+       {
+        "id": "brief-neo_noir-2/confession",
+        "marginC": 1.3954,
+        "marginS": 1.5173,
+        "fallAtNoGrain": 0.9944
+       },
+       {
+        "id": "brief-political_thriller-2/neutral",
+        "marginC": 0.2265,
+        "marginS": 0.4816,
+        "fallAtNoGrain": 0.9276
+       },
+       {
+        "id": "brief-political_thriller-2/defiance",
+        "marginC": 0.6953,
+        "marginS": 0.9142,
+        "fallAtNoGrain": 0.993
+       },
+       {
+        "id": "brief-sword_and_sorcery-3/faith",
+        "marginC": 0.5622,
+        "marginS": 0.7941,
+        "fallAtNoGrain": 1.0585
+       },
+       {
+        "id": "brief-teen-2/poet",
+        "marginC": 0.7756,
+        "marginS": 0.8449,
+        "fallAtNoGrain": 1.3262
+       }
+      ]
+     },
+     {
+      "name": "V5",
+      "budget": 780,
+      "media": {
+       "stage": {
+        "suitable": 57,
+        "C": 56,
+        "S": 57,
+        "ceiling": false,
+        "gained": 1,
+        "otherSide": {
+         "suitable": 66,
+         "C": 66,
+         "S": 20
+        }
+       },
+       "tape": {
+        "suitable": 280,
+        "C": 213,
+        "S": 279,
+        "ceiling": false,
+        "gained": 66,
+        "otherSide": {
+         "suitable": 369,
+         "C": 362,
+         "S": 139
+        }
+       }
+      },
+      "leastExtra": 0.0239,
+      "leastDrawsPart": 0.1881,
+      "leastOtherSideFall": 0.447,
+      "extraNotOver005": [
+       {
+        "id": "brief-tokusatsu-2/hero",
+        "extra": 0.0239,
+        "marginC": 1.8044,
+        "marginS": 1.8283,
+        "extraAtNoGrain": 1.0144
+       }
+      ],
+      "otherSideNotBehind": []
+     }
+    ],
+    "atNoGrain": {
+     "extraNotOver005": 0,
+     "leastExtra": 0.5454,
+     "otherSideNotBehind": 0,
+     "leastFall": 0.6559,
+     "of": 2359,
+     "weakOf": 3045
+    }
+   }
+  },
+  "met": false
+ }
+}

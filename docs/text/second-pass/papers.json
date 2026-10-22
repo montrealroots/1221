@@ -15,9 +15,9 @@
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten",
-  "hash": "7d1aaeef8e4d",
-  "on": "2026-10-21",
-  "evidence": "tests/b20-papers-defects.test.ts (P1: the Permission To Work entry's Status line says Approved, as the row does)",
+  "hash": "82009eb25db6",
+  "on": "2026-10-22",
+  "evidence": "tests/guide-examples-papers.test.ts (documents.work's example played: ended at the end of its 91st day) and tests/b22-authorization.test.ts (the rule the entry says: a booking counted as days without work, released work paid for its days)",
   "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
@@ -67,6 +67,13 @@
   "hash": "5f510aebbacb",
   "on": "2026-10-19",
   "reason": "Says which issuer mails a replacement out of state and on which form, so a New Yorker in New Haven knows the replacement still works.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#OPT_ENDS": {
+  "status": "Retained",
+  "hash": "4b1a80121767",
+  "on": "2026-10-22",
+  "reason": "America/New_York, the time zone the guide's OPT example counts its days in, an id never shown.",
   "first": "Reviewed And Retained"
  },
  "src/engine/content/guide/documents.ts#SSN_VISIT": {
@@ -2281,12 +2288,19 @@
   "reason": "A time zone name the code passes to the calendar, America/New_York, which no screen shows as words.",
   "first": "Reviewed And Retained"
  },
- "src/engine/systems/permission.ts#daysWorkedIn": {
+ "src/engine/systems/permission.ts#endOpt": {
   "status": "Rewritten",
-  "hash": "91a5e4a639ea",
-  "on": "2026-10-21",
-  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words",
+  "hash": "9746de64d2f8",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (A1: the OPT Ended notice word for word, at the midnight it ends)",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/permission.ts#OPT_ZONE": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-22",
+  "reason": "America/New_York, the zone OPT's days are counted in, an id never shown.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/systems/permission.ts#optRefusal": {
   "status": "Retained",
@@ -2297,10 +2311,10 @@
  },
  "src/engine/systems/permission.ts#registerPermission": {
   "status": "Rewritten",
-  "hash": "df3051625747",
-  "on": "2026-10-21",
-  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words",
-  "first": "Rewritten And Verified"
+  "hash": "c3b41defcbfc",
+  "on": "2026-10-22",
+  "evidence": "tests/evidence-g16-papers.test.ts, tests/b20-papers-work.test.ts and tests/propay.test.ts (OPT Approved word for word: a day with work from a job's first day to its last)",
+  "first": "Pending"
  },
  "src/engine/systems/permission.ts#registerPermission [permit]": {
   "status": "Retained",
@@ -3137,10 +3151,10 @@
  },
  "src/ui/papers/Documents.tsx#WorkPane": {
   "status": "Rewritten",
-  "hash": "05f7b08de5e2",
-  "on": "2026-10-21",
-  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt",
-  "first": "Rewritten And Verified"
+  "hash": "dcd9780781cc",
+  "on": "2026-10-22",
+  "evidence": "tests/propay-screen.test.ts (Papers' OPT line drawn: 13 days with work, the end moved 13 days by the work booked)",
+  "first": "Pending"
  },
  "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
   "status": "Retained",

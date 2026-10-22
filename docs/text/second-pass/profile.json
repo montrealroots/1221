@@ -2456,6 +2456,27 @@
   "reason": "Zombie's line under How its scenes are played names what its scenes turn on (“Performers trained to move consistently as the…”), drawn from its research, which the next sentence says",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/genre-weights.ts#PLAY_GENRES": {
+  "status": "Retained",
+  "hash": "01cd324ef3d5",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (PLAY_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these",
+  "first": "Pending"
+ },
+ "src/engine/content/genre-weights.ts#PROJECT_GENRES": {
+  "status": "Retained",
+  "hash": "e1946fd36e70",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (PROJECT_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these",
+  "first": "Pending"
+ },
+ "src/engine/content/genre-weights.ts#SCENE_GENRES": {
+  "status": "Retained",
+  "hash": "15b20e59264a",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (SCENE_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these",
+  "first": "Pending"
+ },
  "src/engine/content/genres.ts#GENRE_DEFS .absurdist": {
   "status": "Rewritten",
   "hash": "9b12b3dcb74f",
@@ -3529,9 +3550,9 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten",
-  "hash": "f5bdc527257f",
+  "hash": "7949ad84d83b",
   "on": "2026-10-22",
-  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): the guide's Genres entry says each play, part, class scene and role says how much of each genre it asks, the order of a list changing nothing, and Related Genres one step only at 65% and 40%, siblings nothing, the genre itself always helping; every sentence checked against what the game does in tests/b22-genre-weights.test.ts ('the guide says the rule the game reads'), with tools/guide-quotes.mjs, tools/voice-check.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
@@ -3926,6 +3947,13 @@
   "reason": "The refusals every hour away from the work shares with practice and the other areas, asleep, at a commitment until a time, in the hospital, said the same everywhere",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/engagement.ts#requirementWords": {
+  "status": "Rewritten",
+  "hash": "bcaa387df5c7",
+  "on": "2026-10-22",
+  "evidence": "Written 2026-10-22 (the owner's brief 22): what a work asks of the genres in words, one genre by its name, two or more 'about evenly' or 'Mostly …, with some …', never a weight or a share (docs/STYLE.md: never show the player the engine); tests/b22-genre-weights.test.ts ('one genre, about even and uneven, never a weight or a share'), shown on the Opportunities tab in tests/pro-opportunities-screen.test.ts",
+  "first": "Pending"
+ },
  "src/engine/systems/engagement.ts#study": {
   "status": "Retained",
   "hash": "9190801211ff",
@@ -3939,6 +3967,13 @@
   "on": "2026-10-19",
   "reason": "A refusal for a genre that doesn't exist, reached only by a command, that says so in five words",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/engagement.ts#weightsProblem": {
+  "status": "Retained",
+  "hash": "044d40c35639",
+  "on": "2026-10-22",
+  "reason": "Not shown to the player: why a level's stated genre weights were skipped (a genre the game doesn't have, a weight not a number or below 0, none above 0), kept on the requirement for tests/b22-genre-weights.test.ts ('W2: weights missing read the tags evenly; invalid weights are skipped, said…') and the weights review, never on a screen",
+  "first": "Pending"
  },
  "src/engine/systems/experience.ts#FEATURE_LABEL": {
   "status": "Retained",
@@ -4250,9 +4285,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
   "status": "Rewritten",
-  "hash": "ba5d7a77182c",
+  "hash": "494de328ce51",
   "on": "2026-10-22",
-  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): the genre to study for the next part is where study would help most of what the part asks, and says so ('your next part asks for it, and of what the part asks, it’s where study would help most.'); read on the Player Profile in tests/evidence-g31-ui.test.ts ('the genre to study is the loved one known least before any part, and once the clock casts her in Major Barbara…') and tests/b22-genre-weights.test.ts ('a brief reads its one genre, and the Profile suggests…')",
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel": {

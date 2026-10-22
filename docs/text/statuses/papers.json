@@ -59,6 +59,12 @@
   "on": "2026-10-17",
   "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
  },
+ "src/engine/content/guide/documents.ts#OPT_ENDS": {
+  "status": "Reviewed And Retained",
+  "hash": "4b1a80121767",
+  "on": "2026-10-22",
+  "reason": "America/New_York, the time zone the guide's OPT example counts its days in, an id never shown."
+ },
  "src/engine/content/guide/documents.ts#SSN_VISIT": {
   "status": "Reviewed And Retained",
   "hash": "90335b649ade",
@@ -1931,11 +1937,17 @@
   "on": "2026-10-17",
   "reason": "A time zone id the code reads; never shown."
  },
- "src/engine/systems/permission.ts#daysWorkedIn": {
+ "src/engine/systems/permission.ts#endOpt": {
   "status": "Rewritten And Verified",
+  "hash": "9746de64d2f8",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (A1: the OPT Ended notice word for word, at the midnight it ends)"
+ },
+ "src/engine/systems/permission.ts#OPT_ZONE": {
+  "status": "Reviewed And Retained",
   "hash": "91a5e4a639ea",
-  "on": "2026-10-21",
-  "evidence": "tests/propay.test.ts reads the OPT approval notice and the weekly count with work booked; tests/evidence-g16-papers.test.ts and five more pin the notice's new words"
+  "on": "2026-10-22",
+  "reason": "America/New_York, the zone OPT's days are counted in, an id never shown."
  },
  "src/engine/systems/permission.ts#optRefusal": {
   "status": "Rewritten And Verified",

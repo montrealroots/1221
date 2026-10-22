@@ -143,6 +143,12 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
+ "src/engine/systems/projobs.ts#keptWords": {
+  "status": "Rewritten And Verified",
+  "hash": "2123b1b08995",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (Released As Hester Vane, Nell and Robin word for word: before, during and an expiry) and tests/pro-work.test.ts (Replaced As)"
+ },
  "src/engine/systems/projobs.ts#KIND_WORDS": {
   "status": "Rewritten And Verified",
   "hash": "66419602c475",
@@ -221,6 +227,12 @@
   "on": "2026-10-21",
   "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing"
  },
+ "src/engine/systems/projobs.ts#permissionWords": {
+  "status": "Rewritten And Verified",
+  "hash": "87409ec637e8",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (Released As Hester Vane, Nell and Robin word for word: before, during and an expiry) and tests/pro-work.test.ts (Replaced As)"
+ },
  "src/engine/systems/projobs.ts#post": {
   "status": "Rewritten And Verified",
   "hash": "a28720469422",
@@ -292,6 +304,18 @@
   "hash": "6c5ea96d4a75",
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+ },
+ "src/engine/systems/projobs.ts#release": {
+  "status": "Rewritten And Verified",
+  "hash": "b3882771f720",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (Released As Hester Vane, Nell and Robin word for word: before, during and an expiry) and tests/pro-work.test.ts (Replaced As)"
+ },
+ "src/engine/systems/projobs.ts#release [problem]": {
+  "status": "Rewritten And Verified",
+  "hash": "b3157761e4f5",
+  "on": "2026-10-22",
+  "evidence": "tests/b22-authorization.test.ts (A1: the run's history line, released as Hester Vane, word for word)"
  },
  "src/engine/systems/projobs.ts#replace": {
   "status": "Rewritten And Verified",
@@ -409,9 +433,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
   "status": "Rewritten And Verified",
-  "hash": "2f64bdbe4195",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "hash": "4f2f844589b1",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): What It Asks in words (requirementWords); tests/pro-opportunities-screen.test.ts ('a first-year’s tab lists the open roles posted…')"
  },
  "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {
   "status": "Rewritten And Verified",

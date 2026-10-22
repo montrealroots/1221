@@ -220,7 +220,7 @@ describe('B1 and B3: after the degree, OPT opens and closes outside work, throug
     played(f1, decides + MS_HOUR);
     expect(opt.status).toBe('valid');
     expect(opt.issuedAt).toBe(decides);
-    expect(titled(f1, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 16, 2026 to November 16, 2027. Each day of professional work you’re booked for counts as a day worked, and OPT ends once you’ve had more than 90 days without work in total.']);
+    expect(titled(f1, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 16, 2026 to November 16, 2027. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them. OPT ends once you’ve had more than 90 days without work in total.']);
 
     // On OPT the same offer is hers to take, as it's the citizen's: two days in December, booked on OPT.
     played(us, at(2026, 11, 16, 15));
@@ -250,10 +250,12 @@ describe('B1 and B3: after the degree, OPT opens and closes outside work, throug
       expect(sim.player.usOutOfStatus).toBe(o.endedAt);
       expect(f1Of(sim.player)!.status).toBe('cancelled');
     }
-    // Counted each Monday from 16 November: thirteen weeks are 91 days less the two worked, 89, and the fourteenth week's
-    // count passes ninety, so it ended on Monday 22 February, played straight or saved and opened; the same notices.
-    expect(optOf(f1).idleDays).toBe(96);
-    expect(formatDate(optOf(f1).endedAt!, NY)).toBe('February 22, 2027');
+    // Counted each day from 16 November (from 2026-10-22, the owner's brief 22): 35 days without work to 20 December,
+    // the two worked, then the 36th from the 23rd, so the 91st was 16 February and it ended at its end, played straight
+    // or saved and opened; the same notices. Counted a week at a time until then, it ended on Monday 22 February with
+    // 96 days without work, the fourteenth week's count passing ninety.
+    expect(optOf(f1).idleDays).toBe(91);
+    expect(optOf(f1).endedAt).toBe(at(2027, 2, 17, 0));
     expect(optOf(opened).endedAt).toBe(optOf(f1).endedAt);
     expect(papersNotices(opened)).toEqual(papersNotices(f1));
 

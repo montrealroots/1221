@@ -646,6 +646,43 @@ if os.path.exists(f'{B21F}/figures.json') and os.path.exists(f'{B19F}/figures.js
             elif not held and r['status'] == IAV:
                 r['status'] = IVI
                 r['missing'] = f"brief 21's figure moved from brief 19's ({FIG19.get(r['id'])}) to {FIG21[r['id']]}, with no reading in {B21MOVED} that its criterion still holds"
+# Brief 22's judge (career-genre-2026-10-22/final-runs/final/, from 2026-10-22), as brief 21's: a pass that changed what
+# the judge reads (each work asks its genres as its material states them, `content/genre-weights.ts`; a related genre
+# counts across one direct link, at 0.65 or 0.40), so every criterion brief 21 measured is measured again on brief 22's
+# tested commit, each figure beside brief 21's ("the same" where it is). A figure that moved is read against its criterion
+# in judge-moved.json ("figures"), as brief 21's were. The Genre Audit as written ("leaks into none") is superseded at the
+# owner's word (brief 22): kept in the record with its figure, and counted as Genre Audit-R, its replacement, measured on
+# the same run (judge-result.json's replacements). Until brief 22 it was Decision Required (brief 21's judge-moved.json).
+B22F = 'docs/verification/career-genre-2026-10-22/final-runs/final'
+B22MOVED = 'docs/verification/career-genre-2026-10-22/final-runs/judge-moved.json'
+B22SUPERSEDED = ("Superseded by Genre Audit-R at the owner's word in brief 22 (\"Explicitly supersede the old 'no transfer to any other genre' "
+                 "criterion with: 'No unrelated-genre contribution; only documented, bounded transfer across approved direct relationships.'\"), "
+                 "measured on brief 22's tested commit (career-genre-2026-10-22/final-runs/judge-result.json); as written it stays in the record with "
+                 "its figure, the next genre over moving in pairs each a genre and its own kind, and its history, brief 21's question and the "
+                 "authorization are kept in career-genre-2026-10-22/decision-history.md")
+if os.path.exists(f'{B22F}/figures.json') and os.path.exists(f'{B21F}/figures.json'):
+    FIG22 = json.load(open(f'{B22F}/figures.json', encoding='utf-8'))
+    B22AT = re.search(r'^at (\w+)', open(f'{B22F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    MOVED22 = json.load(open(B22MOVED, encoding='utf-8')).get('figures', {}) if os.path.exists(B22MOVED) else {}
+    for r in rows:
+        if r.get('measured') == {'commit': B21AT, 'watch': 'judge'}:
+            assert r['id'] in FIG22, r['id']
+            same = FIG22[r['id']] == FIG21.get(r['id'])
+            read = MOVED22.get(r['id'])
+            held = same or bool(read and read.get('was') == FIG21.get(r['id']) and read.get('now') == FIG22[r['id']] and read.get('holds') and read.get('why'))
+            r['measured'] = {'commit': B22AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 22's tested commit ({B22AT}): {'the same' if same else FIG22[r['id']]}{'' if same or not read else ' (' + read['why'] + ')'}"
+            r['evidence'] = f"{r['evidence']}; {B22F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B22F}/figures.json'}] + ([] if same else [{'file': B22MOVED}] if read else [])
+            if r['id'] == 'Genre Audit':
+                r.pop('decision', None)
+                r['status'], r['deferredBy'] = ED, B22SUPERSEDED
+            elif not held and r['status'] == IAV and read and read.get('decision'):
+                r['status'] = DR
+                r['decision'] = read['decision']
+            elif not held and r['status'] == IAV:
+                r['status'] = IVI
+                r['missing'] = f"brief 22's figure moved from brief 21's ({FIG21.get(r['id'])}) to {FIG22[r['id']]}, with no reading in {B22MOVED} that its criterion still holds"
 # Brief 21's runs (genre-banking-2026-10-22/final-runs/, from 2026-10-22), as brief 20's: a pass that changed how genres
 # are weighed and read, and money's yields, a US card's late days and due day and standing orders, files the
 # measurements watch, so each measurement brief 20 held is made again on brief 21's tested commit, the same ways.
@@ -667,6 +704,28 @@ if FIG21R and FIG20R:
         r['failure'] = f"{r['failure']}; brief 21 ({r['measured']['commit']}): {'the same' if FIG21R[r['id']] == FIG20R.get(r['id']) else FIG21R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B21R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B21R}/figures.json'}] + ([{'file': f'{B21R}/gate.txt'}] if gate else [])
+# Brief 22's runs (career-genre-2026-10-22/final-runs/, from 2026-10-22), as brief 21's: a pass that changed how a
+# work's genres are weighed and what a related genre counts for, and work authorization (OPT counted by the day,
+# permission read at each work day, release, pay for days worked), files the measurements watch, so each measurement brief
+# 21 held is made again on brief 22's tested commit, the same ways.
+B22R = 'docs/verification/career-genre-2026-10-22/final-runs/runs'
+FIG22R = json.load(open(f'{B22R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B22R}/figures.json') else {}
+if FIG22R and FIG21R:
+    lane22 = lambda name: re.search(r'^at (\w+)', open(f'{B22R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R22 = {'app': lane22('A'), 'engine': lane22('B')}
+    GATE22 = re.search(r'^at (\w+)', open(f'{B22R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG22R and os.path.exists(f'{B22R}/gate.txt') else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG21R and (gate or m.get('commit') == R21.get(m.get('watch')))):
+            continue
+        if gate and not GATE22:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG22R, r['id']
+        r['measured'] = {'commit': GATE22, 'watch': 'app'} if gate else {'commit': R22[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 22 ({r['measured']['commit']}): {'the same' if FIG22R[r['id']] == FIG21R.get(r['id']) else FIG22R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B22R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B22R}/figures.json'}] + ([{'file': f'{B22R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -701,7 +760,11 @@ B20 = 'docs/verification/audit-2026-10-21/final-runs'
 # area items restated on its own outputs (judge.py, judge-result.json): they're read from brief 21's figures where they
 # moved, not carried as brief 19's.
 B21 = 'docs/verification/genre-banking-2026-10-22/final-runs'
-PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else []) + ([(B19, 'Brief 19')] if os.path.exists(f'{B19}/verification-result.json') else []) + ([(B20, 'Brief 20')] if os.path.exists(f'{B20}/verification-result.json') else []) + ([(B21, 'Brief 21')] if os.path.exists(f'{B21}/verification-result.json') else [])
+# Brief 22's (career-genre-2026-10-22/final-runs/, from 2026-10-22) after brief 21's, the same way: its verify.py restates
+# brief 21's held rows on brief 22's runs, its advice/close.py the advice's four rows, and its judge.py the judge's four
+# area items and the Genre Audit's replacement, Genre Audit-R.
+B22 = 'docs/verification/career-genre-2026-10-22/final-runs'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else []) + ([(B19, 'Brief 19')] if os.path.exists(f'{B19}/verification-result.json') else []) + ([(B20, 'Brief 20')] if os.path.exists(f'{B20}/verification-result.json') else []) + ([(B21, 'Brief 21')] if os.path.exists(f'{B21}/verification-result.json') else []) + ([(B22, 'Brief 22')] if os.path.exists(f'{B22}/verification-result.json') else [])
 for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
     result = json.load(open(f'{d}/{f}', encoding='utf-8'))
