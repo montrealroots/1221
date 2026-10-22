@@ -1,0 +1,36 @@
+{
+ "id": "b20-5",
+ "part": 4,
+ "from": "2029-06-04",
+ "to": "2029-11-14",
+ "secs": 83,
+ "reloads": 51,
+ "done": false,
+ "standing": "graduated",
+ "schoolEnd": "2029-05-21T14:00",
+ "careerFrom": "2029-01-08T14:05",
+ "notSame": 0,
+ "transitions": [
+  "2026-08-24T11:30 creation: same",
+  "2026-12-11T22:20 term 0 reviewed: good: same",
+  "2027-01-01T12:20 the end of 2026: same",
+  "2027-04-23T21:25 term 1 reviewed: good: same",
+  "2027-12-10T22:25 term 2 reviewed: good: same",
+  "2028-01-01T12:25 the end of 2027: same",
+  "2028-04-28T21:25 term 3 reviewed: good: same",
+  "2028-12-08T22:05 term 4 reviewed: good: same",
+  "2029-01-01T12:05 the end of 2028: same",
+  "2029-04-27T21:20 term 5 reviewed: good: same",
+  "2029-05-21T14:40 the School’s end: graduated: same"
+ ],
+ "forks": [
+  "2026-09-17T22:50 a rehearsal with a partner booked for 2026-09-18T23:00 on Scene Study: same",
+  "2029-05-21T14:40 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
+  "2029-06-27T14:40 an audition (in-person) set for 2029-07-02T15:00, Felix in Paper Moons: same",
+  "2029-10-31T21:20 an offer standing: An Offer For Robin: same"
+ ],
+ "workDays": 0,
+ "notices": 921,
+ "bank": 79161.97,
+ "errors": []
+}

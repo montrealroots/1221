@@ -1,0 +1,41 @@
+{
+ "id": "b20-7",
+ "part": 6,
+ "from": "2030-04-01",
+ "to": "2030-09-01",
+ "secs": 83,
+ "reloads": 68,
+ "done": false,
+ "standing": "graduated",
+ "schoolEnd": "2030-05-20T14:00",
+ "careerFrom": "2030-01-07T14:05",
+ "notSame": 0,
+ "transitions": [
+  "2026-08-24T11:30 creation: same",
+  "2026-12-11T22:20 term 0 reviewed: good: same",
+  "2027-01-01T12:20 the end of 2026: same",
+  "2027-04-23T21:25 term 1 reviewed: concern: same",
+  "2027-12-10T22:20 term 2 reviewed: good: same",
+  "2028-01-01T12:20 the end of 2027: same",
+  "2028-04-28T21:10 term 3 reviewed: good: same",
+  "2028-12-08T22:20 term 4 reviewed: good: same",
+  "2029-01-01T12:20 the end of 2028: same",
+  "2029-04-27T21:25 term 5 reviewed: good: same",
+  "2029-12-14T22:20 term 6 reviewed: good: same",
+  "2030-01-01T12:05 the end of 2029: same",
+  "2030-04-26T21:15 term 7 reviewed: good: same",
+  "2030-05-20T14:35 the School’s end: graduated: same",
+  "2030-07-25T22:00 the first booking: Felix in Paper Moons: same",
+  "2030-08-05T22:00 the first work day: same"
+ ],
+ "forks": [
+  "2026-09-01T11:15 a rehearsal with a partner booked for 2026-09-01T23:00 on Scene Study: same",
+  "2030-05-20T14:35 a union bill due 2031-05-20T14:00: Initiation fee, part 2 of 3: same",
+  "2030-06-05T14:35 an audition (self-tape) set for 2030-06-09T22:00, Jess in Static On Route 9: same",
+  "2030-07-11T21:30 an offer standing: An Offer For Felix: same"
+ ],
+ "workDays": 3,
+ "notices": 1252,
+ "bank": 62857.88,
+ "errors": []
+}

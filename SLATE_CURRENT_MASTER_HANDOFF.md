@@ -1,4 +1,4 @@
-# Read First: Brief 20, The Functional And Downstream-Effects Audit, In Progress, 2026-10-22
+# Read First: Brief 20, The Functional And Downstream-Effects Audit, Done And Waiting On The Owner, 2026-10-22
 
 **This section is the current status, and where a new session starts.** The owner gave brief 20
 (`docs/verification/briefs-2026-10-16/20-complete-functional-and-downstream-effects-audit.txt`, kept verbatim) after
@@ -7,11 +7,12 @@ force-pushed. Nothing of it is in `main`, and nothing is deployed: the owner sai
 or deploy without my instruction." There is no stash and one worktree; brief 19's scratch clones with commits the branch
 didn't hold were kept as `refs/preserved/*` before they were deleted for disk space.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
   (Brief 20's D2 changed `src/engine` (`c4832549`), so the 46 rows brief 19's final runs measured on the engine's or the
-  app's whole source read as measured before what they read last changed, until brief 20's final runs measure them again;
-  until then this said 634 of 658. Nothing in them is known to be wrong.)
+  app's whole source read as measured before what they read last changed, and this said 588 of 658 until brief 20's
+  final runs measured them again on `cbec90d8` (`docs/verification/audit-2026-10-21/final-runs/runs/README.md`): every
+  figure the same as brief 19's but the gate's, and all 46 held. The 20 left are earlier briefs' rows, as before.)
 
 - **Read first:** `docs/verification/audit-2026-10-21/criteria.md` (the items, written before any fix, with the fixed
   seeds the journeys play), `areas/INSTRUCTIONS.md` (how each area works) and the brief.
@@ -33,14 +34,20 @@ didn't hold were kept as `refs/preserved/*` before they were deleted for disk sp
   was counted twice; a sleep after the night adds none of its debt, condition or mood, the bedtime for a full night is
   said by the evening before, and a work day takes a rehearsal call's energy. F10 from the journeys: the School's request
   to meet lapses on its day with a notice and a line on the record.
-- **The gate on the integrated commit:** `cbec90d8`, in a clean clone, exit 0 read from its file: 479 of 479 test files,
-  5,481 of 5,481 tests, none skipped, all 22 checks.
-- **In progress:** the final runs on `cbec90d8` (`docs/verification/audit-2026-10-21/final-runs/runs/queue20.sh`):
-  brief 19's lanes again, so the 46 rows measure again; brief 20's journeys again (BJ1 to BJ3); the built app at 1440
-  and 390, a played life's career surfaces and the seven older saves (APP). Then `collect20.sh`, `runs/figures.py`,
-  `advice/close.py`, `verify.py` (a journey ending that moved is held only where `journeys-moved.json` reads why), the
-  matrix, the receipt (`docs/verification/audit-2026-10-21/README.md`) and this handoff. A container restart stops the
-  queue: start it again with the lanes not done (`queue20.sh cbec90d8 "<lanes>"`); each lane skips the steps it passed.
+- **The gate on the tested commit:** `cbec90d8`, in a clean clone, exit 0 read from its file: 479 of 479 test files,
+  5,481 of 5,481 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`). Nothing under `src` changed after it.
+- **The final runs, done on `cbec90d8`** (`final-runs/runs/README.md`, every lane's steps exit 0 but the one that records
+  that brief 19's four lives no longer play line for line, each change brief 20's and said there):
+  - brief 19's lanes again, every figure the same as brief 19's but the gate's;
+  - brief 13's 25 journeys, each ending as before;
+  - the interface's playthroughs at both widths, every step passed;
+  - brief 20's own journeys again, 165 of 165 transitions and 53 of 53 forks the same to the byte, fatigue as the first
+    limit on the work gone from every life;
+  - the built app at 1440 and 390: the career's 52 surfaces and the seven older saves, nothing found.
+- **The receipt:** `docs/verification/audit-2026-10-21/README.md`, with every item brief 20's section 8 asks for, and how
+  to look for oneself.
+- **Waiting on the owner:** nothing is merged or deployed ("Keep the work reviewable. Do not merge or deploy without my
+  instruction."). The next session starts from the decisions below, or from the owner's next brief.
 - **For the owner** (each area's report says more): readiness 60 as the work's knee, at about 20 hours awake; hunger
   that brings no illness (F9); a start outside the School (`livesWhereBorn`); School casting not reading genre
   experience; Amend The Return, which no played life can use; whether notices name their tab; autopay that can't be
@@ -374,8 +381,8 @@ The record is `docs/verification/continuity-2026-10-20/`:
 
 ## 5. The Rules, The Schema And The Model
 
-- **The checks:** CLAUDE.md counts twenty-one. The twenty-first is `tools/surfaces.mjs --check`, the coverage matrix,
-  added in this pass; until then CLAUDE.md said twenty.
+- **The checks:** CLAUDE.md counted twenty-one, twenty-two from brief 20's `tools/effects.mjs --check`. The twenty-first
+  is `tools/surfaces.mjs --check`, the coverage matrix, added in this pass; until then CLAUDE.md said twenty.
 - **The save schema is unchanged:** **94** in both places. The incident fix's fields are optional, and a save from
   before is marked once on opening (`school.missesMarked`).
 - **RULESET is evaluation-11:** nothing the judge reads changed (`final/`, the judge's figures).

@@ -1,0 +1,47 @@
+{
+ "scenario": "withdraw",
+ "seed": "sc-0",
+ "ended": "2027-08-24",
+ "log": [
+  "2027-04-07 school.withdraw"
+ ],
+ "school": {
+  "standing": "withdrawn",
+  "classOf": 2029,
+  "offset": 0,
+  "leaves": [],
+  "welfares": [],
+  "formerClasses": [
+   {
+    "classOf": 2029,
+    "mates": 15,
+    "playedTo": 1,
+    "leftBehind": true,
+    "productions": 1,
+    "cabaret": 0
+   }
+  ],
+  "classmates": 15,
+  "terms": [
+   "0:good"
+  ],
+  "conferred": [],
+  "credits": [],
+  "joinedHistory": [],
+  "firstClassGraduated": [
+   false
+  ],
+  "duringLeave": []
+ },
+ "accounts": [
+  "Chase checking",
+  "Chase savings"
+ ],
+ "owedIrs": 0,
+ "irsSubstitute": [],
+ "states": {},
+ "statePlans": {},
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 12
+}

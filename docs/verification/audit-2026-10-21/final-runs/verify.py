@@ -54,7 +54,9 @@ j_moved = [i for i, x in final.items() if i in before and flat(x) != flat(before
 j_read = [i for i in j_moved if i in readings and readings[i].get('was') == flat(before[i]) and readings[i].get('now') == flat(final[i]) and readings[i].get('by') and readings[i].get('why')]
 j_unexplained = [i for i in j_moved if i not in j_read]
 j_missing = sorted(set(before) - set(final))
-j_steps, j_bad = lane_exits('JR1', 'JR2', 'JR3', 'JRC')
+# Brief 13's journeys' own steps: their parts, and JRC's compare and summary. JRC also plays brief 20's journeys' table and
+# brief 19's lives, which aren't these clauses' and are reported in runs/README.md.
+j_steps, j_bad = lane_exits('JR1', 'JR2', 'JR3', 'JRC', only=r'(J\d\d|F\d)-p\d$|journeys-(compare|summarize)$')
 j_ok = not j_fail and not j_missing and not j_bad and not j_unexplained
 j_at = lane_at('JR1')
 j_said = (f"Played again on brief 20's commit {j_at} (runs20.sh JR1 to JR3 and JRC, {j_steps} steps, " + (f"not exit 0: {', '.join(j_bad)}" if j_bad else 'every one exit 0') + f"): {len(final)} journeys, "

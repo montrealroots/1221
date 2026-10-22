@@ -1,0 +1,23 @@
+{
+ "id": "journey-j01-year-one-8283f80c",
+ "part": 1,
+ "from": "2027-06-01",
+ "to": "2028-03-31",
+ "secs": 57,
+ "reloads": 12,
+ "done": false,
+ "standing": "good",
+ "notSame": 0,
+ "transitions": [
+  "2027-06-01T11:05 opened: same",
+  "2027-12-10T22:20 term 2 reviewed: good: same",
+  "2028-01-01T12:20 the end of 2027: same"
+ ],
+ "forks": [
+  "2027-09-02T01:10 a rehearsal with a partner booked for 2027-09-04T23:00 on A Game Played Through: same"
+ ],
+ "workDays": 0,
+ "notices": 563,
+ "bank": 499200.61,
+ "errors": []
+}

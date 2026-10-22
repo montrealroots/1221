@@ -1,0 +1,4965 @@
+{
+ "id": "old-leave-ff837dfa",
+ "done": true,
+ "parts": [
+  {
+   "part": 1,
+   "from": "2028-03-12",
+   "to": "2029-01-10",
+   "secs": 39,
+   "reloads": 10
+  },
+  {
+   "part": 2,
+   "from": "2029-01-10",
+   "to": "2029-11-10",
+   "secs": 61,
+   "reloads": 10
+  },
+  {
+   "part": 3,
+   "from": "2029-11-10",
+   "to": "2030-09-01",
+   "secs": 121,
+   "reloads": 9,
+   "done": true
+  }
+ ],
+ "creation": {
+  "opened": "old-leave-ff837dfa"
+ },
+ "end": {
+  "on": "2030-09-01",
+  "standing": "graduated",
+  "history": [
+   "0:good",
+   "3:good",
+   "4:good",
+   "5:good",
+   "6:good",
+   "7:good"
+  ],
+  "bank": 70383,
+  "audit": 0,
+  "breaches": 0,
+  "documents": [
+   "license Class D (Operator) driver license valid to 2028-06-14"
+  ]
+ },
+ "standings": [
+  {
+   "at": "2028-03-12T12:35",
+   "standing": "good"
+  },
+  {
+   "at": "2030-05-20T14:40",
+   "standing": "graduated"
+  }
+ ],
+ "reviews": [
+  {
+   "term": 0,
+   "at": "2028-03-12",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.57,
+   "classGrowth": 1.27,
+   "coursework": {
+    "shown": 47,
+    "unready": 5,
+    "strong": 16
+   },
+   "reason": "You were at 100% of what was asked of you, and your craft grew 1.6 against the class’s 1.3: for the room each of you had to grow, ahead of the class."
+  },
+  {
+   "term": 3,
+   "at": "2028-04-28",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.57,
+   "classGrowth": 1.08,
+   "coursework": {
+    "shown": 49,
+    "unready": 4,
+    "strong": 26
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.6 points this term, and the middle student in your class grew 1.1. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 26 of 49 pieces were Strong or better.",
+   "tally": {
+    "classDays": 73,
+    "attended": 73,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_000030",
+    "kept": 56.4,
+    "again": 56.4,
+    "none": 27.77849255336766,
+    "full": 64.70416633820902,
+    "exact": 56.41203965740418
+   }
+  },
+  {
+   "term": 4,
+   "at": "2028-12-08",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.5,
+   "classGrowth": 1.35,
+   "coursework": {
+    "shown": 45,
+    "unready": 4,
+    "strong": 27
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points this term, and the middle student in your class grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 45 pieces were Strong or better.",
+   "tally": {
+    "classDays": 64,
+    "attended": 64,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_000042",
+    "kept": 69.8,
+    "again": 69.8,
+    "none": 24.415594955218758,
+    "full": 69.75884272919646,
+    "exact": 69.75884272919646
+   }
+  },
+  {
+   "term": 5,
+   "at": "2029-04-27",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.3,
+   "classGrowth": 1.11,
+   "coursework": {
+    "shown": 43,
+    "unready": 2,
+    "strong": 20
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.3 points this term, and the middle student in your class grew 1.1. Allowing for how much room each of you had to grow, that’s ahead of the class.",
+   "tally": {
+    "classDays": 68,
+    "attended": 68,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_00005g",
+    "kept": 60.8,
+    "again": 60.8,
+    "none": 22.124923932893076,
+    "full": 62.72596817025949,
+    "exact": 60.84905810206126
+   }
+  },
+  {
+   "term": 6,
+   "at": "2029-12-14",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.28,
+   "classGrowth": 1.15,
+   "coursework": {
+    "shown": 48,
+    "unready": 13,
+    "strong": 27
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.3 points this term, and the middle student in your class grew 1.1. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 48 pieces were Strong or better.",
+   "tally": {
+    "classDays": 69,
+    "attended": 69,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_00006s",
+    "kept": 71,
+    "again": 71,
+    "none": 24.841466537777862,
+    "full": 70.97561867936534,
+    "exact": 70.97561867936534
+   }
+  },
+  {
+   "term": 7,
+   "at": "2030-04-26",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 0.99,
+   "classGrowth": 0.92,
+   "coursework": {
+    "shown": 38,
+    "unready": 0,
+    "strong": 27
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.0 points this term, and the middle student in your class grew 0.9. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 38 pieces were Strong or better.",
+   "tally": {
+    "classDays": 68,
+    "attended": 67,
+    "excused": 1
+   },
+   "prepReplay": {
+    "piece": "assignment_00007w",
+    "kept": 59.9,
+    "again": 59.9,
+    "none": 24.307806560143227,
+    "full": 59.90026010801889,
+    "exact": 59.90026010801889
+   }
+  }
+ ],
+ "acts": [
+  "2030-08-02 health.enroll"
+ ],
+ "health": [
+  {
+   "at": "2028-03-12T12:35",
+   "events": [
+    "care visit: A doctor’s visit, Fair Haven Community Health Care",
+    "care visit: A doctor’s visit, Fair Haven Community Health Care",
+    "care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department",
+    "care visit: A specialist, referred, Fair Haven Community Health Care",
+    "care visit: A doctor’s visit, Fair Haven Community Health Care",
+    "care visit: A doctor’s visit, Fair Haven Community Health Care"
+   ],
+   "before": {
+    "condition": 91,
+    "fitness": 35,
+    "energy": 100
+   },
+   "after": {
+    "condition": 91,
+    "fitness": 35,
+    "energy": 100
+   }
+  },
+  {
+   "at": "2030-02-23T15:25",
+   "events": [
+    "injury bruise 5 days"
+   ],
+   "before": {
+    "condition": 91.1,
+    "fitness": 35,
+    "energy": 94
+   },
+   "after": {
+    "condition": 91.1,
+    "fitness": 35,
+    "energy": 87
+   }
+  },
+  {
+   "at": "2030-04-01T13:10",
+   "events": [
+    "care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department",
+    "in hospital to 2030-04-01"
+   ],
+   "before": {
+    "condition": 91.1,
+    "fitness": 35,
+    "energy": 97
+   },
+   "after": {
+    "condition": 71.1,
+    "fitness": 35,
+    "energy": 74
+   }
+  },
+  {
+   "at": "2030-05-21T14:40",
+   "events": [
+    "care visit: A doctor’s visit, Yale Health Center, Student Health"
+   ],
+   "before": {
+    "condition": 91,
+    "fitness": 35,
+    "energy": 94
+   },
+   "after": {
+    "condition": 91,
+    "fitness": 35,
+    "energy": 91
+   }
+  }
+ ],
+ "reloads": {
+  "n": 44,
+  "notSame": []
+ },
+ "notices": [
+  [
+   "2026-08-24",
+   "Welcome To The Class Of 2029"
+  ],
+  [
+   "2026-08-24",
+   "Fall Term 2026 Begins"
+  ],
+  [
+   "2026-08-24",
+   "Registration And Your Account"
+  ],
+  [
+   "2026-08-25",
+   "Meeting Your Class"
+  ],
+  [
+   "2026-08-26",
+   "Meeting The Acting Faculty"
+  ],
+  [
+   "2026-08-27",
+   "The Building, The Studios And The Library"
+  ],
+  [
+   "2026-08-28",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-08-28",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-08-28",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-08-28",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-08-28",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-08-28",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-08-28",
+   "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice"
+  ],
+  [
+   "2026-08-28",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-08-28",
+   "The Courses And What They Ask"
+  ],
+  [
+   "2026-09-02",
+   "Lucia: A Different Reading"
+  ],
+  [
+   "2026-09-03",
+   "Isaiah Asks To Rehearse"
+  ],
+  [
+   "2026-09-08",
+   "Shown: Scene Study, Working"
+  ],
+  [
+   "2026-09-08",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-09-08",
+   "Caleb: Run Lines Together?"
+  ],
+  [
+   "2026-09-09",
+   "The Note Wasn’t Taken Yet"
+  ],
+  [
+   "2026-09-09",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-09-10",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-09-11",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2026-09-11",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-09-11",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2026-09-14",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2026-09-14",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2026-09-14",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-09-14",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2026-09-14",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-09-15",
+   "Nadia Asks To Rehearse"
+  ],
+  [
+   "2026-09-16",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-09-17",
+   "Shown: A Game Played Through, Working"
+  ],
+  [
+   "2026-09-17",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-09-21",
+   "Shown: Scene Study, Working"
+  ],
+  [
+   "2026-09-22",
+   "The Note Wasn’t Taken Yet"
+  ],
+  [
+   "2026-09-22",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-09-24",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-09-24",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2026-09-25",
+   "Shown: A Voice Sequence, Unready"
+  ],
+  [
+   "2026-09-25",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-09-25",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-09-25",
+   "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice"
+  ],
+  [
+   "2026-09-25",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2026-09-28",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2026-09-28",
+   "Shown: Sound Changes And A Text, Unready"
+  ],
+  [
+   "2026-09-28",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-09-28",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2026-09-28",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-09-29",
+   "Shown: A Play In Its Context, Unready"
+  ],
+  [
+   "2026-09-29",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-09-29",
+   "Maya Didn’t Hear Back"
+  ],
+  [
+   "2026-10-01",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2026-10-05",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-10-05",
+   "Maya: A Different Reading"
+  ],
+  [
+   "2026-10-06",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-10-06",
+   "Owen Asks To Rehearse"
+  ],
+  [
+   "2026-10-07",
+   "Owen Didn’t Hear Back"
+  ],
+  [
+   "2026-10-08",
+   "Shown: A Game Played Through, Working"
+  ],
+  [
+   "2026-10-08",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-10-09",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2026-10-09",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-10-09",
+   "Noah: Run Lines Together?"
+  ],
+  [
+   "2026-10-10",
+   "Ran Lines With Noah"
+  ],
+  [
+   "2026-10-12",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2026-10-13",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2026-10-13",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-10-13",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2026-10-13",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-10-14",
+   "Owen Asks To Rehearse"
+  ],
+  [
+   "2026-10-14",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2026-10-14",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-10-14",
+   "Lucia: Asks For Help"
+  ],
+  [
+   "2026-10-15",
+   "Owen: A Different Reading"
+  ],
+  [
+   "2026-10-15",
+   "Owen Didn’t Hear Back"
+  ],
+  [
+   "2026-10-16",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2026-10-16",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-10-16",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2026-10-19",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-10-19",
+   "Owen Asks To Rehearse"
+  ],
+  [
+   "2026-10-19",
+   "Nadia: Run Lines Together?"
+  ],
+  [
+   "2026-10-20",
+   "Owen Didn’t Hear Back"
+  ],
+  [
+   "2026-10-20",
+   "Ran Lines With Nadia"
+  ],
+  [
+   "2026-10-26",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-10-26",
+   "Mateo Asks To Rehearse"
+  ],
+  [
+   "2026-10-26",
+   "Mateo: Asks For Help"
+  ],
+  [
+   "2026-10-28",
+   "Mateo Asks To Rehearse"
+  ],
+  [
+   "2026-10-28",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-10-30",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2026-10-30",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-10-30",
+   "Shown: Consent And Intimacy Practice, Working"
+  ],
+  [
+   "2026-10-30",
+   "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice"
+  ],
+  [
+   "2026-10-30",
+   "Caleb Asks To Rehearse"
+  ],
+  [
+   "2026-11-02",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-11-02",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2026-11-02",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-11-02",
+   "Mateo: A Different Reading"
+  ],
+  [
+   "2026-11-04",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-11-04",
+   "Shown: A Movement Score, Working"
+  ],
+  [
+   "2026-11-04",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-11-04",
+   "Owen: Run Lines Together?"
+  ],
+  [
+   "2026-11-05",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2026-11-05",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-11-05",
+   "A Referral"
+  ],
+  [
+   "2026-11-06",
+   "Ran Lines With Owen"
+  ],
+  [
+   "2026-11-06",
+   "Imani: Asks For Help"
+  ],
+  [
+   "2026-11-09",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-11-09",
+   "Samuel Asks To Rehearse"
+  ],
+  [
+   "2026-11-11",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-11-11",
+   "Samuel: A Different Reading"
+  ],
+  [
+   "2026-11-13",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2026-11-13",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-11-13",
+   "Caleb Asks To Rehearse"
+  ],
+  [
+   "2026-11-13",
+   "Imani: Run Lines Together?"
+  ],
+  [
+   "2026-11-14",
+   "Caleb Didn’t Hear Back"
+  ],
+  [
+   "2026-11-15",
+   "Ran Lines With Imani"
+  ],
+  [
+   "2026-11-16",
+   "The Emergency Room"
+  ],
+  [
+   "2026-11-17",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-11-17",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2026-11-17",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-11-18",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-11-18",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-11-19",
+   "Imani Asks To Rehearse"
+  ],
+  [
+   "2026-11-20",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2026-11-20",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-11-24",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-11-25",
+   "Noah: A Different Reading"
+  ],
+  [
+   "2026-11-30",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-12-01",
+   "The Note Was Taken"
+  ],
+  [
+   "2026-12-01",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-12-01",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2026-12-01",
+   "Mateo: Run Lines Together?"
+  ],
+  [
+   "2026-12-02",
+   "Isaiah: Asks For Help"
+  ],
+  [
+   "2026-12-03",
+   "Ran Lines With Mateo"
+  ],
+  [
+   "2026-12-03",
+   "Shown: A Game Played Through, Working"
+  ],
+  [
+   "2026-12-04",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2026-12-04",
+   "Shown: Consent And Intimacy Practice, Working"
+  ],
+  [
+   "2026-12-07",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2026-12-07",
+   "A Doctor’s Visit"
+  ],
+  [
+   "2026-12-09",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2026-12-09",
+   "Samuel: Run Lines Together?"
+  ],
+  [
+   "2026-12-11",
+   "In Good Standing"
+  ],
+  [
+   "2027-01-04",
+   "Spring Term 2027 Begins"
+  ],
+  [
+   "2027-01-04",
+   "Cast: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2027-01-11",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-01-11",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-01-11",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-01-12",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-01-12",
+   "Imani: A Different Reading"
+  ],
+  [
+   "2027-01-13",
+   "Shown: A Simulated Rehearsal (At The Table), Strong"
+  ],
+  [
+   "2027-01-13",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-01-14",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-01-14",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2027-01-14",
+   "Ethan: Asks For Help"
+  ],
+  [
+   "2027-01-15",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2027-01-15",
+   "Jordan: Run Lines Together?"
+  ],
+  [
+   "2027-01-17",
+   "Ran Lines With Jordan"
+  ],
+  [
+   "2027-01-19",
+   "Theo: Asks For Help"
+  ],
+  [
+   "2027-01-20",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2027-01-20",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2027-01-20",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-01-20",
+   "Marcus: A Word After Class"
+  ],
+  [
+   "2027-01-22",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2027-01-24",
+   "Ethan Didn’t Come"
+  ],
+  [
+   "2027-01-26",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-01-26",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2027-01-26",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-01-27",
+   "Owen Asks To Rehearse"
+  ],
+  [
+   "2027-01-27",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-01-27",
+   "Ethan: An Apology"
+  ],
+  [
+   "2027-01-27",
+   "Your Leave Has Begun"
+  ],
+  [
+   "2027-03-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2027-04-12",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2027-04-16",
+   "Your 2026 Return Is Late"
+  ],
+  [
+   "2027-05-24",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2027-06-14",
+   "Happy Birthday: 25"
+  ],
+  [
+   "2027-06-17",
+   "A Doctor’s Visit"
+  ],
+  [
+   "2027-08-01",
+   "Your Health Cover Ended"
+  ],
+  [
+   "2027-09-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2028-01-03",
+   "Back From Your Leave"
+  ],
+  [
+   "2028-01-03",
+   "The Class Of 2030"
+  ],
+  [
+   "2028-01-03",
+   "Spring Term 2028 Begins"
+  ],
+  [
+   "2028-01-03",
+   "Cast: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2028-01-10",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-01-10",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2028-01-10",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2028-01-11",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-01-12",
+   "Shown: A Simulated Rehearsal (At The Table), Working"
+  ],
+  [
+   "2028-01-12",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-01-13",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-01-13",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2028-01-14",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2028-01-14",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2028-01-19",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-01-19",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-01-19",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-01-25",
+   "Shown: A Simulated Rehearsal (The Run), Working"
+  ],
+  [
+   "2028-01-25",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-01-25",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2028-01-26",
+   "Shown: A Movement Score, Working"
+  ],
+  [
+   "2028-01-26",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-01-27",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2028-01-27",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-01-28",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2028-01-28",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2028-01-31",
+   "Shown: A Simulated Rehearsal (At The Table), Working"
+  ],
+  [
+   "2028-01-31",
+   "Julian: A Different Reading"
+  ],
+  [
+   "2028-02-01",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-02-02",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-02-02",
+   "Samuel: Asks For Help"
+  ],
+  [
+   "2028-02-03",
+   "Shown: Table Work, Unready"
+  ],
+  [
+   "2028-02-03",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2028-02-03",
+   "Samuel: Run Lines Together?"
+  ],
+  [
+   "2028-02-06",
+   "Ran Lines With Samuel"
+  ],
+  [
+   "2028-02-08",
+   "Shown: A Simulated Rehearsal (The Run), Working"
+  ],
+  [
+   "2028-02-08",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-02-08",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2028-02-08",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2028-02-09",
+   "Owen Asks To Rehearse"
+  ],
+  [
+   "2028-02-09",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-02-09",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-02-09",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-02-10",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-02-10",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-02-11",
+   "Shown: Directions In Daily Life, Unready"
+  ],
+  [
+   "2028-02-11",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2028-02-11",
+   "Shown: A Choreographed Sequence, Working"
+  ],
+  [
+   "2028-02-11",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2028-02-11",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2028-02-12",
+   "Ethan Didn’t Hear Back"
+  ],
+  [
+   "2028-02-14",
+   "Shown: A Simulated Rehearsal (At The Table), Strong"
+  ],
+  [
+   "2028-02-16",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-02-17",
+   "Owen: A Different Reading"
+  ],
+  [
+   "2028-02-18",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2028-02-18",
+   "Marcus: Asks For Help"
+  ],
+  [
+   "2028-02-22",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-02-22",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-02-22",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2028-02-22",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-02-22",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-02-23",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2028-02-23",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-02-23",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-02-24",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-02-24",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-02-24",
+   "Shown: Table Work, Unready"
+  ],
+  [
+   "2028-02-24",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2028-02-25",
+   "Shown: Directions In Daily Life, Unready"
+  ],
+  [
+   "2028-02-25",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2028-02-28",
+   "Shown: A Simulated Rehearsal (At The Table), Strong"
+  ],
+  [
+   "2028-03-01",
+   "Your Public Cover Ended At Renewal"
+  ],
+  [
+   "2028-03-01",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-03-01",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2028-03-01",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-03-01",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-03-03",
+   "Grace: Run Lines Together?"
+  ],
+  [
+   "2028-03-13",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2028-03-13",
+   "Your Understudy Run-Through"
+  ],
+  [
+   "2028-03-13",
+   "Ethan Didn’t Come"
+  ],
+  [
+   "2028-03-14",
+   "A Doctor’s Visit"
+  ],
+  [
+   "2028-03-15",
+   "Shown: A Simulated Rehearsal (The Run), Strong"
+  ],
+  [
+   "2028-03-15",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-03-15",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-03-15",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-03-15",
+   "Ethan: An Apology"
+  ],
+  [
+   "2028-03-15",
+   "You’re On Tonight As Vanya"
+  ],
+  [
+   "2028-03-16",
+   "You Went On As Vanya"
+  ],
+  [
+   "2028-03-16",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-03-16",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-03-17",
+   "Shown: A Choreographed Sequence, Working"
+  ],
+  [
+   "2028-03-17",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2028-03-19",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2028-03-20",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-03-20",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2028-03-20",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2028-03-20",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2028-03-20",
+   "Marcus: A Different Reading"
+  ],
+  [
+   "2028-03-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2028-03-21",
+   "Shown: A Simulated Rehearsal (At The Table), Working"
+  ],
+  [
+   "2028-03-21",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-03-21",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-03-22",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2028-03-23",
+   "Shown: Table Work, Strong"
+  ],
+  [
+   "2028-03-23",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2028-03-24",
+   "Zoe: A Request For Help"
+  ],
+  [
+   "2028-03-27",
+   "Shown: A Simulated Rehearsal (Off Book, On Its Feet), Working"
+  ],
+  [
+   "2028-03-29",
+   "Shown: A Simulated Rehearsal (The Run), Working"
+  ],
+  [
+   "2028-03-29",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-03-29",
+   "Shown: A Movement Score, Working"
+  ],
+  [
+   "2028-03-29",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-03-29",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-03-29",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-03-29",
+   "Julian: Run Lines Together?"
+  ],
+  [
+   "2028-03-30",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-03-30",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-03-30",
+   "Marcus: An Apology"
+  ],
+  [
+   "2028-04-01",
+   "Ran Lines With Julian"
+  ],
+  [
+   "2028-04-03",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-04-03",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2028-04-03",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2028-04-03",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2028-04-03",
+   "Samuel Didn’t Come"
+  ],
+  [
+   "2028-04-04",
+   "Shown: A Simulated Rehearsal (At The Table), Working"
+  ],
+  [
+   "2028-04-05",
+   "Samuel Asks To Rehearse"
+  ],
+  [
+   "2028-04-06",
+   "Samuel: A Different Reading"
+  ],
+  [
+   "2028-04-10",
+   "Shown: A Simulated Rehearsal (Off Book, On Its Feet), Working"
+  ],
+  [
+   "2028-04-11",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-04-11",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2028-04-11",
+   "Owen: A Request For Help"
+  ],
+  [
+   "2028-04-12",
+   "Shown: A Simulated Rehearsal (The Run), Working"
+  ],
+  [
+   "2028-04-12",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2028-04-12",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-04-12",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2028-04-13",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-04-13",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2028-04-13",
+   "Shown: Table Work, Strong"
+  ],
+  [
+   "2028-04-13",
+   "Ethan: Run Lines Together?"
+  ],
+  [
+   "2028-04-14",
+   "Shown: A Choreographed Sequence, Strong"
+  ],
+  [
+   "2028-04-15",
+   "Ran Lines With Ethan"
+  ],
+  [
+   "2028-04-17",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-04-17",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2028-04-17",
+   "Zoe Didn’t Come"
+  ],
+  [
+   "2028-04-18",
+   "Shown: A Simulated Rehearsal (At The Table), Working"
+  ],
+  [
+   "2028-04-19",
+   "Your 2027 Return Is Late"
+  ],
+  [
+   "2028-04-19",
+   "Shown: A Play In Its Context, Strong"
+  ],
+  [
+   "2028-04-19",
+   "Zoe: An Apology"
+  ],
+  [
+   "2028-04-24",
+   "Shown: A Simulated Rehearsal (Off Book, On Its Feet), Strong"
+  ],
+  [
+   "2028-04-26",
+   "Shown: A Simulated Rehearsal (The Run), Strong"
+  ],
+  [
+   "2028-04-26",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-04-26",
+   "Marcus: A Request For Help"
+  ],
+  [
+   "2028-04-27",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-04-28",
+   "In Good Standing"
+  ],
+  [
+   "2028-05-13",
+   "The Director’s Note: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2028-05-13",
+   "Looking Back: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2028-05-18",
+   "The Summer Is Yours"
+  ],
+  [
+   "2028-06-14",
+   "Happy Birthday: 26"
+  ],
+  [
+   "2028-08-28",
+   "Fall Term 2028 Begins"
+  ],
+  [
+   "2028-08-28",
+   "Cast: Directors’ Thesis Production I"
+  ],
+  [
+   "2028-09-05",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-09-05",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-09-05",
+   "Movement Invention II: A Movement Score"
+  ],
+  [
+   "2028-09-06",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2028-09-06",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2028-09-06",
+   "Priya: Run Lines Together?"
+  ],
+  [
+   "2028-09-07",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-09-07",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2028-09-07",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2028-09-08",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-09-08",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2028-09-08",
+   "Marcus: A Different Reading"
+  ],
+  [
+   "2028-09-09",
+   "Ran Lines With Priya"
+  ],
+  [
+   "2028-09-10",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2028-09-11",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-09-12",
+   "Samuel: An Apology"
+  ],
+  [
+   "2028-09-13",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-09-13",
+   "Zoe: A Request For Help"
+  ],
+  [
+   "2028-09-18",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-09-18",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-09-19",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2028-09-19",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-09-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2028-09-21",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-09-21",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-09-26",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2028-09-27",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2028-09-27",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-09-27",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2028-09-27",
+   "Shown: Table Work, Strong"
+  ],
+  [
+   "2028-09-27",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2028-09-27",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2028-09-27",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2028-09-27",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2028-09-30",
+   "Marcus Didn’t Hear Back"
+  ],
+  [
+   "2028-10-01",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2028-10-02",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2028-10-02",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-10-02",
+   "Maya Didn’t Come"
+  ],
+  [
+   "2028-10-03",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2028-10-03",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-10-03",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-10-03",
+   "Movement Invention II: A Movement Score"
+  ],
+  [
+   "2028-10-04",
+   "Ethan: Run Lines Together?"
+  ],
+  [
+   "2028-10-05",
+   "Still There: Rehearsal"
+  ],
+  [
+   "2028-10-05",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-10-05",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-10-05",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2028-10-05",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-10-05",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2028-10-06",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-10-06",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2028-10-10",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2028-10-11",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2028-10-11",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-10-11",
+   "Julian Asks To Rehearse"
+  ],
+  [
+   "2028-10-13",
+   "Marcus: An Apology"
+  ],
+  [
+   "2028-10-14",
+   "Julian Didn’t Hear Back"
+  ],
+  [
+   "2028-10-16",
+   "Your Understudy Run-Through"
+  ],
+  [
+   "2028-10-17",
+   "The Director’s Note: Woyzeck"
+  ],
+  [
+   "2028-10-17",
+   "Looking Back: Woyzeck"
+  ],
+  [
+   "2028-10-18",
+   "Julian Asks To Rehearse"
+  ],
+  [
+   "2028-10-18",
+   "Shown: Table Work, Strong"
+  ],
+  [
+   "2028-10-18",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2028-10-18",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2028-10-18",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2028-10-18",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2028-10-19",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2028-10-19",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-10-21",
+   "Zoe Didn’t Hear Back"
+  ],
+  [
+   "2028-10-23",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2028-10-23",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-10-23",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-10-24",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-10-24",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-10-26",
+   "Theo: A Different Reading"
+  ],
+  [
+   "2028-10-27",
+   "Sofia: A Request For Help"
+  ],
+  [
+   "2028-10-28",
+   "The Director’s Note: Tartuffe"
+  ],
+  [
+   "2028-10-28",
+   "Looking Back: Tartuffe"
+  ],
+  [
+   "2028-10-29",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2028-10-30",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2028-10-30",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-10-31",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-10-31",
+   "Movement Invention II: A Movement Score"
+  ],
+  [
+   "2028-11-01",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2028-11-01",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2028-11-01",
+   "Zoe: Run Lines Together?"
+  ],
+  [
+   "2028-11-02",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2028-11-02",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-11-02",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-11-02",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2028-11-02",
+   "Shown: A Choreographed Sequence, Working"
+  ],
+  [
+   "2028-11-02",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2028-11-03",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2028-11-03",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-11-03",
+   "Shown: A Song Worked Through, Working"
+  ],
+  [
+   "2028-11-03",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2028-11-03",
+   "Maya: An Apology"
+  ],
+  [
+   "2028-11-04",
+   "Zoe Didn’t Hear Back"
+  ],
+  [
+   "2028-11-04",
+   "Ran Lines With Zoe"
+  ],
+  [
+   "2028-11-06",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-11-06",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-11-06",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-11-06",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-11-08",
+   "Shown: Table Work, Strong"
+  ],
+  [
+   "2028-11-08",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2028-11-08",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2028-11-08",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2028-11-13",
+   "Owen Didn’t Come"
+  ],
+  [
+   "2028-11-14",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2028-11-14",
+   "Samuel: A Different Reading"
+  ],
+  [
+   "2028-11-15",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-11-15",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-11-16",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2028-11-16",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-11-20",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-11-20",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-11-20",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2028-11-20",
+   "Samuel: A Request For Help"
+  ],
+  [
+   "2028-11-28",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-11-29",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2028-11-30",
+   "Maya: Run Lines Together?"
+  ],
+  [
+   "2028-12-04",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-12-04",
+   "Owen: An Apology"
+  ],
+  [
+   "2028-12-05",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2028-12-06",
+   "Shown: Table Work, Strong"
+  ],
+  [
+   "2028-12-06",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2028-12-07",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2028-12-07",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2028-12-07",
+   "Shown: A Choreographed Sequence, Strong"
+  ],
+  [
+   "2028-12-07",
+   "Marcus: A Request For Help"
+  ],
+  [
+   "2028-12-08",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2028-12-08",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2028-12-08",
+   "In Good Standing"
+  ],
+  [
+   "2029-01-08",
+   "Spring Term 2029 Begins"
+  ],
+  [
+   "2029-01-08",
+   "Cast: Directors’ Thesis Production III"
+  ],
+  [
+   "2029-01-16",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-01-16",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2029-01-16",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-01-17",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2029-01-17",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2029-01-17",
+   "Samuel: Run Lines Together?"
+  ],
+  [
+   "2029-01-18",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-01-18",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2029-01-18",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2029-01-19",
+   "Sofia Asks To Rehearse"
+  ],
+  [
+   "2029-01-19",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2029-01-20",
+   "Grace Didn’t Hear Back"
+  ],
+  [
+   "2029-01-20",
+   "Sofia Didn’t Hear Back"
+  ],
+  [
+   "2029-01-21",
+   "Ran Lines With Samuel"
+  ],
+  [
+   "2029-01-22",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2029-01-23",
+   "Sofia: A Different Reading"
+  ],
+  [
+   "2029-01-24",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-01-26",
+   "Still There: Rehearsal"
+  ],
+  [
+   "2029-01-26",
+   "Sofia Asks To Rehearse"
+  ],
+  [
+   "2029-01-27",
+   "Sofia Didn’t Hear Back"
+  ],
+  [
+   "2029-01-29",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-01-29",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-01-29",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2029-01-29",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-01-29",
+   "Marcus: An Apology"
+  ],
+  [
+   "2029-01-30",
+   "The Director’s Note: The Wild Duck"
+  ],
+  [
+   "2029-01-30",
+   "Looking Back: The Wild Duck"
+  ],
+  [
+   "2029-01-30",
+   "Shown: A Voice Sequence, Working"
+  ],
+  [
+   "2029-01-30",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2029-01-31",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2029-02-01",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2029-02-01",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2029-02-01",
+   "Zoe: A Request For Help"
+  ],
+  [
+   "2029-02-06",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-02-07",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-02-07",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-02-07",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-02-07",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2029-02-07",
+   "Theo: Run Lines Together?"
+  ],
+  [
+   "2029-02-08",
+   "Shown: A Scene From The Greeks, Working"
+  ],
+  [
+   "2029-02-09",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2029-02-09",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-02-11",
+   "Ran Lines With Theo"
+  ],
+  [
+   "2029-02-12",
+   "Maya Didn’t Come"
+  ],
+  [
+   "2029-02-13",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-02-13",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2029-02-13",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2029-02-13",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-02-15",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2029-02-15",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2029-02-15",
+   "Shown: A Choreographed Sequence, Strong"
+  ],
+  [
+   "2029-02-15",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2029-02-16",
+   "Shown: A Song Worked Through, Working"
+  ],
+  [
+   "2029-02-16",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2029-02-16",
+   "Maya: An Apology"
+  ],
+  [
+   "2029-02-19",
+   "Priya Didn’t Come"
+  ],
+  [
+   "2029-02-19",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-02-19",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2029-02-19",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2029-02-19",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2029-02-20",
+   "Priya Didn’t Come"
+  ],
+  [
+   "2029-02-20",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-02-20",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-02-20",
+   "Zoe: A Word After Class"
+  ],
+  [
+   "2029-02-22",
+   "Note Not Taken Yet: A Scene From The Greeks"
+  ],
+  [
+   "2029-02-22",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-02-22",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2029-02-22",
+   "Owen: A Request For Help"
+  ],
+  [
+   "2029-02-26",
+   "Samuel Didn’t Come"
+  ],
+  [
+   "2029-02-26",
+   "Samuel: A Different Reading"
+  ],
+  [
+   "2029-02-27",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-02-27",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2029-02-28",
+   "Shown: Heightened Text Scene, Unready"
+  ],
+  [
+   "2029-02-28",
+   "Samuel Asks To Rehearse"
+  ],
+  [
+   "2029-02-28",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-02-28",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2029-03-01",
+   "Chase Savings Is Dormant"
+  ],
+  [
+   "2029-03-01",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2029-03-01",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2029-03-02",
+   "Shown: A Scene From The Greeks, Unready"
+  ],
+  [
+   "2029-03-06",
+   "Samuel Didn’t Come"
+  ],
+  [
+   "2029-03-12",
+   "Zoe Didn’t Come"
+  ],
+  [
+   "2029-03-13",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-03-13",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-03-15",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2029-03-15",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-03-15",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2029-03-18",
+   "Samuel Didn’t Come"
+  ],
+  [
+   "2029-03-19",
+   "Zoe Didn’t Come"
+  ],
+  [
+   "2029-03-20",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-03-20",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2029-03-20",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2029-03-20",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-03-21",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-03-21",
+   "Samuel Asks To Rehearse"
+  ],
+  [
+   "2029-03-21",
+   "Owen: Run Lines Together?"
+  ],
+  [
+   "2029-03-22",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2029-03-22",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2029-03-22",
+   "Shown: A Choreographed Sequence, Strong"
+  ],
+  [
+   "2029-03-22",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2029-03-23",
+   "Shown: A Scene From The Greeks, Working"
+  ],
+  [
+   "2029-03-23",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2029-03-23",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2029-03-23",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2029-03-24",
+   "Samuel Didn’t Hear Back"
+  ],
+  [
+   "2029-03-24",
+   "Ethan Didn’t Hear Back"
+  ],
+  [
+   "2029-03-24",
+   "Ran Lines With Owen"
+  ],
+  [
+   "2029-03-25",
+   "Samuel Didn’t Come"
+  ],
+  [
+   "2029-03-26",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-03-26",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-03-26",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2029-03-26",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-03-27",
+   "Priya: An Apology"
+  ],
+  [
+   "2029-03-28",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2029-03-28",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-03-28",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2029-03-30",
+   "Sofia Asks To Rehearse"
+  ],
+  [
+   "2029-03-31",
+   "Sofia Didn’t Hear Back"
+  ],
+  [
+   "2029-03-31",
+   "Ethan Didn’t Come"
+  ],
+  [
+   "2029-04-02",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2029-04-03",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-04-03",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-04-03",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2029-04-04",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-04-04",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-04-05",
+   "Shown: A Scene From The Greeks, Working"
+  ],
+  [
+   "2029-04-05",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2029-04-05",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2029-04-05",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2029-04-06",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2029-04-06",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-04-11",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2029-04-11",
+   "Marcus: A Request For Help"
+  ],
+  [
+   "2029-04-12",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2029-04-13",
+   "Priya Asks To Rehearse"
+  ],
+  [
+   "2029-04-13",
+   "Priya: A Different Reading"
+  ],
+  [
+   "2029-04-14",
+   "Maya Didn’t Hear Back"
+  ],
+  [
+   "2029-04-14",
+   "Priya Didn’t Hear Back"
+  ],
+  [
+   "2029-04-16",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-04-16",
+   "Shown: A Scene From The Greeks, Working"
+  ],
+  [
+   "2029-04-16",
+   "Maya Didn’t Come"
+  ],
+  [
+   "2029-04-17",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-04-17",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2029-04-17",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-04-17",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2029-04-18",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-04-19",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2029-04-19",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2029-04-19",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2029-04-19",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2029-04-19",
+   "Shown: A Choreographed Sequence, Strong"
+  ],
+  [
+   "2029-04-20",
+   "Shown: A Song Worked Through, Working"
+  ],
+  [
+   "2029-04-20",
+   "Marcus: Run Lines Together?"
+  ],
+  [
+   "2029-04-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2029-04-23",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2029-04-24",
+   "Samuel: An Apology"
+  ],
+  [
+   "2029-04-25",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-04-25",
+   "Zoe: A Request For Help"
+  ],
+  [
+   "2029-04-27",
+   "Shown: A Scene From The Greeks, Working"
+  ],
+  [
+   "2029-04-27",
+   "In Good Standing"
+  ],
+  [
+   "2029-04-29",
+   "The Class Of 2029 Graduates"
+  ],
+  [
+   "2029-06-14",
+   "Happy Birthday: 27"
+  ],
+  [
+   "2029-06-21",
+   "A New Card Is On Its Way"
+  ],
+  [
+   "2029-08-27",
+   "Fall Term 2029 Begins"
+  ],
+  [
+   "2029-08-27",
+   "Cast: Directors’ Thesis Production II"
+  ],
+  [
+   "2029-09-01",
+   "Unclaimed Money"
+  ],
+  [
+   "2029-09-04",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2029-09-04",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-09-04",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2029-09-05",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-09-05",
+   "Movement Invention III: A Movement Score"
+  ],
+  [
+   "2029-09-06",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-09-06",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2029-09-07",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2029-09-07",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-09-09",
+   "Zoe Didn’t Come"
+  ],
+  [
+   "2029-09-10",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-09-11",
+   "Zoe: A Different Reading"
+  ],
+  [
+   "2029-09-13",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-09-13",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-09-18",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-09-18",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-09-18",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-09-20",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2029-09-20",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-09-21",
+   "Shown: Scene Study, Strong"
+  ],
+  [
+   "2029-09-21",
+   "Samuel Asks To Rehearse"
+  ],
+  [
+   "2029-09-21",
+   "Samuel: Run Lines Together?"
+  ],
+  [
+   "2029-09-22",
+   "Samuel Didn’t Hear Back"
+  ],
+  [
+   "2029-09-23",
+   "Julian Didn’t Come"
+  ],
+  [
+   "2029-09-24",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-09-24",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2029-09-24",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2029-09-24",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2029-09-25",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2029-09-25",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2029-09-26",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-09-26",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-09-28",
+   "Shown: A Self-Tape, Strong"
+  ],
+  [
+   "2029-09-28",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-10-01",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2029-10-02",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-10-02",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-10-03",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2029-10-03",
+   "Movement Invention III: A Movement Score"
+  ],
+  [
+   "2029-10-04",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-10-04",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-10-04",
+   "Shown: Sound Changes And A Text, Working"
+  ],
+  [
+   "2029-10-04",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-10-04",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2029-10-04",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2029-10-04",
+   "Julian: An Apology"
+  ],
+  [
+   "2029-10-05",
+   "Sofia: A Request For Help"
+  ],
+  [
+   "2029-10-09",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-10-09",
+   "Ethan: A Different Reading"
+  ],
+  [
+   "2029-10-10",
+   "Grace: Run Lines Together?"
+  ],
+  [
+   "2029-10-11",
+   "Zoe: An Apology"
+  ],
+  [
+   "2029-10-12",
+   "Shown: Scene Study, Strong"
+  ],
+  [
+   "2029-10-12",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2029-10-12",
+   "Samuel: A Request For Help"
+  ],
+  [
+   "2029-10-13",
+   "Marcus Didn’t Hear Back"
+  ],
+  [
+   "2029-10-13",
+   "Ran Lines With Grace"
+  ],
+  [
+   "2029-10-15",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-10-15",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2029-10-15",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2029-10-15",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2029-10-15",
+   "Shown: Directions In Daily Life, Working"
+  ],
+  [
+   "2029-10-15",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-10-15",
+   "Your Understudy Run-Through"
+  ],
+  [
+   "2029-10-16",
+   "Shown: A Voice Sequence, Unready"
+  ],
+  [
+   "2029-10-16",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-10-16",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2029-10-16",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2029-10-17",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-10-17",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-10-17",
+   "Samuel: A Word After Class"
+  ],
+  [
+   "2029-10-18",
+   "Still There: Rehearsal"
+  ],
+  [
+   "2029-10-18",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-10-19",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2029-10-19",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-10-23",
+   "Sofia: A Different Reading"
+  ],
+  [
+   "2029-10-25",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-10-25",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-10-25",
+   "Julian: Run Lines Together?"
+  ],
+  [
+   "2029-10-26",
+   "Ethan: An Apology"
+  ],
+  [
+   "2029-10-27",
+   "The Director’s Note: The Playboy Of The Western World"
+  ],
+  [
+   "2029-10-27",
+   "Looking Back: The Playboy Of The Western World"
+  ],
+  [
+   "2029-10-29",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-10-29",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2029-10-30",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-10-30",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2029-10-30",
+   "Still There: Rehearsal"
+  ],
+  [
+   "2029-10-30",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-10-31",
+   "Movement Invention III: A Movement Score"
+  ],
+  [
+   "2029-11-01",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-11-01",
+   "Shown: A Song Worked Through, Unready"
+  ],
+  [
+   "2029-11-01",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2029-11-01",
+   "Marcus: A Request For Help"
+  ],
+  [
+   "2029-11-02",
+   "Note Not Taken Yet: Scene Study"
+  ],
+  [
+   "2029-11-02",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2029-11-02",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2029-11-02",
+   "Julian: A Word After Class"
+  ],
+  [
+   "2029-11-06",
+   "Samuel Didn’t Come"
+  ],
+  [
+   "2029-11-06",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2029-11-06",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2029-11-07",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-11-07",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-11-07",
+   "Ethan: Run Lines Together?"
+  ],
+  [
+   "2029-11-09",
+   "Still There: Rehearsal"
+  ],
+  [
+   "2029-11-09",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-11-09",
+   "Zoe: An Apology"
+  ],
+  [
+   "2029-11-12",
+   "Shown: Directions In Daily Life, Unready"
+  ],
+  [
+   "2029-11-12",
+   "Samuel: A Different Reading"
+  ],
+  [
+   "2029-11-13",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2029-11-13",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-11-15",
+   "Shown: A Clown Turn, Unready"
+  ],
+  [
+   "2029-11-15",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-11-15",
+   "A Word On Your Coursework"
+  ],
+  [
+   "2029-11-15",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-11-16",
+   "Shown: Scene Study, Unready"
+  ],
+  [
+   "2029-11-16",
+   "Zoe: A Request For Help"
+  ],
+  [
+   "2029-11-19",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-11-19",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2029-11-19",
+   "Note Not Taken Yet: Scene Study"
+  ],
+  [
+   "2029-11-19",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2029-11-21",
+   "The Director’s Note: Spring Awakening"
+  ],
+  [
+   "2029-11-21",
+   "Looking Back: Spring Awakening"
+  ],
+  [
+   "2029-11-27",
+   "Shown: A Game Played Through, Strong"
+  ],
+  [
+   "2029-11-28",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-11-28",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-11-28",
+   "Priya: Run Lines Together?"
+  ],
+  [
+   "2029-11-30",
+   "Samuel: An Apology"
+  ],
+  [
+   "2029-12-02",
+   "Ran Lines With Priya"
+  ],
+  [
+   "2029-12-04",
+   "Shown: Heightened Text Scene, Working"
+  ],
+  [
+   "2029-12-05",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-12-05",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2029-12-05",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2029-12-06",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2029-12-06",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2029-12-07",
+   "Shown: A Self-Tape, Strong"
+  ],
+  [
+   "2029-12-10",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2029-12-10",
+   "Shown: Scene Study, Strong"
+  ],
+  [
+   "2029-12-12",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2029-12-12",
+   "Marcus: A Different Reading"
+  ],
+  [
+   "2029-12-13",
+   "Shown: A Clown Turn, Strong"
+  ],
+  [
+   "2029-12-14",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2029-12-14",
+   "In Good Standing"
+  ],
+  [
+   "2030-01-07",
+   "Spring Term 2030 Begins"
+  ],
+  [
+   "2030-01-07",
+   "Cast: Shakespeare Repertory Project I"
+  ],
+  [
+   "2030-01-07",
+   "The Actor Showcase"
+  ],
+  [
+   "2030-01-14",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2030-01-14",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2030-01-15",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2030-01-16",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2030-01-16",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2030-01-17",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2030-01-17",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2030-01-17",
+   "Owen: A Request For Help"
+  ],
+  [
+   "2030-01-18",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2030-01-18",
+   "Your Solo Showing: Solid"
+  ],
+  [
+   "2030-01-23",
+   "Ethan: Run Lines Together?"
+  ],
+  [
+   "2030-01-24",
+   "Marcus: An Apology"
+  ],
+  [
+   "2030-01-28",
+   "Maya Didn’t Come"
+  ],
+  [
+   "2030-01-28",
+   "Maya: A Different Reading"
+  ],
+  [
+   "2030-01-29",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2030-01-29",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2030-01-30",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2030-01-30",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2030-01-30",
+   "Marcus: A Request For Help"
+  ],
+  [
+   "2030-01-31",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2030-01-31",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2030-02-01",
+   "Shown: Two Contrasting Monologues, Working"
+  ],
+  [
+   "2030-02-01",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2030-02-01",
+   "Maya: Run Lines Together?"
+  ],
+  [
+   "2030-02-01",
+   "You’re In The Actor Showcase"
+  ],
+  [
+   "2030-02-03",
+   "Ran Lines With Maya"
+  ],
+  [
+   "2030-02-07",
+   "The Director’s Note: Macbeth"
+  ],
+  [
+   "2030-02-07",
+   "Looking Back: Macbeth"
+  ],
+  [
+   "2030-02-07",
+   "Shown: A Self-Tape, Strong"
+  ],
+  [
+   "2030-02-07",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2030-02-08",
+   "Shown: A Self-Tape, Working"
+  ],
+  [
+   "2030-02-08",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2030-02-11",
+   "Maya: An Apology"
+  ],
+  [
+   "2030-02-12",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2030-02-12",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2030-02-12",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2030-02-12",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2030-02-13",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2030-02-13",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2030-02-13",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2030-02-13",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2030-02-13",
+   "Julian: A Different Reading"
+  ],
+  [
+   "2030-02-14",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2030-02-14",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2030-02-14",
+   "Zoe: A Request For Help"
+  ],
+  [
+   "2030-02-15",
+   "Shown: Two Contrasting Monologues, Working"
+  ],
+  [
+   "2030-02-15",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2030-02-20",
+   "Zoe: Run Lines Together?"
+  ],
+  [
+   "2030-02-23",
+   "A Bad Knock"
+  ],
+  [
+   "2030-02-26",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2030-02-26",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2030-02-27",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2030-02-27",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2030-02-28",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2030-02-28",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2030-02-28",
+   "Shown: A Self-Tape, Working"
+  ],
+  [
+   "2030-02-28",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2030-03-01",
+   "Shown: Two Contrasting Monologues, Working"
+  ],
+  [
+   "2030-03-01",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2030-03-01",
+   "Shown: A Self-Tape, Strong"
+  ],
+  [
+   "2030-03-01",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2030-03-12",
+   "Samuel: An Apology"
+  ],
+  [
+   "2030-03-13",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2030-03-19",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2030-03-19",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2030-03-20",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2030-03-20",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2030-03-20",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2030-03-20",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2030-03-20",
+   "Sofia: A Request For Help"
+  ],
+  [
+   "2030-03-21",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2030-03-21",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2030-03-25",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2030-03-25",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2030-03-25",
+   "Shown: Two Contrasting Monologues, Working"
+  ],
+  [
+   "2030-03-25",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2030-03-27",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2030-03-27",
+   "Sofia: Run Lines Together?"
+  ],
+  [
+   "2030-03-28",
+   "Shown: A Self-Tape, Working"
+  ],
+  [
+   "2030-03-28",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2030-03-29",
+   "Shown: A Self-Tape, Working"
+  ],
+  [
+   "2030-03-29",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2030-03-30",
+   "Maya Didn’t Hear Back"
+  ],
+  [
+   "2030-03-30",
+   "Ran Lines With Sofia"
+  ],
+  [
+   "2030-04-01",
+   "The Emergency Room"
+  ],
+  [
+   "2030-04-02",
+   "Julian: A Different Reading"
+  ],
+  [
+   "2030-04-03",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2030-04-03",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2030-04-03",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2030-04-04",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2030-04-04",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2030-04-05",
+   "Samuel: A Request For Help"
+  ],
+  [
+   "2030-04-08",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2030-04-08",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2030-04-08",
+   "Shown: Two Contrasting Monologues, Working"
+  ],
+  [
+   "2030-04-08",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2030-04-16",
+   "Shown: Directions In Daily Life, Strong"
+  ],
+  [
+   "2030-04-17",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2030-04-17",
+   "Shown: Sound Changes And A Text, Strong"
+  ],
+  [
+   "2030-04-17",
+   "Shown: A Song Worked Through, Strong"
+  ],
+  [
+   "2030-04-18",
+   "Shown: A Movement Score, Strong"
+  ],
+  [
+   "2030-04-18",
+   "Shown: A Self-Tape, Strong"
+  ],
+  [
+   "2030-04-18",
+   "Samuel: Run Lines Together?"
+  ],
+  [
+   "2030-04-19",
+   "Shown: A Self-Tape, Working"
+  ],
+  [
+   "2030-04-22",
+   "Shown: A Voice Sequence, Strong"
+  ],
+  [
+   "2030-04-22",
+   "Shown: Two Contrasting Monologues, Working"
+  ],
+  [
+   "2030-04-22",
+   "Maya: A Different Reading"
+  ],
+  [
+   "2030-04-26",
+   "In Good Standing"
+  ],
+  [
+   "2030-04-29",
+   "The Actor Showcase In New York"
+  ],
+  [
+   "2030-04-30",
+   "The Actor Showcase In New York"
+  ],
+  [
+   "2030-05-07",
+   "The Actor Showcase In Los Angeles"
+  ],
+  [
+   "2030-05-10",
+   "The School’s Follow-Up After The Showcase"
+  ],
+  [
+   "2030-05-17",
+   "A Meeting Is Set At Halberd Talent"
+  ],
+  [
+   "2030-05-20",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2030-05-20",
+   "Your Equity Initiation Fee"
+  ],
+  [
+   "2030-05-20",
+   "Actors’ Equity Association: $600.00 Paid"
+  ],
+  [
+   "2030-05-20",
+   "Your MFA Is Conferred"
+  ],
+  [
+   "2030-05-24",
+   "You Met Thomas Ashgrove’s Office"
+  ],
+  [
+   "2030-05-29",
+   "Thomas Ashgrove Offered You Representation"
+  ],
+  [
+   "2030-06-03",
+   "Submitted For Ferris"
+  ],
+  [
+   "2030-06-05",
+   "A Self-Tape For Ferris"
+  ],
+  [
+   "2030-06-10",
+   "Not Cast As Ferris"
+  ],
+  [
+   "2030-06-14",
+   "Happy Birthday: 28"
+  ],
+  [
+   "2030-06-17",
+   "Submitted For Desk Clerk"
+  ],
+  [
+   "2030-06-19",
+   "A Self-Tape For Desk Clerk"
+  ],
+  [
+   "2030-06-24",
+   "Submitted For Tobias Marsh"
+  ],
+  [
+   "2030-06-24",
+   "Submitted For Jess"
+  ],
+  [
+   "2030-06-26",
+   "An Audition For Tobias Marsh"
+  ],
+  [
+   "2030-06-26",
+   "A Self-Tape For Jess"
+  ],
+  [
+   "2030-06-26",
+   "Not Cast As Desk Clerk"
+  ],
+  [
+   "2030-07-01",
+   "Submitted For Callum"
+  ],
+  [
+   "2030-07-02",
+   "Not Cast As Tobias Marsh"
+  ],
+  [
+   "2030-07-03",
+   "An Audition For Callum"
+  ],
+  [
+   "2030-07-09",
+   "Not Cast As Callum"
+  ],
+  [
+   "2030-07-10",
+   "An Audition For Felix"
+  ],
+  [
+   "2030-07-17",
+   "A Self-Tape For Robin"
+  ],
+  [
+   "2030-07-18",
+   "Not Cast As Felix"
+  ],
+  [
+   "2030-07-26",
+   "A New Card Is On Its Way"
+  ],
+  [
+   "2030-08-01",
+   "Your Health Cover Ended"
+  ],
+  [
+   "2030-08-01",
+   "You Wrapped Static On Route 9"
+  ],
+  [
+   "2030-08-08",
+   "Pay Held For You At Halberd Talent"
+  ],
+  [
+   "2030-08-13",
+   "Paid On From Halberd Talent"
+  ],
+  [
+   "2030-08-19",
+   "Submitted For Ferris"
+  ],
+  [
+   "2030-08-20",
+   "You Wrapped Last Bus To Eastview"
+  ],
+  [
+   "2030-08-21",
+   "A Self-Tape For Ferris"
+  ],
+  [
+   "2030-08-22",
+   "Pay Held For You At Halberd Talent"
+  ],
+  [
+   "2030-08-26",
+   "A Callback For Ferris"
+  ],
+  [
+   "2030-08-27",
+   "Paid On From Halberd Talent"
+  ]
+ ],
+ "b20": {
+  "life": "old-leave-ff837dfa",
+  "table": {
+   "who": "as saved",
+   "means": "as saved",
+   "papers": "as saved",
+   "genres": "as saved",
+   "player": "attentive, then whatever comes"
+  },
+  "played": "brief 13’s attentive player, papers kept",
+  "career": "graduatingActor (the agreement accepted if offered) and, after the School, unsignedActor’s open calls too, represented or not: whatever comes",
+  "nearest": [],
+  "transitions": [
+   {
+    "at": "2028-03-12T12:35",
+    "what": "opened",
+    "same": true,
+    "bytes": 884725,
+    "credit": {
+     "at": "2028-03-12T12:35",
+     "what": "opened",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 93912,
+       "owed": 0
+      }
+     ],
+     "score": 849,
+     "income12": 869.42,
+     "bank": 496538.32
+    }
+   },
+   {
+    "at": "2028-04-28T21:10",
+    "what": "term 3 reviewed: good",
+    "same": true,
+    "bytes": 1065189,
+    "credit": {
+     "at": "2028-04-28T21:10",
+     "what": "term 3 reviewed: good",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 112694,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 1283.42,
+     "bank": 496465.83
+    }
+   },
+   {
+    "at": "2028-12-08T22:15",
+    "what": "term 4 reviewed: good",
+    "same": true,
+    "bytes": 1440439,
+    "credit": {
+     "at": "2028-12-08T22:15",
+     "what": "term 4 reviewed: good",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 135233,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 2939.43,
+     "bank": 493420.22
+    }
+   },
+   {
+    "at": "2029-01-01T12:15",
+    "what": "the end of 2028",
+    "same": true,
+    "bytes": 1451306,
+    "credit": {
+     "at": "2029-01-01T12:15",
+     "what": "the end of 2028",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 135233,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3077.43,
+     "bank": 493183.73
+    }
+   },
+   {
+    "at": "2029-04-27T21:20",
+    "what": "term 5 reviewed: good",
+    "same": true,
+    "bytes": 1658622,
+    "credit": {
+     "at": "2029-04-27T21:20",
+     "what": "term 5 reviewed: good",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 2939.31,
+     "bank": 491211.47
+    }
+   },
+   {
+    "at": "2029-12-14T22:15",
+    "what": "term 6 reviewed: good",
+    "same": true,
+    "bytes": 1807140,
+    "credit": {
+     "at": "2029-12-14T22:15",
+     "what": "term 6 reviewed: good",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3343.01,
+     "bank": 75157.59
+    }
+   },
+   {
+    "at": "2030-01-01T12:15",
+    "what": "the end of 2029",
+    "same": true,
+    "bytes": 1806845,
+    "credit": {
+     "at": "2030-01-01T12:15",
+     "what": "the end of 2029",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3477.5,
+     "bank": 74967.59
+    }
+   },
+   {
+    "at": "2030-04-26T21:20",
+    "what": "term 7 reviewed: good",
+    "same": true,
+    "bytes": 1898369,
+    "credit": {
+     "at": "2030-04-26T21:20",
+     "what": "term 7 reviewed: good",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3467.32,
+     "bank": 72827.44
+    }
+   },
+   {
+    "at": "2030-05-20T14:40",
+    "what": "the School’s end: graduated",
+    "same": true,
+    "bytes": 1910587,
+    "credit": {
+     "at": "2030-05-20T14:40",
+     "what": "the School’s end: graduated",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3463.92,
+     "bank": 70987.44
+    }
+   },
+   {
+    "at": "2030-06-03T15:00",
+    "what": "a signing",
+    "same": true,
+    "bytes": 1918246,
+    "credit": {
+     "at": "2030-06-03T15:00",
+     "what": "a signing",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3460.41,
+     "bank": 70847.44
+    }
+   },
+   {
+    "at": "2030-07-17T21:45",
+    "what": "the first booking: Jess in Static On Route 9",
+    "same": true,
+    "bytes": 1959523,
+    "credit": {
+     "at": "2030-07-17T21:45",
+     "what": "the first booking: Jess in Static On Route 9",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3457.02,
+     "bank": 70407.44
+    }
+   },
+   {
+    "at": "2030-07-29T22:00",
+    "what": "the first work day",
+    "same": true,
+    "bytes": 1967218,
+    "credit": {
+     "at": "2030-07-29T22:00",
+     "what": "the first work day",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3457.02,
+     "bank": 70277.44
+    }
+   },
+   {
+    "at": "2030-08-13T16:00",
+    "what": "the first pay",
+    "same": true,
+    "bytes": 1972424,
+    "credit": {
+     "at": "2030-08-13T16:00",
+     "what": "the first pay",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3453.51,
+     "bank": 71153.2
+    }
+   }
+  ],
+  "credit": [
+   {
+    "at": "2028-03-12T12:35",
+    "what": "opened",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 93912,
+      "owed": 0
+     }
+    ],
+    "score": 849,
+    "income12": 869.42,
+    "bank": 496538.32
+   },
+   {
+    "at": "2028-04-28T21:10",
+    "what": "term 3 reviewed: good",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 112694,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 1283.42,
+    "bank": 496465.83
+   },
+   {
+    "at": "2028-12-08T22:15",
+    "what": "term 4 reviewed: good",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 135233,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 2939.43,
+    "bank": 493420.22
+   },
+   {
+    "at": "2029-01-01T12:15",
+    "what": "the end of 2028",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 135233,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3077.43,
+    "bank": 493183.73
+   },
+   {
+    "at": "2029-04-27T21:20",
+    "what": "term 5 reviewed: good",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 2939.31,
+    "bank": 491211.47
+   },
+   {
+    "at": "2029-12-14T22:15",
+    "what": "term 6 reviewed: good",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3343.01,
+    "bank": 75157.59
+   },
+   {
+    "at": "2030-01-01T12:15",
+    "what": "the end of 2029",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3477.5,
+    "bank": 74967.59
+   },
+   {
+    "at": "2030-04-26T21:20",
+    "what": "term 7 reviewed: good",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3467.32,
+    "bank": 72827.44
+   },
+   {
+    "at": "2030-05-20T14:40",
+    "what": "the School’s end: graduated",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3463.92,
+    "bank": 70987.44
+   },
+   {
+    "at": "2030-06-03T15:00",
+    "what": "a signing",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3460.41,
+    "bank": 70847.44
+   },
+   {
+    "at": "2030-07-17T21:45",
+    "what": "the first booking: Jess in Static On Route 9",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3457.02,
+    "bank": 70407.44
+   },
+   {
+    "at": "2030-07-29T22:00",
+    "what": "the first work day",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3457.02,
+    "bank": 70277.44
+   },
+   {
+    "at": "2030-08-13T16:00",
+    "what": "the first pay",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3453.51,
+    "bank": 71153.2
+   },
+   {
+    "at": "2030-09-01T11:15",
+    "what": "the journey’s end",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 4932,
+    "bank": 70383.07
+   }
+  ],
+  "forks": [
+   {
+    "why": "a rehearsal with a partner booked for 2028-03-13T23:00 on A Choreographed Sequence",
+    "at": "2028-03-12T14:55",
+    "days": 14,
+    "same": true,
+    "bytes": [
+     949255,
+     949255
+    ],
+    "straight": {
+     "now": "2028-03-26T15:45",
+     "bank": 496526.32,
+     "standing": "good",
+     "notices": [
+      "A Doctor’s Appointment",
+      "Your Understudy Run-Through",
+      "Ethan Didn’t Come",
+      "A Doctor’s Visit",
+      "Shown: A Simulated Rehearsal (The Run), Strong",
+      "Acting I: A Simulated Rehearsal",
+      "Shown: A Movement Score, Strong",
+      "The Body As Source I: A Movement Score",
+      "Ethan: An Apology",
+      "You’re On Tonight As Vanya",
+      "You Went On As Vanya",
+      "Shown: A Voice Sequence, Working",
+      "Voice I: A Voice Sequence",
+      "Shown: A Choreographed Sequence, Working",
+      "Acting Intimacy And Combat For The Stage: A Choreographed Sequence",
+      "Marcus Didn’t Come",
+      "Shown: Sound Changes And A Text, Strong",
+      "Speech And Accents I: Sound Changes And A Text",
+      "Shown: Directions In Daily Life, Strong",
+      "Alexander Technique I: Directions In Daily Life",
+      "Marcus: A Different Reading",
+      "Your Card Limit Went Up",
+      "Shown: A Simulated Rehearsal (At The Table), Working",
+      "Shown: A Play In Its Context, Strong",
+      "Text And Context Across The Repertory: A Play In Its Context",
+      "Marcus Asks To Rehearse",
+      "Shown: Table Work, Strong",
+      "Text Analysis I: The Actor’s Table Work: Table Work",
+      "Zoe: A Request For Help"
+     ],
+     "opportunities": [
+      "eastview open"
+     ],
+     "engagements": [],
+     "work": [
+      "Uncle Vanya 47.7",
+      "A Simulated Rehearsal 65.1",
+      "A Movement Score 66.3",
+      "Uncle Vanya 46.2",
+      "A Voice Sequence 63.6",
+      "A Choreographed Sequence 64.2",
+      "Sound Changes And A Text 66.3",
+      "Directions In Daily Life 65.7",
+      "A Simulated Rehearsal 59.5",
+      "A Play In Its Context 73.1",
+      "Table Work 73.7"
+     ],
+     "transactions": 634
+    },
+    "reopened": {
+     "now": "2028-03-26T15:45",
+     "bank": 496526.32,
+     "standing": "good",
+     "notices": [
+      "A Doctor’s Appointment",
+      "Your Understudy Run-Through",
+      "Ethan Didn’t Come",
+      "A Doctor’s Visit",
+      "Shown: A Simulated Rehearsal (The Run), Strong",
+      "Acting I: A Simulated Rehearsal",
+      "Shown: A Movement Score, Strong",
+      "The Body As Source I: A Movement Score",
+      "Ethan: An Apology",
+      "You’re On Tonight As Vanya",
+      "You Went On As Vanya",
+      "Shown: A Voice Sequence, Working",
+      "Voice I: A Voice Sequence",
+      "Shown: A Choreographed Sequence, Working",
+      "Acting Intimacy And Combat For The Stage: A Choreographed Sequence",
+      "Marcus Didn’t Come",
+      "Shown: Sound Changes And A Text, Strong",
+      "Speech And Accents I: Sound Changes And A Text",
+      "Shown: Directions In Daily Life, Strong",
+      "Alexander Technique I: Directions In Daily Life",
+      "Marcus: A Different Reading",
+      "Your Card Limit Went Up",
+      "Shown: A Simulated Rehearsal (At The Table), Working",
+      "Shown: A Play In Its Context, Strong",
+      "Text And Context Across The Repertory: A Play In Its Context",
+      "Marcus Asks To Rehearse",
+      "Shown: Table Work, Strong",
+      "Text Analysis I: The Actor’s Table Work: Table Work",
+      "Zoe: A Request For Help"
+     ],
+     "opportunities": [
+      "eastview open"
+     ],
+     "engagements": [],
+     "work": [
+      "Uncle Vanya 47.7",
+      "A Simulated Rehearsal 65.1",
+      "A Movement Score 66.3",
+      "Uncle Vanya 46.2",
+      "A Voice Sequence 63.6",
+      "A Choreographed Sequence 64.2",
+      "Sound Changes And A Text 66.3",
+      "Directions In Daily Life 65.7",
+      "A Simulated Rehearsal 59.5",
+      "A Play In Its Context 73.1",
+      "Table Work 73.7"
+     ],
+     "transactions": 634
+    },
+    "secs": 4
+   },
+   {
+    "why": "a union bill due 2031-05-20T14:00: Initiation fee, part 2 of 3",
+    "at": "2030-05-20T14:40",
+    "days": 14,
+    "same": true,
+    "bytes": [
+     1918246,
+     1918246
+    ],
+    "straight": {
+     "now": "2030-06-03T15:00",
+     "bank": 70847.44,
+     "standing": "graduated",
+     "notices": [
+      "A Doctor’s Visit",
+      "You Met Thomas Ashgrove’s Office",
+      "Thomas Ashgrove Offered You Representation",
+      "Submitted For Ferris"
+     ],
+     "opportunities": [
+      "gull-season-ferris submitted"
+     ],
+     "engagements": [],
+     "work": [],
+     "transactions": 1524
+    },
+    "reopened": {
+     "now": "2030-06-03T15:00",
+     "bank": 70847.44,
+     "standing": "graduated",
+     "notices": [
+      "A Doctor’s Visit",
+      "You Met Thomas Ashgrove’s Office",
+      "Thomas Ashgrove Offered You Representation",
+      "Submitted For Ferris"
+     ],
+     "opportunities": [
+      "gull-season-ferris submitted"
+     ],
+     "engagements": [],
+     "work": [],
+     "transactions": 1524
+    },
+    "secs": 15
+   },
+   {
+    "why": "an audition (self-tape) set for 2030-06-09T22:00, Ferris in Gull Season",
+    "at": "2030-06-05T14:00",
+    "days": 14,
+    "same": true,
+    "bytes": [
+     1924094,
+     1924094
+    ],
+    "straight": {
+     "now": "2030-06-19T14:15",
+     "bank": 70687.44,
+     "standing": "graduated",
+     "notices": [
+      "A Self-Tape For Ferris",
+      "Not Cast As Ferris",
+      "Happy Birthday: 28",
+      "Submitted For Desk Clerk",
+      "A Self-Tape For Desk Clerk"
+     ],
+     "opportunities": [
+      "gull-season-ferris passed",
+      "calloway-files audition"
+     ],
+     "engagements": [],
+     "work": [
+      "Ferris, Gull Season: Audition, Taped 61.3"
+     ],
+     "transactions": 1540
+    },
+    "reopened": {
+     "now": "2030-06-19T14:15",
+     "bank": 70687.44,
+     "standing": "graduated",
+     "notices": [
+      "A Self-Tape For Ferris",
+      "Not Cast As Ferris",
+      "Happy Birthday: 28",
+      "Submitted For Desk Clerk",
+      "A Self-Tape For Desk Clerk"
+     ],
+     "opportunities": [
+      "gull-season-ferris passed",
+      "calloway-files audition"
+     ],
+     "engagements": [],
+     "work": [
+      "Ferris, Gull Season: Audition, Taped 61.3"
+     ],
+     "transactions": 1540
+    },
+    "secs": 20
+   },
+   {
+    "why": "an offer standing: An Offer For Jess",
+    "at": "2030-07-03T21:15",
+    "days": 14,
+    "same": true,
+    "bytes": [
+     1959523,
+     1959523
+    ],
+    "straight": {
+     "now": "2030-07-17T21:45",
+     "bank": 70407.44,
+     "standing": "graduated",
+     "notices": [
+      "Not Cast As Callum",
+      "An Audition For Felix",
+      "A Self-Tape For Robin"
+     ],
+     "opportunities": [
+      "route-nine booked",
+      "calder-street-callum passed",
+      "paper-moons audition",
+      "eastview audition"
+     ],
+     "engagements": [
+      "route-nine booked 0 worked"
+     ],
+     "work": [
+      "Callum, A House On Calder Street: Audition 69.8",
+      "Felix, Paper Moons: Audition 72.2"
+     ],
+     "transactions": 1568
+    },
+    "reopened": {
+     "now": "2030-07-17T21:45",
+     "bank": 70407.44,
+     "standing": "graduated",
+     "notices": [
+      "Not Cast As Callum",
+      "An Audition For Felix",
+      "A Self-Tape For Robin"
+     ],
+     "opportunities": [
+      "route-nine booked",
+      "calder-street-callum passed",
+      "paper-moons audition",
+      "eastview audition"
+     ],
+     "engagements": [
+      "route-nine booked 0 worked"
+     ],
+     "work": [
+      "Callum, A House On Calder Street: Audition 69.8",
+      "Felix, Paper Moons: Audition 72.2"
+     ],
+     "transactions": 1568
+    },
+    "secs": 16
+   }
+  ],
+  "workDays": [
+   {
+    "at": "2030-07-29T11:00",
+    "project": "Static On Route 9",
+    "role": "Jess",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2030-07-30T11:00",
+    "project": "Static On Route 9",
+    "role": "Jess",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2030-07-31T11:00",
+    "project": "Static On Route 9",
+    "role": "Jess",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2030-08-01T11:00",
+    "project": "Static On Route 9",
+    "role": "Jess",
+    "status": "worked",
+    "band": "strong",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2030-08-19T11:00",
+    "project": "Last Bus To Eastview",
+    "role": "Robin",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2030-08-20T11:00",
+    "project": "Last Bus To Eastview",
+    "role": "Robin",
+    "status": "worked",
+    "band": "strong",
+    "authorized": true,
+    "papers": []
+   }
+  ],
+  "errors": [],
+  "opening": {
+   "fixture": "tests/fixtures/old-leave-ff837dfa.json.gz",
+   "at": "2028-03-12T12:35",
+   "schema": 94,
+   "bytesSaved": 882922,
+   "bytesOpened": 884725,
+   "openedAgainSame": true,
+   "breaches": [],
+   "audit": [],
+   "standing": "good",
+   "termsBegun": 4,
+   "pro": {
+    "since": "2028-03-12T12:35"
+   },
+   "unread": [
+    "2028-02-24 Voice I: A Voice Sequence",
+    "2028-02-24 Shown: Table Work, Unready",
+    "2028-02-24 Text Analysis I: The Actor’s Table Work: Table Work",
+    "2028-02-25 Shown: Directions In Daily Life, Unready",
+    "2028-02-25 Alexander Technique I: Directions In Daily Life",
+    "2028-02-28 Shown: A Simulated Rehearsal (At The Table), Strong",
+    "2028-03-01 Your Public Cover Ended At Renewal",
+    "2028-03-01 Still There: Work With Your Partner",
+    "2028-03-01 Grace Asks To Rehearse",
+    "2028-03-01 Shown: A Play In Its Context, Strong",
+    "2028-03-01 Text And Context Across The Repertory: A Play In Its Context",
+    "2028-03-03 Grace: Run Lines Together?"
+   ]
+  },
+  "startedAt": 1836477300000,
+  "careerFrom": "2030-01-07T14:15",
+  "schoolEnd": "2030-05-20T14:00",
+  "journeyEnd": 1914465600000
+ },
+ "coherence": {
+  "school, attributes and genres": {
+   "pass": true,
+   "evidence": [
+    "standing graduated, reviews 0:good 3:good 4:good 5:good 6:good 7:good, credits 2028 Carlotta Festival Of New Plays (A Leading Part In A New Play, lead); 2028 Yale Rep’s March Production (Vanya); 2028 Directors’ Thesis Production I (Woyzeck, lead); 2029 Directors’ Thesis Production III (Hjalmar Ekdal, lead); 2029 Directors’ Thesis Production II (Melchior Gabor, lead); 2030 Shakespeare Repertory Project I (Macbeth, lead)",
+    "genres practiced drama 67, tragedy 38, coming_of_age 30.2, tragicomedy 28.8, domestic_drama 21.1, romantic_comedy 19, psychological_horror 18.6, horror 18.6, comedy 9.8, satire 9.8, historical_drama 6.6, supernatural 6.6; from plays and jobs: tragicomedy, drama, tragedy, comedy, satire, domestic_drama, coming_of_age, historical_drama, supernatural, psychological_horror, horror, romantic_comedy; loved at creation: none",
+    "development (brief 13's check 3): not run"
+   ],
+   "fails": []
+  },
+  "ledger": {
+   "pass": true,
+   "evidence": [
+    "15 accounts (4 the player's), 1620 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
+    "the player's: checking Chase Total Checking 70383.07; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0; escrow Held For You By Halberd Talent 0"
+   ],
+   "fails": []
+  },
+  "papers and work": {
+   "pass": true,
+   "evidence": [
+    "documents: license Class D (Operator) driver license valid to 2028-06-14",
+    "work days 6: 2030-07-29 Jess worked; 2030-07-30 Jess worked; 2030-07-31 Jess worked; 2030-08-01 Jess worked; 2030-08-19 Robin worked; 2030-08-20 Robin worked",
+    "authorized now true; OPT: OPT is for a student on an F-1, and you’re a US citizen.; out of status never"
+   ],
+   "fails": []
+  },
+  "relationships and credits": {
+   "pass": true,
+   "evidence": [
+    "classmates 15: bonds 33 19 7 17 25 28 68 33 74 58 17 22 11 27 13",
+    "agents: thomas-ashgrove represented (discovered,introduced,checked,sent,meeting-set,meeting-kept,offer,accepted,represented,opportunity,submitted,audition,audition,passed,opportunity,submitted,audition,audition,opportunity,opportunity,submitted,submitted,audition,audition,passed,audition,opportunity,submitted,audition,passed,audition,offer,booked,audition,passed,offer,booked,success,opportunity,submitted,success,audition,audition,callback,callback); agreements accepted",
+    "engagements: Jess in Static On Route 9 finished (4 worked, 1/1 paid); Robin in Last Bus To Eastview finished (2 worked, 1/1 paid)",
+    "credits: screen Jess in Static On Route 9 shot strong; screen Robin in Last Bus To Eastview shot strong"
+   ],
+   "fails": []
+  },
+  "breaches": {
+   "pass": true,
+   "evidence": [
+    "0 breaches"
+   ],
+   "fails": []
+  }
+ },
+ "routes": {
+  "represented": [
+   "agreement with thomas-ashgrove signed 2030-05-29"
+  ],
+  "unsigned": [],
+  "success": [
+   "Jess in Static On Route 9: finished, 1 payments received",
+   "Robin in Last Bus To Eastview: finished, 1 payments received",
+   "audition for route-nine went on (working)",
+   "audition for eastview went on (working)",
+   "audition for gull-season-ferris went on (strong)"
+  ],
+  "failure": [
+   "audition for gull-season-ferris working: not cast (chance 23%)",
+   "audition for calloway-files working: not cast (chance 8%)",
+   "audition for winter-ledger strong: not cast (chance 43%)",
+   "audition for calder-street-callum strong: not cast (chance 54%)",
+   "audition for paper-moons strong: not cast (chance 40%)"
+  ],
+  "delay": [
+   "2027-01-27 Your Leave Has Begun",
+   "2028-01-03 Back From Your Leave"
+  ],
+  "decline": [],
+  "interruption": [
+   "2028-03-12 care visit: A doctor’s visit, Fair Haven Community Health Care; care visit: A doctor’s visit, Fair Haven Community Health Care; care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; care visit: A specialist, referred, Fair Haven Community Health Care; care visit: A doctor’s visit, Fair Haven Community Health Care; care visit: A doctor’s visit, Fair Haven Community Health Care",
+   "2030-02-23 injury bruise 5 days",
+   "2030-04-01 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2030-04-01",
+   "2030-05-21 care visit: A doctor’s visit, Yale Health Center, Student Health"
+  ],
+  "recovery": [
+   "2030-02-24 to 2030-02-28 hurt: condition 91.1 the morning before, 91.1 at its start, 91.1 a week after its end",
+   "2030-04-01 to 2030-04-01 in hospital: condition 91.1 the morning before, 71.1 at its start, 84.6 a week after its end"
+  ],
+  "clash": [],
+  "littleMoney": [],
+  "poorPreparation": [
+   "assignment_00000c Unready",
+   "assignment_00000d Unready",
+   "assignment_00000e Unready",
+   "assignment_00000f Unready",
+   "assignment_00000p Unready"
+  ],
+  "strongPreparation": [
+   "assignment_000003 strong",
+   "assignment_000004 strong",
+   "assignment_000008 strong",
+   "assignment_000009 strong",
+   "assignment_00000b strong"
+  ],
+  "genreStrengths": [
+   "strongest practiced: drama 67, tragedy 38, coming_of_age 30.2; loved at creation: "
+  ],
+  "fatigue": [],
+  "workAuthorization": []
+ }
+}
