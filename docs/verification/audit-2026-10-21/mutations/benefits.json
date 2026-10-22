@@ -1,0 +1,214 @@
+[
+ {
+  "id": "B20-BENEFITS-1",
+  "what": "A week certified reads the School's work alone again, the career's work days not counted (the repair undone)",
+  "file": "src/engine/systems/unemployment.ts",
+  "find": "const worked = { pay: school.pay + career.pay, hours: school.hours + career.hours };",
+  "replace": "const worked = { pay: school.pay, hours: school.hours };",
+  "tests": [
+   "tests/b20-benefits-unemployment.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-2",
+  "what": "A lien is in error on the tax alone again, the penalties and interest it secured not read (the repair undone)",
+  "file": "src/engine/systems/statetax.ts",
+  "find": "return Math.max(0, own - paidTax) + Math.round(beyondTax * (assessed > 0 ? own / assessed : 0));",
+  "replace": "return Math.max(0, own - paidTax);",
+  "tests": [
+   "tests/b20-benefits-reach.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-3",
+  "what": "A state plan's approval says its months without agreeing the noun again: one month as '1 months' (the repair undone)",
+  "file": "src/engine/systems/statetax.ts",
+  "find": "a month for ${plural(p.months, 'month')}, from",
+  "replace": "a month for ${p.months} months, from",
+  "tests": [
+   "tests/b20-benefits-reach.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-4",
+  "what": "The base period reads no quarter's wages",
+  "file": "src/engine/systems/unemployment.ts",
+  "find": "const read = (keys: string[]) => keys.map((k) => record[k]?.wages ?? 0);",
+  "replace": "const read = (keys: string[]) => keys.map(() => 0);",
+  "tests": [
+   "tests/b20-benefits-unemployment.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-5",
+  "what": "Wages paid aren't put into their quarter, so no claim's base period sees them",
+  "file": "src/engine/systems/earnings.ts",
+  "find": "q.wages += pay.gross;",
+  "replace": "q.wages += 0;",
+  "tests": [
+   "tests/b20-benefits-unemployment.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-6",
+  "what": "A week of unemployment paid isn't put on the year's record, so the return doesn't read it",
+  "file": "src/engine/systems/earnings.ts",
+  "find": "y.unemployment += amount;",
+  "replace": "y.unemployment += 0;",
+  "tests": [
+   "tests/b20-benefits-unemployment.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-7",
+  "what": "SNAP's month reads no income: the gross the month before is taken as nothing",
+  "file": "src/engine/systems/assistance.ts",
+  "find": "due = toSave(s, snapMonth(inLocal(s, income.gross, 'USD')",
+  "replace": "due = toSave(s, snapMonth(inLocal(s, 0, 'USD')",
+  "tests": [
+   "tests/b20-benefits-safetynet.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-8",
+  "what": "SNAP counts a student's work-study as earned income, which 7 CFR 273.9(c)(3) leaves out",
+  "file": "src/engine/systems/assistance.ts",
+  "find": "return { gross: k.wages + k.unearned, earned: k.wages, workStudy: k.workStudy };",
+  "replace": "return { gross: k.wages + k.unearned + k.workStudy, earned: k.wages + k.workStudy, workStudy: k.workStudy };",
+  "tests": [
+   "tests/b20-benefits-safetynet.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-9",
+  "what": "The return leaves work-study wages out of the year's income",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "const otherIncome = y.acting + y.workStudy + y.unemployment",
+  "replace": "const otherIncome = y.acting + y.unemployment",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-10",
+  "what": "What a paycheck withheld isn't put on the year's record, so the return credits none of it",
+  "file": "src/engine/systems/earnings.ts",
+  "find": "y.withheld += pay.withheld ?? 0;",
+  "replace": "y.withheld += 0;",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-11",
+  "what": "The IRS's refund is never paid into the bank on its day",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "if (back > 0) s.post({ memo: `Federal tax refund",
+  "replace": "if (back < 0) s.post({ memo: `Federal tax refund",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-12",
+  "what": "A return filed late is charged no late penalty",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "    r.penalty = latePenalty(irs, r.due, s.now, cur);",
+  "replace": "    r.penalty = 0;",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-13",
+  "what": "The IRS's assessment of a return never filed charges no late penalty",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "const penalty = latePenalty(federalPart, r.due, s.now, cur);",
+  "replace": "const penalty = 0;",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-14",
+  "what": "A plan payment the bank can't make is passed over: no CP523, no default, no end",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "    // Missed: notice CP523, thirty days to catch up.",
+  "replace": "    // Missed: notice CP523, thirty days to catch up.\n    return;",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-15",
+  "what": "A plan's next payment is put 60 days on instead of 30",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "if (p.kind === 'long') { p.nextDue = s.now + 30 * MS_DAY; s.schedule({ at: p.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } }); return; }",
+  "replace": "if (p.kind === 'long') { p.nextDue = s.now + 60 * MS_DAY; s.schedule({ at: p.nextDue, kind: TAX_PLAN_KIND, label: 'IRS Payment Plan: A Payment', category: 'personal', priority: 25, payload: { personId: person.id } }); return; }",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-16",
+  "what": "The next tax season is put two years on, so a year's return is never made",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "s.schedule({ at: instantFromZoned({ year: p.year + 1, month: 2, day: 1, hour: 9 }, HOME), kind: TAX_SEASON_KIND",
+  "replace": "s.schedule({ at: instantFromZoned({ year: p.year + 2, month: 2, day: 1, hour: 9 }, HOME), kind: TAX_SEASON_KIND",
+  "tests": [
+   "tests/b20-benefits-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-17",
+  "what": "A state plan's Catch Up takes the money and applies none of it to what's owed",
+  "file": "src/engine/systems/statetax.ts",
+  "find": "payStateOldest(s, person, state, due, 'plan');\n    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_PLAN_END_KIND && one.payload.personId === person.id && one.payload.state === state) s.timeline.cancel(one.id, s.now);",
+  "replace": "for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === STATE_PLAN_END_KIND && one.payload.personId === person.id && one.payload.state === state) s.timeline.cancel(one.id, s.now);",
+  "tests": [
+   "tests/b20-benefits-reach.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-18",
+  "what": "A return past its due date and unfiled weighs on nobody: the day's worry doesn't read it",
+  "file": "src/engine/systems/spending.ts",
+  "find": "if (late > 0) out.push({ kind: 'return_late', amount: late });",
+  "replace": "",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-19",
+  "what": "A state plan in force no longer holds the state's letters back",
+  "file": "src/engine/systems/statetax.ts",
+  "find": "    if (plan && ['pending', 'active', 'missed'].includes(plan.status)) return;\n    accrueState(sd, stateDueOf(r), s.now);",
+  "replace": "    accrueState(sd, stateDueOf(r), s.now);",
+  "tests": [
+   "tests/b20-benefits-reach.test.ts",
+   "tests/scope-taxpapers.test.ts",
+   "tests/liens-and-arrangements.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-20",
+  "what": "The IRS's reconsideration says the penalty and interest were reduced in proportion whatever the ratio again (the repair undone)",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "${ratio < 1 ? ', with the penalty and interest reduced in proportion.' : '. Your return shows the same tax, so its penalty and interest stand.'}",
+  "replace": ", with the penalty and interest reduced in proportion.",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ },
+ {
+  "id": "B20-BENEFITS-21",
+  "what": "New tax under a plan joins it whatever its size: no CP523, nothing to revise",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "if (added <= PLAN.addedPayments * p.monthly) { planNote(p, sim.now, 'New tax joined the plan', added); return; }",
+  "replace": "if (added <= Infinity) { planNote(p, sim.now, 'New tax joined the plan', added); return; }",
+  "tests": [
+   "tests/b20-benefits-tax.test.ts"
+  ]
+ }
+]

@@ -39,6 +39,8 @@ import { payeeAccount } from './cash';
 import { rateOn } from '../content/rates';
 import { claimCredit, livesInBritain } from './universalcredit';
 import { claimAtHome, livesInIreland, livesInMexicoCity } from './homebenefits';
+import { PAY, weekOf } from './propay';
+import { inSaveMoney } from './banking';
 
 export const BENEFIT_WEEK_KIND = 'benefits.week';
 
@@ -150,6 +152,36 @@ export function weekBenefit(claim: Claim, hours: number, pay: Money, into = 'USD
   return Math.max(0, Math.round(claim.weekly - Math.max(0, pay - kept)));
 }
 
+/**
+ * The career's work done between two moments, by when it was done, paid yet or not (from 2026-10-21, brief 20's benefits
+ * area): each work day an engagement's log has as worked in the window, at the pay's eight hours a day (`PAY.hoursPerDay`,
+ * as the pay's memo counts them, an ASSUMPTION of the pay's), and that day's share of the payment for its days, the
+ * week's salary or the days' rate over the days it pays for that weren't missed or called off. A claimant reports the
+ * week's work "even if you do not get paid until later", as `workDoneIn` reads the School's. Until 2026-10-21 a week
+ * certified read the School's work alone, so a claimant who worked four shoot days of Route Nine in the week to
+ * Sunday 13 June 2027 was paid New York's full $314 for it, where a week of over 30 hours pays nothing
+ * (tests/b20-benefits-unemployment.test.ts).
+ */
+export function careerWorkIn(sim: Simulation, person: Person, from: Instant, to: Instant): { pay: Money; hours: number } {
+  let pay = 0;
+  let hours = 0;
+  for (const e of person.pro?.engagements ?? []) {
+    const done = (i: number) => e.log?.find((x) => x.day === i)?.status;
+    for (const l of e.log ?? []) {
+      if (l.status !== 'worked' || l.at < from || l.at >= to) continue;
+      hours += PAY.hoursPerDay;
+      const day = e.days[l.day];
+      const within = (p: (typeof e.pay)[number], d: { from: Instant }) => { const w = weekOf(p); return d.from >= w.from && d.from <= w.to; };
+      const p = day && e.pay.find((x) => within(x, day));
+      if (!p || p.deferred) continue;
+      // Its days: not those missed, and on work called off (a replacement), those worked alone, as its pay was cut to them.
+      const days = e.days.filter((d, i) => within(p, d) && (e.status === 'canceled' ? done(i) === 'worked' : done(i) !== 'missed')).length;
+      pay += inSaveMoney(sim, p.promised, p.currency) / Math.max(1, days);
+    }
+  }
+  return { pay: Math.round(pay), hours };
+}
+
 function nextSunday(from: Instant, zone: string): Instant {
   const p = zonedParts(from, zone);
   for (let n = 1; n <= 7; n += 1) {
@@ -219,8 +251,10 @@ export function registerUnemployment(sim: Simulation): void {
     if (!state) throw new CommandError('Unemployment is paid in the game only in New York, California and Connecticut, and you’d need to have worked or to live in one of them.');
     const record = unemploymentOf(person);
     if (record.claim) throw new CommandError('You already have a claim open.');
-    // A claim was refused on a job until the career went in the scope reset of 2026-10-09; there are no jobs to be on.
-    // In Connecticut a full-time student isn't available for work (from 2026-10-10, `studentUnavailable`).
+    // A claim was refused on a job until the career went in the scope reset of 2026-10-09, and this said there were no
+    // jobs to be on until 2026-10-21, when the career had come back (brief 19): a claim filed while booked is taken, and
+    // each week worked pays by its work (`careerWorkIn`). In Connecticut a full-time student isn't available for work
+    // (from 2026-10-10, `studentUnavailable`).
     const studying = studentUnavailable(person, state);
     if (studying) throw new CommandError(studying);
     // A noncitizen is paid only with permission to work in the US (FUTA 3304(a)(14)), from 2026-10-10: until then a
@@ -258,8 +292,11 @@ export function registerUnemployment(sim: Simulation): void {
     // from 2026-10-13 the work done in it, paid then or later (`workDoneIn`), as a claimant reports it. Until then a
     // shift worked before the claim and paid in its first week took that week as worked: a student who withdrew on
     // Wednesday 6 October 2027, her Saturday’s $138 paid a minute later, was paid $1 for the week to Sunday the 10th,
-    // where nothing was worked in it and it pays $93 (found by that day’s evidence pass).
-    const worked = workDoneIn(s, person, item.at - 7 * MS_DAY, item.at);
+    // where nothing was worked in it and it pays $93 (found by that day’s evidence pass). And from 2026-10-21 the career’s
+    // work days in it (`careerWorkIn`): until then a week of shoot days paid the full benefit.
+    const school = workDoneIn(s, person, item.at - 7 * MS_DAY, item.at);
+    const career = careerWorkIn(s, person, item.at - 7 * MS_DAY, item.at);
+    const worked = { pay: school.pay + career.pay, hours: school.hours + career.hours };
     const due = available ? Math.min(weekBenefit(claim, worked.hours, worked.pay, cur), claim.maxTotal - claim.paid) : 0;
     const zone = CITIES.require(homeOf(person)).timeZone;
     const again = () => s.schedule({ at: nextSunday(item.at, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });
