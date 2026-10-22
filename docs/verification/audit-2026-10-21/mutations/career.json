@@ -199,5 +199,15 @@
   "tests": [
    "tests/b20-career-defects.test.ts"
   ]
+ },
+ {
+  "id": "B20-CAREER-21",
+  "what": "the near-name back: the part Robin called Sam again, the short form of the classmate Samuel's given name (D4)",
+  "file": "src/engine/content/careerwork.ts",
+  "find": "role: { part: 'Robin', size: 'lead'",
+  "replace": "role: { part: 'Sam', size: 'lead'",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ]
  }
 ]
