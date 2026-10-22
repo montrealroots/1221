@@ -30,8 +30,10 @@
  * Every figure is worked here from the rule, never asked of the engine's helper:
  * - the lines SLATE keeps: HUSKY D's 138% of 2026's $15,960 a month, 15,960 × 1.38 ÷ 12 = $1,835.40 (2027 reads 2026's);
  *   the credit's floor, 2025's $15,650 ÷ 12 = $1,304.17;
- * - a Capital One 360 Performance Savings account pays 3.00% a year, a 365th a day on the day's balance, at the month's
- *   end: $365,000 for December's 31 days is 365,000 × 0.03 × 31 ÷ 365 = $930.00; $182,500 is $465.00;
+ * - a Capital One 360 Performance Savings account pays 3.00% APY, credited monthly, which is the nominal
+ *   12 × (1.03^(1/12) − 1) = 2.9595% a year, a 365th a day on the day's balance, at the month's end: $369,992 for December's 31 days is
+ *   369,992 × 0.029595 × 31 ÷ 365 = $930.00; $184,996 is $465.00 (until brief 21, 2026-10-22, the 3.00% ran as the
+ *   nominal rate, and $365,000 and $182,500 earned them at 0.03);
  * - (until later on 2026-10-16, brief 09's journeys, HUSKY D began on the first of next month, and every date of the
  *   renewal below was a month later: dated 1 November, decided 6 December, ending with December)
  * - a notice dated on a day is received five days on, and answered by the thirtieth day from then, the 34th day after
@@ -258,7 +260,8 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
   }, 300_000);
 
   // Change the input: the month's income, of any kind (42 CFR 435.552(f)(2)). Until 2026-10-16 interest didn't count.
-  it('PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short”.
+  it('PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $369,992 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $184,996, $465.00, she’s shown the work rules short', () => {
     const twin = (seed: string, balance: number) => {
       const sim = withdrawn(life(seed, 'inherited'));
       sim.advanceTo(at(2026, 11, 30, 23, 30));
@@ -266,7 +269,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
       sim.advanceTo(at(2027, 1, 4, 9));
       return sim;
     };
-    const high = twin('rhe-income-hi', 365_000_00);
+    const high = twin('rhe-income-hi', 369_992_00);
     expect(interest(high, 2026, 12)).toEqual([930_00]);
     expect(earningsOf(high.player).months['2026-12']).toBe(930_00);
     expect(workedBetween(high, high.player, at(2026, 12, 1, 0), at(2027, 1, 1, 0))).toEqual({ pay: 0, hours: 0 });
@@ -277,7 +280,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from January 1, 2027.']);
     expect(healthOf(high.player).program).toMatchObject({ kind: 'medicaid', from: at(2027, 1, 1, 0), renewAt: at(2027, 7, 1, 0) });
 
-    const low = twin('rhe-income-lo', 182_500_00);
+    const low = twin('rhe-income-lo', 184_996_00);
     expect(interest(low, 2026, 12)).toEqual([465_00]);
     expect(monthEngagement(low, low.player, '2026-12', 'USD')).toBeUndefined();
     const text = papers(low);

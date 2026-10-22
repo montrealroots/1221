@@ -7,7 +7,7 @@
  */
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY,instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, dateKey, instantFromZoned } from '@/engine/core/time';
 import { paymentsOf } from '@/engine/systems/payments';
 import { spend } from '@/engine/systems/spending';
 import { describe,expect,it } from 'vitest';
@@ -92,8 +92,15 @@ describe('standing orders and payments set for a date', () => {
     const savings = accountOf(sim, 'savings')!;
     run(sim, 'bank.add_standing_order', { toId: savings.id, amount: 5_000_00, day: 10 });
     const moved = () => sim.universe.transactions.filter((t) => t.memo.startsWith('Standing order')).length;
+    // Saturday 10 January isn't a business day for an Icelandic bank, so the order is made on Monday the 12th, as the
+    // EEA's rule has it (PSD2 art. 78(2), Iceland's Act no. 114/2021), from 2026-10-22 (brief 21): until then it was made
+    // on the Saturday, and this looked on the 11th.
     sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 11, hour: 12 }, sim.zone));
+    expect(moved()).toBe(0);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 13, hour: 12 }, sim.zone));
     expect(moved()).toBe(1);
+    const made = sim.universe.transactions.find((t) => t.memo.startsWith('Standing order'))!;
+    expect(dateKey(made.at, sim.zone)).toBe('2026-01-12');
     setCurrent(sim, 0);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 11, hour: 12 }, sim.zone));
     expect(moved()).toBe(1);

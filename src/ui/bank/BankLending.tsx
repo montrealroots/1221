@@ -29,7 +29,7 @@ import { SWITCHING } from '@/engine/content/banks-lending';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CASH } from '@/engine/content/cash';
 import { BREAK_NOTICE, breakRuleWords, END_WORDS } from '@/engine/systems/accountlife';
-import { CHARGE_OFF_AFTER, MARK_YEARS } from '@/engine/systems/credit';
+import { CHARGE_OFF_AFTER, MARK_YEARS, US_LATE } from '@/engine/systems/credit';
 import { CITIES } from '@/engine/content/geography';
 import { said } from '@/ui/looks/words';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
@@ -293,8 +293,9 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             <p className="small" style={{ margin: 0 }}>
               {source?.overdraft !== false ? <>{debt.institution} closed your account after it was overdrawn {owedBank?.id.startsWith('fr-') ? `past its limit, on the ${FRANCE.closingNoticeDays} days’ notice French law requires` : `for ${ESTIMATE.closeAfterDays} days`}, and charged off what it couldn’t recover. {owedBank?.id.startsWith('fr-') ? '' : 'How long a bank lets an overdraft run is estimated. '}</> : null}
               {/* The payments missed, as the card's notices count them (from 2026-10-20, brief 17): until then “after its
-                  payments were 180 days behind”, at the sixth missed due date, 150 days after the first. */}
-              {source?.card ? <>{debt.institution} closed your card after {said(CHARGE_OFF_AFTER, 'payment')} in a row were missed, and charged off what was owed on it. </> : null}
+                  payments were 180 days behind”, at the sixth missed due date, 150 days after the first. A US card's from
+                  2026-10-22 (brief 21): charged off at 180 days past due, counted in days (`US_LATE`). */}
+              {source?.card ? <>{debt.institution} closed your card after {owedBank?.iso === 'US' ? `a minimum payment was ${US_LATE.chargeOff} days late` : `${said(CHARGE_OFF_AFTER, 'payment')} in a row were missed`}, and charged off what was owed on it. </> : null}
               {onRecord ? `The charge-off stays on your credit record${recordYears !== undefined ? ` for ${said(recordYears, 'year')}` : ''}, paid or not. ` : ''}While the debt is unpaid, no bank approves a card, and {debt.institution} won’t open an account for you.
             </p>
             <div className="field-act">

@@ -15,7 +15,7 @@
  *   London (Capital One and Citi open for US persons only, `OPENING`); the select's own change carries Wells Fargo to
  *   Review and Begin opens there, under Wells Fargo's account and card names; a Londoner's Capital One, and a bank id
  *   the build doesn't know, open at Chase; and the bank chosen sets what savings earns, 3.00% at Capital One paying
- *   $237.64 on $413,043 at August's month end where Chase's 0.01% pays $0.79, and what a low month costs, $15 and $5
+ *   $234.43 on $413,043 at August's month end where Chase's 0.01% pays $0.79 (until brief 21, $237.64, its 3.00% APY run as a nominal rate), and what a low month costs, $15 and $5
  *   at Chase, nothing at Wells Fargo for somebody twenty-four (its ages 17 to 24) and nothing at Capital One, as
  *   Money's Statements tab reports the year's bank fees.
  * - `c-tutorial`: Review's "I Know SLATE" radio, then Begin, makes a life with no guide and the clock paused
@@ -485,18 +485,20 @@ describe('c-bank', () => {
     expect(primary(f1).institution).toBe('Chase');
   });
 
-  it('pays savings the chosen bank’s rate: $237.64 at Capital One’s 3.00% and $0.79 at Chase’s 0.01% for August’s seven midnights', () => {
+  it('pays savings the chosen bank’s rate: $234.43 at Capital One’s 3.00% APY and $0.79 at Chase’s 0.01% APY for August’s seven midnights', () => {
     const cap = createSave(1, 'g29-bank-rate', ada({ bankId: 'us-capital-one' }));
     const chase = createSave(1, 'g29-bank-rate', ada());
     cap.advanceTo(at(2026, 9, 1, 1));
     chase.advanceTo(at(2026, 9, 1, 1));
-    // A day's interest on $413,043 is the rate over 365: $33.948739 at 3.00%, $0.113162 at 0.01%; seven midnights from
-    // 25 August to 31 August build before August's month end at 11 PM on the 31st, paid in whole cents.
+    // A day's interest on $413,043 is the rate that earns the APY credited monthly, 12 × ((1 + APY)^(1/12) − 1), over
+    // 365: $33.490700 at 3.00% APY (2.959524% a year), $0.113157 at 0.01% APY; seven midnights from 25 August to 31
+    // August build before August's month end at 11 PM on the 31st, paid in whole cents: $234.43 and $0.79. Until brief
+    // 21 (2026-10-22) the APY ran as the yearly rate itself: $33.948739 a day at Capital One, $237.64 for the seven.
     const paid = (sim: Simulation, memo: string) => sim.universe.transactions.filter((t) => t.memo === memo)
       .map((t) => t.postings.find((p) => p.accountId === mine(sim, 'savings')[0]!.id)?.amount);
-    expect(paid(cap, 'Interest: 360 Performance Savings')).toEqual([237_64]);
+    expect(paid(cap, 'Interest: 360 Performance Savings')).toEqual([234_43]);
     expect(paid(chase, 'Interest: Chase Savings')).toEqual([79]);
-    expect(mine(cap, 'savings')[0]!.balance).toBe(413_043_00 + 237_64);
+    expect(mine(cap, 'savings')[0]!.balance).toBe(413_043_00 + 234_43);
     expect(mine(chase, 'savings')[0]!.balance).toBe(413_043_00 + 79);
   });
 

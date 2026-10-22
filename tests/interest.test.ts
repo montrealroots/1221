@@ -133,7 +133,12 @@ describe('the rate', () => {
 });
 
 describe('the US penalty rate', () => {
-  it('comes 45 days after a payment sixty days late, and comes off after six on time in a row', () => {
+  /**
+   * Until brief 21 (2026-10-22) it was noticed at the second due date missed in a row, about 30 days late; from then on
+   * the 61st day after the due date of the minimum still short (Reg Z §1026.55(b)(4), comment 55(b)(4)-1: due March 15,
+   * from May 15), and in force 45 days after the notice (§1026.9(g)).
+   */
+  it('comes 45 days after a minimum more than 60 days late, not at the second due date missed, and comes off after six on time in a row', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'int-penalty');
     const c = card(sim);
     withCard(c.bankId!, { ...base, penaltyApr: 0.2999 });
@@ -145,7 +150,18 @@ describe('the US penalty rate', () => {
       broke();
       sim.advanceTo(due + 1000);
     }
+    // Two due dates missed, about 30 days late: no notice yet.
+    expect(sim.player.credit!.missed).toBe(2);
+    expect(sim.player.credit!.penalty).toBeUndefined();
+    const first = sim.player.credit!.pastDue![0]!.at;
+    // The 60th day after it, still nothing; the 61st, at its first minute, the notice.
+    broke();
+    sim.advanceTo(first + 60 * MS_DAY);
+    expect(sim.player.credit!.penalty).toBeUndefined();
+    broke();
+    sim.advanceTo(first + 61 * MS_DAY);
     const penalty = sim.player.credit!.penalty!;
+    expect(penalty.noticeAt).toBe(startOfNextDay(first + 60 * MS_DAY, 'America/New_York'));
     expect(penalty.from - penalty.noticeAt).toBe(45 * MS_DAY);
     expect(sim.universe.notifications.some((n) => n.title === 'A Penalty Rate Is Coming')).toBe(true);
     expect(cardTerms(sim, c, 700).penaltyInForce).toBe(false);

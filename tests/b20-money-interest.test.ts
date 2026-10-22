@@ -108,7 +108,7 @@ describe('autopay against paying by hand', () => {
 });
 
 describe('a savings rate paying interest', () => {
-  it('pays $50,000 moved into 3.00% savings on 1 September its twenty-nine midnights at the month’s end, worked by hand, and the card and the School don’t see it', () => {
+  it('pays $50,000 moved into 3.00% APY savings on 1 September its twenty-nine midnights at the month’s end, worked by hand, and the card and the School don’t see it', () => {
     const moved = life('b20-money-save');
     const kept = life('b20-money-save');
     for (const sim of [moved, kept]) sim.advanceTo(at(2026, 9, 1));
@@ -116,12 +116,14 @@ describe('a savings rate paying interest', () => {
     for (const sim of [moved, kept]) sim.advanceTo(at(2026, 10, 1));
     const interest = (sim: Simulation) => posted(sim, own(sim, 'savings'), /^Interest: 360 Performance Savings$/);
     // August's, before the move, the same; September's, paid at 11 PM on the 30th, more by the midnights of the 2nd to
-    // the 30th, each a day of $50,000 at 3.00% a year: 29 × 5,000,000¢ × 0.03 ÷ 365 = 11,917.8¢. What's paid is the
-    // whole cents built up, the fraction carried, so the gap is that sum rounded either way.
+    // the 30th, each a day of $50,000 at the rate that earns 3.00% APY credited monthly, 12 × (1.03^(1/12) − 1) =
+    // 2.95952% a year: 29 × 5,000,000¢ × 0.0295952 ÷ 365 = 11,757.0¢. What's paid is the whole cents built up, the
+    // fraction carried, so the gap is that sum rounded either way. Until brief 21 (2026-10-22) the APY ran as a nominal
+    // 3.00%: 11,917.8¢, and a year of it 3.0416%.
     expect(interest(moved).map((i) => i.at)).toEqual([at(2026, 8, 31, 23), at(2026, 9, 30, 23)]);
     expect(interest(moved)[0]).toEqual(interest(kept)[0]);
     const gap = interest(moved)[1]!.amount - interest(kept)[1]!.amount;
-    expect(gap === 11_917 || gap === 11_918).toBe(true);
+    expect(gap === 11_756 || gap === 11_757 || gap === 11_758, String(gap)).toBe(true);
     // Checking earns nothing at Capital One, so what left it cost nothing there.
     expect(posted(moved, own(moved, 'checking'), /^Interest/)).toEqual([]);
     // The card and the School don't read where the money is.

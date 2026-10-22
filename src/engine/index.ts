@@ -26,7 +26,7 @@ import type { Personality, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
 import type { SaveAdapter, Slot } from './persistence/adapter';
 import {
-  addDays, formatDate, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
+  addDays, addMonths, formatDate, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
 } from './core/time';
 import { formatMoneyCompact, saveCurrency } from './core/money';
 import { clamp } from './core/rng';
@@ -1242,6 +1242,35 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // a slot that migrated was saved back without the school year until the next autosave). A save from before 80 has
   // the film career's line, and that goes, whatever it says.
   if (player && (from < 80 || !universe.meta.careerLabel)) universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
+
+  // A US card already behind when a save from before 2026-10-22 (the owner's brief 21) is opened: its days past due,
+  // which from then on date its penalty rate, the end of its introductory rate and its charge-off (`CardState.pastDue`,
+  // `US_LATE`). Such a save kept no due dates, only the due dates missed in a row (`missed`) and the
+  // last one's late fee (`lateFeeAt`), so the oldest is dated that many months before the last, and what's short of it
+  // is taken as the last statement's balance, all of which is behind. What the old rule already did stands: a penalty
+  // rate begun or noticed, an introductory rate ended, and a default notice sent at the fifth are each marked as sent for
+  // it, so none is sent again. Nothing posted is changed, and nothing is charged for the days before the save was opened.
+  {
+    let dated = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      const credit = person.credit as (Record<string, unknown> & { primaryId?: string; cards?: Record<string, Record<string, unknown>> }) | undefined;
+      if (!credit) continue;
+      const states: [string | undefined, Record<string, unknown>][] = [[credit.primaryId, credit], ...Object.entries(credit.cards ?? {})];
+      for (const [id, state] of states) {
+        const card = id ? universe.accounts?.[id] : undefined;
+        const missed = Number(state.missed ?? 0);
+        if (!card || card.closedAt || state.pastDue !== undefined || missed <= 0 || typeof state.lateFeeAt !== 'number') continue;
+        const iso = card.bankId ? bankById(card.bankId)?.iso : undefined;
+        if (iso !== 'US') continue;
+        const at = addMonths(state.lateFeeAt, -(missed - 1), universe.homeZone);
+        state.pastDue = [{ at, short: Math.max(1, Number(state.statementBalance ?? 0)) }];
+        if (missed >= 2) state.noticedFor = at;
+        if (missed >= 5) state.defaultNoticedFor = at;
+        dated += 1;
+      }
+    }
+    if (dated > 0) steps.push(`Counted the days past due on ${plural(dated, 'US card', 'US cards')} behind on ${dated === 1 ? 'its' : 'their'} payments, from the first due date missed.`);
+  }
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;
   if (from < SAVE_SCHEMA_VERSION) steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);

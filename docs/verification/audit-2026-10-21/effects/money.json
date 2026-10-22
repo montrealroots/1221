@@ -3229,7 +3229,7 @@
    "where": "A due date short of the minimum (`afterMissed`).",
    "prerequisites": "What sends it, as `where` says.",
    "reads": "The payments missed in a row, the bank.",
-   "changes": "Britain’s set-off; the card suspended at two; the default notice at five; the charge-off at six.",
+   "changes": "Britain’s set-off; the card suspended at two; outside the US the default notice at five and the charge-off at six (a US card’s by its days past due from 2026-10-22, brief 21: `delinquency`).",
    "consumers": [
     {
      "what": "a suspended card has no room",
@@ -3258,6 +3258,60 @@
    "seeded": false,
    "readBy": "money",
    "readAt": "bf632759"
+  },
+  {
+   "id": "notice.systems/credit#delinquency",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "Each night, on a US card with a minimum short at a due date (`delinquency`, from 2026-10-22, brief 21).",
+   "prerequisites": "A US card's minimum short at its due date (`CardState.pastDue`), what's paid going to the oldest first.",
+   "reads": "The days since the due date of the oldest minimum still short, the card's penalty rate and introductory rate, and what's still unpaid of that minimum.",
+   "changes": "On the 61st day the bank's notice, and 45 days on the penalty rate where the card has one and the end of its introductory rate; on the 150th the default notice; on the 180th the charge-off to collections.",
+   "consumers": [
+    {
+     "what": "the penalty rate on what's owed, in the card's terms and each statement's interest",
+     "at": "src/engine/systems/credit.ts:591"
+    },
+    {
+     "what": "the introductory rate ended",
+     "at": "src/engine/systems/credit.ts:596"
+    },
+    {
+     "what": "the charge-off to collections",
+     "at": "src/engine/systems/credit.ts:1450"
+    }
+   ],
+   "experienced": "“A Penalty Rate Is Coming” on the 61st day, “A Default Notice” on the 150th and “Your Card Was Charged Off” on the 180th, each dated (editorial17-money, b21-banking-proof).",
+   "saveLoad": "`pastDue`, `towardPastDue`, `noticedFor`, `introEndsAt` and `defaultNoticedFor` in the card's state; a save from before brief 21 with a US card behind is dated on opening from its last late fee (`migrate`), nothing charged for the days before.",
+   "evidence": {
+    "tests": [
+     "tests/b21-banking-proof.test.ts",
+     "tests/editorial17-money.test.ts",
+     "tests/interest.test.ts",
+     "tests/cardoffers.test.ts",
+     "tests/evidence3-home.test.ts"
+    ],
+    "comparisons": [
+     "day 60 against day 61, 149 against 150, 179 against 180; a twin who pays the whole statement at the next due date; the oldest minimum paid on day 60 (b21-banking-proof)"
+    ],
+    "mutations": [
+     "B21-B4",
+     "B21-B5",
+     "B21-B6",
+     "B21-B7",
+     "B21-B12"
+    ],
+    "journeys": [
+     "played a day at a time, jumped from due date to due date, and saved and loaded between: the same days (b21-banking-proof)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "brief 21"
   },
   {
    "id": "notice.systems/credit#chargeOff",

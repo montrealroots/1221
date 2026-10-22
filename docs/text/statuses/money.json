@@ -3173,6 +3173,12 @@
   "on": "2026-10-17",
   "reason": "'Your Card Was Charged Off: … on the … is with collections now, and the card is closed. It’s on your record.': says what happened and what it means; the memos and the collections account's name are matched by name"
  },
+ "src/engine/systems/credit.ts#delinquency": {
+  "status": "Rewritten And Verified",
+  "hash": "c97b22b06e75",
+  "on": "2026-10-22",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' holds A Penalty Rate Is Coming and A Default Notice word for word, dated by brief 21's day counts"
+ },
  "src/engine/systems/credit.ts#persistentDebt": {
   "status": "Rewritten And Verified",
   "hash": "6e47e1c10e3d",

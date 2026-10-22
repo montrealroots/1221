@@ -160,8 +160,29 @@ export interface CardState {
   rewardsFrom?: Instant;
   /** What a card's bonus caps have taken this period, by category and period. */
   bonusUsed?: Record<string, Money>;
-  /** A US card's introductory rates, lost for a payment sixty days late (Reg Z §1026.55(b)(4)). */
+  /** A card's introductory rates, lost: on a US card 45 days after a payment more than 60 days late (Reg Z §1026.55(b)(4)). */
   introLost?: boolean;
+  /**
+   * A US card's minimums short at their due dates, oldest first, with what's still short of each (from 2026-10-22, the
+   * owner's brief 21): a payment clears the oldest first, and a due date paid in full clears them all. The first is how
+   * many days past due the card is, which its penalty rate, the end of its introductory rate and its charge-off are
+   * counted from in days (`delinquency`). Until then they were counted in due dates missed in a row: the second, about
+   * 30 days late, where Reg Z §1026.55(b)(4) says more than 60; the sixth, about 150, where the FFIEC says 180.
+   */
+  pastDue?: { at: Instant; short: Money }[];
+  /**
+   * What's been paid since the statement toward the minimums past due (`pastDue`), which the minimum payment due takes
+   * in beside the statement's own (`autopayAsk`), so a payment clears one minimum, not two. As first written the same
+   * day, a payment that cleared the oldest still counted toward the next due date's minimum too, and $40 paid on the
+   * 60th day settled two $40 minimums and wiped the card's lateness (found by tests/b21-banking-proof.test.ts).
+   */
+  towardPastDue?: Money;
+  /** The due date whose lateness the 61st day's notice was sent for, so it's sent once (§1026.9(g)). */
+  noticedFor?: Instant;
+  /** The day a US card's introductory rates end, 45 days after that notice. */
+  introEndsAt?: Instant;
+  /** The due date whose lateness the 150th day's notice before a charge-off was sent for. */
+  defaultNoticedFor?: Instant;
   /**
    * A statement cut before the next one whose due date comes after it (from 2026-10-13): what it said was owed, the
    * least its due date judges, what autopay asks for it, and what has been paid since it, so its due date judges it and
@@ -200,6 +221,7 @@ const CARD_KEYS: readonly (keyof CardState)[] = [
   'autopay', 'statementBalance', 'paidSinceStatement', 'carrying', 'reviewedAt', 'raisedAt', 'askedAt', 'statementInterest', 'statementDay', 'statementAt', 'dayMovedAt', 'cuts', 'issued', 'feeAt', 'autopayFrom', 'missed', 'suspended', 'closing',
   'overLimitOptIn', 'noAutoRaise', 'hardship', 'persistentNoticeAt', 'lateFeeAt', 'paymentHolds', 'accrued', 'trailing', 'penalty',
   'recentFees', 'creditSince', 'cashOwed', 'cashAccrued', 'transfers', 'plans', 'statementPlanDue', 'rewards', 'rewardsFrom', 'bonusUsed', 'introLost', 'waiting',
+  'pastDue', 'towardPastDue', 'noticedFor', 'introEndsAt', 'defaultNoticedFor',
 ];
 
 /** A new card's state: nothing owed, nothing carried, paid by autopay as the holder pays their others. */
@@ -312,13 +334,37 @@ const OVER_LIMIT_SHARE = 0.1;
  * Due dates missed in a row before the bank suspends the card: SLATE's estimate, written here as "sixty days late". The
  * second due date missed is thirty days past the first, as the late notice says of a US card's report, so the player's
  * words count the payments missed instead (from 2026-10-20, brief 17): until then the penalty notice said "A payment is
- * sixty days late" on the day the late notice said thirty, and the default notice "150 days behind" at 120. That the
- * penalty rate and the end of an introductory rate come at the second missed due date, thirty days late where Reg Z
- * §1026.55(b)(4) says sixty, and the charge-off at the sixth, 150 days where the FFIEC says 180, is the owner's to rule on.
+ * sixty days late" on the day the late notice said thirty, and the default notice "150 days behind" at 120. Until brief
+ * 21 (2026-10-22) a US card's penalty rate and the end of its introductory rate came at the second missed due date, and
+ * its charge-off at the sixth; from then they're counted in days (`US_LATE`).
  */
 export const SUSPEND_AFTER = 2;
-/** And before it charges the card off to collections: 180 days, the FFIEC's rule for open-end credit in the US, used everywhere. */
+/**
+ * And before it charges the card off to collections, outside the US: the sixth due date missed in a row, about 150 days
+ * past the first, SLATE's assumption, no country's own rule having been read. This said "180 days, the FFIEC's rule …
+ * used everywhere" until brief 21, while it charged off at 150.
+ */
 export const CHARGE_OFF_AFTER = 6;
+/**
+ * A US card's days past due, counted from the due date of the oldest minimum still short (from 2026-10-22, the owner's
+ * brief 21; docs/verification/genre-banking-2026-10-22/banking-sources.md):
+ * - `notice`: the first day a minimum isn't received "within 60 days after the due date" (Reg Z §1026.55(b)(4); comment
+ *   55(b)(4)-1: due March 15, the exception applies from May 15), when the §1026.9(g) notice may go;
+ * - `noticeDays`: 45 days after it the penalty rate (on a card whose terms have one) and the end of an introductory rate
+ *   take effect (§1026.9(g));
+ * - `warn`: the day the last notice before a charge-off goes, 30 days ahead of it, SLATE's;
+ * - `chargeOff`: open-end credit "charged off when 180 days past due" (FFIEC Uniform Retail Credit Classification and
+ *   Account Management Policy, 65 FR 36903; OCC Bulletin 2000-20, June 20, 2000).
+ */
+export const US_LATE = { notice: 61, noticeDays: 45, warn: 150, chargeOff: 180 } as const;
+/** Whether a card is a US bank's, held to Reg Z. */
+export const usCard = (card: Account | undefined): boolean => bankById(card?.bankId ?? '')?.iso === 'US';
+/** Whole days from one instant's date to another's, in a zone. */
+const daysBetween = (from: Instant, to: Instant, zone: string): number => {
+  const a = zonedParts(from, zone);
+  const b = zonedParts(to, zone);
+  return Math.round((Date.UTC(b.year, b.month - 1, b.day) - Date.UTC(a.year, a.month - 1, a.day)) / MS_DAY);
+};
 /** How often the limit is reviewed. */
 const REVIEW_EVERY = 182 * 86_400_000;
 /**
@@ -709,6 +755,17 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false,
     state.paidSinceStatement += paid;
     // Toward a statement still waiting for its due date too (`waiting`): what’s owed on it is in the newer one as well.
     for (const w of state.waiting ?? []) w.paid += paid;
+    // And toward a US card's minimums past due, the oldest first (`pastDue`, from 2026-10-22).
+    let toward = paid;
+    while (toward > 0 && state.pastDue?.length) {
+      const oldest = state.pastDue[0]!;
+      const take = Math.min(toward, oldest.short);
+      oldest.short -= take;
+      toward -= take;
+      state.towardPastDue = (state.towardPastDue ?? 0) + take;
+      if (oldest.short <= 0) state.pastDue.shift();
+    }
+    if (state.pastDue?.length === 0) delete state.pastDue;
     // Paid from another bank, the card's bank may hold back the credit it frees
     // for its days while the payment clears; paid from its own, it doesn't. The bank is the drawn account's: autopay's
     // own account, or the primary by hand. Until 2026-10-12 it was always the primary's, so autopay from the card's
@@ -801,15 +858,35 @@ export function scheduleStatement(sim: Simulation, person: Person, after: Instan
  * 12:01 PM, and a payment made in the minute after noon counted on time; found
  * by that day’s third round of defects.
  */
-export function dueAt(zone: string, statementAt: Instant, graceDays?: number): Instant {
+/**
+ * A US card's due day for a statement on a day of the month, and whether it falls in the next month: one day each month
+ * (Reg Z §1026.7(b)(11)(i)(A)), at least 21 days after the statement (§1026.5(b)(2)(ii)), from 2026-10-22 (brief 21).
+ * A bank's days kept after a statement on that day in every month, February the shortest: Chase's 21 after the 20th
+ * the 13th. A card whose days weren't found keeps the 15th of the next month, later where that's under the law's 21
+ * days in February (a statement after the 22nd): Citi's and Capital One's. Until then theirs was the 15th whatever the
+ * statement's day, 18 days after a statement on 28 January.
+ */
+export function usDueDay(statementDay: number, graceDays?: number): { day: number; next: boolean } {
+  if (graceDays === undefined) return { day: Math.max(15, statementDay + 21 - 28), next: true };
+  return statementDay + graceDays <= 28 ? { day: statementDay + graceDays, next: false } : { day: statementDay + graceDays - 28, next: true };
+}
+
+export function dueAt(zone: string, statementAt: Instant, graceDays?: number, sameDay = false): Instant {
   const p = zonedParts(statementAt, zone);
+  const next = { year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1 };
+  // A US card's due date is one day each month (`usDueDay`), from 2026-10-22 (brief 21). Until then the statement plus
+  // the bank's days, so Chase's fell on the 10th, 11th or 13th by the month.
+  if (sameDay) {
+    const due = usDueDay(p.day, graceDays);
+    return instantFromZoned({ ...(due.next ? next : { year: p.year, month: p.month }), day: due.day, hour: 12 }, zone);
+  }
   return graceDays !== undefined
     ? instantFromZoned({ ...normalDate(p.year, p.month, p.day + graceDays), hour: 12 }, zone)
-    : instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 15, hour: 12 }, zone);
+    : instantFromZoned({ ...next, day: 15, hour: 12 }, zone);
 }
 
 function scheduleDue(sim: Simulation, person: Person, statementAt: Instant, graceDays: number | undefined, card: Account): void {
-  const at = dueAt(zoneOf(sim, person), statementAt, graceDays);
+  const at = dueAt(zoneOf(sim, person), statementAt, graceDays, usCard(card));
   // The statement it’s for (from 2026-10-13), which a due date after the next statement judges from `waiting`.
   sim.schedule({ at, kind: DUE_KIND, label: 'Card Payment Due', category: 'home', priority: 36, payload: { personId: person.id, accountId: card.id, statementAt } });
 }
@@ -878,6 +955,7 @@ export function registerCredit(sim: Simulation): void {
     persistentDebt(s, person, card, credit);
     credit.statementBalance = Math.max(0, -card.balance);
     credit.paidSinceStatement = 0;
+    delete credit.towardPastDue;
     // Every six months, a good record raises the limit, unless the holder asked it never to be raised unasked, by a fifth
     // or as far toward it as their income or savings carry (`limitCarried`, from 2026-10-21; until then a fifth whatever
     // they earned or held, so the limit grew without end).
@@ -947,7 +1025,7 @@ export function registerCredit(sim: Simulation): void {
     if (credit.waiting?.length === 0) delete credit.waiting;
     const paidNow = () => waited?.paid ?? credit.paidSinceStatement;
     const statement = waited?.statement ?? credit.statementBalance;
-    const { asked, due } = waited ? { asked: Math.max(0, waited.want - waited.paid), due: waited.due } : autopayAsk(s, person, card);
+    const { asked, due, minimum, pastDue } = waited ? { asked: Math.max(0, waited.want - waited.paid), due: waited.due, minimum: waited.due, pastDue: 0 } : autopayAsk(s, person, card);
     // Autopay asks the bank for the whole amount; a current account that
     // can't cover it sends it back, and the card charges for that (C59).
     if (asked > 0) {
@@ -970,7 +1048,8 @@ export function registerCredit(sim: Simulation): void {
           // No step to the card where this miss is the one that charges it off (`afterMissed`): from 2026-10-20 (brief 17),
           // when the sixth miss's notices were first read in order, this one sent the player to pay a card that was closed
           // and its debt in collections by the time they read it.
-          const last = short && (credit.missed ?? 0) + 1 >= CHARGE_OFF_AFTER;
+          // A US card's charge-off comes by its days past due, not at the sixth (`delinquency`, from 2026-10-22).
+          const last = short && !usCard(card) && (credit.missed ?? 0) + 1 >= CHARGE_OFF_AFTER;
           const after = returned > 0 ? `The card charged a ${formatMoney(returned, currency)} returned payment fee for it.` : 'The payment is late now, and its late fee is the only fee you’re charged for it.';
           s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `The ${card.name}’s autopay of ${formatMoney(asked, currency)} didn’t go through, because ${from?.name ?? 'your checking account'} couldn’t cover it. ${after}${short && !last ? ` Move money into ${from?.name ?? 'your checking account'}, then pay the card on Money, under Cards.` : ''}`, importance: 75 });
         }
@@ -1008,6 +1087,10 @@ export function registerCredit(sim: Simulation): void {
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: fee }, { accountId: card.id, amount: -fee }],
       });
       credit.missed = (credit.missed ?? 0) + 1;
+      // A US card's minimum short is kept by its due date, for its days past due (`US_LATE`, from 2026-10-22).
+      // What's short of this statement's own minimum, past what went to the older ones (`towardPastDue`).
+      const ownShort = (credit.hardship || waited ? due : minimum) - (paid - (credit.towardPastDue ?? 0));
+      if (usCard(card) && ownShort > 0) credit.pastDue = [...(credit.pastDue ?? []), { at: item.at, short: ownShort }];
       // A US lender reports a payment late to the bureaus once it's thirty
       // days past due, at the next due date still short; elsewhere the month's
       // report carries it. Until 2026-09-27 a US payment a day short was on
@@ -1030,24 +1113,18 @@ export function registerCredit(sim: Simulation): void {
       s.notify({
         category: 'bank',
         title: 'A Late Card Payment',
-        body: `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} on the ${card.name}, ${formatMoney(due, currency)}, was due ${formatDate(item.at, zoneOf(s, person))}, and ${paid > 0 ? `only ${formatMoney(paid, currency)} was paid` : 'nothing was paid'}. That costs a ${formatMoney(fee, currency)} late fee${reported
+        body: `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} on the ${card.name}, ${formatMoney(due, currency)},${pastDue > 0 ? ` ${formatMoney(pastDue, currency)} of it past due,` : ''} was due ${formatDate(item.at, zoneOf(s, person))}, and ${paid > 0 ? `only ${formatMoney(paid, currency)} was paid` : 'nothing was paid'}. That costs a ${formatMoney(fee, currency)} late fee${reported
           ? `, and it’s on your credit record now.${suspends ? ` If the next payment is short too, ${suspends}.` : ''}`
-          : `. If the payment is still short at the next due date, thirty days late, it goes on your credit record${suspends ? ` and ${suspends}` : ''}.`}${credit.missed >= CHARGE_OFF_AFTER ? '' : ' Pay the card on Money, under Cards.'}`,
+          : `. If the payment is still short at the next due date, thirty days late, it goes on your credit record${suspends ? ` and ${suspends}` : ''}.`}${credit.missed >= CHARGE_OFF_AFTER && !usCard(card) ? '' : ' Pay the card on Money, under Cards.'}`,
         importance: 80,
       });
       if (credit.penalty) credit.penalty.onTime = 0;
       if (bankById(card.bankId ?? '')?.iso === 'GB') credit.recentFees = [...(credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000), { at: s.now, amount: fee }];
       afterMissed(s, person, card, credit, due - paid);
-      // Sixty days late on a US card: its introductory rates end (Reg Z §1026.55(b)(4)). A card whose terms end it at one missed minimum, at once.
-      if ((credit.missed ?? 0) >= 2 && bankById(card.bankId ?? '')?.iso === 'US') credit.introLost = true;
+      // A card whose terms end its offer at one missed minimum, at once. A US card's penalty rate and the end of its
+      // introductory rate come by its days past due (`delinquency`, from 2026-10-22): until then at the second missed due
+      // date, about 30 days late, where Reg Z §1026.55(b)(4) says more than 60.
       if (card.bankId && INTRO_ENDS_ON_MISS.has(card.bankId)) credit.introLost = true;
-      // Sixty days late on a US card with a penalty rate: 45 days' notice, then the penalty rate (Reg Z §1026.9(g), §1026.55(b)(4)).
-      if ((credit.missed ?? 0) >= 2 && !credit.penalty && terms.penaltyApr && bankById(card.bankId ?? '')?.iso === 'US' && !card.closedAt) {
-        credit.penalty = { noticeAt: s.now, from: s.now + 45 * 86_400_000, onTime: 0 };
-        // The payments missed, counted as the suspension counts them (from 2026-10-20, brief 17): until then “A payment is
-        // sixty days late.”, on the day the late notice said it was thirty (`SUSPEND_AFTER`).
-        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Penalty Rate Is Coming', body: `You’ve missed ${countWord(credit.missed ?? SUSPEND_AFTER)} payments in a row. From ${formatDate(credit.penalty.from, zoneOf(s, person))}, the ${card.name} charges ${(terms.penaltyApr * 100).toFixed(2)}% on what’s owed. Six payments on time in a row take it off.`, importance: 85 });
-      }
       // Two missed minimums in twelve months on a Canadian card with a penalty rate: it rises at once (`CANADA_PENALTY`).
       const recentMisses = record.late.filter((when) => s.now - when < 365 * 86_400_000).length;
       if (recentMisses >= 2 && !credit.penalty && card.bankId && CANADA_PENALTY[card.bankId] && !card.closedAt) {
@@ -1057,6 +1134,9 @@ export function registerCredit(sim: Simulation): void {
     } else {
       move += ON_TIME;
       credit.missed = 0;
+      // Current again: nothing is past due (`pastDue`).
+      delete credit.pastDue;
+      delete credit.towardPastDue;
       // Six on time in a row after the penalty began, and it comes off (Reg Z §1026.55(b)(4)(ii)).
       if (credit.penalty && s.now >= credit.penalty.from) {
         credit.penalty.onTime += 1;
@@ -1087,6 +1167,13 @@ export function registerCredit(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'credit.no_card', (_event, { sim: s }) => {
     if (zonedParts(s.now, s.homeZone).day !== 1) return;
     for (const person of Object.values(s.universe.people)) reportWithoutCard(s, person);
+  });
+
+  // A US card's days past due, each day (from 2026-10-22, the owner's brief 21): counted from the due date of the oldest
+  // minimum still short, so a time jump, a save and a load, or a payment between due dates is read as the calendar has
+  // it, not by due dates (`US_LATE`).
+  sim.onEvent('world.day_rollover', 'credit.delinquency', (_event, { sim: s }) => {
+    for (const person of Object.values(s.universe.people)) if (person.credit) for (const card of cardsOf(s, person)) delinquency(s, person, card);
   });
 
   sim.onEvent('world.day_rollover', 'card.interest', (_event, { sim: s }) => {
@@ -1234,9 +1321,9 @@ function statementWords(sim: Simulation, person: Person, card: Account, statemen
   const zone = zoneOf(sim, person);
   const credit = stateOf(person, card);
   const owed = credit.statementBalance;
-  const { asked, due } = autopayAsk(sim, person, card);
+  const { asked, due, pastDue } = autopayAsk(sim, person, card);
   const from = sourceOf(sim, person, card);
-  const least = due >= owed ? `The whole ${formatMoney(owed, cur)} is due` : `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} is ${formatMoney(due, cur)}`;
+  const least = due >= owed ? `The whole ${formatMoney(owed, cur)} is due` : `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} is ${formatMoney(due, cur)}${pastDue > 0 ? `, ${formatMoney(pastDue, cur)} of it past due` : ''}`;
   const autopay = asked > 0 && from && !from.closedAt ? ` Autopay pays ${asked >= owed && asked > due ? `the whole ${formatMoney(owed, cur)}` : formatMoney(asked, cur)} from ${from.name} that day, if there’s enough in it.` : '';
   // What this due date decides, where the last was missed (from 2026-10-20, brief 17, section 8): the second miss in a row
   // suspends the card and goes on the record (`SUSPEND_AFTER`, the due date's `reported`), and a suspended card works again
@@ -1247,7 +1334,7 @@ function statementWords(sim: Simulation, person: Person, card: Account, statemen
     : !credit.suspended && credit.missed === SUSPEND_AFTER - 1
       ? ` The last payment was missed. If this one is short too, ${bankById(card.bankId ?? '')?.name ?? 'the bank'} suspends the card, and it goes on your credit record${us ? '' : ' again'}.`
       : '';
-  return `The statement comes to ${formatMoney(owed, cur)}, due ${formatDate(dueAt(zone, statementAt, graceDays), zone)}. ${least}.${autopay}${stake}`;
+  return `The statement comes to ${formatMoney(owed, cur)}, due ${formatDate(dueAt(zone, statementAt, graceDays, us), zone)}. ${least}.${autopay}${stake}`;
 }
 
 /**
@@ -1255,14 +1342,20 @@ function statementWords(sim: Simulation, person: Person, card: Account, statemen
  * whole statement, and a hardship plan's payment stands in for both (from 2026-10-10 a function of its own, which the
  * account alerts read ahead of the day, `systems/statements.ts`).
  */
-export function autopayAsk(sim: Simulation, person: Person, card: Account): { asked: Money; due: Money; minimum: Money } {
+export function autopayAsk(sim: Simulation, person: Person, card: Account): { asked: Money; due: Money; minimum: Money; pastDue: Money } {
   const credit = stateOf(person, card);
   const terms = cardTerms(sim, card, person.credit!.score);
   const statement = credit.statementBalance;
   const minimum = minimumDue(sim, statement, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0);
   const plan = credit.hardship ? Math.min(statement, credit.hardship.payment) : undefined;
-  const want = plan ?? (credit.autopay === 'full' ? statement : minimum);
-  return { asked: Math.max(0, want - credit.paidSinceStatement), due: plan ?? minimum, minimum };
+  // A US card's minimum payment due takes in what's past due, as its statement says it (from 2026-10-22, brief 21): what
+  // was short at the statement, paid toward since or not (`towardPastDue`, `pastDue`). A plan's payment stands in for it,
+  // and met, brings the card current, as SLATE's plans did before (an assumption: the FFIEC's re-aging asks three
+  // payments in a row, which SLATE doesn't count).
+  const pastDue = plan === undefined && usCard(card) ? (credit.towardPastDue ?? 0) + (credit.pastDue ?? []).reduce((n, p) => n + p.short, 0) : 0;
+  const owedNow = Math.min(statement, minimum + pastDue);
+  const want = plan ?? (credit.autopay === 'full' ? statement : owedNow);
+  return { asked: Math.max(0, want - credit.paidSinceStatement), due: plan ?? owedNow, minimum, pastDue };
 }
 
 function autopayReach(sim: Simulation, person: Person, card: Account): Money {
@@ -1307,11 +1400,54 @@ function afterMissed(sim: Simulation, person: Person, card: Account, credit: Car
     // payment on time”, which a payment of any size today could seem to be.
     if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Is Suspended', body: `You’ve missed ${countWord(missed)} payments in a row, so ${bank?.name ?? 'the bank'} has suspended the ${card.name}. It works again once you pay at least the minimum by a due date, or pay the card off.`, importance: 85 });
   }
+  // A US card's notice before a charge-off, and the charge-off, come by its days past due (`delinquency`, from
+  // 2026-10-22): until then at the fifth and sixth due dates missed, as everywhere.
+  if (usCard(card)) return;
   // The payments missed, where until 2026-10-20 (brief 17) it said “150 days behind” at the fifth, 120 days after the first.
   if (missed === CHARGE_OFF_AFTER - 1 && person.id === sim.universe.playerId) {
     sim.notify({ category: 'bank', title: 'A Default Notice', body: `You’ve missed ${countWord(missed)} payments in a row on the ${card.name}. Pay at least ${formatMoney(minimumDue(sim, Math.max(0, -card.balance), cardTerms(sim, card, person.credit!.score), credit.statementInterest ?? 0, credit.statementPlanDue ?? 0), currency)} before the next due date, or the whole balance falls due and goes to collections.`, importance: 95 });
   }
   if (missed >= CHARGE_OFF_AFTER) chargeOff(sim, person, card, credit);
+}
+
+/**
+ * A US card's day past due (`US_LATE`, from 2026-10-22, the owner's brief 21): on the 61st day after the due date of
+ * the oldest minimum still short, the notice (§1026.9(g)), and 45 days on the penalty rate, where the card's terms have
+ * one, and the end of any introductory rate still running (§1026.55(b)(4)); on the 150th, the last notice; on the
+ * 180th, the charge-off (FFIEC). A minimum paid by the 60th day, or a due date paid in full, ends it before any of
+ * them; once the notice has gone it stands, as the regulation allows, and six minimums on time take the penalty rate
+ * off (§1026.55(b)(4)(ii)). Each notice once for each due date it's about, so a save and a load or a long jump sends it
+ * once.
+ */
+function delinquency(sim: Simulation, person: Person, card: Account): void {
+  const credit = stateOf(person, card);
+  // The introductory rate's end, on its day.
+  if (credit.introEndsAt !== undefined && sim.now >= credit.introEndsAt) { credit.introLost = true; delete credit.introEndsAt; }
+  const oldest = credit.pastDue?.[0];
+  if (!oldest || card.closedAt || !usCard(card)) return;
+  const zone = zoneOf(sim, person);
+  const late = daysBetween(oldest.at, sim.now, zone);
+  const terms = cardTerms(sim, card, person.credit!.score);
+  const currency = saveCurrency(sim.universe);
+  const due = formatDate(oldest.at, zone);
+  if (late >= US_LATE.notice && credit.noticedFor !== oldest.at) {
+    credit.noticedFor = oldest.at;
+    const from = sim.now + US_LATE.noticeDays * MS_DAY;
+    const penalty = terms.penaltyApr !== undefined && !credit.penalty;
+    const intro = terms.introUntil !== undefined && sim.now < terms.introUntil && !credit.introLost && credit.introEndsAt === undefined;
+    if (penalty) credit.penalty = { noticeAt: sim.now, from, onTime: 0 };
+    if (intro) credit.introEndsAt = from;
+    const what = [penalty ? `charges ${(terms.penaltyApr! * 100).toFixed(2)}% on what’s owed` : '', intro ? 'its introductory rate ends' : ''].filter(Boolean).join(', and ');
+    if (what && person.id === sim.universe.playerId) {
+      sim.notify({ category: 'bank', title: penalty ? 'A Penalty Rate Is Coming' : 'Your Introductory Rate Is Ending', body: `The ${card.name}’s minimum payment, due ${due}, is more than 60 days late. From ${formatDate(from, zone)}, the card ${what}.${penalty ? ' Six minimum payments on time in a row take the penalty rate off.' : ''}`, importance: 85 });
+    }
+  }
+  if (late >= US_LATE.warn && credit.defaultNoticedFor !== oldest.at) {
+    credit.defaultNoticedFor = oldest.at;
+    const off = formatDate(oldest.at + US_LATE.chargeOff * MS_DAY, zone);
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'A Default Notice', body: `The ${card.name}’s minimum payment, due ${due}, is ${late} days late. Pay at least the ${formatMoney(oldest.short, currency)} of it still unpaid before ${off}, or the card is closed and what’s owed goes to collections.`, importance: 95 });
+  }
+  if (late >= US_LATE.chargeOff) chargeOff(sim, person, card, credit);
 }
 
 /** The card closed, and what's owed on it charged off to collections, owed to the bank. */
@@ -1331,6 +1467,8 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: CardS
   delete credit.suspended;
   delete credit.hardship;
   credit.missed = 0;
+  delete credit.pastDue;
+  delete credit.towardPastDue;
   ensurePrimary(sim, person);
   // How long the mark stays, paid or not, and what the unpaid debt blocks (from brief 15, 2026-10-19): until then “It’s on
   // your record.”, which the In Collections panel said lasted until the debt was paid, though nothing paying it touches

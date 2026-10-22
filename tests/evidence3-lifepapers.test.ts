@@ -231,7 +231,9 @@ function intoTheCd(sim: Simulation): string {
 /** The Inherited life of tests/need-paths.test.ts, enrolled on Papers on 1 October, frozen as Enroll leaves it. */
 const enrolled = once(() => {
   const sim = withdrawnEarly('lp-m1', 'inherited');
-  expect(earningsOf(sim.player).months['2026-09']).toBe(6_436_10);
+  // $6,349.21: the 3.00% APY's nominal rate on the family's savings (tests/need-paths.test.ts works it); $6,436.10 until
+  // brief 21 (2026-10-22), when the 3.00% ran as the nominal rate.
+  expect(earningsOf(sim.player).months['2026-09']).toBe(6_349_21);
   papers(sim);
   const toast = press('health.enroll');
   return { toast, snap: freeze(sim) };

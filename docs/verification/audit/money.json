@@ -675,7 +675,7 @@
           },
           {
             "file": "scope-money.test.ts",
-            "title": "bank.cancel_new > FIXTURE, London: a NatWest Flexible Saver at 1.25% holding £10,000 for ten days’ ends, canceled: its interest kept, as Britain’s rule leaves it, £3.42, and £10,003.42 into the NatWest current account",
+            "title": "bank.cancel_new > FIXTURE, London: a NatWest Flexible Saver at 1.25% AER holding £10,000 for ten days’ ends, canceled: its interest kept, as Britain’s rule leaves it, £3.40, and £10,003.40 into the NatWest current account",
             "kind": "fixture",
             "closes": "Britain keeps the interest earned: £3.42 paid on canceling, £10,003.42 into the current account; the panel says “its money back with its interest.”"
           },
@@ -4636,7 +4636,7 @@
           },
           {
             "file": "evidence2-b11.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $530, then suspended owing $880, said once the notices are read, across a reload",
             "kind": "render",
             "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
             "round": "remaining-09-banking"
@@ -5656,7 +5656,7 @@
           },
           {
             "file": "evidence2-b11.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $530, then suspended owing $880, said once the notices are read, across a reload",
             "kind": "render",
             "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
             "round": "remaining-09-banking"
@@ -6744,7 +6744,7 @@
       "downstream": "interest accrual credit.ts:982 (card.interest); cardRoom; score -> applications/loans",
       "persistent": "ledger + record",
       "explanation": "bounce/late/suspend/penalty notices",
-      "tests": "tests/defects3-bank.test.ts:223 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November’; tests/evidence-g12-money.test.ts:413 ‘has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48…’, :476 ‘ends at the due date once the card is paid off before it…’; tests/evidence2-b04.test.ts:443 ‘puts a missed payment back to none once the plan’s $101 is met at the next due date…’; tests/evidence-g13-money.test.ts:167 ‘paid by hand to the minimum before its due date: autopay asks nothing…’; tests/money-fixes.test.ts:58 ‘late, is charged the late fee, and no returned payment’s fee beside it’; tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes; their tests at :272 and :298); interest.test.ts:62,81,102,125,136,166,187,216; tests/defects5.test.ts card.due ‘judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s’",
+      "tests": "tests/defects3-bank.test.ts:226 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 13 November’; tests/evidence-g12-money.test.ts:413 ‘has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48…’, :478 ‘ends at the due date once the card is paid off before it…’; tests/evidence2-b04.test.ts:444 ‘puts a missed payment back to none once the plan’s $101 is met at the next due date…’; tests/evidence-g13-money.test.ts:167 ‘paid by hand to the minimum before its due date: autopay asks nothing…’; tests/money-fixes.test.ts:58 ‘late, is charged the late fee, and no returned payment’s fee beside it’; tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes; their tests at :272 and :298); interest.test.ts:62,81,102,125,141,182,203,232; tests/defects5.test.ts card.due ‘judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s’",
       "status": "verified",
       "issue": "Until 2026-10-10 a US card short on autopay was charged both a returned-payment fee and a late fee for one missed payment; a bounce that leaves the minimum unpaid takes the late fee alone since (credit.ts:872-874). Until 2026-10-13 a due date across a month’s end came at 12:01 PM; it comes at noon now (dueAt, credit.ts:725). Two due items after a statement-day move: from 2026-10-10 a move makes no cycle shorter than 27 days (MIN_CYCLE_DAYS, credit.ts:691), and from 2026-10-13 the day moves once a cycle (statementDayRefusal, credit.ts:701). Until 2026-10-13 six non-US cards whose grace passes 27 days (Postbank, Banco General 28; Nordea, OTP Moldova, monobank 30; Banrural 55) fell due after the next statement and were judged on it, against what was paid since it: a Nordea February statement paid in full in February was taken on 22 March for March’s, autopay took March’s minimum four weeks early and the card lost its grace. Each due date judges its own statement since (waiting, credit.ts:166, :745-751, :856-862)",
       "auditStatus": "partial",
@@ -6833,7 +6833,7 @@
       "downstream": "cardRoom / debit spending work again",
       "persistent": "plastic",
       "explanation": "'Your New Card Arrived'",
-      "tests": "tests/evidence-g13-money.test.ts:482 ‘reported lost and then moved to a new number, the debit card arrives once, unlocked, across a save and a load’, :505 ‘while it’s on its way the day’s groceries go on the credit card, and once it arrives they come out of the current account again’; security.test.ts:84",
+      "tests": "tests/evidence-g13-money.test.ts:486 ‘reported lost and then moved to a new number, the debit card arrives once, unlocked, across a save and a load’, :509 ‘while it’s on its way the day’s groceries go on the credit card, and once it arrives they come out of the current account again’; security.test.ts:84",
       "status": "verified",
       "issue": "",
       "review": {
@@ -6947,7 +6947,7 @@
       "downstream": "card.due; score",
       "persistent": "ledger + record",
       "explanation": "statementReady with minimum",
-      "tests": "tests/evidence-g13-money.test.ts:524 ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it’, :544 ‘charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements…’, :565 ‘asked to move the statement day every morning, it moves once a cycle…’; tests/defects3-bank.test.ts:183 ‘PLAYER JOURNEY: late once, on a plan, paid off: the 20 October statement owes nothing…’; cards.test.ts:216; cardlife.test.ts ‘isn’t raised unasked once the holder says never’ (:200), ‘is a US card’s choice, lets a tenth over…’ (:212), ‘writes at eighteen months of paying more in interest and fees than off the card…’ (:387), ‘hold a US card’s first-year yearly fee to a quarter of its limit’ (:411); interest.test.ts",
+      "tests": "tests/evidence-g13-money.test.ts:528 ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it’, :548 ‘charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements…’, :569 ‘asked to move the statement day every morning, it moves once a cycle…’; tests/defects3-bank.test.ts:184 ‘PLAYER JOURNEY: late once, on a plan, paid off: the 20 October statement owes nothing…’; cards.test.ts:216; cardlife.test.ts ‘isn’t raised unasked once the holder says never’ (:200), ‘is a US card’s choice, lets a tenth over…’ (:212), ‘writes at eighteen months of paying more in interest and fees than off the card…’ (:387), ‘hold a US card’s first-year yearly fee to a quarter of its limit’ (:411); interest.test.ts",
       "status": "verified",
       "issue": "Until 2026-10-10 each zero-balance statement reported a month on time and the yearly fee keyed on the calendar month only, so set_statement_day could cut extra statements, reports and fees. From 2026-10-10 a moved day makes no cycle shorter than 27 days (MIN_CYCLE_DAYS, credit.ts:691) and the fee is charged once in its month (feeAt, credit.ts:789); from 2026-10-13 the day moves once a cycle (statementDayRefusal, credit.ts:701)",
       "auditStatus": "partial",
@@ -7067,7 +7067,7 @@
           },
           {
             "file": "evidence2-b11.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $530, then suspended owing $880, said once the notices are read, across a reload",
             "kind": "render",
             "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
             "round": "remaining-09-banking"
@@ -7122,7 +7122,7 @@
       "downstream": "fedOn read by meals; fee waivers (purchasesSince banking.ts:273); rewards (the statement’s scan, cardoffers.ts:179-190); French ceiling (cardCeilingRoom lending.ts:231). Not settleArrears (spending.ts:432): the day’s food never makes arrears, since spend without owe refuses before posting (spending.ts:325)",
       "persistent": "ledger",
       "explanation": "'No Money For Food Today', with spendRefusal’s reason where it’s more than the money running out: cash in hand a card payer’s day doesn’t spend, a locked or stopped debit card, or the French debit card’s ceiling (from 2026-10-12; until then it said only that there was nothing left to pay with)",
-      "tests": "tests/defects-r3a-1.test.ts:103 ‘buys both, the meal at 11:40 PM and the groceries at midnight, where there’s money for both’ (through the clock); tests/evidence-g13-money.test.ts:505 ‘while it’s on its way the day’s groceries go on the credit card…’; tests/evidence-g12-money.test.ts:245 ‘stops a lost Chase debit card for no fee: the meal and each morning’s groceries go on the credit card…’; tests/defects-r1-1.test.ts:129 ‘say why: the cash a card payer’s day doesn’t spend, a locked debit card, or nothing left at all’; payments.test.ts:30,78; lending.test.ts:56,92; security.test.ts:26; cash.test.ts:134; pending.test.ts:22",
+      "tests": "tests/defects-r3a-1.test.ts:103 ‘buys both, the meal at 11:40 PM and the groceries at midnight, where there’s money for both’ (through the clock); tests/evidence-g13-money.test.ts:509 ‘while it’s on its way the day’s groceries go on the credit card…’; tests/evidence-g12-money.test.ts:245 ‘stops a lost Chase debit card for no fee: the meal and each morning’s groceries go on the credit card…’; tests/defects-r1-1.test.ts:129 ‘say why: the cash a card payer’s day doesn’t spend, a locked debit card, or nothing left at all’; payments.test.ts:30,78; lending.test.ts:56,92; security.test.ts:26; cash.test.ts:134; pending.test.ts:22",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7247,7 +7247,7 @@
       "downstream": "card.apply approval/limit (cardlife.ts:126,133), priced APR (cardTerms, credit.ts:448), loanOffer/overdraftOffer (lending.ts:451,430, through rateForRecord :412), request_limit (cardlife.ts:174)/auto raise (credit.ts:803-812). Until 2026-10-13 these cited credit.ts:1104, :311, :425 and lending.ts:352, :366, lines the files had moved from",
       "persistent": "record",
       "explanation": "scoreWord/number on screens",
-      "tests": "tests/evidence-g13-money.test.ts:565 ‘asked to move the statement day every morning, it moves once a cycle: … and at day 125 the score has gained nothing on a twin’s who never moved it’, :595 ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back…’, :625 ‘reads what’s used of the limit at the due date…’, :641 ‘with no card open, the record ages back 2 a month on the 1st…’, :656 ‘prices a Citi loan by the record: 12.10% at 735…’; several-cards.test.ts:117,135; cardlife.test.ts:48,100; tests/money-fixes.test.ts:30 ‘moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one’",
+      "tests": "tests/evidence-g13-money.test.ts:569 ‘asked to move the statement day every morning, it moves once a cycle: … and at day 125 the score has gained nothing on a twin’s who never moved it’, :601 ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back…’, :631 ‘reads what’s used of the limit at the due date…’, :647 ‘with no card open, the record ages back 2 a month on the 1st…’, :662 ‘prices a Citi loan by the record: 12.10% at 735…’; several-cards.test.ts:117,135; cardlife.test.ts:48,100; tests/money-fixes.test.ts:30 ‘moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one’",
       "status": "verified",
       "issue": "Until 2026-10-10 farmable through set_statement_day (measured +60 in 20 days). From then a move made no cycle shorter than 27 days, but a move each morning held the statement off for good, and with it the month’s report and any mark, until 2026-10-13, when the day came to move once a cycle (statementDayRefusal, credit.ts:701). A day moved later once each cycle still stretches those cycles (42 and 47 days), putting off a due date and any late mark: a choice recorded at credit.ts:693-700",
       "auditStatus": "partial",
@@ -7425,7 +7425,7 @@
       "downstream": "periodsOf → cardStatement → the Statements screen",
       "persistent": "n/a",
       "explanation": "periods, lines, minimum warning",
-      "tests": "tests/evidence-g13-money.test.ts:680 ‘shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-only warning, as the player has it’, :715 ‘ends a current account’s last period at its closing, and says so’, :727 ‘ends a closed card’s last period at its closing…’; tests/evidence2-b04.test.ts:505 ‘writes each line’s balance after it…’, :479 ‘is what the Statements page asks on a plan…’; tests/coverage-gaps-statements.test.ts",
+      "tests": "tests/evidence-g13-money.test.ts:686 ‘shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-only warning, as the player has it’, :722 ‘ends a current account’s last period at its closing, and says so’, :734 ‘ends a closed card’s last period at its closing…’; tests/evidence2-b04.test.ts:507 ‘writes each line’s balance after it…’, :481 ‘is what the Statements page asks on a plan…’; tests/coverage-gaps-statements.test.ts",
       "status": "verified",
       "issue": "Until 2026-10-10 periodsOf cut every past card period on the current statement day, so a move re-cut past statements; past periods are built from kept cuts since (cardPeriods, statements.ts:174). Fixed on 2026-10-13: a closed card’s last period ran past its closing as ‘So Far’; every life’s first card statement read ‘(Rebuilt)’; a December period and a rebuilt period across a new year were a minute off (edge, statements.ts:97); cardPeriods read sim.zone where periodsOf reads homeZone. Also fixed that day: a card opened in the life whose statement day was moved before its first statement, putting it more than a month after the opening, was drawn as two periods, the older a rebuilt statement that never came; its first statement runs from the opening now (firstFromOpening, statements.ts:198-203, held by tests/defects5.test.ts statements)",
       "previous": "partial",

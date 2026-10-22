@@ -410,8 +410,9 @@ describe('card.report', () => {
 describe('card.request_hardship', () => {
   /**
    * The life's Chase card owing $4,800, late at its first due date and then on a plan: the statement of 20 September asks
-   * $4,800, autopay (the whole statement, as the life starts) asks it on Sunday 11 October at noon of a bank emptied the
-   * minute before, and it bounces. The card's minimum was Chase's 1% and the month's interest (none in the introduction),
+   * $4,800, autopay (the whole statement, as the life starts) asks it on Tuesday 13 October at noon of a bank emptied the
+   * minute before, and it bounces (Sunday 11 October, 21 days on, until brief 21, 2026-10-22, when a US card's due date
+   * became one day each month, Chase's the 13th). The card's minimum was Chase's 1% and the month's interest (none in the introduction),
    * never under $40: $48. Late once on a US card is the safe harbor's $30 and not yet the record (twice is, thirty days
    * past due). Then the plan: $4,830 over forty-eight months, $100.625, a dollar up, $101; and the means to pay come.
    */
@@ -422,12 +423,12 @@ describe('card.request_hardship', () => {
     purchases(sim, card, 4_800_00); // TEST SETUP
     sim.advanceTo(edt(9, 20, 9, 1));
     expect(stateOf(sim.player, card).statementBalance).toBe(4_800_00);
-    sim.advanceTo(edt(10, 11, 11, 59));
+    sim.advanceTo(edt(10, 13, 11, 59));
     setBalance(sim, checking, 0); // TEST SETUP: the bank emptied the minute before the due date
     setBalance(sim, mine(sim, 'savings'), 0); // TEST SETUP
-    sim.advanceTo(edt(10, 11, 12, 5));
+    sim.advanceTo(edt(10, 13, 12, 5));
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
-    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited, $48.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.']);
+    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited, $48.00, was due October 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.']);
     expect(stateOf(sim.player, card).missed).toBe(1);
     expect(sim.player.credit!.late).toEqual([]);
     expect(sim.player.credit!.score).toBe(795);
@@ -435,7 +436,7 @@ describe('card.request_hardship', () => {
     setBalance(sim, checking, 1_000_00); // TEST SETUP: the means to pay the plan, come since
     // The statement of 20 October asks the plan's payment, and charges no interest on a plan.
     sim.advanceTo(edt(10, 20, 9, 1));
-    expect(notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body).toContain('The statement comes to $4,830.00, due November 10, 2026. The plan’s payment is $101.00. Autopay pays $101.00 from Chase Total Checking that day, if there’s enough in it.');
+    expect(notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body).toContain('The statement comes to $4,830.00, due November 13, 2026. The plan’s payment is $101.00. Autopay pays $101.00 from Chase Total Checking that day, if there’s enough in it.');
     expect(moved(sim, card, 'Interest')).toEqual([]);
     return { sim, card, checking };
   }
@@ -443,14 +444,15 @@ describe('card.request_hardship', () => {
   it('puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record', () => {
     const met = lateThenPlan('b04-plan-missed');
     const short = lateThenPlan('b04-plan-missed');
-    // Due 21 days after 20 October: Tuesday 10 November at noon, on Eastern Standard Time.
+    // Due the 13th: Friday 13 November at noon, on Eastern Standard Time (Tuesday 10 November, 21 days after 20 October,
+    // until brief 21, 2026-10-22).
     for (const { sim, card } of [met, short]) {
-      sim.advanceTo(est(11, 10, 11, 59));
+      sim.advanceTo(est(11, 13, 11, 59));
       expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([]);
       expect(stateOf(sim.player, card).missed).toBe(1);
     }
     setBalance(short.sim, short.checking, 0); // TEST SETUP: the twin's bank emptied the minute before
-    for (const { sim } of [met, short]) sim.advanceTo(est(11, 10, 12, 5));
+    for (const { sim } of [met, short]) sim.advanceTo(est(11, 13, 12, 5));
 
     // Autopay asks the plan's $101, not the whole $4,830 it's set to, and it's paid: on time, the count back to none.
     expect(moved(met.sim, met.card, 'Paid Chase Freedom Unlimited')).toEqual([101_00]);
@@ -460,25 +462,25 @@ describe('card.request_hardship', () => {
     // A month paid as agreed, three; $4,729 of $65,217 used is 7%, under the 30% past which the record docks it.
     expect(met.sim.player.credit!.score).toBe(798);
     expect(met.sim.player.credit!.late).toEqual([]);
-    expect(stateOf(met.sim.player, met.card).hardship).toEqual({ payment: 101_00, since: edt(10, 11, 12, 5) });
+    expect(stateOf(met.sim.player, met.card).hardship).toEqual({ payment: 101_00, since: edt(10, 13, 12, 5) });
 
     // The twin: the plan's $101 bounced, a second miss, thirty days past due, on the record. A repeat within six cycles
     // may be the safe harbor's $41, and Chase's card agreement says "up to $40": $40.
     expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('The Chase Freedom Unlimited’s autopay of $101.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     expect(stateOf(short.sim.player, short.card).missed).toBe(2);
     expect(moved(short.sim, short.card, 'Late fee')).toEqual([-30_00, -40_00]);
-    // The record’s mark is that due date’s: 10 November, at its noon. Until the third round of 2026-10-13 this was held
+    // The record’s mark is that due date’s: 13 November, at its noon (10 November until brief 21). Until the third round of 2026-10-13 this was held
     // to the hour, the due date running at 12:01: `dueAt` passed the 20th plus 21 days unmended to `instantFromZoned`,
     // which took it down its gap path a minute late (defect 48 of that round).
     const second = short.sim.universe.transactions.filter((t) => t.memo === 'Late fee').at(-1)!.at;
     expect(short.sim.player.credit!.late).toEqual([second]);
-    expect(second).toBe(est(11, 10, 12, 0));
-    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment on the Chase Freedom Unlimited, $101.00, was due November 10, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
+    expect(second).toBe(est(11, 13, 12, 0));
+    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment on the Chase Freedom Unlimited, $101.00, was due November 13, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
   });
 
   it('is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48', () => {
     const { sim, card } = lateThenPlan('b04-plan-page');
-    sim.advanceTo(est(11, 10, 12, 5));
+    sim.advanceTo(est(11, 13, 12, 5));
     // The life’s first statement, cut by the clock on 20 September, is kept, not rebuilt; the months before it, from
     // before the life began, are drawn back to the card’s opening. Until the third round of 2026-10-13 this held the
     // first one “(Rebuilt)”, with the note that it came from before statements were kept (defect 49).
@@ -488,11 +490,11 @@ describe('card.request_hardship', () => {
     ]);
     const october = draw(sim, createElement(BankStatements), [card.id, 1]).text;
     expect(october).toContain('Brought Forward $4,800.00 Payments And Credits $0.00 Spending $0.00 Fees $30.00 Interest $0.00 New Balance $4,830.00');
-    expect(october).toContain('The plan’s payment is $101.00, due November 10, 2026.');
+    expect(october).toContain('The plan’s payment is $101.00, due November 13, 2026.');
     const september = draw(sim, createElement(BankStatements), [card.id, 2]).text;
     expect(september).not.toContain('Rebuilt: this statement is from before the game kept card statements');
     expect(september).toContain('New Balance $4,800.00');
-    expect(september).toContain('The minimum payment is $48.00, due October 11, 2026.');
+    expect(september).toContain('The minimum payment is $48.00, due October 13, 2026.');
     expect(september).not.toContain('the plan’s payment');
   });
 });

@@ -103,8 +103,9 @@ function draw(sim: Simulation, element: ReactElement, states: unknown[] = []): s
 /**
  * The card owing $4,800, late at its first due date and then on a plan, as `tests/evidence2-b04.test.ts` plays it: the
  * statement of 20 September asks $4,800 and the card’s minimum, 1% of it and the month’s interest (none in the
- * introduction), never under $40: $48. Autopay, on the whole statement as the life starts, bounces on Sunday 11 October
- * at noon from a bank emptied the minute before. Then the plan: $4,830 over forty-eight months, $100.625, a dollar up,
+ * introduction), never under $40: $48. Autopay, on the whole statement as the life starts, bounces on Tuesday 13 October
+ * at noon, Chase's due day (Sunday 11 October, 21 days on, until brief 21, 2026-10-22), from a bank emptied the minute
+ * before. Then the plan: $4,830 over forty-eight months, $100.625, a dollar up,
  * $101; and the means to pay come.
  */
 function lateThenPlan(seed: string): { sim: Simulation; card: Account; checking: Account } {
@@ -112,10 +113,10 @@ function lateThenPlan(seed: string): { sim: Simulation; card: Account; checking:
   const card = mine(sim, 'credit_card');
   const checking = mine(sim, 'checking');
   purchases(sim, card, 4_800_00); // TEST SETUP
-  sim.advanceTo(edt(10, 11, 11, 59));
+  sim.advanceTo(edt(10, 13, 11, 59));
   setBalance(sim, checking, 0); // TEST SETUP: the bank emptied the minute before the due date
   setBalance(sim, mine(sim, 'savings'), 0); // TEST SETUP
-  sim.advanceTo(edt(10, 11, 12, 5));
+  sim.advanceTo(edt(10, 13, 12, 5));
   expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
   expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 101_00 });
   setBalance(sim, checking, 1_000_00); // TEST SETUP: the means to pay the plan, come since
@@ -135,16 +136,17 @@ describe('a hardship plan’s statement', () => {
     expect(cardStatement(sim, card, october)).toMatchObject({ newBalance: 4_830_00, minimum: 101_00, plan: true });
   });
 
-  it('still asks the plan’s $101 on the Statements tab once the plan has ended: paid off on 25 October, the plan ends at the 10 November due date, and the October statement reads as it asked', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “still asks the plan’s $101 on the Statements tab once the plan has ended: paid off on 25 October, the plan ends at the 10 November due date, and the October statement reads as it asked”.
+  it('still asks the plan’s $101 on the Statements tab once the plan has ended: paid off on 25 October, the plan ends at the 13 November due date, and the October statement reads as it asked', () => {
     const { sim, card, checking } = lateThenPlan('plan-least-ended');
     setBalance(sim, checking, 6_000_00); // TEST SETUP: the means to clear it
     sim.advanceTo(edt(10, 25, 9));
     expect(must(sim, 'finance.pay_card', { amount: 'full' })).toEqual({ paid: 4_830_00 });
-    sim.advanceTo(est(11, 10, 12, 5));
+    sim.advanceTo(est(11, 13, 12, 5));
     expect(stateOf(sim.player, card).hardship).toBeUndefined();
     const october = draw(sim, createElement(BankStatements), [card.id, 1]);
     expect(october).toContain('New Balance $4,830.00');
-    expect(october).toContain('The plan’s payment is $101.00, due November 10, 2026.');
+    expect(october).toContain('The plan’s payment is $101.00, due November 13, 2026.');
   });
 
   it('says on the Statements tab what the plan’s payment takes to clear it, with no interest, not what paying the card’s minimum would at its rate', () => {
@@ -173,9 +175,9 @@ describe('a hardship plan’s statement', () => {
     // $4,800 over forty-eight months: $100 exactly.
     expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 100_00 });
     expect(stateOf(sim.player, card).issued!.at(-1)).toMatchObject({ at: edt(9, 20, 9), minimum: 100_00, plan: true });
-    expect(draw(sim, createElement(BankStatements), [card.id, 1])).toContain('The plan’s payment is $100.00, due October 11, 2026.');
+    expect(draw(sim, createElement(BankStatements), [card.id, 1])).toContain('The plan’s payment is $100.00, due October 13, 2026.');
     // Its due date: autopay asks the $100, not the whole statement it’s set to, and it’s on time.
-    sim.advanceTo(edt(10, 11, 12, 5));
+    sim.advanceTo(edt(10, 13, 12, 5));
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([100_00]);
     expect(moved(sim, card, 'Late fee')).toEqual([]);
     expect(stateOf(sim.player, card).missed ?? 0).toBe(0);
@@ -188,8 +190,8 @@ describe('paying the minimum by hand on a hardship plan', () => {
     expect(must(sim, 'finance.pay_card', { amount: 'minimum' })).toEqual({ paid: 101_00 });
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([101_00]);
     setBalance(sim, checking, 0); // TEST SETUP: the bank emptied the minute before the due date
-    sim.advanceTo(est(11, 10, 11, 59));
-    sim.advanceTo(est(11, 10, 12, 5));
+    sim.advanceTo(est(11, 13, 11, 59));
+    sim.advanceTo(est(11, 13, 12, 5));
     // Autopay asked nothing more, and the month is on time: the one late fee is October’s.
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([101_00]);
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
@@ -202,7 +204,7 @@ describe('the card’s panel on a hardship plan', () => {
     const { sim } = lateThenPlan('plan-least-panel');
     const panel = draw(sim, createElement(BankCard, { bankId: 'us-chase' }));
     // This statement’s $101 is the next payment’s line from 2026-10-20 (brief 17), where the plan’s line said it again until then.
-    expect(panel).toContain('It’s been on a payment plan since October 11, 2026. There’s no interest, and each statement asks for the plan’s $101 instead of the minimum. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.');
+    expect(panel).toContain('It’s been on a payment plan since October 13, 2026. There’s no interest, and each statement asks for the plan’s $101 instead of the minimum. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.');
     expect(panel).toMatch(/The next payment is due [A-Z][a-z]+ \d{1,2}, \d{4}\. The statement is \$[\d,]+, and the plan’s payment is \$101\./);
     expect(panel).toContain('The minimum payment once the plan ends is');
     expect(panel).not.toMatch(/The minimum payment once the plan ends is [^.]*\. On this statement it’s/);

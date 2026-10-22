@@ -35,10 +35,13 @@
  *   year's, 15,960 × 1.38 ÷ 12 = $1,835.40 a month in 2026 and 2027; Covered Connecticut's is 175% of the year before's,
  *   15,650 × 1.75 ÷ 12 = $2,282.29 in 2026 and 15,960 × 1.75 ÷ 12 = $2,327.50 in 2027; the credit's floor is 100% of
  *   the year before's, 15,650 ÷ 12 = $1,304.17 in 2026 (to the cent, $1,304.16⅔) and 15,960 ÷ 12 = $1,330.00 in 2027;
- * - a Capital One 360 Performance Savings account pays 3.00% a year, a 365th a day on each day's closing balance, at the
- *   month's end at 11 at night: $657,000 for a 30-day month is 657,000 × 0.03 × 30 ÷ 365 = $1,620.00, and $803,000 for a
- *   31-day month is 803,000 × 0.03 × 31 ÷ 365 = $2,046.00; set at half past eleven on the month before's last day, a
- *   balance earns the month on itself alone (these earn whole cents, so no fraction is carried);
+ * - a Capital One 360 Performance Savings account pays 3.00% APY, credited monthly, which is the nominal
+ *   12 × (1.03^(1/12) − 1) = 2.9595% a year, a 365th a day on each day's closing balance, at the month's end at 11 at night:
+ *   $665,986 for a 30-day month is 665,986 × 0.029595 × 30 ÷ 365 = $1,620.00, and $813,983 for a 31-day month is
+ *   813,983 × 0.029595 × 31 ÷ 365 = $2,046.00 (a ninth and a sixth of a cent over: the cent's fraction carried from the
+ *   month before is added, and where it would take one a cent past, a balance to the cent is set, said where it's done);
+ *   set at half past eleven on the month before's last day, a balance earns the month on itself alone. Until brief 21 (2026-10-22) the 3.00% ran as the nominal rate, and $657,000 and $803,000 earned
+ *   those figures at 0.03;
  * - work-study is $23.00 an hour: January 2027's 6 hours before a leave begun on the 20th are $138.00;
  * - HUSKY D renews twelve months from a 2026 start and six from a 2027 one; Covered Connecticut likewise.
  *
@@ -338,7 +341,7 @@ describe('Covered Connecticut is had with the premium tax credit: none under the
   /**
    * An Inherited family's student withdrawn on 21 September or 1 December 2026, and played to enroll on 1 October or
    * 2 December, on the month before's income within Covered Connecticut's band. A citizen earns it: savings at Capital
-   * One set on the month before's last night to $657,000, which earns 657,000 × 0.03 × 30 ÷ 365 = $1,620.00 in the
+   * One set on the month before's last night to $665,986, which earns 665,986 × 0.029595 × 30 ÷ 365 = $1,620.00 in the
    * month, beside the work-study paid in it, $23.00 an hour. An F-1 student can't (TEST SETUP: the month's income set on
    * her record to $2,052.00): Capital One and Citi open only for a US citizen or green card holder, so her money is at
    * Chase, whose savings pays a few dollars a month on millions; and her work-study, the only other income a student
@@ -348,7 +351,7 @@ describe('Covered Connecticut is had with the premium tax credit: none under the
   const withdrawnOn = (seed: string, born: 'us-ny-newyork' | 'uk-eng-london', month: 9 | 11) => {
     const sim = life(seed, 'inherited', born);
     sim.advanceTo(at(2026, month - 1, 31, 23, 30));
-    if (born === 'us-ny-newyork') setSavings(sim, 657_000_00);
+    if (born === 'us-ny-newyork') setSavings(sim, 665_986_00); // $657,000 until brief 21 (2026-10-22): above
     sim.advanceTo(month === 9 ? at(2026, 9, 21, 12) : at(2026, 12, 1, 12));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     sim.advanceTo(month === 9 ? at(2026, 10, 1, 9) : at(2026, 12, 2, 9));
@@ -440,7 +443,9 @@ describe('a program taken on a personal leave without Affiliate cover, and Yale 
 
   it('PLAYER JOURNEY: an Inherited family’s student enrolls in Covered Connecticut on her leave, on January’s interest; back at the School on 3 January 2028, Yale Health covers her and Covered Connecticut ends at the 1 February look, said', () => {
     const sim = thaw(atSchool().rich);
-    setSavings(sim, 803_000_00);
+    // $813,982.33, a hundredth of a cent over $2,046.00 in January: $813,983, a sixth of a cent over, took December's
+    // carried fraction a cent past it. $803,000 until brief 21 (2026-10-22): above.
+    setSavings(sim, 813_982_33);
     onLeave(sim);
     sim.advanceTo(at(2027, 2, 1, 9));
     // January: $2,046.00 of interest and 6 hours' work-study, $138.00: $2,184.00, over $1,835.40 and within $2,327.50.

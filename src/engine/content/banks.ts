@@ -85,8 +85,24 @@ export interface Product {
    * paid Chase's fee on benefit Chase itself counts.
    */
   deposits?: 'wages' | 'electronic';
-  /** What it pays a year, as a fraction. Absent: nothing. */
+  /** What it pays a year, as a fraction, as its source quotes it (`quoted`). Absent: nothing. */
   rate?: number;
+  /**
+   * The effective yearly yield its rates are quoted as, where its source names one (from 2026-10-22, the owner's brief 21):
+   * an APY (the US), an AER (Britain, Ireland), a TAE (Spain) or a GAT (Mexico), each what a year earns with the interest
+   * left in. A day's interest is then worked from the nominal rate that earns it as the account credits it
+   * (`nominalRate` in `systems/banking.ts`). Absent, the rate is nominal (Canada's "regular rate", Spain's TIN, the rest's
+   * "p.a.", or a figure whose basis its source doesn't name, SLATE's assumption), a day's interest the rate ÷ 365, as
+   * every rate ran until then (docs/verification/genre-banking-2026-10-22/banking-sources.md).
+   */
+  quoted?: 'APY' | 'AER' | 'TAE' | 'GAT';
+  /** Compounded daily where its terms say so (Wells Fargo's), a day's interest earning from the next day; else at each crediting. */
+  compounds?: 'daily';
+  /**
+   * Credited once every so many months counted from the day it opened, where its terms say so (Nationwide's and Lloyds'
+   * yearly, Bankinter's half-yearly), not at month ends or in set months. From 2026-10-22: until then, monthly.
+   */
+  creditsEvery?: 6 | 12;
   /** The rate is paid only on a balance of at least this. */
   rateFrom?: Money;
   /** A higher rate for a larger balance, paid on the whole of it, from each tier's floor up. */

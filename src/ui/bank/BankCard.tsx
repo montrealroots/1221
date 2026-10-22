@@ -23,7 +23,7 @@ import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateKey, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { said } from '@/ui/looks/words';
-import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
+import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, stateOf, statementDayOf, statementDayRefusal, usCard, usDueDay, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
 import { transferRefusal } from '@/engine/systems/cardoffers';
@@ -213,7 +213,8 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   if (due && ask) {
     const statement = state.statementBalance;
     const paid = state.paidSinceStatement;
-    const least = ask.due >= statement ? `The whole ${money(statement)} statement is due then` : `The statement is ${money(statement)}, and ${plan ? 'the plan’s payment' : 'the minimum payment'} is ${money(ask.due)}`;
+    // What's past due is in the minimum payment due, and said (from 2026-10-22, brief 21).
+    const least = ask.due >= statement ? `The whole ${money(statement)} statement is due then` : `The statement is ${money(statement)}, and ${plan ? 'the plan’s payment' : 'the minimum payment'} is ${money(ask.due)}${ask.pastDue > 0 ? `, ${money(ask.pastDue)} of it past due` : ''}`;
     const covered = ask.due < statement && paid >= ask.due ? ` You’ve paid ${money(paid)} since the statement, which covers it.` : paid > 0 && paid < ask.due ? ` You’ve paid ${money(paid)} of it since the statement.` : '';
     now.push(`The next payment is due ${formatDate(due.at, sim.zone)}. ${least}.${covered}`);
   }
@@ -282,7 +283,14 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   }
   if (!charge) rules.push('Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.');
   // The next due date is the first line now (from 2026-10-20, brief 17); until then it closed this one.
-  rules.push(`Statements come on the ${statementDayOf(person, card)}${ordinal(statementDayOf(person, card))}, and payment is due ${terms.graceDays !== undefined ? `${terms.graceDays} days after each one` : 'on the 15th of the next month'}.`);
+  // A US card's one day each month (`usDueDay`), from 2026-10-22 (brief 21): until then every card said its days after
+  // each statement, which a US card's due date no longer is.
+  const statementDay = statementDayOf(person, card);
+  const usDue = usCard(card) ? usDueDay(statementDay, terms.graceDays) : undefined;
+  const dueWords = usDue
+    ? `on the ${usDue.day}${ordinal(usDue.day)} of ${usDue.next ? 'the next month' : 'the same month'}${terms.graceDays !== undefined ? `, at least ${terms.graceDays} days after each one` : ''}`
+    : terms.graceDays !== undefined ? `${terms.graceDays} days after each one` : 'on the 15th of the next month';
+  rules.push(`Statements come on the ${statementDay}${ordinal(statementDay)}, and payment is due ${dueWords}.`);
   // This statement’s minimum is the next payment’s line, above (from 2026-10-20, brief 17): until then each rule ended
   // “On this statement it’s …”.
   if (!charge) {

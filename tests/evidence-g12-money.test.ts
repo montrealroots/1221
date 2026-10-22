@@ -420,10 +420,12 @@ describe('card.request_hardship', () => {
     // Chase's minimum on it: 1% of $4,800 and the month's interest, none in the introduction, never under $40: $48.
     expect(stateOf(sim.player, card).statementBalance).toBe(4_800_00);
     expect(sim.player.credit!.score).toBe(795);
-    // Due 21 days after the statement, Chase's grace: Sunday 11 October at noon.
-    sim.advanceTo(edt(10, 11, 11, 59));
+    // Due a day each month that keeps Chase's 21 days after a statement on the 20th, even in February: Tuesday 13 October
+    // at noon (Sunday 11 October, 21 days on, until brief 21, 2026-10-22, when a US card's due date became one day each
+    // month).
+    sim.advanceTo(edt(10, 13, 11, 59));
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([]);
-    sim.advanceTo(edt(10, 11, 12, 1));
+    sim.advanceTo(edt(10, 13, 12, 1));
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([100_00]);
     expect(card.balance).toBe(-4_700_00);
     expect(moved(sim, card, 'Late fee')).toEqual([]);
@@ -444,9 +446,9 @@ describe('card.request_hardship', () => {
     // The card’s $48 typed in. Until 2026-10-13 paying “the minimum” paid it, the card’s own on a plan; from that day it
     // pays the plan’s payment (`tests/hardship-plan-minimum.test.ts`), so the card’s is paid as an amount here.
     expect(must(sim, 'finance.pay_card', { amount: 48_00 })).toEqual({ paid: 48_00 });
-    sim.advanceTo(edt(10, 11, 11, 59));
+    sim.advanceTo(edt(10, 13, 11, 59));
     setBalance(sim, checking(sim), 0); // TEST SETUP: nothing in checking for autopay's rest, a minute before it asks
-    sim.advanceTo(edt(10, 11, 12, 1));
+    sim.advanceTo(edt(10, 13, 12, 1));
     return { sim, card: chaseCard(sim), statement };
   }
 
@@ -481,7 +483,7 @@ describe('card.request_hardship', () => {
     expect(must(sim, 'finance.pay_card', { amount: 'full' })).toEqual({ paid: 4_800_00 });
     expect(card.balance).toBe(0);
     expect(cardRoom(sim.player, card)).toBe(0);
-    sim.advanceTo(edt(10, 11, 12, 1));
+    sim.advanceTo(edt(10, 13, 12, 1));
     const state = stateOf(sim.player, card);
     expect(state.hardship).toBeUndefined();
     expect(state.suspended).toBeUndefined();
@@ -646,7 +648,7 @@ describe('card.request_limit', () => {
     const lowered = owing();
     const raised = owing();
     expect(must(raised, 'card.request_limit', { limit: 4_500_00 })).toEqual({ limit: 4_500_00, granted: true });
-    for (const sim of [lowered, raised]) sim.advanceTo(edt(10, 11, 12, 1));
+    for (const sim of [lowered, raised]) sim.advanceTo(edt(10, 13, 12, 1));
     // Chase's minimum on $3,000, 1% under its $40 floor: $40, paid by autopay on time, three points; $2,960 left.
     for (const sim of [lowered, raised]) {
       expect(moved(sim, chaseCard(sim), 'Paid Chase Freedom Unlimited')).toEqual([40_00]);

@@ -272,7 +272,8 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     // What it costs first, then its standing terms under The Card’s Terms (from 2026-10-20, brief 17), the penalty rule in
     // the game’s count of payments missed: until then the rule said “If a payment is sixty days late”.
     expect(words).toContain('but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut. Miss two payments in a row, and the rate goes up to 29.99% after 45 days’ notice. No yearly fee. The Card’s Terms');
-    expect(paragraphs).toContain('Statements come on the 20th, and payment is due 21 days after each one.');
+    // A US card's due day each month (from 2026-10-22, brief 21: until then "payment is due 21 days after each one").
+    expect(paragraphs).toContain('Statements come on the 20th, and payment is due on the 13th of the next month, at least 21 days after each one.');
     expect(paragraphs).toContain('The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more.');
     expect(words).toContain('Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself.');
     expect(words).toContain('Owed $0 Left To Spend');

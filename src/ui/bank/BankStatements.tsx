@@ -16,7 +16,7 @@ import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at, type Subject } from '@/ui/looks';
 import type { Account } from '@/engine/core/ledger';
-import { dueAt, stateOf } from '@/engine/systems/credit';
+import { dueAt, stateOf, usCard } from '@/engine/systems/credit';
 import { pendingOn } from '@/engine/systems/pending';
 import { PENDING } from '@/engine/content/pending';
 import { LOOKAHEAD_DAYS } from '@/engine/systems/obligations';
@@ -123,7 +123,9 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
   const money = (c: number) => formatMoney(c, cur);
   const st = cardStatement(sim, account, period);
   const closed = period.to <= sim.now;
-  const due = closed ? dueAt(sim.zone, period.to, st.terms.graceDays) : undefined;
+  // A US card's due date is one day each month, as the engine schedules it (`dueAt`); until 2026-10-22 (brief 21) this
+  // worked it as the statement and the bank's days whatever the card, which were the engine's then too.
+  const due = closed ? dueAt(sim.zone, period.to, st.terms.graceDays, usCard(account)) : undefined;
   // A balance carried into it: paid in full, what built up since still comes on the next, as trailing interest.
   const carried = sim.player.credit !== undefined && stateOf(sim.player, account).carrying === true && st.previous > 0;
   // On a hardship plan the due date judges the plan’s payment, never more than the statement, and not the card’s

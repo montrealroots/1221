@@ -11,7 +11,7 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig, newLifeFrom, type NewSaveConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
-import { MS_DAY, formatDate } from '@/engine/core/time';
+import { MS_DAY, formatDate, instantFromZoned } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 import { LOAN_DUE_KIND } from '@/engine/systems/lending';
@@ -95,7 +95,14 @@ function missEach(sim: Simulation, times: number): void {
 }
 
 describe('a card’s missed payments, read in the order they come', () => {
-  it('PLAYER JOURNEY: six due dates missed at Chase: each late notice names its own date and what the next miss brings, the statements between say what the due date decides, the counts are payments missed, and the miss that charges the card off sends nobody to the card', () => {
+  /**
+   * Until brief 21 (2026-10-22) Chase's due date was the statement's plus 21 days, the 11th, the 10th or the 11th by the
+   * month, and the sixth due date missed charged the card off, about 150 days on; the penalty notice came at the second.
+   * From then it's due on the 13th every month (Reg Z §1026.7(b)(11)), the notice on the 61st day after the first missed
+   * (13 December), the penalty rate 45 days after it (27 January), the last notice on the 150th (12 March) and the
+   * charge-off on the 180th (11 April), each worked here from the first due date, 13 October 2026.
+   */
+  it('PLAYER JOURNEY: six due dates missed at Chase: each late notice names its own date and what the next miss brings, the statements between say what the due date decides, the counts are payments missed, and the day that charges the card off, 180 days after the first, sends nobody to the card', () => {
     const sim = ada('b17-money-late');
     missEach(sim, 6);
     const late = titled(sim, 'A Late Card Payment');
@@ -103,30 +110,36 @@ describe('a card’s missed payments, read in the order they come', () => {
     // up to the day in its place, one notice for four late fees.
     expect(late).toHaveLength(6);
     expect(new Set(late).size).toBe(6);
-    expect(late[0]).toBe('The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.');
-    expect(late[1]).toBe('The minimum payment on the Chase Freedom Unlimited, $40.00, was due November 10, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
-    // The sixth charges it off: it sends nobody to a card closed by the time it's read, and nor does its bounce.
-    expect(late[5]).toBe('The minimum payment on the Chase Freedom Unlimited, $40.00, was due March 13, 2027, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now.');
+    expect(late[0]).toBe('The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.');
+    // The minimum payment due takes in each minimum past due, a payment going to the oldest first (from 2026-10-22,
+    // brief 21: until then each said the month's own $40, and $40 paid then made the card current again).
+    expect(late[1]).toBe('The minimum payment on the Chase Freedom Unlimited, $80.00, $40.00 of it past due, was due November 13, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
+    // The sixth no longer charges it off, so it sends the player to the card, as its bounce does.
+    expect(late[5]).toBe('The minimum payment on the Chase Freedom Unlimited, $240.00, $200.00 of it past due, was due March 13, 2027, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
     const bounced = titled(sim, 'A Card Payment Bounced');
-    expect(bounced.slice(0, 5).every((b) => b.endsWith('then pay the card on Money, under Cards.'))).toBe(true);
-    expect(bounced.at(-1)).toBe('The Chase Freedom Unlimited’s autopay of $1,043.27 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it.');
-    expect(titled(sim, 'Your Card Was Charged Off')).toHaveLength(1);
+    expect(bounced).toHaveLength(6);
+    expect(bounced.every((b) => b.endsWith('then pay the card on Money, under Cards.'))).toBe(true);
+    expect(titled(sim, 'Your Card Was Charged Off')).toHaveLength(0);
 
     const statements = titled(sim, 'Statement Ready: Chase Freedom Unlimited');
-    expect(statements[0]).toBe('The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.');
-    expect(statements[1]).toBe('The statement comes to $600.00, due November 10, 2026. The minimum payment is $40.00. Autopay pays the whole $600.00 from Chase Total Checking that day, if there’s enough in it. The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.');
-    expect(statements[2]).toBe('The statement comes to $861.92, due December 11, 2026. The minimum payment is $40.00. Autopay pays the whole $861.92 from Chase Total Checking that day, if there’s enough in it. The card works again if at least $40.00 is paid by then.');
+    expect(statements[0]).toBe('The statement comes to $270.00, due October 13, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.');
+    expect(statements[1]).toBe('The statement comes to $600.00, due November 13, 2026. The minimum payment is $80.00, $40.00 of it past due. Autopay pays the whole $600.00 from Chase Total Checking that day, if there’s enough in it. The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.');
+    expect(statements[2]).toMatch(/^The statement comes to \$[\d,]+\.\d\d, due December 13, 2026\. The minimum payment is \$120\.00, \$80\.00 of it past due\. Autopay pays the whole \$[\d,]+\.\d\d from Chase Total Checking that day, if there’s enough in it\. The card works again if at least \$120\.00 is paid by then\.$/);
 
     expect(titled(sim, 'Your Card Is Suspended')).toEqual(['You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you pay at least the minimum by a due date, or pay the card off.']);
-    // The counts are the payments missed, where until 2026-10-20 they were days: “sixty days late” on the day the late
-    // notice said thirty, and “150 days behind” at 120.
-    expect(titled(sim, 'A Penalty Rate Is Coming')).toEqual(['You’ve missed two payments in a row. From December 25, 2026, the Chase Freedom Unlimited charges 29.99% on what’s owed. Six payments on time in a row take it off.']);
-    expect(titled(sim, 'A Default Notice')).toEqual(['You’ve missed five payments in a row on the Chase Freedom Unlimited. Pay at least $40.00 before the next due date, or the whole balance falls due and goes to collections.']);
+    // By days from the first missed due date, 13 October 2026: 61 is 13 December, and 45 more 27 January.
+    expect(titled(sim, 'A Penalty Rate Is Coming')).toEqual(['The Chase Freedom Unlimited’s minimum payment, due October 13, 2026, is more than 60 days late. From January 27, 2027, the card charges 29.99% on what’s owed. Six minimum payments on time in a row take the penalty rate off.']);
+    // 150 days is 12 March, and 180 the day it's charged off, 11 April.
+    expect(titled(sim, 'A Default Notice')).toEqual(['The Chase Freedom Unlimited’s minimum payment, due October 13, 2026, is 150 days late. Pay at least the $40.00 of it still unpaid before April 11, 2027, or the card is closed and what’s owed goes to collections.']);
+    sim.advanceTo(instantFromZoned({ year: 2027, month: 4, day: 10, hour: 23 }, 'America/New_York'));
+    expect(titled(sim, 'Your Card Was Charged Off')).toHaveLength(0);
+    sim.advanceTo(instantFromZoned({ year: 2027, month: 4, day: 11, hour: 1 }, 'America/New_York'));
+    expect(titled(sim, 'Your Card Was Charged Off')).toHaveLength(1);
 
     // Short For A Payment at nothing and below: until 2026-10-20 “it has $0.00 available” and “it has -$12.00 available”.
     const short = titled(sim, 'Short For A Payment: Chase Total Checking');
-    expect(short).toContain('The Chase Freedom Unlimited’s autopay, $270.00, comes from Chase Total Checking at Chase on October 11, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.');
-    expect(short).toContain('The Chase Freedom Unlimited’s autopay, $915.28, comes from Chase Total Checking at Chase on January 10, 2027, and it’s overdrawn by $12.00. Move money into it, pay the card by hand, or have autopay pay from another account.');
+    expect(short).toContain('The Chase Freedom Unlimited’s autopay, $600.00, comes from Chase Total Checking at Chase on November 13, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.');
+    expect(short.some((x) => /comes from Chase Total Checking at Chase on January 13, 2027, and it’s overdrawn by \$12\.00\./.test(x))).toBe(true);
     expect(short.join(' ')).not.toMatch(/\$0\.00 available|-\$/);
   }, 600_000);
 
@@ -170,7 +183,8 @@ describe('the card’s panel says the next payment and what it costs first, and 
     expect(at(first)).toBeLessThan(at('Paying less than the minimum by the due date costs $30 the first time'));
     expect(at('Paying less than the minimum by the due date costs $30 the first time')).toBeLessThan(at('Miss two payments in a row, and the rate goes up to 29.99% after 45 days’ notice.'));
     expect(at('Miss two payments in a row, and the rate goes up to 29.99% after 45 days’ notice.')).toBeLessThan(at('The Card’s Terms'));
-    expect(at('The Card’s Terms')).toBeLessThan(at('Statements come on the 20th, and payment is due 21 days after each one.'));
+    // A US card's due day each month (from 2026-10-22, brief 21: until then "payment is due 21 days after each one").
+    expect(at('The Card’s Terms')).toBeLessThan(at('Statements come on the 20th, and payment is due on the 13th of the next month, at least 21 days after each one.'));
     // The terms are a native disclosure, shut until opened, with the minimum's rule and the rate inside it.
     expect(html).toMatch(/<details[^>]*data-card-terms=""[^>]*><summary>The Card’s Terms<\/summary>.*Statements come on the 20th.*The minimum payment is 1% of the statement plus the month’s interest, or \$40 if that’s more\..*<\/details>/s);
     expect(text).not.toContain('sixty days late');
@@ -210,12 +224,13 @@ describe('applying for a card says what it would come with, before Apply For Thi
 });
 
 describe('an introductory rate says what ends it early, by the game’s own count', () => {
-  it('Chase: two payments missed in a row', () => {
+  /** Until brief 21 (2026-10-22) "Missing two payments in a row ends it early.", the second due date missed. */
+  it('Chase: a minimum more than 60 days late, 45 days after the notice', () => {
     const sim = ada('b17-intro-us');
     const card = cardsOf(sim, sim.player)[0]!;
     // TEST SETUP: a new card, its fifteen months ahead of it.
     card.openedAt = sim.now;
-    expect(drawn(sim, BankCardOffers as FunctionComponent<Record<string, unknown>>, { bankId: 'us-chase' }).text).toMatch(/0% on purchases until [A-Z][a-z]+ \d+, \d{4}, then \d+\.\d+%\. Missing two payments in a row ends it early\./);
+    expect(drawn(sim, BankCardOffers as FunctionComponent<Record<string, unknown>>, { bankId: 'us-chase' }).text).toMatch(/0% on purchases until [A-Z][a-z]+ \d+, \d{4}, then \d+\.\d+%\. A minimum payment more than 60 days late ends it early, 45 days after the bank’s notice\./);
   });
 
   it('Barclaycard: one minimum payment missed, as its terms end it, where until 2026-10-20 the panel said nothing of it, and “sixty days late” once it had', () => {

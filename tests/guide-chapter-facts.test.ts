@@ -177,11 +177,17 @@ describe('You As An Actor on the day’s practice', () => {
 });
 
 describe('Your Bank on what ends a US card’s introductory rate', () => {
-  /** A Chase card owing $500, nothing to pay it with, run past its next due date and the one after. */
+  /**
+   * A Chase card owing $500, nothing to pay it with, run past its next due date and the one after; then, from brief 21
+   * (2026-10-22), on to the 61st day after the first missed and 45 days past that, a day at a time. Until then the
+   * introductory rate ended at the second due date missed, and the chapter said so.
+   */
   function twoMissed() {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'guide-facts-two-missed');
     const card = cardOf(sim, sim.player)!;
     const credit = sim.player.credit!;
+    // TEST SETUP: a new card, its fifteen months ahead of it, so its introductory rate runs past the days read here.
+    card.openedAt = sim.now;
     // TEST SETUP: $500 owed on the card, and every account of theirs emptied, so each due date's payment fails.
     const post = (accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
     post(card.id, -card.balance - 500_00);
@@ -194,25 +200,35 @@ describe('Your Bank on what ends a US card’s introductory rate', () => {
       if (due) seen.push({ missed: credit.missed ?? 0, introLost: Boolean(credit.introLost) });
     }
     expect(seen).toHaveLength(2);
-    return seen;
+    // On to the 61st day after the first due date missed, and 45 days past it, kept broke.
+    const first = credit.pastDue![0]!.at;
+    const broke = () => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.id !== card.id && a.balance > 0) post(a.id, -a.balance); };
+    const on = (days: number) => { while (sim.now < first + days * MS_DAY) { broke(); sim.advanceTo(Math.min(first + days * MS_DAY, sim.now + MS_DAY)); } return { missed: credit.missed ?? 0, introLost: Boolean(credit.introLost), ends: credit.introEndsAt }; };
+    const day60 = on(60);
+    const day61 = on(61);
+    const before = on(61 + 44);
+    const after = on(61 + 46);
+    return [...seen.map((x) => ({ ...x, ends: undefined })), day60, day61, before, after];
   }
 
-  it('ends it at the second payment missed in a row, not the first', () => {
-    const [first, second] = twoMissed();
-    expect(first).toEqual({ missed: 1, introLost: false });
-    expect(second).toEqual({ missed: 2, introLost: true });
+  it('ends it 45 days after a minimum more than 60 days late, not at the second payment missed in a row', () => {
+    const [first, second, day60, day61, before, after] = twoMissed();
+    expect(first).toEqual({ missed: 1, introLost: false, ends: undefined });
+    expect(second).toEqual({ missed: 2, introLost: false, ends: undefined });
+    expect(day60!.introLost).toBe(false);
+    expect(day60!.ends).toBeUndefined();
+    // The notice on the 61st day sets the day it ends, 45 days on; it still runs the day before.
+    expect(day61!.ends).toBeDefined();
+    expect(before!.introLost).toBe(false);
+    expect(after!.introLost).toBe(true);
   });
 
-  it('is said so: two payments missed in a row, in the chapter and in the card’s entries, and never sixty days late', () => {
-    const [first, second] = twoMissed();
+  it('is said so: a minimum more than 60 days late, in the chapter and in the card’s entries, and never two payments missed', () => {
     const words = [...sentences('bank'), ...GUIDE_BY_ID['bank.card']!.later, ...GUIDE_BY_ID['bank.card-offers']!.reads.map((f) => f.value)].join(' ');
-    expect(words).not.toMatch(/sixty days late/);
-    // Only while the second miss is what ends it: change that, and the words may say otherwise.
-    if (!first!.introLost && second!.introLost) {
-      expect(sentences('bank').join(' ')).toContain('In the US two payments missed in a row end any introductory rate');
-      expect(GUIDE_BY_ID['bank.card']!.later.join(' ')).toContain('Two missed in a row also end any introductory rate.');
-      expect(GUIDE_BY_ID['bank.card-offers']!.reads.find((f) => f.label === 'The Introductory Rate')!.value).toContain('On a US card two payments missed in a row end it');
-    }
+    expect(words).not.toMatch(/two payments missed in a row end|Two missed in a row also end/i);
+    expect(sentences('bank').join(' ')).toContain('In the US a minimum payment more than 60 days late brings the bank’s notice, and 45 days later any introductory rate ends');
+    expect(GUIDE_BY_ID['bank.card']!.later.join(' ')).toContain('On a US card, a minimum payment more than 60 days late, counted from its due date, brings the bank’s notice. 45 days later any penalty rate the card has applies');
+    expect(GUIDE_BY_ID['bank.card-offers']!.reads.find((f) => f.label === 'The Introductory Rate')!.value).toContain('On a US card a minimum payment more than 60 days late ends it, 45 days after the bank’s notice');
   });
 });
 

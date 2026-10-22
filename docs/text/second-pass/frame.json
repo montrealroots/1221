@@ -2087,9 +2087,9 @@
  },
  "src/engine/index.ts#migrate": {
   "status": "Rewritten",
-  "hash": "f8545e1fd645",
-  "on": "2026-10-20",
-  "evidence": "tests/continuity-incidents.test.ts ('marks each miss an apology it keeps covered…'): the steps a save from before brief 17 is told on opening",
+  "hash": "223957465d7d",
+  "on": "2026-10-22",
+  "evidence": "tests/b21-banking-proof.test.ts opens a save from before brief 21 with a US card behind and reads the step it adds to the opening's list",
   "first": "Pending"
  },
  "src/engine/index.ts#openSlot": {

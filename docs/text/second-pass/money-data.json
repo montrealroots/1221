@@ -512,9 +512,9 @@
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [es-bankinter]": {
   "status": "Rewritten",
-  "hash": "67248b89c818",
-  "on": "2026-10-19",
-  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "hash": "513c18e9d0b0",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [es-bbva]": {
@@ -581,60 +581,60 @@
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-barclays]": {
-  "status": "Retained",
-  "hash": "7ece0e10f6ca",
-  "on": "2026-10-19",
-  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "95a2e1985725",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-hsbc]": {
-  "status": "Retained",
-  "hash": "ae4a0d7c953e",
-  "on": "2026-10-19",
-  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "496f191542c4",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-lloyds]": {
-  "status": "Retained",
-  "hash": "5ad9e82f2cef",
-  "on": "2026-10-19",
-  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "2624707527a6",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-nationwide]": {
-  "status": "Retained",
-  "hash": "0e6960026676",
-  "on": "2026-10-19",
-  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "cb4165c1a0e5",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-natwest]": {
   "status": "Rewritten",
-  "hash": "674946ce1284",
-  "on": "2026-10-19",
-  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "hash": "f845b8d9dc34",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-santander]": {
-  "status": "Retained",
-  "hash": "d24002186111",
-  "on": "2026-10-19",
-  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "b13039d0e17d",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [ie-aib]": {
   "status": "Rewritten",
-  "hash": "312c525799e3",
-  "on": "2026-10-19",
-  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "hash": "f009f1d6b01f",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [ie-bank-of-ireland]": {
-  "status": "Retained",
-  "hash": "67be86ab8249",
-  "on": "2026-10-19",
-  "reason": "Bank of Ireland’s and PTSB’s product names, Personal Current Account, Explore Account and Demand Deposit Account, as the banks spell them, with source lines giving each monthly fee and AER and, for PTSB, that there have been no waivers since 2023.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "84a0e1c33b35",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [ie-ptsb]": {
   "status": "Retained",
@@ -742,11 +742,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [mx-banorte]": {
-  "status": "Retained",
-  "hash": "b8c1af8fc63a",
-  "on": "2026-10-19",
-  "reason": "The Mexican banks’ product names as they spell them (Libretón Básico Cuenta Digital, Cuenta Enlace Personal, Débito LikeU, Ahorro Fácil), and source lines that say what each page gives, a quoted “sin intereses”, the quiet-month fee with its VAT, and which page couldn’t be read.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "9ff5460bfdce",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [mx-bbva]": {
   "status": "Retained",
@@ -798,25 +798,25 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-bank-of-america]": {
-  "status": "Retained",
-  "hash": "0e21a6f62e6a",
-  "on": "2026-10-19",
-  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "4e7f69951216",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-capital-one]": {
-  "status": "Retained",
-  "hash": "161d1c1d9638",
-  "on": "2026-10-19",
-  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ee601893f2da",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-chase]": {
-  "status": "Retained",
-  "hash": "5b4d36e5b46b",
-  "on": "2026-10-19",
-  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "a69d77546da8",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-citi]": {
   "status": "Retained",
@@ -827,9 +827,9 @@
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-wells-fargo]": {
   "status": "Rewritten",
-  "hash": "4c8d9e015aa3",
-  "on": "2026-10-19",
-  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "hash": "e003e0c528e3",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
   "first": "Pending"
  },
  "src/engine/content/banks-world-fees.ts#WORLD_FEES": {

@@ -12,12 +12,23 @@ exact test results. Updated as each module lands; the criteria are `criteria.md`
   coverage document said again and marked; the tests the change moved brought to it with dated notes; the audit's
   citations, the wiring list's handler lines and the effects matrix's new guide promise brought up to date.
 - B research written (`banking-sources.md`, committed with the banking module).
+- G proof (P1): `tests/b21-genre-proof.test.ts` (42 tests) over `tests/setup/genre-proof.ts`, the table written by
+  `genre-proof.ts`; it found the School's genre part complete only at 100 (`genrePart` read the known share of 90), fixed.
+- B, the banking module: B1 yields converted (`Product.quoted`, `compounds`, `creditsEvery`, `pays`), B2/B3 a US card's
+  days past due (`pastDue`, `US_LATE`: 61, 45 after, 150, 180), B4 the charge-off at 180 days, B5 a US due day each
+  month (`usDueDay`), B6 standing orders on the next business day in Britain, the EU and the EEA; the Statements tab and
+  the card's panel brought to the same due day; the old-save migration (S). Banking proof (P2):
+  `tests/b21-banking-proof.test.ts`, 17 tests, which found a payment clearing two minimums (fixed: `towardPastDue`).
+- The banking-related tests the rules moved, brought to them with dated notes and hand-worked figures; renamed titles
+  repointed in the audit and the surfaces matrix.
 
 ## Left
 
-- G: the proof tests (P1) and their mutations.
-- B: sources for each banking item; the fixes; what stays as it is, with evidence.
-- S, P2, P3, J, R: saves, banking proof, regressions and mutations, journeys, built app, gate, records.
+- P3: mutations, genre and banking, in the base clone brought to the new code.
+- J: journeys (school into professional work, mixed genres, banking deadlines, older saves, continuous and reopened);
+  the built app at 1440 and 390.
+- The full suite, the effects matrix's file:line citations, devmap and traceability, then the gate in a clean clone and
+  the final runs; R: handoff, receipt.
 
 ## Decisions
 

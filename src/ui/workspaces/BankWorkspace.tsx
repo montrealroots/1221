@@ -36,7 +36,7 @@ import { dateKey, formatDate, formatDateKey } from '@/engine/core/time';
 import { bankById, bankingIn } from '@/engine/content/banks';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Product } from '@/engine/content/banks';
-import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, interestTaxFor, interestAllowanceLeft, monthEndAfter, monthStartOf, productOf, closesQuarterly, feesPostAt, savingsNotice, tierRate, earningBalance, cardYearWords } from '@/engine/systems/banking';
+import { bankAccountsOf, introStep, nominalOf, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, interestTaxFor, interestAllowanceLeft, monthEndAfter, monthStartOf, productOf, closesQuarterly, feesPostAt, savingsNotice, tierRate, earningBalance, cardYearWords } from '@/engine/systems/banking';
 import { savingsDebit } from '@/engine/systems/accountlife';
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
@@ -419,8 +419,14 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
   // A rate the research didn't find isn't a rate of none: until 2026-09-26 Citi's savings said it paid no interest.
   if (product && product.rate === undefined && /no published rate/i.test(product.source) && !product.changes?.length && !product.tiers?.length && !product.bonus && !product.intro) return 'No published rate was found for it, so it earns no interest in the game.';
   if (!product || (rate <= 0 && !product.bonus && !product.intro)) return 'Pays no interest.';
-  // The yield with the interest left in, credited monthly or in the bank's months (B31).
-  const said: string[] = [`Pays ${pct(rate)} a year${tiered !== undefined ? ' on this balance' : ''} (${pct(Number(apyOf(rate, product.pays?.length ?? 12).toFixed(5)))} APY)`];
+  // The yield with the interest left in, credited monthly or in the bank's months (B31). A rate quoted as a yield is said
+  // as the bank says it, with the rate a day's interest is worked from beside it (from 2026-10-22, brief 21: until then
+  // every rate was said, and paid, as a nominal one, and Capital One's 3.00% APY as "3% a year (3.042% APY)").
+  const perYear = product.creditsEvery ? 12 / product.creditsEvery : product.pays?.length ?? (quarterly ? 4 : 12);
+  const on = tiered !== undefined ? ' on this balance' : '';
+  const said: string[] = [product.quoted
+    ? `Pays ${pct(rate)} ${product.quoted}${on} (${pct(Number(nominalOf(product, rate, perYear).toFixed(5)))} a year${product.compounds === 'daily' ? ', compounded daily' : ' before compounding'})`
+    : `Pays ${pct(rate)} a year${on} (${pct(Number(apyOf(rate, perYear).toFixed(5)))} APY)`];
   if (step !== undefined) {
     // The steps still to come, and what it pays after them.
     let through = 0;
@@ -445,7 +451,9 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
     said.push(` It pays another ${pct(product.bonus.rate)} in any month ${earn}.`);
   }
   // As the engine pays it: in the bank’s months, at Germany’s quarterly closing, or each month’s end.
-  said.push(product.pays
+  said.push(product.creditsEvery
+    ? ` Interest builds up daily and is paid every ${product.creditsEvery === 12 ? '12' : 'six'} months, counted from the day it opened.`
+    : product.pays
     ? ` Interest builds up daily and is paid in ${product.pays.map((m) => MONTH_NAMES[m - 1]).join(' and ')}.`
     : quarterly
       ? ' Interest builds up daily and is paid at each quarter’s close: the end of March, June, September and December.'

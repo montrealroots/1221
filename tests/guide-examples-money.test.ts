@@ -589,8 +589,12 @@ const PLAYS: Record<string, () => void> = {
     expect(Math.round(state.statementBalance * terms.minimumShare)).toBe(sum(result, `of ${formatMoney(state.statementBalance, 'USD', { cents: false })} is `, ','));
     expect(terms.minimumFloor).toBe(sum(result, 'floor is ', '.'));
     expect(state.issued!.at(-1)!.minimum).toBe(sum(result, 'minimum payment is ', ':'));
+    // Due the same day each month, its days after a statement on that day in February (from 2026-10-22, brief 21: until
+    // then "due 25 days later", the statement and the bank's days).
     const due = sim.universe.scheduled.find((i) => i.kind === DUE_KIND && i.status === 'pending' && i.payload.accountId === card.id)!;
-    expect(due.at).toBe(dueAt(sim.zone, statement.at, count(result, 'due ', ' days later')));
+    const days = count(result, 'at least ', ' days after its statement');
+    expect(due.at).toBe(dueAt(sim.zone, statement.at, days, true));
+    expect(due.at - statement.at).toBeGreaterThanOrEqual(days * MS_DAY - HOUR);
 
     // Autopay takes the whole statement on the due date, and the month is on the record paid on time.
     sim.advanceTo(due.at - HOUR);
