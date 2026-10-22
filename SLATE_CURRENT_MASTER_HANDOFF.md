@@ -1,10 +1,12 @@
-# Read First: Brief 22, The Three Remaining Career And Genre Issues, Not Merged, 2026-10-22
+# Read First: Brief 22, The Three Remaining Career And Genre Issues, Merged, 2026-10-22
 
 **This section is the current status, and where a new session starts.** The owner gave brief 22
 (`docs/verification/briefs-2026-10-16/22-finish-the-three-remaining-career-and-genre-issues.txt`, kept verbatim) after
 brief 21's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `46822660` (`main`, #53), pushed and never
-force-pushed. It is not merged: "Keep the changes reviewable. Do not merge or deploy without my instruction." No pull
-request is open for it. Nothing is deployed. There is no stash and one worktree.
+force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not merge or deploy
+without my instruction."); it went to `main` at "lets just merge everything" (2026-10-22), in #54, merged as
+`9aed9ed4`, and this record of the merge followed it there. No other pull request was open. Nothing is deployed. There
+is no stash and one worktree.
 
 **Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
@@ -57,9 +59,9 @@ request is open for it. Nothing is deployed. There is no stash and one worktree.
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate.txt`). Brief 22 added 4 test files and 49 tests to
   brief 21's 482 and 5,547. Run again on the commit that folds its figure, `0014aff6`, the same, the matrix at 634
   (`final-runs/runs/gate-receipt.txt`). Only that figure was written after it.
-- **Not merged, not deployed:** both wait on the owner's word. Base44 deployment waits on the gate and that word (rule
-  14), and §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of
-  brief 20's or 21's line accepts this line's saves.
+- **Merged, not deployed:** #54 (`9aed9ed4`). Base44 deployment waits on the gate and the owner's word (rule 14), and
+  §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of brief 20's
+  or 21's line accepts this line's saves. The next session starts from the owner's next brief.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
   - enjoyment read from tags;
