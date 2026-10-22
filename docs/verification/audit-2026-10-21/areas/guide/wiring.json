@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1500"
+   "handler": "src/engine/systems/projobs.ts:1506"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1543"
+   "handler": "src/engine/systems/projobs.ts:1549"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1525"
+   "handler": "src/engine/systems/projobs.ts:1531"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1587"
+   "handler": "src/engine/systems/projobs.ts:1593"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1575"
+   "handler": "src/engine/systems/projobs.ts:1581"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1491"
+   "handler": "src/engine/systems/projobs.ts:1497"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1510"
+   "handler": "src/engine/systems/projobs.ts:1516"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -1367,7 +1367,7 @@
    "kind": "life.look_after",
    "payload": "{ action: action }",
    "verdict": "Right",
-   "handler": "src/engine/systems/life.ts:452",
+   "handler": "src/engine/systems/life.ts:458",
    "note": "Each line is `lookAfterOptions`' own, its label the action's (Eat A Meal, Order In, Shower, Work Out, Unwind), and sends that action. Not wrapped in Gated: it asks `useFeature('life.look_after')` and opens the guide while that's locked."
   },
   {
@@ -1430,7 +1430,7 @@
    "kind": "calendar.cancel",
    "payload": "{ entryId: entry.id }",
    "verdict": "Right",
-   "handler": "src/engine/world/plans.ts:204"
+   "handler": "src/engine/world/plans.ts:221"
   },
   {
    "file": "src/ui/workspaces/CalendarWorkspace.tsx",
@@ -1439,7 +1439,7 @@
    "kind": "calendar.schedule",
    "payload": "{ title, at, durationMinutes: minutes, }",
    "verdict": "Right",
-   "handler": "src/engine/world/plans.ts:161",
+   "handler": "src/engine/world/plans.ts:178",
    "note": "Not wrapped in Gated: the Calendar screen is the chapter's own (ui.open-calendar), and calendar.schedule opens with the same chapter."
   },
   {
@@ -1968,7 +1968,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1543"
+   "handler": "src/engine/systems/projobs.ts:1549"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -1976,7 +1976,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1575"
+   "handler": "src/engine/systems/projobs.ts:1581"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -2004,7 +2004,7 @@
    "kind": "calendar.skip",
    "payload": "(item) => ({ entryId: item.id })",
    "verdict": "Right",
-   "handler": "src/engine/world/plans.ts:185"
+   "handler": "src/engine/world/plans.ts:202"
   },
   {
    "file": "src/engine/world/clock.ts",

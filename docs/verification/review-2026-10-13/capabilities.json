@@ -2681,7 +2681,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:121-171 (describe 'sleep')",
+    "where": "tests/simulation.test.ts:121-174 (describe 'sleep')",
     "asserts": "Through the command: the clock moves exactly the hours asked, across DST too; energy and debt recover, and debt grows on a short night; a scheduled item still fires during the night.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -2726,7 +2726,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1150,1172; tests/life-fixes.test.ts:164-165",
+    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1162,1184; tests/life-fixes.test.ts:164-165",
     "asserts": "Refused while the guide holds it, for a start in the past, for NaN hours and for a bedtime more than a day ahead.",
     "reachesAction": true,
     "checksConsequence": true,

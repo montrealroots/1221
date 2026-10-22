@@ -154,7 +154,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:1334 'gives a save written under 80 a title from its pronouns'",
+            "where": "tests/simulation.test.ts:1346 'gives a save written under 80 a title from its pronouns'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -3468,7 +3468,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:768-780 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
+            "where": "tests/simulation.test.ts:775-787 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -6761,7 +6761,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/weather.test.ts:206; tests/day-bounds.test.ts:330",
+            "where": "tests/weather.test.ts:207; tests/day-bounds.test.ts:330",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,
@@ -8468,7 +8468,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/simulation.test.ts:1464-1483",
+            "where": "tests/simulation.test.ts:1476-1495",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": false,

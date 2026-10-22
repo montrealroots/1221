@@ -1,0 +1,30 @@
+[
+ {
+  "surface": "The Bedtime Before A Commitment",
+  "where": "Under the next commitment on Home's Calendar, in the Day look for today, and beside the next commitment in the Sleep dialog",
+  "sources": [
+   "src/engine/systems/life.ts#fullNightWords"
+  ],
+  "states": [
+   "ordinary",
+   "recommendation"
+  ],
+  "outcome": "Revised",
+  "why": "Read on a shoot week before and after (brief 20's D3): a 7 AM call in New York, two hours from New Haven. Before, nothing said when to be in bed until the Sleep dialog, opened at eleven, said there wasn't time for a full night and offered five hours. Now the bedtime a full night asks for is said by the evening before, and past it, that it was.",
+  "changes": "New: \"A full night before it, with an hour to get up and two hours to get there, means being asleep by 8:00 PM.\" and, past it, \"… needed you asleep by 8:00 PM.\"",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b20-life-screens.test.ts: 'Home’s Calendar says it under the shoot day'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b20-life-screens.test.ts: 'the Sleep dialog says it beside the next commitment'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b20-life-fatigue.test.ts: 'names a bedtime by the evening before'"
+   }
+  ]
+ }
+]

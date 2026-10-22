@@ -281,7 +281,8 @@ describe('2. What’s Coming', () => {
     drawn(sim, TimeControls).press('Stand Here');
     sim.must({ kind: 'life.sleep', payload: { hours: 2 } });
     expect(statusOf(sim, item.id)).toBe('missed');
-    expect(sim.universe.notifications.some((n) => n.title === 'You Slept Through 1 Commitment')).toBe(true);
+    // The count in words since brief 20's life area (F12, 2026-10-22); until then "You Slept Through 1 Commitment".
+    expect(sim.universe.notifications.some((n) => n.title === 'You Slept Through One Commitment')).toBe(true);
   });
 
   it('PLAYER JOURNEY: a plan of your own offers Skip It; it marks the plan missed and carries the clock on, as Go does', () => {

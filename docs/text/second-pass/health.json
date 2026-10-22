@@ -505,9 +505,9 @@
  },
  "src/engine/content/guide/body.ts#BODY [body.sleep]": {
   "status": "Rewritten",
-  "hash": "4088b0a29295",
-  "on": "2026-10-20",
-  "evidence": "The suggestion reads whether the night's behind you, your energy and the trip, and a commitment slept through is missed; held by tests/time-stops.test.ts beside the behavior",
+  "hash": "cfa5d6e58cc6",
+  "on": "2026-10-21",
+  "evidence": "read against docs/STYLE.md; tests/b20-life-screens.test.ts holds the bedtime the entry now points to on Home and the Sleep dialog",
   "first": "Pending"
  },
  "src/engine/content/guide/body.ts#BODY [evaluation]": {

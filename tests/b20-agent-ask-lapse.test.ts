@@ -5,8 +5,9 @@
  * date went by with nothing said and nothing kept, and only the Representation tab's next step changed its words.
  *
  * TEST SETUP: a graduate made by the School's own handlers (`tests/fakes/career-work.ts`'s `graduate`), its showcase
- * recorded as performed at Strong in both cities, as tests/pro-agent.test.ts records it, and a seed whose first draw for
- * his interest falls under the least chance to meet, so the follow-up asks; the clock tended six hours at a time.
+ * recorded as performed at Strong in both cities, as tests/pro-agent.test.ts records it, and a seed whose first draw of
+ * whether his office meets falls under the least chance to meet, so the follow-up asks; the clock tended six hours at a
+ * time.
  */
 import { describe, expect, it } from 'vitest';
 import type { Simulation } from '@/engine/core/simulation';

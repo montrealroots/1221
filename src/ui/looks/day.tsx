@@ -32,11 +32,13 @@ import { formatDaylight, sunTimes, type SunTimes } from '@/engine/core/sun';
 import { plural, titleCaseLabel } from '@/engine/core/text';
 import {
   MONTH_NAMES, MS_DAY, MS_HOUR, MS_MINUTE, WEEKDAY_NAMES,
-  addDays, dateKey, daysBetween, formatDate, formatDuration, formatTime,
+  addDays, dateKey, daysBetween, formatDate, formatDuration, formatDurationWords, formatTime,
   instantFromZoned, parseDateKey, seasonOf, startOfDay, startOfNextDay, zoneAbbreviation, zonedParts,
   type Instant, type Season, type TimeZone, type ZonedParts,
 } from '@/engine/core/time';
 import { forecastFor } from '@/engine/systems/weather';
+import { fullNightBefore, fullNightWords } from '@/engine/systems/life';
+import { theCountry } from '@/engine/systems/documents';
 import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { MEETING_KIND, tripWords } from '@/engine/systems/proagent';
@@ -384,8 +386,18 @@ defineLook<TheDay>('day', {
                 You need to be at one of them.", and "three of them" of three. */}
             {wants.length > 0 && ` You need to be at ${wants.length < entries.length ? count(wants.length, 'of them', 'of them') : entries.length === 1 ? 'it' : entries.length === 2 ? 'both' : 'all of them'}.`}
             {clashes.length > 0 && ` ${toStart(count(clashes.length, 'of them', 'of them'))} ${clashes.length === 1 ? 'clashes with something else' : 'clash'}.`}
-            {keptHere.length > 0 && ` ${spokenList(keptHere)} ${isAre(keptHere.length)} kept in ${country} that day.`}
+            {/* With the country’s article, as Papers names it (`theCountry`, from 2026-10-21, brief 20): until then "Labor Day
+                is kept in United States that day". */}
+            {keptHere.length > 0 && ` ${spokenList(keptHere)} ${isAre(keptHere.length)} kept in ${theCountry(country)} that day.`}
           </p>
+          {/* Today, when a full night before what’s next starts (`fullNightBefore`, from 2026-10-21, the owner’s brief 20,
+              D3): until then nothing said it until the Sleep dialog, opened at bedtime, said there wasn’t time for one. */}
+          {offset === 0 && (() => {
+            const night = fullNightBefore(sim);
+            if (!night || night.by < sim.now) return null;
+            const clock = CITIES.get(night.item.locationId ?? '')?.timeZone ?? zone;
+            return <p className="small muted">{`${asName(night.item.label)} is next, ${spokenWhen(night.item.at, sim, zone)} at ${formatTime(night.item.at, clock)}. ${fullNightWords(sim, night)}`}</p>;
+          })()}
           {sim.zone !== zone && (
             <p className="small muted">
               The time where you are is {zoneAbbreviation(sim.now, sim.zone)}, and the calendar’s days still
@@ -434,7 +446,7 @@ defineLook<TheDay>('day', {
             <>
               {byCountry.map(({ name, kept }) => (
                 <p key={name} className="small">
-                  {`${name} keeps ${spokenList(kept.map(holidayLabel))} on it.`}
+                  {`${toStart(theCountry(name))} keeps ${spokenList(kept.map(holidayLabel))} on it.`}
                 </p>
               ))}
               <p className="small muted">
@@ -444,7 +456,7 @@ defineLook<TheDay>('day', {
                     ? 'None of them is a public holiday, though the banks or the schools shut for one.'
                     : 'None of them is a day off: they’re marked, not taken.'}
                 {regional > 0
-                  ? ` ${count(regional, 'of them', 'of them')} ${isAre(regional)} kept here and not in the rest of ${country}.`
+                  ? ` ${count(regional, 'of them', 'of them')} ${isAre(regional)} kept here and not in the rest of ${theCountry(country)}.`
                   : ''}
               </p>
             </>
@@ -512,7 +524,8 @@ function lightSentence(day: TheDay): string {
   const { sun, city } = day;
   if (sun.polar === 'day') return 'The sun stays up all day and all night.';
   if (sun.polar === 'night') return 'The sun stays below the horizon all day.';
-  return `Daylight from ${formatTime(sun.sunrise ?? 0, city.timeZone)} to ${formatTime(sun.sunset ?? 0, city.timeZone)}: ${formatDaylight(sun.daylightMinutes)}.`;
+  // The length in words, as a sentence says one (from 2026-10-21, brief 20): until then the readout, "12h 54m".
+  return `Daylight from ${formatTime(sun.sunrise ?? 0, city.timeZone)} to ${formatTime(sun.sunset ?? 0, city.timeZone)}: ${formatDurationWords(sun.daylightMinutes * MS_MINUTE)}.`;
 }
 
 /** The same, compressed into the line a way into the light carries. */

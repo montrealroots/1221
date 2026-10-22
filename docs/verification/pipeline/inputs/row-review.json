@@ -4174,7 +4174,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:122-144 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
+    "where": "tests/simulation.test.ts:122-147 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
     "asserts": "sim.now = before + 8h exactly; energy > 60 and debt < 12 after 9 h from 20/12; debt > 0 after 4 h",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4183,7 +4183,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:291-307 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
+    "where": "tests/simulation.test.ts:298-314 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
     "asserts": "With startAt two hours ahead: quality = the eight o'clock quality - 0.08; lastSleptAt = start + 8h; every waking hour up to the bedtime is charged (100 - 19*3)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4192,7 +4192,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:319-336 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
+    "where": "tests/simulation.test.ts:326-343 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
     "asserts": "Energy, sleepDebt, stress and morale after the command equal applySleep applied once to a bedtime copy, for bedtimes 23, 1 and 16, three nights each",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4237,7 +4237,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1142-1159, 1169-1175",
+    "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1154-1171, 1181-1187",
     "asserts": "NaN hours is refused 'Say how long to sleep.'; a start 3 days ahead is refused; a past start is refused, with the clock, energy, accounts, transactions and audit unchanged",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5379,7 +5379,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:352-373 'costs the same in one-second ticks...'",
+    "where": "tests/simulation.test.ts:359-380 'costs the same in one-second ticks...'",
     "asserts": "16 h from energy 30, nourishment 30, stress 70: condition falls, ticks equal a jump",
     "reachesAction": true,
     "checksConsequence": false,
@@ -5620,7 +5620,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:417",
+    "where": "tests/simulation.test.ts:424",
     "asserts": "after midnight nourishment is 76 less 2 an hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5715,7 +5715,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:338-350",
+    "where": "tests/simulation.test.ts:345-357",
     "asserts": "hygiene 82 at midnight, 82 - 1.6 per waking hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5811,7 +5811,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:352-373",
+    "where": "tests/simulation.test.ts:359-380",
     "asserts": "16 h from energy 30: stress > 75",
     "reachesAction": true,
     "checksConsequence": false,
@@ -13198,7 +13198,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:259-268 'charges nothing at midnight...'",
+    "where": "tests/simulation.test.ts:266-275 'charges nothing at midnight...'",
     "asserts": "energy across a midnight falls by 0.1 for two minutes",
     "reachesAction": true,
     "checksConsequence": false,
@@ -13234,7 +13234,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:338-349, 806-848",
+    "where": "tests/simulation.test.ts:345-356, 813-855",
     "asserts": "the hygiene floor: 82 at midnight, then 1.6 an hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13943,7 +13943,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:190-257",
+    "where": "tests/simulation.test.ts:193-264",
     "asserts": "clock-driven drain: 12 over 4 hours; ×1.5 at a debt of 24; the same by the minute as in one jump",
     "reachesAction": true,
     "checksConsequence": true,
@@ -14037,7 +14037,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:203-246, 926-951",
+    "where": "tests/simulation.test.ts:206-253, 933-963",
     "asserts": "drain ×1.5 at a woken debt of 24; over 60 held the same by minute or jump; short nights never leave more than 60 + shortfall × 1.35; a 5.9-hour night clears quality × 1.4 per hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -14046,7 +14046,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:139-144 'accrues debt when the night is short'",
+    "where": "tests/simulation.test.ts:139-147 'accrues debt when the night is short'",
     "asserts": "debt > 0 after 4 hours",
     "reachesAction": true,
     "checksConsequence": true,
@@ -19040,7 +19040,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/weather.test.ts:206; tests/day-bounds.test.ts:330",
+    "where": "tests/weather.test.ts:207; tests/day-bounds.test.ts:330",
     "asserts": "forecastFor's days for a place (engine).",
     "reachesAction": false,
     "checksConsequence": true,
@@ -19257,7 +19257,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:768-780 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
+    "where": "tests/simulation.test.ts:775-787 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
     "asserts": "A light_sleeper save advanced by the clock: unattendedNight hours > 8, and lastSleptAt does not change after 8 AM.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22399,7 +22399,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:1334 'gives a save written under 80 a title from its pronouns'",
+    "where": "tests/simulation.test.ts:1346 'gives a save written under 80 a title from its pronouns'",
     "asserts": "migrate gives a title-less save the pronouns' title and careerLabel.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -23773,7 +23773,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/simulation.test.ts:1464-1483",
+    "where": "tests/simulation.test.ts:1476-1495",
     "asserts": "Overdue rows sort first; open rows are never resolved or dismissed.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -25235,7 +25235,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:121-171 (describe 'sleep')",
+    "where": "tests/simulation.test.ts:121-174 (describe 'sleep')",
     "asserts": "Through the command: the clock moves exactly the hours asked, across DST too; energy and debt recover, and debt grows on a short night; a scheduled item still fires during the night.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -25280,7 +25280,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1150,1172; tests/life-fixes.test.ts:164-165",
+    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1162,1184; tests/life-fixes.test.ts:164-165",
     "asserts": "Refused while the guide holds it, for a start in the past, for NaN hours and for a bedtime more than a day ahead.",
     "reachesAction": true,
     "checksConsequence": true,

@@ -993,7 +993,7 @@
    "saveLoad": "Not recorded",
    "failure": "Open: No render evidence that the screen shows energy as the clock leaves it (wellbeing.tsx / Home's How You Are).; The illness entry (careFor's flu, emergency and stay energy toll) is reached only by direct careFor calls.; The cited tests are direct-call fixtures. The clock and command evidence above isn't cited.",
    "implementation": "sleep, workout, illness",
-   "evidence": "tests/evidence-g06-life.test.ts energy ‘PLAYER JOURNEY: fourteen hours by the clock leave the 82 a new life wakes with at 40…’, ‘holds the workout’s gate at 25 as the clock reaches it…’, ‘a night chosen at 3:30 AM puts back 8 × quality × 13.5 × 0.995…’ (the debt paid down not read), ‘a stay and an emergency drawn by the health week take CARE’s 40 and 20 against a twin…’, ‘the flu drawn by the health week in its season takes CARE’s 30 against a twin…’, ‘readiness reads it…’; simulation.test.ts:190-257 (the drain by the minute and in one jump); looking-after.test.ts ‘refuses ${name}, and leaves the save as it was’; checking less: personality.test.ts ‘charges running on empty for the hours spent there…’ (applyElapsedWellbeing on a person built by hand), wellbeing-bites.test.ts",
+   "evidence": "tests/evidence-g06-life.test.ts energy ‘PLAYER JOURNEY: fourteen hours by the clock leave the 82 a new life wakes with at 40…’, ‘holds the workout’s gate at 25 as the clock reaches it…’, ‘a night chosen at 3:30 AM puts back 8 × quality × 13.5 × 0.995…’ (the debt paid down not read), ‘a stay and an emergency drawn by the health week take CARE’s 40 and 20 against a twin…’, ‘the flu drawn by the health week in its season takes CARE’s 30 against a twin…’, ‘readiness reads it…’; simulation.test.ts:193-264 (the drain by the minute and in one jump); looking-after.test.ts ‘refuses ${name}, and leaves the save as it was’; checking less: personality.test.ts ‘charges running on empty for the hours spent there…’ (applyElapsedWellbeing on a person built by hand), wellbeing-bites.test.ts",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -6123,7 +6123,7 @@
    "saveLoad": "The relation’s referrals, via, stage and history; the notice | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
    "failure": "each refusal said in the player's words (above) | Open: Ask For A Referral isn’t pressed on the rendered screen: the command is issued through execute.",
    "implementation": "`systems/proagent.ts` | Career, Representation, How To Reach Him: People You’ve Worked With and Ask For A Referral (RepresentationPane.tsx:117), each job listed with why it can’t refer you where it can’t; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:985 (from 2026-10-21)",
-   "evidence": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through’ (a year after a pass, the send refused as nothing new; a referral asked through the command from a job already considered; newSince reads only the referral, and the next approach is taken); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the casting office of the play her work in was judged Strong...’ (a play, The Winter Ledger, booked from an open call, worked and judged Strong by the work loop; the referral asked from it through the command: the route in, kept once with its band, the notice in its casting office’s name, not his, her materials sent through it, and his office’s answer two weeks on, a request for a reel; until 2026-10-21 a student film, Paper Moons, and its director, before its part was written for an actor); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (the job listed, the referral noted once, the notice in the referrer’s name, a second refused, then a send taken); tests/pro-agent.test.ts ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’ (refused before the check, for a Working job, an unjudged one and one not finished); ‘works out each factor apart, with its level and its words...’ (Your Work reads the referring job’s band, and the answer keeps those reasons); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’ (the job listed with Ask For A Referral open). In every one the finished job is written by hand (finishedJob) | journeys: journey-agent.test.ts",
+   "evidence": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through’ (a year after a pass, the send refused as nothing new; a referral asked through the command from a job already considered; newSince reads only the referral, and the next approach is taken); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong...’ (a play, The Winter Ledger, booked from an open call, worked and judged Strong by the work loop; the referral asked from it through the command: the route in, kept once with its band, the notice in its casting office’s name, not his, her materials sent through it, and his office’s answer two weeks on, a request for a reel; until 2026-10-21 a student film, Paper Moons, and its director, before its part was written for an actor); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (the job listed, the referral noted once, the notice in the referrer’s name, a second refused, then a send taken); tests/pro-agent.test.ts ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’ (refused before the check, for a Working job, an unjudged one and one not finished); ‘works out each factor apart, with its level and its words...’ (Your Work reads the referring job’s band, and the answer keeps those reasons); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’ (the job listed with Ask For A Referral open). In every one the finished job is written by hand (finishedJob) | journeys: journey-agent.test.ts",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -6145,7 +6145,7 @@
    "saveLoad": "The relation: stage, considered, cooldown, request, meeting, why, history and counts; the scheduled answer | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
    "failure": "each refusal said in the player's words (above) | Open: A pass and no answer, with their holds, follow a send only after an introduction written by hand (tests/journey-agent.test.ts).; Send Your Materials isn’t pressed on the rendered screen: the command is issued through execute.",
    "implementation": "`systems/proagent.ts` | Career, Representation, Your Materials For Him: Send Your Materials (RepresentationPane.tsx:149), grayed with sendRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1002 (from 2026-10-21)",
-   "evidence": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: after the School’s follow-up passed on his office’s request to meet, checked and sent the same morning; a week on the meeting set, the answer’s seven factors and its chance kept); tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’ (life B: after a follow-up with no request, sent; the answer after the degree a request for an up-to-date résumé); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the casting office of the play her work in was judged Strong...’ (sent on a played referral; the answer a request for a reel); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’ (the unsolicited send refused in the agency’s quoted words, then taken on a referral, the answer on the clock, nothing from him meanwhile); ‘PLAYER JOURNEY: no answer: waiting once the usual two weeks go by...’; ‘PLAYER JOURNEY: a request for more: what, by when...’; ‘PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through’ (a pass, too soon, nothing new, then a second approach to a meeting); tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’ (after the School’s follow-up, the request to meet answered by a meeting); ‘GUARD: a reload before the answer gives the same answer...’. Every send in a test follows an introduction the game didn’t make in that test | journeys: journey-agent.test.ts",
+   "evidence": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: after the School’s follow-up passed on his office’s request to meet, checked and sent the same morning; a week on the meeting set, the answer’s seven factors and its chance kept); tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’ (life B: after a follow-up with no request, sent; the answer after the degree a request for an up-to-date résumé); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong...’ (sent on a played referral; the answer a request for a reel); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’ (the unsolicited send refused in the agency’s quoted words, then taken on a referral, the answer on the clock, nothing from him meanwhile); ‘PLAYER JOURNEY: no answer: waiting once the usual two weeks go by...’; ‘PLAYER JOURNEY: a request for more: what, by when...’; ‘PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through’ (a pass, too soon, nothing new, then a second approach to a meeting); tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’ (after the School’s follow-up, the request to meet answered by a meeting); ‘GUARD: a reload before the answer gives the same answer...’. Every send in a test follows an introduction the game didn’t make in that test | journeys: journey-agent.test.ts",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -11614,7 +11614,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11689,7 +11689,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11741,7 +11741,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11817,7 +11817,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -14200,7 +14200,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14619,7 +14619,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14920,7 +14920,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14947,7 +14947,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14974,7 +14974,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15001,7 +15001,7 @@
     "commit": "4aac9a94",
     "watch": "app"
    },
-   "missing": "It was measured on 4aac9a94, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on 4aac9a94, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15284,7 +15284,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15311,7 +15311,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15338,7 +15338,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15365,7 +15365,7 @@
     "commit": "ef2ab8b9",
     "watch": "app"
    },
-   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, …): measure it again"
+   "missing": "It was measured on ef2ab8b9, and what it reads has changed since (src/app/game-context.tsx, src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15392,7 +15392,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15419,7 +15419,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15446,7 +15446,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15473,7 +15473,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15500,7 +15500,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15527,7 +15527,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15554,7 +15554,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15581,7 +15581,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15608,7 +15608,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15635,7 +15635,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15662,7 +15662,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15689,7 +15689,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15716,7 +15716,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15743,7 +15743,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15770,7 +15770,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15797,7 +15797,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15824,7 +15824,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15851,7 +15851,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15878,7 +15878,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15905,7 +15905,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15932,7 +15932,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15959,7 +15959,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15986,7 +15986,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16013,7 +16013,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16062,7 +16062,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16089,7 +16089,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16116,7 +16116,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16143,7 +16143,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16170,7 +16170,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16197,7 +16197,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16224,7 +16224,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16251,7 +16251,7 @@
     "commit": "63fe7391",
     "watch": "engine"
    },
-   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/guide/documents.ts, …): measure it again"
+   "missing": "It was measured on 63fe7391, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/body.ts, src/engine/content/guide/career.ts, …): measure it again"
   }
  ]
 }

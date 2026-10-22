@@ -10,31 +10,31 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 1327 | 15875 | 7 | 59 | 268 | 0 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 548 | 15003 | 0 | 31 | 20 | 0 | 0 |
-| Home And Its Retained Actions | 19 | 187 | 896 | 0 | 7 | 12 | 0 | 0 |
+| Home And Its Retained Actions | 20 | 194 | 906 | 0 | 9 | 11 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55971 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 765 | 6640 | 152101 | 13 | 268 | 497 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 4611 | 57074 | 3 | 110 | 365 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 296 | 1952 | 17958 | 0 | 279 | 17 | 0 | 0 |
-| Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2564 | 15122 | 0 | 16 | 67 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 296 | 1954 | 17974 | 0 | 279 | 17 | 0 | 0 |
+| Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8300 | 0 | 34 | 72 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2569 | 15181 | 0 | 19 | 64 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 203 | 846 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4550 | 38868 | 594880 | 316 | 1410 | 3140 | 0 | 0 |
+| **All** | 4551 | 38882 | 594990 | 316 | 1415 | 3136 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 115 | 10141 | 98 | 17 | 0 | 0 |
+| career | 115 | 10157 | 98 | 17 | 0 | 0 |
 | career-agent | 57 | 2782 | 57 | 0 | 0 | 0 |
 | career-pay | 30 | 1229 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 72 | 2046 | 72 | 0 | 0 | 0 |
-| frame | 505 | 33910 | 100 | 405 | 0 | 0 |
-| health | 178 | 38772 | 38 | 140 | 0 | 0 |
+| frame | 506 | 33979 | 105 | 401 | 0 | 0 |
+| health | 178 | 38797 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 265 | 55131 | 110 | 155 | 0 | 0 |
@@ -50,19 +50,19 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 |---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 16 | 255 | 56 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 19 | 8 | 24 | 0 |
-| Home And Its Retained Actions | 19 | 5 | 9 | 5 | 0 |
+| Home And Its Retained Actions | 20 | 4 | 9 | 7 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 146 | 238 | 237 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 127 | 352 | 187 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 765 | 123 | 376 | 266 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 475 | 152 | 225 | 98 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 296 | 279 | 17 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 296 | 278 | 17 | 1 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 33 | 37 | 13 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 31 | 37 | 15 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 14 | 27 | 4 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4550 | 992 | 2409 | 1149 | 0 |
+| **All** | 4551 | 988 | 2409 | 1154 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -459,7 +459,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/life.ts#WET` | 4 | 0 | Retained | frame | The weather conditions that make a run a bad idea, named as the weather names them: Rain, Thunderstorm, Snow, Drizzle. | Reviewed And Retained |
 | `src/engine/systems/life.ts#wellbeingSummary` | 11 | 0 | Rewritten | frame | Held by tests/language-dynamic.test.ts, 'says a hospital stay, the flu and an injury with the day each ends, before the lines that say all’s well, on Home and your own look'; read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt, Home's How You Are: 'Mending a back strain until May 4, 2027.' where it said 'Rested, steady and ready for a real day.' | Pending |
 | `src/engine/systems/life.ts#registerLife [life.day_rollover]` | 1 | 0 | Retained | frame | The label of the midnight item in the system category, which no calendar screen draws; New Day says what it is. | Reviewed And Retained |
-| `src/engine/systems/life.ts#registerLife <life.sleep>` | 7 | 0 | Retained | frame | Each refusal names the obstacle, a time in the past, more than a day ahead, or where you are until when, and the missed notice names what you slept through. | Rewritten And Verified |
+| `src/engine/systems/life.ts#registerLife <life.sleep>` | 9 | 0 | Rewritten | frame | The slept-through notice's title says its count in words under ten, as the game's other titles do (brief 20, the journeys' F12): until then "You Slept Through 1 Commitment". | Pending |
 | `src/engine/systems/life.ts#registerLife <life.look_after>` | 5 | 0 | Retained | frame | A refusal no menu can reach now, and the meal memos a statement lists; the guide’s body entry quotes the payment line as it stands. | Reviewed And Retained |
 | `src/engine/systems/life.ts#LOOKING_AFTER` | 5 | 0 | Retained | frame | The Look After Yourself menu’s five actions, each a plain verb for what the hour is: Eat A Meal, Order In, Shower, Work Out, Unwind. | Reviewed And Retained |
 | `src/engine/systems/life.ts#WORKOUTS_TODAY` | 1 | 0 | Retained | frame | A key for counting the day’s workouts, stamina<workout, never shown; its words name the record, not a label. | Reviewed And Retained |
@@ -468,7 +468,8 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/life.ts#lookAfterRefusal` | 7 | 0 | Rewritten | frame | Held by tests/life-fixes.test.ts, tests/evidence-g01-life.test.ts, tests/evidence-g06-life.test.ts, tests/evidence-g07-life.test.ts, tests/evidence-g30-ui.test.ts and tests/attributes-phase-2b.test.ts, each with the flu's own end date: 'Not with the flu: rest until it passes on …' | Pending |
 | `src/engine/systems/life.ts#whyNow` | 14 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu: Eat A Meal and Order In say 'Nourishment at 63: little to gain yet.' as Shower and Unwind say theirs) | Pending |
 | `src/engine/systems/life.ts#suggestedSleep` | 8 | 0 | Rewritten | frame | The Sleep dialog's reasons with a commitment and its trip, read at 11 PM and 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-1440.txt) and held by tests/time-stops.test.ts, a trip inside the call's hours among them | Pending |
-| `src/engine/systems/life.ts#napNow` | 3 | 0 | Rewritten | frame | The nap's two reasons, rested and low, read at 7:15 AM on the built app (docs/verification/career-2026-10-20/time/after/walk-390.txt) and held word for word by tests/time-stops.test.ts | Rewritten And Verified |
+| `src/engine/systems/life.ts#fullNightWords` | 6 | 0 | Rewritten | frame | tests/b20-life-screens.test.ts and tests/b20-life-fatigue.test.ts read the bedtime words on Home, the Day look and the Sleep dialog | Rewritten And Verified |
+| `src/engine/systems/life.ts#napNow` | 2 | 0 | Rewritten | frame | tests/time-stops.test.ts and tests/evidence-g01-life.test.ts read the nap reasons in the Sleep dialog | Pending |
 | `src/engine/systems/life.ts#hoursSaid` | 11 | 0 | Rewritten | frame | Hours at the start of a sentence, Half an hour to Fourteen hours, in the nap's reasons; tests/time-stops.test.ts holds one and a half and seven and a half | Rewritten And Verified |
 | `src/engine/systems/life.ts#sleepReason` | 11 | 0 | Retained | frame | Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less. | Rewritten And Verified |
 | `src/ui/screens/Home.tsx#Home` | 71 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (What Needs You, six of 310); held by tests/evidence-g32-ui.test.ts and tests/language-dynamic.test.ts word for word | Pending |
@@ -3108,7 +3109,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]` | 44 | 0 | Rewritten | career | Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md: Equity joined by a first day under an Equity contract as by the degree, read against tests/b20-career-defects.test.ts, which plays it | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]` | 41 | 0 | Rewritten | career | Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts | Rewritten And Verified |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 41 | 0 | Rewritten | career | Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects | Rewritten And Verified |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 40 | 0 | Rewritten | career | Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing | Rewritten And Verified |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 42 | 0 | Rewritten | career | read against docs/STYLE.md; tests/b20-life-fatigue.test.ts holds the work day energy the cost line says | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/content/guide/showcase.ts#TERM_WEEK` | 6 | 0 | Rewritten | career-showcase | tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md | Rewritten And Verified |
 | `src/engine/content/guide/showcase.ts#SHOWCASE_GUIDE [coursework.showcase]` | 51 | 0 | Rewritten | career-showcase | tests/guide.test.ts holds the entry's links, places and coverage, and tests/pro-showcase.test.ts plays each step it names; read against docs/STYLE.md | Rewritten And Verified |
@@ -3343,7 +3344,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/body.ts#BODY [evaluation]` | 4 | 0 | Retained | health | Each How It Connects line names one link in plain words with its figure: readiness sets what a class builds, under 60 a tired night on stage costs you, missed classes are absences, the weather decides a run. | Rewritten And Verified |
 | `src/engine/content/guide/body.ts#BODY [optional]` | 2 | 0 | Retained | health | Two concrete options with their catch stated: under 55 condition a sick day is excused, and skipping through the night sleeps for you but stops at 74 energy. | Rewritten And Verified |
 | `src/engine/content/guide/body.ts#BODY [history]` | 3 | 0 | Retained | health | Three short lines that say where each thing is kept: long-term conditions on Papers, slept-through commitments in the next morning's notice, and fitness as the Profile's Stamina. | Rewritten And Verified |
-| `src/engine/content/guide/body.ts#BODY [body.sleep]` | 61 | 0 | Rewritten | health | The suggestion reads whether the night's behind you, your energy and the trip, and a commitment slept through is missed; held by tests/time-stops.test.ts beside the behavior | Pending |
+| `src/engine/content/guide/body.ts#BODY [body.sleep]` | 61 | 0 | Rewritten | health | read against docs/STYLE.md; tests/b20-life-screens.test.ts holds the bedtime the entry now points to on Home and the Sleep dialog | Pending |
 | `src/engine/content/guide/body.ts#BODY [body.look-after]` | 75 | 0 | Rewritten | health | Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4 in two paragraphs, the menu and its order, then what each line says and that pressing one moves the clock; tests/guide.test.ts and tests/guide-examples-start-day-body.test.ts pass. | Pending |
 | `src/engine/content/guide/body.ts#BODY [scheduled]` | 1 | 0 | Rewritten | health | docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections | Pending |
 | `src/engine/content/injury.ts#INJURY_KIND` | 7 | 0 | Retained | health | Seven injuries by their everyday names in Title Case, A Sprained Ankle and A Broken Bone, the titles of their notices and looks. | Reviewed And Retained |
@@ -3453,7 +3454,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#DAY [scheduled]` | 2 | 0 | Retained | frame | Lines under Changes Later: midnight’s groceries, and a plan stopping the clock, each said as what happens when. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [day.needs]` | 55 | 0 | Rewritten | frame | the life editor traced world.take_decision_action: an answer runs the same command, its label not always the same (Reactivate on Money); tests/guide-examples-start-day-body.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [history]` | 2 | 0 | Retained | frame | Lines under Kept In Your Record: a notice for a plan skipped or slept through, said where it appears. | Rewritten And Verified |
-| `src/engine/content/guide/day.ts#DAY [day.plans]` | 61 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Your Own Plans | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.plans]` | 62 | 0 | Rewritten | frame | read against docs/STYLE.md; tests/b20-life-time.test.ts holds the clash the new line says | Pending |
 | `src/engine/content/guide/day.ts#DAY [day.weather]` | 42 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Weather | Pending |
 | `src/engine/content/holiday-data.ts#HOLIDAY_FILES` | 1 | 0 | Retained | frame | A table of each country’s holiday file size and count, read by the loader and never shown as words. | Reviewed And Retained |
 | `src/engine/content/holidays.ts#loadCountryHolidays` | 2 | 0 | Retained | frame | The holiday file’s path and a developer’s error if it can’t be fetched, neither of them words a player reads. | Reviewed And Retained |
@@ -3473,7 +3474,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/world/plans.ts#NOT_ON_CALENDAR` | 1 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Rewritten And Verified |
 | `src/engine/world/plans.ts#ALREADY_OVER` | 1 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Rewritten And Verified |
 | `src/engine/world/plans.ts#checkPlan` | 8 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Rewritten And Verified |
-| `src/engine/world/plans.ts#registerPlans` | 6 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Rewritten And Verified |
+| `src/engine/world/plans.ts#registerPlans` | 8 | 0 | Rewritten | frame | tests/b20-life-time.test.ts reads the clash notices word for word | Pending |
 | `src/engine/world/plans.ts#registerPlans <calendar.skip>` | 4 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Rewritten And Verified |
 | `src/engine/world/plans.ts#registerPlans <calendar.cancel>` | 3 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Rewritten And Verified |
 | `src/engine/world/plans.ts#PLAN_LENGTHS` | 6 | 0 | Retained | frame | Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else. | Reviewed And Retained |
@@ -3483,11 +3484,11 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/looks/day.tsx#spokenWhen` | 1 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
 | `src/ui/looks/day.tsx#missCost` | 18 | 0 | Rewritten | frame | tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs | Rewritten And Verified |
 | `src/ui/looks/day.tsx#entryDetail` | 4 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
-| `src/ui/looks/day.tsx#top` | 120 | 0 | Rewritten | frame | tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs | Rewritten And Verified |
+| `src/ui/looks/day.tsx#top` | 121 | 0 | Rewritten | frame | tests/b20-life-looks.test.ts and tests/b20-life-screens.test.ts read the Day look text | Pending |
 | `src/ui/looks/day.tsx#top [observed]` | 8 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
 | `src/ui/looks/day.tsx#loadOf` | 5 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
 | `src/ui/looks/day.tsx#daySentence` | 11 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Reviewed And Retained |
-| `src/ui/looks/day.tsx#lightSentence` | 3 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
+| `src/ui/looks/day.tsx#lightSentence` | 3 | 0 | Rewritten | frame | tests/b20-life-looks.test.ts reads the daylight sentence on the Day look | Rewritten And Verified |
 | `src/ui/looks/day.tsx#lightDetail` | 3 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
 | `src/ui/looks/day.tsx#quarterSentence` | 6 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
 | `src/ui/looks/day.tsx#entrySentence` | 8 | 0 | Retained | frame | A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from. | Rewritten And Verified |
@@ -3521,7 +3522,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail` | 12 | 0 | Rewritten | frame | Rewritten 2026-10-21 so the entry says the trip the meeting's notice promises (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/calendar-entry-trip.test.ts | Rewritten And Verified |
 | `src/ui/workspaces/CalendarWorkspace.tsx#MONTHS` | 12 | 0 | Retained | frame | The months spelled out in full in the month picker, as the game writes every date. | Reviewed And Retained |
 | `src/ui/workspaces/CalendarWorkspace.tsx#statusWords` | 1 | 0 | Retained | frame | Canceled, the one status word the entry needs spelled for the screen, in American spelling. | Reviewed And Retained |
-| `public/holidays#names` | 1430 | 0 | Retained | frame | The names of real public holidays and observances as the published calendar data spells them in English; the calendar shows each verbatim beside its date, and a proper name isn't the game's to reword. | Pending |
+| `public/holidays#names` | 1431 | 0 | Rewritten | frame | tests/b20-life-looks.test.ts reads Labor Day on the Day look in the United States’ own English | Pending |
 
 ## Notifications, Invitations, Feedback And Generated Messages
 
@@ -3580,7 +3581,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/shell/TimeControls.tsx#DIAL_LABEL` | 8 | 0 | Retained | frame | The eight wellbeing measures by the names How You Are gives them, so the menu’s figures match the panel’s. | Reviewed And Retained |
 | `src/ui/shell/TimeControls.tsx#choicesAhead` | 5 | 0 | Rewritten | frame | On The Way's sentence of the choices on the way and what the clock does after them; Read on the built app at 1440 and 390 (docs/verification/career-2026-10-20/time/after/walk-1440.txt, walk-390.txt) and held by tests/time-controls.test.ts and tests/time-stops.test.ts and tests/language-frame-ui.test.ts | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#TimeControls` | 24 | 0 | Rewritten | frame | Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…') | Rewritten And Verified |
-| `src/ui/shell/TimeControls.tsx#SleepDialog` | 13 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Sleep dialog); the claim it makes, a commitment slept through is missed, held by tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through…' | Pending |
+| `src/ui/shell/TimeControls.tsx#SleepDialog` | 13 | 0 | Rewritten | frame | tests/b20-life-screens.test.ts renders the Sleep dialog and reads the bedtime line | Pending |
 | `src/ui/shell/TimeControls.tsx#DueNow` | 21 | 0 | Rewritten | frame | Rewritten 2026-10-21 so the stop and On The Way say what a clash between two career commitments gives up (the app's fourth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…') | Rewritten And Verified |
 | `src/ui/shell/TimeControls.tsx#SkipDialog` | 17 | 0 | Rewritten | frame | Skip To Event lists a foreseen stop as not on your calendar yet; held by tests/time-controls.test.ts on the real provider | Pending |
 | `src/ui/shell/TimeControls.tsx#AdvanceMenu` | 14 | 0 | Retained | frame | Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing. | Rewritten And Verified |

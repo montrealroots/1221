@@ -279,7 +279,9 @@ describe('D3: the Sleep dialog’s suggestion', () => {
     const sim = morning('time-sleep-morning');
     expect(suggestedSleep(sim)).toEqual({
       hours: SHORTEST_SLEEP,
-      reason: `You’ve already slept since midnight, and with your energy at ${Math.round(sim.player.wellbeing.energy)} you don’t need more sleep yet. A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.`,
+      // Until 2026-10-21 it went on "A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.": a
+      // sleep after the night adds no short night's debt since (brief 20's D3, `applySleep`).
+      reason: `You’ve already slept since midnight, and with your energy at ${Math.round(sim.player.wellbeing.energy)} you don’t need more sleep yet.`,
     });
     // The same life that evening, the night ahead of it: a night, as at any bedtime.
     jump(sim, at(8, 29, 23));

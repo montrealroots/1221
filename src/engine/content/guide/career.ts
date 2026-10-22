@@ -31,6 +31,7 @@ import { YALE_DRAMA } from '../school';
 import { AGENTS, agencyOf } from '../agents';
 import { AGREEMENT, AUDITION_TOWNS, UNIONS } from '../careerwork';
 import { BAND_LABEL } from '../../systems/coursework';
+import { ESTIMATE } from '../../systems/school';
 import { PAY, sagJoinUsd } from '../../systems/propay';
 import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
 import { BRIEF } from '../../systems/briefs';
@@ -743,7 +744,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Permission to work in the US for every day of it, as Papers shows it.',
       'No other booking on the same days, and in the summer no School call on them.',
     ],
-    costs: [{ label: 'Time', value: 'Each work day’s hours, with the trip each way' }, { label: 'Money', value: 'None: the work pays you' }],
+    costs: [{ label: 'Time', value: 'Each work day’s hours, with the trip each way' }, { label: 'Energy', value: `${ESTIMATE.energy.rehearsal} a work day, as a School rehearsal call takes, on top of its hours awake`, estimate: true }, { label: 'Money', value: 'None: the work pays you' }],
     reads: [
       { label: 'Permission To Work', value: 'Every day of the work, against the papers you hold' },
       { label: 'The Part', value: 'Its preparation, your abilities and techniques, and the day’s condition, judged as every piece of work is' },

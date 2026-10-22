@@ -20,7 +20,7 @@ import { Panel, Stat, Meter, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
-import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT } from '@/engine/systems/life';
+import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT, fullNightBefore, fullNightWords } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
@@ -42,6 +42,9 @@ export function Home() {
   const snapshot = useWorld(lifeSnapshot);
   const decisions = useWorld(openDecisions);
   const next = useWorld(nextCommitment);
+  // The trip the next commitment carries, where it carries its own, and the full night before it while one's still to be had.
+  const nextTrip = useWorld((s) => { const n = nextCommitment(s); return n ? s.timeline.get(n.id)?.travelMinutes ?? 0 : 0; });
+  const fullNight = useWorld((s) => { const n = fullNightBefore(s); return n && n.by >= s.now ? fullNightWords(s, n) : undefined; });
   const soon = useWorld((s) => upcoming(s, 6));
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const cur = saveCurrency(sim.universe);
@@ -189,17 +192,22 @@ export function Home() {
                 {' at '}
                 {/* The call's own clock, where it names another city: until 2026-09-27 the home clock with no zone. */}
                 <Open subject={at('entry', next.id)}>{(() => { const tz = next.locationId ? CITIES.get(next.locationId)?.timeZone : undefined; return tz && tz !== sim.zone ? `${formatTime(next.at, tz)} ${zoneAbbreviation(next.at, tz)}` : formatTime(next.at, sim.zone); })()}</Open>
-                {/* Only of a commitment that needs you in its town already: one that carries its own trip (`travelMinutes`, the
-                    career's meetings, auditions and work days) takes you there and back inside its time, and its handler
-                    never asks the town, as its entry and its stop say. Until 2026-10-21 (brief 20) this said "you’re not in
-                    New York" of those too, in red, under a meeting the entry said the trip was part of. */}
-                {next.locationId && next.locationId !== player.currentLocationId && sim.timeline.get(next.id)?.travelMinutes === undefined && (
+                {/* Not of a commitment that carries its own trip (`travelMinutes`, the career's meetings, auditions and
+                    work days), whose handler takes the trip as made and never asks the town, as its entry and its stop say
+                    (from 2026-10-21, brief 20, found by both the guide area and the life area): until then a shoot day in
+                    New York read "you’re not in New York" in red from New Haven, where the entry it opens says the trip is
+                    part of it. */}
+                {next.locationId && next.locationId !== player.currentLocationId && nextTrip <= 0 && (
                   <span className="negative">
                     {' · you’re not in '}
                     <Open subject={at('place', next.locationId)}>{CITIES.get(next.locationId)?.name ?? 'that place'}</Open>
                   </span>
                 )}
               </span>
+              {/* When a full night before it starts, said by the evening before (`fullNightBefore`, from 2026-10-21, the
+                  owner's brief 20, D3): until then nothing said it until the Sleep dialog, opened at bedtime, said there
+                  wasn't time for one. */}
+              {fullNight && <span className="stat-note">{fullNight}</span>}
             </div>
           ) : (
             <p className="muted small" style={{ margin: 0 }}>

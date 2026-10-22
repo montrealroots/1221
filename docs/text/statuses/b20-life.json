@@ -1,0 +1,8 @@
+{
+ "src/engine/systems/life.ts#fullNightWords": {
+  "status": "Rewritten And Verified",
+  "hash": "7a1818012d74",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-life-screens.test.ts and tests/b20-life-fatigue.test.ts read the bedtime words on Home, the Day look and the Sleep dialog"
+ }
+}

@@ -20,6 +20,7 @@ import type { Simulation } from '../core/simulation';
 import type { Id } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { formatTime, MS_DAY, zoneAbbreviation, type Instant } from '../core/time';
+import { occupiedAt } from '../systems/life';
 
 /** The one scheduled kind a person can make for themselves. */
 export const PLAN_KIND = 'life.commitment';
@@ -137,6 +138,22 @@ export function registerPlans(sim: Simulation): void {
     const asleep = Boolean(player) && ((player!.awakeSince !== undefined && player!.awakeSince > item.at) || (player!.health?.inHospitalUntil ?? 0) > item.at);
     if (player && inPlace && asleep) {
       item.status = 'missed';
+      return;
+    }
+    // At another commitment they went to, whose hours still run (`occupiedAt`): the one the clock reached first is kept,
+    // and this one is missed, said with where they were, as the career's clashing commitments are (`careerClashes`,
+    // `systems/projobs.ts`). From 2026-10-21 (the owner's brief 20, D1, "commitments that clash are said and settled"):
+    // until then a plan at eight beside another at eight, or at nine inside a two-hour dinner from eight, was kept as
+    // well, and the entry said Completed of both.
+    const busy = player && inPlace ? occupiedAt(s, item.at, item.id) : undefined;
+    if (busy) {
+      item.status = 'missed';
+      s.notify({
+        category: 'personal',
+        title: `You Missed ${item.label}`,
+        body: `You were at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.homeZone)}, and ${item.label} was at the same time. Missing a plan of your own costs nothing else.`,
+        importance: 60,
+      });
       return;
     }
     if (inPlace || !player || !wanted) return;

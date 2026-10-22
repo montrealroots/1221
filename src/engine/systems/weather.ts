@@ -38,7 +38,14 @@ export interface DayWeather {
   low: number;
   /** Whether that unit is Fahrenheit. */
   fahrenheit: boolean;
-  /** Also in Celsius, for anything that computes rather than displays. */
+  /**
+   * Also in Celsius, unrounded, for anything that computes rather than displays. The hours are worked out from these
+   * (`temperatureAtHour`), so an hour, rounded once to the unit the town reads, never reads past the `high` and `low`
+   * rounded once from the same figures. From 2026-10-21 (brief 20, the guide area's finding, repaired by the life area):
+   * until then these were whole degrees while `high` and `low` were converted from the unrounded figures, and a
+   * Fahrenheit town's hours, worked out from the rounded Celsius, read past them: on one save, 238 of a year of New
+   * Haven's readings read over the day's high and 146 under its low, and Home said "86°F" beside "High 85°F".
+   */
   highC: number;
   lowC: number;
   precipitation: 'none' | 'rain' | 'snow' | 'storm';
@@ -239,7 +246,7 @@ export function weatherOn(sim: Simulation, city: City, instant: Instant): DayWea
     dateKey: `${parts.year}-${String(parts.month).padStart(2, '0')}-${String(parts.day).padStart(2, '0')}`,
     condition,
     high: show(highC), low: show(lowC), fahrenheit,
-    highC: Math.round(highC), lowC: Math.round(lowC),
+    highC, lowC,
     precipitation, windKph, humidity,
     climate: normal.type, climateName: CLIMATE_NAMES[normal.type],
     anomalyC: Math.round(anomalyC * 10) / 10,

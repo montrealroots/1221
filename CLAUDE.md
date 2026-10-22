@@ -108,7 +108,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-twenty-one checks: title-case, label-sweep, plural-check, voice-check, tics,
+twenty-two checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
 traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
 which fails an audit row whose cited test or line doesn't hold, and
@@ -131,7 +131,16 @@ owner's brief 17, after guide-quotes: it fails a source of player text that no r
 of the text coverage matrix in `docs/text/surfaces/` claims, a row whose source is
 gone, whose state isn't one the brief lists or whose outcome isn't Revised or Kept,
 a Kept row with no reason, evidence that isn't there, and a `docs/text/SURFACES.md`
-that isn't the matrix as it stands). This said twenty until brief 17 on
+that isn't the matrix as it stands) and effects (added 2026-10-22 at the owner's
+brief 20, after surfaces: it fails a feature the code has, from a command, a
+scheduled kind, a reactor or an event to a creation choice, a look, a notice
+outside a handler or a promise the guide makes between its entries, that no row of
+the feature-to-effect matrix in `docs/verification/audit-2026-10-21/effects/`
+names; a row whose feature is gone, still seeded or with an empty field; a status
+that isn't one of the owner's seven; a mechanic with no consumer at a file and line
+that exists; a verified row or promise with no test the gate runs, or a verified
+command none of whose tests issues it; and an `EFFECTS.md` that isn't the matrix as
+it stands). This said twenty-one until brief 20 on 2026-10-22, twenty until brief 17 on
 2026-10-20, nineteen until the end of brief 14 on 2026-10-17, eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with

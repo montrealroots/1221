@@ -2,7 +2,7 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**306 surfaces; 4550 of 4550 sources claimed; 168 revised, 138 kept.**
+**307 surfaces; 4551 of 4551 sources claimed; 169 revised, 138 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
@@ -11,7 +11,7 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | career-pay | 30 | 30 |
 | career-showcase | 22 | 22 |
 | career-work | 72 | 72 |
-| frame | 505 | 505 |
+| frame | 506 | 506 |
 | health | 178 | 178 |
 | material-a | 507 | 507 |
 | material-b | 492 | 492 |
@@ -21,6 +21,12 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | profile | 621 | 621 |
 | school | 638 | 638 |
 | tutorial | 51 | 51 |
+
+## b20-life
+
+| Surface | Where | States | Outcome | What reading it found, and what changed | Evidence |
+|---|---|---|---|---|---|
+| The Bedtime Before A Commitment | Under the next commitment on Home's Calendar, in the Day look for today, and beside the next commitment in the Sleep dialog | ordinary, recommendation | Revised | Read on a shoot week before and after (brief 20's D3): a 7 AM call in New York, two hours from New Haven. Before, nothing said when to be in bed until the Sleep dialog, opened at eleven, said there wasn't time for a full night and offered five hours. Now the bedtime a full night asks for is said by the evening before, and past it, that it was. **Changed:** New: "A full night before it, with an hour to get up and two hours to get there, means being asleep by 8:00 PM." and, past it, "… needed you asleep by 8:00 PM." | test: tests/b20-life-screens.test.ts: 'Home’s Calendar says it under the shoot day'; test: tests/b20-life-screens.test.ts: 'the Sleep dialog says it beside the next commitment'; test: tests/b20-life-fatigue.test.ts: 'names a bedtime by the evening before' |
 
 ## career-agent
 
