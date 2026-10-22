@@ -91,7 +91,7 @@ interface ThePaper { doc: PersonDocument; person: Person }
 
 /**
  * Where it stands now, in a word a person uses. Approved and starting on a later day is its own (from 2026-10-21, brief
- * 20's papers area): an OPT decided before the program's end runs from the end (`documents.permission`), and until then
+ * 20's papers area): an OPT decided before the program’s end runs from the end (`documents.permission`), and until then
  * this read it as valid, so its page said "It’s in force until …" over the out-of-force words of `whatItDoes`.
  */
 function standingOf(doc: PersonDocument, now: number): 'pending' | 'approved' | 'valid' | 'lost' | 'cancelled' | 'expired' {
@@ -214,7 +214,7 @@ defineLook<ThePaper>('document', {
         <>
           <p className="small">
             {state === 'approved' ? `${issuer} approved it.` : `${issuer} issued it${doc.issuedAt ? ` on ${formatDate(doc.issuedAt, zone)}` : ''}.`}{' '}
-            {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'You don’t hold it yet, so it doesn’t let you do anything until it arrives.' : state === 'approved' ? (doc.kind === 'permit' ? 'It doesn’t let you work until then.' : 'It doesn’t let you do anything until then.') : ''}
+            {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'You don’t hold it yet, so it doesn’t let you do anything until it arrives.' : state === 'approved' ? (doc.kind === 'permit' ? 'It doesn’t let you work until then.' : (doc.kind === 'visa' || doc.kind === 'authorization') && doc.destination ? `It doesn’t let you into ${theCountry(countryOfIso(doc.destination)?.name ?? doc.destination)} until then.` : 'It doesn’t let you do anything until then.') : ''}
             {/* A US state card issued non-verified says so, as the card itself does (from 2026-10-16: a non-citizen’s
                 Connecticut card was marked REAL ID until then, `documents.apply_idcard`). */}
             {doc.realId ? ' It meets REAL ID.' : doc.kind === 'idcard' && doc.issuer.startsWith('us-') && doc.realId === false ? ' It’s marked Not For Federal Identification: it isn’t REAL ID.' : ''}

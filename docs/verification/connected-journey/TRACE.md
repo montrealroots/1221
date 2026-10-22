@@ -1050,7 +1050,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.headshots`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1074,7 +1074,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1128,7 +1128,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - His office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
   - After a pass, his office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
-- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### His Office’s Answers And The Meeting (`career.agent-answers`)
 

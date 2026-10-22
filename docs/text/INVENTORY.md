@@ -14,22 +14,22 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55971 | 176 | 179 | 442 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70391 | 7 | 189 | 477 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 765 | 6640 | 152101 | 13 | 268 | 497 | 0 | 0 |
-| Papers, Documents, Applications, Taxes And Status Notices | 475 | 4610 | 57067 | 3 | 110 | 365 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 296 | 1947 | 17881 | 0 | 279 | 17 | 0 | 0 |
+| Papers, Documents, Applications, Taxes And Status Notices | 475 | 4611 | 57074 | 3 | 110 | 365 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 296 | 1952 | 17958 | 0 | 279 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8275 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2564 | 15122 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1171 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 203 | 846 | 0 | 14 | 31 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4550 | 38862 | 594796 | 316 | 1410 | 3140 | 0 | 0 |
+| **All** | 4550 | 38868 | 594880 | 316 | 1410 | 3140 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
 | career | 115 | 10141 | 98 | 17 | 0 | 0 |
-| career-agent | 57 | 2705 | 57 | 0 | 0 | 0 |
+| career-agent | 57 | 2782 | 57 | 0 | 0 | 0 |
 | career-pay | 30 | 1229 | 30 | 0 | 0 | 0 |
 | career-showcase | 22 | 1760 | 22 | 0 | 0 | 0 |
 | career-work | 72 | 2046 | 72 | 0 | 0 | 0 |
@@ -39,7 +39,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 265 | 55131 | 110 | 155 | 0 | 0 |
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
-| papers | 475 | 57067 | 110 | 365 | 0 | 0 |
+| papers | 475 | 57074 | 110 | 365 | 0 | 0 |
 | profile | 621 | 55971 | 179 | 442 | 0 | 0 |
 | school | 638 | 67373 | 185 | 453 | 0 | 0 |
 | tutorial | 51 | 15003 | 31 | 20 | 0 | 0 |
@@ -54,7 +54,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 146 | 238 | 237 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 127 | 352 | 187 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 765 | 123 | 376 | 266 | 0 |
-| Papers, Documents, Applications, Taxes And Status Notices | 475 | 151 | 225 | 99 | 0 |
+| Papers, Documents, Applications, Taxes And Status Notices | 475 | 152 | 225 | 98 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 296 | 279 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 33 | 37 | 13 | 0 |
@@ -62,7 +62,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 45 | 14 | 27 | 4 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4550 | 991 | 2409 | 1150 | 0 |
+| **All** | 4550 | 992 | 2409 | 1149 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -2982,7 +2982,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/looks/papers.tsx#KIND_WORD` | 7 | 0 | Retained | papers | The kind line of a document's page, Travel Document or Proof Of Identity, which says what the paper is for without repeating its own name above it. | Rewritten And Verified |
 | `src/ui/looks/papers.tsx#PLAIN_NAME` | 7 | 0 | Retained | papers | The plain fallback name, Passport or ID Card, shown only where a document's own name won't read as one, so the page always has a familiar title. | Reviewed And Retained |
 | `src/ui/looks/papers.tsx#whatItDoes` | 20 | 0 | Rewritten | papers | tests/defects-g25-1.test.ts 'names an older one, still in force, as not the one in your name' resolves the look and asserts It’s in force, but another passport … | Pending |
-| `src/ui/looks/papers.tsx#top` | 48 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P1: an OPT approved before the program ends reads Approved, and its page says the day it starts) | Pending |
+| `src/ui/looks/papers.tsx#top` | 49 | 0 | Rewritten | papers | Rewritten 2026-10-22 at brief 20's integration: a visa or travel authorization approved but not yet started says the country it doesn't let you into until then (it said 'anything'), to docs/STYLE.md; read in tests/defects-r7-1.test.ts ('says it with the article … not yet in force') and tests/b20-papers-defects.test.ts | Rewritten And Verified |
 | `src/ui/papers/Documents.tsx#KIND_WORD` | 7 | 0 | Retained | papers | The plain name of each kind of paper as the report-lost toast says it, Passport Reported Stolen And Canceled, short and unambiguous beside each row. | Reviewed And Retained |
 | `src/ui/papers/Documents.tsx#STATUS_WORD` | 4 | 0 | Retained | papers | The glossary's four statuses for a document, Being Decided and In Force keeping applying apart from holding, exactly as the guide and the look name them. | Reviewed And Retained |
 | `src/ui/papers/Documents.tsx#DocumentList` | 32 | 0 | Rewritten | papers | tests/b20-papers-defects.test.ts (P1: the Work tab's row reads Approved until the OPT's first day) | Pending |
@@ -3178,7 +3178,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/proagent.ts#agreementBefore` | 3 | 0 | Rewritten | career-agent | Written for brief 20's D1 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts, a second offer after one declined and one let lapse | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#offerAgreement` | 5 | 0 | Rewritten | career-agent | Written for brief 20's D1 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts, a second offer after one declined and one let lapse | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#scheduleShowcaseFollowUp` | 2 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/proagent.ts#followUp` | 12 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
+| `src/engine/systems/proagent.ts#followUp` | 13 | 0 | Rewritten | career-agent | Rewritten 2026-10-22 for brief 20's F10, so the School's request to meet lapses on its day with a notice and a line in History With His Office, to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-agent-ask-lapse.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#top` | 4 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#agentIn` | 1 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#registerProAgent <pro.agent_notice>` | 1 | 0 | Rewritten | career-agent | Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3189,7 +3189,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/proagent.ts#registerProAgent <pro.ask_to_move>` | 2 | 0 | Rewritten | career-agent | Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>` | 4 | 0 | Rewritten | career-agent | Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#registerProAgent <pro.decline_agreement>` | 2 | 0 | Rewritten | career-agent | Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts | Rewritten And Verified |
-| `src/engine/systems/proagent.ts#registerProAgent` | 30 | 0 | Rewritten | career-agent | Rewritten 2026-10-21 so a round or a meeting missed for another career commitment says where the actor was (the app's third walk), to docs/STYLE.md; read in tests/pro-work.test.ts ('two auditions in person whose trips meet…' and 'a meeting at the agent’s office and an audition…') | Rewritten And Verified |
+| `src/engine/systems/proagent.ts#registerProAgent` | 34 | 0 | Rewritten | career-agent | Rewritten 2026-10-22 for brief 20's F10, so the School's request to meet lapses on its day with a notice and a line in History With His Office, to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-agent-ask-lapse.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#endAgreement` | 3 | 0 | Rewritten | career-agent | Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#NY` | 1 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#FIELD_WORDS` | 7 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |

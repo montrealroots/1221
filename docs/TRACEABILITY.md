@@ -129,7 +129,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 44 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | pro.agent_term_end | 5 | journey-agent.test.ts |
 | `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 10 | — |
-| `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 8 | journey-agent.test.ts |
+| `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 9 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 7 | journey-agent.test.ts |
 | `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 6 | journey-agent.test.ts |
 | `pro.ask_to_move` | Verified (journey) | Representation | RepresentationPane.tsx TimeControls.tsx | `systems/proagent.ts` | — (also moveRefusal) | — | — | — | 3 | journey-agent.test.ts |
@@ -137,17 +137,17 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pro.decline_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | — | 4 | journey-agent.test.ts |
 | `pro.decline_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | There’s no offer to decline. | — | — | declined | 4 | — |
 | `pro.end_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also endRefusal) | — | — | pro.agent_decision | 3 | journey-agent.test.ts |
-| `pro.headshots` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | — | Yes | headshot | 11 | journey-agent.test.ts |
+| `pro.headshots` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | — | Yes | headshot | 12 | journey-agent.test.ts |
 | `pro.join_sag` | Implemented But Unverified | Your Career | WorkPane.tsx | `systems/propay.ts` | Your bank can’t cover …, so nothing was charged. (also joinSagRefusal) | — | Yes | — | 3 | — |
 | `pro.move_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also moveRefusal) | — | — | — | 1 | — |
 | `pro.prepare` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also prepareRefusal) | — | — | — | 2 | — |
 | `pro.request_outside_work` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also requestRefusal) | — | — | pro.school_answer; requested | 1 | — |
-| `pro.send_materials` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also sendRefusal) | — | — | pro.reply | 10 | journey-agent.test.ts |
+| `pro.send_materials` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also sendRefusal) | — | — | pro.reply | 11 | journey-agent.test.ts |
 | `pro.set_name` | Implemented But Unverified | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also nameRefusal) | — | — | — | 2 | — |
 | `pro.submit` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also submitRefusal) | — | — | — | 4 | — |
 | `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.reply | 2 | journey-agent.test.ts |
 | `pro.tape_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also tapeRefusal) | — | — | — | 2 | — |
-| `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 13 | journey-agent.test.ts |
+| `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 14 | journey-agent.test.ts |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 8 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |
 | `school.approach` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a way to work on it. (also approachRefusal) | — | — | — | 8 | journey-three-students.test.ts |
@@ -259,6 +259,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pension.imss_month` | `systems/imss.ts` | systems/imss.ts | — | Yes | pension.imss_month | 0 |
 | `pension.ss_month` | `systems/socialsecurity.ts` | systems/socialsecurity.ts | — | Yes | pension.ss_month | 2 |
 | `pension.state_payment` | `systems/statepension.ts` | systems/statepension.ts | — | Yes | pension.state_payment | 0 |
+| `pro.agent_ask_lapse` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 2 |
 | `pro.agent_decision` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 2 |
 | `pro.agent_follow_up` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 8 |
 | `pro.agent_meeting` | `systems/proagent.ts` | systems/proagent.ts | — | — | pro.agent_decision | 16 |

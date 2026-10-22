@@ -75,6 +75,12 @@ export const DECISION_KIND = 'pro.agent_decision';
 export const OFFER_LAPSE_KIND = 'pro.agent_offer_lapse';
 export const TERM_END_KIND = 'pro.agent_term_end';
 export const FOLLOW_UP_KIND = 'pro.agent_follow_up';
+/**
+ * The last day of his office's request to meet, passed on by the School (`askedStandsDays` after the follow-up; from
+ * 2026-10-22, brief 20's journeys, F10). With no materials sent by then the request lapses, said and kept on the record;
+ * an approach after it is an ordinary one. Until then the date the follow-up's notice gave went by with nothing said.
+ */
+export const ASK_LAPSE_KIND = 'pro.agent_ask_lapse';
 
 /** The Career screen's Representation tab, where every notice of this system sends the player. */
 export const REPRESENTATION_ROUTE = '/workspace/career?tab=representation';
@@ -966,6 +972,7 @@ function followUp(sim: Simulation, person: Person): void {
     keepWhy(sim, rel, 'follow-up', asks ? 'asked' : 'introduced', interest);
     if (asks) showcase.followUp.agents.push(agent.id);
     const until = addDays(sim.now, AGENT_TIMES.askedStandsDays, officeZone(agent));
+    if (asks) sim.schedule({ at: until, kind: ASK_LAPSE_KIND, label: `Last Day Of The Request To Meet From ${agencyOf(agent).name}`, category: 'career', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id } });
     note(sim, rel, 'introduced', key, asks ? `The School passed on a request from his office to meet you, standing until ${formatDate(until, z)}.` : 'The School’s follow-up introduced you to his office. It sent no request to meet.');
     tell(sim, person, agent, 'The School’s Follow-Up After The Showcase', asks
       ? `The School passed your showcase on to the agencies it follows up with, and ${office} asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by ${formatDate(until, z)}, and his office sets a time.${intro} ${how}`
@@ -1159,6 +1166,17 @@ export function registerProAgent(sim: Simulation): void {
     // An answer to an approach that's still the one under way: anything else was settled another way.
     if (!person || !agent || !rel || rel.stage !== 'sent' || approachesOf(rel) !== item.payload.approach) return;
     answer(s, person, agent, rel, { approach: Number(item.payload.approach), step: item.payload.step === 'after-request' ? 'after-request' : 'first', asked: item.payload.asked === true, ...(typeof item.payload.reelId === 'string' ? { reelId: item.payload.reelId } : {}), from: Number(item.payload.from), silenceAt: Number(item.payload.silenceAt) });
+  });
+
+  sim.onSchedule(ASK_LAPSE_KIND, (item, s) => {
+    const person = personIn(s, item);
+    const agent = agentById(String(item.payload.agentId));
+    const rel = person && agent ? relationOf(person, agent.id) : undefined;
+    // Answered already (materials sent), or reached him some other way since: the request has nothing left to lapse.
+    if (!person || !agent || !rel || rel.via?.route !== 'showcase' || approachesOf(rel) > 0) return;
+    const z = s.zone;
+    note(s, rel, 'ask-lapsed', `ask-lapsed:${agent.id}`, `His office’s request to meet, passed on by the School, lapsed on ${formatDate(item.at, z)}: no materials came.`);
+    tell(s, person, agent, `The Request To Meet From ${atAgency(agent)} Lapsed`, `You didn’t send your materials to ${officeOf(agent)} by ${formatDate(item.at, z)}, so the request to meet that it passed on through the School after the showcase has lapsed. You can still send them from the Representation tab. It’s then an ordinary approach, which his office answers in its usual time.`);
   });
 
   sim.onSchedule(REQUEST_DUE_KIND, (item, s) => {

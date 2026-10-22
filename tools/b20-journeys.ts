@@ -67,7 +67,7 @@ import { CARE } from '../src/engine/content/safetynet';
 import { schoolEnded, sickRefusal } from '../src/engine/systems/school';
 import { courseworkOf } from '../src/engine/systems/coursework';
 import { templateById } from '../src/engine/content/coursework';
-import { activeAgreement } from '../src/engine/systems/pro';
+import { activeAgreement, ENGAGEMENTS_KEPT, finished } from '../src/engine/systems/pro';
 import { roundToCome } from '../src/engine/systems/projobs';
 import { optRefusal, usWorkAuthorized } from '../src/engine/systems/permission';
 import { documentsOf, inForce } from '../src/engine/systems/documents';
@@ -541,8 +541,10 @@ function coherence(sim: Simulation, rec: BRec): Record<string, { pass: boolean; 
       const due = t?.medium === 'stage' ? e.log?.some((l) => l.status === 'worked' && l.band !== undefined) : e.status === 'finished' && worked;
       if (due && !credit) fails.push(`${e.role} in ${t?.project}: ${t?.medium === 'stage' ? 'performed' : 'worked and finished'} with no credit`);
     }
+    // A credit's engagement may be gone only where the finished ones kept are at their bound (`keepBounded`): from
+    // 2026-10-22 read off the bound, where until then the record's `trimmed` count said so, removed by the career area.
     for (const c of pro?.credits ?? []) {
-      if (c.engagementId && !(pro!.engagements.some((e) => e.id === c.engagementId) || (pro!.trimmed?.engagements ?? 0) > 0)) fails.push(`credit ${c.role} in ${c.project}: its engagement gone`);
+      if (c.engagementId && !(pro!.engagements.some((e) => e.id === c.engagementId) || pro!.engagements.filter(finished).length >= ENGAGEMENTS_KEPT)) fails.push(`credit ${c.role} in ${c.project}: its engagement gone`);
     }
     const twice = (pro?.credits ?? []).filter((c, i, all) => c.engagementId && all.findIndex((x) => x.engagementId === c.engagementId) !== i);
     if (twice.length) fails.push(`credits twice for one engagement: ${twice.map((c) => c.role).join(', ')}`);

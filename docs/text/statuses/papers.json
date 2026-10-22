@@ -2581,9 +2581,9 @@
  },
  "src/ui/looks/papers.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "e44aff49af26",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g15-papers.test.ts: a citizen's card and its replacement On Its Way with no issue date until it comes, a British student's Being Decided through SAVE's days and On Its Way after, on the row and in the look (4 mutations killed); found by brief 14's document journey, defect 2"
+  "hash": "38cd50ab822c",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 at brief 20's integration: a visa or travel authorization approved but not yet started says the country it doesn't let you into until then (it said 'anything'), to docs/STYLE.md; read in tests/defects-r7-1.test.ts ('says it with the article … not yet in force') and tests/b20-papers-defects.test.ts"
  },
  "src/ui/looks/papers.tsx#whatItDoes": {
   "status": "Rewritten And Verified",

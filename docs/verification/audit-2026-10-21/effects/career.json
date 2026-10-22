@@ -1135,6 +1135,50 @@
    "prior": null
   },
   {
+   "id": "pro.agent_ask_lapse",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "working tree, 2026-10-22",
+   "where": "The clock, the last day of the request to meet the School passed on after the showcase (`ASK_LAPSE_KIND`), scheduled by `followUp` when the agent asks.",
+   "prerequisites": "The follow-up asked, the relation still the showcase's (`via.route === 'showcase'`) and no approach made by its day.",
+   "reads": "The relation's route and its approaches; the agent and his agency.",
+   "changes": "An ask-lapsed line on the relation's history, once (`note`'s key), and a notice saying the request lapsed and that materials sent later are an ordinary approach.",
+   "consumers": [
+    {
+     "what": "History With His Office draws the relation's history, the lapse among it",
+     "at": "src/ui/career/RepresentationPane.tsx:298"
+    },
+    {
+     "what": "What Needs You and the notices list carry the lapse notice",
+     "at": "src/engine/systems/proagent.ts:1179"
+    }
+   ],
+   "experienced": "On the request's last day a notice says it lapsed and where materials can still be sent; His Office's history says it lapsed with no materials. A player who sent them in time sees neither.",
+   "saveLoad": "The calendar's pending item and the relation's history are in the save; the handler reads the relation's route and approaches before acting and `note` keys the line, so a save opened past the day says nothing more (tests/b20-agent-ask-lapse.test.ts, after `reload`).",
+   "evidence": {
+    "tests": [
+     "tests/b20-agent-ask-lapse.test.ts"
+    ],
+    "comparisons": [
+     "b20-agent-ask-lapse: twins from one seed, one unanswered by October 6 (lapse said and kept) and one that sent materials in time (nothing said or kept)"
+    ],
+    "mutations": [
+     "B20-F10-1",
+     "B20-F10-2"
+    ],
+    "journeys": [
+     "F10, found by brief 20's journeys (docs/verification/audit-2026-10-21/journeys/REPORT.md)"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "Found by brief 20's journeys (F10): until 2026-10-22 the request's day passed with nothing said and nothing kept."
+  },
+  {
    "id": "pro.agent_silence",
    "kind": "scheduled",
    "area": "career",

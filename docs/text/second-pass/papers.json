@@ -3039,10 +3039,10 @@
  },
  "src/ui/looks/papers.tsx#top": {
   "status": "Rewritten",
-  "hash": "88b3bb8d06f0",
-  "on": "2026-10-21",
-  "evidence": "tests/b20-papers-defects.test.ts (P1: an OPT approved before the program ends reads Approved, and its page says the day it starts)",
-  "first": "Pending"
+  "hash": "38cd50ab822c",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 at brief 20's integration: a visa or travel authorization approved but not yet started says the country it doesn't let you into until then (it said 'anything'), to docs/STYLE.md; read in tests/defects-r7-1.test.ts ('says it with the article … not yet in force') and tests/b20-papers-defects.test.ts",
+  "first": "Rewritten And Verified"
  },
  "src/ui/looks/papers.tsx#whatItDoes": {
   "status": "Rewritten",

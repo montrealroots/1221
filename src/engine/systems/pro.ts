@@ -83,7 +83,10 @@ export type ProEventKind =
   | 'worked' | 'paid' | 'success' | 'problem'
   // What an agent's office asked for and didn't get (from 2026-10-21): a `problem` until then, which the work loop's
   // problems on his submissions and a missed work day also wrote, so his reliability read all three as material not sent.
-  | 'request-missed';
+  | 'request-missed'
+  // His office's request to meet, passed on by the School, gone by with no materials sent (from 2026-10-22, brief 20's
+  // journeys, F10): until then it passed its date with nothing said and nothing kept.
+  | 'ask-lapsed';
 
 /** One event in a history: a stable id, when, what, its words as the player reads them, and what it's about. */
 export interface ProEvent {
