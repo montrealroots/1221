@@ -450,17 +450,19 @@ describe('documents.permission', () => {
     expect(Object.values(later.universe.decisions).filter((d) => d.title === 'Your US Status Is Ending')).toEqual([]);
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);
     // Papers gives the status’s end as the day the OPT’s days without work will end it: the 91st counted from 3 June, past
-    // its 90, is 1 September, and it ends at that day's end, 2 September, with no grace after (by the day from
-    // 2026-10-22, the owner's brief 22; until then thirteen weeks of them, at the thirteenth count). Until 2026-10-13 it gave the expiry’s sixty
-    // days on, 2 August 2030, which no played OPT reaches (found by that day’s third round; this failed before the fix).
+    // its 90, is 1 September, and it ends at that day's end, the midnight that opens 2 September, with no grace after (by
+    // the day from 2026-10-22, the owner's brief 22; until then thirteen weeks of them, at the thirteenth count), said as
+    // its last day, 1 September (from later that day; it said "September 2" until the built app showed it a day late).
+    // Until 2026-10-13 it gave the expiry’s sixty days on, 2 August 2030, which no played OPT reaches (found by that day’s
+    // third round; this failed before the fix).
     const status = drawn(later, WorkPane);
-    expect(status.text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
+    expect(status.text).toContain('Your US Status Ends September 1, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
     expect(status.text).not.toContain('August 2, 2030');
-    // Past the degree’s own sixty days, 30 July, still in status, and Papers says the same day; ended on its 91st day
-    // without work, 2 September, the day Papers gave.
+    // Past the degree’s own sixty days, 30 July, still in status, and Papers says the same day; ended at the end of its
+    // 91st day without work, 1 September, the day Papers gives (it gave 2 September, the midnight's, until brief 22).
     later.advanceTo(Date.UTC(2029, 7, 1, 16));
     expect(later.player.usOutOfStatus).toBeUndefined();
-    expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 2, 2029');
+    expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 1, 2029');
     later.advanceTo(Date.UTC(2029, 8, 2, 16));
     expect(opt).toMatchObject({ status: 'cancelled', idleDays: 91, endedAt: Date.UTC(2029, 8, 2, 4) });
     expect(later.player.usOutOfStatus).toBe(Date.UTC(2029, 8, 2, 4));

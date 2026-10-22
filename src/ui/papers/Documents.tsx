@@ -270,6 +270,9 @@ export function WorkPane() {
   const idleEnds = optRunsOut(person);
   const statusEnds = usStatusEnds(person);
   const status = statusEnds !== undefined && idleEnds !== undefined ? Math.min(statusEnds, idleEnds) : statusEnds;
+  // Said as the last day in status: an end at a midnight is the end of the day before (`status - 1`), as the OPT Ended
+  // notice and the guide say it. From brief 22 (2026-10-22) OPT's days without work end it at a midnight, and until this
+  // was found on the built app the same day, Papers said "Ends September 2, 2029" of a status that ended with 1 September.
   const optNo = optRefusal(sim, person);
   // The window to apply by their own program's end, as `optRefusal` reads it, said first (from 2026-10-20, brief 16): for
   // a student on an F-1, not one who left without the degree, whom OPT refuses whatever the day.
@@ -288,7 +291,7 @@ export function WorkPane() {
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? `You can apply for OPT from ${opt.windowBeforeDays} days before it to ${opt.windowAfterDays} days after` : 'For a student on an F-1'} />
-            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? `Since ${formatDate(person.usOutOfStatus, sim.zone)}. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you` : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out. There’s no grace period after it, and staying past it puts you out of status` : 'Including the grace period after your permission ends. Staying past it puts you out of status') : end ? 'While you study, or while an application is being decided' : 'For a student on an F-1'} />
+            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status - 1, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? `Since ${formatDate(person.usOutOfStatus, sim.zone)}. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you` : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out. There’s no grace period after it, and staying past it puts you out of status` : 'Including the grace period after your permission ends. Staying past it puts you out of status') : end ? 'While you study, or while an application is being decided' : 'For a student on an F-1'} />
           </div>
           <DocumentList kinds={['permit', 'visa']} none="You don’t hold a work permit or a visa." />
         </div>

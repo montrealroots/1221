@@ -1,0 +1,541 @@
+{
+ "B22-A1": {
+  "claim": "the work-day guard removed: a day is worked whatever permission says",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 3 passed (4)",
+   "Tests  2 failed | 65 passed (67)"
+  ],
+  "failing": [
+   "× A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows 145ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, during: a two-day shoot whose second day falls after OPT’s end date (TEST SETUP: the end moved to the first day’s evening) works the first day, refuses the second at its hour, and pays the one day worked; no screen credit for a shoot not finished 275ms"
+  ]
+ },
+ "B22-A1b": {
+  "claim": "the work-day guard counts OPT no further before it reads permission",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "survived",
+  "summary": [
+   "Test Files  4 passed (4)",
+   "Tests  67 passed (67)"
+  ],
+  "failing": []
+ },
+ "B22-A1c": {
+  "claim": "permission ending says nothing to the work booked: no release at the end",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 3 passed (4)",
+   "Tests  3 failed | 64 passed (67)"
+  ],
+  "failing": [
+   "× A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 273ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, before: a run booked to begin on 5 January is warned of at acceptance, and released at the end of 30 December, the 91st day without work, the days waiting for it counted against OPT; nothing of it worked, paid or credited, and the status ends with it 470ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > A11: after the breach, no route reopens the released run; a green card (TEST SETUP: held from 1 February 2027, as an older save could hold one) lets casting’s next offer be taken and worked, and the run stays released 440ms"
+  ]
+ },
+ "B22-A2": {
+  "claim": "a booking counted as employment: a job not yet begun employs from the start",
+  "file": "src/engine/systems/permission.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 2 passed (4)",
+   "Tests  7 failed | 60 passed (67)"
+  ],
+  "failing": [
+   "× A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 456ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, before: a run booked to begin on 5 January is warned of at acceptance, and released at the end of 30 December, the 91st day without work, the days waiting for it counted against OPT; nothing of it worked, paid or credited, and the status ends with it 406ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, authorized work and after: a run beginning on 29 December, the 90th day, is worked whole, every day of its ten weeks counted as a day with work; OPT ends after it, at the end of 9 March, and the run’s last week, paid on the 11th, is still paid; its credit stands 485ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > A12: one long advance, six-hour steps and a save opened the day before the end come to the same end, the same released work, the same notices and, saved and opened against straight, the same state to the byte 492ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > A11: after the breach, no route reopens the released run; a green card (TEST SETUP: held from 1 February 2027, as an older save could hold one) lets casting’s next offer be taken and worked, and the run stays released 341ms",
+   "× A4: what counts as a day with work, from the record > a booking isn’t employment; a job begun is, to its last day, its days off included; called off, to that moment; a day missed inside it still is; under 20 hours a week it never is 3ms",
+   "× B1 and B3: after the degree, OPT opens and closes outside work, through the clock > PLAYER JOURNEY: refused before OPT, asked at the program’s end, approved on its thirtieth federal workday and open from then, closed again by its days without work with her status, once each across a save and a load; the citizen takes every offer and her papers never move 959ms"
+  ]
+ },
+ "B22-A3": {
+  "claim": "the boundary a day late: OPT ends after the 92nd day without work, not the 91st",
+  "file": "src/engine/systems/permission.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 2 passed (4)",
+   "Tests  5 failed | 62 passed (67)"
+  ],
+  "failing": [
+   "× A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 333ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, before: a run booked to begin on 5 January is warned of at acceptance, and released at the end of 30 December, the 91st day without work, the days waiting for it counted against OPT; nothing of it worked, paid or credited, and the status ends with it 561ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, authorized work and after: a run beginning on 29 December, the 90th day, is worked whole, every day of its ten weeks counted as a day with work; OPT ends after it, at the end of 9 March, and the run’s last week, paid on the 11th, is still paid; its credit stands 734ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > A12: one long advance, six-hour steps and a save opened the day before the end come to the same end, the same released work, the same notices and, saved and opened against straight, the same state to the byte 680ms",
+   "× B1 and B3: after the degree, OPT opens and closes outside work, through the clock > PLAYER JOURNEY: refused before OPT, asked at the program’s end, approved on its thirtieth federal workday and open from then, closed again by its days without work with her status, once each across a save and a load; the citizen takes every offer and her papers never move 1074ms"
+  ]
+ },
+ "B22-A4": {
+  "claim": "a released engagement keeps the pay of weeks it never worked",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 2 passed (4)",
+   "Tests  4 failed | 63 passed (67)"
+  ],
+  "failing": [
+   "× A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 358ms",
+   "× A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows 112ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, before: a run booked to begin on 5 January is warned of at acceptance, and released at the end of 30 December, the 91st day without work, the days waiting for it counted against OPT; nothing of it worked, paid or credited, and the status ends with it 475ms",
+   "× what missing a step costs > PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played 520ms"
+  ]
+ },
+ "B22-A5": {
+  "claim": "a released engagement drops the pay of the days it worked (the defect payDue had)",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 2 passed (4)",
+   "Tests  4 failed | 63 passed (67)"
+  ],
+  "failing": [
+   "× A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows 105ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, during: a two-day shoot whose second day falls after OPT’s end date (TEST SETUP: the end moved to the first day’s evening) works the first day, refuses the second at its hour, and pays the one day worked; no screen credit for a shoot not finished 228ms",
+   "× what missing a step costs > PLAYER JOURNEY: a shoot day slept through replaces the actor, the days never worked come off the promised pay, and there’s no credit 1114ms",
+   "× what missing a step costs > PLAYER JOURNEY: a performance missed brings the company manager’s written warning and the understudy on; a second and the company replaces the actor, who keeps the credit for the nights played 567ms"
+  ]
+ },
+ "B22-A6": {
+  "claim": "a day counted twice: each settling counts the last day counted again",
+  "file": "src/engine/systems/permission.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  3 failed | 1 passed (4)",
+   "Tests  8 failed | 59 passed (67)"
+  ],
+  "failing": [
+   "× A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 375ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, before: a run booked to begin on 5 January is warned of at acceptance, and released at the end of 30 December, the 91st day without work, the days waiting for it counted against OPT; nothing of it worked, paid or credited, and the status ends with it 258ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, authorized work and after: a run beginning on 29 December, the 90th day, is worked whole, every day of its ten weeks counted as a day with work; OPT ends after it, at the end of 9 March, and the run’s last week, paid on the 11th, is still paid; its credit stands 254ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, during: a two-day shoot whose second day falls after OPT’s end date (TEST SETUP: the end moved to the first day’s evening) works the first day, refuses the second at its hour, and pays the one day worked; no screen credit for a shoot not finished 247ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > A12: one long advance, six-hour steps and a save opened the day before the end come to the same end, the same released work, the same notices and, saved and opened against straight, the same state to the byte 221ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > A11: after the breach, no route reopens the released run; a green card (TEST SETUP: held from 1 February 2027, as an older save could hold one) lets casting’s next offer be taken and worked, and the run stays released 223ms",
+   "× permission to work, for each engagement’s dates > PLAYER JOURNEY: OPT counts an engagement worked as days with work, its first day to its last, so a run of twelve days over thirteen moves its end thirteen days later than none, and once its days without work run out a later engagement is refused, said where it bites 688ms",
+   "× B1 and B3: after the degree, OPT opens and closes outside work, through the clock > PLAYER JOURNEY: refused before OPT, asked at the program’s end, approved on its thirtieth federal workday and open from then, closed again by its days without work with her status, once each across a save and a load; the citizen takes every offer and her papers never move 1039ms"
+  ]
+ },
+ "B22-A7": {
+  "claim": "acceptance reads a day's start alone, as before brief 22",
+  "file": "src/engine/systems/permission.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ],
+  "result": "survived",
+  "summary": [
+   "Test Files  4 passed (4)",
+   "Tests  67 passed (67)"
+  ],
+  "failing": []
+ },
+ "B22-W1": {
+  "claim": "the first-listed half back, for tags read without weights",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 2 passed (3)",
+   "Tests  1 failed | 81 passed (82)"
+  ],
+  "failing": [
+   "× W2 and W5: one resolved set, normalized, bounded and free of order > W1: the same tags in every order, and the same weights written in every order, resolve to the same set to the bit; a tag repeated adds nothing 9ms"
+  ]
+ },
+ "B22-W1b": {
+  "claim": "a play's stated set ignored: every play read from its tags",
+  "file": "src/engine/content/genre-weights.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  3 failed (3)",
+   "Tests  22 failed | 60 passed (82)"
+  ],
+  "failing": [
+   "× T3: exact, partial and none, together and bounded > several genres of a work known unevenly: Macbeth (tragedy 3, historical drama 1, supernatural 1) with tragedy at 90, drama at 60 and horror at 40 6ms",
+   "× the measure > weighs each material’s genres as the material states them (brief 22; the first listed half until then), a broad genre beside its own kind counted as the kind 11ms",
+   "× the measure > gives each shape its share: low, medium, the most, one mastered and one weak, all mastered, and nothing for an unrelated genre at its most 38ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, Riders To The Sea (single): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 101ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, Measure For Measure (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 76ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, Blood Wedding (uneven two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 88ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, Macbeth (three): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 47ms",
+   "× the paths, the same actor and draw, only the genres changed > school casting, A Midsummer Night’s Dream (overlapping): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 50ms"
+  ]
+ },
+ "B22-W2": {
+  "claim": "a class scene's own set ignored",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 2 passed (3)",
+   "Tests  3 failed | 79 passed (82)"
+  ],
+  "failing": [
+   "× W2 and W3: the levels, the most precise first > different scenes within one play: Julius Caesar’s Forum, orchard and tent each ask their own, a political drama specialist reading the Forum highest; a scene without its own reads its play’s; a scene of a play with no kinds its filed genre 12ms",
+   "× W6: every reader reads the resolved set > a class scene’s preparation goes faster by the scene’s own: the Forum faster for a political drama specialist than the orchard 1ms",
+   "× W10: the explanations say it in words > the Actor Showcase’s faculty say what a scene asks: a scene of one genre names it, one asking several says which most 2ms"
+  ]
+ },
+ "B22-W2b": {
+  "claim": "a role's own set ignored",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 1 passed (3)",
+   "Tests  14 failed | 68 passed (82)"
+  ],
+  "failing": [
+   "× the measure > weighs each material’s genres as the material states them (brief 22; the first listed half until then), a broad genre beside its own kind counted as the kind 14ms",
+   "× the measure > gives each shape its share: low, medium, the most, one mastered and one weak, all mastered, and nothing for an unrelated genre at its most 6ms",
+   "× the paths, the same actor and draw, only the genres changed > audition in person, Static On Route 9, its role asking horror and comedy evenly (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 19ms",
+   "× the paths, the same actor and draw, only the genres changed > audition in person, Static On Route 9, its role asking horror, comedy and romance (three): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 21ms",
+   "× the paths, the same actor and draw, only the genres changed > self-tape, Static On Route 9, its role asking horror and comedy evenly (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 13ms",
+   "× the paths, the same actor and draw, only the genres changed > self-tape, Static On Route 9, its role asking horror, comedy and romance (three): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 29ms",
+   "× the paths, the same actor and draw, only the genres changed > callback, Static On Route 9, its role asking horror and comedy evenly (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 15ms",
+   "× the paths, the same actor and draw, only the genres changed > callback, Static On Route 9, its role asking horror, comedy and romance (three): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 14ms"
+  ]
+ },
+ "B22-W2c": {
+  "claim": "a part's own set ignored: every part reads its play's",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 2 passed (3)",
+   "Tests  4 failed | 78 passed (82)"
+  ],
+  "failing": [
+   "× W2 and W3: the levels, the most precise first > a part’s own against its play’s: Bottom’s farce, the fairies’ fairy tale, the lovers’ inherited romantic comedy; a part with invalid weights reads the play 10ms",
+   "× W6: every reader reads the resolved set > a night on stage reads the part’s: a farce specialist as Bottom has the genre part complete, as Hermia none 12ms",
+   "× W6: every reader reads the resolved set > a call kept is practice in the part’s genres only: Bottom’s in farce, Hermia’s shared 3 to 2 8ms",
+   "× W6: every reader reads the resolved set > a brief reads its one genre, and the Profile suggests, of what the next part asks, where study helps most 6ms"
+  ]
+ },
+ "B22-W3": {
+  "claim": "a repeat counted: a tag listed twice takes two shares",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 1 passed (3)",
+   "Tests  3 failed | 79 passed (82)"
+  ],
+  "failing": [
+   "× W2 and W5: one resolved set, normalized, bounded and free of order > W1: the same tags in every order, and the same weights written in every order, resolve to the same set to the bit; a tag repeated adds nothing 15ms",
+   "× the guide says the rule the game reads > Knowing The Genre: the order genres are named in changes nothing, and a genre named beside its own kind counts as that kind 4ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at 0.4 (half until brief 22’s measurement) 12ms"
+  ]
+ },
+ "B22-W4": {
+  "claim": "weights not normalized: stated weights read as written",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  3 failed (3)",
+   "Tests  33 failed | 49 passed (82)"
+  ],
+  "failing": [
+   "× T3: exact, partial and none, together and bounded > several genres of a work known unevenly: Macbeth (tragedy 3, historical drama 1, supernatural 1) with tragedy at 90, drama at 60 and horror at 40 5ms",
+   "× T3: exact, partial and none, together and bounded > keeps every reading between 0 and 1, never lowers it for more of any genre, and each point of the genre’s own always adds, over 3,000 seeded records 13ms",
+   "× the measure > weighs each material’s genres as the material states them (brief 22; the first listed half until then), a broad genre beside its own kind counted as the kind 16ms",
+   "× the measure > gives each shape its share: low, medium, the most, one mastered and one weak, all mastered, and nothing for an unrelated genre at its most 8ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at 0.4 (half until brief 22’s measurement) 2ms",
+   "× the measure > never adds for more tags: every list in the game weighs to one, knowing every genre at 100 comes to one, and an unknown tag added never raises it 4ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Measure For Measure (even two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 62ms",
+   "× the paths, the same actor and draw, only the genres changed > school night, Blood Wedding (uneven two): the genre part and the choices move by the rule, the whole never falls as knowledge rises, and an unrelated genre moves nothing 54ms"
+  ]
+ },
+ "B22-W5": {
+  "claim": "invalid weights accepted",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 2 passed (3)",
+   "Tests  1 failed | 81 passed (82)"
+  ],
+  "failing": [
+   "× W2 and W5: one resolved set, normalized, bounded and free of order > W2: weights missing read the tags evenly; invalid weights are skipped, said, and the level’s tags or the next level read 13ms"
+  ]
+ },
+ "B22-W6": {
+  "claim": "absorption removed: a broad genre beside its own kind counted again",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  3 failed (3)",
+   "Tests  4 failed | 78 passed (82)"
+  ],
+  "failing": [
+   "× T2: familiarity apart from progression > practice goes only to what the work asks: a domestic drama’s session to domestic drama, none to drama, however well drama is known 9ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at 0.4 (half until brief 22’s measurement) 7ms",
+   "× W2 and W5: one resolved set, normalized, bounded and free of order > a broad genre beside its own kind is one demand: folded into the kind, at any depth, never counted twice 15ms",
+   "× the guide says the rule the game reads > Knowing The Genre: the order genres are named in changes nothing, and a genre named beside its own kind counts as that kind 1ms"
+  ]
+ },
+ "B22-T1": {
+  "claim": "siblings related: two kinds of one broad genre count toward each other",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 1 passed (3)",
+   "Tests  8 failed | 74 passed (82)"
+  ],
+  "failing": [
+   "× T1: one direct link, and nothing else > reads all 149 by 149: itself 1, a direct kind toward its broad genre 0.65, a broad genre toward its direct kind 0.4, every other pair 0 11ms",
+   "× T1: one direct link, and nothing else > gives nothing between siblings: two kinds of one broad genre, romantic comedy and farce of comedy, domestic and political drama of drama 2ms",
+   "× T3: nothing irrelevant moves > an unrelated genre at 100 leaves a taped brief of another genre exactly as knowing nothing does, and a related one moves it less than the genre itself 9ms",
+   "× W2 and W3: the levels, the most precise first > different scenes within one play: Julius Caesar’s Forum, orchard and tent each ask their own, a political drama specialist reading the Forum highest; a scene without its own reads its play’s; a scene of a play with no kinds its filed genre 12ms",
+   "× W6: every reader reads the resolved set > a night on stage reads the part’s: a farce specialist as Bottom has the genre part complete, as Hermia none 12ms",
+   "× W6: every reader reads the resolved set > School casting reads the play’s, the parts being dealt after it: knowing farce alone fits A Midsummer Night’s Dream as knowing nothing does 5ms",
+   "× W6: every reader reads the resolved set > a class scene’s preparation goes faster by the scene’s own: the Forum faster for a political drama specialist than the orchard 1ms",
+   "× the guide says the rule the game reads > Related Genres: a kind toward its broad genre at 65%, a broad genre toward its kind at 40%, one step only, siblings nothing, the genre itself always helping, anything else nothing; each sentence what the game does 2ms"
+  ]
+ },
+ "B22-T2": {
+  "claim": "chains restored: a kind counts toward every broad genre above it",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  2 failed | 1 passed (3)",
+   "Tests  4 failed | 78 passed (82)"
+  ],
+  "failing": [
+   "× T1: one direct link, and nothing else > reads all 149 by 149: itself 1, a direct kind toward its broad genre 0.65, a broad genre toward its direct kind 0.4, every other pair 0 38ms",
+   "× T1: one direct link, and nothing else > gives nothing two links away: the twelve kinds of a broad genre that is itself a kind (Nordic noir of crime, crime of drama) count nothing toward the farther one, which brief 21 counted at 0.75 1ms",
+   "× T3: exact, partial and none, together and bounded > never amplifies a chain: drama known gives a Nordic noir nothing, crime known 0.4 of itself, and both together crime’s 0.4 1ms",
+   "× the guide says the rule the game reads > Related Genres: a kind toward its broad genre at 65%, a broad genre toward its kind at 40%, one step only, siblings nothing, the genre itself always helping, anything else nothing; each sentence what the game does 11ms"
+  ]
+ },
+ "B22-T3": {
+  "claim": "transfer writing practice: a related genre that helps is credited practice of its own",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/b21-journeys.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  4 failed (4)",
+   "Tests  5 failed | 79 passed (84)"
+  ],
+  "failing": [
+   "× T2: familiarity apart from progression > practice goes only to what the work asks: a domestic drama’s session to domestic drama, none to drama, however well drama is known 10ms",
+   "× a professional rehearsal day, played > PLAYER JOURNEY: A House On Calder Street’s rehearsal days, each worked, give domestic drama a session’s practice, drama listed beside it absorbed into it, and no other genre moves 442ms",
+   "× W6: every reader reads the resolved set > a call kept is practice in the part’s genres only: Bottom’s in farce, Hermia’s shared 3 to 2 18ms",
+   "× W6: every reader reads the resolved set > a professional rehearsal day learns the role’s lines faster by the role’s, and practice on a work day goes to the role’s genres 6ms",
+   "× J2: continuous play and play saved and reopened end the same > PLAYER JOURNEY: a student’s first year to April at Chase, played straight through and reopened on the 1st of each month, ends with the same genres, balances, postings, notices and card 24594ms"
+  ]
+ },
+ "B22-T3b": {
+  "claim": "reading writes: a need met by a related genre is stored as known",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 2 passed (3)",
+   "Tests  1 failed | 81 passed (82)"
+  ],
+  "failing": [
+   "× T2: familiarity apart from progression > reading writes nothing: the record is the same after every reading 8ms"
+  ]
+ },
+ "B22-T4": {
+  "claim": "full transfer: a related genre counts as the genre itself",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  3 failed (3)",
+   "Tests  14 failed | 68 passed (82)"
+  ],
+  "failing": [
+   "× T1: one direct link, and nothing else > reads all 149 by 149: itself 1, a direct kind toward its broad genre 0.65, a broad genre toward its direct kind 0.4, every other pair 0 14ms",
+   "× T1: one direct link, and nothing else > gives nothing two links away: the twelve kinds of a broad genre that is itself a kind (Nordic noir of crime, crime of drama) count nothing toward the farther one, which brief 21 counted at 0.75 2ms",
+   "× T3: exact, partial and none, together and bounded > reads a domestic drama: itself at 90 is 0.9; drama, its broad genre, at 90 is 0.36; a kind of nothing, Western, at 100 is 0; both is 0.936, more than either and never their sum 1ms",
+   "× T3: exact, partial and none, together and bounded > a kind toward its broad genre at 0.65 and a broad genre toward its kind at 0.4: Psychological Horror known meets Horror, Horror known meets Psychological Horror 1ms",
+   "× T3: exact, partial and none, together and bounded > several genres of a work known unevenly: Macbeth (tragedy 3, historical drama 1, supernatural 1) with tragedy at 90, drama at 60 and horror at 40 3ms",
+   "× T3: exact, partial and none, together and bounded > never amplifies a chain: drama known gives a Nordic noir nothing, crime known 0.4 of itself, and both together crime’s 0.4 1ms",
+   "× T3: exact, partial and none, together and bounded > keeps every reading between 0 and 1, never lowers it for more of any genre, and each point of the genre’s own always adds, over 3,000 seeded records 48ms",
+   "× T3: exact, partial and none, together and bounded > keeps specialist work worth it: at 90, the genre itself 0.9, its kind 0.585, its broad genre 0.36, an unrelated genre 0; and from a broad genre known at 90, the first study of the kind adds, where brief 21’s better-of-the-two added nothing until past its broad genre’s credit 3ms"
+  ]
+ },
+ "B22-T5": {
+  "claim": "transfer summed: every related genre known adds, not the best once",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed | 2 passed (3)",
+   "Tests  2 failed | 80 passed (82)"
+  ],
+  "failing": [
+   "× T3: exact, partial and none, together and bounded > a kind toward its broad genre at 0.65 and a broad genre toward its kind at 0.4: Psychological Horror known meets Horror, Horror known meets Psychological Horror 6ms",
+   "× T3: exact, partial and none, together and bounded > keeps every reading between 0 and 1, never lowers it for more of any genre, and each point of the genre’s own always adds, over 3,000 seeded records 24ms"
+  ]
+ },
+ "B22-T6": {
+  "claim": "brief 21's better of the two: the genre's own and the related credit not counted together",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  3 failed (3)",
+   "Tests  5 failed | 77 passed (82)"
+  ],
+  "failing": [
+   "× T3: exact, partial and none, together and bounded > reads a domestic drama: itself at 90 is 0.9; drama, its broad genre, at 90 is 0.36; a kind of nothing, Western, at 100 is 0; both is 0.936, more than either and never their sum 6ms",
+   "× T3: exact, partial and none, together and bounded > keeps every reading between 0 and 1, never lowers it for more of any genre, and each point of the genre’s own always adds, over 3,000 seeded records 3ms",
+   "× T3: exact, partial and none, together and bounded > keeps specialist work worth it: at 90, the genre itself 0.9, its kind 0.585, its broad genre 0.36, an unrelated genre 0; and from a broad genre known at 90, the first study of the kind adds, where brief 21’s better-of-the-two added nothing until past its broad genre’s credit 1ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at 0.4 (half until brief 22’s measurement) 7ms",
+   "× the guide says the rule the game reads > Related Genres: a kind toward its broad genre at 65%, a broad genre toward its kind at 40%, one step only, siblings nothing, the genre itself always helping, anything else nothing; each sentence what the game does 8ms"
+  ]
+ },
+ "B22-K1": {
+  "claim": "brief 21's coefficients back: 0.75 and 0.5",
+  "file": "src/engine/content/engagement.ts",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/b22-comparisons.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  4 failed (4)",
+   "Tests  11 failed | 73 passed (84)"
+  ],
+  "failing": [
+   "× T3: exact, partial and none, together and bounded > reads a domestic drama: itself at 90 is 0.9; drama, its broad genre, at 90 is 0.36; a kind of nothing, Western, at 100 is 0; both is 0.936, more than either and never their sum 9ms",
+   "× T3: exact, partial and none, together and bounded > a kind toward its broad genre at 0.65 and a broad genre toward its kind at 0.4: Psychological Horror known meets Horror, Horror known meets Psychological Horror 1ms",
+   "× T3: exact, partial and none, together and bounded > several genres of a work known unevenly: Macbeth (tragedy 3, historical drama 1, supernatural 1) with tragedy at 90, drama at 60 and horror at 40 4ms",
+   "× T3: exact, partial and none, together and bounded > keeps specialist work worth it: at 90, the genre itself 0.9, its kind 0.585, its broad genre 0.36, an unrelated genre 0; and from a broad genre known at 90, the first study of the kind adds, where brief 21’s better-of-the-two added nothing until past its broad genre’s credit 1ms",
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at 0.4 (half until brief 22’s measurement) 11ms",
+   "× T4: the coefficients measured on the fixed seeds > keeps 0.65 and 0.40, which hold K1 and K2 on every path: nothing and an unrelated genre alike, then the broad genre, a kind and the genre itself in order; a kind at most 0.85 of the genre’s own gain, a broad genre at most 0.65 11ms",
+   "× T4: the coefficients measured on the fixed seeds > the measurement that replaced brief 21’s 0.75 and 0.5 (TEST SETUP: set back by hand): a kind over 0.85 of the genre’s own on a taped brief, a School night and a self-tape, a broad genre over 0.65 on a taped brief and a School night 245ms",
+   "× W2 and W5: one resolved set, normalized, bounded and free of order > a broad genre beside its own kind is one demand: folded into the kind, at any depth, never counted twice 11ms"
+  ]
+ }
+}

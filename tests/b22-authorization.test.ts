@@ -8,9 +8,10 @@
  * 91st; work booked past the end is released then, and a work day reads permission for the whole day before it
  * happens. Pay for days worked stays owed.
  *
- * PLAYER JOURNEYS: b20-4's own life (British, at Yale on an F-1, then OPT), opened from two saves made on brief 22's
- * starting commit (`tests/fixtures/b22/`): 1 September 2029, before its OPT ended, and 1 October 2029, after the old
- * count had ended it in the middle of The Winter Ledger. And new graduates, played by the clock and the commands the
+ * PLAYER JOURNEYS: b20-4's own life (British, at Yale on an F-1, then OPT), opened from three saves made on brief 22's
+ * starting commit (`tests/fixtures/b22/`): 1 September 2029, before its OPT ended; 4 September 2029 at 7 AM, the run's
+ * first day, its weekly count three days behind; and 1 October 2029, after the old count had ended it in the middle of
+ * The Winter Ledger. And new graduates, played by the clock and the commands the
  * screens send.
  *
  * TEST SETUP, said where it's done: the body kept fed, rested and awake as the clock moves (`played`); a graduate made
@@ -154,6 +155,28 @@ describe('A1: b20-4, the life that worked 47 days after its OPT ended, opened fr
   }, 120_000);
 });
 
+describe('A12, an older save: b20-4 opened from its save of 4 September 2029 at 7 AM, written by the build before brief 22, its weekly count three days behind', () => {
+  it('PLAYER JOURNEY: the run’s first day, at 10 AM before any midnight, counts OPT’s days first, finds it ended at the end of 1 September, and releases the run then; not one day of it worked', () => {
+    const sim = opened('b20-4-opt-2029-09-04');
+    const opt = optOf(sim);
+    // As the old weekly count left it on the 4th: 88 days without work to 29 August, its next week to end on the 6th.
+    expect([opt.status, opt.idleDays, opt.workedDays, opt.countedTo]).toEqual(['valid', 88, 3, undefined]);
+    const run = engagementFor(sim, 'winter-ledger-hester');
+    expect([run.status, worked(run).length]).toEqual(['booked', 0]);
+    const first = run.days[0]!;
+    expect([formatDate(first.from, NY), first.from - sim.now]).toEqual(['September 4, 2029', 3 * MS_HOUR]);
+
+    played(sim, at(2029, 9, 6, 12));
+    // The work day counted 30 and 31 August and 1 September before it read permission: the end where the daily count puts
+    // it, three days back, said and released at the work day's own hour. Until the guard counted first (it read
+    // permission as the old count left it), this day was worked and the run released at the next midnight.
+    expect([opt.status, opt.idleDays, opt.endedAt]).toEqual(['cancelled', 91, midnight(2029, 9, 2)]);
+    expect([run.status, run.finishedAt, worked(run).length, run.creditId]).toEqual(['canceled', first.from, 0, undefined]);
+    expect(titled(sim, 'Released As Hester Vane').map((n) => n.at)).toEqual([first.from]);
+    for (const e of sim.player.pro!.engagements) expect(worked(e).filter((l) => l.at >= opt.endedAt!)).toEqual([]);
+  }, 120_000);
+});
+
 describe('A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT', () => {
   it('PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows', () => {
     const sim = opened('b20-4-opt-ended-2029-10-01');
@@ -251,6 +274,27 @@ describe('A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 202
     expect([shoot.status, shoot.finishedAt, shoot.creditId]).toEqual(['canceled', two!.from, undefined]);
     expect(shoot.pay.map((p) => [p.promised, Boolean(p.received)])).toEqual([[Math.round(each / 2), true]]);
     expect(titled(sim, 'Released As Robin').map((n) => n.body)).toEqual(['Your OPT ran out on December 7, 2026, and without it you can’t work in the United States. So Ferrous Pictures can’t keep you on as Robin in Last Bus To Eastview, and has released you. The one day you worked is still paid on its payday, and the rest are called off. There’s no credit for it.']);
+  }, 180_000);
+
+  it('PLAYER JOURNEY, inside a day: OPT’s end within the first shoot day’s hours (TEST SETUP: moved there; approval sets the end at the hour OPT began, a year on, Commencement’s 2 PM or the decision’s own hour) refuses the offer while it stands, and once taken releases the shoot at that day’s start, not an hour of it worked or paid', () => {
+    const sim = onOpt('b22-auth-midday');
+    played(sim, at(2026, 11, 2, 12));
+    const o = offered(sim, 'eastview', at(2026, 11, 2, 12));
+    const [one] = datesOf(o);
+    const card = optOf(sim);
+    const was = card.expiresAt;
+    const end = one!.from + Math.round((one!.to - one!.from) / 2 / MS_HOUR) * MS_HOUR;
+    card.expiresAt = end;
+    // Permission at the day's start and none at its end: the day is read whole, at acceptance as at the work day.
+    expect([one!.from < end, end < one!.to, workAuthorizedFor(sim.player, one!)]).toEqual([true, true, false]);
+    expect(accept(sim, o).ok).toBe(false);
+    card.expiresAt = was;
+    expect(accept(sim, o).ok).toBe(true);
+    const shoot = engagementFor(sim, 'eastview');
+    card.expiresAt = end;
+    played(sim, at(2026, 12, 20, 12));
+    expect([worked(shoot).length, shoot.status, shoot.finishedAt, shoot.pay.length, shoot.creditId]).toEqual([0, 'canceled', one!.from, 0, undefined]);
+    expect(titled(sim, 'Released As Robin')).toHaveLength(1);
   }, 180_000);
 
   it('A12: one long advance, six-hour steps and a save opened the day before the end come to the same end, the same released work, the same notices and, saved and opened against straight, the same state to the byte', () => {

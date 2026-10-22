@@ -162,7 +162,8 @@ describe('the Work tab', () => {
     const shown = words(renderToStaticMarkup(createElement(PapersWork)));
     const opt = documentsOf(sim.player).find((d) => d.name.includes('OPT'))!;
     expect(shown).toContain(`So far your OPT has counted ${opt.idleDays} days without work and 13 days with work.`);
-    expect(shown).toContain(`Your US Status Ends ${formatDate(idle + 13 * MS_DAY, 'America/New_York')} When your OPT’s 90 days without work run out.`);
+    // Said as the last day in status, the day before the midnight that ends it (from brief 22, found on the built app).
+    expect(shown).toContain(`Your US Status Ends ${formatDate(idle + 13 * MS_DAY - 1, 'America/New_York')} When your OPT’s 90 days without work run out.`);
     expect(shown).toContain('On OPT, this is the list of your work and its dates that SEVP’s guidance asks you to keep.');
   }, 90_000);
 

@@ -1,0 +1,325 @@
+[
+ {
+  "id": "B22-A1",
+  "claim": "the work-day guard removed: a day is worked whatever permission says",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "    if (!workAuthorizedFor(person, e.days[i]!)) {\n      release(s, person, e, t, item.at);",
+  "new": "    if (false && !workAuthorizedFor(person, e.days[i]!)) {\n      release(s, person, e, t, item.at);",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A1b",
+  "claim": "the work-day guard counts OPT no further before it reads permission",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "    settleOpt(s, person, item.at);\n    if (!live(e)) return;",
+  "new": "    if (!live(e)) return;",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A1c",
+  "claim": "permission ending says nothing to the work booked: no release at the end",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "      release(s, person!, e, projectById(e.projectId)!, at);",
+  "new": "      void at;",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A2",
+  "claim": "a booking counted as employment: a job not yet begun employs from the start",
+  "file": "src/engine/systems/permission.ts",
+  "old": "  if (!worked.length) return undefined;",
+  "new": "  if (!worked.length) return { from: 0, to: last };",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A3",
+  "claim": "the boundary a day late: OPT ends after the 92nd day without work, not the 91st",
+  "file": "src/engine/systems/permission.ts",
+  "old": "    if (doc.idleDays! > WORK_RULES.opt.unemploymentDays) {",
+  "new": "    if (doc.idleDays! > WORK_RULES.opt.unemploymentDays + 1) {",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A4",
+  "claim": "a released engagement keeps the pay of weeks it never worked",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "    if (!done) return false;",
+  "new": "    if (!done) return true;",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A5",
+  "claim": "a released engagement drops the pay of the days it worked (the defect payDue had)",
+  "file": "src/engine/systems/propay.ts",
+  "old": "  if (p.received || p.inTrust || p.deferred) return;",
+  "new": "  if (p.received || p.inTrust || p.deferred || e.status === 'canceled') return;",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A6",
+  "claim": "a day counted twice: each settling counts the last day counted again",
+  "file": "src/engine/systems/permission.ts",
+  "old": "  let day = Math.max(countedFrom(doc), startOfDay(doc.issuedAt, OPT_ZONE));\n  for (let end",
+  "new": "  let day = Math.max(addDays(countedFrom(doc), -1, OPT_ZONE), startOfDay(doc.issuedAt, OPT_ZONE));\n  for (let end",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-A7",
+  "claim": "acceptance reads a day's start alone, as before brief 22",
+  "file": "src/engine/systems/permission.ts",
+  "old": "  return usWorkAuthorized(person, day.from) && usWorkAuthorized(person, day.to - 1);",
+  "new": "  return usWorkAuthorized(person, day.from);",
+  "tests": [
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W1",
+  "claim": "the first-listed half back, for tags read without weights",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "    if (tags.length) return folded(tags.map((g) => [g, 1]), source.level, 'even', skipped);",
+  "new": "    if (tags.length) return folded(tags.map((g, i) => [g, tags.length > 1 && i === 0 ? tags.length - 1 : 1]), source.level, 'even', skipped);",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W1b",
+  "claim": "a play's stated set ignored: every play read from its tags",
+  "file": "src/engine/content/genre-weights.ts",
+  "old": "export function playGenresOf(title: string | undefined): PlayGenres | undefined {\n  if (!title) return undefined;",
+  "new": "export function playGenresOf(title: string | undefined): PlayGenres | undefined {\n  if (title || !title) return undefined;",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W2",
+  "claim": "a class scene's own set ignored",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "resolveGenres({ level: 'scene', weights: SCENE_GENRES[scene.id]?.weights }, ",
+  "new": "resolveGenres(undefined, ",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W2b",
+  "claim": "a role's own set ignored",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "resolveGenres({ level: 'role', weights: ROLE_GENRES[id]?.weights }, ",
+  "new": "resolveGenres(undefined, ",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W2c",
+  "claim": "a part's own set ignored: every part reads its play's",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  return resolveGenres(part ? { level: 'part', weights: stated?.parts?.[part]?.weights } : undefined, ",
+  "new": "  return resolveGenres(part ? { level: 'part', weights: undefined } : undefined, ",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W3",
+  "claim": "a repeat counted: a tag listed twice takes two shares",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "    const tags = [...new Set(source.tags ?? [])].filter((g) => GENRE_DEFS[g]);",
+  "new": "    const tags = [...(source.tags ?? [])].filter((g) => GENRE_DEFS[g]);",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W4",
+  "claim": "weights not normalized: stated weights read as written",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  const weight = new Map(kept.map(([g, w]) => [g, w / sum]));",
+  "new": "  const weight = new Map(kept.map(([g, w]) => [g, w + 0 * sum]));",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W5",
+  "claim": "invalid weights accepted",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "export function weightsProblem(weights: GenreWeights): string | undefined {\n  const entries",
+  "new": "export function weightsProblem(weights: GenreWeights): string | undefined {\n  if (weights) return undefined;\n  const entries",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-W6",
+  "claim": "absorption removed: a broad genre beside its own kind counted again",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  const absorbed = new Set(ids.filter((g) => kindsListed(g).length > 0));",
+  "new": "  const absorbed = new Set<string>(ids.filter(() => false));",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T1",
+  "claim": "siblings related: two kinds of one broad genre count toward each other",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  if (parentsOf(need).includes(known)) return r.parentToKind;\n  return 0;",
+  "new": "  if (parentsOf(need).includes(known)) return r.parentToKind;\n  if (parentsOf(known).some((p) => parentsOf(need).includes(p))) return r.parentToKind;\n  return 0;",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T2",
+  "claim": "chains restored: a kind counts toward every broad genre above it",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  if (parentsOf(known).includes(need)) return r.kindToParent;",
+  "new": "  if (ancestorsOf(known).has(need)) return r.kindToParent;",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T3",
+  "claim": "transfer writing practice: a related genre that helps is credited practice of its own",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "    g.practice = r2(g.practice + 100 * ENGAGEMENT.genre.practice * amount * need.weight * (1 - g.practice / 100));\n    return need.id;",
+  "new": "    g.practice = r2(g.practice + 100 * ENGAGEMENT.genre.practice * amount * need.weight * (1 - g.practice / 100));\n    for (const p of parentsOf(need.id)) { const q = (record.byGenre[p] ??= { familiarity: 0, practice: 0 }); q.practice = r2(q.practice + 1); }\n    return need.id;",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/b21-journeys.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T3b",
+  "claim": "reading writes: a need met by a related genre is stored as known",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "    const credit = 1 - (1 - own) * (1 - related);",
+  "new": "    const credit = 1 - (1 - own) * (1 - related);\n    if (related > 0) (byGenre as Record<string, { familiarity: number; practice: number }>)[n.id] ??= { familiarity: 0, practice: 0 };",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T4",
+  "claim": "full transfer: a related genre counts as the genre itself",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  const r = ENGAGEMENT.related;",
+  "new": "  const r = { kindToParent: 1, parentToKind: 1 };",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T5",
+  "claim": "transfer summed: every related genre known adds, not the best once",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "      if (c > related) { related = c; by = g; }",
+  "new": "      if (c > 0) { related = Math.min(1, related + c); by = g; }",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-T6",
+  "claim": "brief 21's better of the two: the genre's own and the related credit not counted together",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "    const credit = 1 - (1 - own) * (1 - related);",
+  "new": "    const credit = Math.max(own, related);",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B22-K1",
+  "claim": "brief 21's coefficients back: 0.75 and 0.5",
+  "file": "src/engine/content/engagement.ts",
+  "old": "  related: { kindToParent: 0.65, parentToKind: 0.4 },",
+  "new": "  related: { kindToParent: 0.75, parentToKind: 0.5 },",
+  "tests": [
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/b22-comparisons.test.ts"
+  ]
+ }
+]

@@ -577,7 +577,9 @@ describe('documents.permission', () => {
     // 2029, ended at midnight, with no grace after. Until 2026-10-13 it gave the expiry’s sixty days on, 2 August 2030,
     // which no played OPT reaches, and this test held that date.
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);
-    expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
+    // Said as its last day, 1 September (from brief 22, found on the built app): until then "Ends September 2, 2029", the
+    // midnight that ends the 1st read as the day it opens.
+    expect(drawn(later, WorkPane).text).toContain('Your US Status Ends September 1, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
 
     // Past the degree's own sixty days, 30 July 2029, she's still in status, her F-1 standing.
     later.advanceTo(Date.UTC(2029, 7, 1, 16));
