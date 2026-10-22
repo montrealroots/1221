@@ -250,7 +250,8 @@ The full gate in a clean clone, its exit read from its file:
 
 ## For The Owner
 
-- **No merge, no deployment.** The branch is pushed; `main` is untouched.
+- **Merged, not deployed.** Kept out of `main` until the owner's "Merge everything." (2026-10-22); merged then in #52,
+  as `d7239165`. Nothing is deployed: Base44 waits on the owner's word.
 - **The Genre Audit's question** (`final-runs/judge-moved.json`): brief 21's measure lets a genre's own kind count toward
   it (0.75 one way, 0.5 the other), and the audit's earlier threshold said knowing a genre transfers to no other. The
   nine pairs it now finds are each a genre and its own kind. Recommended: keep the credits and read the threshold as no
