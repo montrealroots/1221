@@ -1,0 +1,4611 @@
+{
+ "asked": "crime",
+ "seeds": [
+  "b22-proof-1",
+  "b22-proof-2",
+  "b22-proof-3",
+  "b22-proof-4",
+  "b22-proof-5",
+  "b22-proof-6",
+  "b22-proof-7",
+  "b22-proof-8"
+ ],
+ "records": {
+  "none": {},
+  "unrelated": {
+   "western": 90
+  },
+  "broad": {
+   "drama": 90
+  },
+  "kind": {
+   "police_procedural": 90
+  },
+  "exact": {
+   "crime": 90
+  }
+ },
+ "paths": [
+  "school casting",
+  "school night",
+  "taped brief",
+  "audition in person",
+  "self-tape",
+  "callback",
+  "work day",
+  "casting’s fit",
+  "rehearsal day’s lines"
+ ],
+ "kept": {
+  "kindToParent": 0.65,
+  "parentToKind": 0.4
+ },
+ "rows": [
+  {
+   "path": "school casting",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 51.9
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 51.9
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 53.8
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 55
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 56.5
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37.7,
+    "overall": 46.2
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37.7,
+    "overall": 46.2
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 42.7,
+    "overall": 47.7
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 45.8,
+    "overall": 48.6
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 50.2,
+    "overall": 49.1
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 47.1,
+    "overall": 55.3
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 47.1,
+    "overall": 55.3
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 53.4,
+    "overall": 57.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 57.3,
+    "overall": 58
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 62.8,
+    "overall": 58.5
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 39.9,
+    "overall": 46.9
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 39.9,
+    "overall": 46.9
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 45.3,
+    "overall": 49.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 48.6,
+    "overall": 49.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 53.3,
+    "overall": 50.4
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40.8,
+    "overall": 47.4
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40.8,
+    "overall": 47.4
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 46.3,
+    "overall": 49.5
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 49.7,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 54.5,
+    "overall": 51.2
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 34.3,
+    "overall": 41.9
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 34.3,
+    "overall": 41.9
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 38.9,
+    "overall": 42.7
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 41.7,
+    "overall": 43.1
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 45.7,
+    "overall": 43.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 39.9,
+    "overall": 45.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 39.9,
+    "overall": 45.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 45.3,
+    "overall": 47.9
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 48.6,
+    "overall": 49.2
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 53.3,
+    "overall": 50
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.287
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.287
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.487
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.612
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.787
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-1",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-1",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-1",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-1",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-1",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 50.3
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 50.3
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 52.2
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 53.4
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 54.7
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38.5,
+    "overall": 44.9
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38.5,
+    "overall": 44.9
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 43.6,
+    "overall": 46.4
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 46.8,
+    "overall": 47.1
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 51.3,
+    "overall": 47.6
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 47.5,
+    "overall": 55.5
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 47.5,
+    "overall": 55.5
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 53.9,
+    "overall": 57.6
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 57.8,
+    "overall": 58.2
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 63.4,
+    "overall": 58.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.6,
+    "overall": 49.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.6,
+    "overall": 49.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 49.4,
+    "overall": 50.6
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 53.1,
+    "overall": 51.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 58.2,
+    "overall": 51.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 44.4,
+    "overall": 51.1
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 44.4,
+    "overall": 51.1
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 50.3,
+    "overall": 53.1
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 54,
+    "overall": 53.6
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 59.2,
+    "overall": 54.3
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 35.2,
+    "overall": 43.9
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 35.2,
+    "overall": 43.9
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 39.9,
+    "overall": 44.6
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 42.9,
+    "overall": 45
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 47,
+    "overall": 45.6
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.6,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.6,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 49.4,
+    "overall": 52.8
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 53.1,
+    "overall": 53.4
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 58.2,
+    "overall": 54.2
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.302
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.302
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.502
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.627
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.802
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-2",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-2",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-2",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-2",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-2",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 48.6
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 48.6
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 51.4
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 51.9
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37,
+    "overall": 43.6
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37,
+    "overall": 43.6
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 42,
+    "overall": 45
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 45.1,
+    "overall": 45.5
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 49.4,
+    "overall": 46
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 45.6,
+    "overall": 52.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 45.6,
+    "overall": 52.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 51.7,
+    "overall": 54.5
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 55.5,
+    "overall": 55.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 60.8,
+    "overall": 55.9
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 34.8,
+    "overall": 44.5
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 34.8,
+    "overall": 44.5
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 39.4,
+    "overall": 46.3
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 42.3,
+    "overall": 47.4
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 46.4,
+    "overall": 48
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 36.1,
+    "overall": 45.5
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 36.1,
+    "overall": 45.5
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 40.9,
+    "overall": 47.3
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 43.9,
+    "overall": 48.5
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 48.1,
+    "overall": 49.4
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 32.4,
+    "overall": 41
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 32.4,
+    "overall": 41
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 36.8,
+    "overall": 42.7
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 39.5,
+    "overall": 43.8
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 43.2,
+    "overall": 44.9
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 34.8,
+    "overall": 43.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 34.8,
+    "overall": 43.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 39.4,
+    "overall": 45.6
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 42.3,
+    "overall": 46.8
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 46.4,
+    "overall": 48.5
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.283
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.283
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.483
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.608
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.783
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-3",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-3",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-3",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-3",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-3",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 50.2
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 50.2
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 52.1
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 53.3
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 54.3
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 36.7,
+    "overall": 44.4
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 36.7,
+    "overall": 44.4
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 41.6,
+    "overall": 46.2
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 44.7,
+    "overall": 47
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 49,
+    "overall": 47.5
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 47.1,
+    "overall": 54.2
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 47.1,
+    "overall": 54.2
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 53.4,
+    "overall": 56.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 57.3,
+    "overall": 57
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 62.8,
+    "overall": 57.6
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40,
+    "overall": 47.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40,
+    "overall": 47.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 45.3,
+    "overall": 49.8
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 48.6,
+    "overall": 50.8
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 53.3,
+    "overall": 51.5
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40.9,
+    "overall": 48.8
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40.9,
+    "overall": 48.8
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 46.3,
+    "overall": 50.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 49.7,
+    "overall": 52.2
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 54.5,
+    "overall": 52.9
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 39.3,
+    "overall": 45.3
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 39.3,
+    "overall": 45.3
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 44.5,
+    "overall": 46.5
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 47.8,
+    "overall": 47
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 52.4,
+    "overall": 47.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40,
+    "overall": 46.5
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40,
+    "overall": 46.5
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 45.3,
+    "overall": 48.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 48.6,
+    "overall": 50
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 53.3,
+    "overall": 50.8
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.285
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.285
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.485
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.61
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.785
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-4",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-4",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-4",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-4",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-4",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 50.6
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 50.6
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 52.6
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 53.8
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 54.3
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37.8,
+    "overall": 45.8
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37.8,
+    "overall": 45.8
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 42.9,
+    "overall": 47.3
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 46,
+    "overall": 48
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 50.4,
+    "overall": 48.7
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 44.7,
+    "overall": 53
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 44.7,
+    "overall": 53
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 50.6,
+    "overall": 55
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 54.4,
+    "overall": 56.2
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 59.6,
+    "overall": 56.8
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38.3,
+    "overall": 45.6
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38.3,
+    "overall": 45.6
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 43.5,
+    "overall": 46.8
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 46.6,
+    "overall": 47.3
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 51.1,
+    "overall": 47.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37.5,
+    "overall": 45.8
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 37.5,
+    "overall": 45.8
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 42.5,
+    "overall": 47.8
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 45.7,
+    "overall": 49
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 50,
+    "overall": 50
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 32.4,
+    "overall": 39.7
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 32.4,
+    "overall": 39.7
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 36.8,
+    "overall": 40.8
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 39.5,
+    "overall": 41.2
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 43.2,
+    "overall": 41.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38.3,
+    "overall": 44.6
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38.3,
+    "overall": 44.6
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 43.5,
+    "overall": 46.8
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 46.6,
+    "overall": 48.1
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 51.1,
+    "overall": 49
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.257
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.257
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.457
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.582
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.757
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-5",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-5",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-5",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-5",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-5",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 53.1
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 53.1
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 55.1
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 56.4
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 58.1
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41,
+    "overall": 49
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41,
+    "overall": 49
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 46.5,
+    "overall": 50.2
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 49.9,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 54.7,
+    "overall": 51
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 48.2,
+    "overall": 56.1
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 48.2,
+    "overall": 56.1
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 54.6,
+    "overall": 58.2
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 58.6,
+    "overall": 58.7
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 64.3,
+    "overall": 59.2
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.8,
+    "overall": 51.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.8,
+    "overall": 51.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 47.3,
+    "overall": 52.6
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 50.8,
+    "overall": 53.2
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 55.7,
+    "overall": 53.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.1,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.1,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 48.9,
+    "overall": 53.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 52.5,
+    "overall": 54.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 57.5,
+    "overall": 55.6
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.4,
+    "overall": 47.6
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.4,
+    "overall": 47.6
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 47,
+    "overall": 48.7
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 50.4,
+    "overall": 49.2
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 55.3,
+    "overall": 49.9
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.8,
+    "overall": 50.1
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.8,
+    "overall": 50.1
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 47.3,
+    "overall": 52.4
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 50.8,
+    "overall": 53.8
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 55.7,
+    "overall": 54.7
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.304
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.304
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.504
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.629
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.804
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-6",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-6",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-6",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-6",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-6",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 53.7
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 54.9
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 56.1
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40.4,
+    "overall": 46.7
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 40.4,
+    "overall": 46.7
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 45.8,
+    "overall": 47.7
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 49.2,
+    "overall": 48
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 53.9,
+    "overall": 48.5
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 48.8,
+    "overall": 56.7
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 48.8,
+    "overall": 56.7
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 55.4,
+    "overall": 58.9
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 59.4,
+    "overall": 59.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 65.1,
+    "overall": 60
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 49.2
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 49.2
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 49.2,
+    "overall": 50.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 52.9,
+    "overall": 50.6
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 57.9,
+    "overall": 51.3
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 44.4,
+    "overall": 51.6
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 44.4,
+    "overall": 51.6
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 50.4,
+    "overall": 52.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 54.1,
+    "overall": 53.4
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 59.2,
+    "overall": 54.1
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.8,
+    "overall": 43.8
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 41.8,
+    "overall": 43.8
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 47.4,
+    "overall": 44.6
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 50.9,
+    "overall": 45.2
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 55.7,
+    "overall": 45.9
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 50.5
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 49.2,
+    "overall": 52.2
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 52.9,
+    "overall": 52.8
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 57.9,
+    "overall": 53.6
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.304
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.304
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.504
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.629
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.804
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-7",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-7",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-7",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-7",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-7",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 51.5
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 51.5
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 53.4
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 54.6
+   }
+  },
+  {
+   "path": "school casting",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 55.9
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38,
+    "overall": 45.3
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 38,
+    "overall": 45.3
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "prepared": 0.85,
+    "interpretation": 43.1,
+    "overall": 46.6
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 46.3,
+    "overall": 46.9
+   }
+  },
+  {
+   "path": "school night",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 50.7,
+    "overall": 47.4
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 49.3,
+    "overall": 57.1
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "required": 0.9,
+    "prepared": 0.75,
+    "interpretation": 49.3,
+    "overall": 57.1
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.3600000000000001,
+    "required": 0.9,
+    "prepared": 0.85,
+    "interpretation": 55.8,
+    "overall": 59.1
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "required": 0.9,
+    "prepared": 0.9125,
+    "interpretation": 59.9,
+    "overall": 59.6
+   }
+  },
+  {
+   "path": "taped brief",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "required": 0.9,
+    "prepared": 1,
+    "interpretation": 65.7,
+    "overall": 60.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 49.4,
+    "overall": 52.5
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 53,
+    "overall": 53.1
+   }
+  },
+  {
+   "path": "audition in person",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 58.1,
+    "overall": 53.8
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 45.4,
+    "overall": 53.2
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 45.4,
+    "overall": 53.2
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 51.5,
+    "overall": 54.9
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 55.2,
+    "overall": 55.4
+   }
+  },
+  {
+   "path": "self-tape",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 60.5,
+    "overall": 56.1
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 42.2,
+    "overall": 49.8
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 42.2,
+    "overall": 49.8
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 47.8,
+    "overall": 50.7
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 51.3,
+    "overall": 51.2
+   }
+  },
+  {
+   "path": "callback",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 56.3,
+    "overall": 51.9
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "prepared": 0.75,
+    "interpretation": 43.5,
+    "overall": 51.7
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.36000000000000004,
+    "prepared": 0.85,
+    "interpretation": 49.4,
+    "overall": 54
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.5850000000000001,
+    "prepared": 0.9125,
+    "interpretation": 53,
+    "overall": 54.6
+   }
+  },
+  {
+   "path": "work day",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 0.9,
+    "prepared": 1,
+    "interpretation": 58.1,
+    "overall": 55.4
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.32
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "part": 0,
+    "overall": 0.32
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "part": 0.4,
+    "overall": 0.52
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "part": 0.65,
+    "overall": 0.645
+   }
+  },
+  {
+   "path": "casting’s fit",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "part": 1,
+    "overall": 0.82
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-8",
+   "record": "none",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-8",
+   "record": "unrelated",
+   "figures": {
+    "reading": 0,
+    "overall": 0.12
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-8",
+   "record": "broad",
+   "figures": {
+    "reading": 0.3600000000000001,
+    "overall": 0.127
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-8",
+   "record": "kind",
+   "figures": {
+    "reading": 0.5850000000000001,
+    "overall": 0.132
+   }
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "seed": "b22-proof-8",
+   "record": "exact",
+   "figures": {
+    "reading": 0.9,
+    "overall": 0.138
+   }
+  }
+ ],
+ "verdicts": [
+  {
+   "path": "school casting",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 1.9000000000000021,
+    "kind": 3.1000000000000014,
+    "exact": 4.399999999999999
+   },
+   "kindShare": 0.7045454545454551,
+   "broadShare": 0.43181818181818243,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "school night",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 1.4499999999999993,
+    "kind": 2.0500000000000007,
+    "exact": 2.5500000000000007
+   },
+   "kindShare": 0.803921568627451,
+   "broadShare": 0.5686274509803917,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "taped brief",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 2.1000000000000014,
+    "kind": 2.700000000000003,
+    "exact": 3.25
+   },
+   "kindShare": 0.8307692307692316,
+   "broadShare": 0.6461538461538466,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "audition in person",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 1.3499999999999979,
+    "kind": 1.8999999999999986,
+    "exact": 2.549999999999997
+   },
+   "kindShare": 0.7450980392156865,
+   "broadShare": 0.5294117647058821,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "self-tape",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 2,
+    "kind": 3.0500000000000007,
+    "exact": 3.8500000000000014
+   },
+   "kindShare": 0.7922077922077921,
+   "broadShare": 0.5194805194805193,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "callback",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 1,
+    "kind": 1.4500000000000028,
+    "exact": 2.1000000000000014
+   },
+   "kindShare": 0.6904761904761914,
+   "broadShare": 0.4761904761904759,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "work day",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 2.1999999999999993,
+    "kind": 3.299999999999997,
+    "exact": 4.299999999999997
+   },
+   "kindShare": 0.7674418604651161,
+   "broadShare": 0.5116279069767443,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "casting’s fit",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 0.2,
+    "kind": 0.325,
+    "exact": 0.5
+   },
+   "kindShare": 0.65,
+   "broadShare": 0.4,
+   "k1": true,
+   "k2": true
+  },
+  {
+   "path": "rehearsal day’s lines",
+   "gains": {
+    "none": 0,
+    "unrelated": 0,
+    "broad": 0.007000000000000006,
+    "kind": 0.01200000000000001,
+    "exact": 0.018000000000000016
+   },
+   "kindShare": 0.6666666666666666,
+   "broadShare": 0.3888888888888889,
+   "k1": true,
+   "k2": true
+  }
+ ],
+ "sweep": [
+  {
+   "kindToParent": 0.75,
+   "parentToKind": 0.5,
+   "verdicts": [
+    {
+     "path": "school casting",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.3999999999999986,
+      "kind": 3.6000000000000014,
+      "exact": 4.399999999999999
+     },
+     "kindShare": 0.8181818181818188,
+     "broadShare": 0.5454545454545453,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "school night",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.7000000000000028,
+      "kind": 2.25,
+      "exact": 2.5500000000000007
+     },
+     "kindShare": 0.8823529411764703,
+     "broadShare": 0.6666666666666676,
+     "k1": true,
+     "k2": false
+    },
+    {
+     "path": "taped brief",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.5,
+      "kind": 2.900000000000002,
+      "exact": 3.25
+     },
+     "kindShare": 0.8923076923076929,
+     "broadShare": 0.7692307692307693,
+     "k1": true,
+     "k2": false
+    },
+    {
+     "path": "audition in person",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.5999999999999979,
+      "kind": 2.099999999999998,
+      "exact": 2.549999999999997
+     },
+     "kindShare": 0.823529411764706,
+     "broadShare": 0.6274509803921567,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "self-tape",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.3999999999999986,
+      "kind": 3.3500000000000014,
+      "exact": 3.8500000000000014
+     },
+     "kindShare": 0.8701298701298702,
+     "broadShare": 0.6233766233766228,
+     "k1": true,
+     "k2": false
+    },
+    {
+     "path": "callback",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.1499999999999986,
+      "kind": 1.6000000000000014,
+      "exact": 2.1000000000000014
+     },
+     "kindShare": 0.7619047619047621,
+     "broadShare": 0.5476190476190466,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "work day",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.599999999999998,
+      "kind": 3.649999999999995,
+      "exact": 4.299999999999997
+     },
+     "kindShare": 0.848837209302325,
+     "broadShare": 0.6046511627906975,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "casting’s fit",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 0.25000000000000006,
+      "kind": 0.37500000000000006,
+      "exact": 0.5
+     },
+     "kindShare": 0.7500000000000001,
+     "broadShare": 0.5000000000000001,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "rehearsal day’s lines",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 0.009000000000000008,
+      "kind": 0.014000000000000012,
+      "exact": 0.018000000000000016
+     },
+     "kindShare": 0.7777777777777778,
+     "broadShare": 0.5,
+     "k1": true,
+     "k2": true
+    }
+   ]
+  },
+  {
+   "kindToParent": 0.7,
+   "parentToKind": 0.45,
+   "verdicts": [
+    {
+     "path": "school casting",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.1499999999999986,
+      "kind": 3.3500000000000014,
+      "exact": 4.399999999999999
+     },
+     "kindShare": 0.7613636363636369,
+     "broadShare": 0.4886363636363635,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "school night",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.5500000000000007,
+      "kind": 2.150000000000002,
+      "exact": 2.5500000000000007
+     },
+     "kindShare": 0.8431372549019613,
+     "broadShare": 0.607843137254902,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "taped brief",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.3000000000000007,
+      "kind": 2.8000000000000007,
+      "exact": 3.25
+     },
+     "kindShare": 0.8615384615384618,
+     "broadShare": 0.707692307692308,
+     "k1": true,
+     "k2": false
+    },
+    {
+     "path": "audition in person",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.4999999999999964,
+      "kind": 1.9999999999999964,
+      "exact": 2.549999999999997
+     },
+     "kindShare": 0.7843137254901955,
+     "broadShare": 0.5882352941176463,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "self-tape",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.150000000000002,
+      "kind": 3.200000000000003,
+      "exact": 3.8500000000000014
+     },
+     "kindShare": 0.8311688311688316,
+     "broadShare": 0.5584415584415587,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "callback",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.0999999999999979,
+      "kind": 1.5499999999999972,
+      "exact": 2.1000000000000014
+     },
+     "kindShare": 0.7380952380952363,
+     "broadShare": 0.5238095238095224,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "work day",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.3999999999999986,
+      "kind": 3.4499999999999957,
+      "exact": 4.299999999999997
+     },
+     "kindShare": 0.8023255813953484,
+     "broadShare": 0.5581395348837209,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "casting’s fit",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 0.22500000000000003,
+      "kind": 0.35000000000000003,
+      "exact": 0.5
+     },
+     "kindShare": 0.7000000000000001,
+     "broadShare": 0.45000000000000007,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "rehearsal day’s lines",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 0.008000000000000007,
+      "kind": 0.013000000000000012,
+      "exact": 0.018000000000000016
+     },
+     "kindShare": 0.7222222222222222,
+     "broadShare": 0.4444444444444444,
+     "k1": true,
+     "k2": true
+    }
+   ]
+  },
+  {
+   "kindToParent": 0.65,
+   "parentToKind": 0.4,
+   "verdicts": [
+    {
+     "path": "school casting",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.9000000000000021,
+      "kind": 3.1000000000000014,
+      "exact": 4.399999999999999
+     },
+     "kindShare": 0.7045454545454551,
+     "broadShare": 0.43181818181818243,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "school night",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.4499999999999993,
+      "kind": 2.0500000000000007,
+      "exact": 2.5500000000000007
+     },
+     "kindShare": 0.803921568627451,
+     "broadShare": 0.5686274509803917,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "taped brief",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.1000000000000014,
+      "kind": 2.700000000000003,
+      "exact": 3.25
+     },
+     "kindShare": 0.8307692307692316,
+     "broadShare": 0.6461538461538466,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "audition in person",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1.3499999999999979,
+      "kind": 1.8999999999999986,
+      "exact": 2.549999999999997
+     },
+     "kindShare": 0.7450980392156865,
+     "broadShare": 0.5294117647058821,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "self-tape",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2,
+      "kind": 3.0500000000000007,
+      "exact": 3.8500000000000014
+     },
+     "kindShare": 0.7922077922077921,
+     "broadShare": 0.5194805194805193,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "callback",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 1,
+      "kind": 1.4500000000000028,
+      "exact": 2.1000000000000014
+     },
+     "kindShare": 0.6904761904761914,
+     "broadShare": 0.4761904761904759,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "work day",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 2.1999999999999993,
+      "kind": 3.299999999999997,
+      "exact": 4.299999999999997
+     },
+     "kindShare": 0.7674418604651161,
+     "broadShare": 0.5116279069767443,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "casting’s fit",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 0.2,
+      "kind": 0.325,
+      "exact": 0.5
+     },
+     "kindShare": 0.65,
+     "broadShare": 0.4,
+     "k1": true,
+     "k2": true
+    },
+    {
+     "path": "rehearsal day’s lines",
+     "gains": {
+      "none": 0,
+      "unrelated": 0,
+      "broad": 0.007000000000000006,
+      "kind": 0.01200000000000001,
+      "exact": 0.018000000000000016
+     },
+     "kindShare": 0.6666666666666666,
+     "broadShare": 0.3888888888888889,
+     "k1": true,
+     "k2": true
+    }
+   ]
+  }
+ ]
+}

@@ -66,7 +66,7 @@ import { sharedOf, sharedWords, type PartnerRead, type SharedResult } from './en
 import { abilityFull, abilityOf, stepSpeed } from './attributes';
 import { bandOfQuality, chiefLimit, countDirection, countTogether, performerOf, recordWork, type Evaluation } from './evaluation';
 import { noteAdvice } from './next-steps';
-import { SELF_TAPE, genreState, practiceGenres, relevantGenre } from './engagement';
+import { SELF_TAPE, genreState, practiceGenres, relevantGenre, requirementOfBrief } from './engagement';
 import { FEATURE_LABEL, featureSpeed, featuresOf, noteMaterial } from './experience';
 import type { Identity } from './artistry';
 import { inHospital } from './health';
@@ -333,7 +333,7 @@ export function briefPiece(b: Brief, rec: Pick<BriefRecord, 'work' | 'book'> & {
  * and taping in it built it. From 2026-10-16 it's complete at 90 and read over the whole of the way there, from a floor
  * of three quarters (`EVALUATION.partFloor`): about 28 sessions, or as many takes, and each one shows in the take.
  */
-export const genreKnown = (person: Person, b: Brief): number => relevantGenre(person, b.kinds).total;
+export const genreKnown = (person: Person, b: Brief): number => relevantGenre(person, requirementOfBrief(b)).total;
 
 /**
  * How much faster a step goes: the material's features met before (`featureSpeed`). Knowing the genre, studied or
@@ -653,7 +653,7 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   for (const k of Object.keys(b.techniques ?? {}) as Skill[]) ordinary(sim, person, k, focus, 0.25 * worth, 'self-tape');
   // The same brief again the same day is half the practice of the one before; its genres share it. And from 2026-10-16
   // a take credits its genres by how far it was prepared (`practiceShare`): a cold take, about a seventh of a prepared one.
-  practiceGenres(sim, person, b.kinds, worth * 0.5 ** again * practiceShare(rec, b));
+  practiceGenres(sim, person, requirementOfBrief(b), worth * 0.5 ** again * practiceShare(rec, b));
   noteMaterial(person, { material: briefMaterial(b), at: sim.now, overall: e.overall, approaches: sidesOf(rec.playing), shown: true });
   const chief = chiefLimit(e);
   // The genre's concern behind it, where its register asked for the ability that held the take back (from 2026-10-16).

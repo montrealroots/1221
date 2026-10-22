@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1524"
+   "handler": "src/engine/systems/projobs.ts:1602"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1567"
+   "handler": "src/engine/systems/projobs.ts:1645"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1549"
+   "handler": "src/engine/systems/projobs.ts:1627"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1611"
+   "handler": "src/engine/systems/projobs.ts:1689"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1599"
+   "handler": "src/engine/systems/projobs.ts:1677"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1515"
+   "handler": "src/engine/systems/projobs.ts:1593"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1534"
+   "handler": "src/engine/systems/projobs.ts:1612"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -730,7 +730,7 @@
    "kind": "school.choose_showcase",
    "payload": "{ options: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proshowcase.ts:652"
+   "handler": "src/engine/systems/proshowcase.ts:664"
   },
   {
    "file": "src/ui/career/WorkPane.tsx",
@@ -740,7 +740,7 @@
    "kind": "pro.join_sag",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/propay.ts:761"
+   "handler": "src/engine/systems/propay.ts:765"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -791,7 +791,7 @@
    "kind": "genre.study",
    "payload": "{ genre }",
    "verdict": "Right",
-   "handler": "src/engine/systems/engagement.ts:242"
+   "handler": "src/engine/systems/engagement.ts:375"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -821,7 +821,7 @@
    "kind": "school.choose_playing",
    "payload": "{ assignmentId: a.id, ...c }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1947",
+   "handler": "src/engine/systems/coursework.ts:1948",
    "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It, locked by school.choose_playing; it sends the scene's assignment and the way chosen."
   },
   {
@@ -832,7 +832,7 @@
    "kind": "school.prepare",
    "payload": "{ assignmentId: a.id, activity: act.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1926"
+   "handler": "src/engine/systems/coursework.ts:1927"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -842,7 +842,7 @@
    "kind": "school.approach",
    "payload": "{ assignmentId: a.id, kind: k }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1934"
+   "handler": "src/engine/systems/coursework.ts:1935"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -851,7 +851,7 @@
    "kind": "school.choose",
    "payload": "{ assignmentId: a.id, question: q.id, option: e.target.value }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1963"
+   "handler": "src/engine/systems/coursework.ts:1964"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -861,7 +861,7 @@
    "kind": "school.ask_partner",
    "payload": "{ assignmentId: a.id, at: when }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1989"
+   "handler": "src/engine/systems/coursework.ts:1990"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -871,7 +871,7 @@
    "kind": "school.cancel_rehearsal",
    "payload": "{ assignmentId: a.id, rehearsalId: r.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2031"
+   "handler": "src/engine/systems/coursework.ts:2032"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -881,7 +881,7 @@
    "kind": "school.orientation",
    "payload": "{ task: o.task }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1915"
+   "handler": "src/engine/systems/coursework.ts:1916"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -901,7 +901,7 @@
    "kind": "school.read_feedback",
    "payload": "{ assignmentId: a.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:1981"
+   "handler": "src/engine/systems/coursework.ts:1982"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -911,7 +911,7 @@
    "kind": "school.answer_partner",
    "payload": "{ assignmentId: a.id, askId: k.id, yes: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2001"
+   "handler": "src/engine/systems/coursework.ts:2002"
   },
   {
    "file": "src/ui/components/CourseworkPane.tsx",
@@ -921,7 +921,7 @@
    "kind": "school.answer_partner",
    "payload": "{ assignmentId: a.id, askId: k.id, yes: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2001"
+   "handler": "src/engine/systems/coursework.ts:2002"
   },
   {
    "file": "src/ui/components/LienPanels.tsx",
@@ -972,7 +972,7 @@
    "kind": "school.choose_part_playing",
    "payload": "{ which, ...c }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:628",
+   "handler": "src/engine/systems/production.ts:627",
    "note": "The button is PlayingChooser's own: Play It This Way, or Change How You Play It, locked by school.choose_part_playing; it sends the production (`which`) and the way chosen."
   },
   {
@@ -983,7 +983,7 @@
    "kind": "school.work_note",
    "payload": "{ which, ...(chosen ? { solution: chosen.adjustment, ...(chosen.option ? { option: chosen.option } : {}) } : {}) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:644"
+   "handler": "src/engine/systems/production.ts:643"
   },
   {
    "file": "src/ui/components/RehearsalProcess.tsx",
@@ -993,7 +993,7 @@
    "kind": "school.review_blocking",
    "payload": "{ which }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:614"
+   "handler": "src/engine/systems/production.ts:613"
   },
   {
    "file": "src/ui/components/RehearsalProcess.tsx",
@@ -1003,7 +1003,7 @@
    "kind": "school.learn_part",
    "payload": "{ which }",
    "verdict": "Right",
-   "handler": "src/engine/systems/production.ts:597"
+   "handler": "src/engine/systems/production.ts:596"
   },
   {
    "file": "src/ui/components/StudyPlanPanels.tsx",
@@ -1043,7 +1043,7 @@
    "kind": "school.request_conversion",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3696"
+   "handler": "src/engine/systems/school.ts:3699"
   },
   {
    "file": "src/ui/components/StudyPlanPanels.tsx",
@@ -1193,7 +1193,7 @@
    "kind": "documents.apply_passport",
    "payload": "{ expedite: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/documents.ts:324"
+   "handler": "src/engine/systems/documents.ts:333"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1203,7 +1203,7 @@
    "kind": "documents.apply_passport",
    "payload": "{ expedite: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/documents.ts:324"
+   "handler": "src/engine/systems/documents.ts:333"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1233,7 +1233,7 @@
    "kind": "documents.apply_opt",
    "payload": "{}",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:271"
+   "handler": "src/engine/systems/permission.ts:376"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1243,7 +1243,7 @@
    "kind": "documents.apply_opt",
    "payload": "{ premium: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:271"
+   "handler": "src/engine/systems/permission.ts:376"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1263,7 +1263,7 @@
    "kind": "documents.report_lost",
    "payload": "{ documentId: d.id, ...(confirming.stolen ? { stolen: true } : {}) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/documents.ts:343"
+   "handler": "src/engine/systems/documents.ts:352"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1273,7 +1273,7 @@
    "kind": "documents.police_report",
    "payload": "{ documentId: d.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/documents.ts:358"
+   "handler": "src/engine/systems/documents.ts:367"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1836,7 +1836,7 @@
    "kind": "genre.study",
    "payload": "{ genre: g.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/engagement.ts:242"
+   "handler": "src/engine/systems/engagement.ts:375"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1865,7 +1865,7 @@
    "kind": "school.buy_ppe",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3627"
+   "handler": "src/engine/systems/school.ts:3630"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1875,7 +1875,7 @@
    "kind": "school.call_in_sick",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4391"
+   "handler": "src/engine/systems/school.ts:4394"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1885,7 +1885,7 @@
    "kind": "school.cabaret",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4046"
+   "handler": "src/engine/systems/school.ts:4049"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1895,7 +1895,7 @@
    "kind": "school.summer_cabaret",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4122"
+   "handler": "src/engine/systems/school.ts:4125"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1924,7 +1924,7 @@
    "kind": "school.take_shift",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4400"
+   "handler": "src/engine/systems/school.ts:4403"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1934,7 +1934,7 @@
    "kind": "school.withdraw",
    "payload": "{ confirm: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4352"
+   "handler": "src/engine/systems/school.ts:4355"
   }
  ],
  "decisionAnswers": [
@@ -1952,7 +1952,7 @@
    "kind": "documents.apply_opt",
    "payload": "{}",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:271"
+   "handler": "src/engine/systems/permission.ts:376"
   },
   {
    "file": "src/engine/systems/permission.ts",
@@ -1960,7 +1960,7 @@
    "kind": "documents.apply_opt",
    "payload": "{ premium: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:271"
+   "handler": "src/engine/systems/permission.ts:376"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -1968,7 +1968,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1567"
+   "handler": "src/engine/systems/projobs.ts:1645"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -1976,7 +1976,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1599"
+   "handler": "src/engine/systems/projobs.ts:1677"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -2013,7 +2013,7 @@
    "kind": "school.cancel_rehearsal",
    "payload": "(item) => ({ assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/coursework.ts:2031"
+   "handler": "src/engine/systems/coursework.ts:2032"
   }
  ]
 }

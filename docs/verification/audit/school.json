@@ -3873,7 +3873,7 @@
       "downstream": "genreSpeed (engagement.ts:101): a scene for class from a play of the kind (coursework.ts:592) and a part’s lines (production.ts:527, and :602 for a lines note worked); a take of a brief’s knowing the genre (genreKnown, briefs.ts:287, from 2026-10-12). A play’s kinds are found by its title without its case, and The Proposal as A Marriage Proposal (genresOfPlay, plays.ts:201, from 2026-10-13: until then four scenes’ plays found none, and no study sped them).",
       "persistent": "engagement.byGenre",
       "explanation": "ProfileWorkspace.tsx; looks/actor.tsx",
-      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600…’, ‘PLAYER JOURNEY: a scene for class from Riders to the Sea, which the game knows as a tragedy, is sped by studies of tragedy…’, ‘finds the kinds of every scene’s play the lists know, whatever the case of its small words, and The Proposal’s as A Marriage Proposal’s’, ‘PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part…’; tests/evidence-g23-school.test.ts ‘PLAYER JOURNEY: three studies of tragedy add nothing to a note on Blood Wedding’s lines, worked, once its calls have taught more of it than they do’; tests/guide-examples-craft.test.ts ‘Genres: a study, a second the same day, and once a day until the brief counts the genre known’; tests/engagement.test.ts ‘lives an action sent twice once, and refuses an hour that would run into a commitment’; tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (pressed on the rendered Profile)",
+      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, three-fifths of it drama, moves 1 + 7.008/600…’, ‘PLAYER JOURNEY: a scene for class from Riders to the Sea, which the game knows as a tragedy, is sped by studies of tragedy…’, ‘finds the kinds of every scene’s play the lists know, whatever the case of its small words, and The Proposal’s as A Marriage Proposal’s’, ‘PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part…’; tests/evidence-g23-school.test.ts ‘PLAYER JOURNEY: three studies of tragedy add nothing to a note on Blood Wedding’s lines, worked, once its calls have taught more of it than they do’; tests/guide-examples-craft.test.ts ‘Genres: a study, a second the same day, and once a day until the brief counts the genre known’; tests/engagement.test.ts ‘lives an action sent twice once, and refuses an hour that would run into a commitment’; tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (pressed on the rendered Profile)",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -3953,7 +3953,7 @@
         "tests": [
           {
             "file": "evidence-g20-school.test.ts",
-            "title": "PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left",
+            "title": "PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, three-fifths of it drama, moves 1 + 7.008/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left",
             "kind": "command",
             "closes": "genreSpeed's first consumer (coursework.ts:592) shown faster after a study through the command, to 9 places; the day's half-again count kept across a reload (13.45)"
           },
@@ -3965,7 +3965,7 @@
           },
           {
             "file": "evidence-g20-school.test.ts",
-            "title": "PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 5.84/600 of a twin’s who didn’t study: a farce, which comedy known meets at half",
+            "title": "PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 4.672/600 of a twin’s who didn’t study: a farce, which comedy known meets at 0.4",
             "kind": "command",
             "closes": "genreSpeed's second consumer (production.ts:526, school.learn_part) shown faster after studies through the command, to 9 places"
           }
@@ -7316,7 +7316,7 @@
           },
           {
             "file": "evidence-g23-school.test.ts",
-            "title": "PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth, of its half of Blood Wedding",
+            "title": "PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth, of its three-fifths of Blood Wedding",
             "kind": "command",
             "closes": "Gap 1, production.ts school.learn_part on the second year's thesis (Blood Wedding: tragedy, romantic drama)"
           },
@@ -7328,7 +7328,7 @@
           },
           {
             "file": "evidence-g23-school.test.ts",
-            "title": "PLAYER JOURNEY: each call and each night of a play practises each of its kinds, a session’s worth shared between them, 5% of what’s left each",
+            "title": "PLAYER JOURNEY: each call and each night of a play practises each of its kinds, a session’s worth shared between them by the play’s weights, 6% and 4% of what’s left",
             "kind": "command",
             "closes": "Gap 2, practice from a night: 5 and 5 after the first night, 9.75 and 9.75 after the second"
           }

@@ -290,5 +290,22 @@
       { "kind": "test", "ref": "tests/attributes-matrix.test.ts" },
       { "kind": "test", "ref": "tests/genre-coverage.test.ts" }
     ]
+  },
+  {
+    "surface": "The material’s reasons for its genre weights (not shown)",
+    "where": "Not shown to a player: read by tests/b22-genre-weights.test.ts and written out by docs/verification/career-genre-2026-10-22/genre-weights.ts",
+    "sources": [
+      "src/engine/content/genre-weights.ts#PLAY_GENRES",
+      "src/engine/content/genre-weights.ts#PROJECT_GENRES",
+      "src/engine/content/genre-weights.ts#SCENE_GENRES"
+    ],
+    "states": ["details"],
+    "outcome": "Kept",
+    "why": "Each stated weight carries SLATE’s reason for it, read from the material (a play’s story and parts, a scene’s summary, a breakdown’s words), so the weights can be reviewed as the design choices they are; no screen reads them. The player meets what a work asks in words instead (requirementWords: “Mostly Tragedy, with some Romantic Drama”), on the Opportunities tab and in the showcase’s notes.",
+    "evidence": [
+      { "kind": "source", "ref": "src/engine/content/genre-weights.ts" },
+      { "kind": "test", "ref": "tests/b22-genre-weights.test.ts: 'cover every project, every play the catalog gives kinds and the Rep’s Seagull, name only real parts and scenes, give each a reason, and keep each play’s register the genre it had, its first-listed kind'" },
+      { "kind": "source", "ref": "docs/verification/career-genre-2026-10-22/genre-weights.md" }
+    ]
   }
 ]

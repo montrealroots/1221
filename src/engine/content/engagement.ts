@@ -22,30 +22,46 @@
  * - an hour of either at a desk costs a little energy.
  *
  * From 2026-10-22 (the owner's brief 21) a work's genres are weighed, not taken at their best
- * (`systems/engagement.ts`, `genreNeeds` and `relevantGenre`). Until then every reader took the best-known of a work's
- * genres, so knowing one of two counted as knowing both, and knowing both added nothing. Now:
+ * (`systems/engagement.ts`, `resolveGenres` and `relevantGenre`). Until then every reader took the best-known of a
+ * work's genres, so knowing one of two counted as knowing both, and knowing both added nothing. Now:
  *
- * - `weights.primary`: a work's first-listed genre is its main one and carries half the weight where there are two
- *   or more, the rest sharing the other half; one alone carries all of it. The lists were written main genre first
- *   (a play's register is read from its first kind, `GENRE_REGISTER[kinds[0]]`). SLATE's estimate of importance.
+ * - A work's requirement is stated by the material, genre by genre, at the most precise level the game holds
+ *   (`content/genre-weights.ts`, from brief 22, later on 2026-10-22), its tags read evenly where nothing is stated.
+ *   Brief 21 gave the first-listed genre half the weight where there were two or more (`weights.primary`, 0.5), the
+ *   lists having been written main genre first; brief 22 deleted it, since the order of a list decided what a work
+ *   asked.
  * - A genre listed beside one of its own kinds (`drama` beside `domestic_drama`, `thriller` beside
- *   `psychological_thriller`) is the same requirement said twice, broad and narrow: it's absorbed into the kind, which
+ *   `psychological_thriller`) is the same requirement said twice, broad and narrow: it's folded into the kind, which
  *   takes its weight, so one expertise isn't counted twice.
- * - `related`: what knowing one genre is worth toward another. A kind of a genre carries most of it
- *   (`kindToParent`: a domestic drama's actor knows drama's conventions and some); the broad genre carries half of
- *   one of its kinds (`parentToKind`: drama's conventions without the domestic drama's own). Any other genre is worth
- *   nothing, two kinds of one broad genre included: the owner's briefs 01, 05 and 21 ask that an unrelated genre give
- *   no bonus, and with `drama` among most genres' families, kinds crediting each other would have been near
- *   universal. SLATE's estimates; a genre's kinds are read from the families its source gives it
- *   (`content/genres.ts`), a family that's a genre of its own (`drama`, `comedy`, `thriller` …) being the broad genre.
+ * - `related`: what knowing one genre is worth toward another, across one direct link (brief 22, the owner's approval
+ *   of "partial transfer between a broad genre and its direct subgenres"). A direct kind of a genre carries most of it
+ *   (`kindToParent`: a domestic drama's actor knows drama's conventions and some); the broad genre carries half of one
+ *   of its direct kinds (`parentToKind`: drama's conventions without the domestic drama's own). Any other genre is
+ *   worth nothing: two kinds of one broad genre, a genre two links away (brief 21 read any depth, so Nordic noir
+ *   counted toward drama through crime), an unrelated one. The owner's briefs 01, 05, 21 and 22 ask that an unrelated
+ *   genre give no bonus. SLATE's estimates, 0.75 and 0.5 from brief 21, kept provisionally by brief 22, measured and
+ *   lowered to 0.65 and 0.40 (`related`, below); a genre's kinds are read from the families its source
+ *   gives it (`content/genres.ts`), a family that's a genre of its own (`drama`, `comedy`, `thriller` …) being the
+ *   broad genre.
+ * - A genre's own knowledge and the best related credit count together toward a need (brief 22), so studying the
+ *   genre itself always adds; brief 21 took the better of the two.
  */
 
 export const ENGAGEMENT = {
   energy: { desk: 2 },
   genre: { study: 0.08, practice: 0.1, minutes: 90 },
   genreSpeed: 1 / 6,
-  weights: { primary: 0.5 },
-  related: { kindToParent: 0.75, parentToKind: 0.5 },
+  /**
+   * From 2026-10-22, brief 22's measurement (docs/verification/career-genre-2026-10-22/comparisons.md): 0.65 and 0.40.
+   * Brief 21 set 0.75 and 0.5, which brief 22 kept provisionally and measured on eight fixed seeds, every path that reads
+   * a work's genres, the same actor, day, preparation and draw, against the criterion written before (criteria.md, T4):
+   * a related genre's gain on the whole at most 0.85 of the genre's own for a kind, 0.65 for a broad genre. At 0.75 and
+   * 0.5 a kind gave a taped brief 0.89 of the genre's own gain, a School night 0.88 and a self-tape 0.87, and a broad
+   * genre a taped brief 0.77 and a School night 0.67: the judgment saturates near complete, so a related genre's
+   * three-quarters of the reading came to nearly all of the work. Lowered by 0.05 at a time until both held on every
+   * path: 0.65 (a taped brief's kind 0.83) and 0.40 (its broad genre 0.65).
+   */
+  related: { kindToParent: 0.65, parentToKind: 0.4 },
   /**
    * Where knowing a work's genres counts complete, as a part of its preparation: 0.9, as a technique is mastered at 90.
    * `BRIEF.complete.genre` was the one place it lived until 2026-10-22 (brief 21), when the School's nights and its

@@ -433,9 +433,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
   "status": "Rewritten And Verified",
-  "hash": "2f64bdbe4195",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
+  "hash": "4f2f844589b1",
+  "on": "2026-10-22",
+  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): What It Asks in words (requirementWords); tests/pro-opportunities-screen.test.ts ('a first-year’s tab lists the open roles posted…')"
  },
  "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {
   "status": "Rewritten And Verified",

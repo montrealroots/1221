@@ -797,7 +797,9 @@ describe('p-genres', () => {
     expect(h.elements.some((e) => e.type === 'button' && /^Show \d+ More$/.test(e.text))).toBe(false);
   });
 
-  it('PLAYER JOURNEY: the genre to study is the loved one known least before any part, and once the clock casts her in Major Barbara, its kind known least, each moved by a study', () => {
+  // Renamed on 2026-10-22 (brief 22): until then “PLAYER JOURNEY: the genre to study is the loved one known least before any part, and once the clock casts her in Major Barbara, its kind known least, each moved by a study”: the material's stated weights and the measured coefficients moved its figures.
+
+  it('PLAYER JOURNEY: the genre to study is the loved one known least before any part, and once the clock casts her in Major Barbara, of what the part asks, where study would help most', () => {
     fresh();
     const sim = life('g31-part', { genres: ['drama', 'comedy'] });
     sim.advanceTo(at(2026, 8, 24, 8));
@@ -814,10 +816,19 @@ describe('p-genres', () => {
     // the play demands (`BASE_INPUTS`), and Barbara again from later that day, when a stage's house came to weigh the
     // voice and the body (`STAGE_LEAN`). The play, and so the kinds below, are the same.
     expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft' });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.');
+    // From brief 22 (2026-10-22) the genre where study would help most of what the part asks: Major Barbara asks satire 3
+    // and political drama 2 (comedy folded into satire, its kind), each weighed by what's left of it to know. Until then
+    // the play's kind known least, whatever its share: satire, then political drama once satire had a study.
+    const forPart = 'is worth studying next: your next part asks for it, and of what the part asks, it’s where study would help most.';
+    expect(sentence(profile(sim))).toBe(`Drama, Comedy. Satire ${forPart}`);
     expect(studyRefusal(sim, sim.player, 'satire')).toBeUndefined();
     sim.must({ kind: 'genre.study', payload: { genre: 'satire' } });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Political Drama is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.');
+    // A study of satire leaves it the most to gain: the calls so far have worked both, and satire's share is the larger.
+    expect(sentence(profile(sim))).toBe(`Drama, Comedy. Satire ${forPart}`);
+    // TEST SETUP: satire known at 60, as weeks of study would leave it: political drama, 0.4 of the part with 85% of it
+    // left (its calls' work 15.07), now has more to gain than satire's 0.6 with 40% left.
+    sim.player.engagement!.byGenre.satire!.familiarity = 60;
+    expect(sentence(profile(sim))).toBe(`Drama, Comedy. Political Drama ${forPart}`);
   });
 
   it('PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 1.5 in Drama’s row, a cold take’s share, across a reload; refused by the clock before orientation', () => {

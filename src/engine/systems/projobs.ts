@@ -82,7 +82,7 @@ import { enjoyWork } from './enjoyment';
 import { exerts } from './body';
 import { trainingRefusal } from './injury';
 import { SPENT, startRefusal } from './life';
-import { SELF_TAPE, genreSpeed, practiceGenres, relevantGenre } from './engagement';
+import { SELF_TAPE, genreSpeed, practiceGenres, relevantGenre, requirementOfRole } from './engagement';
 import {
   CALL_KIND, ESTIMATE, classPeriod, conditionAt, countWords, coursesFor, focusAt, keyOf, offSick, ordinary, recessStart, schoolEnded, setStanding,
   termOf, termStart,
@@ -336,8 +336,13 @@ export function inScope(agentId: string, t: ProjectTemplate): boolean {
 /** The role's fit: how well you know its genre, and its techniques against yours, each 0 to 1, and the two together. */
 export interface Fit { genre: number; demands: number; fit: number }
 
-/** A project's genres: the work's, never the player's own loves, which only enjoyment reads (tests/cohesion.test.ts). */
-const projectGenresOf = ({ genres }: ProjectTemplate): readonly string[] => genres;
+/**
+ * What a role asks of the genres: its own requirement, or its project's, as the material states it (`requirementOfRole`,
+ * from 2026-10-22, the owner's brief 22; until then the project's tags, the first listed carrying half). The work's,
+ * never the player's own loves, which only enjoyment reads (tests/cohesion.test.ts). A professional audition, callback
+ * or self-tape has no sides of its own in the game, so it reads the role's too.
+ */
+export const projectGenresOf = (t: ProjectTemplate) => requirementOfRole(t);
 
 /**
  * How well the role suits the actor, from the record: the project's genres known, weighed (`relevantGenre`), against
@@ -1525,8 +1530,7 @@ export function registerProJobs(sim: Simulation): void {
       // ... is practice"). From 2026-10-21 (brief 19's J6, found by the playthroughs): until then a professional run
       // left no experience of its genres on the record, while the School's nights and the briefs' tapes did. The
       // project's genres, never the player's own loves (`fitOf`; tests/cohesion.test.ts).
-      const { genres: projectGenres } = t;
-      practiceGenres(s, person, projectGenres);
+      practiceGenres(s, person, projectGenresOf(t));
       // A stage credit is the part performed, from its first night (`ProCredit`'s 'performed').
       if (kind === 'performance' && !e.creditId) {
         const c = addCredit(s, person, { kind: 'stage', project: t.project, role: t.role.part, company: t.company, year: zonedParts(item.at, NY).year, medium: 'stage', status: 'performed', ...(t.union !== 'none' ? { union: t.union } : {}), engagementId: e.id, at: item.at, band });

@@ -238,7 +238,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 4 |
 | `documents.decided` | `systems/documents.ts` | systems/documents.ts | documentsOf (added to) | Yes | passport; documents.decided | 5 |
 | `documents.idcard_arrives` | `systems/identity.ts` | systems/identity.ts | documentsOf (added to) | Yes | idcard; documents.idcard_arrives | 1 |
-| `documents.opt_week` | `systems/permission.ts` | — | — | — | — | 1 |
+| `documents.opt_week` | `systems/permission.ts` | — | — | — | — | 2 |
 | `documents.permission` | `systems/permission.ts` | systems/permission.ts | — | — | — | 4 |
 | `documents.ssn_arrives` | `systems/taxid.ts` | systems/taxid.ts | ssn | — | — | 2 |
 | `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | — | 13 |

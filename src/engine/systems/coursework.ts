@@ -62,8 +62,7 @@ import { UNPERFORMED } from './material';
 import { abilityFull, abilityOf, CRAFT_ABILITY, stepSpeed } from './attributes';
 import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
-import { genreSpeed } from './engagement';
-import { genresOfPlay } from '../content/plays';
+import { genreSpeed, requirementOfScene } from './engagement';
 import { SPENT, startRefusal } from './life';
 import { exerts } from './body';
 import { personalityOf } from './personality';
@@ -675,10 +674,12 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
   // Work in a genre known goes faster (`genreSpeed`, from 2026-10-09): the scene's play's kinds, the best of them until
-  // brief 21 (2026-10-22), each by its weight in the play from then (`relevantGenre`).
+  // brief 21 (2026-10-22), each by its weight in the play from then (`relevantGenre`), and from brief 22 the scene's own
+  // requirement where it states one, else its play's, else its filed genre where the play names none
+  // (`requirementOfScene`): until then 43 of the 67 scenes, of plays with no kinds, read no genre at all.
   // And from 2026-10-10 the material's features met before (`featureSpeed`), the better of the two: familiarity with a
   // kind of work counted once, never twice.
-  const speed = Math.max(genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined), featureSpeed(person, materialOf(a.sceneId)));
+  const speed = Math.max(genreSpeed(person, requirementOfScene(a.sceneId)), featureSpeed(person, materialOf(a.sceneId)));
   // And by the ability the step is practice in (`STEP_ABILITY`, from 2026-10-16): memory learns lines faster, and so on.
   const able = STEP_ABILITY[act.dim] ? stepSpeed(sim, person, STEP_ABILITY[act.dim]!) : 1;
   a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * speed * able * (1 - before));

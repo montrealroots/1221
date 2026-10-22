@@ -16,7 +16,7 @@ import type { Dimension, TaskProfile } from '../content/tasks';
 import { GENRE_BY_ID } from '../content/film-genres';
 import { GENRE_REGISTER } from '../content/genre-register';
 import { SCENES } from '../content/coursework';
-import { genresOfPlay } from '../content/plays';
+import { registerOfPlay } from '../content/genre-weights';
 
 /** What a scene is, beyond its material, for reading a choice against it: its genre's register, its reader, the reading taken. */
 export interface Scene {
@@ -162,15 +162,16 @@ export function requiredFor(sides: readonly AxisValue[], material: MaterialProfi
 
 /**
  * The scene a class scene or a play is read as, where nothing more is given (from 2026-10-16, later): its genre's
- * register, as a brief's is, the genre a class scene names and the first a play is listed under (`kinds[0]`, as a brief's
- * first genre is). Until then a class scene and a play were read by their material alone, and nothing in any of them
+ * register, as a brief's is, the genre a class scene names and the one a play names as its register (`registerOfPlay`,
+ * `content/genre-weights.ts`, from 2026-10-22, the owner's brief 22: until then the first a play was listed under,
+ * `kinds[0]`, by position; each play's register is the genre it had). Until then a class scene and a play were read by their material alone, and nothing in any of them
  * could favor restraint: measured on the 86 of them, fresh to the criteria, expansive came out ahead on every one
  * (docs/verification/interpretation-2026-10-16/i3-review.md). Their suitability only: the register's lean and draw on
  * class work stay as they were.
  */
 export function sceneOfMaterial(material: MaterialProfile | undefined): Scene {
   if (!material) return {};
-  const genre = SCENE_BY_ID.get(material.id)?.genre ?? genresOfPlay(material.title)?.[0];
+  const genre = SCENE_BY_ID.get(material.id)?.genre ?? registerOfPlay(material.title);
   const concerns = genre ? GENRE_REGISTER[genre]?.concerns : undefined;
   return genre && concerns?.length ? { genre, concerns } : {};
 }

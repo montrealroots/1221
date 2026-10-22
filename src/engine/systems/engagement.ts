@@ -7,9 +7,11 @@
  * A take of a brief reads how well its genres are known, the better of familiarity and practice (`genreKnown` in
  * `systems/briefs.ts`), and the two speed a scene for class from a play of the kind and a part's lines in one
  * (`genreSpeed`). Neither caps what work can reach. Until brief 21 (2026-10-22) a work's genres were read as the best
- * known of them, never their sum; from then each counts for its weight in the work (`genreNeeds`, `relevantGenre`),
- * the weights summing to one, and the same reading is part of an audition's, a self-tape's, a shoot day's and a
- * night's preparation and of casting's fit (`projobs.ts`, `school.ts`). This said a
+ * known of them, never their sum; from then each counts for its weight in the work (`relevantGenre`), the weights
+ * summing to one, and the same reading is part of an audition's, a self-tape's, a shoot day's and a night's
+ * preparation and of casting's fit (`projobs.ts`, `school.ts`). From brief 22 the weights are the material's own,
+ * stated at the most precise level the game holds (`resolveGenres`, `content/genre-weights.ts`), where brief 21's
+ * `genreNeeds` gave the first-listed tag half. This said a
  * self-tape read familiarity alone as its "knowing the genre" and the genre sped the preparation of all work in it:
  * a brief's own steps read the material met before (`prepSpeed`), not the genre (from 2026-10-12).
  *
@@ -29,7 +31,11 @@ import { formatTime } from '../core/time';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
 import { GENRE_BY_ID } from '../content/film-genres';
-import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '../content/plays';
+import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '../content/plays';
+import { PROJECT_GENRES, ROLE_GENRES, SCENE_GENRES, playGenresOf, type GenreWeights } from '../content/genre-weights';
+import type { ProjectTemplate } from '../content/careerwork';
+import { SEAGULL_2027 } from '../content/school';
+import { SCENES } from '../content/coursework';
 import { alreadyApplied, markApplied, repeatsToday } from './attributes';
 import { commitmentWithin, occupiedAt } from './life';
 import { inHospital } from './health';
@@ -81,17 +87,19 @@ export function study(sim: Simulation, person: Person, id: string): { familiarit
 }
 
 /**
- * Practice in a work's genres: one session's worth shared among them by the work's weights (`genreNeeds`), so a tag
- * listed twice, or a broad genre listed beside its own kind, doesn't take a share of its own. Until 2026-10-22 (brief
- * 21) it was shared evenly among the tags as listed, so `['psychological_thriller', 'thriller']` gave each half.
+ * Practice in a work's genres: one session's worth shared among its requirement's genres by weight (`resolveGenres`),
+ * so a tag listed twice, or a broad genre listed beside its own kind, doesn't take a share of its own, and only the
+ * genres the work asks are practiced: a related genre that helps meet one (`relatedness`) earns nothing stored. Until
+ * 2026-10-22 (brief 21) it was shared evenly among the tags as listed, so `['psychological_thriller', 'thriller']` gave
+ * each half; brief 21 shared it by the first-listed half, and brief 22 by the work's stated weights.
  */
-export function practiceGenres(sim: Simulation, person: Person, genres: readonly string[], amount = 1): void {
-  for (const id of creditPractice(engagementOf(person), genres, amount)) genreState(person, id).lastAt = sim.now;
+export function practiceGenres(sim: Simulation, person: Person, work: Work, amount = 1): void {
+  for (const id of creditPractice(engagementOf(person), work, amount)) genreState(person, id).lastAt = sim.now;
 }
 
-/** One session's practice in a work's genres, by its weights, on a record with no clock: the requirements credited. */
-export function creditPractice(record: Engagement, genres: readonly string[], amount = 1): string[] {
-  return genreNeeds(genres).map((need) => {
+/** One session's practice in a work's genres, by its requirement's weights, on a record with no clock: the genres credited. */
+export function creditPractice(record: Engagement, work: Work, amount = 1): string[] {
+  return requirementOf(work).needs.map((need) => {
     const g = (record.byGenre[need.id] ??= { familiarity: 0, practice: 0 });
     g.practice = r2(g.practice + 100 * ENGAGEMENT.genre.practice * amount * need.weight * (1 - g.practice / 100));
     return need.id;
@@ -118,16 +126,16 @@ export function playOfCredit(production: string): string | undefined {
 }
 
 /**
- * How much faster preparation goes in a work's genres: by how well its genres are known, weighed (`relevantGenre`),
- * at most a sixth. Until 2026-10-22 (brief 21) it was the best-known of them, so knowing one of a work's two genres sped
- * it as much as knowing both.
+ * How much faster preparation goes in a work's genres: by how well its requirement is met (`relevantGenre`), at most a
+ * sixth. Until 2026-10-22 (brief 21) it was the best-known of its tags, so knowing one of a work's two genres sped it as
+ * much as knowing both.
  */
-export function genreSpeed(person: Knower, genres: readonly string[] | undefined): number {
-  return 1 + ENGAGEMENT.genreSpeed * relevantGenre(person, genres ?? []).total;
+export function genreSpeed(person: Knower, work: Work | undefined): number {
+  return 1 + ENGAGEMENT.genreSpeed * relevantGenre(person, work ?? []).total;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// A work's genres, weighed (from 2026-10-22, the owner's brief 21)
+// A work's genres: what it asks, and how well it's known (from 2026-10-22, the owner's briefs 21 and 22)
 // ---------------------------------------------------------------------------------------------------------------------
 
 /** Whoever has a record of genres: a person, or the stand-in for a class whose days aren't lived (`school.ts`). */
@@ -153,26 +161,84 @@ export function ancestorsOf(id: string): Set<string> {
   return out;
 }
 
-/** One requirement of a work, after its tags are weighed: the genre, its share of the whole, and the tags it took in. */
+/** The levels a requirement can be stated at, the most precise first where a reader passes several. */
+export type GenreLevel = 'scene' | 'part' | 'role' | 'play' | 'project' | 'brief' | 'tags';
+
+/** One level's statement of a work's genres: its weights where they're written, its tags where they're not. */
+export interface GenreSource { level: GenreLevel; weights?: GenreWeights; tags?: readonly string[] }
+
+/** One requirement of a work: the genre, its share of the whole, and the genres it took in (a broad genre folded in). */
 export interface GenreNeed { id: string; weight: number; from: string[] }
 
 /**
- * A work's genres as requirements, their weights summing to 1 (or none for a work with no genre the game knows): the
- * tags in the order listed, a repeat dropped; the first half the weight where there are two or more and the rest the
- * other half evenly (`ENGAGEMENT.weights`); then a tag that's the broad genre of another listed tag absorbed into its
- * listed kinds, its weight shared among them. More tags never add weight: it's shared, not summed.
+ * A work's genres resolved, one set for every reading: its needs, their weights summing to 1, sorted by genre; the level
+ * they came from; whether written there (`stated`), read evenly from its tags (`even`, the neutral fallback) or none
+ * found (`none`); and each level skipped for invalid weights, with why.
  */
-export function genreNeeds(genres: readonly string[]): GenreNeed[] {
-  const tags = [...new Set(genres)].filter((g) => GENRE_DEFS[g]);
-  if (!tags.length) return [];
-  const first = tags.length > 1 ? ENGAGEMENT.weights.primary : 1;
-  const weight = new Map(tags.map((g, i) => [g, i === 0 ? first : (1 - first) / (tags.length - 1)]));
-  const from = new Map(tags.map((g) => [g, [g]]));
-  const kindsListed = (g: string) => tags.filter((t) => t !== g && ancestorsOf(t).has(g));
-  // A broad genre with a kind of its own listed is absorbed, its weight and name passed to the kinds that aren't
-  // themselves absorbed (the narrowest listed).
-  const absorbed = new Set(tags.filter((g) => kindsListed(g).length > 0));
-  for (const g of tags) {
+export interface GenreRequirement {
+  needs: GenreNeed[];
+  level?: GenreLevel;
+  how: 'stated' | 'even' | 'none';
+  skipped: { level: GenreLevel; why: string }[];
+}
+
+/** What a reader can be given for a work: its resolved requirement, or tags alone, read evenly (an older record). */
+export type Work = GenreRequirement | readonly string[];
+
+/** Why a set of weights can't be read, or nothing: a genre the game doesn't have, a weight that isn't a number or is below 0, or none above 0. */
+export function weightsProblem(weights: GenreWeights): string | undefined {
+  const entries = Object.entries(weights);
+  for (const [g, w] of entries) {
+    if (!GENRE_DEFS[g]) return `${g} isn't a genre the game has`;
+    if (typeof w !== 'number' || !Number.isFinite(w)) return `${g}'s weight isn't a number`;
+    if (w < 0) return `${g}'s weight is below 0`;
+  }
+  return entries.some(([, w]) => w > 0) ? undefined : 'no genre weighs above 0';
+}
+
+/**
+ * A work's requirement from its levels, the most precise first (from 2026-10-22, the owner's brief 22): the first level
+ * that states valid weights gives the whole set, and none is merged with another; a level whose weights are invalid
+ * (`weightsProblem`) is skipped, said in `skipped`, and its tags read instead where it has any; a level with tags and no
+ * weights reads them evenly, the neutral fallback for older content; a level with neither passes to the next. Then:
+ *
+ * - **normalized and bounded:** each weight a share of their sum, nonnegative, at most 1, summing to 1, a genre at 0
+ *   dropped; a tag listed twice is one genre;
+ * - **overlap folded:** a broad genre listed beside one of its own kinds, at any depth, is the same demand said twice,
+ *   so its weight passes to the narrowest listed kinds, evenly, and one expertise is never counted twice;
+ * - **order-free:** the genres are sorted and summed by id, so listing them in another order changes nothing, to the
+ *   bit.
+ *
+ * Until brief 22 there was one level, a work's tags, and the first listed carried half the weight where there were two
+ * or more (`ENGAGEMENT.weights.primary`, brief 21's `genreNeeds`), so the order a list was written in decided what a
+ * work asked.
+ */
+export function resolveGenres(...sources: (GenreSource | undefined)[]): GenreRequirement {
+  const skipped: GenreRequirement['skipped'] = [];
+  for (const source of sources) {
+    if (!source) continue;
+    if (source.weights) {
+      const problem = weightsProblem(source.weights);
+      if (!problem) return folded(Object.entries(source.weights), source.level, 'stated', skipped);
+      skipped.push({ level: source.level, why: problem });
+    }
+    const tags = [...new Set(source.tags ?? [])].filter((g) => GENRE_DEFS[g]);
+    if (tags.length) return folded(tags.map((g) => [g, 1]), source.level, 'even', skipped);
+  }
+  return { needs: [], how: 'none', skipped };
+}
+
+function folded(pairs: [string, number][], level: GenreLevel, how: 'stated' | 'even', skipped: GenreRequirement['skipped']): GenreRequirement {
+  const kept = pairs.filter(([, w]) => w > 0).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  const sum = kept.reduce((a, [, w]) => a + w, 0);
+  const weight = new Map(kept.map(([g, w]) => [g, w / sum]));
+  const ids = kept.map(([g]) => g);
+  const from = new Map(ids.map((g) => [g, [g]]));
+  const kindsListed = (g: string) => ids.filter((t) => t !== g && ancestorsOf(t).has(g));
+  // A broad genre with a kind of its own listed is folded in, its weight and name passed to the kinds that aren't
+  // themselves folded (the narrowest listed).
+  const absorbed = new Set(ids.filter((g) => kindsListed(g).length > 0));
+  for (const g of ids) {
     if (!absorbed.has(g)) continue;
     const into = kindsListed(g).filter((t) => !absorbed.has(t));
     for (const t of into) {
@@ -180,47 +246,114 @@ export function genreNeeds(genres: readonly string[]): GenreNeed[] {
       from.get(t)!.push(g);
     }
   }
-  return tags.filter((g) => !absorbed.has(g)).map((g) => ({ id: g, weight: weight.get(g)!, from: from.get(g)! }));
+  return { needs: ids.filter((g) => !absorbed.has(g)).map((g) => ({ id: g, weight: weight.get(g)!, from: from.get(g)! })), level, how, skipped };
 }
 
+/** A reader's work as a requirement: tags alone read evenly, at no level of their own (`tags`). */
+export const requirementOf = (work: Work): GenreRequirement => ('needs' in work ? work : resolveGenres({ level: 'tags', tags: work }));
+
 /**
- * What knowing `known` is worth toward the requirement `need`, 0 to 1 (`ENGAGEMENT.related`): itself 1; a kind of it
- * most; its broad genre half; anything else nothing, two kinds of one broad genre included. The owner's briefs 01, 05
- * and 21 ask that mastery of an unrelated genre give no bonus, and `drama` is a family of most genres: crediting two of
- * its kinds to each other, as a first draft of 2026-10-22 did (0.375), credited social realism to a Nordic noir and
- * nearly every drama to every other, a near-universal bonus. Only a genre's own line counts, and a broad genre carries
- * to its kinds only by being known itself.
+ * What knowing `known` is worth toward the requirement `need`, 0 to 1 (`ENGAGEMENT.related`), across one direct link
+ * only (from 2026-10-22, the owner's brief 22, approving "partial transfer between a broad genre and its direct
+ * subgenres"): itself 1; a direct kind of it toward its broad genre `kindToParent`; a broad genre toward its direct
+ * kind `parentToKind`; anything else nothing: two kinds of one broad genre, a genre two links away, an unrelated one.
+ * Until brief 22 the links were read through any depth (`ancestorsOf`), so the 12 kinds of a broad genre that is itself
+ * a kind (Nordic noir of crime, crime of drama) counted toward drama at 0.75, two links away.
  */
 export function relatedness(known: string, need: string): number {
   if (known === need) return 1;
   const r = ENGAGEMENT.related;
-  if (ancestorsOf(known).has(need)) return r.kindToParent;
-  if (ancestorsOf(need).has(known)) return r.parentToKind;
+  if (parentsOf(known).includes(need)) return r.kindToParent;
+  if (parentsOf(need).includes(known)) return r.parentToKind;
   return 0;
 }
 
-/** How a work's genres are known: the whole, 0 to 1, and each requirement's weight, credit and the genre that gave it. */
-export interface GenreReading { total: number; needs: { id: string; weight: number; credit: number; by?: string }[] }
+/** How a work's genres are known: the whole, 0 to 1, the requirement read, and each need's weight, the genre's own knowledge, the best related credit, the two together, and the related genre that gave it. */
+export interface GenreReading {
+  total: number;
+  requirement: GenreRequirement;
+  needs: { id: string; weight: number; own: number; related: number; credit: number; by?: string }[];
+}
 
 /**
- * How well a person knows a work's genres, 0 to 1: each requirement (`genreNeeds`) credited the best of the genres
- * they know, each by how well it's known and how related it is (`relatedness`), and the credits weighed. It never
- * falls as any genre's knowledge rises, never passes 1 however many tags a work carries, and a genre unrelated to the
- * work's adds nothing. What a person loves isn't read: preference is enjoyment's, not expertise.
+ * How well a person knows a work's genres, 0 to 1: each need met by the genre's own knowledge and the best credit a
+ * directly related genre gives (`relatedness`), together as `1 − (1 − own) × (1 − related)`, and the needs weighed.
+ * Exact knowledge counts in full and always adds, so studying a work's own genre is never wasted on a broad genre
+ * already known; a related genre helps up to its link's share and no further; the best related genre counts once, never
+ * summed with another; nothing passes 1, nothing falls as any genre's knowledge rises, and an unrelated genre adds
+ * nothing. Until 2026-10-22 (brief 21) each need took the better of the two alone, so studying the genre itself added
+ * nothing until it passed what a related genre gave. What a person loves isn't read: preference is enjoyment's.
  */
-export function relevantGenre(person: Knower, genres: readonly string[]): GenreReading {
+export function relevantGenre(person: Knower, work: Work): GenreReading {
+  const requirement = requirementOf(work);
   const byGenre = person.engagement?.byGenre ?? {};
-  const known = Object.keys(byGenre).filter((g) => knownOf(person, g) > 0);
-  const needs = genreNeeds(genres).map((n) => {
-    let credit = 0;
+  const known = Object.keys(byGenre).filter((g) => knownOf(person, g) > 0).sort();
+  const needs = requirement.needs.map((n) => {
+    const own = knownOf(person, n.id);
+    let related = 0;
     let by: string | undefined;
     for (const g of known) {
+      if (g === n.id) continue;
       const c = relatedness(g, n.id) * knownOf(person, g);
-      if (c > credit) { credit = c; by = g; }
+      if (c > related) { related = c; by = g; }
     }
-    return { id: n.id, weight: n.weight, credit, ...(by ? { by } : {}) };
+    const credit = 1 - (1 - own) * (1 - related);
+    return { id: n.id, weight: n.weight, own, related, credit, ...(by ? { by } : {}) };
   });
-  return { total: Math.min(1, needs.reduce((a, n) => a + n.weight * n.credit, 0)), needs };
+  return { total: Math.min(1, needs.reduce((a, n) => a + n.weight * n.credit, 0)), requirement, needs };
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Each material's requirement, read from what it states (`content/genre-weights.ts`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** A professional role's: its own where `ROLE_GENRES` gives one, else its project's, else the project's tags evenly. */
+export const requirementOfRole = ({ id, project, genres }: Pick<ProjectTemplate, 'id' | 'project' | 'genres'>): GenreRequirement =>
+  resolveGenres({ level: 'role', weights: ROLE_GENRES[id]?.weights }, { level: 'project', weights: PROJECT_GENRES[project]?.weights, tags: genres });
+
+/** A play's, or a part's in it: the part's own where the play gives one, else the play's, else its tags evenly. */
+export function requirementOfPlay(title: string | undefined, part?: string, tags?: readonly string[]): GenreRequirement {
+  const stated = playGenresOf(title);
+  return resolveGenres(part ? { level: 'part', weights: stated?.parts?.[part]?.weights } : undefined, { level: 'play', weights: stated?.weights, tags: tags ?? genresOfPlay(title) });
+}
+
+/**
+ * A School holder's (a casting, an understudy, the Rep's or the Cabaret's): its part's in its play (`requirementOfPlay`),
+ * the Rep's 2026–27 Seagull by its own name. What `genresOfHolder` gave as tags until 2026-10-22 (brief 22).
+ */
+export function requirementOfHolder(h: { play?: string; kind?: string; production?: string; role?: string } | undefined): GenreRequirement {
+  if (h?.play) return requirementOfPlay(h.play, h.role);
+  return (h?.kind === 'role' || h?.kind === 'understudy') && h.production === SEAGULL_2027.name ? requirementOfPlay('The Seagull', h.role, SEAGULL_2027.kinds) : resolveGenres();
+}
+
+/** A practice brief's: its one genre (every brief is written for one, `Brief.kinds`). */
+export const requirementOfBrief = (b: { kinds: readonly string[] }): GenreRequirement => resolveGenres({ level: 'brief', tags: b.kinds });
+
+/**
+ * A class scene's: its own where `SCENE_GENRES` gives one, else its play's, else its filed genre (`Scene.genre`), which
+ * is coarser than a play's kinds and so read only where the play names none.
+ */
+export function requirementOfScene(sceneId: string | undefined): GenreRequirement {
+  const scene = sceneId ? SCENE_BY_ID.get(sceneId) : undefined;
+  if (!scene) return resolveGenres();
+  const stated = playGenresOf(scene.play);
+  return resolveGenres({ level: 'scene', weights: SCENE_GENRES[scene.id]?.weights }, { level: 'play', weights: stated?.weights, tags: genresOfPlay(scene.play) }, { level: 'scene', tags: [scene.genre] });
+}
+const SCENE_BY_ID = new Map(SCENES.map((x) => [x.id, x]));
+
+/**
+ * A requirement in words, as a casting notice or the showcase's note says it (from 2026-10-22, the owner's brief 22):
+ * "Domestic Drama"; two or more within a tenth of each other "Tragedy and Drama, about evenly"; otherwise the heaviest
+ * first, "Mostly Farce, with some Romantic Comedy". Never a weight or a share.
+ */
+export function requirementWords(req: GenreRequirement): string | undefined {
+  const label = (id: string) => GENRE_BY_ID[id]?.label ?? id;
+  const needs = [...req.needs].sort((a, b) => b.weight - a.weight || (a.id < b.id ? -1 : 1));
+  if (!needs.length) return undefined;
+  if (needs.length === 1) return label(needs[0]!.id);
+  const list = (ids: string[]) => (ids.length === 1 ? ids[0]! : `${ids.slice(0, -1).join(', ')} and ${ids.at(-1)}`);
+  if (needs[0]!.weight - needs.at(-1)!.weight <= 0.1) return `${list(needs.map((n) => label(n.id)))}, about evenly`;
+  return `Mostly ${label(needs[0]!.id)}, with some ${list(needs.slice(1).map((n) => label(n.id)))}`;
 }
 
 /** A self-tape’s hour: a take of a brief (`systems/briefs.ts`). */

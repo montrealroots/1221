@@ -176,6 +176,9 @@ genre, move (Decision Required).
   itself at 90. 0.75 and 0.5 stay if, on the median over the seeds at every path: (K1) nothing = unrelated < broad <
   kind < exact; (K2) the kind's gain is at most 0.85 of the exact genre's, and the broad genre's at most 0.65. Where
   either fails, the coefficient is lowered until both hold, and the reason kept.
+  **Measured (2026-10-22, `comparisons.md`):** 0.75 and 0.5 held K1 and failed K2 on three paths (a taped brief, a
+  School night, a self-tape); 0.70 and 0.45 failed it on one (a taped brief); 0.65 and 0.40 held both on every path, and
+  replaced them (`content/engagement.ts`; `decision-history.md`).
 - **T5, the criterion superseded, not loosened.** The Genre Audit's "leaks into none" (the owner's genre acceptance
   brief of 2026-10-16) replaced by the owner's words of brief 22: "No unrelated-genre contribution; only documented,
   bounded transfer across approved direct relationships." The tool reports both halves: unrelated moves (must be 0),

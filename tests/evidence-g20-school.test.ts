@@ -806,13 +806,16 @@ describe('genre.study', () => {
   };
   const studyTwice = (sim: Simulation, genre: string) => studies(sim, genre, [8, FAMILIAR]);
 
-  it('PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left', () => {
+  // Renamed on 2026-10-22 (brief 22): until then “PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half of it drama, moves 1 + 5.84/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left”: the material's stated weights and the measured coefficients moved its figures.
+
+  it('PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, three-fifths of it drama, moves 1 + 7.008/600 of a twin’s who didn’t study; after a save and a load a third that day adds a quarter of the first’s on what’s left', () => {
     const ada = life('g20-genre-2'), twin = life('g20-genre-2');
     for (const one of [ada, twin]) one.advanceTo(at(2026, 9, 5, 16, 5));
     studyTwice(ada, 'drama');
     expect(twin.player.engagement?.byGenre.drama).toBeUndefined();
-    // Until brief 21 (2026-10-22), 1 + 11.68/600: drama the better known of Trifles' two; from then its half.
-    expect(sceneRead(ada) / sceneRead(twin)).toBeCloseTo(1 + (0.5 * FAMILIAR) / 600, 9);
+    // Until brief 21 (2026-10-22), 1 + 11.68/600: drama the better known of Trifles' two; from then its half; from brief
+    // 22, its share as the play states it, drama 3 and mystery 2.
+    expect(sceneRead(ada) / sceneRead(twin)).toBeCloseTo(1 + (0.6 * FAMILIAR) / 600, 9);
     // The day's count survives a reload: 2 × (1 − 0.1168) = 1.7664 more, to 13.45 at two places.
     const back = reload(ada);
     dials(back); // TEST SETUP
@@ -860,7 +863,9 @@ describe('genre.study', () => {
     expect(genresOfPlay('The Proposal')).toEqual(['comedy', 'farce']);
   });
 
-  it('PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 5.84/600 of a twin’s who didn’t study: a farce, which comedy known meets at half', () => {
+  // Renamed on 2026-10-22 (brief 22): until then “PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 5.84/600 of a twin’s who didn’t study: a farce, which comedy known meets at half”: the material's stated weights and the measured coefficients moved its figures.
+
+  it('PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 4.672/600 of a twin’s who didn’t study: a farce, which comedy known meets at 0.4', () => {
     const lines = (study: boolean) => {
       const sim = life('g20-summer');
       tended(sim, at(2027, 3, 20));
@@ -877,10 +882,11 @@ describe('genre.study', () => {
       expect(processOf(show).lines).toBe(r.value!.lines);
       return r.value!.lines;
     };
-    // A comedy and a farce, one requirement, the farce (`genreNeeds`); comedy, the broader, meets a farce at half
-    // (`ENGAGEMENT.related.parentToKind`). Until brief 21 (2026-10-22), comedy listed met it whole: 1 + 11.68/600.
+    // A comedy and a farce, one requirement, the farce (`requirementOfPlay`); comedy, the broader, meets a farce at 0.4
+    // (`ENGAGEMENT.related.parentToKind`). Until brief 21 (2026-10-22), comedy listed met it whole: 1 + 11.68/600; until
+    // brief 22's measurement, at half: 1 + 5.84/600.
     expect(genresOfPlay('A Marriage Proposal')).toEqual(['comedy', 'farce']);
-    expect(lines(true) / lines(false)).toBeCloseTo(1 + (0.5 * FAMILIAR) / 600, 9);
+    expect(lines(true) / lines(false)).toBeCloseTo(1 + (0.4 * FAMILIAR) / 600, 9);
   });
 });
 

@@ -21,7 +21,10 @@ import { PROJECTS } from '@/engine/content/careerwork';
 import { TECHNIQUE_LABEL } from '@/engine/content/abilities';
 import type { Skill } from '@/engine/content/school';
 import type { Opportunity } from '@/engine/systems/pro';
-import { DEFERRED_WHY, payTermsOf, writtenForWords } from '@/engine/systems/projobs';
+import { DEFERRED_WHY, payTermsOf, projectGenresOf, writtenForWords } from '@/engine/systems/projobs';
+import { requirementWords } from '@/engine/systems/engagement';
+import { GENRE_BY_ID } from '@/engine/content/film-genres';
+import { PROJECT_GENRES } from '@/engine/content/genre-weights';
 
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation, tab: 'opportunities' }));
 
@@ -98,6 +101,11 @@ describe('the Opportunities tab', () => {
     expect(shown).toContain(`The Part ${t.role.part}: ${t.role.about}`);
     // Who the part is written for, as a breakdown says it, before its playing ages (from 2026-10-21).
     expect(shown).toContain(`${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to`);
+    // What the part asks of the genres, in words, never a weight or a share (from 2026-10-22, the owner's brief 22): until
+    // then the project's tags as listed, a broad genre beside its own kind ("Psychological Horror, Horror").
+    expect(shown).toContain(`What It Asks ${requirementWords(projectGenresOf(t))}. ${writtenForWords(t)}`);
+    expect(requirementWords(projectGenresOf(t))).toBe(GENRE_BY_ID[Object.keys(PROJECT_GENRES[t.project]!.weights)[0]!]!.label);
+    if (t.genres.length > 1) expect(shown).not.toContain(t.genres.map((g) => GENRE_BY_ID[g]!.label).join(', '));
     expect(open.map((o) => PROJECTS.find((x) => x.id === o.projectId)!.role.for)).not.toContain('actor');
     // What the part asks: its two techniques named once, then the actor's own levels, read from the record.
     const [a, b] = Object.keys(t.role.techniques) as Skill[];

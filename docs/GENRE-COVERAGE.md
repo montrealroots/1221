@@ -18,8 +18,13 @@ Every genre has the same working mechanics, and every one is reachable from the 
   and it doesn't also speed the brief's steps. Until brief 21 (2026-10-22) a work of several genres read the best known
   of them, never the sum; from then each counts for its weight in the work, the weights summing to one, a broad genre
   listed beside its own kind counted as that kind, and a related genre credited only along its own line (a kind toward
-  its genre at 0.75, a genre toward its kind at 0.5, any other at nothing) (`genreNeeds`, `relevantGenre`). The same
-  reading is part of the preparation of an audition, a self-tape, a shoot day and a night on stage, and of casting's fit.
+  its genre at 0.75, a genre toward its kind at 0.5, any other at nothing). From brief 22 (2026-10-22) the weights are
+  the material's own, stated by the play, part, scene, project or role (`content/genre-weights.ts`), its tags read
+  evenly where nothing is stated, and a related genre counts across one direct link only, beside the genre's own
+  knowledge (`resolveGenres`, `relevantGenre`), at 0.65 toward a broad genre and 0.40 toward a kind, measured
+  against the 0.75 and 0.5 it kept provisionally (docs/verification/career-genre-2026-10-22/comparisons.md). The same
+  reading is part of the preparation of an audition, a self-tape, a shoot day and a night on stage, and of casting's
+  fit.
 - **Its register** (from 2026-10-16, `content/genre-register.ts`): 149 of 149 genres have
   one, the conventions its scenes are played in, 13 concerns among them, one or two a genre,
   each with where it's from. It's read by every take of a brief written for the genre, and it says how well a way of
