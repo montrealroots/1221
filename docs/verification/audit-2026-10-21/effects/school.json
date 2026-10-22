@@ -14,15 +14,15 @@
    "consumers": [
     {
      "what": "The take’s context reads the reading’s lean and the way’s required mark",
-     "at": "src/engine/systems/briefs.ts:358"
+     "at": "src/engine/systems/briefs.ts:361"
     },
     {
      "what": "A take needs a reading chosen",
-     "at": "src/engine/systems/briefs.ts:544"
+     "at": "src/engine/systems/briefs.ts:547"
     },
     {
      "what": "The take judged with that context",
-     "at": "src/engine/systems/briefs.ts:632"
+     "at": "src/engine/systems/briefs.ts:635"
     }
    ],
    "experienced": "At once the pane’s forecast and preview change with the reading; later the take is judged on it, and the habits panel counts the sides chosen.",
@@ -59,11 +59,11 @@
    "consumers": [
     {
      "what": "The take reads the preparation as its prep",
-     "at": "src/engine/systems/briefs.ts:400"
+     "at": "src/engine/systems/briefs.ts:403"
     },
     {
      "what": "A take credits its genres by how far it was prepared",
-     "at": "src/engine/systems/briefs.ts:653"
+     "at": "src/engine/systems/briefs.ts:656"
     }
    ],
    "experienced": "The pane’s forecast rises at once; the take later is judged on the preparation and credits its genres by it.",
@@ -99,15 +99,15 @@
    "consumers": [
     {
      "what": "The reader’s read: their preparation, timing and reliability",
-     "at": "src/engine/systems/briefs.ts:555"
+     "at": "src/engine/systems/briefs.ts:558"
     },
     {
      "what": "The take together reads the reader",
-     "at": "src/engine/systems/briefs.ts:567"
+     "at": "src/engine/systems/briefs.ts:570"
     },
     {
      "what": "What the take together leaves between you and the reader",
-     "at": "src/engine/systems/briefs.ts:662"
+     "at": "src/engine/systems/briefs.ts:665"
     }
    ],
    "experienced": "The take together is judged with the reader; a classmate’s bond and trust move after it.",
@@ -143,11 +143,11 @@
    "consumers": [
     {
      "what": "genreSpeed reads familiarity and practice",
-     "at": "src/engine/systems/engagement.ts:101"
+     "at": "src/engine/systems/engagement.ts:125"
     },
     {
      "what": "A take’s knowing the genre",
-     "at": "src/engine/systems/briefs.ts:333"
+     "at": "src/engine/systems/briefs.ts:336"
     }
    ],
    "experienced": "Work in the genre goes faster after: a class scene from a play of the kind, a part’s lines, a take of a brief.",
@@ -184,7 +184,7 @@
    "consumers": [
     {
      "what": "The script skill, read with the craft by castFit",
-     "at": "src/engine/systems/school.ts:2800"
+     "at": "src/engine/systems/school.ts:2877"
     },
     {
      "what": "Research needs a read first",
@@ -223,7 +223,7 @@
    "consumers": [
     {
      "what": "The script skill, read with the craft by castFit",
-     "at": "src/engine/systems/school.ts:2800"
+     "at": "src/engine/systems/school.ts:2877"
     }
    ],
    "experienced": "The note on the Plays To Read list at once; a tenth of a point of script each, read by the casting’s fit.",
@@ -295,15 +295,15 @@
    "consumers": [
     {
      "what": "The work record read by the work look and the identity",
-     "at": "src/engine/systems/briefs.ts:642"
+     "at": "src/engine/systems/briefs.ts:645"
     },
     {
      "what": "Genre practice, read by genreSpeed",
-     "at": "src/engine/systems/briefs.ts:653"
+     "at": "src/engine/systems/briefs.ts:656"
     },
     {
      "what": "The callback the next take answers",
-     "at": "src/engine/systems/briefs.ts:664"
+     "at": "src/engine/systems/briefs.ts:667"
     }
    ],
    "experienced": "The take’s result at once on the pane; later the genre’s practice speeds its work, and a callback asks the next take.",
@@ -340,11 +340,11 @@
    "consumers": [
     {
      "what": "The rehearsal comes and is kept or missed",
-     "at": "src/engine/systems/coursework.ts:2044"
+     "at": "src/engine/systems/coursework.ts:2045"
     },
     {
      "what": "An ask left unanswered lapses, costing a little trust",
-     "at": "src/engine/systems/coursework.ts:2018"
+     "at": "src/engine/systems/coursework.ts:2019"
     }
    ],
    "experienced": "A yes is an evening on the calendar; no answer at all costs a little trust (“Didn’t Hear Back”), where a no costs nothing.",
@@ -416,11 +416,11 @@
     },
     {
      "what": "A smaller piece’s parts read larger, and its band held to Working",
-     "at": "src/engine/systems/coursework.ts:845"
+     "at": "src/engine/systems/coursework.ts:846"
     },
     {
      "what": "The partner way works the weakness at a kept rehearsal",
-     "at": "src/engine/systems/coursework.ts:1805"
+     "at": "src/engine/systems/coursework.ts:1806"
     }
    ],
    "experienced": "The piece is prepared and judged the chosen way; the note’s history shows whether it was taken.",
@@ -456,11 +456,11 @@
    "consumers": [
     {
      "what": "The rehearsal comes and is kept or missed",
-     "at": "src/engine/systems/coursework.ts:2044"
+     "at": "src/engine/systems/coursework.ts:2045"
     },
     {
      "what": "The partner declines under the wary line",
-     "at": "src/engine/systems/coursework.ts:1732"
+     "at": "src/engine/systems/coursework.ts:1733"
     }
    ],
    "experienced": "The evening on the calendar, a stop when the clock reaches it; a partner stood up before declines in so many words.",
@@ -538,7 +538,7 @@
    "consumers": [
     {
      "what": "An assigned shift needs it, or the student is sent home and it’s missed",
-     "at": "src/engine/systems/school.ts:3582"
+     "at": "src/engine/systems/school.ts:3664"
     }
    ],
    "experienced": "A Saturday’s crew shift is worked; short of it, “Sent Home From Work-Study”, missed.",
@@ -572,11 +572,11 @@
    "consumers": [
     {
      "what": "The calls come and are played or missed",
-     "at": "src/engine/systems/school.ts:3989"
+     "at": "src/engine/systems/school.ts:4071"
     },
     {
      "what": "The term review reads the run’s nights",
-     "at": "src/engine/systems/school.ts:3192"
+     "at": "src/engine/systems/school.ts:3274"
     }
    ],
    "experienced": "The calls on the calendar; the nights judged; the term review notes the run.",
@@ -615,19 +615,19 @@
    "consumers": [
     {
      "what": "The day’s classes excused, not counted against attendance",
-     "at": "src/engine/systems/school.ts:3501"
+     "at": "src/engine/systems/school.ts:3583"
     },
     {
      "what": "A shift that day excused, its hours convertible",
-     "at": "src/engine/systems/school.ts:3561"
+     "at": "src/engine/systems/school.ts:3643"
     },
     {
      "what": "A rehearsal with a partner that day excused, at no cost in trust",
-     "at": "src/engine/systems/coursework.ts:1751"
+     "at": "src/engine/systems/coursework.ts:1752"
     },
     {
      "what": "Each course’s meeting kept as excused, toward an Incomplete",
-     "at": "src/engine/systems/school.ts:3492"
+     "at": "src/engine/systems/school.ts:3574"
     }
    ],
    "experienced": "The day’s classes, shift and rehearsal are excused when they come; enough excused meetings make a course Incomplete at the review, with a month to make it up; most of a term’s class days ill bring Yale Health’s assessment.",
@@ -715,7 +715,7 @@
     },
     {
      "what": "Trust read by the partner’s asks and declines",
-     "at": "src/engine/systems/coursework.ts:1858"
+     "at": "src/engine/systems/coursework.ts:1859"
     }
    ],
    "experienced": "The evening is free at once; at short notice the partner trusts you less, and may set a boundary.",
@@ -825,11 +825,11 @@
    "consumers": [
     {
      "what": "Steps, a partner’s evening and a drill rehearse it in",
-     "at": "src/engine/systems/coursework.ts:689"
+     "at": "src/engine/systems/coursework.ts:690"
     },
     {
      "what": "The showing reads the way against its mark",
-     "at": "src/engine/systems/coursework.ts:1004"
+     "at": "src/engine/systems/coursework.ts:1005"
     }
    ],
    "experienced": "The forecast reflects the way at once; the meeting judges it.",
@@ -867,7 +867,7 @@
    "consumers": [
     {
      "what": "Each showcase day judges each chosen scene",
-     "at": "src/engine/systems/proshowcase.ts:580"
+     "at": "src/engine/systems/proshowcase.ts:585"
     }
    ],
    "experienced": "The pieces open to prepare; each showcase day’s notice gives each scene’s band.",
@@ -900,11 +900,11 @@
    "consumers": [
     {
      "what": "The interpretation read from the answers the text supports",
-     "at": "src/engine/systems/coursework.ts:753"
+     "at": "src/engine/systems/coursework.ts:754"
     },
     {
      "what": "A note on a choice, given and taken",
-     "at": "src/engine/systems/coursework.ts:895"
+     "at": "src/engine/systems/coursework.ts:896"
     }
    ],
    "experienced": "The piece is judged with the answers at its meeting; an unsupported answer brings a note.",
@@ -1012,11 +1012,11 @@
    "consumers": [
     {
      "what": "The partner’s trust read by their asks and declines",
-     "at": "src/engine/systems/coursework.ts:1732"
+     "at": "src/engine/systems/coursework.ts:1733"
     },
     {
      "what": "The partner’s own work on a shared scene reads trust",
-     "at": "src/engine/systems/coursework.ts:777"
+     "at": "src/engine/systems/coursework.ts:778"
     }
    ],
    "experienced": "Trust back over the wary line, and the partner’s asks are no longer declined for it; the boundary stays until rehearsals are kept.",
@@ -1057,7 +1057,7 @@
    "consumers": [
     {
      "what": "The degree waiting on it is conferred once nothing stands in its way",
-     "at": "src/engine/systems/school.ts:3292"
+     "at": "src/engine/systems/school.ts:3374"
     },
     {
      "what": "The degree reads the best attempt",
@@ -1101,15 +1101,15 @@
    "consumers": [
     {
      "what": "Classes count a student only once registered",
-     "at": "src/engine/systems/school.ts:3503"
+     "at": "src/engine/systems/school.ts:3585"
     },
     {
      "what": "A shift can’t be worked unregistered",
-     "at": "src/engine/systems/school.ts:3574"
+     "at": "src/engine/systems/school.ts:3656"
     },
     {
      "what": "A classmate not met can’t be asked to rehearse",
-     "at": "src/engine/systems/coursework.ts:1707"
+     "at": "src/engine/systems/coursework.ts:1708"
     },
     {
      "what": "The studios and the library known for preparation",
@@ -1197,11 +1197,11 @@
    "consumers": [
     {
      "what": "The showing reads the parts prepared",
-     "at": "src/engine/systems/coursework.ts:833"
+     "at": "src/engine/systems/coursework.ts:834"
     },
     {
      "what": "The piece judged at its meeting",
-     "at": "src/engine/systems/coursework.ts:970"
+     "at": "src/engine/systems/coursework.ts:971"
     }
    ],
    "experienced": "The Shown Today line moves at once; at the piece’s meeting it is shown at the band the preparation earns, and the term review counts the pieces Unready.",
@@ -1311,7 +1311,7 @@
    "consumers": [
     {
      "what": "The processing pays the hours as grant aid",
-     "at": "src/engine/systems/school.ts:3630"
+     "at": "src/engine/systems/school.ts:3712"
     }
    ],
    "experienced": "At the processing, “Hours Converted To Grant Aid”: the grant in the bank, a taxable scholarship on the year’s return.",
@@ -1473,7 +1473,7 @@
    "consumers": [
     {
      "what": "Classes count a student only once registered",
-     "at": "src/engine/systems/school.ts:154"
+     "at": "src/engine/systems/school.ts:155"
     }
    ],
    "experienced": "Back from a leave or past a term begun under a hold, classes count the student from the next class day.",
@@ -1556,7 +1556,7 @@
     },
     {
      "what": "The return term begins the return",
-     "at": "src/engine/systems/school.ts:3370"
+     "at": "src/engine/systems/school.ts:3452"
     }
    ],
    "experienced": "No reminder and no dismissal; at the return term, “Back From Your Leave”, register before classes count you.",
@@ -1630,11 +1630,11 @@
    "consumers": [
     {
      "what": "The summer’s calls",
-     "at": "src/engine/systems/school.ts:4090"
+     "at": "src/engine/systems/school.ts:4172"
     },
     {
      "what": "The weekly stipend, a wage",
-     "at": "src/engine/systems/school.ts:4214"
+     "at": "src/engine/systems/school.ts:4296"
     }
    ],
    "experienced": "The summer’s calls and pay on the calendar; credits on the Profile; the casting reads the run.",
@@ -1671,7 +1671,7 @@
    "consumers": [
     {
      "what": "The shift comes, worked and paid, or missed and its hours freed",
-     "at": "src/engine/systems/school.ts:3553"
+     "at": "src/engine/systems/school.ts:3635"
     }
    ],
    "experienced": "The evening on the calendar; its pay the Friday after; missed, its hours free again and nothing counted against attendance.",
@@ -1705,7 +1705,7 @@
    "consumers": [
     {
      "what": "The School’s end lets go its calendar and records the end",
-     "at": "src/engine/systems/school.ts:1995"
+     "at": "src/engine/systems/school.ts:2010"
     },
     {
      "what": "An F-1’s status after withdrawing",
@@ -1889,11 +1889,11 @@
     },
     {
      "what": "A term begun under the hold asks registration again",
-     "at": "src/engine/systems/school.ts:3418"
+     "at": "src/engine/systems/school.ts:3500"
     },
     {
      "what": "Commencement holds the diploma",
-     "at": "src/engine/systems/school.ts:3941"
+     "at": "src/engine/systems/school.ts:4023"
     }
    ],
    "experienced": "“A Financial Hold” each month with the amount and the fee; paid, “The Financial Hold Is Lifted”.",
@@ -1932,7 +1932,7 @@
    "consumers": [
     {
      "what": "A term past six reads the review",
-     "at": "src/engine/systems/school.ts:1507"
+     "at": "src/engine/systems/school.ts:1522"
     }
    ],
    "experienced": "The review’s notice; the term past six billed or supported by it.",
@@ -1969,11 +1969,11 @@
    "consumers": [
     {
      "what": "The review counts calls answered",
-     "at": "src/engine/systems/school.ts:3186"
+     "at": "src/engine/systems/school.ts:3268"
     },
     {
      "what": "Missed calls take the student out of the casting pool",
-     "at": "src/engine/systems/school.ts:2099"
+     "at": "src/engine/systems/school.ts:2114"
     }
    ],
    "experienced": "The night’s notice; “You Missed A Rehearsal Call”; “Out Of The Casting Pool”; at the review, the run noted.",
@@ -2009,7 +2009,7 @@
    "consumers": [
     {
      "what": "The review’s attendance",
-     "at": "src/engine/systems/school.ts:3186"
+     "at": "src/engine/systems/school.ts:3268"
     },
     {
      "what": "A course failed under three quarters of its meetings",
@@ -2021,7 +2021,7 @@
     },
     {
      "what": "A piece due shown at the meeting",
-     "at": "src/engine/systems/coursework.ts:1468"
+     "at": "src/engine/systems/coursework.ts:1469"
     }
    ],
    "experienced": "The day’s notice if missed, said at nine that morning; at the review the attendance figure and each course’s result; three Fails in a term bring the faculty’s review and academic warning.",
@@ -2067,7 +2067,7 @@
    "consumers": [
     {
      "what": "A degree waiting is conferred once nothing stands in its way",
-     "at": "src/engine/systems/school.ts:3292"
+     "at": "src/engine/systems/school.ts:3374"
     },
     {
      "what": "The degree gives Equity membership in the career",
@@ -2109,7 +2109,7 @@
    "consumers": [
     {
      "what": "The next casting reads each student’s craft",
-     "at": "src/engine/systems/school.ts:2821"
+     "at": "src/engine/systems/school.ts:2900"
     }
    ],
    "experienced": "The class grows by its runs; the next cast list reads it.",
@@ -2143,7 +2143,7 @@
    "consumers": [
     {
      "what": "A degree waiting is conferred once nothing stands in its way",
-     "at": "src/engine/systems/school.ts:3292"
+     "at": "src/engine/systems/school.ts:3374"
     }
    ],
    "experienced": "“Your MFA Is Conferred” at Yale’s December conferral, the diploma mailed in about six weeks.",
@@ -2183,7 +2183,7 @@
     },
     {
      "what": "Hours converted aren’t converted again",
-     "at": "src/engine/systems/school.ts:1940"
+     "at": "src/engine/systems/school.ts:1955"
     }
    ],
    "experienced": "“Hours Converted To Grant Aid” with the amount; or “No Hours To Convert”.",
@@ -2221,19 +2221,19 @@
    "consumers": [
     {
      "what": "The standing set and said",
-     "at": "src/engine/systems/school.ts:1992"
+     "at": "src/engine/systems/school.ts:2007"
     },
     {
      "what": "On warning, no Cabaret",
-     "at": "src/engine/systems/school.ts:1604"
+     "at": "src/engine/systems/school.ts:1619"
     },
     {
      "what": "Only good standing joins the Summer Cabaret",
-     "at": "src/engine/systems/school.ts:1625"
+     "at": "src/engine/systems/school.ts:1640"
     },
     {
      "what": "A last year’s Fails offered thirty days",
-     "at": "src/engine/systems/school.ts:3262"
+     "at": "src/engine/systems/school.ts:3344"
     }
    ],
    "experienced": "The review’s notice (In Good Standing, A Notice Of Academic Concern, Academic Warning, dismissal), Not Passed and Incomplete notices; later the Cabaret, the summer company and the casting pool read the standing.",
@@ -2392,7 +2392,7 @@
     },
     {
      "what": "The review counts it among the calls",
-     "at": "src/engine/systems/school.ts:3186"
+     "at": "src/engine/systems/school.ts:3268"
     }
    ],
    "experienced": "The lab’s showing notice; at the review its course passed or failed.",
@@ -2430,7 +2430,7 @@
    "consumers": [
     {
      "what": "The term’s courses go on",
-     "at": "src/engine/systems/school.ts:3470"
+     "at": "src/engine/systems/school.ts:3552"
     }
    ],
    "experienced": "The decision’s notice; rescinded, classes again.",
@@ -2506,7 +2506,7 @@
    "consumers": [
     {
      "what": "The School’s end",
-     "at": "src/engine/systems/school.ts:1995"
+     "at": "src/engine/systems/school.ts:2010"
     }
    ],
    "experienced": "The reminder, then “Dismissed From The School” if no notice was given.",
@@ -2544,7 +2544,7 @@
    "consumers": [
     {
      "what": "Trust read by the partner’s asks",
-     "at": "src/engine/systems/coursework.ts:1858"
+     "at": "src/engine/systems/coursework.ts:1859"
     }
    ],
    "experienced": "The moment is gone from Your Class; the classmate’s look keeps it.",
@@ -2581,7 +2581,7 @@
    "consumers": [
     {
      "what": "Trust read by the partner’s asks and declines",
-     "at": "src/engine/systems/coursework.ts:1732"
+     "at": "src/engine/systems/coursework.ts:1733"
     }
    ],
    "experienced": "“… Didn’t Hear Back”: no rehearsal, a little trust lost, where a no costs nothing.",
@@ -2618,15 +2618,15 @@
    "consumers": [
     {
      "what": "The partner declines under the wary line",
-     "at": "src/engine/systems/coursework.ts:1732"
+     "at": "src/engine/systems/coursework.ts:1733"
     },
     {
      "what": "The partner’s own work on the scene reads trust",
-     "at": "src/engine/systems/coursework.ts:777"
+     "at": "src/engine/systems/coursework.ts:778"
     },
     {
      "what": "The scene together reads the partner part prepared",
-     "at": "src/engine/systems/coursework.ts:782"
+     "at": "src/engine/systems/coursework.ts:783"
     }
    ],
    "experienced": "Kept, the scene together rises; missed, the partner trusts you less, then declines in so many words; the scene shown together a band lower.",
@@ -2747,7 +2747,7 @@
    "consumers": [
     {
      "what": "The repeated year’s courses meet again",
-     "at": "src/engine/systems/school.ts:814"
+     "at": "src/engine/systems/school.ts:824"
     }
    ],
    "experienced": "“You’ll Repeat The Year” with the terms billed past six; or “Your Repeat Isn’t Granted”.",
@@ -2786,7 +2786,7 @@
    "consumers": [
     {
      "what": "The School’s end",
-     "at": "src/engine/systems/school.ts:1995"
+     "at": "src/engine/systems/school.ts:2010"
     }
    ],
    "experienced": "“The Degree Isn’t Recommended”: the thirty days ended with nothing asked for.",
@@ -2824,15 +2824,15 @@
    "consumers": [
     {
      "what": "The payday pays the hours owed",
-     "at": "src/engine/systems/school.ts:3655"
+     "at": "src/engine/systems/school.ts:3737"
     },
     {
      "what": "The review counts shifts worked",
-     "at": "src/engine/systems/school.ts:3186"
+     "at": "src/engine/systems/school.ts:3268"
     },
     {
      "what": "Excused hours become grant aid",
-     "at": "src/engine/systems/school.ts:1934"
+     "at": "src/engine/systems/school.ts:1949"
     }
    ],
    "experienced": "Paid the Friday after; slept through, “You Missed A Work-Study Shift” and nothing paid; excused, convertible in January or May.",
@@ -2877,7 +2877,7 @@
    "consumers": [
     {
      "what": "Each showcase day judges the chosen scenes",
-     "at": "src/engine/systems/proshowcase.ts:580"
+     "at": "src/engine/systems/proshowcase.ts:585"
     }
    ],
    "experienced": "The scenes on the Coursework tab; kept out, said in the notice and the panel.",
@@ -2910,7 +2910,7 @@
    "consumers": [
     {
      "what": "DRAM 793b settled after its last day",
-     "at": "src/engine/systems/school.ts:3914"
+     "at": "src/engine/systems/school.ts:3996"
     }
    ],
    "experienced": "Each day’s notice with each scene’s band; Actor Showcase passed or not.",
@@ -2980,7 +2980,7 @@
    "consumers": [
     {
      "what": "The showing reads the parts prepared",
-     "at": "src/engine/systems/coursework.ts:833"
+     "at": "src/engine/systems/coursework.ts:834"
     }
    ],
    "experienced": "The scene’s lines prepared further; missed, the classmate trusts you less.",
@@ -3015,7 +3015,7 @@
    "consumers": [
     {
      "what": "The casting reads the summer’s run",
-     "at": "src/engine/systems/school.ts:2699"
+     "at": "src/engine/systems/school.ts:2721"
     }
    ],
    "experienced": "The nights’ notices, the credit on the Profile; missed, “Out Of The Summer Cabaret”.",
@@ -3050,11 +3050,11 @@
    "consumers": [
     {
      "what": "The review reads the fresh tally",
-     "at": "src/engine/systems/school.ts:3186"
+     "at": "src/engine/systems/school.ts:3268"
     },
     {
      "what": "Under a hold, registration asked again",
-     "at": "src/engine/systems/school.ts:154"
+     "at": "src/engine/systems/school.ts:155"
     },
     {
      "what": "The scholarship’s taxable part on the year’s return",
@@ -3103,11 +3103,11 @@
    "consumers": [
     {
      "what": "Each class day handled",
-     "at": "src/engine/systems/school.ts:3470"
+     "at": "src/engine/systems/school.ts:3552"
     },
     {
      "what": "Each shift handled",
-     "at": "src/engine/systems/school.ts:3553"
+     "at": "src/engine/systems/school.ts:3635"
     }
    ],
    "experienced": "The week’s classes and shift on the calendar, each once; moved past in one jump, each still comes, once.",

@@ -250,19 +250,19 @@
    "consumers": [
     {
      "what": "the career’s postings: a part is posted only where written for the title or for either",
-     "at": "src/engine/systems/projobs.ts:423"
+     "at": "src/engine/systems/projobs.ts:428"
     },
     {
      "what": "writtenFor",
-     "at": "src/engine/systems/projobs.ts:406"
+     "at": "src/engine/systems/projobs.ts:411"
     },
     {
      "what": "the School’s casting pool, by title",
-     "at": "src/engine/systems/school.ts:2888"
+     "at": "src/engine/systems/school.ts:2967"
     },
     {
      "what": "the Rep’s and the company’s parts written for the title",
-     "at": "src/engine/systems/school.ts:2934"
+     "at": "src/engine/systems/school.ts:3016"
     },
     {
      "what": "a play read’s part for you",
@@ -826,7 +826,7 @@
     },
     {
      "what": "the card’s autopay",
-     "at": "src/engine/systems/credit.ts:1344"
+     "at": "src/engine/systems/credit.ts:1482"
     }
    ],
    "experienced": "Each of the seven through the clock or a command (the axis.* rows): the steady take two hours on empty with less stress, the orderly sleep deeper, the open and the agreeable are lifted 3.6 more by the Cabaret’s read-through, the introvert takes its first curtain with 7.2 more stress, and over 65 the card carries a balance.",
@@ -941,11 +941,11 @@
     },
     {
      "what": "a Summer Cabaret rehearsal",
-     "at": "src/engine/systems/school.ts:4152"
+     "at": "src/engine/systems/school.ts:4234"
     },
     {
      "what": "the genre look’s A Genre You Love",
-     "at": "src/ui/looks/actor.tsx:172"
+     "at": "src/ui/looks/actor.tsx:173"
     }
    ],
    "experienced": "At a rehearsal or a night of a play of a kind loved: the Summer Cabaret’s first rehearsal of Miss Julie (drama, tragedy) is 1.5 more morale and 1.5 less stress for a lover of drama than for a lover of westerns, and the same as the westerns’ for a lover of comedy or of nothing (b20-c-genre-1, 2027). The work is no better for it.",
@@ -1068,7 +1068,7 @@
    "consumers": [
     {
      "what": "Yale’s need assessment",
-     "at": "src/engine/systems/school.ts:1497"
+     "at": "src/engine/systems/school.ts:1512"
     }
    ],
    "experienced": "At 9 AM on the first morning: a family with need is paid the living-expense scholarship less the plan, $13,318.50, into the bank; a Wealthy or Inherited one pays the $1,882 plan from it. The same each term, and through a week jumped at once, once.",
@@ -1179,7 +1179,7 @@
     },
     {
      "what": "with the family, Yale’s need",
-     "at": "src/engine/systems/school.ts:1497"
+     "at": "src/engine/systems/school.ts:1512"
     }
    ],
    "experienced": "On the first morning: Nothing $43 and no card; Scraping $1,348, $326 saved, $913 carried on a $1,630 card, score 610; Modest $5,217 and $7,065, $457 carried, 690; Comfortable $19,565 and $45,652, 748; Wealthy $92,391 and $413,043, 795; Inherited $260,870 and $2,608,696, 812. The autopay clears a carried balance on 11 October. The class, the craft and the career’s postings are the same for all six.",
@@ -1267,7 +1267,7 @@
     },
     {
      "what": "the places and holidays loaded",
-     "at": "src/engine/index.ts:1320"
+     "at": "src/engine/index.ts:1349"
     }
    ],
    "experienced": "Raised in London: HSBC UK or Barclays is offered and kept, in pounds, keeping England’s bank holidays; raised in New York, no bank is offered. The birthplace alone grants none.",
@@ -1575,11 +1575,11 @@
     },
     {
      "what": "a Cabaret rehearsal",
-     "at": "src/engine/systems/school.ts:4028"
+     "at": "src/engine/systems/school.ts:4110"
     },
     {
      "what": "a festival’s rehearsal call",
-     "at": "src/engine/systems/school.ts:3883"
+     "at": "src/engine/systems/school.ts:3965"
     }
    ],
    "experienced": "At a rehearsal of new work: the Yale Cabaret’s read-through lifts the open student 3.6 more at 95 than at 5, the stress alike; its curtain, not a rehearsal, alike.",
@@ -1724,11 +1724,11 @@
     },
     {
      "what": "a Cabaret rehearsal",
-     "at": "src/engine/systems/school.ts:4028"
+     "at": "src/engine/systems/school.ts:4110"
     },
     {
      "what": "a lab",
-     "at": "src/engine/systems/school.ts:4194"
+     "at": "src/engine/systems/school.ts:4276"
     }
    ],
    "experienced": "At a rehearsal: the Cabaret’s read-through lifts the agreeable student 3.6 more at 95 than at 5, the stress alike.",
@@ -1877,7 +1877,7 @@
    "consumers": [
     {
      "what": "the card’s autopay, over 65 on the minimum",
-     "at": "src/engine/systems/credit.ts:1344"
+     "at": "src/engine/systems/credit.ts:1482"
     },
     {
      "what": "the Profile’s line on what it did",
@@ -1926,7 +1926,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "the craft’s emotion, read where work is judged",
@@ -1972,7 +1972,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "nerves grow it",
@@ -1980,7 +1980,7 @@
     },
     {
      "what": "casting’s fit",
-     "at": "src/engine/systems/school.ts:2424"
+     "at": "src/engine/systems/school.ts:2441"
     }
    ],
    "experienced": "Where work is judged: the same brief taped cold on the first morning is judged better at 90 than at 30 (19.5 at 30, 21.6 at 90, b20-c-able). Skill posts no different part: with every ability at 30 or 90 the career posts the same parts on the same Mondays through the fall.",
@@ -2022,15 +2022,15 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "an evening with a partner goes further",
-     "at": "src/engine/systems/coursework.ts:1785"
+     "at": "src/engine/systems/coursework.ts:1786"
     },
     {
      "what": "a reader’s evening",
-     "at": "src/engine/systems/coursework.ts:712"
+     "at": "src/engine/systems/coursework.ts:713"
     }
    ],
    "experienced": "Where work is judged: the same brief taped cold on the first morning is judged better at 90 than at 30 (19.4 at 30, 22 at 90, b20-c-able). Skill posts no different part: with every ability at 30 or 90 the career posts the same parts on the same Mondays through the fall.",
@@ -2072,7 +2072,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "table work and a brief’s breakdown go further (stepSpeed)",
@@ -2118,7 +2118,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "getting to know coursework’s material goes further (stepSpeed)",
@@ -2164,11 +2164,11 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "learning a part’s lines goes further",
-     "at": "src/engine/systems/production.ts:605"
+     "at": "src/engine/systems/production.ts:609"
     }
    ],
    "experienced": "Where work is judged: the same brief taped cold on the first morning is judged better at 90 than at 30 (18.5 at 30, 22.1 at 90, b20-c-able). Skill posts no different part: with every ability at 30 or 90 the career posts the same parts on the same Mondays through the fall.",
@@ -2212,11 +2212,11 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "a director’s note on the blocking worked further",
-     "at": "src/engine/systems/production.ts:689"
+     "at": "src/engine/systems/production.ts:693"
     }
    ],
    "experienced": "Where work is judged: the same brief taped cold on the first morning is judged better at 90 than at 30 (19.2 at 30, 22.6 at 90, b20-c-able). Skill posts no different part: with every ability at 30 or 90 the career posts the same parts on the same Mondays through the fall.",
@@ -2258,7 +2258,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "a performance’s nerves: the stress they add",
@@ -2306,7 +2306,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "the craft’s voice, read where work is judged",
@@ -2352,7 +2352,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "the craft’s movement, read where work is judged",
@@ -2398,7 +2398,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "every growth’s lift",
@@ -2446,7 +2446,7 @@
     },
     {
      "what": "a taped brief judged",
-     "at": "src/engine/systems/briefs.ts:409"
+     "at": "src/engine/systems/briefs.ts:412"
     },
     {
      "what": "the drain through a piece judged in parts",
@@ -2518,7 +2518,7 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     }
    ],
    "experienced": "stressGain × 0.78: two hours awake on empty from stress 40, through the clock, the stress it ended at: 42.477 for the plain twin, 41.798 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -2582,7 +2582,7 @@
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -2834,7 +2834,7 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     }
    ],
    "experienced": "stressGain × 0.85: two hours awake on empty from stress 40, through the clock, the stress it ended at: 42.477 for the plain twin, 42.005 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -2886,11 +2886,11 @@
     },
     {
      "what": "sharpness before noon",
-     "at": "src/engine/systems/school.ts:944"
+     "at": "src/engine/systems/school.ts:954"
     },
     {
      "what": "sharpness from five",
-     "at": "src/engine/systems/school.ts:945"
+     "at": "src/engine/systems/school.ts:955"
     }
    ],
    "experienced": "morning × 1.1: one step of preparation through school.prepare at 7:30 on the first morning, the part moved: 0.475 for the plain twin, 0.489 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -2943,11 +2943,11 @@
     },
     {
      "what": "sharpness before noon",
-     "at": "src/engine/systems/school.ts:944"
+     "at": "src/engine/systems/school.ts:954"
     },
     {
      "what": "sharpness from five",
-     "at": "src/engine/systems/school.ts:945"
+     "at": "src/engine/systems/school.ts:955"
     }
    ],
    "experienced": "morning × 0.88: one step of preparation through school.prepare at 7:30 on the first morning, the part moved: 0.475 for the plain twin, 0.423 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3116,7 +3116,7 @@
     },
     {
      "what": "friends in a cast",
-     "at": "src/engine/systems/school.ts:323"
+     "at": "src/engine/systems/school.ts:324"
     }
    ],
    "experienced": "energyRecovery × 1.15: six hours through life.sleep at 11 PM from the same dials, the energy put back: 47.738 for the plain twin, 53.843 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3164,7 +3164,7 @@
     },
     {
      "what": "friends in a cast",
-     "at": "src/engine/systems/school.ts:323"
+     "at": "src/engine/systems/school.ts:324"
     }
    ],
    "experienced": "energyRecovery × 0.9: six hours through life.sleep at 11 PM from the same dials, the energy put back: 47.738 for the plain twin, 43.19 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3212,7 +3212,7 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "the day’s eating",
@@ -3644,7 +3644,7 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     }
    ],
    "experienced": "spending × 1.1: a meal through life.look_after, hungry, the cents paid: 500 for the plain twin, 549 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3690,7 +3690,7 @@
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -3751,7 +3751,7 @@
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -3811,11 +3811,11 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "friends in a cast",
-     "at": "src/engine/systems/school.ts:323"
+     "at": "src/engine/systems/school.ts:324"
     }
    ],
    "experienced": "stressGain × 0.88: two hours awake on empty from stress 40, through the clock, the stress it ended at: 42.477 for the plain twin, 42.097 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3871,7 +3871,7 @@
     },
     {
      "what": "friends in a cast",
-     "at": "src/engine/systems/school.ts:323"
+     "at": "src/engine/systems/school.ts:324"
     }
    ],
    "experienced": "moraleSwing × 1.2: a meal through life.look_after, hungry, the morale lifted: 2 for the plain twin, 2.354 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3927,11 +3927,11 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "friends in a cast",
-     "at": "src/engine/systems/school.ts:323"
+     "at": "src/engine/systems/school.ts:324"
     }
    ],
    "experienced": "stressGain × 0.9: two hours awake on empty from stress 40, through the clock, the stress it ended at: 42.477 for the plain twin, 42.159 with it. Its other knobs act where they’re read. Its look says each figure and, held, the figure all told.",
@@ -3987,11 +3987,11 @@
     },
     {
      "what": "a classmate coming closer",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -4051,7 +4051,7 @@
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -4111,7 +4111,7 @@
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -4179,7 +4179,7 @@
     },
     {
      "what": "a slight from a classmate",
-     "at": "src/engine/systems/school.ts:330"
+     "at": "src/engine/systems/school.ts:331"
     },
     {
      "what": "a rehearsal missed by you",
@@ -4527,7 +4527,7 @@
    "consumers": [
     {
      "what": "its level and full",
-     "at": "src/ui/looks/actor.tsx:112"
+     "at": "src/ui/looks/actor.tsx:113"
     }
    ],
    "experienced": "Says the level against its full, what grows it and what reads it. Held: every ability’s summary says the engine’s level and full, and focus’s says its new level after an hour of Circles Of Attention through practice.exercise.",
@@ -4566,7 +4566,7 @@
    "consumers": [
     {
      "what": "loved or not",
-     "at": "src/ui/looks/actor.tsx:172"
+     "at": "src/ui/looks/actor.tsx:173"
     }
    ],
    "experienced": "Says whether it’s loved and the record’s familiarity and work in it. Held: drama loved, westerns not; drama’s familiarity said after genre.study.",
