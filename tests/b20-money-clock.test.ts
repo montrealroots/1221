@@ -205,6 +205,8 @@ describe('an account left untouched', () => {
     for (const sim of [left, kept]) expect(sim.universe.notifications.filter((n) => n.title === 'Chase Savings Is Dormant').map((n) => n.at)).toEqual([at(2029, 3, 1, 0)]);
     // The letter: on 1 June 2029, ninety days or more before the three years run out on 24 August, with its date and
     // Keep The Account.
+    // Strengthened after B20-MONEY-14 broke only its setup: the letter's absence is the assertion that fails.
+    for (const sim of [left, kept]) expect(letterOf(sim), 'the bank’s letter before the state').toBeDefined();
     const letter = letterOf(kept)!;
     expect(letter.createdAt).toBe(at(2029, 6, 1, 0));
     expect(letter.dueAt - at(2029, 6, 1, 0)).toBeGreaterThanOrEqual(80 * MS_DAY);
