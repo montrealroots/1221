@@ -133,7 +133,11 @@ SLATE's due date was the statement date plus the bank's days, so Chase's (21 day
 11th or the 13th by the month. From brief 21 a US card's due date is one day each month: the day that keeps at least the
 bank's days after the statement in every month, February included. With the statement on the 20th, Chase's 21 days
 make it the 13th (24 days after a January statement, 21 after February's, 22 in a leap year); Bank of America's and
-Wells Fargo's 25 days the 17th. Citi's and Capital One's, the 15th of the month after, were one day already. A due date
+Wells Fargo's 25 days the 17th; a statement early in the month keeps its due date in the same month (Chase's on the 5th,
+the 26th). Citi's and Capital One's days weren't found: theirs is the 15th of the month after, and later where a
+statement after the 22nd would leave less than the law's 21 days after a statement in February (`usDueDay`: a statement
+on the 28th, the 21st). This said theirs "were one day already" until later on 2026-10-22: the 15th whatever the
+statement's day, which left 18 days after a statement on 28 January. A due date
 already on a statement in a save stays as it was disclosed. Other countries' cards keep the statement date plus their
 days: no rule asking otherwise was read. **Uncertain**: Japan's issuers bill on fixed days (MUFG Card, for one, closes
 on the 15th and pays on the 10th), which the cards' recorded sources don't give; SLATE's 25 to 27 days after its own

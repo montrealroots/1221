@@ -85,9 +85,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
   "status": "Rewritten",
-  "hash": "8534604a53a8",
+  "hash": "4682ea60b387",
   "on": "2026-10-22",
-  "evidence": "tests/interest.test.ts and tests/cardoffers.test.ts play the 61st day's notice and the 45 days after it the bank chapter's sentence says; read against docs/STYLE.md",
+  "evidence": "read again on 2026-10-22 (brief 21): Your Bank's late-payment sentence says the US days the game counts (a notice past 60 days, the penalty rate 45 days on, the charge-off at 180) and six missed due dates only elsewhere; tests/b21-banking-proof.test.ts ('the tutorial and the guide say the days the game counts') holds it to US_LATE and the played timeline",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {

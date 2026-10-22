@@ -22,6 +22,8 @@ import { genresOfHolder, genresOfPlay } from '@/engine/content/plays';
 import { SEAGULL_2027 } from '@/engine/content/school';
 import { nightEvaluation } from '@/engine/systems/school';
 import { callAnswered } from '@/engine/systems/production';
+import { dayKindOf } from '@/engine/systems/projobs';
+import { graduate, offered, played } from './fakes/b20-benefits';
 import { PROJECTS, projectById } from '@/engine/content/careerwork';
 import { BRIEFS } from '@/engine/content/briefs';
 import { GENRE_DEFS } from '@/engine/content/genres';
@@ -74,6 +76,11 @@ describe('the measure', () => {
     const both = (known: Known, kinds: readonly string[]) => relevantGenre(knower(known), kinds).total;
     expect(both({ comedy: 80 }, ['comedy', 'comedy'])).toBe(both({ comedy: 80 }, ['comedy']));
     expect(both({ comedy: 80 }, ['comedy', 'comedy'])).toBeCloseTo(0.8, 12);
+    // And with another between: thriller first at half, comedy the other half, the second thriller nothing of its own,
+    // so 0.5 × 0.8 = 0.4. Counted again, the three would share 0.25 each and comedy come to 0.2 (mutation B21-G5, which
+    // the pair above couldn't tell: two halves of one genre are its whole).
+    expect(both({ comedy: 80 }, ['thriller', 'comedy', 'thriller'])).toBeCloseTo(0.4, 12);
+    expect(genreNeeds(['thriller', 'comedy', 'thriller'])).toEqual([{ id: 'thriller', weight: 0.5, from: ['thriller'] }, { id: 'comedy', weight: 0.5, from: ['comedy'] }]);
     const route = projectById('route-nine')!.genres;
     expect(route).toEqual(['psychological_horror', 'horror']);
     expect(both({ psychological_horror: 90 }, route)).toBeCloseTo(0.9, 12);
@@ -270,4 +277,39 @@ describe('the Rep’s 2026–27 Seagull, which no play catalog names', () => {
     // 100 × 0.1 (a session's practice) × 0.5 (each kind's weight) × (1 − 0/100) = 5.
     expect([g.tragicomedy?.practice, g.drama?.practice]).toEqual([5, 5]);
   });
+});
+
+describe('a professional rehearsal day, played', () => {
+  // Mutation B21-G9 (2026-10-22): with the rehearsal day's practice taken out, b20-career-effects and journey-career
+  // still passed, since a film's shoot days and a run's nights credit the same genres. This plays a stage run's
+  // rehearsal days alone, before its first night.
+  it('PLAYER JOURNEY: A House On Calder Street’s rehearsal days, each worked, give domestic drama a session’s practice, drama listed beside it absorbed into it, and no other genre moves', () => {
+    const sim = graduate('b21-rehearsal');
+    const o = offered(sim, 'calder-street', sim.now);
+    const { engagementId } = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
+    const e = sim.player.pro!.engagements.find((x) => x.id === engagementId)!;
+    const t = projectById('calder-street')!;
+    expect(t.genres).toEqual(['domestic_drama', 'drama']);
+    // Drama, its broad genre listed beside it, is absorbed into domestic drama: one requirement, the whole session.
+    expect(genreNeeds(t.genres)).toEqual([{ id: 'domestic_drama', weight: 1, from: ['domestic_drama', 'drama'] }]);
+    const rehearsals = e.days.flatMap((d, i) => (dayKindOf(t, i) === 'rehearsal' ? [d] : []));
+    const first = e.days.findIndex((_, i) => dayKindOf(t, i) !== 'rehearsal');
+    expect(rehearsals.length).toBeGreaterThan(0);
+    expect(first).toBe(rehearsals.length);
+    const before = structuredClone(sim.player.engagement?.byGenre ?? {});
+    // To the hour after the last rehearsal day, before the first night.
+    played(sim, rehearsals.at(-1)!.to + 60 * 60 * 1000);
+    expect(sim.now).toBeLessThan(e.days[first]!.from);
+    expect((e.log ?? []).filter((l) => l.status === 'worked')).toHaveLength(rehearsals.length);
+    // Each day 100 × 0.1 (a session) × 1 (its weight) of what's left to 100, kept to two places: twenty days from none,
+    // 87.84.
+    const worked = (from: number) => { let p = from; for (let n = 0; n < rehearsals.length; n += 1) p = Math.round((p + 10 * (1 - p / 100)) * 100) / 100; return p; };
+    const after = sim.player.engagement!.byGenre;
+    expect(rehearsals).toHaveLength(20);
+    expect(after.domestic_drama!.practice).toBe(worked(before.domestic_drama?.practice ?? 0));
+    expect(worked(0)).toBe(87.84);
+    // Drama itself, and every other genre, where it was.
+    for (const g of Object.keys(after).filter((x) => x !== 'domestic_drama')) expect(after[g], g).toEqual(before[g]);
+    expect(after.drama).toEqual(before.drama);
+  }, 600_000);
 });

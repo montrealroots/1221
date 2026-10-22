@@ -40,13 +40,30 @@ exact test results. Updated as each module lands; the criteria are `criteria.md`
     delivery the chair reads, now worked from the runs' unrounded records and held exactly), b08 (its night rule now
     reads the genre part at its 0.75 floor), g27 (her Ilse and his Melchior Gabor, the bond rule checked over both
     casts). Regression tests: three in `tests/b21-genre-proof.test.ts`. J1 and J2 pass (17 s and 24 s).
+  - Committed as `59e9c4af`. Full suite there, before the last test fix: 5,544 of 5,545 in 482 files; the one failure,
+    language-money's old penalty sentence, 21 of 21 after.
+  - P3, 27 mutations (`mutations/`), in a clone of `59e9c4af`: 24 killed, each by an assertion in milliseconds. Three
+    survived, and each one's test was too weak:
+    - G5: a tag listed twice. `['comedy', 'comedy']` can't tell, since two halves of one genre are its whole; a duplicate
+      with another tag between now does.
+    - G9: a professional rehearsal day's practice. The film and run tests credit the same genres from shoot days and
+      nights; a played test of Calder Street's twenty rehearsal days alone now does.
+    - B12: a payment counted toward the past due once. The notice date alone couldn't tell, since 13 November's is the
+      oldest either way; the past-due list after 13 December now does.
+    All three were killed on the rerun (`mutations/results-rerun.json`).
+  - After `59e9c4af`:
+    - The tutorial's Your Bank said every card was charged off at six missed payments. It now gives the US days, with a
+      test that ties the tutorial and the guide to `US_LATE`.
+    - `banking-sources.md` said Citi's and Capital One's 15th "were one day already". It now gives the later day after a
+      statement past the 22nd.
+    So the tested commit moves to the next one.
   - Not changed, recorded: the class's expected genre record (`classGenres`) counts School productions and never the
     Rep, as before; a class scene of The Seagull (`seagull-4`) still reads no genre speed, since `genresOfPlay` keeps
     to the catalogs and migration 92 reads it (a class scene is outside the paths the brief names).
 
 ## Left
 
-- P3: 27 mutations (`B21-G1`–`G11`, `B21-B1`–`B16`), in a clone of the tested commit.
+- The final runs on the tested commit, then the matrix fold, the gate in a clean clone, the receipt and the handoff.
 - The full suite, the effects matrix's file:line citations, devmap and traceability, then the gate in a clean clone and
   the final runs; R: handoff, receipt.
 

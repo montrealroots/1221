@@ -667,7 +667,9 @@ export const CHAPTERS: readonly Chapter[] = [
   // it said nothing of an account kept at home, which creation had opened since that day’s module 3 (`systems/abroad.ts`).
   // Until 2026-10-20 (brief 17) The Details said a US card's introductory rate ended, and its penalty rate came, with "a
   // payment sixty days late": both come at the second due date missed in a row (`credit.missed >= 2`), which the late
-  // notice calls thirty days late, and it says that now (the money editor's finding).
+  // notice calls thirty days late, and it says that now (the money editor's finding). Until 2026-10-22 (brief 21) it
+  // said every card was charged off at six missed payments, which a US card no longer is: its notice, penalty rate and
+  // charge-off come by its days past due (`US_LATE`), as the guide's Your Cards says.
   {
     id: 'bank',
     title: 'Your Bank',
@@ -679,7 +681,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'An account that earns interest builds it each day, and the bank pays it at the end of the month, or in the months it pays interest. A checking account with a monthly fee takes the fee at the month’s end, unless that month met one of the bank’s conditions for waiving it, such as enough paid in, enough kept in the account, enough card purchases, or your age. Each account’s panel, on Accounts, says whether this month’s fee is waived so far.',
       'Your credit card, on Cards, is the bank’s own, with its own name and terms. Its statement comes on the 20th, or the day you set under Statement Day. Pay each statement in full and you’re charged no interest on it, unless the one before wasn’t paid in full.',
       'Autopay pays the whole statement, or only the minimum, from the checking account it’s set on: its button says which, and pressing it switches. Pay Card In Full pays the card off now; when you can’t cover all of it, the button says Pay What You Can and pays what you have.',
-      'If there isn’t enough to cover autopay, the payment comes back unpaid, and unless you’ve paid the minimum yourself, it counts as missed. Paying less than the minimum is late and costs a late fee. Miss two payments in a row and the card is suspended; miss six and it’s charged off to collections.',
+      'If there isn’t enough to cover autopay, the payment comes back unpaid, and unless you’ve paid the minimum yourself, it counts as missed. Paying less than the minimum is late and costs a late fee. Miss two payments in a row and the card is suspended. On a US card, a minimum more than 60 days late brings the bank’s notice and, 45 days on, any penalty rate; one 180 days late is charged off to collections. Elsewhere, miss six and it’s charged off.',
       'If your checking accounts and savings together can’t clear the card, press Ask For Help With Payments, on Cards: the bank freezes the interest, sets a payment that clears the balance in four years, and suspends the card until the first statement or due date after it’s paid off.',
       'To apply for a card at any bank in the country that issues one, yours or another, choose the Bank under Credit Card, on Cards (Another Card once you hold one), and press Apply For This Card. The bank looks at your credit score and what you have to repay it from. If it says yes, the card comes in about a week.',
       'You can hold one card from each bank. The day’s spending goes on your everyday card, and Make It The Everyday Card moves it to another.',

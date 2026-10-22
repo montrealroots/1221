@@ -30,7 +30,9 @@ import type { Account } from '@/engine/core/ledger';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, dateKey, instantFromZoned, type Instant } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { cardsOf, cardTerms, dueAt, stateOf, usDueDay } from '@/engine/systems/credit';
+import { cardsOf, cardTerms, dueAt, stateOf, US_LATE, usDueDay } from '@/engine/systems/credit';
+import { CHAPTER_BY_ID } from '@/engine/content/tutorial';
+import { MONEY } from '@/engine/content/guide/money';
 import { addCountryHolidays } from '@/engine/content/holidays';
 import { readFileSync } from 'node:fs';
 
@@ -169,7 +171,7 @@ describe('B1: a rate quoted as a yield earns that yield in a year, and a nominal
 // ---------------------------------------------------------------------------
 
 describe('B5: a US card’s due date is one day each month, at least the bank’s days after the statement', () => {
-  it('keeps the bank’s days after a statement on the same day in every month, February the shortest; Citi and Capital One, whose days weren’t found, keep the 15th', () => {
+  it('keeps the bank’s days after a statement on the same day in every month, February the shortest; Citi and Capital One, whose days weren’t found, the 15th, later after a statement past the 22nd', () => {
     // [statement day, the bank's days] → the due day, and whether it's next month. Worked: the day plus its days, less 28
     // where that's past the 28th; with no days found, the 15th, later where under 21 days in February.
     expect([[20, 21], [5, 21], [7, 21], [8, 21], [20, 25], [3, 25], [4, 25]].map(([d, g]) => usDueDay(d!, g))).toEqual([
@@ -298,6 +300,10 @@ describe('B2 and B3: a US card’s minimum more than 60 days late, counted in da
     expect(stateOf(sim.player, card()).pastDue!.map((p) => dateKey(p.at, NY))).toEqual(['2026-11-13']);
     miss(sim, CHASE_DUES[2]!);
     sim.advanceTo(at(2026, 12, 14, 9));
+    // 13 December's own minimum is short too: what was paid on the 12th went to 13 October's and counts once
+    // (`towardPastDue`). Counted again toward December's, that minimum read as paid and one fewer was past due: the defect
+    // this test found, and mutation B21-B12, which the notice's date alone couldn't tell (13 November's is the oldest either way).
+    expect(stateOf(sim.player, card()).pastDue!.map((p) => dateKey(p.at, NY))).toEqual(['2026-11-13', '2026-12-13']);
     expect(titled(sim, 'A Penalty Rate Is Coming')).toEqual([]);
     miss(sim, CHASE_DUES[3]!);
     sim.advanceTo(at(2027, 1, 14, 9));
@@ -433,4 +439,19 @@ describe('S: a save from before brief 21 with a US card behind', () => {
     expect(titled(opened, 'A Penalty Rate Is Coming')).toHaveLength(titled(sim, 'A Penalty Rate Is Coming').length);
     expect(titled(opened, 'Your Card Was Charged Off').map((n) => dateKey(n.at, NY))).toEqual(['2027-04-11']);
   }, 300_000);
+});
+
+describe('the tutorial and the guide say the days the game counts', () => {
+  // Found 2026-10-22, after the tested commit's first run: the tutorial's Your Bank still said every card was charged
+  // off at six missed payments, as the game did before brief 21. The guide had been brought to the days; the tutorial,
+  // which no test read, hadn't.
+  it('Your Bank and the guide name the US notice, penalty and charge-off days the timeline above plays, and six missed due dates only outside the US', () => {
+    expect(US_LATE).toMatchObject({ notice: 61, noticeDays: 45, warn: 150, chargeOff: 180 });
+    const tutorial = CHAPTER_BY_ID.bank!.body.join(' ');
+    expect(tutorial).toContain(`Miss two payments in a row and the card is suspended. On a US card, a minimum more than ${US_LATE.notice - 1} days late brings the bank’s notice and, ${US_LATE.noticeDays} days on, any penalty rate; one ${US_LATE.chargeOff} days late is charged off to collections. Elsewhere, miss six and it’s charged off.`);
+    expect(tutorial).not.toContain('miss six and it’s charged off to collections');
+    const guide = JSON.stringify(MONEY);
+    expect(guide).toContain(`On a US card, a minimum payment more than ${US_LATE.notice - 1} days late, counted from its due date, brings the bank’s notice. ${US_LATE.noticeDays} days later any penalty rate the card has applies`);
+    expect(guide).toContain(`At ${US_LATE.warn} days late a default notice comes, and at ${US_LATE.chargeOff} days the card is charged off to collections`);
+  });
 });

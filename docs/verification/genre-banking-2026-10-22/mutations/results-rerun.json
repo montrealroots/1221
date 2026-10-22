@@ -1,0 +1,49 @@
+{
+ "B21-G5": {
+  "claim": "a tag listed twice counts once",
+  "file": "src/engine/systems/engagement.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 45 passed (46)"
+  ],
+  "failing": [
+   "× the measure > counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half 10ms"
+  ]
+ },
+ "B21-G9": {
+  "claim": "a professional rehearsal day is practice in the project's genres",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b21-genre-proof.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/journey-career.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed | 2 passed (3)",
+   "      Tests  1 failed | 65 passed (66)"
+  ],
+  "failing": [
+   "× a professional rehearsal day, played > PLAYER JOURNEY: A House On Calder Street’s rehearsal days, each worked, give domestic drama a session’s practice, drama listed beside it absorbed into it, and no other genre moves 262ms"
+  ]
+ },
+ "B21-B12": {
+  "claim": "a payment clears one minimum, the oldest first, not two",
+  "file": "src/engine/systems/credit.ts",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   " Test Files  1 failed (1)",
+   "      Tests  1 failed | 17 passed (18)"
+  ],
+  "failing": [
+   "× B2 and B3: a US card’s minimum more than 60 days late, counted in days from its due date > counts from the oldest minimum still short: 13 October’s paid by hand on 12 December, day 60, leaves 13 November’s, noticed on 13 January 360ms"
+  ]
+ }
+}

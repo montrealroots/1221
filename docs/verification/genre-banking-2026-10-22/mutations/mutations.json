@@ -1,0 +1,280 @@
+[
+ {
+  "id": "B21-G1",
+  "claim": "a work's first-listed genre carries half where it has two or more",
+  "file": "src/engine/content/engagement.ts",
+  "old": "weights: { primary: 0.5 }",
+  "new": "weights: { primary: 1 }",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G2",
+  "claim": "a kind known counts 0.75 toward its broad genre",
+  "file": "src/engine/content/engagement.ts",
+  "old": "related: { kindToParent: 0.75, parentToKind: 0.5 }",
+  "new": "related: { kindToParent: 1, parentToKind: 0.5 }",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G3",
+  "claim": "a broad genre known counts half toward its kinds",
+  "file": "src/engine/content/engagement.ts",
+  "old": "related: { kindToParent: 0.75, parentToKind: 0.5 }",
+  "new": "related: { kindToParent: 0.75, parentToKind: 0 }",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G4",
+  "claim": "a broad genre listed beside its own kind is absorbed into it, not counted twice",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  const absorbed = new Set(tags.filter((g) => kindsListed(g).length > 0));",
+  "new": "  const absorbed = new Set<string>();",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G5",
+  "claim": "a tag listed twice counts once",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  const tags = [...new Set(genres)].filter((g) => GENRE_DEFS[g]);",
+  "new": "  const tags = [...genres].filter((g) => GENRE_DEFS[g]);",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G6",
+  "claim": "the weighed total is bounded at 1",
+  "file": "src/engine/systems/engagement.ts",
+  "old": "  return { total: Math.min(1, needs.reduce((a, n) => a + n.weight * n.credit, 0)), needs };",
+  "new": "  return { total: needs.reduce((a, n) => a + n.weight * n.credit, 0) * 1.25, needs };",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G7",
+  "claim": "a School night's genre part is complete at 90, as a professional round's is (the defect the proof found)",
+  "file": "src/engine/systems/school.ts",
+  "old": "  return { prep: { genre: reading.total }, required: { genre: ENGAGEMENT.genreComplete } };",
+  "new": "  return { prep: { genre: reading.total * ENGAGEMENT.genreComplete }, required: { genre: ENGAGEMENT.genreComplete } };",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G8",
+  "claim": "a professional rehearsal day's lines are quicker for an actor who knows the genre",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "  p.memorization = r3(clamp(p.memorization + PROCESS.call.lines * genreSpeed(person, projectGenresOf(t)) * (1 - p.memorization), 0, 1));",
+  "new": "  p.memorization = r3(clamp(p.memorization + PROCESS.call.lines * (1 - p.memorization), 0, 1));",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G9",
+  "claim": "a professional rehearsal day is practice in the project's genres",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "      practiceGenres(s, person, projectGenresOf(t));\n      (e.log ??= []).push({ day: i, at: item.at, status: 'worked' });",
+  "new": "      (e.log ??= []).push({ day: i, at: item.at, status: 'worked' });",
+  "tests": [
+   "tests/b21-genre-proof.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/journey-career.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B1",
+  "claim": "a quoted yield is converted to the nominal rate that earns it",
+  "file": "src/engine/systems/banking.ts",
+  "old": "  if (!product?.quoted || quoted <= 0) return quoted;",
+  "new": "  return quoted;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B2",
+  "claim": "Wells Fargo's interest compounds daily",
+  "file": "src/engine/systems/banking.ts",
+  "old": "const daily = product?.compounds === 'daily' ? earning + Math.max(0, account.accrued ?? 0) : earning;",
+  "new": "const daily = earning;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B3",
+  "claim": "Lloyds, Nationwide and Bankinter credit from the opening day",
+  "file": "src/engine/systems/banking.ts",
+  "old": "      if (creditsOn(product, account.openedAt, s.now, s.homeZone)) payInterest(s, account, `Interest: ${account.name}`);",
+  "new": "",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B4",
+  "claim": "the bank's notice comes on the 61st day, more than 60 days late",
+  "file": "src/engine/systems/credit.ts",
+  "old": "export const US_LATE = { notice: 61, noticeDays: 45, warn: 150, chargeOff: 180 } as const;",
+  "new": "export const US_LATE = { notice: 60, noticeDays: 45, warn: 150, chargeOff: 180 } as const;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/interest.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B5",
+  "claim": "the penalty rate and the end of an introductory rate come 45 days after the notice",
+  "file": "src/engine/systems/credit.ts",
+  "old": "export const US_LATE = { notice: 61, noticeDays: 45, warn: 150, chargeOff: 180 } as const;",
+  "new": "export const US_LATE = { notice: 61, noticeDays: 0, warn: 150, chargeOff: 180 } as const;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/interest.test.ts",
+   "tests/cardoffers.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B6",
+  "claim": "the default notice comes on the 150th day",
+  "file": "src/engine/systems/credit.ts",
+  "old": "export const US_LATE = { notice: 61, noticeDays: 45, warn: 150, chargeOff: 180 } as const;",
+  "new": "export const US_LATE = { notice: 61, noticeDays: 45, warn: 151, chargeOff: 180 } as const;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B7",
+  "claim": "the charge-off comes on the 180th day (the defect: about 150)",
+  "file": "src/engine/systems/credit.ts",
+  "old": "export const US_LATE = { notice: 61, noticeDays: 45, warn: 150, chargeOff: 180 } as const;",
+  "new": "export const US_LATE = { notice: 61, noticeDays: 45, warn: 150, chargeOff: 179 } as const;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B8",
+  "claim": "a US card's due day keeps the bank's days, not the law's 21 alone",
+  "file": "src/engine/systems/credit.ts",
+  "old": "  return statementDay + graceDays <= 28 ? { day: statementDay + graceDays, next: false } : { day: statementDay + graceDays - 28, next: true };",
+  "new": "  return statementDay + 21 <= 28 ? { day: statementDay + 21, next: false } : { day: statementDay + 21 - 28, next: true };",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B9",
+  "claim": "a US card's due date is one day each month (the defect: the statement plus the days)",
+  "file": "src/engine/systems/credit.ts",
+  "old": "  const at = dueAt(zoneOf(sim, person), statementAt, graceDays, usCard(card));",
+  "new": "  const at = dueAt(zoneOf(sim, person), statementAt, graceDays, false);",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B10",
+  "claim": "a standing order from a British or EEA bank moves to the next business day",
+  "file": "src/engine/systems/payments.ts",
+  "old": "  if (!iso || !NEXT_BUSINESS_DAY.has(iso)) return undefined;",
+  "new": "  return undefined;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/payments.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B11",
+  "claim": "a US bank's order goes on its day",
+  "file": "src/engine/systems/payments.ts",
+  "old": "  if (!iso || !NEXT_BUSINESS_DAY.has(iso)) return undefined;",
+  "new": "  if (!iso) return undefined;",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B12",
+  "claim": "a payment clears one minimum, the oldest first, not two",
+  "file": "src/engine/systems/credit.ts",
+  "old": "      state.towardPastDue = (state.towardPastDue ?? 0) + take;",
+  "new": "",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B13",
+  "claim": "a save from before brief 21 with a US card behind is dated on opening",
+  "file": "src/engine/index.ts",
+  "old": "        state.pastDue = [{ at, short: Math.max(1, Number(state.statementBalance ?? 0)) }];",
+  "new": "",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B14",
+  "claim": "what the old rule already sent isn't sent again on an old save",
+  "file": "src/engine/index.ts",
+  "old": "        if (missed >= 2) state.noticedFor = at;",
+  "new": "",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G10",
+  "file": "src/engine/content/plays.ts",
+  "claim": "the Rep’s 2026–27 Seagull reads its kinds, tragicomedy and drama (the defect J2 found: none)",
+  "old": "return (h?.kind === 'role' || h?.kind === 'understudy') && h.production === SEAGULL_2027.name ? SEAGULL_2027.kinds : undefined;",
+  "new": "return undefined;",
+  "tests": [
+   "tests/b21-genre-proof.test.ts",
+   "tests/b21-journeys.test.ts"
+  ]
+ },
+ {
+  "id": "B21-G11",
+  "file": "src/engine/systems/production.ts",
+  "claim": "a School call kept is practice in the play’s genres",
+  "old": "practiceGenres(sim, person, genresOfHolder(holder as { play?: string; kind?: string; production?: string }) ?? []);",
+  "new": "void practiceGenres;",
+  "tests": [
+   "tests/b21-genre-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B15",
+  "file": "src/engine/systems/credit.ts",
+  "claim": "a US card’s minimum payment due includes what’s past due",
+  "old": "const owedNow = Math.min(statement, minimum + pastDue);",
+  "new": "const owedNow = Math.min(statement, minimum);",
+  "tests": [
+   "tests/b21-banking-proof.test.ts"
+  ]
+ },
+ {
+  "id": "B21-B16",
+  "file": "src/engine/systems/credit.ts",
+  "claim": "the statement says how much of the minimum is past due",
+  "old": "${pastDue > 0 ? `, ${formatMoney(pastDue, cur)} of it past due` : ''}",
+  "new": "",
+  "tests": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/editorial17-money.test.ts"
+  ]
+ }
+]
