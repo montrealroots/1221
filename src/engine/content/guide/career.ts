@@ -694,8 +694,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'Money', value: 'None' },
     ],
     reads: [
-      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation and the day’s condition, judged as every piece of work is' },
-      { label: 'The Role’s Fit', value: 'How well you know its genre, and its techniques against yours' },
+      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation, how well you know the project’s genres and the day’s condition, judged as every piece of work is' },
+      { label: 'The Role’s Fit', value: 'How well you know its genres, each by its share as Genres explains, and its techniques against yours' },
       { label: 'The Field', value: 'How many other actors that kind of work draws, estimated' },
     ],
     now: ['A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.'],
@@ -747,7 +747,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     costs: [{ label: 'Time', value: 'Each work day’s hours, with the trip each way' }, { label: 'Energy', value: `${ESTIMATE.energy.rehearsal} a work day, as a School rehearsal call takes, on top of its hours awake`, estimate: true }, { label: 'Money', value: 'None: the work pays you' }],
     reads: [
       { label: 'Permission To Work', value: 'Every day of the work, against the papers you hold' },
-      { label: 'The Part', value: 'Its preparation, your abilities and techniques, and the day’s condition, judged as every piece of work is' },
+      { label: 'The Part', value: 'Its preparation, how well you know the project’s genres, your abilities and techniques, and the day’s condition, judged as every piece of work is. A rehearsal day learns the lines faster in genres you know' },
     ],
     now: ['The work days go on your calendar, and the pay for each week is promised, due the Thursday after it. It isn’t paid yet.'],
     later: [

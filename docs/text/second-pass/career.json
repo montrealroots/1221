@@ -428,10 +428,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {
   "status": "Rewritten",
-  "hash": "c03bf5682bd2",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects",
-  "first": "Rewritten And Verified"
+  "hash": "63163488adca",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
   "status": "Rewritten",
@@ -449,9 +449,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
   "status": "Rewritten",
-  "hash": "36a4066eb9d6",
-  "on": "2026-10-21",
-  "evidence": "read against docs/STYLE.md; tests/b20-life-fatigue.test.ts holds the work day energy the cost line says",
+  "hash": "fd161aff6cd3",
+  "on": "2026-10-22",
+  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {

@@ -2352,6 +2352,21 @@
    "seeded": false,
    "readBy": "craft",
    "readAt": "12c04ee1"
+  },
+  {
+   "id": "promise.craft.genre>career.auditions",
+   "kind": "evaluation",
+   "claim": "Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at ${pct(BRIEF.complete.genre)}, and half of how well casting thinks you suit the role.",
+   "entryFile": "src/engine/content/guide/craft.ts",
+   "holds": "From brief 21: the project's genres, weighed (`relevantGenre`), are half of the role's fit (`fitOf`, src/engine/systems/projobs.ts:352), which sets casting's chance; and a part of every round's preparation, in the room as on tape, complete at `BRIEF.complete.genre` (`auditionContext`, src/engine/systems/projobs.ts:1062), read by interpretation (src/engine/content/tasks.ts `audition`, `tape`).",
+   "tests": [
+    "tests/b20-career-effects.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "craft",
+   "readAt": "brief 21, uncommitted on 6d3d9374"
   }
  ]
 }

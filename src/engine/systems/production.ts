@@ -55,7 +55,7 @@ import { CABARET_KIND, CALL_KIND, SUMMER_KIND, type Craft } from './school';
 import { courseworkOf, notesOf } from './coursework';
 import { recordNote, type NoteFocus as LedgerFocus } from './learning';
 import { develop, stepSpeed, type Target } from './attributes';
-import { genreSpeed } from './engagement';
+import { genreSpeed, practiceGenres } from './engagement';
 import { genresOfPlay } from '../content/plays';
 import { AXES, APPROACH_EFFECT } from '../content/approaches';
 import type { Axis, AxisValue } from '../content/material';
@@ -482,6 +482,10 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
   attend(p, stage);
   // A call kept is discipline kept, a quarter of a session's worth (from 2026-10-09).
   develop(sim, person, 'discipline', { weight: 0.25, focus: 1, deliberate: false, source: 'call' });
+  // And work in the play's genres, a session's worth as a night is (`practiceGenres`, from 2026-10-22, the owner's brief
+  // 21). Until then a call was no practice in its play's kind, which cost nothing while a night read no genre; once a
+  // night came to read it, a student came to opening night knowing none of a genre rehearsed for weeks.
+  practiceGenres(sim, person, genresOfPlay((holder as { play?: string }).play) ?? []);
   // The director's request, from the first call (from 2026-10-10).
   p.direction ??= drawDirection(sim, person, holder);
   // Every call works the part on its feet, and with it the way it's being played.

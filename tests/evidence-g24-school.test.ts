@@ -373,7 +373,7 @@ describe('casting (castFit/castScore)', () => {
   const row = (s: Simulation, name: string) => s.player.school!.castRead!.rows.find((r) => r.name === name)!;
   const r3 = (x: number) => Math.round(x * 1000) / 1000;
 
-  it('reads a Carlotta closing night slept through as delivered at nothing, the run at its nights’ mean, and casts the twin a featured part where the one who played it keeps a lead', () => {
+  it('reads a Carlotta closing night slept through as delivered at nothing, the run at its nights’ mean, and casts the twin a smaller part where the one who played it keeps a lead', () => {
     const played = closingEve();
     const slept = closingEve();
     expect(played.player.school!.casting).toMatchObject({ production: CARLOTTA, size: 'lead', performed: 3 });
@@ -422,11 +422,14 @@ describe('casting (castFit/castScore)', () => {
     const order = (s: Simulation) => s.player.school!.castRead!.rows.map((r) => r.name);
     expect(order(K).indexOf('You')).toBeLessThan(order(K).indexOf('Samuel Park'));
     expect(order(M).indexOf('You')).toBeGreaterThan(order(M).indexOf('Samuel Park'));
-    // And the part given moves with it.
+    // And the part given moves with it. A featured part for the one who slept until brief 21 (2026-10-22), when the
+    // chair came to read Major Barbara's genres, a satire and a political drama, as each student knows them (the class's
+    // from the School's productions, `classGenres`), and the reads around hers moved: a
+    // supporting part from then, still below the lead the one who played keeps.
     expect(you(K).size).toBe('lead');
-    expect(you(M).size).toBe('featured');
+    expect(you(M).size).toBe('supporting');
     expect(K.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft', size: 'lead' });
-    expect(M.player.school!.casting).toMatchObject({ play: 'Major Barbara', size: 'featured' });
+    expect(M.player.school!.casting).toMatchObject({ play: 'Major Barbara', size: 'supporting' });
   });
 
   it('lists a real term’s cast by the chair’s read, highest first, each read its fit by a fifth for delivery and the balance, with no lead read below a featured part', () => {

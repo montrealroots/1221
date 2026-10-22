@@ -422,7 +422,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.known).toBeGreaterThanOrEqual(BRIEF.complete.genre);
     expect(ex.result).toContain(`it passes ${pct(BRIEF.complete.genre)} on day ${r.days}, at ${one(r.at)}`);
     // What the genre’s look says, word for word as the example quotes it.
-    const said = /a scene or a part from a play of its kind \d+% quicker to prepare/.exec(r.summary)?.[0];
+    const said = /a scene or a part from a play of only its kind \d+% quicker to prepare/.exec(r.summary)?.[0];
     expect(said).toBeDefined();
     expect(ex.result).toContain(`the genre’s look says it makes ${said}`);
   });

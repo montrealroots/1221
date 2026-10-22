@@ -9,7 +9,7 @@ not Explicitly Deferred.
 
 **Features:** 491 of 518 in scope Implemented And Verified (94.8%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 0 Decision Required, 20 Explicitly Deferred. 407 mechanics, 131 presentation.
 
-**The guide's promises:** 389 of 403 in scope Implemented And Verified (96.5%); 14 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 0 Decision Required, 2 Explicitly Deferred.
+**The guide's promises:** 390 of 404 in scope Implemented And Verified (96.5%); 14 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 0 Decision Required, 2 Explicitly Deferred.
 
 ## Totals
 
@@ -17,14 +17,14 @@ not Explicitly Deferred.
 |---|---|---|---|---|---|---|---|---|---|---|
 | creation | 93 | 92 | 1 |  |  |  |  |  | 0 | 0 |
 | school | 102 | 102 |  |  |  |  |  |  | 43 | 42 |
-| craft | 0 |  |  |  |  |  |  |  | 144 | 144 |
+| craft | 0 |  |  |  |  |  |  |  | 145 | 145 |
 | money | 96 | 81 | 15 |  |  |  |  |  | 63 | 57 |
 | benefits | 57 | 35 | 8 |  |  |  |  | 14 | 20 | 20 |
 | papers | 58 | 50 | 2 |  |  |  |  | 6 | 43 | 37 |
 | life | 36 | 35 | 1 |  |  |  |  |  | 44 | 43 |
 | career | 49 | 49 |  |  |  |  |  |  | 40 | 38 |
 | guide | 47 | 47 |  |  |  |  |  |  | 8 | 8 |
-| **All** | **538** | **491** | **27** | **0** | **0** | **0** | **0** | **20** | **405** | **389** |
+| **All** | **538** | **491** | **27** | **0** | **0** | **0** | **0** | **20** | **406** | **390** |
 
 ## Creation
 

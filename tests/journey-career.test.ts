@@ -429,9 +429,12 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const agreementId = au.player.pro!.agreements[0]!.id;
     expect([o.via, o.agentId, o.agreementId, o.status, o.rounds![0]!.form]).toEqual(['agent', AGENT.id, agreementId, 'audition', 'self-tape']);
     expect(o.sent!.map((x) => x.kind)).toEqual(['headshot', 'resume', 'reel']);
-    // The third time his breakdowns brought the part: the first two self-tapes were judged Working, and casting passed.
+    // The third time his breakdowns brought the part: the first self-tape judged Working and the second Strong, and casting
+    // passed both. Both were Working until brief 21 (2026-10-22): from then the drama she'd worked in at the School counts
+    // half toward a police procedural, a kind of drama (`relatedness`), so each tape's genre part read 0.23 of 0.9 where it
+    // had read nothing, and the August tape came to 66.5, not 64.5.
     expect(au.player.pro!.opportunities.filter((x) => x.projectId === 'calloway-files' && x.via === 'agent').map((x) => [formatDate(x.postedAt, zone), x.status, x.rounds?.[0]?.band ?? null])).toEqual([
-      ['June 11, 2029', 'passed', 'working'], ['August 27, 2029', 'passed', 'working'], ['November 12, 2029', 'audition', null],
+      ['June 11, 2029', 'passed', 'working'], ['August 27, 2029', 'passed', 'strong'], ['November 12, 2029', 'audition', null],
     ]);
     // The offer: SAG-AFTRA's Day Performer minimum for work from July 1, 2029, $1,402.00 (work.md S30), plus ten percent.
     const of = opened('offer');
@@ -448,17 +451,20 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(e.days.map((d) => formatDate(d.from, zone))).toEqual(['December 17, 2029', 'December 18, 2029']);
     expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * 1_542_20, 'December 20, 2029', null, null]]);
     expect(bk.universe.scheduled.filter((i) => i.kind === WORK_DAY_KIND && i.refId === e.id).map((i) => [i.requiresPlayer, i.travelMinutes])).toEqual([[true, 120], [true, 120]]);
-    // Worked and judged, the credit shot; and, the J6 rule, each day is work in the project's genres: a day's practice
-    // shared between police procedural and crime, 100 x 0.1 x a half of what's left, twice (content/engagement.ts).
+    // Worked and judged, the credit shot; and, the J6 rule, each day is work in the project's genres (content/engagement.ts).
+    // Until brief 21 (2026-10-22) a day's practice was shared between police procedural and crime, 100 x 0.1 x a half of
+    // what's left, twice; from then crime, listed beside its own kind, is one requirement with it, the police procedural,
+    // so the whole day's practice is the procedural's, 100 x 0.1 of what's left, twice: 10, then 9 more. Crime itself
+    // is read through its kind (`relatedness`), and isn't practised apart.
     const wr = opened('wrapped');
     const done = wr.player.pro!.engagements.find((x) => x.id === e.id)!;
     expect(done.log!.map((l) => [l.status, l.band !== undefined])).toEqual([['worked', true], ['worked', true]]);
     expect(wr.player.pro!.credits.find((c) => c.engagementId === e.id)).toMatchObject({ kind: 'screen', project: 'The Calloway Files', role: 'Desk Clerk', company: 'Bright Harbor Television', year: 2029, status: 'shot', union: 'sag-aftra' });
-    const day1 = 100 * ENGAGEMENT.genre.practice * 0.5;
-    for (const g of ['police_procedural', 'crime']) {
-      expect(bk.player.engagement?.byGenre[g]?.practice ?? 0).toBe(0);
-      expect(wr.player.engagement!.byGenre[g]!.practice).toBeCloseTo(day1 + 100 * ENGAGEMENT.genre.practice * 0.5 * (1 - day1 / 100), 2);
-    }
+    const day1 = 100 * ENGAGEMENT.genre.practice;
+    for (const g of ['police_procedural', 'crime']) expect(bk.player.engagement?.byGenre[g]?.practice ?? 0).toBe(0);
+    expect(wr.player.engagement!.byGenre.police_procedural!.practice).toBeCloseTo(day1 + 100 * ENGAGEMENT.genre.practice * (1 - day1 / 100), 2);
+    expect(wr.player.engagement!.byGenre.police_procedural!.practice).toBeCloseTo(19, 2);
+    expect(wr.player.engagement?.byGenre.crime?.practice ?? 0).toBe(0);
     // The payday: into the trust account. Commission is only what's over scale, ($1,542.20 - $1,402.00) x 2 = $280.40
     // (representation.md S3), and, a member by then, SAG-AFTRA's working dues of 1.575% (work.md S20): $48.58.
     const tr = opened('in-trust').player.pro!.engagements.find((x) => x.id === e.id)!.pay[0]!;

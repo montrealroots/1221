@@ -591,10 +591,12 @@ describe('casting (castFit/castScore)', () => {
     expect(row(M, 'Samuel Park').score).toBe(row(K, 'Samuel Park').score);
     expect(you(K).score).toBeGreaterThan(row(K, 'Samuel Park').score);
     expect(you(M).score).toBeLessThan(row(M, 'Samuel Park').score);
-    // The parts as partsFor's rule gives them, by title in the order read: Barbara Undershaft, then a featured part.
+    // The parts as partsFor's rule gives them, by title in the order read: Barbara Undershaft, then a supporting part.
+    // A featured one until brief 21 (2026-10-22), when the chair came to read the play's genres as each student knows
+    // them and the reads around hers moved (`classGenres`).
     for (const s of [K, M]) expect(s.player.school!.castRead!.rows.map((r) => ({ part: r.part, size: r.size }))).toEqual(partsByRule(s));
     expect(K.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft', size: 'lead' });
-    expect(M.player.school!.casting).toMatchObject({ play: 'Major Barbara', size: 'featured' });
+    expect(M.player.school!.casting).toMatchObject({ play: 'Major Barbara', size: 'supporting' });
   }, 60_000);
 
   it('gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first', () => {

@@ -674,7 +674,8 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   const before = a.prep[act.dim];
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
-  // Work in a genre known goes faster (`genreSpeed`, from 2026-10-09): the scene's play's kinds, the best of them.
+  // Work in a genre known goes faster (`genreSpeed`, from 2026-10-09): the scene's play's kinds, the best of them until
+  // brief 21 (2026-10-22), each by its weight in the play from then (`relevantGenre`).
   // And from 2026-10-10 the material's features met before (`featureSpeed`), the better of the two: familiarity with a
   // kind of work counted once, never twice.
   const speed = Math.max(genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined), featureSpeed(person, materialOf(a.sceneId)));
