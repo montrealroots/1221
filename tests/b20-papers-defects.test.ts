@@ -16,6 +16,14 @@
  * a public holiday since 2026-10-13 (`appointments.ts`'s `slot`); the therapist's practice is no more open that day.
  * Found by brief 20's papers area looking for impossible scheduling (D1).
  *
+ * P3, a medical debt put on a Connecticut student's credit record. A medical debt of $500 or more, a year past due,
+ * marked the record (40 points, `MEDICAL_DEBT.recordHit`) and said "A Medical Debt Is On Your Record" outside the states
+ * that bar it, which SLATE kept as New York and California. Connecticut has barred it since 1 July 2024: Public Act
+ * 24-6, "An Act Concerning the Reporting of Medical Debt", signed on 9 May 2024, forbids a health care provider or a
+ * hospital to report any part of a medical debt to a credit rating agency, and voids one so reported (the governor's
+ * release, portal.ct.gov, read 2026-10-22). Every life lives in New Haven, so every played life's unpaid care was put on
+ * a record the state's law keeps it off. Found by brief 20's papers area reading the rule against its source.
+ *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), at Yale in New Haven from Monday 24 August 2026,
  * played by the clock and the commands Papers sends; Papers rendered to markup (react-dom/server) over the save, with
  * `useGame` standing in for the provider, which needs a browser, as tests/defects-g25-1.test.ts does.
@@ -24,7 +32,9 @@
  * Wednesday 4 November 2026 with its sixty days' grace (a life's own is 31 May 2029), so the ninety days before it fall
  * in the first term; the United States' holidays read from public/holidays/us.tsv, as the app fetches them when a save
  * opens (`loadPlacesFor`); for P2, depression on her record from 12 November, as a month's onset would put it there (which
- * month brings it is the draw's, tested apart in tests/evidence-g07-life.test.ts).
+ * month brings it is the draw's, tested apart in tests/evidence-g07-life.test.ts); for P3, the bank emptied and a
+ * $900 bill raised on her first morning as an injury's is (`billCare`), and money put back to live on once it's debt,
+ * not paid toward it.
  */
 import { describe, expect, it, vi } from 'vitest';
 import { createElement } from 'react';
@@ -36,7 +46,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { documentsOf, inForce } from '@/engine/systems/documents';
 import { f1Of, programEnd, usWorkAuthorized } from '@/engine/systems/permission';
-import { healthOf } from '@/engine/systems/health';
+import { billCare, healthOf, medicalDebtOf } from '@/engine/systems/health';
 import { THERAPY, THERAPY_SESSION_KIND } from '@/engine/systems/therapy';
 import { addCountryHolidays, holidaysOn } from '@/engine/content/holidays';
 import { readFileSync } from 'node:fs';
@@ -159,4 +169,37 @@ describe('P2: a course of therapy on a public holiday', () => {
     expect(opened.universe.scheduled.filter((i) => i.kind === THERAPY_SESSION_KIND && i.status === 'done')).toHaveLength(THERAPY.sessions);
     expect(opened.player.therapy).toBeUndefined();
   }, 60_000);
+});
+
+describe('P3: a medical debt and a Connecticut credit record', () => {
+  /** TEST SETUP: a posting of a sum into or out of one of her accounts, against a test line. */
+  const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: -amount }] });
+  /** TEST SETUP: every current, savings and cash account of hers emptied. */
+  const broke = (sim: Simulation) => {
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && !a.closedAt && ['checking', 'savings', 'cash'].includes(a.kind) && a.balance > 0) give(sim, a.id, -a.balance);
+  };
+
+  it('PLAYER JOURNEY: $900 of care unpaid at its due date is owed as debt, and a year and more on it’s still owed, counted, and never put on her credit record or said to be, across a reload', () => {
+    const sim = createSave(1, 'b20-papers-ctdebt', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    broke(sim);
+    const bill = billCare(sim, sim.player, 'A care bill', 900_00, sim.now);
+    tended(sim, bill.dueAt + MS_DAY);
+    expect(bill.inDebt).toBe(true);
+    expect(-medicalDebtOf(sim, sim.player)!.balance).toBe(900_00);
+    // Money to live on, none of it paid toward the debt.
+    give(sim, sim.player.primaryAccountId!, 20_000_00);
+    const marks = () => (sim.player.credit?.marks ?? []).filter((m) => m.points === 40).length;
+    const before = marks();
+    tended(sim, at(2027, 6, 1, 12));
+    const opened = reload(sim);
+    // A year past its due date of 23 September 2026 is 23 September 2027; the month's look on 1 October reads it.
+    for (const s of [sim, opened]) {
+      tended(s, at(2027, 11, 2, 12));
+      expect(-medicalDebtOf(s, s.player)!.balance).toBe(900_00);
+      expect(s.universe.notifications.filter((n) => n.title === 'A Medical Debt Is On Your Record')).toEqual([]);
+      expect(healthOf(s.player).reported).toBeFalsy();
+      expect((s.player.credit?.marks ?? []).filter((m) => m.points === 40).length).toBe(before);
+    }
+    expect(marks()).toBe(before);
+  }, 90_000);
 });

@@ -715,7 +715,7 @@ describe('health.pay_bill', () => {
   };
   const reports = (sim: Simulation) => titled(sim, 'A Medical Debt Is On Your Record');
 
-  it('PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay is reported once, across a reload, and the one who paid never is', () => {
+  it('PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay still owes it, across a reload, and neither is reported, Connecticut barring it', () => {
     const play = (pay: boolean) => {
       let { sim } = inDebt('g03-debt');
       // TEST SETUP: $20,000 back in the current account to live on.
@@ -745,15 +745,16 @@ describe('health.pay_bill', () => {
       const first = reports(sim).map((n) => [n.at, n.body]);
       sim = reload(sim);
       tended(sim, at(2027, 11, 2, 12));
-      // The mark the report puts on the record, at its moment: other marks a year brings are other rules'.
-      return { first, all: reports(sim).length, marks: (sim.player.credit?.marks ?? []).filter((m) => m.at === at(2027, 10, 1, 0, 30)).length };
+      // The mark a report would put on the record, at its moment: other marks a year brings are other rules'.
+      return { first, all: reports(sim).length, marks: (sim.player.credit?.marks ?? []).filter((m) => m.at === at(2027, 10, 1, 0, 30)).length, owing: Math.max(0, -(medicalDebtOf(sim, sim.player)?.balance ?? 0)) };
     };
+    // Until 2026-10-22 the twin who didn't pay was reported on 1 October 2027 with a 40-point mark. Connecticut has barred
+    // reporting medical debt since 1 July 2024 (Public Act 24-6; `MEDICAL_DEBT.barredIn`, brief 20's papers area): what
+    // paying changes is the debt, still owed by the one who didn't.
     const owed = play(false);
-    expect(owed.first).toEqual([[at(2027, 10, 1, 0, 30), 'Your medical debt is $500.00 or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.']]);
-    expect(owed.all).toBe(1);
-    expect(owed.marks).toBe(1);
+    expect(owed).toEqual({ first: [], all: 0, marks: 0, owing: 900_00 });
     const paid = play(true);
-    expect(paid).toEqual({ first: [], all: 0, marks: 0 });
+    expect(paid).toEqual({ first: [], all: 0, marks: 0, owing: 0 });
   });
 
   it('paid from a savings account named, which falls by it while the current account doesn’t; each refusal in its own words', () => {

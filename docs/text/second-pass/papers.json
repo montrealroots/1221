@@ -169,9 +169,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten",
-  "hash": "db6c7035ca1d",
-  "on": "2026-10-20",
-  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check; its notice quote checked against healthMonth in systems/health.ts",
+  "hash": "76e0ea9669ba",
+  "on": "2026-10-22",
+  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
@@ -197,9 +197,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [scheduled]": {
   "status": "Rewritten",
-  "hash": "ba56db431cf8",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a long-term condition left untreated takes its toll)",
+  "hash": "ba488acc93d2",
+  "on": "2026-10-22",
+  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PRACTICE": {
@@ -3221,9 +3221,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#HealthPane": {
   "status": "Rewritten",
-  "hash": "f337c758e206",
-  "on": "2026-10-20",
-  "evidence": "brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/scope-taxpapers.test.ts (brief 17: Papers says what File It takes, what a missed plan payment needs, and what the letters do next), tests/remaining-tax.test.ts (Catch Up drawn on Papers) and tests/editorial17-papers.test.ts",
+  "hash": "9d3efb8762e9",
+  "on": "2026-10-22",
+  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
   "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel": {

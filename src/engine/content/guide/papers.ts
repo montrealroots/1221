@@ -285,7 +285,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'Your Status', value: 'US citizenship or five years with a green card for HUSKY D from October 1, 2026; lawful presence for the marketplace, and for Covered Connecticut until 2027, when it’s a citizen’s or a green card holder’s', estimate: false },
       { label: 'A Denied Claim', value: `${pct(DENIALS.rate)} of a marketplace plan’s claims, billed as if you were uninsured; insurers uphold ${pct(DENIALS.upheld)} of appeals`, estimate: true },
       { label: 'The Hospital’s Financial Assistance', value: `Your last twelve months’ income against the poverty line: free to ${pct(CT_CHARITY.freeTo)}, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}` },
-      { label: 'Medical Debt On Your Record', value: `${usd(MEDICAL_DEBT.reportAt)} or more, unpaid ${MEDICAL_DEBT.reportAfterDays} days, and you living outside New York and California` },
+      { label: 'Medical Debt On Your Record', value: 'Never while you live in Connecticut: its law keeps medical debt off a credit record, as New York’s and California’s do' },
     ],
     now: [
       // From 2026-10-16 (brief 09's journeys): until then HUSKY D, too, started on the first of next month.
@@ -318,7 +318,7 @@ export const PAPERS: readonly GuideEntry[] = [
       // 2026-10-14 a marketplace plan enrolled ahead was said to have ended too.
       'Stay past your US status and, at the next month’s start, a marketplace plan ends with the notice “Your Marketplace Plan Has Ended”, and Covered Connecticut with “Your Public Cover Has Ended”, or, where you enrolled ahead, “Your Marketplace Plan Won’t Begin” and “Your Public Cover Won’t Begin”.',
       `A bill still open on its due date, ${MEDICAL_DEBT.dueDays} days on, is taken from ${FROM_CURRENT}, if between them they can cover all of it. If not, it’s medical debt, owed to Your Providers, with the notice “A Medical Bill Went Unpaid”.`,
-      `A medical debt of ${usd(MEDICAL_DEBT.reportAt)} or more, ${MEDICAL_DEBT.reportAfterDays} days after its first bill went unpaid, is reported to your credit record once, at the next month’s start, since you live in Connecticut. The notice is “A Medical Debt Is On Your Record”.`,
+      'A medical debt isn’t reported to your credit record, however long it goes unpaid, since you live in Connecticut, whose law bars it. It stays owed to Your Providers until you pay it off.',
       `An appeal is decided ${DENIALS.decideDays} days on. Overturned, you owe only the plan’s share: what you paid over it comes back into the account your payments go to, what went to debt over it comes off the debt, and what you’d paid toward that debt past what’s left of it comes back too; a debt it clears settles every bill that went to it. Upheld, the bill stands.`,
       `Each Monday may bring care at an adult’s rates: about ${CARE.perYear.visit} doctor’s visits a year, ${CARE.perYear.emergency} emergency visits, a stay in hospital one year in ${Math.round(1 / CARE.perYear.stay)} (${CARE.stayDays} days), and the flu about one year in ${Math.round(1 / CARE.flu)}, likelier when you’re short of sleep or stressed.`,
       // Until 2026-10-16 this said the 60 days ran from that first of the month for Yale Health's end too, weeks after a
@@ -384,7 +384,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { to: 'papers.doctor', kind: 'evaluation', why: 'Your cover decides your share each time you have care: a visit, urgent care, an emergency or a stay.' },
       { to: 'papers.conditions', kind: 'evaluation', why: 'A condition’s month of care and each fill of its medicine are priced at your plan’s copays.' },
       { to: 'taxes.return', kind: 'history', why: 'Each marketplace premium paid is kept for the year’s premium tax credit, which the return works out.' },
-      { to: 'money.affairs', kind: 'scheduled', why: `A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts; at ${usd(MEDICAL_DEBT.reportAt)} or more, ${MEDICAL_DEBT.reportAfterDays} days on, it marks your credit record.` },
+      { to: 'money.affairs', kind: 'scheduled', why: 'A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts. Connecticut’s law keeps it off your credit record.' },
       { to: 'school.sick', kind: 'optional', why: 'A stay in hospital excuses you from school of itself; down with the flu, Call In Sick excuses the day.' },
     ],
     // Until 2026-10-15 this example's graduate was given HUSKY D from 1 September: Enroll asked no work of somebody
