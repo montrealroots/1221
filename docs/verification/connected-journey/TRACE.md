@@ -1050,7 +1050,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.headshots`: `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1074,7 +1074,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1099,7 +1099,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - New recorded work after it shows under What’s Missing as worth adding.
-- **Tested by:** `pro.cut_reel`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.cut_reel`: `tests/b20-career-effects.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### The Agent And How To Reach Him (`career.agent`)
 
@@ -1128,7 +1128,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - His office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
   - After a pass, his office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
-- **Tested by:** `pro.agent_notice`: `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### His Office’s Answers And The Meeting (`career.agent-answers`)
 
@@ -1198,7 +1198,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
-- **Tested by:** `pro.accept_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.accept_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### Your Work And Its Pay (`career.pay`)
 
@@ -1255,10 +1255,10 @@ The Career screen, your professional profile and name, headshots, your résumé 
 
 - **Action:** `pro.join_sag`, at Career, Work, Your Unions (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Your Career”. Join SAG-AFTRA opens once you’ve worked a SAG-AFTRA principal role.
 - **Preconditions:**
-  - For Equity: the degree.
+  - For Equity: the degree, or a first day of work under an Equity contract.
   - For SAG-AFTRA: a SAG-AFTRA principal role worked, and the fee in your bank.
 - **Costs:**
-  - Equity’s Initiation Fee: $1,800.00 within three years: $600.00 at the degree, then two parts a year apart. The two parts’ dates are estimated
+  - Equity’s Initiation Fee: $1,800.00 within three years: $600.00 when you join, then two parts a year apart. The two parts’ dates are estimated
   - Equity’s Dues: $88.00 each May and November, and 2.5% of Equity pay, taken from it. Taking it from the pay is estimated
   - Joining SAG-AFTRA: About $3,244.07: the initiation fee and half a year’s base dues, then half a year’s dues each May and November, and 1.575% of SAG-AFTRA pay. Read from a search engine’s copy of its pages (an estimate)
 - **State (what changes at once):**
@@ -1295,6 +1295,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Feedback (how to read what comes back):**
   - Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.
   - Each role says it’s fictional: no real production is casting.
+  - A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
@@ -1348,7 +1349,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-papers-work.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-papers-work.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 

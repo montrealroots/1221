@@ -1900,6 +1900,64 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
+  },
+  {
+   "id": "pro.agent_reply",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "where": "The clock: the agent's office answers an approach on its own day at its answer hour (`AGENT_TIMES.replyDays`, or `afterSupplyDays` after what it asked for, or when it had asked to meet), 'An Answer' on no screen until it comes.",
+   "prerequisites": "An approach sent (`pro.send_materials`) or what the office asked for sent (`pro.supply_material`), still the approach under way: the relation at 'sent' and its approach number the item's; anything settled another way (ended, closed, a new approach) makes it nothing.",
+   "reads": "The agent's interest in the actor that day (`interestOf`: the training, the credits, the reel, the record, the list's room drawn under his id), the approach's step (first, after a request), whether the office had asked to meet, the reel sent.",
+   "changes": "One of: a request for more by a date (`rel.request`, the stage 'requested', a `pro.agent_request_due` on the calendar); a meeting set (`rel.meeting`, the stage 'meeting', `pro.agent_meeting` on the calendar with its trip); a pass (the approach closed, a year's cooldown); or waiting (the stage 'waiting', `pro.agent_silence` at the silence's date). The reasons kept (`keepWhy`) for Why It Went This Way.",
+   "consumers": [
+    {
+     "what": "the answer read by the handler, which hands the approach to `answer`",
+     "at": "src/engine/systems/proagent.ts:1155"
+    },
+    {
+     "what": "the interest the answer reads",
+     "at": "src/engine/systems/proagent.ts:829"
+    },
+    {
+     "what": "a request's due date falls on the clock and is settled on what was sent",
+     "at": "src/engine/systems/proagent.ts:1164"
+    },
+    {
+     "what": "a meeting set comes to the clock, kept or missed",
+     "at": "src/engine/systems/proagent.ts:1185"
+    },
+    {
+     "what": "silence, the approach closed as no answer",
+     "at": "src/engine/systems/proagent.ts:1175"
+    }
+   ],
+   "experienced": "A notice on its day: his office asked for more by a date, asked to meet (with the place and the trip), or passed, with Why It Went This Way's reasons; or nothing until the silence's date, when No Answer comes. The Representation tab shows the stage.",
+   "saveLoad": "The item on the calendar with its approach and step; `tests/b20-career-saveload.test.ts` plays an approach's six steps saved and opened before each, ending the same to the byte as played straight.",
+   "evidence": {
+    "tests": [
+     "tests/journey-agent.test.ts",
+     "tests/pro-agent.test.ts",
+     "tests/b20-career-saveload.test.ts",
+     "tests/b20-career-skill.test.ts",
+     "tests/b20-career-history.test.ts"
+    ],
+    "comparisons": [
+     "the same approach answered alike at the top and the bottom of skill, the list's room and the interest's factors the same (b20-career-skill)",
+     "an approach passed on refused for a year (b20-career-effects 3)"
+    ],
+    "mutations": [],
+    "journeys": [
+     "journey-agent",
+     "journey-career"
+    ]
+   },
+   "missing": "None found. It was in no table until 16630746 (the inventory read a kind constant by its name across files, and projobs.ts's REPLY_KIND, 'pro.reply', stood for proagent.ts's), so the career area's rows, read before that, had none; written by the coordinator from the code and the career area's tests.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "coordinator",
+   "readAt": "1fb67173"
   }
  ],
  "promises": [
