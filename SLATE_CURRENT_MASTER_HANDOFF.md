@@ -72,6 +72,8 @@ is no stash and one worktree.
     the calendar still said "Payday: The Winter Ledger" four times. They come off with the week now (`dropPaydays`), and
     an older save's come off on opening.
   - **"The producers answers soon."** on Opportunities' In Progress: its verb agrees now.
+  - **The gate** on `5ccf054e` in a clean clone, its exit read from its file: 0; 486 of 486 test files, 5,598 of 5,598
+    tests, all 22 checks (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate-after-merge.txt`).
   - Merging it waits on the owner's word; measuring the 46 rows again waits on final runs.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;

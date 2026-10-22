@@ -327,8 +327,12 @@ The pages captured on the built app after #54's merge (2026-10-22) showed two de
     calendar, where `main`'s build showed it 4 and 7 times.
   - **1 September, the run booked:** its six paydays shown on the calendar, as on `main`.
   - **16 August, Robin's self-tape:** "Submitted. The producers answer soon."
+- **The gate,** in a clean clone of `5ccf054e`, its exit read from its file: exit 0; 486 of 486 test files and 5,598 of
+  5,598 tests, none skipped; all 22 checks, the matrix at 588 (`final-runs/runs/gate-after-merge.txt`). Brief 22's own
+  gate record (`gate.txt`, `gate-receipt.txt`) stays as it was; only this figure was written after it.
 - **The matrix:** the fix changed `src/engine`, so the 46 rows measured on the engine's or the app's whole source read as
-  measured before what they read last changed until final runs measure them again: 588 of 658 until then.
+  measured before what they read last changed until final runs measure them again: 588 of 658 until then. INT-gate is
+  one of them: its figure is brief 22's gate, and this one isn't folded in place of it.
 
 ## Not Done, And What Limits This
 
