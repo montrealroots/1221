@@ -5,8 +5,11 @@
 set -u
 S=/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad
 B=/home/user/1221/docs/verification/career-genre-2026-10-22/final-runs
+# Brief 20's journeys (BJ1 to BJ3) were played again on afe751f1, its src the tested commit's, once their coherence check
+# read what each part asks (`tools/b20-journeys.ts`): those lanes' clones are f22b-, and their journeys f22b-b20journeys.
 for L in A ADVF ADVR B C D J UI APP JR1 JR2 JR3 JRC BJ1 BJ2 BJ3 M1 M2 M3 M4 MF; do
   C="$S/f22-$L/docs/verification/career-genre-2026-10-22/final-runs"
+  [ -d "$S/f22b-$L" ] && C="$S/f22b-$L/docs/verification/career-genre-2026-10-22/final-runs"
   [ -d "$C" ] || { echo "no lane $L"; continue; }
   for d in runs advice final interface-final journeys14-final app; do [ -d "$C/$d" ] && mkdir -p "$B/$d" && cp -r "$C/$d/." "$B/$d/"; done
 done
@@ -15,6 +18,6 @@ cp -r "$S/f22-final/." "$B/final/"
 rm -f "$B"/journeys-final/*.json
 cp -r "$S/f22-journeys/." "$B/journeys-final/"
 rm -rf "${B:?}/b20-journeys/"*
-cp -r "$S/f22-b20journeys/." "$B/b20-journeys/"
+cp -r "$( [ -d "$S/f22b-b20journeys" ] && echo "$S/f22b-b20journeys" || echo "$S/f22-b20journeys")/." "$B/b20-journeys/"
 cat $(ls "$S"/f22-B-work/life-*.json "$S"/f22-C-work/life-*.json | sort -V) > "$B/runs/lives.jsonl"
 echo "collected $(date -u +%T)"
