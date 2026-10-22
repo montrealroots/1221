@@ -1,0 +1,161 @@
+{
+ "width": 390,
+ "base": "http://localhost:4221",
+ "commit": "16b50e07",
+ "at": "2026-10-22T18:52:30.393Z",
+ "saves": [
+  {
+   "save": "before",
+   "steps": [
+    {
+     "step": "opened with Continue: Home",
+     "clock": "2:00 PM · September 1, 2029",
+     "picture": "before-01"
+    },
+    {
+     "step": "Papers, Permission To Work",
+     "picture": "before-02"
+    },
+    {
+     "step": "Career, Work",
+     "picture": "before-03"
+    },
+    {
+     "step": "Career, Opportunities",
+     "picture": "before-04"
+    },
+    {
+     "step": "How This Works, Genres",
+     "picture": "before-05"
+    },
+    {
+     "step": "How This Works, Permission To Work",
+     "picture": "before-06"
+    },
+    {
+     "step": "reads /Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked begins among them/",
+     "on": "Papers, Permission To Work",
+     "held": true
+    },
+    {
+     "step": "reads /Your US Status\\s*Ends September 1, 2029/i",
+     "on": "Papers, Permission To Work",
+     "held": true
+    },
+    {
+     "step": "reads /Hester Vane/",
+     "on": "Career, Work",
+     "held": true
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "released",
+   "steps": [
+    {
+     "step": "opened with Continue: Home",
+     "clock": "9:00 AM · September 2, 2029",
+     "picture": "released-01"
+    },
+    {
+     "step": "Papers, Permission To Work",
+     "picture": "released-02"
+    },
+    {
+     "step": "Career, Work",
+     "picture": "released-03"
+    },
+    {
+     "step": "Career, Opportunities",
+     "picture": "released-04"
+    },
+    {
+     "step": "How This Works, Genres",
+     "picture": "released-05"
+    },
+    {
+     "step": "How This Works, Permission To Work",
+     "picture": "released-06"
+    },
+    {
+     "step": "reads /Your US Status\\s*Out Of Status/i",
+     "on": "Papers, Permission To Work",
+     "held": true
+    },
+    {
+     "step": "reads /released you as Hester Vane on September 2, 2029: your OPT ended on September 1, 2029, after more than 90 days without work/",
+     "on": "Career, Work",
+     "held": true
+    },
+    {
+     "step": "reads /On OPT, each day is counted once it’s over: a day with work from a job’s first day to its last/",
+     "on": "Guide, Permission To Work",
+     "held": true
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "roles",
+   "steps": [
+    {
+     "step": "opened with Continue: Home",
+     "clock": "7:30 AM · September 1, 2026",
+     "picture": "roles-01"
+    },
+    {
+     "step": "Papers, Permission To Work",
+     "picture": "roles-02"
+    },
+    {
+     "step": "Career, Work",
+     "picture": "roles-03"
+    },
+    {
+     "step": "Career, Opportunities",
+     "picture": "roles-04"
+    },
+    {
+     "step": "How This Works, Genres",
+     "picture": "roles-05"
+    },
+    {
+     "step": "How This Works, Permission To Work",
+     "picture": "roles-06"
+    },
+    {
+     "step": "reads /What It Asks\\s*(Psychological Horror|Coming Of Age|Farce|Domestic Drama|Police Procedural|Psychological Thriller|Romantic Comedy)\\. /",
+     "on": "Career, Opportunities",
+     "held": true
+    },
+    {
+     "step": "doesn’t read /What It Asks\\s*[^.]*, (Horror|Drama|Comedy|Crime|Thriller)\\./",
+     "on": "Career, Opportunities",
+     "held": true
+    },
+    {
+     "step": "reads /Each play, part, class scene and professional role says how much of each genre it asks/",
+     "on": "Guide, Genres",
+     "held": true
+    },
+    {
+     "step": "reads /counts at 65%: Psychological Horror known counts toward Horror/",
+     "on": "Guide, Genres",
+     "held": true
+    },
+    {
+     "step": "reads /counts at 40%: Comedy known counts toward Farce/",
+     "on": "Guide, Genres",
+     "held": true
+    },
+    {
+     "step": "reads /One step only: Nordic Noir doesn’t count toward Drama, two steps away/",
+     "on": "Guide, Genres",
+     "held": true
+    }
+   ],
+   "found": []
+  }
+ ]
+}

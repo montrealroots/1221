@@ -1,0 +1,1170 @@
+{
+ "J03 J04 J05": {
+  "advisedToTheFollower": [
+   "vocal",
+   "focus",
+   "imagination",
+   "listening",
+   "adaptability",
+   "physical",
+   "composure",
+   "emotionalDepth"
+  ],
+  "risesOfTheAdvised": {
+   "follows": 235.1,
+   "partly": 185.3,
+   "ignores": 171.6
+  },
+  "byInput": {
+   "vocal": {
+    "follows": 49.1,
+    "partly": 49.9,
+    "ignores": 15.5
+   },
+   "focus": {
+    "follows": 29,
+    "partly": 17.8,
+    "ignores": 9.5
+   },
+   "imagination": {
+    "follows": 35.7,
+    "partly": 29.9,
+    "ignores": 13.8
+   },
+   "listening": {
+    "follows": 31.9,
+    "partly": 17.9,
+    "ignores": 30.6
+   },
+   "adaptability": {
+    "follows": 27.4,
+    "partly": 22.9,
+    "ignores": 5
+   },
+   "physical": {
+    "follows": 15.3,
+    "partly": 14.8,
+    "ignores": 42.2
+   },
+   "composure": {
+    "follows": 26.4,
+    "partly": 15.5,
+    "ignores": 10
+   },
+   "emotionalDepth": {
+    "follows": 20.3,
+    "partly": 16.6,
+    "ignores": 45
+   }
+  },
+  "ignorersFavorite": {
+   "ability": "presence",
+   "exercise": "showing-for-classmates",
+   "sessions": 612,
+   "follows": 1.9,
+   "partly": 32.7,
+   "ignores": 32.6
+  },
+  "followersLastTwelve": {
+   "pieces": 12,
+   "atFollowers": 78.06,
+   "atPartlys": 75.25,
+   "atIgnorers": 72.54
+  },
+  "outcome": [
+   "graduated",
+   "graduated",
+   "graduated"
+  ]
+ },
+ "J06 J07 J08": {
+  "advisedToTheFollower": [
+   "imagination",
+   "focus",
+   "vocal",
+   "listening",
+   "composure",
+   "adaptability",
+   "physical",
+   "presence",
+   "emotionalDepth"
+  ],
+  "risesOfTheAdvised": {
+   "follows": 245.1,
+   "partly": 220.7,
+   "ignores": 210.3
+  },
+  "byInput": {
+   "imagination": {
+    "follows": 39,
+    "partly": 28.7,
+    "ignores": 14.5
+   },
+   "focus": {
+    "follows": 31.3,
+    "partly": 17.9,
+    "ignores": 9.4
+   },
+   "vocal": {
+    "follows": 46.9,
+    "partly": 47.6,
+    "ignores": 25.3
+   },
+   "listening": {
+    "follows": 32.3,
+    "partly": 17.8,
+    "ignores": 47.3
+   },
+   "composure": {
+    "follows": 25.9,
+    "partly": 19.3,
+    "ignores": 9.6
+   },
+   "adaptability": {
+    "follows": 26,
+    "partly": 19.3,
+    "ignores": 4.9
+   },
+   "physical": {
+    "follows": 21.2,
+    "partly": 17.4,
+    "ignores": 16.1
+   },
+   "presence": {
+    "follows": 2.9,
+    "partly": 36.8,
+    "ignores": 36.9
+   },
+   "emotionalDepth": {
+    "follows": 19.6,
+    "partly": 15.9,
+    "ignores": 46.3
+   }
+  },
+  "ignorersFavorite": {
+   "ability": "presence",
+   "exercise": "showing-for-classmates",
+   "sessions": 669,
+   "follows": 2.9,
+   "partly": 36.8,
+   "ignores": 36.9
+  },
+  "followersLastTwelve": {
+   "pieces": 12,
+   "atFollowers": 77.58,
+   "atPartlys": 74.23,
+   "atIgnorers": 72.33
+  },
+  "outcome": [
+   "graduated",
+   "graduated",
+   "graduated"
+  ]
+ },
+ "J11 against J09": {
+  "specialist": "feeling",
+  "strengths": [
+   "emotionalDepth",
+   "composure",
+   "imagination",
+   "presence"
+  ],
+  "weaknesses": [
+   "listening",
+   "focus",
+   "memory",
+   "adaptability",
+   "vocal",
+   "physical",
+   "discipline"
+  ],
+  "atSetupLevels": {
+   "asExpected": 24,
+   "of": 24,
+   "readsStrengths": 4,
+   "pieces": [
+    {
+     "piece": "brief:brief-art_house/still",
+     "generalist": 67.11,
+     "specialist": 66.56,
+     "strengthsAdd": 6.74,
+     "weaknessesCost": -7.27,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-comedy/timing",
+     "generalist": 67.3,
+     "specialist": 62.61,
+     "strengthsAdd": 4.3,
+     "weaknessesCost": -8.81,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-drama/guarded",
+     "generalist": 67.36,
+     "specialist": 70.11,
+     "strengthsAdd": 8.89,
+     "weaknessesCost": -5.97,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-musical/persuade",
+     "generalist": 63.02,
+     "specialist": 57.53,
+     "strengthsAdd": 3.65,
+     "weaknessesCost": -9.08,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-horror/trust",
+     "generalist": 65.38,
+     "specialist": 63.36,
+     "strengthsAdd": 5.85,
+     "weaknessesCost": -7.64,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-legal_drama/counsel",
+     "generalist": 67.64,
+     "specialist": 64,
+     "strengthsAdd": 4.99,
+     "weaknessesCost": -8.6,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-thriller/steady",
+     "generalist": 68.06,
+     "specialist": 68.02,
+     "strengthsAdd": 7.08,
+     "weaknessesCost": -7.15,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-social_realism/tired",
+     "generalist": 67.37,
+     "specialist": 67.82,
+     "strengthsAdd": 7.47,
+     "weaknessesCost": -6.84,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:seagull-4",
+     "generalist": 69.6,
+     "specialist": 66.18,
+     "strengthsAdd": 4.52,
+     "weaknessesCost": -8.06,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:earnest-2",
+     "generalist": 70.52,
+     "specialist": 67.43,
+     "strengthsAdd": 4.68,
+     "weaknessesCost": -7.71,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:hamlet-3-1",
+     "generalist": 69.63,
+     "specialist": 67.61,
+     "strengthsAdd": 5.36,
+     "weaknessesCost": -7.46,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:antigone-441",
+     "generalist": 69.58,
+     "specialist": 69.38,
+     "strengthsAdd": 6.34,
+     "weaknessesCost": -6.56,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:dream-3-2",
+     "generalist": 67.2,
+     "specialist": 61.65,
+     "strengthsAdd": 3.08,
+     "weaknessesCost": -8.57,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:scapin-3-2",
+     "generalist": 65.74,
+     "specialist": 59.02,
+     "strengthsAdd": 2.29,
+     "weaknessesCost": -8.98,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:henry5-4-3",
+     "generalist": 68.63,
+     "specialist": 67.89,
+     "strengthsAdd": 6.13,
+     "weaknessesCost": -6.92,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:orig-office-hours",
+     "generalist": 71.67,
+     "specialist": 72.12,
+     "strengthsAdd": 6.69,
+     "weaknessesCost": -6.3,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:The Bear",
+     "generalist": 60.59,
+     "specialist": 53.36,
+     "strengthsAdd": 4.17,
+     "weaknessesCost": -11.29,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Three Sisters",
+     "generalist": 60.48,
+     "specialist": 57.14,
+     "strengthsAdd": 6.65,
+     "weaknessesCost": -9.95,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Macbeth",
+     "generalist": 59.3,
+     "specialist": 56.37,
+     "strengthsAdd": 6.7,
+     "weaknessesCost": -9.57,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Hedda Gabler",
+     "generalist": 59.82,
+     "specialist": 58.36,
+     "strengthsAdd": 7.54,
+     "weaknessesCost": -8.97,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Twelfth Night",
+     "generalist": 67.19,
+     "specialist": 64.05,
+     "strengthsAdd": 6.03,
+     "weaknessesCost": -9.01,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Julius Caesar",
+     "generalist": 64.87,
+     "specialist": 61.55,
+     "strengthsAdd": 6.43,
+     "weaknessesCost": -9.55,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Trifles",
+     "generalist": 65.15,
+     "specialist": 66.16,
+     "strengthsAdd": 8.82,
+     "weaknessesCost": -7.53,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Tartuffe",
+     "generalist": 64.83,
+     "specialist": 59.54,
+     "strengthsAdd": 5.12,
+     "weaknessesCost": -10.22,
+     "reads": "weaknesses",
+     "asExpected": true
+    }
+   ]
+  },
+  "atFinalLevels": {
+   "asExpected": 24,
+   "of": 24,
+   "pieces": [
+    {
+     "piece": "brief:brief-art_house/still",
+     "generalist": 82.31,
+     "specialist": 84.92,
+     "strengthsAdd": 3.07,
+     "weaknessesCost": -1.85,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-comedy/timing",
+     "generalist": 82.78,
+     "specialist": 85.32,
+     "strengthsAdd": 3.22,
+     "weaknessesCost": -0.83,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-drama/guarded",
+     "generalist": 79.68,
+     "specialist": 82.26,
+     "strengthsAdd": 3.99,
+     "weaknessesCost": -1.41,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-musical/persuade",
+     "generalist": 74.68,
+     "specialist": 76.26,
+     "strengthsAdd": 2.94,
+     "weaknessesCost": -1.7,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-horror/trust",
+     "generalist": 80.08,
+     "specialist": 81.66,
+     "strengthsAdd": 3.1,
+     "weaknessesCost": -1.78,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-legal_drama/counsel",
+     "generalist": 81.45,
+     "specialist": 82.53,
+     "strengthsAdd": 2.18,
+     "weaknessesCost": -1.11,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-thriller/steady",
+     "generalist": 84.57,
+     "specialist": 87.51,
+     "strengthsAdd": 3.3,
+     "weaknessesCost": -1.81,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-social_realism/tired",
+     "generalist": 80.33,
+     "specialist": 81.87,
+     "strengthsAdd": 3.23,
+     "weaknessesCost": -1.7,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:seagull-4",
+     "generalist": 84.89,
+     "specialist": 85.87,
+     "strengthsAdd": 2.77,
+     "weaknessesCost": -2.46,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:earnest-2",
+     "generalist": 84.73,
+     "specialist": 86.6,
+     "strengthsAdd": 3.22,
+     "weaknessesCost": -1.75,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:hamlet-3-1",
+     "generalist": 83.33,
+     "specialist": 84.43,
+     "strengthsAdd": 2.57,
+     "weaknessesCost": -2.48,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:antigone-441",
+     "generalist": 83.12,
+     "specialist": 85.55,
+     "strengthsAdd": 4.39,
+     "weaknessesCost": -1.96,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:dream-3-2",
+     "generalist": 79.35,
+     "specialist": 80.21,
+     "strengthsAdd": 2.18,
+     "weaknessesCost": -1.64,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:scapin-3-2",
+     "generalist": 78.37,
+     "specialist": 79.16,
+     "strengthsAdd": 2.1,
+     "weaknessesCost": -1.63,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:henry5-4-3",
+     "generalist": 80.06,
+     "specialist": 84.23,
+     "strengthsAdd": 5.83,
+     "weaknessesCost": -1.08,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:orig-office-hours",
+     "generalist": 85.87,
+     "specialist": 88.24,
+     "strengthsAdd": 3.68,
+     "weaknessesCost": -2.24,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:The Bear",
+     "generalist": 79.31,
+     "specialist": 81.45,
+     "strengthsAdd": 4.23,
+     "weaknessesCost": -2.54,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Three Sisters",
+     "generalist": 80.06,
+     "specialist": 83,
+     "strengthsAdd": 4.5,
+     "weaknessesCost": -2.73,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Macbeth",
+     "generalist": 75.97,
+     "specialist": 79.28,
+     "strengthsAdd": 5.2,
+     "weaknessesCost": -2.49,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Hedda Gabler",
+     "generalist": 77.01,
+     "specialist": 80.54,
+     "strengthsAdd": 5.53,
+     "weaknessesCost": -2.89,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Twelfth Night",
+     "generalist": 83.49,
+     "specialist": 86.2,
+     "strengthsAdd": 4.66,
+     "weaknessesCost": -2.75,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Julius Caesar",
+     "generalist": 82.12,
+     "specialist": 85.35,
+     "strengthsAdd": 5.46,
+     "weaknessesCost": -2.5,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Trifles",
+     "generalist": 80.48,
+     "specialist": 84.04,
+     "strengthsAdd": 5.71,
+     "weaknessesCost": -2.67,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Tartuffe",
+     "generalist": 82.04,
+     "specialist": 84.27,
+     "strengthsAdd": 3.83,
+     "weaknessesCost": -2.69,
+     "reads": "strengths",
+     "asExpected": true
+    }
+   ]
+  },
+  "finalLevels": {
+   "emotionalDepth": 90,
+   "presence": 90.5,
+   "listening": 80.5,
+   "imagination": 98.5,
+   "focus": 92.2,
+   "memory": 64.9,
+   "adaptability": 82.9,
+   "composure": 91.7,
+   "vocal": 98.9,
+   "physical": 73.9,
+   "discipline": 100,
+   "stamina": 35
+  },
+  "strengthsMin": 90,
+  "weaknessesMax": 100,
+  "weaknessesMean": 84.8,
+  "adviceWeeks": {
+   "strengths": 7,
+   "weaknesses": 135,
+   "all": 153
+  },
+  "strengthsNamed": [
+   "2027-05-23 imagination at 90.78",
+   "2027-05-30 imagination at 92.19",
+   "2027-06-06 imagination at 93.6",
+   "2027-06-13 imagination at 95.02",
+   "2027-06-20 imagination at 96.44",
+   "2027-06-27 imagination at 97.85",
+   "2029-02-11 emotionalDepth at 90"
+  ],
+  "outcome": [
+   "graduated",
+   "graduated"
+  ]
+ },
+ "J12 against J10": {
+  "specialist": "body",
+  "strengths": [
+   "vocal",
+   "physical",
+   "memory",
+   "presence"
+  ],
+  "weaknesses": [
+   "emotionalDepth",
+   "listening",
+   "imagination",
+   "focus",
+   "adaptability",
+   "composure",
+   "discipline"
+  ],
+  "atSetupLevels": {
+   "asExpected": 24,
+   "of": 24,
+   "readsStrengths": 2,
+   "pieces": [
+    {
+     "piece": "brief:brief-art_house/still",
+     "generalist": 67.12,
+     "specialist": 58.58,
+     "strengthsAdd": 1.72,
+     "weaknessesCost": -10.26,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-comedy/timing",
+     "generalist": 67.68,
+     "specialist": 59.43,
+     "strengthsAdd": 1.94,
+     "weaknessesCost": -10.25,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-drama/guarded",
+     "generalist": 67.38,
+     "specialist": 59.96,
+     "strengthsAdd": 2.38,
+     "weaknessesCost": -9.79,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-musical/persuade",
+     "generalist": 63.19,
+     "specialist": 63.62,
+     "strengthsAdd": 7.27,
+     "weaknessesCost": -6.9,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-horror/trust",
+     "generalist": 65.4,
+     "specialist": 59.2,
+     "strengthsAdd": 2.96,
+     "weaknessesCost": -9.21,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-legal_drama/counsel",
+     "generalist": 67.66,
+     "specialist": 61.49,
+     "strengthsAdd": 3.32,
+     "weaknessesCost": -9.54,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-thriller/steady",
+     "generalist": 68.08,
+     "specialist": 57.82,
+     "strengthsAdd": 0.72,
+     "weaknessesCost": -10.96,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-social_realism/tired",
+     "generalist": 67.39,
+     "specialist": 59.67,
+     "strengthsAdd": 2.2,
+     "weaknessesCost": -9.91,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:seagull-4",
+     "generalist": 69.44,
+     "specialist": 63.22,
+     "strengthsAdd": 2.82,
+     "weaknessesCost": -9.06,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:earnest-2",
+     "generalist": 70.71,
+     "specialist": 64.7,
+     "strengthsAdd": 2.77,
+     "weaknessesCost": -8.87,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:hamlet-3-1",
+     "generalist": 69.4,
+     "specialist": 64.57,
+     "strengthsAdd": 3.57,
+     "weaknessesCost": -8.46,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:antigone-441",
+     "generalist": 69.27,
+     "specialist": 64.67,
+     "strengthsAdd": 3.49,
+     "weaknessesCost": -8.16,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:dream-3-2",
+     "generalist": 67.19,
+     "specialist": 65.17,
+     "strengthsAdd": 5.09,
+     "weaknessesCost": -7.24,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:scapin-3-2",
+     "generalist": 66.04,
+     "specialist": 63.68,
+     "strengthsAdd": 4.93,
+     "weaknessesCost": -7.39,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:henry5-4-3",
+     "generalist": 68.42,
+     "specialist": 66.12,
+     "strengthsAdd": 5.1,
+     "weaknessesCost": -7.44,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:orig-office-hours",
+     "generalist": 71.35,
+     "specialist": 64.82,
+     "strengthsAdd": 2.34,
+     "weaknessesCost": -8.87,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:The Bear",
+     "generalist": 60.33,
+     "specialist": 59.57,
+     "strengthsAdd": 8.13,
+     "weaknessesCost": -8.86,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Three Sisters",
+     "generalist": 60.29,
+     "specialist": 52.06,
+     "strengthsAdd": 3.47,
+     "weaknessesCost": -11.67,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Macbeth",
+     "generalist": 59.11,
+     "specialist": 57.49,
+     "strengthsAdd": 7.46,
+     "weaknessesCost": -9.06,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Hedda Gabler",
+     "generalist": 59.58,
+     "specialist": 55.36,
+     "strengthsAdd": 5.7,
+     "weaknessesCost": -9.9,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Twelfth Night",
+     "generalist": 66.97,
+     "specialist": 64.76,
+     "strengthsAdd": 6.39,
+     "weaknessesCost": -8.61,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Julius Caesar",
+     "generalist": 64.6,
+     "specialist": 64.74,
+     "strengthsAdd": 8.34,
+     "weaknessesCost": -8.2,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Trifles",
+     "generalist": 64.77,
+     "specialist": 61.45,
+     "strengthsAdd": 5.65,
+     "weaknessesCost": -8.97,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Tartuffe",
+     "generalist": 64.56,
+     "specialist": 63.35,
+     "strengthsAdd": 7.43,
+     "weaknessesCost": -8.64,
+     "reads": "weaknesses",
+     "asExpected": true
+    }
+   ]
+  },
+  "atFinalLevels": {
+   "asExpected": 23,
+   "of": 24,
+   "pieces": [
+    {
+     "piece": "brief:brief-art_house/still",
+     "generalist": 82.05,
+     "specialist": 83.58,
+     "strengthsAdd": 1.01,
+     "weaknessesCost": -0.4,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-comedy/timing",
+     "generalist": 82.99,
+     "specialist": 82.99,
+     "strengthsAdd": 0.48,
+     "weaknessesCost": -0.53,
+     "reads": "weaknesses",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-drama/guarded",
+     "generalist": 79.88,
+     "specialist": 83.09,
+     "strengthsAdd": 1.61,
+     "weaknessesCost": 0.84,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-musical/persuade",
+     "generalist": 75.09,
+     "specialist": 79.01,
+     "strengthsAdd": 3.2,
+     "weaknessesCost": -0.56,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-horror/trust",
+     "generalist": 79.77,
+     "specialist": 81.76,
+     "strengthsAdd": 1.23,
+     "weaknessesCost": 0.38,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-legal_drama/counsel",
+     "generalist": 82.26,
+     "specialist": 85.27,
+     "strengthsAdd": 2.25,
+     "weaknessesCost": -1.04,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-thriller/steady",
+     "generalist": 83.67,
+     "specialist": 85.04,
+     "strengthsAdd": 0.48,
+     "weaknessesCost": 0.56,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "brief:brief-social_realism/tired",
+     "generalist": 79.96,
+     "specialist": 83.49,
+     "strengthsAdd": 1.48,
+     "weaknessesCost": 1.06,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:seagull-4",
+     "generalist": 83.27,
+     "specialist": 86.58,
+     "strengthsAdd": 1.19,
+     "weaknessesCost": 0.71,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:earnest-2",
+     "generalist": 84.92,
+     "specialist": 85.34,
+     "strengthsAdd": 1.13,
+     "weaknessesCost": -1.27,
+     "reads": "weaknesses",
+     "asExpected": false
+    },
+    {
+     "piece": "scene:hamlet-3-1",
+     "generalist": 82.07,
+     "specialist": 85.56,
+     "strengthsAdd": 1.68,
+     "weaknessesCost": 0.57,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:antigone-441",
+     "generalist": 82.55,
+     "specialist": 84.39,
+     "strengthsAdd": 1.1,
+     "weaknessesCost": 0.16,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:dream-3-2",
+     "generalist": 79.17,
+     "specialist": 80.79,
+     "strengthsAdd": 1.94,
+     "weaknessesCost": -0.66,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:scapin-3-2",
+     "generalist": 77.87,
+     "specialist": 80.39,
+     "strengthsAdd": 1.51,
+     "weaknessesCost": -0.34,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:henry5-4-3",
+     "generalist": 80.12,
+     "specialist": 84.67,
+     "strengthsAdd": 2.92,
+     "weaknessesCost": 0.39,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "scene:orig-office-hours",
+     "generalist": 85.05,
+     "specialist": 87.3,
+     "strengthsAdd": 1.36,
+     "weaknessesCost": 0.48,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:The Bear",
+     "generalist": 79.21,
+     "specialist": 83.7,
+     "strengthsAdd": 4.25,
+     "weaknessesCost": -1.17,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Three Sisters",
+     "generalist": 79.11,
+     "specialist": 84.19,
+     "strengthsAdd": 2.47,
+     "weaknessesCost": 0.27,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Macbeth",
+     "generalist": 75.75,
+     "specialist": 81.5,
+     "strengthsAdd": 4.42,
+     "weaknessesCost": 0.07,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "night:Hedda Gabler",
+     "generalist": 76.37,
+     "specialist": 81.63,
+     "strengthsAdd": 3.66,
+     "weaknessesCost": 0.27,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Twelfth Night",
+     "generalist": 82.92,
+     "specialist": 88.34,
+     "strengthsAdd": 3.38,
+     "weaknessesCost": -0.15,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Julius Caesar",
+     "generalist": 81.97,
+     "specialist": 87.75,
+     "strengthsAdd": 4.46,
+     "weaknessesCost": 0.01,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Trifles",
+     "generalist": 80.04,
+     "specialist": 86.38,
+     "strengthsAdd": 4.48,
+     "weaknessesCost": 0.56,
+     "reads": "strengths",
+     "asExpected": true
+    },
+    {
+     "piece": "casting:Tartuffe",
+     "generalist": 82.16,
+     "specialist": 86.84,
+     "strengthsAdd": 4.78,
+     "weaknessesCost": -1.35,
+     "reads": "strengths",
+     "asExpected": true
+    }
+   ]
+  },
+  "finalLevels": {
+   "emotionalDepth": 86.6,
+   "presence": 90.6,
+   "listening": 84.2,
+   "imagination": 94.8,
+   "focus": 82.1,
+   "memory": 90,
+   "adaptability": 88.6,
+   "composure": 73.4,
+   "vocal": 99.1,
+   "physical": 90.2,
+   "discipline": 100,
+   "stamina": 35
+  },
+  "strengthsMin": 90,
+  "weaknessesMax": 100,
+  "weaknessesMean": 87.1,
+  "adviceWeeks": {
+   "strengths": 17,
+   "weaknesses": 133,
+   "all": 153
+  },
+  "strengthsNamed": [
+   "2027-09-19 vocal at 90",
+   "2027-10-03 physical at 90",
+   "2027-10-31 physical at 90",
+   "2027-11-14 vocal at 90",
+   "2027-11-21 vocal at 90",
+   "2027-12-12 vocal at 91.45",
+   "2027-12-19 vocal at 92.93",
+   "2027-12-26 vocal at 94.42",
+   "2028-01-02 vocal at 95.86",
+   "2028-01-09 vocal at 96.39",
+   "2028-01-16 vocal at 96.63",
+   "2028-02-13 vocal at 96.63",
+   "2028-03-19 vocal at 96.76",
+   "2028-04-16 vocal at 96.76",
+   "2028-04-30 vocal at 97.76",
+   "2028-09-24 vocal at 99.05",
+   "2029-03-25 physical at 90"
+  ],
+  "outcome": [
+   "graduated",
+   "graduated"
+  ]
+ }
+}

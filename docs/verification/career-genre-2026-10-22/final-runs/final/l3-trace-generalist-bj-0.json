@@ -1,0 +1,1860 @@
+{
+ "profile": "generalist",
+ "seed": "bj-0",
+ "days": 120,
+ "byMonth": {
+  "m0": {
+   "n": 2,
+   "overall": 62.15,
+   "noDraw": 62.4,
+   "atStartLevels": 62.2,
+   "atEndLevels": 64.65,
+   "difficulty": -0.2,
+   "readiness": 69.5,
+   "callbacks": 0
+  },
+  "m2": {
+   "n": 2,
+   "overall": 61.15,
+   "noDraw": 61.5,
+   "atStartLevels": 60.85,
+   "atEndLevels": 62.85,
+   "difficulty": -0.2,
+   "readiness": 74.5,
+   "callbacks": 0
+  },
+  "m3": {
+   "n": 19,
+   "overall": 61.83,
+   "noDraw": 62.11,
+   "atStartLevels": 60.71,
+   "atEndLevels": 62.59,
+   "difficulty": -0.2,
+   "readiness": 70.21,
+   "callbacks": 0
+  }
+ },
+ "controlled": [
+  {
+   "at": "start",
+   "day": 0,
+   "meanOfEveryTake": 60.86,
+   "abilities": {
+    "emotionalDepth": 63.9,
+    "presence": 63.9,
+    "listening": 63.9,
+    "imagination": 63.9,
+    "focus": 63.9,
+    "memory": 63.9,
+    "adaptability": 63.9,
+    "composure": 63.9,
+    "vocal": 63.9,
+    "physical": 63.9,
+    "discipline": 63.9,
+    "stamina": 50
+   }
+  },
+  {
+   "at": "m1",
+   "day": 30,
+   "meanOfEveryTake": 61.26,
+   "abilities": {
+    "emotionalDepth": 64.6,
+    "presence": 64.1,
+    "listening": 64.9,
+    "imagination": 65.2,
+    "focus": 64.3,
+    "memory": 64.5,
+    "adaptability": 64.2,
+    "composure": 64,
+    "vocal": 64.2,
+    "physical": 64.5,
+    "discipline": 64.8,
+    "stamina": 44.6
+   }
+  },
+  {
+   "at": "m2",
+   "day": 60,
+   "meanOfEveryTake": 61.41,
+   "abilities": {
+    "emotionalDepth": 65.2,
+    "presence": 64.1,
+    "listening": 65.7,
+    "imagination": 65.8,
+    "focus": 64.7,
+    "memory": 64.8,
+    "adaptability": 64.4,
+    "composure": 64,
+    "vocal": 64.5,
+    "physical": 65.1,
+    "discipline": 64.8,
+    "stamina": 39.2
+   }
+  },
+  {
+   "at": "m3",
+   "day": 90,
+   "meanOfEveryTake": 61.72,
+   "abilities": {
+    "emotionalDepth": 65.8,
+    "presence": 64.1,
+    "listening": 66.4,
+    "imagination": 67,
+    "focus": 65.1,
+    "memory": 65,
+    "adaptability": 64.5,
+    "composure": 64,
+    "vocal": 64.8,
+    "physical": 65.8,
+    "discipline": 65.4,
+    "stamina": 35
+   }
+  },
+  {
+   "at": "m4",
+   "day": 120,
+   "meanOfEveryTake": 62.79,
+   "abilities": {
+    "emotionalDepth": 66.3,
+    "presence": 64.1,
+    "listening": 66.8,
+    "imagination": 71.6,
+    "focus": 66.2,
+    "memory": 65.2,
+    "adaptability": 64.6,
+    "composure": 64,
+    "vocal": 65,
+    "physical": 66.1,
+    "discipline": 68.7,
+    "stamina": 35
+   }
+  },
+  {
+   "at": "end",
+   "day": 120,
+   "meanOfEveryTake": 62.79,
+   "abilities": {
+    "emotionalDepth": 66.3,
+    "presence": 64.1,
+    "listening": 66.8,
+    "imagination": 71.6,
+    "focus": 66.2,
+    "memory": 65.2,
+    "adaptability": 64.6,
+    "composure": 64,
+    "vocal": 65,
+    "physical": 66.1,
+    "discipline": 68.7,
+    "stamina": 35
+   }
+  }
+ ],
+ "falls": [
+  {
+   "take": "brief-sea_adventure day 104",
+   "from": "start",
+   "to": "m1",
+   "by": -0.005911689814382726
+  },
+  {
+   "take": "brief-sea_adventure day 104",
+   "from": "m1",
+   "to": "m2",
+   "by": -0.20255016412580318
+  },
+  {
+   "take": "brief-sea_adventure day 104",
+   "from": "m2",
+   "to": "m3",
+   "by": -0.024649898673061443
+  },
+  {
+   "take": "brief-war day 111",
+   "from": "m1",
+   "to": "m2",
+   "by": -0.06262535318570173
+  },
+  {
+   "take": "brief-film_noir day 117",
+   "from": "m1",
+   "to": "m2",
+   "by": -0.01401897451648182
+  },
+  {
+   "take": "brief-sea_adventure day 117",
+   "from": "start",
+   "to": "m1",
+   "by": -0.026873982701523857
+  },
+  {
+   "take": "brief-sea_adventure day 117",
+   "from": "m1",
+   "to": "m2",
+   "by": -0.21463731610555925
+  },
+  {
+   "take": "brief-sea_adventure day 117",
+   "from": "m2",
+   "to": "m3",
+   "by": -0.0407944323462317
+  }
+ ],
+ "mix": {
+  "m0": {
+   "takes": 2,
+   "purposes": {
+    "first": 2
+   },
+   "difficulty": {
+    "-0.2": 2
+   },
+   "size": {
+    "short": 2
+   },
+   "stakes": {
+    "1": 2
+   },
+   "beats": {
+    "3": 1,
+    "4": 1
+   },
+   "genres": 2
+  },
+  "m2": {
+   "takes": 2,
+   "purposes": {
+    "another-reading": 1,
+    "first": 1
+   },
+   "difficulty": {
+    "-0.2": 2
+   },
+   "size": {
+    "short": 2
+   },
+   "stakes": {
+    "1": 2
+   },
+   "beats": {
+    "3": 1,
+    "4": 1
+   },
+   "genres": 2
+  },
+  "m3": {
+   "takes": 19,
+   "purposes": {
+    "first": 13,
+    "another-reading": 6
+   },
+   "difficulty": {
+    "-0.2": 18,
+    "-0.15000000000000002": 1
+   },
+   "size": {
+    "short": 14,
+    "medium": 5
+   },
+   "stakes": {
+    "1": 18,
+    "2": 1
+   },
+   "beats": {
+    "3": 17,
+    "4": 2
+   },
+   "genres": 15
+  }
+ },
+ "takes": [
+  {
+   "day": 2,
+   "month": 0,
+   "brief": "brief-absurdist",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 60.9,
+   "noDraw": 61.2,
+   "atStartLevels": 61.1,
+   "atEndLevels": 63.5,
+   "atMonthLevels": {
+    "m1": 61.593316797901224,
+    "m2": 61.79170651024458,
+    "m3": 62.17452046857385,
+    "m4": 63.4850123917097
+   },
+   "startExact": 61.118403504437815,
+   "endExact": 63.4850123917097,
+   "size": "short",
+   "stakes": 1,
+   "beats": 4,
+   "difficulty": -0.2,
+   "readiness": 65,
+   "prep": {
+    "interpretation": 0.916,
+    "memorization": 0.915,
+    "rehearsal": 0.607,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Imagination (ability, interpretation) 3.8",
+    "Emotional Depth (ability, believability) 3.6",
+    "Knowing the genre (preparation, interpretation) 3.5"
+   ]
+  },
+  {
+   "day": 13,
+   "month": 0,
+   "brief": "brief-coming_of_age",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 63.4,
+   "noDraw": 63.6,
+   "atStartLevels": 63.3,
+   "atEndLevels": 65.8,
+   "atMonthLevels": {
+    "m1": 63.88737510306389,
+    "m2": 64.16717818121964,
+    "m3": 64.59561368674386,
+    "m4": 65.7692765845344
+   },
+   "startExact": 63.338129498754924,
+   "endExact": 65.7692765845344,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 74,
+   "prep": {
+    "interpretation": 0.887,
+    "memorization": 0.91,
+    "rehearsal": 0.751,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 5.5",
+    "Imagination (ability, interpretation) 4.9",
+    "Knowing the genre (preparation, interpretation) 4.7"
+   ]
+  },
+  {
+   "day": 61,
+   "month": 2,
+   "brief": "brief-absurdist",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 61.1,
+   "noDraw": 61.6,
+   "atStartLevels": 61,
+   "atEndLevels": 63.2,
+   "atMonthLevels": {
+    "m1": 61.44782962139089,
+    "m2": 61.623121055609225,
+    "m3": 61.96819520094107,
+    "m4": 63.190212344724884
+   },
+   "startExact": 61.014773818726226,
+   "endExact": 63.190212344724884,
+   "size": "short",
+   "stakes": 1,
+   "beats": 4,
+   "difficulty": -0.2,
+   "readiness": 77,
+   "prep": {
+    "interpretation": 0.815,
+    "memorization": 0.915,
+    "rehearsal": 0.607,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 4.6",
+    "Imagination (ability, interpretation) 3.6",
+    "Knowing the genre (preparation, interpretation) 3.5"
+   ]
+  },
+  {
+   "day": 64,
+   "month": 2,
+   "brief": "brief-concert_film",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 61.2,
+   "noDraw": 61.4,
+   "atStartLevels": 60.7,
+   "atEndLevels": 62.5,
+   "atMonthLevels": {
+    "m1": 61.15430962686099,
+    "m2": 61.3367852661368,
+    "m3": 61.6296365040921,
+    "m4": 62.50385391392664
+   },
+   "startExact": 60.722556764048726,
+   "endExact": 62.50385391392664,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 72,
+   "prep": {
+    "interpretation": 0.87,
+    "memorization": 0.822,
+    "rehearsal": 0.549,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.3",
+    "Knowing the genre (preparation, interpretation) 2.9",
+    "Imagination (ability, interpretation) 2.8"
+   ]
+  },
+  {
+   "day": 90,
+   "month": 3,
+   "brief": "brief-fairy_tale",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 61.7,
+   "noDraw": 62,
+   "atStartLevels": 60.6,
+   "atEndLevels": 63.5,
+   "atMonthLevels": {
+    "m1": 61.240946127547986,
+    "m2": 61.531152193780876,
+    "m3": 62.01072857399134,
+    "m4": 63.497840320968855
+   },
+   "startExact": 60.645431948404145,
+   "endExact": 63.497840320968855,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 76,
+   "prep": {
+    "interpretation": 0.867,
+    "memorization": 0.906,
+    "rehearsal": 0.558,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Imagination (ability, interpretation) 4.5",
+    "Knowing the genre (preparation, interpretation) 4",
+    "Focus (ability, execution) 1.9"
+   ]
+  },
+  {
+   "day": 91,
+   "month": 3,
+   "brief": "brief-coming_of_age",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 64.3,
+   "noDraw": 64.9,
+   "atStartLevels": 63.7,
+   "atEndLevels": 65.8,
+   "atMonthLevels": {
+    "m1": 64.16701205318589,
+    "m2": 64.43443683980864,
+    "m3": 64.82109743984209,
+    "m4": 65.81282769101055
+   },
+   "startExact": 63.65059392297719,
+   "endExact": 65.81282769101055,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 71,
+   "prep": {
+    "interpretation": 0.923,
+    "memorization": 0.91,
+    "rehearsal": 0.751,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 4.4",
+    "Imagination (ability, interpretation) 4.3",
+    "Emotional Depth (ability, believability) 4.2"
+   ]
+  },
+  {
+   "day": 96,
+   "month": 3,
+   "brief": "brief-cyberpunk",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 61,
+   "noDraw": 61.5,
+   "atStartLevels": 60,
+   "atEndLevels": 62.6,
+   "atMonthLevels": {
+    "m1": 60.567172854631124,
+    "m2": 60.79839584948448,
+    "m3": 61.229993026441505,
+    "m4": 62.61217028912707
+   },
+   "startExact": 60.039580004384824,
+   "endExact": 62.61217028912707,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 65,
+   "prep": {
+    "interpretation": 0.825,
+    "memorization": 0.818,
+    "rehearsal": 0.567,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Imagination (ability, interpretation) 3.6",
+    "Knowing the genre (preparation, interpretation) 3.6",
+    "Emotional Depth (ability, believability) 3.1"
+   ]
+  },
+  {
+   "day": 98,
+   "month": 3,
+   "brief": "brief-prison_film",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 61.5,
+   "noDraw": 62.1,
+   "atStartLevels": 60.6,
+   "atEndLevels": 62.8,
+   "atMonthLevels": {
+    "m1": 61.135704647588035,
+    "m2": 61.42044329231727,
+    "m3": 61.816785603286505,
+    "m4": 62.799079458563014
+   },
+   "startExact": 60.60596305080501,
+   "endExact": 62.799079458563014,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 71,
+   "prep": {
+    "interpretation": 0.82,
+    "memorization": 0.802,
+    "rehearsal": 0.534,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 2.7",
+    "Emotional Depth (ability, believability) 2.7",
+    "Imagination (ability, interpretation) 2.5"
+   ]
+  },
+  {
+   "day": 100,
+   "month": 3,
+   "brief": "brief-concert_film",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 60.7,
+   "noDraw": 61.3,
+   "atStartLevels": 60.2,
+   "atEndLevels": 61.9,
+   "atMonthLevels": {
+    "m1": 60.644363532862776,
+    "m2": 60.805423734299744,
+    "m3": 61.072339759413055,
+    "m4": 61.93739152507435
+   },
+   "startExact": 60.24098704867339,
+   "endExact": 61.93739152507435,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 71,
+   "prep": {
+    "interpretation": 0.832,
+    "memorization": 0.822,
+    "rehearsal": 0.549,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 2.9",
+    "Emotional Depth (ability, believability) 2.7",
+    "Knowing the genre (preparation, interpretation) 2.4"
+   ]
+  },
+  {
+   "day": 104,
+   "month": 3,
+   "brief": "brief-sea_adventure",
+   "purpose": "first",
+   "task": "tapeOnFeet",
+   "overall": 57.5,
+   "noDraw": 58.1,
+   "atStartLevels": 58,
+   "atEndLevels": 58.5,
+   "atMonthLevels": {
+    "m1": 57.990560964021974,
+    "m2": 57.78801079989617,
+    "m3": 57.76336090122311,
+    "m4": 58.52491210231397
+   },
+   "startExact": 57.996472653836356,
+   "endExact": 58.52491210231397,
+   "size": "medium",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 86,
+   "prep": {
+    "interpretation": 0.806,
+    "memorization": 0.927,
+    "rehearsal": 0.505,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.1",
+    "Knowing the genre (preparation, interpretation) 2.8",
+    "Imagination (ability, interpretation) 2.5"
+   ]
+  },
+  {
+   "day": 105,
+   "month": 3,
+   "brief": "brief-anime",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 58.2,
+   "noDraw": 59.4,
+   "atStartLevels": 58.7,
+   "atEndLevels": 59.7,
+   "atMonthLevels": {
+    "m1": 58.883010243176564,
+    "m2": 58.91109689315939,
+    "m3": 59.034226822436686,
+    "m4": 59.66783320388468
+   },
+   "startExact": 58.72804936000378,
+   "endExact": 59.66783320388468,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 58,
+   "prep": {
+    "interpretation": 0.817,
+    "memorization": 0.813,
+    "rehearsal": 0.502,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 5.3",
+    "Vocal Expression (ability, execution) 4.2",
+    "Rehearsal on your feet (preparation, execution) 2.8"
+   ]
+  },
+  {
+   "day": 106,
+   "month": 3,
+   "brief": "brief-fairy_tale",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 63.4,
+   "noDraw": 63.2,
+   "atStartLevels": 61.4,
+   "atEndLevels": 64,
+   "atMonthLevels": {
+    "m1": 61.926850862682414,
+    "m2": 62.21390516818881,
+    "m3": 62.66620926939893,
+    "m4": 63.98453109092338
+   },
+   "startExact": 61.35758201052643,
+   "endExact": 63.98453109092338,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 70,
+   "prep": {
+    "interpretation": 0.809,
+    "memorization": 0.906,
+    "rehearsal": 0.558,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 3.4",
+    "Imagination (ability, interpretation) 2.7",
+    "Knowing the genre (preparation, interpretation) 2.7"
+   ]
+  },
+  {
+   "day": 108,
+   "month": 3,
+   "brief": "brief-comedy",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 62.3,
+   "noDraw": 62.9,
+   "atStartLevels": 61.7,
+   "atEndLevels": 63.2,
+   "atMonthLevels": {
+    "m1": 62.023432365048286,
+    "m2": 62.14644249853874,
+    "m3": 62.389151691929605,
+    "m4": 63.23570970053468
+   },
+   "startExact": 61.723212701903,
+   "endExact": 63.23570970053468,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 59,
+   "prep": {
+    "interpretation": 0.813,
+    "memorization": 0.808,
+    "rehearsal": 0.548,
+    "genre": 0.22587520000000005
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 3.8",
+    "Emotional Depth (ability, believability) 2.7",
+    "Knowing the genre (preparation, interpretation) 2.7"
+   ]
+  },
+  {
+   "day": 110,
+   "month": 3,
+   "brief": "brief-spy",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 65,
+   "noDraw": 64.6,
+   "atStartLevels": 62.8,
+   "atEndLevels": 65,
+   "atMonthLevels": {
+    "m1": 63.30454535967832,
+    "m2": 63.5742750505443,
+    "m3": 63.967998329987445,
+    "m4": 65.02605832737024
+   },
+   "startExact": 62.78614152491059,
+   "endExact": 65.02605832737024,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 83,
+   "prep": {
+    "interpretation": 0.901,
+    "memorization": 0.906,
+    "rehearsal": 0.674,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 4.3",
+    "Imagination (ability, interpretation) 3.8",
+    "Composure (ability, consistency) 2.7"
+   ]
+  },
+  {
+   "day": 110,
+   "month": 3,
+   "brief": "brief-cyberpunk",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 62,
+   "noDraw": 62.5,
+   "atStartLevels": 60.6,
+   "atEndLevels": 63,
+   "atMonthLevels": {
+    "m1": 61.13680281872166,
+    "m2": 61.35568443933752,
+    "m3": 61.745424166086174,
+    "m4": 62.9900156802989
+   },
+   "startExact": 60.64565097082109,
+   "endExact": 62.9900156802989,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 70,
+   "prep": {
+    "interpretation": 0.822,
+    "memorization": 0.818,
+    "rehearsal": 0.567,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 3.1",
+    "Knowing the genre (preparation, interpretation) 3",
+    "Imagination (ability, interpretation) 2.8"
+   ]
+  },
+  {
+   "day": 111,
+   "month": 3,
+   "brief": "brief-war",
+   "purpose": "first",
+   "task": "tapeOnFeet",
+   "overall": 60.8,
+   "noDraw": 61.3,
+   "atStartLevels": 60.4,
+   "atEndLevels": 61.7,
+   "atMonthLevels": {
+    "m1": 60.534076762154115,
+    "m2": 60.47145140896841,
+    "m3": 60.623406331280265,
+    "m4": 61.6520681813033
+   },
+   "startExact": 60.384023552951724,
+   "endExact": 61.6520681813033,
+   "size": "short",
+   "stakes": 1,
+   "beats": 4,
+   "difficulty": -0.2,
+   "readiness": 78,
+   "prep": {
+    "interpretation": 0.808,
+    "memorization": 0.87,
+    "rehearsal": 0.649,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Physical Expression (ability, execution) 3.5",
+    "Emotional Depth (ability, believability) 3",
+    "Knowing the genre (preparation, interpretation) 2.4"
+   ]
+  },
+  {
+   "day": 112,
+   "month": 3,
+   "brief": "brief-kaiju-2",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 63.4,
+   "noDraw": 63.2,
+   "atStartLevels": 61.2,
+   "atEndLevels": 63.5,
+   "atMonthLevels": {
+    "m1": 61.68726333558443,
+    "m2": 61.92503626618986,
+    "m3": 62.34220408222707,
+    "m4": 63.537211746758054
+   },
+   "startExact": 61.17123111555995,
+   "endExact": 63.537211746758054,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 60,
+   "prep": {
+    "interpretation": 0.822,
+    "memorization": 0.812,
+    "rehearsal": 0.563,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 3.1",
+    "Emotional Depth (ability, believability) 3",
+    "Imagination (ability, interpretation) 2.8"
+   ]
+  },
+  {
+   "day": 113,
+   "month": 3,
+   "brief": "brief-prison_film",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 63.2,
+   "noDraw": 62.9,
+   "atStartLevels": 61,
+   "atEndLevels": 63.2,
+   "atMonthLevels": {
+    "m1": 61.50558846176147,
+    "m2": 61.776134715304714,
+    "m3": 62.16532032311337,
+    "m4": 63.15305771283153
+   },
+   "startExact": 60.989469238946526,
+   "endExact": 63.15305771283153,
+   "size": "short",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 69,
+   "prep": {
+    "interpretation": 0.82,
+    "memorization": 0.802,
+    "rehearsal": 0.534,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.1",
+    "Composure (ability, consistency) 2.3",
+    "Knowing the genre (preparation, interpretation) 2.3"
+   ]
+  },
+  {
+   "day": 115,
+   "month": 3,
+   "brief": "brief-steampunk",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 63.2,
+   "noDraw": 63.6,
+   "atStartLevels": 61.3,
+   "atEndLevels": 63.9,
+   "atMonthLevels": {
+    "m1": 61.843231238722815,
+    "m2": 62.07358554237757,
+    "m3": 62.49357737035388,
+    "m4": 63.89701096737385
+   },
+   "startExact": 61.31874607306169,
+   "endExact": 63.89701096737385,
+   "size": "short",
+   "stakes": 2,
+   "beats": 3,
+   "difficulty": -0.15000000000000002,
+   "readiness": 66,
+   "prep": {
+    "interpretation": 0.886,
+    "memorization": 0.879,
+    "rehearsal": 0.75,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 4",
+    "Imagination (ability, interpretation) 4",
+    "Focus (ability, execution) 2.4"
+   ]
+  },
+  {
+   "day": 117,
+   "month": 3,
+   "brief": "brief-film_noir",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 63.2,
+   "noDraw": 63.3,
+   "atStartLevels": 61.9,
+   "atEndLevels": 63.4,
+   "atMonthLevels": {
+    "m1": 62.15073382248842,
+    "m2": 62.13671484797194,
+    "m3": 62.30752615912335,
+    "m4": 63.35913277398645
+   },
+   "startExact": 61.92885958427701,
+   "endExact": 63.35913277398645,
+   "size": "medium",
+   "stakes": 1,
+   "beats": 4,
+   "difficulty": -0.2,
+   "readiness": 78,
+   "prep": {
+    "interpretation": 0.911,
+    "memorization": 0.91,
+    "rehearsal": 0.667,
+    "genre": 0.15359999999999996
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 3",
+    "Knowing the genre (preparation, interpretation) 2.4",
+    "Imagination (ability, interpretation) 2.3"
+   ]
+  },
+  {
+   "day": 117,
+   "month": 3,
+   "brief": "brief-sea_adventure",
+   "purpose": "another-reading",
+   "task": "tapeOnFeet",
+   "overall": 58,
+   "noDraw": 58.1,
+   "atStartLevels": 57.7,
+   "atEndLevels": 58.2,
+   "atMonthLevels": {
+    "m1": 57.68673871391704,
+    "m2": 57.47210139781148,
+    "m3": 57.43130696546525,
+    "m4": 58.17884496084876
+   },
+   "startExact": 57.71361269661856,
+   "endExact": 58.17884496084876,
+   "size": "medium",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 64,
+   "prep": {
+    "interpretation": 0.859,
+    "memorization": 0.927,
+    "rehearsal": 0.505,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Vocal Expression (ability, execution) 2.8",
+    "Stamina, By Beat 2 (condition, execution) 2.8",
+    "Emotional Depth (ability, believability) 2.6"
+   ]
+  },
+  {
+   "day": 118,
+   "month": 3,
+   "brief": "brief-blaxploitation",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 62.2,
+   "noDraw": 62.2,
+   "atStartLevels": 61,
+   "atEndLevels": 62.3,
+   "atMonthLevels": {
+    "m1": 61.22734100226209,
+    "m2": 61.25635102310317,
+    "m3": 61.43045219588794,
+    "m4": 62.2725806231997
+   },
+   "startExact": 60.97085601323619,
+   "endExact": 62.2725806231997,
+   "size": "medium",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 78,
+   "prep": {
+    "interpretation": 0.819,
+    "memorization": 0.805,
+    "rehearsal": 0.647,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 2.9",
+    "Vocal Expression (ability, execution) 2.9",
+    "Memory (ability, execution) 2.8"
+   ]
+  },
+  {
+   "day": 119,
+   "month": 3,
+   "brief": "brief-alternate_history",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 63.2,
+   "noDraw": 63,
+   "atStartLevels": 60.7,
+   "atEndLevels": 63,
+   "atMonthLevels": {
+    "m1": 61.230068184770204,
+    "m2": 61.48449757362662,
+    "m3": 61.88248585960461,
+    "m4": 63.01790438085629
+   },
+   "startExact": 60.70458291254706,
+   "endExact": 63.01790438085629,
+   "size": "medium",
+   "stakes": 1,
+   "beats": 3,
+   "difficulty": -0.2,
+   "readiness": 61,
+   "prep": {
+    "interpretation": 0.803,
+    "memorization": 0.817,
+    "rehearsal": 0.573,
+    "genre": 0.11680000000000001
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Knowing the genre (preparation, interpretation) 4.4",
+    "Imagination (ability, interpretation) 3.1",
+    "Memory (ability, execution) 2.4"
+   ]
+  }
+ ],
+ "l3r": {
+  "fixedSet": {
+   "pieces": 24,
+   "byPoint": [
+    {
+     "at": "start",
+     "mean": 65.96
+    },
+    {
+     "at": "m1",
+     "mean": 66.353
+    },
+    {
+     "at": "m2",
+     "mean": 66.462
+    },
+    {
+     "at": "m3",
+     "mean": 66.682
+    },
+    {
+     "at": "m4",
+     "mean": 67.386
+    },
+    {
+     "at": "end",
+     "mean": 67.386
+    }
+   ],
+   "growth": 1.4266991290168534,
+   "perPiece": [
+    {
+     "piece": "brief:brief-art_house/still",
+     "byPoint": [
+      67.482,
+      67.865,
+      68.005,
+      68.287,
+      69.156,
+      69.156
+     ]
+    },
+    {
+     "piece": "brief:brief-comedy/timing",
+     "byPoint": [
+      67.556,
+      67.831,
+      67.924,
+      68.14,
+      68.815,
+      68.815
+     ]
+    },
+    {
+     "piece": "brief:brief-drama/guarded",
+     "byPoint": [
+      67.819,
+      68.247,
+      68.439,
+      68.718,
+      69.324,
+      69.324
+     ]
+    },
+    {
+     "piece": "brief:brief-musical/persuade",
+     "byPoint": [
+      62.941,
+      62.688,
+      62.253,
+      62.03,
+      62.605,
+      62.605
+     ]
+    },
+    {
+     "piece": "brief:brief-horror/trust",
+     "byPoint": [
+      65.771,
+      65.987,
+      65.971,
+      66.125,
+      66.971,
+      66.971
+     ]
+    },
+    {
+     "piece": "brief:brief-legal_drama/counsel",
+     "byPoint": [
+      67.988,
+      68.406,
+      68.561,
+      68.82,
+      69.587,
+      69.587
+     ]
+    },
+    {
+     "piece": "brief:brief-thriller/steady",
+     "byPoint": [
+      68.479,
+      68.98,
+      69.191,
+      69.527,
+      70.517,
+      70.517
+     ]
+    },
+    {
+     "piece": "brief:brief-social_realism/tired",
+     "byPoint": [
+      67.825,
+      68.245,
+      68.429,
+      68.698,
+      69.3,
+      69.3
+     ]
+    },
+    {
+     "piece": "scene:seagull-4",
+     "byPoint": [
+      69.19,
+      69.45,
+      69.419,
+      69.548,
+      70.377,
+      70.377
+     ]
+    },
+    {
+     "piece": "scene:earnest-2",
+     "byPoint": [
+      70.263,
+      70.601,
+      70.698,
+      70.894,
+      71.594,
+      71.594
+     ]
+    },
+    {
+     "piece": "scene:hamlet-3-1",
+     "byPoint": [
+      69.407,
+      69.584,
+      69.534,
+      69.617,
+      70.254,
+      70.254
+     ]
+    },
+    {
+     "piece": "scene:antigone-441",
+     "byPoint": [
+      69.273,
+      69.463,
+      69.439,
+      69.527,
+      70.075,
+      70.075
+     ]
+    },
+    {
+     "piece": "scene:dream-3-2",
+     "byPoint": [
+      67.094,
+      66.949,
+      66.618,
+      66.465,
+      67.038,
+      67.038
+     ]
+    },
+    {
+     "piece": "scene:scapin-3-2",
+     "byPoint": [
+      65.775,
+      65.445,
+      64.935,
+      64.671,
+      65.297,
+      65.297
+     ]
+    },
+    {
+     "piece": "scene:henry5-4-3",
+     "byPoint": [
+      68.438,
+      68.457,
+      68.246,
+      68.177,
+      68.754,
+      68.754
+     ]
+    },
+    {
+     "piece": "scene:orig-office-hours",
+     "byPoint": [
+      70.835,
+      71.524,
+      71.876,
+      72.259,
+      72.889,
+      72.889
+     ]
+    },
+    {
+     "piece": "night:The Bear",
+     "byPoint": [
+      59.895,
+      60.548,
+      60.869,
+      61.248,
+      62.024,
+      62.024
+     ]
+    },
+    {
+     "piece": "night:Three Sisters",
+     "byPoint": [
+      59.978,
+      60.577,
+      60.743,
+      61.06,
+      62.169,
+      62.169
+     ]
+    },
+    {
+     "piece": "night:Macbeth",
+     "byPoint": [
+      58.815,
+      59.25,
+      59.38,
+      59.561,
+      60.276,
+      60.276
+     ]
+    },
+    {
+     "piece": "night:Hedda Gabler",
+     "byPoint": [
+      59.162,
+      59.751,
+      59.984,
+      60.234,
+      60.952,
+      60.952
+     ]
+    },
+    {
+     "piece": "casting:Twelfth Night",
+     "byPoint": [
+      66.621,
+      67.442,
+      67.834,
+      68.262,
+      68.88,
+      68.88
+     ]
+    },
+    {
+     "piece": "casting:Julius Caesar",
+     "byPoint": [
+      64.165,
+      65.05,
+      65.571,
+      66.148,
+      66.662,
+      66.662
+     ]
+    },
+    {
+     "piece": "casting:Trifles",
+     "byPoint": [
+      64.154,
+      65.128,
+      65.693,
+      66.35,
+      67.013,
+      67.013
+     ]
+    },
+    {
+     "piece": "casting:Tartuffe",
+     "byPoint": [
+      64.105,
+      65.011,
+      65.485,
+      66.002,
+      66.743,
+      66.743
+     ]
+    }
+   ]
+  },
+  "falls": {
+   "steps": 235,
+   "falls": 23,
+   "unexplained": 0,
+   "list": [
+    {
+     "what": "fixed brief:brief-musical/persuade",
+     "from": "start",
+     "to": "m1",
+     "by": -0.25292891767309555,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.4588925103364616,
+     "explained": true
+    },
+    {
+     "what": "fixed brief:brief-musical/persuade",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.43537929128098085,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.2795283898563028,
+     "explained": true
+    },
+    {
+     "what": "fixed brief:brief-musical/persuade",
+     "from": "m2",
+     "to": "m3",
+     "by": -0.2229015510019039,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3358690324336493,
+     "explained": true
+    },
+    {
+     "what": "fixed brief:brief-horror/trust",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.016462752567036887,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3567762752548731,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:seagull-4",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.030985761444142668,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3262687500162684,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:hamlet-3-1",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.050051738775238164,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3016258831594598,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:antigone-441",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.02359645829517376,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3236206269263562,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:dream-3-2",
+     "from": "start",
+     "to": "m1",
+     "by": -0.1448024554637044,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.4607043611985091,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:dream-3-2",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.33158991266940063,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.27634233019196586,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:dream-3-2",
+     "from": "m2",
+     "to": "m3",
+     "by": -0.15213111705921278,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3228102898867604,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:scapin-3-2",
+     "from": "start",
+     "to": "m1",
+     "by": -0.33080255075485354,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.4311560732906088,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:scapin-3-2",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.5097553929773824,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.2549713193904921,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:scapin-3-2",
+     "from": "m2",
+     "to": "m3",
+     "by": -0.26407294154387273,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.33346906733154924,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:henry5-4-3",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.2107990046584831,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.2514517557407885,
+     "explained": true
+    },
+    {
+     "what": "fixed scene:henry5-4-3",
+     "from": "m2",
+     "to": "m3",
+     "by": -0.06897881974229847,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.2917601939136034,
+     "explained": true
+    },
+    {
+     "what": "take brief-sea_adventure day 104",
+     "from": "start",
+     "to": "m1",
+     "by": -0.005911689814382726,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.4981559574535197,
+     "explained": true
+    },
+    {
+     "what": "take brief-sea_adventure day 104",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.20255016412580318,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.30389734229692067,
+     "explained": true
+    },
+    {
+     "what": "take brief-sea_adventure day 104",
+     "from": "m2",
+     "to": "m3",
+     "by": -0.024649898673061443,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3711668282909315,
+     "explained": true
+    },
+    {
+     "what": "take brief-war day 111",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.06262535318570173,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3285232893318266,
+     "explained": true
+    },
+    {
+     "what": "take brief-film_noir day 117",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.01401897451648182,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.27494350988350647,
+     "explained": true
+    },
+    {
+     "what": "take brief-sea_adventure day 117",
+     "from": "start",
+     "to": "m1",
+     "by": -0.026873982701523857,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.4718778656853999,
+     "explained": true
+    },
+    {
+     "what": "take brief-sea_adventure day 117",
+     "from": "m1",
+     "to": "m2",
+     "by": -0.21463731610555925,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.2863076532704838,
+     "explained": true
+    },
+    {
+     "what": "take brief-sea_adventure day 117",
+     "from": "m2",
+     "to": "m3",
+     "by": -0.0407944323462317,
+     "fell": [
+      "stamina"
+     ],
+     "held": 0.3505801357669398,
+     "explained": true
+    }
+   ]
+  },
+  "journeyMetric": {
+   "firstMonth": {
+    "n": 2,
+    "mean": 62.2,
+    "min": 60.9,
+    "max": 63.4
+   },
+   "lastMonth": {
+    "n": 19,
+    "mean": 61.8,
+    "min": 57.5,
+    "max": 65
+   },
+   "l3AsWritten": "fails"
+  },
+  "mix": {
+   "m0": {
+    "takes": 2,
+    "purposes": {
+     "first": 2
+    },
+    "difficulty": {
+     "mean": -0.2,
+     "min": -0.2,
+     "max": -0.2
+    },
+    "stakes": {
+     "1": 2
+    },
+    "genres": [
+     "absurdist",
+     "coming_of_age"
+    ]
+   },
+   "m2": {
+    "takes": 2,
+    "purposes": {
+     "another-reading": 1,
+     "first": 1
+    },
+    "difficulty": {
+     "mean": -0.2,
+     "min": -0.2,
+     "max": -0.2
+    },
+    "stakes": {
+     "1": 2
+    },
+    "genres": [
+     "absurdist",
+     "concert_film"
+    ]
+   },
+   "m3": {
+    "takes": 19,
+    "purposes": {
+     "first": 13,
+     "another-reading": 6
+    },
+    "difficulty": {
+     "mean": -0.197,
+     "min": -0.2,
+     "max": -0.15000000000000002
+    },
+    "stakes": {
+     "1": 18,
+     "2": 1
+    },
+    "genres": [
+     "fairy_tale",
+     "coming_of_age",
+     "cyberpunk",
+     "prison_film",
+     "concert_film",
+     "sea_adventure",
+     "anime",
+     "comedy",
+     "spy",
+     "war",
+     "kaiju",
+     "steampunk",
+     "film_noir",
+     "blaxploitation",
+     "alternate_history"
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,123 @@
+How This Works
+✕
+Contents
+›
+Permission To Work
+Search How This Works
+Search
+Permission To Work
+Show Less
+
+On an F-1, you make two applications here. The first, while you’re registered for your program, is a Social Security number, which you apply for in person at New Haven’s office: with it, the IRS decides a payment plan at once, some banks open your account online, Connecticut’s DMV can issue you an ID card, and a 1040-NR doesn’t wait on an ITIN.
+
+The second, after your degree, is OPT, which lets you work in your field and keeps your US status going past its 60-day grace period. Every day from a job’s first day to its last counts as a day with work, and every other day as one without, the days before a booked job begins among them. OPT ends once you’ve had more than 90 days without work in total.
+
+Where To Find It
+Papers, Permission To Work, Social Security Number And OPT.
+When You Can Use It
+From the guide’s chapter “Passports And ID”. It’s for a student on an F-1: a US citizen already has a Social Security number, and OPT is only for F-1 students.
+Show Me Where
+What To Press
+Open Papers, then the Permission To Work tab. The Permission To Work panel shows Your Program Ends and Your US Status.
+Once you’re registered at the School and have your passport in force, press Apply At The Social Security Office under Social Security Number. It takes an hour there.
+From 90 days before your program ends to 60 days after, press Apply For OPT under OPT, or Apply With Premium Processing for a decision within 30 business days.
+When your status is ending and you can still apply for OPT, What Needs You asks too, with Apply For OPT and Apply For OPT, Premium Processing.
+What You Need First
+Being a student on an F-1.
+For the number: being registered for your program, since the School’s work-study is the on-campus work it needs; a passport in force; and an hour free, out of hospital.
+For OPT: your degree completed or on its way, applying inside its window, and no OPT applied for before.
+OPT’s fee in your accounts.
+TIME AND MONEY
+Time
+60 minutes at the Social Security office, and the clock moves on by that much. Applying for OPT doesn’t move the clock (estimated)
+A Social Security Number
+Free
+OPT
+$470 filed online; premium processing costs $1,780 more
+How Long
+The card comes in 21 days. OPT is decided in 90 days, or within 30 business days with premium processing, not counting weekends and federal holidays (estimated)
+What Happens
+STRAIGHT AWAY
+Applying for the number moves the clock an hour and puts the card on its way, with its date under Social Security Number.
+Applying for OPT takes the fee and lists Employment Authorization, OPT, as Being Decided. You don’t hold it until it’s approved. The status item in What Needs You is answered.
+While OPT is being decided, your status holds, past its grace period if need be.
+LATER ON
+The card arrives on its day. A bank that opens accounts online for people with a number can now open one for you.
+If OPT is approved, it runs for 12 months from the later of your program’s end and the approval.
+On OPT, each day is counted once it’s over: a day with work from a job’s first day to its last, its days off included, and a day without work otherwise. After 90 days without work in total, OPT ends at the end of the next, your status with it, with no grace period, and work you’d booked after it is released: the days you worked are still paid.
+When your permission has run out and only the grace period is left, What Needs You says Your US Status Is Ending, with its date.
+If you stay past it, you’re out of status. In the game, that cancels your F-1 visa, ends a marketplace plan at the end of the month, closes Covered Connecticut and the DMV’s ID card to you, and closes the Visa Waiver Program to you from then on.
+READING THE RESULT
+Your US Status reads Held while you study or an application is being decided; Ends with its date once school is over and nothing is being decided (on OPT, the day its days without work run out, with no grace period after); or Out Of Status.
+An approved OPT reads Approved until its first day, the later of your program’s end and the approval, then In Force with its dates, and Canceled once its days without work have run out.
+The game keeps no actual Social Security number, only whether you hold one, so no number is shown.
+How It Connects
+COMES FIRST
+Orientation Week: You need to be registered for your program to get the number: once you are, the School’s work-study counts as your on-campus work.
+Passport And ID: The Social Security office asks for your passport in force.
+CHANGES LATER
+Health Cover: Your status ends on a set day. Once you’re out of status, a marketplace plan ends at the end of the month.
+COUNTS TOWARD
+Your Tax Return: A 1040-NR filed without a number goes in with an ITIN application, which holds up its refund seven weeks longer.
+Payment Plans And Waivers: With a number, the IRS decides a plan within a minute. Without one, it’s by mail in 30 days.
+Another Bank: Without a number, a bank that opens accounts for international students opens yours only in a branch.
+Unemployment And Assistance: Unemployment insurance pays a noncitizen only with permission to work in the US, such as OPT in force.
+WHAT LEADS HERE
+What Needs You: When your US status is ending, its question carries Apply For OPT while that can still be applied for.
+Leave, Withdrawal And Coming Back: On an F-1, a medical leave extends the I-20 a year once it begins, and withdrawing leaves a grace period of 15 days and no OPT.
+Repeating, Extra Terms And Incompletes: On an F-1, a repeat or an additional term extends the I-20 a year when it’s granted.
+Pensions: A year as a nonresident on an F-1 earns no credit: your status is read for each year of your record.
+Your Tax Return: On a 1040-NR, having a Social Security number before you file saves the seven weeks an ITIN application holds up the refund.
+Payment Plans And Waivers: A Social Security number gets an IRS plan decided within a minute. Without one it takes 30 days.
+Passport And ID: The Social Security office asks for your passport in force before it takes an application.
+Passport And ID: On an F-1, Connecticut’s DMV asks for your Social Security number before it issues an ID card.
+Passport And ID: If you’re not a citizen, Connecticut’s DMV asks for your passport in force, or OPT’s card, before it issues an ID card.
+Residence Abroad: Residence abroad and permission to work in the US are separate: OPT is the US route for a student.
+The Career Screen: Permission To Work on the Overview is the same permission Papers shows under Permission To Work.
+The Agreement: Signing with him gives no permission to work: Papers, under Permission To Work, still says what you may do.
+Your Work And Its Pay: Each engagement’s dates are read against your permission to work when you book it.
+Offers And Booked Work: An offer can be accepted only where your permission to work covers every one of its days.
+What To Do Next
+Once the card comes, a new bank can open an account for you online, and Connecticut’s DMV can issue you an ID card: see Passport And ID.
+Near your program’s end, apply for OPT inside its window if you want your status to last past the grace period.
+If You Can’t
+The number’s button shows only while you have no number and none on its way. A US citizen’s panel reads Held, as a US citizen.
+“On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.”, or once school is over, “On an F-1, you can get a number only with on-campus work, and yours ended with your program.”
+“The office asks for your passport, and you don’t have one in force.”, or another commitment in that hour.
+OPT: “You can apply from …”, a date 90 days before your program ends, or “The time to apply closed on …”, 60 days after.
+“OPT follows a completed degree, and you left without one.”
+“You’ve already applied for OPT.”, once, even after it ends; and for a US citizen, “OPT is for a student on an F-1, and you’re a US citizen.”
+MISTAKES, AND PUTTING THEM RIGHT
+Waiting for the card before working shifts: work-study pays without it, because the IRS lets an employer report the number as applied for.
+Leaving the number until after your degree: once school is over the office refuses it, and without it Connecticut’s DMV won’t issue you an ID card, even on OPT. One applied for in your program’s last weeks still comes.
+Counting on OPT’s 12 months without work: it ends once its days without work pass 90, months before its end date. A job counts only from its first day, so a booking weeks ahead doesn’t stop the count, and OPT can end before the work begins, the part with it.
+Paying for premium processing to keep your status: your status holds while either kind is being decided, so the $1,780 only buys an earlier answer. If that answer comes after your program’s end, OPT starts sooner, and with no work its days run out sooner too.
+What Decides It
+Your Program’s End
+May 31 of your class’s last year, or the day you left school without the degree
+How School Ended
+The grace period after your program: 60 days with the degree, 15 after a withdrawal or a degree withheld, and none after a dismissal. OPT follows a completed degree: if you applied while the degree was on its way and school ends without it, OPT is denied when it’s decided, and the fee isn’t refunded
+Your Registration
+The number needs on-campus work that has started or starts within 30 days. Once you’re registered, the School’s work-study counts
+Days Without Work
+Counted on OPT a week at a time: each week’s seven, less the days of professional work you were booked for. After 90, OPT ends
+A Worked Example
+
+An F-1 student in the class that began in 2026, whose program ends May 31, 2029, with no work lined up.
+
+On March 3, 2029, press Apply For OPT.
+Graduate, and stay in New Haven.
+
+What comes of it. $470 leaves the bank. OPT is decided on June 1, 2029 and runs from June 1, 2029. With no work, it ends at the end of August 30, 2029, its days without work past 90, and your status ends with it. Without OPT, your status would have ended on July 30, 2029.
+
+READ WITH IT
+Passport And ID
+Residence Abroad
+Your Tax Return
+Payment Plans And Waivers
+Unemployment And Assistance
+Health Cover
+Work-Study Shifts
+The clock waits while you read.
+Back
+Close

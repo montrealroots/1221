@@ -1,0 +1,198 @@
+{
+ "profile": "generalist",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 80.1,
+  "training": 85,
+  "study": 48
+ },
+ "takes": 23,
+ "briefs": 16,
+ "readings": 23,
+ "genres": 16,
+ "purposes": {
+  "first": 16,
+  "another-reading": 7
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 62.2,
+   "min": 60.9,
+   "max": 63.4
+  },
+  "m2": {
+   "n": 2,
+   "mean": 61.2,
+   "min": 61.1,
+   "max": 61.2
+  },
+  "m3": {
+   "n": 19,
+   "mean": 61.8,
+   "min": 57.5,
+   "max": 65
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 16,
+  "mean": 0.25,
+  "max": 0.7,
+  "over1": 0
+ },
+ "notes": {
+  "takes": 23,
+  "distinct": 6,
+  "longestSame": 2,
+  "sameAgainInAnotherGenre": 1,
+  "withConcern": 10,
+  "concerns": [
+   "stylized",
+   "sincerity",
+   "rhythm",
+   "invention",
+   "extremity",
+   "exactness",
+   "partnership"
+  ],
+  "asShown": {
+   "distinct": 14,
+   "longestSame": 2,
+   "sameAgainInAnotherGenre": 1
+  },
+  "sequence": [
+   "d2 absurdist first 60.9: Your imagination held back your interpretation: absurdist’s stylized",
+   "d13 coming_of_age first 63.4: Your emotional depth held back your believability: coming_of_age’s sincerity",
+   "d61 absurdist another-reading 61.1: Your focus held back your execution: absurdist’s rhythm",
+   "d64 concert_film first 61.2: Your emotional depth held back your believability",
+   "d90 fairy_tale first 61.7: Your imagination held back your interpretation: fairy_tale’s invention",
+   "d91 coming_of_age another-reading 64.3: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d96 cyberpunk first 61: Your imagination held back your interpretation: cyberpunk’s invention",
+   "d98 prison_film first 61.5: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d100 concert_film another-reading 60.7: Your focus held back your execution",
+   "d104 sea_adventure first 57.5: Your emotional depth held back your believability: sea_adventure’s extremity",
+   "d105 anime first 58.2: Your focus held back your execution: anime’s exactness",
+   "d106 fairy_tale another-reading 63.4: Your emotional depth held back your believability",
+   "d108 comedy first 62.3: Your focus held back your execution: comedy’s rhythm",
+   "d110 spy first 65: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d110 cyberpunk another-reading 62: Your emotional depth held back your believability",
+   "d111 war first 60.8: Your physical expression held back your execution: war’s extremity",
+   "d112 kaiju first 63.4: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d113 prison_film another-reading 63.2: Your emotional depth held back your believability: prison_film’s partnership",
+   "d115 steampunk first 63.2: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d117 film_noir first 63.2: Your emotional depth held back your believability",
+   "d117 sea_adventure another-reading 58: Your vocal expression held back your execution",
+   "d118 blaxploitation first 62.2: Knowing the genre wasn’t complete, and that cost your interpretation",
+   "d119 alternate_history first 63.2: Knowing the genre wasn’t complete, and that cost your interpretation"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 3,
+  "longestSameTarget": 4,
+  "longestSameMessage": 1,
+  "longestSameState": 1,
+  "longRuns": [],
+  "sequence": [
+   "7:imagination@64",
+   "14:imagination@65",
+   "21:imagination@65",
+   "28:imagination@65",
+   "35:vocal@64",
+   "42:focus@64",
+   "49:vocal@64",
+   "56:focus@65",
+   "63:imagination@66",
+   "70:focus@65",
+   "77:focus@65",
+   "84:focus@65",
+   "91:imagination@67",
+   "98:imagination@68",
+   "105:focus@66",
+   "112:imagination@70",
+   "119:imagination@71"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 66,
+  "presence": 64,
+  "listening": 67,
+  "imagination": 72,
+  "focus": 66,
+  "memory": 65,
+  "adaptability": 65,
+  "composure": 64,
+  "vocal": 65,
+  "physical": 66,
+  "discipline": 69,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-prison_film",
+   "genre": "prison_film",
+   "reading": "dignity",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 63.2,
+   "chief": "Your emotional depth held back your believability by 15 points out of 100",
+   "concern": "partnership"
+  },
+  {
+   "day": 115,
+   "brief": "brief-steampunk",
+   "genre": "steampunk",
+   "reading": "bluff",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.2,
+   "chief": "Knowing the genre wasn’t complete, and that cost your interpretation 15 points out of 100"
+  },
+  {
+   "day": 117,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.2,
+   "chief": "Your emotional depth held back your believability by 13 points out of 100"
+  },
+  {
+   "day": 117,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "craft",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 58,
+   "chief": "Your vocal expression held back your execution by 7 points out of 100"
+  },
+  {
+   "day": 118,
+   "brief": "brief-blaxploitation",
+   "genre": "blaxploitation",
+   "reading": "block",
+   "sides": "",
+   "purpose": "first",
+   "overall": 62.2,
+   "chief": "Knowing the genre wasn’t complete, and that cost your interpretation 16 points out of 100"
+  },
+  {
+   "day": 119,
+   "brief": "brief-alternate_history",
+   "genre": "alternate_history",
+   "reading": "memory",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.2,
+   "chief": "Knowing the genre wasn’t complete, and that cost your interpretation 16 points out of 100"
+  }
+ ]
+}

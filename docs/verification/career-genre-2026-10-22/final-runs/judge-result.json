@@ -1,0 +1,172 @@
+{
+ "rows": [
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 22: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "The same commands and seeds on brief 22's tested commit, 16b50e07 (measure.sh genres-a, genres-b, stage, ag): signature.json, signature-fresh.json, signature-validate.json, genre-identity.json, ag-baseline.json the same as brief 21's in every number. The audit, on the criterion that replaced its first (the owner's brief 22, docs/verification/career-genre-2026-10-22/decision-history.md): tools/genre-audit.ts on brief 22's tested commit, 16b50e07 (measure.sh genres-b): every genre helps its own brief in 149 of 149; an unrelated genre moves another's brief in 0 of 21644 ordered pairs; a genre one direct link away (a kind and its broad genre) in 408 of 408, each by less than the genre itself in 408 of 408, the most 85% of its own gain; the old criterion's next genre over moves in 9, each a genre and its own kind, reported and not counted",
+   "measured": {
+    "commit": "16b50e07",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/signature.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/signature-fresh.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/signature-validate.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/genre-identity.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/ag-baseline.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/genre-audit.md",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ]
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 22: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "measure.sh journeys-a, journeys-b and l3r on brief 22's tested commit, 16b50e07, seeds bj-0 and bj-1, all four profiles: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) met, growth 1.253 at least; L3-R met: True; l3r.json moved from brief 21's, the verdict read from it here",
+   "measured": {
+    "commit": "16b50e07",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/l3r.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/judge-moved.json",
+     "kind": "review"
+    }
+   ]
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 22: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "Every part of measure.sh but the two mutation runs on brief 22's tested commit, 16b50e07 (23 parts, every one exit 0): 22 of 35 outputs brief 21's in every number; moved by brief 22's genre weights and related credit, each read in judge-moved.json: journey-beginner-bj-0.json, journey-beginner-bj-1.json, journey-developing-bj-0.json, journey-specialist-bj-1.json, l3-trace-beginner-bj-0.json, l3-trace-beginner-bj-1.json, l3-trace-developing-bj-0.json, l3-trace-developing-bj-1.json, l3-trace-generalist-bj-0.json, l3-trace-generalist-bj-1.json, l3-trace-specialist-bj-0.json, l3-trace-specialist-bj-1.json, l3r.json; L3-R's verdict True, as brief 21's True. So every criterion that held holds and those that failed fail as before.",
+   "measured": {
+    "commit": "16b50e07",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/figures.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/exits.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ]
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 22: the judge",
+   "status": "Implemented And Verified",
+   "exercised": "tools/ag-baseline.ts and tools/ag-criteria.mjs on brief 22's tested commit, 16b50e07 (measure.sh ag): F2 as written FAILS named 2.43 against 1.14 (2.13×); unread 0; the largest gain in 308 of 447 (68.9%) [2×; 0; 80%]; the line brief 21's, reported beside F2-A10 and not counted for the advice",
+   "measured": {
+    "commit": "16b50e07",
+    "watch": "judge"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/criteria.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/ag-baseline.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
+     "kind": "review"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/numbers-same.json",
+     "kind": "measurement"
+    }
+   ]
+  }
+ ],
+ "replacements": [
+  {
+   "id": "Genre Audit-R",
+   "replaces": "Genre Audit (as written: \"helps its own in every genre; leaks into none\")",
+   "criterion": "Every genre in the code (149): knowing it helps its own work; no unrelated-genre contribution; only documented, bounded transfer across approved direct relationships (the owner's brief 22, 2026-10-22)",
+   "entry": "npx vite-node tools/genre-audit.ts -- --out <file>",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over every genre's first brief, and `relevantGenre` with `relatedness` (`systems/engagement.ts`): a genre known at 100 against 0, for an even actor, everything prepared",
+   "threshold": "Its own brief helped in every genre; an unrelated genre moves another's brief in 0 pairs; a genre one direct link away moves it by less than the genre itself in every pair",
+   "changes": "Nothing: a measurement",
+   "systems": "Every judged piece that reads a work's genres: briefs, nights, auditions, self-tapes, callbacks, work days, casting's fit, class scenes",
+   "sees": "What It Asks on a part, the guide's Genres entry (Related Genres: 65% and 40%, one step only)",
+   "failure": "tools/genre-audit.ts on brief 22's tested commit, 16b50e07 (measure.sh genres-b): every genre helps its own brief in 149 of 149; an unrelated genre moves another's brief in 0 of 21644 ordered pairs; a genre one direct link away (a kind and its broad genre) in 408 of 408, each by less than the genre itself in 408 of 408, the most 85% of its own gain; the old criterion's next genre over moves in 9, each a genre and its own kind, reported and not counted",
+   "implementation": "systems/engagement.ts (`relatedness`, `relevantGenre`), content/engagement.ts (`ENGAGEMENT.related`), tools/genre-audit.ts",
+   "evidence": [
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/final/genre-audit.md",
+     "title": "the criterion and the direct pairs"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/decision-history.md",
+     "title": "the old criterion, brief 21's question and the owner's authorization"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/comparisons.md",
+     "title": "the coefficients measured"
+    },
+    {
+     "file": "tests/b22-transfer.test.ts"
+    },
+    {
+     "file": "tests/b22-comparisons.test.ts"
+    }
+   ],
+   "status": "Implemented And Verified",
+   "measured": {
+    "commit": "16b50e07",
+    "watch": "judge"
+   }
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "about": "Brief 22's judge outputs that moved from brief 21's (numbers-same.json, 'final'), each read against what brief 22 changed and its criterion; and the judge's figures that moved (none: all 36 of brief 21's figures are the same, and Genre Audit-R is new). Read by judge.py ('files') and criteria.py ('figures').",
+ "files": {
+  "journey-beginner-bj-0.json": {
+   "why": "a taped brief's genre part moved by brief 22's credit rule: a genre's own knowledge and the best directly related one now count together, 1 − (1 − own) × (1 − related), and a related genre counts 0.65 toward its broad genre and 0.40 toward its kind (0.75 and 0.5 until brief 22); a take moves at most 0.6 either way, and L3-R's verdict, read from l3r.json, is brief 21's: met, (b) on 8 journeys, (c) growth 1.253 at least",
+   "holds": true
+  },
+  "journey-beginner-bj-1.json": {
+   "why": "a taped brief's genre part moved by brief 22's credit rule: a genre's own knowledge and the best directly related one now count together, 1 − (1 − own) × (1 − related), and a related genre counts 0.65 toward its broad genre and 0.40 toward its kind (0.75 and 0.5 until brief 22); a take moves at most 0.6 either way, and L3-R's verdict, read from l3r.json, is brief 21's: met, (b) on 8 journeys, (c) growth 1.253 at least",
+   "holds": true
+  },
+  "journey-developing-bj-0.json": {
+   "why": "a taped brief's genre part moved by brief 22's credit rule: a genre's own knowledge and the best directly related one now count together, 1 − (1 − own) × (1 − related), and a related genre counts 0.65 toward its broad genre and 0.40 toward its kind (0.75 and 0.5 until brief 22); a take moves at most 0.6 either way, and L3-R's verdict, read from l3r.json, is brief 21's: met, (b) on 8 journeys, (c) growth 1.253 at least",
+   "holds": true
+  },
+  "journey-specialist-bj-1.json": {
+   "why": "a taped brief's genre part moved by brief 22's credit rule: a genre's own knowledge and the best directly related one now count together, 1 − (1 − own) × (1 − related), and a related genre counts 0.65 toward its broad genre and 0.40 toward its kind (0.75 and 0.5 until brief 22); a take moves at most 0.6 either way, and L3-R's verdict, read from l3r.json, is brief 21's: met, (b) on 8 journeys, (c) growth 1.253 at least",
+   "holds": true
+  },
+  "l3-trace-beginner-bj-0.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-beginner-bj-1.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-developing-bj-0.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-developing-bj-1.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-generalist-bj-0.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-generalist-bj-1.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-specialist-bj-0.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3-trace-specialist-bj-1.json": {
+   "why": "its month means moved with the takes they sum, by brief 22's credit rule (above), at most 0.45; a specialist's genre part reads 0.1168 to the last bit, worked the new way (0.11680000000000001), the same take",
+   "holds": true
+  },
+  "l3r.json": {
+   "why": "its journeys' metrics moved with their takes (above); its verdict is brief 21's: L3-R met, (b) met on 8 journeys, two per profile, (c) met, growth 1.253 at least",
+   "holds": true
+  }
+ },
+ "figures": {}
+}
