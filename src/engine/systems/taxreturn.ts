@@ -45,7 +45,7 @@ import { earningsOf, stateOf, yearOf } from './earnings';
 import { drawFromBank, expenseFor, inTheBank, payFromBank } from './spending';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
-import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateDueOf, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
+import { type Lien, THREE_YEAR_KIND, owedThen, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateDueOf, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
 import { YALE_DRAMA } from '../content/school';
 import { foreignAccountsNotice } from './abroad';
 import { creditStatus, medicaidStatus } from './health';
@@ -320,12 +320,17 @@ function federalLienPaid(sim: Simulation, person: Person, r: TaxReturn): void {
   sim.schedule({ at: l.releaseDue, kind: FEDERAL_LIEN_KIND, label: FEDERAL_LIEN.name, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, action: 'release' } });
 }
 
-/** Whether it was filed in error: their own return, replacing the IRS's, owed no more than was paid when it was filed. */
+/**
+ * Whether it was filed in error: with their own return in the place of the IRS's, nothing was owed on the year when it was
+ * filed (`owedThen`, 26 CFR 301.6326-1(b)(1)). Until 2026-10-21 it read the tax alone, their own return's federal tax no
+ * more than the tax paid before it, whatever penalty and interest it secured, as a state's did (`lienInError`).
+ */
 export function federalLienInError(r: TaxReturn): boolean {
   const l = r.lien;
   if (!l || l.filedAt === undefined || r.reconsideredAt === undefined) return false;
-  const paidBefore = (r.payments ?? []).filter((p) => p.at < l.filedAt!).reduce((s, p) => s + p.tax, 0);
-  return Math.max(0, r.figures.owedTo?.irs ?? r.figures.balance) <= paidBefore;
+  const paidTax = (r.payments ?? []).filter((p) => p.at < l.filedAt!).reduce((s, p) => s + p.tax, 0);
+  const own = Math.max(0, r.figures.owedTo?.irs ?? r.figures.balance);
+  return owedThen(own, r.substituteTax ?? own, paidTax, l.amount - l.fee) <= 0;
 }
 
 /** Why a withdrawal (Form 12277) can't be asked now, or nothing. */
@@ -486,6 +491,11 @@ export interface TaxReturn {
   threeYearFor?: Record<string, true>;
   /** The IRS's own figures on a substitute, kept beside the return's. */
   substituteFigures?: ReturnFigures;
+  /**
+   * The federal tax the IRS assessed on its substitute (from 2026-10-21), which `federalLienInError` reads once their own
+   * return has replaced it. A substitute assessed before keeps none, and is read as their own return's.
+   */
+  substituteTax?: Money;
   /** A payment plan's months at the reduced failure-to-pay rate: from, and to once it ends (`payLateRateAt`). */
   reducedFrom?: Instant;
   reducedTo?: Instant;
@@ -1410,6 +1420,7 @@ export function registerTaxReturn(sim: Simulation): void {
     r.filedAt = s.now;
     r.penalty = penalty;
     r.substitute = true;
+    r.substituteTax = federalPart;
     setOwed(r, { tax: federalPart, penalty, interest }, s.now);
     // The assessment is the notice and demand for its penalty: the paying-late share draws interest only past its days.
     demand(r, lateShares(federalPart, r.due, s.now, cur).payLate, s.now);
@@ -1788,10 +1799,13 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): Filed {
   r.figures = own;
   r.substitute = false;
   r.reconsideredAt = sim.now;
+  // Its notice says the penalty and interest fell only where they did (from 2026-10-21, brief 20): until then it said they
+  // were "reduced in proportion" whatever the ratio, and an heir's own 2026 return, the IRS's figure to the cent, left them
+  // as they were (tests/b20-benefits-tax.test.ts).
   if (!r.owed) federalLienPaid(sim, person, r);
   if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = sim.now;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment using your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year, against its ${formatMoney(was, cur)}. ${r.owed ? `You still owe ${formatMoney(r.owed, cur)}, with the penalty and interest reduced in proportion.` : over > 0 ? `The ${formatMoney(over, cur)} you paid beyond it comes back to you.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment using your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year, against its ${formatMoney(was, cur)}. ${r.owed ? `You still owe ${formatMoney(r.owed, cur)}${ratio < 1 ? ', with the penalty and interest reduced in proportion.' : '. Your return shows the same tax, so its penalty and interest stand.'}` : over > 0 ? `The ${formatMoney(over, cur)} you paid beyond it comes back to you.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
   return { balance: own.balance, penalty: r.penalty ?? 0, paid: !r.owed && statesPaid, irs: ownIrs, states: own.owedTo!.states, refunded: Math.max(0, over) };
 }
 
