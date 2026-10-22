@@ -67,7 +67,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `calendar.cancel` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | — | 8 | journey-life.test.ts |
 | `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 28 | journey-life.test.ts |
 | `calendar.skip` | Implemented But Unverified | What’s Coming | TimeControls.tsx | `world/plans.ts` | — | status; resolvedAt | — | — | 4 | — |
-| `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal) | — | — | card.arrives | 16 | — |
+| `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal) | — | — | card.arrives | 17 | — |
 | `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 8 | — |
 | `card.dispute` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | — (also disputeRefusal) | — | — | bank.fraud_refund | 6 | — |
 | `card.lock` | Verified (journey) | Your Bank | BankSecurity.tsx | `systems/security.ts` | That card is stopped, and a new one is on its way. | — | — | — | 17 | journey-money.test.ts |
@@ -77,8 +77,8 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `card.refund_credit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/credit.ts` | The card holds no credit to send back. | — | — | — | 2 | — |
 | `card.report` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | Choose why: lost, stolen or damaged.; That card is already stopped, and a new one is on its way.; … doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.; No rushed replacement was found for …. | — | Yes | — | 8 | — |
 | `card.request_hardship` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; You’re already on a payment plan.; You don’t owe anything on the card.; You could pay it off today. A hardship plan is for when you can’t. | — | — | — | 8 | — |
-| `card.request_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Enter the limit you want. | — | — | — | 3 | — |
-| `card.set_auto_raise` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card. | — | — | — | 2 | — |
+| `card.request_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Enter the limit you want. (also askRefusal) | — | — | — | 4 | — |
+| `card.set_auto_raise` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card. | — | — | — | 3 | — |
 | `card.set_autopay_from` | Implemented But Unverified | Your Bank | BankMoves.tsx | `systems/bankmoves.ts` | That isn’t one of your cards.; Autopay has to pay from one of your open checking accounts.; … is closing, so autopay can’t pay from it. | — | — | — | 15 | — |
 | `card.set_everyday` | Verified (journey) | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t hold that card.; That card is being closed, so nothing new can go on it. | — | — | — | 4 | journey-money.test.ts |
 | `card.set_over_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Only a US card lets you opt in to going over the limit. | — | — | — | 2 | — |
@@ -234,7 +234,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `card.arrives` | `systems/cardlife.ts` | systems/abroad.ts; systems/bankmoves.ts; systems/cardlife.ts | — | — | credit_card; card.arrives | 1 |
 | `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 43 |
 | `card.replaced` | `systems/security.ts` | systems/bankmoves.ts; systems/security.ts | last4; issued; expiresAt | — | — | 8 |
-| `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 27 |
+| `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 29 |
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 4 |
 | `documents.decided` | `systems/documents.ts` | systems/documents.ts | documentsOf (added to) | Yes | passport; documents.decided | 5 |
 | `documents.idcard_arrives` | `systems/identity.ts` | systems/identity.ts | documentsOf (added to) | Yes | idcard; documents.idcard_arrives | 1 |

@@ -3596,7 +3596,7 @@
       "downstream": "cardlife.ts:70 opens card; score feeds later approvals/pricing",
       "persistent": "record + card",
       "explanation": "approve/decline notices with reason",
-      "tests": "guide-examples-money.test.ts, the play of the bank.card entry (a New Haven life); cardlife.test.ts:99,134; several-cards.test.ts:33; cardoffers.test.ts ‘moves a Chase card’s balance onto Citi’s card after switching, for Citi’s fee, at 0% for eighteen months’, ‘isn’t made where the new limit won’t take it with its fee, before the bank looks’",
+      "tests": "guide-examples-money.test.ts, the play of the bank.card entry (a New Haven life); cardlife.test.ts:100,135; several-cards.test.ts:33; cardoffers.test.ts ‘moves a Chase card’s balance onto Citi’s card after switching, for Citi’s fee, at 0% for eighteen months’, ‘isn’t made where the new limit won’t take it with its fee, before the bank looks’",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -3619,7 +3619,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:98, :133",
+            "where": "tests/cardlife.test.ts:99, :134",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -3657,7 +3657,7 @@
         "gaps": [
           "The decline reasons for a debt in collections and for under 21 with no means of their own are untested through the command.",
           "No render of BankCard's Apply or its disabled state.",
-          "The row cites cardlife.test.ts:98,133 and several-cards:33, but not the stronger New Haven guide example."
+          "The row cites cardlife.test.ts:99,134 and several-cards:33, but not the stronger New Haven guide example."
         ]
       },
       "verification": {
@@ -3674,7 +3674,7 @@
       "downstream": "cardRoom 0 (credit.ts:568); no annual fee (:788); statement closes when paid (:835); utilization denominator shrinks (reportMonth over cardsOf, credit.ts:1238-1242). Until 2026-10-13 this said :537, :709 and :740, which had drifted.",
       "persistent": "state",
       "explanation": "'Closed to anything new' line",
-      "tests": "evidence-g11-money.test.ts ‘leaves Citi’s $2,500 of $5,000 alone in what’s used once Chase’s card is closed from the panel, owing nothing: Citi’s due date moves the record a point down, where beside Chase’s it moves 1.5 up’, ‘takes nothing new on a closing Chase card that owes $400: a second close refused, the night’s groceries kept off it, paid in full from the panel, and closed at its statement, across a reload’, ‘charges no yearly fee on a closing card: AIB’s €30 …’ (Dublin); cardlife.test.ts:149; several-cards.test.ts:104",
+      "tests": "evidence-g11-money.test.ts ‘leaves Citi’s $2,500 of $5,000 alone in what’s used once Chase’s card is closed from the panel, owing nothing: Citi’s due date moves the record a point down, where beside Chase’s it moves 1.5 up’, ‘takes nothing new on a closing Chase card that owes $400: a second close refused, the night’s groceries kept off it, paid in full from the panel, and closed at its statement, across a reload’, ‘charges no yearly fee on a closing card: AIB’s €30 …’ (Dublin); cardlife.test.ts:150; several-cards.test.ts:104",
       "status": "verified",
       "issue": "",
       "review": {
@@ -3685,7 +3685,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:148 'takes nothing new, and closes once it owes nothing'",
+            "where": "tests/cardlife.test.ts:149 'takes nothing new, and closes once it owes nothing'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -3701,7 +3701,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:45 'ages back a little each month while nothing is in collections...'",
+            "where": "tests/cardlife.test.ts:46 'ages back a little each month while nothing is in collections...'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -3769,7 +3769,7 @@
             "The closing test is exercised through the player's route. 'It's already being closed.' is asserted. cardRoom is 0, and the night's groceries, with The Day's Spending on the card, come from checking. Pay Card In Full ($400) is pressed (finance.pay_card), and the card closes at its 20 Sep statement with 'Card Closed', across a reload.",
             "The yearly-fee skip is shown only on Dublin quick-save lives at AIB, because no New Haven card has a fee. The test says so.",
             "The line-reference correction (credit.ts:557, :759, :800, :1195) is proposed, not applied. The audit row in the tree still says :537, :709, :740.",
-            "The tautology at cardlife.test.ts:155 and the if-guarded hand pay-off at :162 are still in the gate. The review's todo asked for them to be replaced, but they were only supplemented."
+            "The tautology at cardlife.test.ts:156 and the if-guarded hand pay-off at :163 are still in the gate. The review's todo asked for them to be replaced, but they were only supplemented."
           ],
           "weakTests": [
             {
@@ -4503,7 +4503,7 @@
       "downstream": "card.interest skips accrual on a plan (credit.ts:992); autopayAsk (credit.ts:1110-1118) makes the plan’s payment what autopay asks and what the due date judges; met, the month counts on time (+3) and missed goes back to none (credit.ts:948-949); the plan ends once nothing is owed, at a due date (:963-966) or a statement (:832); cardRoom 0 while suspended (credit.ts:568); the statement’s notice (:843), its issued record (:816) and the Statements page (BankStatements.tsx:125-126) ask the plan’s payment. Until 2026-10-13 this cited credit.ts:891 and :764",
       "persistent": "state",
       "explanation": "'On a plan ... no interest' line",
-      "tests": "evidence-g12-money.test.ts ‘card.request_hardship’ (8: refusals and no room, autopay asks the plan’s $100 on time, late under it, the notices name it, ends at a due date and at a statement, Capital One’s 28.99% frozen, the panel); evidence2-b04.test.ts ‘puts a missed payment back to none once the plan’s $101 is met…’ and ‘is what the Statements page asks on a plan…’; hardship-plan-minimum.test.ts (5); defects3-bank.test.ts ‘PLAYER JOURNEY: late once, on a plan, paid off…’; money-fixes.test.ts ‘is refused to a holder whose bank could clear the card today’; cardlife.test.ts:250",
+      "tests": "evidence-g12-money.test.ts ‘card.request_hardship’ (8: refusals and no room, autopay asks the plan’s $100 on time, late under it, the notices name it, ends at a due date and at a statement, Capital One’s 28.99% frozen, the panel); evidence2-b04.test.ts ‘puts a missed payment back to none once the plan’s $101 is met…’ and ‘is what the Statements page asks on a plan…’; hardship-plan-minimum.test.ts (5); defects3-bank.test.ts ‘PLAYER JOURNEY: late once, on a plan, paid off…’; money-fixes.test.ts ‘is refused to a holder whose bank could clear the card today’; cardlife.test.ts:254",
       "status": "verified",
       "issue": "Until 2026-10-10 granted unconditionally, a free 0% 48-month plan on demand; from then refused where the bank could clear the card today (cardlife.ts:226). Until 2026-10-13 a plan paid off before its statement never ended, the statement and late notice named the card’s minimum where the due date judged the plan’s payment, and its due date came at 12:01; all three were fixed that day",
       "corrected": {
@@ -4519,7 +4519,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:227 'freezes the interest, sets a payment that clears it in four years, and stops the card'",
+            "where": "tests/cardlife.test.ts:231 'freezes the interest, sets a payment that clears it in four years, and stops the card'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4723,7 +4723,7 @@
       "downstream": "cardRoom (credit.ts:566-577), so the room a purchase and a cash advance have (cash.ts:110); reportMonth’s utilization at the due date (credit.ts:1238-1249). Until 2026-10-13 this also said a cash limit share: no card product sets cashLimitShare (content/cards.ts:44), so no limit sets a cash limit",
       "persistent": "account",
       "explanation": "decline notice with rule",
-      "tests": "evidence-g12-money.test.ts ‘card.request_limit’ (4: lowered to what’s owed and raised a fifth with a meal and a cash advance on it; each decline reason in its words; read by the record at the due date; asked from the panel); cardlife.test.ts:179",
+      "tests": "evidence-g12-money.test.ts ‘card.request_limit’ (4: lowered to what’s owed and raised a fifth with a meal and a cash advance on it; each decline reason in its words; read by the record at the due date; asked from the panel); cardlife.test.ts:180",
       "status": "verified",
       "issue": "",
       "review": {
@@ -4734,7 +4734,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:178 'lowers on asking, never under what’s owed, and rises only for a record that earns it, by a fifth at most'",
+            "where": "tests/cardlife.test.ts:179 'lowers on asking, never under what’s owed, and rises only for a record that earns it, by a fifth at most'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -4831,7 +4831,7 @@
       "downstream": "credit.ts:803 six-monthly raise skipped",
       "persistent": "state",
       "explanation": "toggle label",
-      "tests": "evidence-g13-money.test.ts ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it’; cardlife.test.ts:196; turning it back on is untested",
+      "tests": "evidence-g13-money.test.ts ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it’; cardlife.test.ts:200; turning it back on is untested",
       "status": "verified",
       "issue": "",
       "review": {
@@ -4842,7 +4842,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:195 'isn’t raised unasked once the holder says never'",
+            "where": "tests/cardlife.test.ts:199 'isn’t raised unasked once the holder says never'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4850,7 +4850,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:360 (persistent debt in Britain), line 365",
+            "where": "tests/cardlife.test.ts:364 (persistent debt in Britain), line 365",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": false,
@@ -5005,7 +5005,7 @@
       "downstream": "cardRoom a tenth over the limit for a holder who opted in (credit.ts:574), so a purchase goes past the limit. Until 2026-10-13 the statement also charged an over-limit fee (credit.ts:729); no card here publishes one, only a test’s product reached it, and it was taken out (credit.ts:796-798)",
       "persistent": "state",
       "explanation": "opt-in line, which says the card charges nothing for it (BankCard.tsx:202); until 2026-10-13 it named a fee",
-      "tests": "evidence-g12-money.test.ts ‘lets a meal go a tenth over a $500 limit once opted in, charges no fee for it at the statement, and opted out leaves the limit less what’s owed’ and ‘is the panel’s Going Over The Limit, pressed…’; cardlife.test.ts:208, :230 (the migration that sheds overLimitCycles)",
+      "tests": "evidence-g12-money.test.ts ‘lets a meal go a tenth over a $500 limit once opted in, charges no fee for it at the statement, and opted out leaves the limit less what’s owed’ and ‘is the panel’s Going Over The Limit, pressed…’; cardlife.test.ts:212, :234 (the migration that sheds overLimitCycles)",
       "status": "verified",
       "issue": "",
       "review": {
@@ -5016,7 +5016,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:207 'is a US card’s choice, lets a tenth over for someone who opted in, and charges the card’s fee three cycles at most'",
+            "where": "tests/cardlife.test.ts:211 'is a US card’s choice, lets a tenth over for someone who opted in, and charges the card’s fee three cycles at most'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -5038,7 +5038,7 @@
         "verdict": "partial",
         "disposition": "stale-claim",
         "gaps": [
-          "The row's downstream 'over-limit fee' describes nothing a life reaches: no researched card has one, and the fee is charged only on a test-made product (cardlife.test.ts:212).",
+          "The row's downstream 'over-limit fee' describes nothing a life reaches: no researched card has one, and the fee is charged only on a test-made product (cardlife.test.ts:216).",
           "No purchase over the limit through spend or a command after opting in is tested. A review probe at Chase with real terms: a $30 purchase with $10 of room was refused before opting in and bought after, leaving the balance past the limit.",
           "Opting out (resetting overLimitCycles, and the room going back to the limit) is untested.",
           "The row's line references are stale: cardlife.ts:200→202, credit.ts:543→559, credit.ts:718→755, BankCard.tsx:279→287."
@@ -5088,9 +5088,9 @@
           "verdict": "verified",
           "problems": [
             "RESOLVED: the fee path is gone. src has no overLimitFee or overLimitCycles except the migration that sheds overLimitCycles from the person and each card state (src/engine/index.ts:649-653). credit.ts:769-771 says in the past tense that the fee was charged until 2026-10-13. BankCard.tsx:193 now always says 'this card charges nothing for it', and guide money.ts:835 says no card here publishes a fee.",
-            "RESOLVED by removal: the vacuous opt-out reset. Opting out is now shown by cardRoom falling from $50 to 0 and the meal refused again in its words (evidence-g12-money.test.ts:784-790). Dropping the opt-out would leave $45 of room and fail.",
+            "RESOLVED by removal: the vacuous opt-out reset. Opting out is now shown by cardRoom falling from $50 to 0 and the meal refused again in its words (evidence-g12-money.test.ts:792-798). Dropping the opt-out would leave $45 of room and fail.",
             "RESOLVED in substance: 'no fee' couldn't fail. Besides the memo check, g12 asserts card.balance unchanged at −$505 across the statement (:781), which catches any charge posted to the card, not just one memo. cardlife's fees() count and /limit/ filter are absence checks with nothing left to mutate.",
-            "The migration is tested on an old-shaped save through migrate() and loadSave (cardlife.test.ts:229-246): 'Dropped the fields this build no longer reads from 1 person.', both levels shed, opt-in kept. cardlife ran 20/20 and g12 33/33.",
+            "The migration is tested on an old-shaped save through migrate() and loadSave (cardlife.test.ts:233-250): 'Dropped the fields this build no longer reads from 1 person.', both levels shed, opt-in kept. cardlife ran 20/20 and g12 33/33.",
             "OPEN in the docs, and not only a line reference: docs/verification/audit/money.json and docs/GAMEPLAY-COVERAGE.md:811 still list the downstream 'over-limit fee credit.ts:718' and the explanation 'opt-in line with fee'. The review claim says the statement 'charges the card’s over-limit fee, three cycles at most'. The row's own words still declare the removed mechanism and must be corrected for the row to read verified."
           ],
           "weakTests": []
@@ -5116,7 +5116,7 @@
       "downstream": "credit.ts:739 statement -> due, interest, reportMonth; yearly fee once in its month (credit.ts:788-789, feeAt)",
       "persistent": "state",
       "explanation": "toast 'due date moves with them'",
-      "tests": "evidence-g13-money.test.ts ‘asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it’ and ‘charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee)’; money-fixes.test.ts ‘moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one’; coverage-gaps-statements.test.ts:23; cardlife.test.ts:170",
+      "tests": "evidence-g13-money.test.ts ‘asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it’ and ‘charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee)’; money-fixes.test.ts ‘moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one’; coverage-gaps-statements.test.ts:23; cardlife.test.ts:171",
       "status": "verified",
       "issue": "Until 2026-10-10 the day moved with no frequency limit: 20 statements in 20 days, score 640->700, and two statements in a month doubled the yearly fee; from then a moved day made one cycle of at least 27 days and the fee came once in its month. Until 2026-10-13 it moved as often as asked, and a day moved on each morning never came; from then once a cycle (statementDayRefusal)",
       "auditStatus": "partial",
@@ -5158,7 +5158,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:169 'moves, and the statement and its due date come with it'",
+            "where": "tests/cardlife.test.ts:170 'moves, and the statement and its due date come with it'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -5508,7 +5508,7 @@
       "downstream": "card.due (credit.ts:848) asks the statement less what was paid since (autopayAsk, credit.ts:1110-1118) and checks it late or not; carrying/grace (credit.ts:879-889); cardRoom (credit.ts:566), less a payment from another bank held for its days (paymentHolds, :575). Until 2026-10-13 this cited credit.ts:789, :1038, :818 and :551",
       "persistent": "ledger + state",
       "explanation": "button shows amount",
-      "tests": "evidence-g13-money.test.ts ‘finance.pay_card’ (7: the minimum by hand before the due date bounces nothing and charges no late fee across a reload; in full keeps the grace, the minimum carries $62.47; refusals in their words; savings drawn with the link off; the minimum to the cheapest balance, the rest to the cash advance; Capital One’s payment held 15 days; the button, whose test runs the command rather than its onClick); hardship-plan-minimum.test.ts ‘paying the minimum by hand on a hardship plan…’; cardlife.test.ts:117; interest.test.ts ‘is held when more is paid than owed…’",
+      "tests": "evidence-g13-money.test.ts ‘finance.pay_card’ (7: the minimum by hand before the due date bounces nothing and charges no late fee across a reload; in full keeps the grace, the minimum carries $62.47; refusals in their words; savings drawn with the link off; the minimum to the cheapest balance, the rest to the cash advance; Capital One’s payment held 15 days; the button, whose test runs the command rather than its onClick); hardship-plan-minimum.test.ts ‘paying the minimum by hand on a hardship plan…’; cardlife.test.ts:118; interest.test.ts ‘is held when more is paid than owed…’",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -5526,7 +5526,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:116-131 'holds back the credit a payment from another bank frees...'",
+            "where": "tests/cardlife.test.ts:117-132 'holds back the credit a payment from another bank frees...'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -6688,7 +6688,7 @@
       "downstream": "spend cardRoom; statements",
       "persistent": "account",
       "explanation": "'Your New Card Arrived'",
-      "tests": "cardlife.test.ts:99; cardoffers.test.ts:94",
+      "tests": "cardlife.test.ts:100; cardoffers.test.ts:94",
       "status": "verified",
       "issue": "",
       "review": {
@@ -6714,7 +6714,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:98-114; tests/several-cards.test.ts:33-43",
+            "where": "tests/cardlife.test.ts:99-115; tests/several-cards.test.ts:33-43",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -6744,7 +6744,7 @@
       "downstream": "interest accrual credit.ts:982 (card.interest); cardRoom; score -> applications/loans",
       "persistent": "ledger + record",
       "explanation": "bounce/late/suspend/penalty notices",
-      "tests": "tests/defects3-bank.test.ts:223 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November’; tests/evidence-g12-money.test.ts:412 ‘has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48…’, :475 ‘ends at the due date once the card is paid off before it…’; tests/evidence2-b04.test.ts:443 ‘puts a missed payment back to none once the plan’s $101 is met at the next due date…’; tests/evidence-g13-money.test.ts:167 ‘paid by hand to the minimum before its due date: autopay asks nothing…’; tests/money-fixes.test.ts:58 ‘late, is charged the late fee, and no returned payment’s fee beside it’; tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes; their tests at :268 and :294); interest.test.ts:62,81,102,125,136,166,187,216; tests/defects5.test.ts card.due ‘judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s’",
+      "tests": "tests/defects3-bank.test.ts:223 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November’; tests/evidence-g12-money.test.ts:413 ‘has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48…’, :476 ‘ends at the due date once the card is paid off before it…’; tests/evidence2-b04.test.ts:443 ‘puts a missed payment back to none once the plan’s $101 is met at the next due date…’; tests/evidence-g13-money.test.ts:167 ‘paid by hand to the minimum before its due date: autopay asks nothing…’; tests/money-fixes.test.ts:58 ‘late, is charged the late fee, and no returned payment’s fee beside it’; tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes; their tests at :272 and :298); interest.test.ts:62,81,102,125,136,166,187,216; tests/defects5.test.ts card.due ‘judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s’",
       "status": "verified",
       "issue": "Until 2026-10-10 a US card short on autopay was charged both a returned-payment fee and a late fee for one missed payment; a bounce that leaves the minimum unpaid takes the late fee alone since (credit.ts:872-874). Until 2026-10-13 a due date across a month’s end came at 12:01 PM; it comes at noon now (dueAt, credit.ts:725). Two due items after a statement-day move: from 2026-10-10 a move makes no cycle shorter than 27 days (MIN_CYCLE_DAYS, credit.ts:691), and from 2026-10-13 the day moves once a cycle (statementDayRefusal, credit.ts:701). Until 2026-10-13 six non-US cards whose grace passes 27 days (Postbank, Banco General 28; Nordea, OTP Moldova, monobank 30; Banrural 55) fell due after the next statement and were judged on it, against what was paid since it: a Nordea February statement paid in full in February was taken on 22 March for March’s, autopay took March’s minimum four weeks early and the card lost its grace. Each due date judges its own statement since (waiting, credit.ts:166, :745-751, :856-862)",
       "auditStatus": "partial",
@@ -6770,7 +6770,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:244-267 'is reported by a US lender at thirty days past due...'",
+            "where": "tests/cardlife.test.ts:248-271 'is reported by a US lender at thirty days past due...'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -6778,7 +6778,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:270-357 ('missed payments' describe)",
+            "where": "tests/cardlife.test.ts:274-361 ('missed payments' describe)",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -6814,7 +6814,7 @@
         },
         "verdict": "verified",
         "gaps": [
-          "A hardship plan's payment standing in as the due (credit.ts:1046) and the plan ending once the card is paid off (credit.ts:899-902) are not tested through a due date. cardlife.test.ts:227 checks only the statement's interest freeze.",
+          "A hardship plan's payment standing in as the due (credit.ts:1046) and the plan ending once the card is paid off (credit.ts:899-902) are not tested through a due date. cardlife.test.ts:231 checks only the statement's interest freeze.",
           "A payment made by hand before the due date (autopay asking less) is untested here too. See finance.pay_card.",
           "Many tests set credit.autopay by hand instead of running finance.set_autopay."
         ]
@@ -6947,7 +6947,7 @@
       "downstream": "card.due; score",
       "persistent": "ledger + record",
       "explanation": "statementReady with minimum",
-      "tests": "tests/evidence-g13-money.test.ts:524 ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it’, :544 ‘charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements…’, :565 ‘asked to move the statement day every morning, it moves once a cycle…’; tests/defects3-bank.test.ts:183 ‘PLAYER JOURNEY: late once, on a plan, paid off: the 20 October statement owes nothing…’; cards.test.ts:216; cardlife.test.ts ‘isn’t raised unasked once the holder says never’ (:196), ‘is a US card’s choice, lets a tenth over…’ (:208), ‘writes at eighteen months of paying more in interest and fees than off the card…’ (:383), ‘hold a US card’s first-year yearly fee to a quarter of its limit’ (:407); interest.test.ts",
+      "tests": "tests/evidence-g13-money.test.ts:524 ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it’, :544 ‘charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements…’, :565 ‘asked to move the statement day every morning, it moves once a cycle…’; tests/defects3-bank.test.ts:183 ‘PLAYER JOURNEY: late once, on a plan, paid off: the 20 October statement owes nothing…’; cards.test.ts:216; cardlife.test.ts ‘isn’t raised unasked once the holder says never’ (:200), ‘is a US card’s choice, lets a tenth over…’ (:212), ‘writes at eighteen months of paying more in interest and fees than off the card…’ (:387), ‘hold a US card’s first-year yearly fee to a quarter of its limit’ (:411); interest.test.ts",
       "status": "verified",
       "issue": "Until 2026-10-10 each zero-balance statement reported a month on time and the yearly fee keyed on the calendar month only, so set_statement_day could cut extra statements, reports and fees. From 2026-10-10 a moved day makes no cycle shorter than 27 days (MIN_CYCLE_DAYS, credit.ts:691) and the fee is charged once in its month (feeAt, credit.ts:789); from 2026-10-13 the day moves once a cycle (statementDayRefusal, credit.ts:701)",
       "auditStatus": "partial",
@@ -6980,7 +6980,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:383-396, :206-224, :147-165, :359-380",
+            "where": "tests/cardlife.test.ts:387-400, :210-228, :148-166, :363-384",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -7002,7 +7002,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:195-203 'isn’t raised unasked once the holder says never'",
+            "where": "tests/cardlife.test.ts:199-207 'isn’t raised unasked once the holder says never'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -7122,7 +7122,7 @@
       "downstream": "fedOn read by meals; fee waivers (purchasesSince banking.ts:273); rewards (the statement’s scan, cardoffers.ts:179-190); French ceiling (cardCeilingRoom lending.ts:231). Not settleArrears (spending.ts:432): the day’s food never makes arrears, since spend without owe refuses before posting (spending.ts:325)",
       "persistent": "ledger",
       "explanation": "'No Money For Food Today', with spendRefusal’s reason where it’s more than the money running out: cash in hand a card payer’s day doesn’t spend, a locked or stopped debit card, or the French debit card’s ceiling (from 2026-10-12; until then it said only that there was nothing left to pay with)",
-      "tests": "tests/defects-r3a-1.test.ts:103 ‘buys both, the meal at 11:40 PM and the groceries at midnight, where there’s money for both’ (through the clock); tests/evidence-g13-money.test.ts:505 ‘while it’s on its way the day’s groceries go on the credit card…’; tests/evidence-g12-money.test.ts:244 ‘stops a lost Chase debit card for no fee: the meal and each morning’s groceries go on the credit card…’; tests/defects-r1-1.test.ts:129 ‘say why: the cash a card payer’s day doesn’t spend, a locked debit card, or nothing left at all’; payments.test.ts:30,78; lending.test.ts:56,92; security.test.ts:26; cash.test.ts:134; pending.test.ts:22",
+      "tests": "tests/defects-r3a-1.test.ts:103 ‘buys both, the meal at 11:40 PM and the groceries at midnight, where there’s money for both’ (through the clock); tests/evidence-g13-money.test.ts:505 ‘while it’s on its way the day’s groceries go on the credit card…’; tests/evidence-g12-money.test.ts:245 ‘stops a lost Chase debit card for no fee: the meal and each morning’s groceries go on the credit card…’; tests/defects-r1-1.test.ts:129 ‘say why: the cash a card payer’s day doesn’t spend, a locked debit card, or nothing left at all’; payments.test.ts:30,78; lending.test.ts:56,92; security.test.ts:26; cash.test.ts:134; pending.test.ts:22",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7181,7 +7181,7 @@
       "downstream": "every system reads Account.balance; audit() ledger.ts:286",
       "persistent": "transactions",
       "explanation": "statements derive from postings (activity, statements.ts:63)",
-      "tests": "journey-money.test.ts:32; money.test.ts:89,103,114,130,167,179; cardlife.test.ts:322 (audit)",
+      "tests": "journey-money.test.ts:32; money.test.ts:89,103,114,130,167,179; cardlife.test.ts:326 (audit)",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7215,7 +7215,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:299 (charge-off test)",
+            "where": "tests/cardlife.test.ts:303 (charge-off test)",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -7247,7 +7247,7 @@
       "downstream": "card.apply approval/limit (cardlife.ts:126,133), priced APR (cardTerms, credit.ts:448), loanOffer/overdraftOffer (lending.ts:451,430, through rateForRecord :412), request_limit (cardlife.ts:174)/auto raise (credit.ts:803-812). Until 2026-10-13 these cited credit.ts:1104, :311, :425 and lending.ts:352, :366, lines the files had moved from",
       "persistent": "record",
       "explanation": "scoreWord/number on screens",
-      "tests": "tests/evidence-g13-money.test.ts:565 ‘asked to move the statement day every morning, it moves once a cycle: … and at day 125 the score has gained nothing on a twin’s who never moved it’, :595 ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back…’, :625 ‘reads what’s used of the limit at the due date…’, :641 ‘with no card open, the record ages back 2 a month on the 1st…’, :656 ‘prices a Citi loan by the record: 12.10% at 735…’; several-cards.test.ts:117,135; cardlife.test.ts:47,99; tests/money-fixes.test.ts:30 ‘moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one’",
+      "tests": "tests/evidence-g13-money.test.ts:565 ‘asked to move the statement day every morning, it moves once a cycle: … and at day 125 the score has gained nothing on a twin’s who never moved it’, :595 ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back…’, :625 ‘reads what’s used of the limit at the due date…’, :641 ‘with no card open, the record ages back 2 a month on the 1st…’, :656 ‘prices a Citi loan by the record: 12.10% at 735…’; several-cards.test.ts:117,135; cardlife.test.ts:48,100; tests/money-fixes.test.ts:30 ‘moves once a statement cycle: asked every day for two months, the statement still comes, each cycle a full one’",
       "status": "verified",
       "issue": "Until 2026-10-10 farmable through set_statement_day (measured +60 in 20 days). From then a move made no cycle shorter than 27 days, but a move each morning held the statement off for good, and with it the month’s report and any mark, until 2026-10-13, when the day came to move once a cycle (statementDayRefusal, credit.ts:701). A day moved later once each cycle still stretches those cycles (42 and 47 days), putting off a due date and any late mark: a choice recorded at credit.ts:693-700",
       "auditStatus": "partial",
@@ -7281,7 +7281,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:98 'is approved for a record that earns it, costs the record a few points...' and :133 'is declined for a poor record...'",
+            "where": "tests/cardlife.test.ts:99 'is approved for a record that earns it, costs the record a few points...' and :134 'is declined for a poor record...'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -7289,7 +7289,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/cardlife.test.ts:46 'ages back a little each month while nothing is in collections...'",
+            "where": "tests/cardlife.test.ts:47 'ages back a little each month while nothing is in collections...'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,

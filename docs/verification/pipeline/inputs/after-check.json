@@ -24,7 +24,7 @@
    "changes": "overLimitOptIn (cardlife.ts:211)",
    "downstream": "cardRoom +10% (credit.ts:554). Until 2026-10-13 also an over-limit fee at the statement, three cycles at most, for a card with one; no card SLATE has publishes one, so it went",
    "explanation": "opt-in line, no fee (BankCard.tsx:193); until 2026-10-13 the line named a fee where a card had one",
-   "tests": "cardlife.test.ts:207; evidence-g12-money.test.ts (card.set_over_limit)"
+   "tests": "cardlife.test.ts:211; evidence-g12-money.test.ts (card.set_over_limit)"
   },
   "test": {
    "file": "cardlife.test.ts",

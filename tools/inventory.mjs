@@ -17,6 +17,7 @@
  */
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 
 const BEGIN = '<!-- inventory:begin -->';
 const END = '<!-- inventory:end -->';
@@ -48,18 +49,41 @@ function collect() {
   // invisible, so this counted the game's surface as smaller than it was and
   // said so with a straight face. tests/cohesion.test.ts already resolves
   // constants for exactly this reason; this does now too.
-  const named = new Map();
+  //
+  // A name is read in the file that uses it (from 2026-10-21, brief 20's money area): its own constant, or the one it
+  // imports by that name from another of the engine's files. Until then one map held every file's constants by name, the
+  // last file's winning, so `ARRIVES_KIND` was `cardlife.ts`'s `card.arrives` in `bankmoves.ts` too, whose own is
+  // `bank.transfer_arrives`, and that scheduled kind was in no table.
   const files = walk('src/engine').sort();
+  const own = new Map();
   for (const file of files) {
-    for (const m of readFileSync(file, 'utf8').matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+\.[a-z0-9_]+)'/g)) {
-      named.set(m[1], m[2]);
-    }
+    const mine = new Map();
+    for (const m of readFileSync(file, 'utf8').matchAll(/const ([A-Z][A-Z0-9_]*) = '([a-z0-9_]+\.[a-z0-9_]+)'/g)) mine.set(m[1], m[2]);
+    own.set(file, mine);
   }
-  const kindOf = (token) => (token.startsWith("'") ? token.slice(1, -1) : named.get(token));
+  const resolveFrom = (file, spec) => {
+    const base = join(dirname(file), spec);
+    return [`${base}.ts`, `${base}.tsx`, join(base, 'index.ts')].find((f) => own.has(f));
+  };
+  const namesIn = (file, text) => {
+    const names = new Map(own.get(file));
+    for (const m of text.matchAll(/import\s*(?:type\s*)?\{([^}]*)\}\s*from\s*'(\.[^']+)'/g)) {
+      const from = resolveFrom(file, m[2]);
+      if (!from) continue;
+      for (const part of m[1].split(',')) {
+        const [name, local = name] = part.trim().replace(/^type\s+/, '').split(/\s+as\s+/).map((x) => x.trim());
+        const kind = own.get(from).get(name);
+        if (kind && !names.has(local)) names.set(local, kind);
+      }
+    }
+    return names;
+  };
 
   for (const file of files) {
     const text = readFileSync(file, 'utf8');
     const rel = file;
+    const names = namesIn(file, text);
+    const kindOf = (token) => (token.startsWith("'") ? token.slice(1, -1) : names.get(token));
     const add = (map, re, group = 1) => {
       for (const m of text.matchAll(re)) {
         const kind = kindOf(m[group]);

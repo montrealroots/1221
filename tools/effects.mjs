@@ -228,7 +228,9 @@ function loadRows() {
 }
 
 /** Each test a row's evidence names, from its `tests` and from any `tests/….test.ts` written in its other evidence. */
-const testsOf = (r) => [...new Set([...(r.evidence?.tests ?? []), ...JSON.stringify({ ...r.evidence, tests: undefined }).matchAll(/tests\/[\w./-]+\.test\.ts/g)].map((m) => (typeof m === 'string' ? m : m[0])))];
+// A promise's own `tests` too (from 2026-10-21, found by the money area: INSTRUCTIONS.md names a promise's tests `tests`, and
+// until then only `evidence.tests` was read, so a promise's tests went unchecked).
+const testsOf = (r) => [...new Set([...(r.tests ?? []), ...(r.evidence?.tests ?? []), ...JSON.stringify({ ...r.evidence, tests: undefined }).matchAll(/tests\/[\w./-]+\.test\.ts/g)].map((m) => (typeof m === 'string' ? m : m[0])))];
 
 function problems() {
   const { features: found, promises: promised, constants } = features();

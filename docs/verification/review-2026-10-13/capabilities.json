@@ -628,7 +628,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:98-144",
+    "where": "tests/cardlife.test.ts:99-145",
     "asserts": "card.apply approved/declined by record, arrives in a week (Iceland)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -637,7 +637,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:116-131; tests/defects-g19-1.test.ts; tests/interest.test.ts:234-249",
+    "where": "tests/cardlife.test.ts:117-132; tests/defects-g19-1.test.ts; tests/interest.test.ts:234-249",
     "asserts": "finance.pay_card holds credit from another bank for its days, reads the autopay account; card.refund_credit sends $500 back, refused twice, auto after six months",
     "reachesAction": true,
     "checksConsequence": true,
@@ -655,7 +655,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:148-224",
+    "where": "tests/cardlife.test.ts:149-228",
     "asserts": "card.close removes the card's room and closes after a statement at zero; set_statement_day moves the next statement to the 5th; request_limit lowers to owed and raises by a fifth for 760; set_auto_raise off leaves the limit; set_over_limit lets 10% over and charges three cycles",
     "reachesAction": true,
     "checksConsequence": true,
@@ -664,7 +664,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/cardlife.test.ts:227-241",
+    "where": "tests/cardlife.test.ts:231-245",
     "asserts": "card.request_hardship refused when the bank could pay, then payment owed/48, suspended, no interest at the statement",
     "reachesAction": true,
     "checksConsequence": true,
@@ -689,10 +689,10 @@
   "partialClass": "missing-evidence",
   "gaps": [
    "finance.pay_card: no test pays through the command before a due date and asserts the statement then asks less, keeps the grace (no interest) or charges no late fee.",
-   "The unasked limit raise in the effects ('a limit raised ... when the record earns it', credit.ts:763-771) has no test: nothing asserts 'Your Card Limit Went Up'; card.set_auto_raise's only test (cardlife.test.ts:195-203) has no positive twin.",
+   "The unasked limit raise in the effects ('a limit raised ... when the record earns it', credit.ts:763-771) has no test: nothing asserts 'Your Card Limit Went Up'; card.set_auto_raise's only test (cardlife.test.ts:199-207) has no positive twin.",
    "card.set_everyday: no purchase after the command checks which card spend charges.",
-   "card.set_statement_day: the due date moving with the statement is not asserted (cardlife.test.ts:169-174).",
-   "card.close test carries a tautological assertion (cardlife.test.ts:155).",
+   "card.set_statement_day: the due date moving with the statement is not asserted (cardlife.test.ts:170-175).",
+   "card.close test carries a tautological assertion (cardlife.test.ts:156).",
    "The row's tests list omits tests/guide-examples-money.test.ts, the New Haven evidence for card.apply and finance.set_autopay.",
    "No reload with a card's statement open."
   ],

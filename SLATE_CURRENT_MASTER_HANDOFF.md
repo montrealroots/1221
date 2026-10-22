@@ -1,6 +1,39 @@
-# Read First: Brief 19, Professional Career Foundation And The First Individual Agent, Merged, 2026-10-21
+# Read First: Brief 20, The Functional And Downstream-Effects Audit, In Progress, 2026-10-22
 
-**This section is the current status, and where a new session starts.** The owner gave brief 19
+**This section is the current status, and where a new session starts.** The owner gave brief 20
+(`docs/verification/briefs-2026-10-16/20-complete-functional-and-downstream-effects-audit.txt`, kept verbatim) after
+brief 19's merge. It is worked on `claude/peaceful-hamilton-59zdbb`, from `340ce7ae` (`main`, #49), pushed and never
+force-pushed. Nothing of it is in `main`, and nothing is deployed: the owner said "Keep the work reviewable. Do not merge
+or deploy without my instruction." There is no stash and one worktree; brief 19's scratch clones with commits the branch
+didn't hold were kept as `refs/preserved/*` before they were deleted for disk space.
+
+**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+  (Brief 20's D2 changed `src/engine` (`c4832549`), so the 46 rows brief 19's final runs measured on the engine's or the
+  app's whole source read as measured before what they read last changed, until brief 20's final runs measure them again;
+  until then this said 634 of 658. Nothing in them is known to be wrong.)
+
+- **Read first:** `docs/verification/audit-2026-10-21/criteria.md` (the items, written before any fix, with the fixed
+  seeds the journeys play), `areas/INSTRUCTIONS.md` (how each area works) and the brief.
+- **The baseline:** the full gate in a clean clone of `340ce7ae`, exit 0 read from its file: 423 of 423 test files, 5,092
+  of 5,092 tests, none skipped, all 21 checks (`docs/verification/audit-2026-10-21/baseline/gate.txt`).
+- **The matrix:** `tools/effects.mjs` finds every feature in the code (commands, scheduled kinds, reactors, events,
+  creation's fields, dials, abilities, personality axes and traits, looks, `ui.*` ids, tutorial chapters, notices sent
+  outside a handler: 539) and every connection the guide promises (405), and holds a row for each in
+  `docs/verification/audit-2026-10-21/effects/<area>.json`, seeded from the completion matrix and failed until read.
+- **Done:** D2, the credit limit (`credit/README.md`): a raise, reviewed or asked, goes only as far as the holder's income
+  or savings carry under Regulation Z §1026.51(a), and an ask waits six months. Measured on six years of each starting
+  means; eight tests; ten mutations, all killed. Savings counting in full, and the opening limit by the score alone, are
+  for the owner. The inventory read a kind constant by its name across files, so three scheduled kinds were in no table
+  (`bank.transfer_arrives`, `health.appeal_decided`, `pro.agent_reply`); it reads each name in its own file now.
+- **In progress:** nine area audits in clones (creation, school, craft, money, benefits, papers, life, career, guide) and
+  the journeys on the fixed seeds; then integration, the built app at 1440 and 390, the final runs, the gate in a clean
+  clone and the receipt (`docs/verification/audit-2026-10-21/README.md`). The money area has reported
+  (`areas/money/REPORT.md`).
+
+# Earlier: Brief 19, Professional Career Foundation And The First Individual Agent, Merged, 2026-10-21
+
+**This section was the current status until brief 20 began** (2026-10-21; the completion line is stated in brief 20's section above). The owner gave brief 19
 (`docs/verification/briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept
 verbatim) after pausing brief 18. It was built on `claude/peaceful-hamilton-59zdbb`, pushed and never force-pushed;
 it went to `main` at the owner's word, "Merge it." (2026-10-21), in #48, merged as `3b56d056`, and this record of
