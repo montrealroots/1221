@@ -209,5 +209,15 @@
   "tests": [
    "tests/pro-core.test.ts"
   ]
+ },
+ {
+  "id": "B20-CAREER-22",
+  "what": "the record's bounds drop the newest settled postings instead of the oldest (held, since `trimmed` went, by which postings are kept)",
+  "file": "src/engine/systems/pro.ts",
+  "find": "const done = pro.opportunities.filter(resolved).sort((a, b) => (a.resolvedAt ?? a.postedAt) - (b.resolvedAt ?? b.postedAt));",
+  "replace": "const done = pro.opportunities.filter(resolved).sort((a, b) => (b.resolvedAt ?? b.postedAt) - (a.resolvedAt ?? a.postedAt));",
+  "tests": [
+   "tests/pro-core.test.ts"
+  ]
  }
 ]
