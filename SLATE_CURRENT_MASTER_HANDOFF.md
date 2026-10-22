@@ -19,17 +19,34 @@ didn't hold were kept as `refs/preserved/*` before they were deleted for disk sp
   of 5,092 tests, none skipped, all 21 checks (`docs/verification/audit-2026-10-21/baseline/gate.txt`).
 - **The matrix:** `tools/effects.mjs` finds every feature in the code (commands, scheduled kinds, reactors, events,
   creation's fields, dials, abilities, personality axes and traits, looks, `ui.*` ids, tutorial chapters, notices sent
-  outside a handler: 539) and every connection the guide promises (405), and holds a row for each in
-  `docs/verification/audit-2026-10-21/effects/<area>.json`, seeded from the completion matrix and failed until read.
-- **Done:** D2, the credit limit (`credit/README.md`): a raise, reviewed or asked, goes only as far as the holder's income
-  or savings carry under Regulation Z §1026.51(a), and an ask waits six months. Measured on six years of each starting
-  means; eight tests; ten mutations, all killed. Savings counting in full, and the opening limit by the score alone, are
-  for the owner. The inventory read a kind constant by its name across files, so three scheduled kinds were in no table
-  (`bank.transfer_arrives`, `health.appeal_decided`, `pro.agent_reply`); it reads each name in its own file now.
-- **In progress:** nine area audits in clones (creation, school, craft, money, benefits, papers, life, career, guide) and
-  the journeys on the fixed seeds; then integration, the built app at 1440 and 390, the final runs, the gate in a clean
-  clone and the receipt (`docs/verification/audit-2026-10-21/README.md`). The money area has reported
-  (`areas/money/REPORT.md`).
+  outside a handler) and every connection the guide promises, and holds a row for each in
+  `docs/verification/audit-2026-10-21/effects/<area>.json`, each read against the code. `EFFECTS.md` is written from
+  them: 491 of 518 features in scope Implemented And Verified (94.8%), 27 Implemented, Verification Incomplete, 20
+  Explicitly Deferred; the guide's promises 389 of 403 (96.5%). From `cbec90d8` its check is the gate's twenty-second.
+- **Done:** the ten areas' audits, each in a clone, merged, each with its report in `areas/<area>/REPORT.md` (the journeys'
+  in `journeys/REPORT.md`): creation, the School, craft, money, benefits, papers, life, the career, the guide, and eight
+  fixed-seed lives with the seven older saves played into the career. 264 mutations, 263 killed by an assertion and none a
+  setup error; the one that survives (B20-SCHOOL-13) removes a registration mark kept twice on purpose for older saves,
+  and B20-SCHOOL-21, which breaks the code that reads it, is killed. D2, the credit limit (`credit/README.md`): a raise,
+  reviewed or asked, goes only as far as the holder's income or savings carry under Regulation Z §1026.51(a), and an ask
+  waits six months. D3, consecutive work days (`areas/life/REPORT.md`): the body's figures were right, and a short night
+  was counted twice; a sleep after the night adds none of its debt, condition or mood, the bedtime for a full night is
+  said by the evening before, and a work day takes a rehearsal call's energy. F10 from the journeys: the School's request
+  to meet lapses on its day with a notice and a line on the record.
+- **The gate on the integrated commit:** `cbec90d8`, in a clean clone, exit 0 read from its file: 479 of 479 test files,
+  5,481 of 5,481 tests, none skipped, all 22 checks.
+- **In progress:** the final runs on `cbec90d8` (`docs/verification/audit-2026-10-21/final-runs/runs/queue20.sh`):
+  brief 19's lanes again, so the 46 rows measure again; brief 20's journeys again (BJ1 to BJ3); the built app at 1440
+  and 390, a played life's career surfaces and the seven older saves (APP). Then `collect20.sh`, `runs/figures.py`,
+  `advice/close.py`, `verify.py` (a journey ending that moved is held only where `journeys-moved.json` reads why), the
+  matrix, the receipt (`docs/verification/audit-2026-10-21/README.md`) and this handoff. A container restart stops the
+  queue: start it again with the lanes not done (`queue20.sh cbec90d8 "<lanes>"`); each lane skips the steps it passed.
+- **For the owner** (each area's report says more): readiness 60 as the work's knee, at about 20 hours awake; hunger
+  that brings no illness (F9); a start outside the School (`livesWhereBorn`); School casting not reading genre
+  experience; Amend The Return, which no played life can use; whether notices name their tab; autopay that can't be
+  turned off, a card's due day moving with the month, APY run as a nominal rate, the penalty at 30 days and the
+  charge-off at 150, a weekend standing order paid that day; savings counted in full against a limit and the opening
+  limit by the score alone (D2); OPT and the days between gigs (F3).
 
 # Earlier: Brief 19, Professional Career Foundation And The First Individual Agent, Merged, 2026-10-21
 
