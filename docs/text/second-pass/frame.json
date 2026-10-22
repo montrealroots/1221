@@ -2675,9 +2675,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalityStep": {
   "status": "Rewritten",
-  "hash": "fbdf74f1a1ea",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'creation says what it’s for, a draft put back, each disposition and trait’s reach…', and tests/evidence-g28-ui.test.ts and tests/evidence-g27-ui.test.ts, each disposition's line",
+  "hash": "3ba1118d1706",
+  "on": "2026-10-21",
+  "evidence": "Rewritten 2026-10-21 (brief 20, creation area) so the Traits list says Generous moves what food costs and not a meal's lift, to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('creation says what it’s for, a draft put back, each disposition and trait’s reach…') and held to the traits' own knobs by tests/b20-creation-copy.test.ts",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
