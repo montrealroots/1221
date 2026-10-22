@@ -101,11 +101,15 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     // Then the agent's way in for an actor the showcase didn't bring him: on the Representation tab, his office's notice
     // read, her materials checked, a referral asked for from a finished job whose work was judged well enough (the
     // tab lists each with its refusal), and her materials sent through it. His office's answer comes on the clock.
-    // Played on until she has such a job: from 2026-10-21, when the parts were written for an actor, an actress or
-    // either, this actress's student film was Ivy in Paper Moons, judged Working, and the first job that can refer her is
-    // Hester Vane in The Winter Ledger, cast from an open call in January 2030 and judged Strong, its run closed in April.
-    // Until then it was Theo in Paper Moons (an actor's part since, named Felix), judged Strong, and the referral was
-    // asked for on 4 October 2029.
+    // Played on until she has such a job: her student film, Ivy in Paper Moons, judged Strong, its director the one who
+    // refers her, asked on 22 November 2029. Ivy was Working until brief 20's life area (2026-10-21, D3): this player
+    // goes to bed at eleven or before five with the Sleep dialog's suggestion, and the half hour it suggests at four
+    // before a seven o'clock call was charged a short night's debt on top of the night's, so her readiness at the film's
+    // three calls was 70.7, 37.5 and 23.6, and 88.3, 74.5 and 65.6 once the short night's debt was the night's alone.
+    // Then the first job that could refer her was Hester Vane in The Winter Ledger, cast from an open call in January 2030
+    // and judged Strong, its run closed in April, and the referral was asked for on 21 April 2030. Before that, when the
+    // parts weren't yet written for an actor, an actress or either, it was Theo in Paper Moons (an actor's part since,
+    // named Felix), judged Strong, and the referral was asked for on 4 October 2029.
     const AGENT = AGENTS[0]!;
     until('referrer', at(2030, 6, 1), (s) => referrersOf(s, s.player, AGENT).some((r) => !r.why));
     const job = referrersOf(sim, sim.player, AGENT).find((r) => !r.why)!;
@@ -197,42 +201,47 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     expect(breaches(sim.universe, sim.now)).toEqual([]);
   });
 
-  // Until 2026-10-21 this said "from the director of the student film her work in was judged Strong": the referral was
-  // the film's director's, for Theo in Paper Moons, a part written for an actor since and named Felix, and her Ivy there
-  // was Working.
-  it('PLAYER JOURNEY: Ask For A Referral, from the casting office of the play her work in was judged Strong: his office’s notice read, her materials checked, the referral asked for and her materials sent through it, and his office’s answer, a request for a reel', () => {
+  // Until 2026-10-21 (brief 20's life area, D3) this said "from the casting office of the play her work in was judged
+  // Strong": her Ivy was Working (the comment in this describe's setup says why), the referral was Ostrander Vale
+  // Casting's, for Hester Vane in The Winter Ledger, asked on 21 April 2030, and his office asked for a reel by May 26,
+  // 2030, with the room on his list assumed for 2030 short of the bar and the chance 0.12. Before that, it said "from the
+  // director of the student film her work in was judged Strong", of Theo in Paper Moons, an actor's part since.
+  it('PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong: his office’s notice read, her materials checked, the referral asked for and her materials sent through it, and his office’s answer, a request for a reel', () => {
     const AGENT = AGENTS[0]!;
     const sim = opened('referred');
     const pro = sim.player.pro!;
-    const play = pro.engagements.find((e) => e.projectId === 'winter-ledger-hester')!;
     const film = pro.engagements.find((e) => e.projectId === 'paper-moons-ivy')!;
-    expect([play.status, film.status]).toEqual(['finished', 'finished']);
-    // Each finished job is listed with whether it can refer: work judged Strong or better (`REFERRAL_BAND`).
-    expect(pro.credits.find((c) => c.engagementId === play.id)!.band).toBe('strong');
-    expect(pro.credits.find((c) => c.engagementId === film.id)!.band).toBe('working');
-    expect(referrersOf(sim, sim.player, AGENT).find((r) => r.engagementId === film.id)!.why).toBe('A referral needs work judged Strong or better in the game, and your work as Ivy was Working.');
-    // The referral is the route in, from the play's casting office, and her materials went through it.
+    const route = pro.engagements.find((e) => e.projectId === 'route-nine')!;
+    expect([film.status, route.status]).toEqual(['finished', 'finished']);
+    // Each finished job is listed with whether it can refer: work judged Strong or better (`REFERRAL_BAND`), and not
+    // already used. Both of hers were judged Strong; the film's has referred her. A job judged under Strong, and what
+    // the tab says of it, is tests/pro-agent.test.ts's.
+    expect(pro.credits.find((c) => c.engagementId === film.id)!.band).toBe('strong');
+    expect(referrersOf(sim, sim.player, AGENT).map((r) => [r.job, r.band, r.why ?? null])).toEqual([
+      ['Ivy in Paper Moons', 'strong', 'The film’s director referred you on November 22, 2029.'],
+      ['Jess in Static On Route 9', 'strong', null],
+    ]);
+    // The referral is the route in, from the film's director, and her materials went through it.
     const rel = relationOf(sim.player, AGENT.id)!;
-    expect(rel.via).toEqual({ route: 'referral', at: rel.referrals![0]!.at, by: 'Ostrander Vale Casting' });
-    expect(rel.referrals!.map((r) => [r.engagementId, r.by, r.job, r.band])).toEqual([[play.id, 'Ostrander Vale Casting', 'Hester Vane in The Winter Ledger', 'strong']]);
+    expect(rel.via).toEqual({ route: 'referral', at: rel.referrals![0]!.at, by: 'the film’s director' });
+    expect(rel.referrals!.map((r) => [r.engagementId, r.by, r.job, r.band])).toEqual([[film.id, 'the film’s director', 'Ivy in Paper Moons', 'strong']]);
     expect(rel.history.map((e) => e.kind)).toEqual(['discovered', 'checked', 'referred', 'sent']);
-    // Said by the casting office, never by him.
-    const referred = G.lines.find((l) => l.includes('| NOTICE | Ostrander Vale Casting Referred You |'))!;
-    expect(referred).toContain(`Ostrander Vale Casting has referred you to ${AGENT.name}’s office at Halberd Talent, from your work as Hester Vane in The Winter Ledger.`);
+    // Said by the film's director, never by him.
+    const referred = G.lines.find((l) => l.includes('| NOTICE | The Film’s Director Referred You |'))!;
+    expect(referred).toContain(`The film’s director has referred you to ${AGENT.name}’s office at Halberd Talent, from your work as Ivy in Paper Moons.`);
     expect(referred).not.toMatch(/Fictional:/);
-    // His office's answer, two weeks on: six of the seven factors at the bar or beyond (four are needed), the draw under
-    // the chance, and a reel asked for, which she hasn't got. Seven stood there until 2026-10-21, in 2029 with the real
-    // agent; his list's assumed room is drawn by the year under the agent's id, and the fictional one's for 2030 came out
-    // short of the bar, so the chance is 0.12, and the draw, keyed by her, him and the approach, still falls under it.
+    // His office's answer, two weeks on: six of the seven factors at the bar or beyond (four are needed), the room on his
+    // list assumed for 2029 near it (one supporting actor aged 22 to 35, and she's a lead), so the chance is 0.24, and
+    // the draw, keyed by her, him and the approach, falls under it: a reel asked for, which she hasn't got.
     const an = opened('answered');
     const answered = relationOf(an.player, AGENT.id)!;
     expect([answered.stage, answered.request!.what]).toEqual(['requested', ['reel']]);
     expect([answered.why!.step, answered.why!.outcome, answered.why!.atOrBeyond]).toEqual(['reply', 'request', 6]);
-    expect(answered.why!.factors.find((f) => f.id === 'roster')!.level).toBe('short');
+    expect(answered.why!.factors.find((f) => f.id === 'roster')!.level).toBe('near');
     expect(drawOf(an, an.player, AGENT, 1, 'interest')).toBeLessThan(answered.why!.chance!);
     // By the title's shape, his office however the build names it (`titleShape`).
     const asked = G.lines.find((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && titleShape(x[2] ?? '', { name: AGENT.name, agency: agencyOf(AGENT).name }) === 'His Office Asked For More'; })!;
-    expect(asked).toContain(`${AGENT.name}’s office at Halberd Talent has asked for a reel by May 26, 2030.`);
+    expect(asked).toContain(`${AGENT.name}’s office at Halberd Talent has asked for a reel by December 27, 2029.`);
     expect(asked).not.toMatch(/Fictional:/);
     expect(breaches(an.universe, an.now)).toEqual([]);
   });

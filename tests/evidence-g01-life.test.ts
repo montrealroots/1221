@@ -256,8 +256,12 @@ describe('life.sleep', () => {
     // Up from the night at 7:30 AM, the suggestion is a nap's (from 2026-10-20, brief 19's D3): until then it was a night
     // cut short by the Gym, "“Gym” is in 2 hours. Getting up and there takes an hour and a half, so there isn’t time for a
     // full night.", at an hour the night was already behind. The Gym is still named beside it.
-    expect(text).toContain(`You’ve already slept since midnight, and with your energy at ${Math.round(sim.player.wellbeing.energy)} you don’t need more sleep yet. A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.`);
-    expect(text).toContain('Your next commitment is in 2 hours.');
+    // Until 2026-10-21 it went on "A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.":
+    // a sleep after the night adds no short night's debt since (brief 20's D3, `applySleep`).
+    expect(text).toContain(`You’ve already slept since midnight, and with your energy at ${Math.round(sim.player.wellbeing.energy)} you don’t need more sleep yet.`);
+    expect(text).not.toContain('adds to the sleep you owe');
+    // The night before the Gym is behind her, so the line under the next commitment says nothing of a bedtime (brief 20).
+    expect(text).toContain('Your next commitment is in 2 hours. You’d sleep through');
     expect(text).toContain('You’d Wake At 3:30 PM, August 24, 2026');
     expect(text).toContain('You’d sleep through one commitment: Gym — 9:30 AM');
     buttons.find((b) => b.text === 'Sleep 8 Hours')!.onClick!();

@@ -12,8 +12,9 @@
  *   fitness is 0.6 × (0.4 + 0.8 × readiness/100) at the readiness its hour leaves, 0.6629 against 0.5231. Profile's
  *   Current Condition is rendered at each.
  * - weather/trainingAt: on New Haven's days the clock reaches, a dry hour under freezing (Saturday 9 January 2027,
- *   −2 °C) and a humid afternoon under 32 °C whose heat index is over it (Thursday 27 August 2026, 30 °C at 73%,
- *   35.8 °C as it feels by the National Weather Service's regression, worked here) are Work Outs indoors: the menu
+ *   −2 °C) and a humid afternoon under 32 °C whose heat index is over it (Thursday 27 August 2026, 29 °C at 73%,
+ *   33.3 °C as it feels by the National Weather Service's regression, worked here; 30 °C and 35.8 °C until
+ *   2026-10-21, when brief 20 had the hours worked out from the day's unrounded high and low) are Work Outs indoors: the menu
  *   says so, and the hour builds what indoors builds, burns at MET 3.5 and rolls a gym's chance; a mild dry hour is a
  *   run, a tenth more, MET 9.3 and a run's chance.
  * - seasons/flu: a health week on Monday 2 November 2026 draws an unseen flu by the clock: five days of it, 25
@@ -411,9 +412,10 @@ describe('weather/trainingAt', () => {
     // An hour at MET 3.5 less the sedentary 1.4 a kilogram (2024 Adult Compendium), and a gym's 0.62 injuries a thousand hours.
     expect(cold.kcal).toBeCloseTo(2.1 * cold.kg, 6);
     expect(cold.rolls).toEqual([{ source: 'gym', chance: 1 - Math.exp(-0.62 / 1000) }]);
-    // The control: Monday 24 August's first hour, 22 °C and overcast to 8:30 AM, is a run: a tenth more, MET 9.3, a run's 7.7.
+    // The control: Monday 24 August's first hour, 21 °C and overcast to 8:30 AM (22 °C until 2026-10-21, from the day's
+    // high and low rounded), is a run: a tenth more, MET 9.3, a run's 7.7.
     const mild = workOutAt(Date.UTC(2026, 7, 24, 11, 30));
-    expect(mild.hour.temperatureC).toBe(22);
+    expect(mild.hour.temperatureC).toBe(21);
     expect(mild.hour.wetNow).toBe(false);
     expect(mild.line.says).toContain('A run in fine weather');
     expect(mild.source).toBe('workout:run');
@@ -422,14 +424,15 @@ describe('weather/trainingAt', () => {
     expect(mild.rolls).toEqual([{ source: 'run', chance: 1 - Math.exp(-7.7 / 1000) }]);
   });
 
-  it('PLAYER JOURNEY: a humid afternoon under 32 °C that feels over it is indoors: Thursday 27 August 2026, 30 °C at 73% to 1:30 PM', () => {
+  it('PLAYER JOURNEY: a humid afternoon under 32 °C that feels over it is indoors: Thursday 27 August 2026, 29 °C at 73% to 1:30 PM', () => {
     const hot = workOutAt(Date.UTC(2026, 7, 27, 16, 30)); // 12:30 PM EDT
-    expect(hot.hour.temperatureC).toBe(30);
+    expect(hot.hour.temperatureC).toBe(29);
     expect(hot.hour.humidity).toBe(73);
     expect(hot.hour.wetNow).toBe(false);
     expect(hot.hour.condition).toBe('Overcast');
-    // The air at 30 °C is under the 32 °C line; as it feels, by the NWS's regression, 35.8 °C, over it.
-    expect(nwsHeatIndexC(30, 73)).toBeCloseTo(35.78, 2);
+    // The air at 29 °C is under the 32 °C line; as it feels, by the NWS's regression, 33.3 °C, over it. Until 2026-10-21
+    // the hour read 30 °C, 35.8 °C as it felt, worked out from the day's high and low rounded to whole degrees.
+    expect(nwsHeatIndexC(29, 73)).toBeCloseTo(33.30, 2);
     expect(hot.line.says).toContain('Indoors, since the weather’s no good for a run');
     expect(hot.source).toBe('workout');
     expect(hot.built).toBeCloseTo(BUILT_AT_90, 9);

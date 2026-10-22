@@ -108,7 +108,8 @@ describe('the places', () => {
     expect(la.fahrenheit).toBe(true);
     expect(london.fahrenheit).toBe(false);
     expect(la.high).toBeGreaterThan(la.highC); // 25°C reads as 77°F
-    expect(london.high).toBe(london.highC);
+    // `highC` is the unrounded figure (from 2026-10-21, brief 20), and the high shown is it rounded once.
+    expect(london.high).toBe(Math.round(london.highC));
   });
 
   it('fall back on latitude for a place the table does not name', () => {
@@ -315,9 +316,13 @@ describe('the hours', () => {
     const sim = quickSave();
     const zone = CITIES.require(HOME).timeZone;
     const day = weatherOn(sim, CITIES.require(HOME), sim.now);
+    // Within the day's own high and low, as each is shown, with nothing to spare (from 2026-10-21, brief 20): until then
+    // a degree either side was allowed, which the hours, worked out from the rounded Celsius, used (b20-life-looks).
     for (const hour of hoursOn(sim, HOME, startOfDay(sim.now, zone))) {
-      expect(hour.temperatureC).toBeGreaterThanOrEqual(day.lowC - 1);
-      expect(hour.temperatureC).toBeLessThanOrEqual(day.highC + 1);
+      expect(hour.temperatureC).toBeGreaterThanOrEqual(Math.round(day.lowC));
+      expect(hour.temperatureC).toBeLessThanOrEqual(Math.round(day.highC));
+      expect(hour.temperature).toBeGreaterThanOrEqual(day.low);
+      expect(hour.temperature).toBeLessThanOrEqual(day.high);
       expect(hour.dateKey).toBe(day.dateKey);
     }
   });

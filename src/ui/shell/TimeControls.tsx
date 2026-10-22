@@ -12,7 +12,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Modal, WhyNot, dialogOpen } from '@/ui/components/primitives';
 import {
   suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, occupiedAt, lookAfterOptions, labelFor, type LookAfter,
-  LONGEST_NIGHT, SHORTEST_SLEEP,
+  LONGEST_NIGHT, SHORTEST_SLEEP, fullNightBefore, fullNightWords,
 } from '@/engine/systems/life';
 import { skipTargets, type SkipTarget } from '@/engine/world/calendar';
 import { ADVANCE_HOURS, carryOnTo, nextAtHour, nextMondayAt, refusalOf, stopChoices, type Stop, type StopChoice } from '@/engine/world/clock';
@@ -247,6 +247,9 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
   useHeld('sleep');
   const suggestion = useWorld((s) => suggestedSleep(s));
   const untilNext = useWorld((s) => hoursUntilNextCommitment(s));
+  // When a full night before it starts (`fullNightBefore`, from 2026-10-21, brief 20's D3): until then the dialog said
+  // only what a sleep from now would be, and at eleven before a seven o'clock call two hours away, that there was no time.
+  const fullNight = useWorld((s) => { const n = fullNightBefore(s); return n && fullNightWords(s, n); });
   const [hours, setHours] = useState(suggestion.hours);
 
   const wakeAt = sim.now + hours * MS_HOUR;
@@ -305,7 +308,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           have said "in less than a minute". */}
       {untilNext !== undefined && (
         <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDurationWords(untilNext * MS_HOUR)}.`}
+          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDurationWords(untilNext * MS_HOUR)}.${fullNight ? ` ${fullNight}` : ''}`}
         </div>
       )}
 

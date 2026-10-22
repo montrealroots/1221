@@ -82,7 +82,7 @@ import { trainingRefusal } from './injury';
 import { SPENT, startRefusal } from './life';
 import { SELF_TAPE, practiceGenres } from './engagement';
 import {
-  CALL_KIND, classPeriod, conditionAt, countWords, coursesFor, focusAt, keyOf, offSick, ordinary, recessStart, schoolEnded, setStanding,
+  CALL_KIND, ESTIMATE, classPeriod, conditionAt, countWords, coursesFor, focusAt, keyOf, offSick, ordinary, recessStart, schoolEnded, setStanding,
   termOf, termStart,
 } from './school';
 import { f1Of, usWorkAuthorized } from './permission';
@@ -1392,6 +1392,12 @@ export function registerProJobs(sim: Simulation): void {
         e.creditId = c.id;
       }
     }
+    // What the day's work takes out of the body, after it's judged, on top of its waking hours: a School rehearsal call's
+    // (`ESTIMATE.energy.rehearsal`, SLATE's estimate), as the Actor Showcase's rehearsals and its performance take
+    // (`systems/proshowcase.ts`). From 2026-10-21 (the owner's brief 20, D3, by the life area): until then a work day
+    // took nothing but its waking hours, so eleven hours on set cost less than a six-hour School rehearsal call, which
+    // takes these eight on top of its own.
+    person.wellbeing.energy = clamp(person.wellbeing.energy - ESTIMATE.energy.rehearsal, 0, 100);
     if (e.log.filter((l) => l.status === 'worked').length === 1) noteEvent(s, e, { kind: 'worked', key: 'first', words: `Your first day as ${t.role.part} in ${t.project}.` });
     if (i === e.days.length - 1 && e.status === 'working') finish(s, person, e, t);
   });

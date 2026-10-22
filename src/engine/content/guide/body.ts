@@ -186,7 +186,7 @@ export const BODY: readonly GuideEntry[] = [
       'Press Sleep in the top bar.',
       'Read the suggestion at the top: how many hours it suggests, and why.',
       'Set Hours with the slider, in half hours. You’d Wake At, beside Now, changes with it.',
-      'Read the warnings under it: your next commitment, “This would count as tonight’s sleep.” when it would, and any commitments you’d sleep through.',
+      'Read the warnings under it: your next commitment and, within the day, when a full night before it starts, “This would count as tonight’s sleep.” when it would, and any commitments you’d sleep through.',
       'Press Sleep and the hours, such as Sleep 8 Hours, or Sleep 1 Hour at one hour, or Not Yet to close it and leave the clock where it was.',
     ],
     needs: [
@@ -229,7 +229,7 @@ export const BODY: readonly GuideEntry[] = [
       'Sleep is gray while you’re in the middle of a commitment you went to, and it says where you are and until when.',
     ],
     mistakes: [
-      'Taking the suggestion before an early call can mean a short night. It keeps an hour to get up and the trip there, and a sleep under six hours adds sleep debt. Go to bed earlier instead.',
+      'Taking the suggestion at eleven before an early call can mean a short night. It keeps an hour to get up and the trip there, and a night under six hours adds sleep debt. Be asleep by the time Home’s Calendar and the Sleep dialog give for a full night instead.',
       'Sleeping through a class because the hours ran over it. The dialog lists what you’d sleep through, so shorten the hours until the list is empty.',
       'A nap under six hours that ends in the small hours, before you’ve slept that night, counts as the whole night, and you’re up from when it ends.',
     ],

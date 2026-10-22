@@ -6,1013 +6,1582 @@
    "kind": "command",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "CalendarWorkspace.tsx:354 (callOff’s run('calendar.cancel'), pressed by Call It Off at :367). Until 2026-10-13 this said :352. | guide: Your Own Plans | CalendarWorkspace.tsx",
-   "prerequisites": "A plan passes checkPlan (a title, a start, a length from half an hour to all day, in the town you’re in); calling off only before it starts, skipping only once it’s due | refused where: —",
-   "reads": "item kind/status/at",
-   "changes": "item canceled",
-   "consumers": [],
-   "laterText": "no longer halts clock or clashes look_after | occupiedAt (systems/life.ts), which refuses sleep, looking after, coursework, play reading and production work while a plan runs; the clock’s halt at a due item (advanceTo and advanceBy with stopOnPlayerRequired, core/simulation.ts), held as standingAt (app/game-context.tsx) and put on screen with Skip It or Go (ui/shell/TimeControls.tsx); the live clock’s rate, SPEED_MULTIPLIER (app/game-context.tsx)",
-   "experienced": "CalendarWorkspace | looks: day, entry, plans, stretch",
-   "saveLoad": "status canceled | universe.scheduled (the plan’s item and status), universe.preferences.timeSpeed",
+   "seeded": false,
+   "where": "Calendar screen: a plan of your own opened from its day or Next Thirty Days, Call It Off (CalendarWorkspace.tsx, EntryDetail’s callOff, run('calendar.cancel')).",
+   "prerequisites": "A plan you made yourself (life.commitment), still pending, whose start is still ahead. Refused in words: not on your calendar; only a plan you made yourself; already over (kept, missed or called off); already started.",
+   "reads": "The timeline item: its kind, status and start against the clock.",
+   "changes": "The plan is cancelled on the timeline (status cancelled, resolvedAt now).",
+   "consumers": [
+    {
+     "what": "the clock’s advance takes only pending items, so it no longer stops there",
+     "at": "src/engine/core/simulation.ts:438"
+    },
+    {
+     "what": "Look After Yourself’s clash reads what’s on the timeline in the hour, so the hour is free again",
+     "at": "src/engine/systems/life.ts:655"
+    },
+    {
+     "what": "an hour of practice’s commitmentWithin, the same",
+     "at": "src/engine/systems/life.ts:582"
+    },
+    {
+     "what": "Your Own Plans counts it Called Off",
+     "at": "src/ui/looks/plans.tsx:162"
+    }
+   ],
+   "experienced": "At once: it leaves the month and Next Thirty Days. Later: the clock runs past its hour without stopping, and its hours take a shower, a meal or practice again; Your Own Plans counts it Called Off.",
+   "saveLoad": "The item’s status and resolvedAt are in universe.scheduled; a reload keeps it cancelled and the clock passes it (evidence-g02-life, called off across a reload).",
    "evidence": {
     "tests": [
-     "tests/evidence-g02-life.test.ts"
+     "tests/evidence-g02-life.test.ts",
+     "tests/plans.test.ts",
+     "tests/b20-life-looks.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "evidence-g02-life: called off, the clock runs past 7:40 without stopping, where a twin that kept it stops there"
+    ],
+    "mutations": [
+     "B20-LIFE-19"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "calendar.cancel"
+   "prior": "calendar.cancel",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "calendar.schedule",
    "kind": "command",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "CalendarWorkspace.tsx:271 (the plan form’s run('calendar.schedule'), pressed by Put It On at :285). Until 2026-10-13 this said :269. | guide: Your Own Plans | CalendarWorkspace.tsx",
-   "prerequisites": "A plan passes checkPlan (a title, a start, a length from half an hour to all day, in the town you’re in); calling off only before it starts, skipping only once it’s due | refused where: —",
-   "reads": "checkPlan (title, time, length, location)",
-   "changes": "timeline item life.commitment requiresPlayer",
-   "consumers": [],
-   "laterText": "life.commitment | Simulation halts at requiresPlayer; life.ts:lookAfterRefusal clash; life.ts:occupiedAt blocks sleep and Look After during a kept plan | occupiedAt (systems/life.ts), which refuses sleep, looking after, coursework, play reading and production work while a plan runs; the clock’s halt at a due item (advanceTo and advanceBy with stopOnPlayerRequired, core/simulation.ts), held as standingAt (app/game-context.tsx) and put on screen with Skip It or Go (ui/shell/TimeControls.tsx); the live clock’s rate, SPEED_MULTIPLIER (app/game-context.tsx)",
-   "experienced": "CalendarWorkspace (its form rendered and Put It On pressed, tests/evidence-g01-life.test.ts); checkConflicts flag; the Sleep dialog’s suggestion (suggestedSleep), rendered over a plan calendar.schedule made (tests/evidence-g01-life.test.ts). Until 2026-10-13 this said the suggestion was tested only on an item put on the timeline by hand (simulation.test.ts). | looks: day, entry, plans, stretch",
-   "saveLoad": "scheduled item | universe.scheduled (the plan’s item and status), universe.preferences.timeSpeed",
+   "seeded": false,
+   "where": "Calendar screen: a day, Put Something On It, the plan form’s Put It On (CalendarWorkspace.tsx PlanForm’s put, run('calendar.schedule')).",
+   "prerequisites": "checkPlan: a name, a start not past and at most five years ahead, a length from five minutes to a day, a personal category and a place on the map. The form offers half-hour starts and the lengths in PLAN_LENGTHS; a refusal is said beside the field.",
+   "reads": "The clock, the player’s town (the plan’s place when none is given).",
+   "changes": "A life.commitment item on the timeline: requiresPlayer, its length, its town.",
+   "consumers": [
+    {
+     "what": "the clock stops at it, for every way of moving it from a screen",
+     "at": "src/engine/core/simulation.ts:441"
+    },
+    {
+     "what": "Look After Yourself refuses what would run into it",
+     "at": "src/engine/systems/life.ts:655"
+    },
+    {
+     "what": "practice refuses an hour that would run into it",
+     "at": "src/engine/systems/life.ts:582"
+    },
+    {
+     "what": "a Sleep over it names it and misses it",
+     "at": "src/engine/systems/life.ts:396"
+    },
+    {
+     "what": "the calendar flags a clash with anything else wanting the player",
+     "at": "src/engine/world/calendar.ts:129"
+    },
+    {
+     "what": "at its start, another commitment kept and still running settles the clash (from 2026-10-21)",
+     "at": "src/engine/world/plans.ts:148"
+    }
+   ],
+   "experienced": "At once on the month, Next Thirty Days and Home. Later: the clock stops at it and asks Go or Skip It; before it, its hour holds; a clash is marked Clash, and at its start the one the clock reached first is kept and this one missed with a notice.",
+   "saveLoad": "A timeline item in universe.scheduled; a reload keeps it and its handler (plans.test: comes back off a reload with its handler still attached).",
    "evidence": {
     "tests": [
-     "tests/evidence-g01-life.test.ts"
+     "tests/evidence-g01-life.test.ts",
+     "tests/b20-life-time.test.ts",
+     "tests/b20-life-bite.test.ts",
+     "tests/plans.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: a plan at 3 PM refuses a workout, a meal and practice at 2:30 in its words and takes a shower; at 4:30 the workout is taken"
+    ],
+    "mutations": [
+     "B20-LIFE-4",
+     "B20-LIFE-9",
+     "B20-LIFE-10"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found. Found and repaired: two plans at once, or one inside another kept commitment, were both kept and both said Completed (b20-life-time).",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "calendar.schedule"
+   "prior": "calendar.schedule",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "calendar.skip",
    "kind": "command",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "TimeControls.tsx:119 (DueNow’s onStay, run('calendar.skip')). Until 2026-10-13 this said :99. | guide: What’s Coming | TimeControls.tsx",
-   "prerequisites": "A plan passes checkPlan (a title, a start, a length from half an hour to all day, in the town you’re in); calling off only before it starts, skipping only once it’s due | refused where: —",
-   "reads": "item pending and at<=now",
-   "changes": "status missed, resolvedAt, notice | status; resolvedAt",
-   "consumers": [],
-   "laterText": "life.ts:lookAfterRefusal’s clash with a plan still due (timeline.between), which passes over a missed one | occupiedAt (systems/life.ts), which refuses sleep, looking after, coursework, play reading and production work while a plan runs; the clock’s halt at a due item (advanceTo and advanceBy with stopOnPlayerRequired, core/simulation.ts), held as standingAt (app/game-context.tsx) and put on screen with Skip It or Go (ui/shell/TimeControls.tsx); the live clock’s rate, SPEED_MULTIPLIER (app/game-context.tsx)",
-   "experienced": "'You Didn't Go To ...' notice | looks: day, entry, plans, stretch",
-   "saveLoad": "status missed | universe.scheduled (the plan’s item and status), universe.preferences.timeSpeed",
+   "seeded": false,
+   "where": "The stop at a plan of your own (TimeControls.tsx DueNow, its Skip It choice, `stopChoices` from world/clock.ts:105, run('calendar.skip')).",
+   "prerequisites": "A plan of your own, pending, that the clock has reached. Refused in words: not on your calendar, not a plan of yours, already over, not started yet (Call It Off instead).",
+   "reads": "The item’s kind, status and start against the clock.",
+   "changes": "The plan is missed (status missed, resolvedAt now); a notice “You Didn’t Go To …”; the jump carries on to where it was headed (carryOnTo).",
+   "consumers": [
+    {
+     "what": "Your Own Plans counts it Gone By",
+     "at": "src/ui/looks/plans.tsx:163"
+    },
+    {
+     "what": "no longer pending, it holds no hour against Look After Yourself",
+     "at": "src/engine/systems/life.ts:655"
+    },
+    {
+     "what": "the jump carries on from the stop",
+     "at": "src/engine/world/clock.ts:105"
+    }
+   ],
+   "experienced": "At once: the notice in What Needs You; the clock carries on to the next stop or where it was going. Later: the plan reads Missed on its entry and Gone By in Your Own Plans.",
+   "saveLoad": "The item’s status in universe.scheduled and the notice in universe.notifications; a reload keeps both, and Skip It again is refused (coverage-gaps-life, across a reload).",
    "evidence": {
     "tests": [
      "tests/coverage-gaps-life.test.ts",
-     "tests/evidence-g04-life.test.ts"
+     "tests/evidence-g04-life.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/time-controls.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-20"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "calendar.skip"
+   "prior": "calendar.skip",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.look_after",
    "kind": "command",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "The Look After Yourself menu (TimeControls.tsx:560, LookAfterMenu’s act, run('life.look_after', { action })); the command itself, apart from its five actions’ rows (life.look_after:eat and the rest) | guide: Looking After Yourself | TimeControls.tsx",
-   "prerequisites": "Not refused by lookAfterRefusal: not at a commitment (eating excepted), not too full, too clean or too spent (FULL 90, CLEAN 95, SPENT 25); a meal that spend would pay with nothing owed, refused in its words (spendRefusal, from 2026-10-12: cash in hand counts only where spend spends it) | refused where: That isn’t something you can do for yourself here.; The payment didn’t go through. (also lookAfterRefusal)",
-   "reads": "the action, one of LOOKING_AFTER’s five (life.ts:438-441); alreadyApplied (an actionId sent twice); lookAfterRefusal (life.ts:610), each action’s own; a meal’s price (costFor)",
-   "changes": "a meal paid before its hour (spend; “The payment didn’t go through.” where it fails, reached by no play since lookAfterRefusal asks spendRefusal at the same moment, life.ts:446-461); the action’s minutes lived and charged as waking; applyLookingAfter; a workout’s fitness on the development history, its exertion and its injury draw; the action id marked; what each dial moved returned as changed, with the hour it was done",
-   "consumers": [],
-   "laterText": "each action’s readers, in its row; the menu’s toast (done at its hour) | readiness (systems/life.ts); lookAfterOptions (systems/life.ts); mayHurt and the injury record (systems/injury.ts)",
-   "experienced": "The menu’s toast; each refusal in its words | looks: dial, readiness, trait",
-   "saveLoad": "the dials, the ledger, the development history, the action ids applied | Person.wellbeing (hunger, hygiene, stress, mood, energy, fitness), body exertion, injuries, the meal’s ledger postings",
+   "seeded": false,
+   "where": "The top bar’s Look After Yourself menu (TimeControls.tsx LookAfterMenu’s act, run('life.look_after', { action })): Eat A Meal, Order In, Shower, Work Out, Unwind, in the order lookAfterOptions ranks them, each with its time, cost, why and the dials it moves.",
+   "prerequisites": "lookAfterRefusal, which the menu and the command both ask: not in hospital; not at a commitment (a meal fits in one); not full (a meal), not clean (a shower), not spent under 25 energy, hurt or with the flu (a workout); the meal paid as spend pays it; nothing wanting the player inside its hour. The same actionId twice is lived once.",
+   "reads": "The dials, the weather as a workout’s hour ends (trainingAt), the day’s workouts so far, the money and How You Pay, an injury, the flu, the calendar.",
+   "changes": "The hour passes as waking time; then the dials the action moves (applyLookingAfter); a meal is paid as it’s ordered; a workout builds fitness (stamina) and is recorded, burns its MET on the body’s tally, and may hurt at its rate.",
+   "consumers": [
+    {
+     "what": "readiness reads each dial it moves",
+     "at": "src/engine/systems/life.ts:285"
+    },
+    {
+     "what": "a class, a lab or a rehearsal builds by readiness (focusAt)",
+     "at": "src/engine/systems/school.ts:950"
+    },
+    {
+     "what": "judged work reads readiness as its condition (conditionAt)",
+     "at": "src/engine/systems/school.ts:967"
+    },
+    {
+     "what": "the meal is paid through spend, the way How You Pay pays the day",
+     "at": "src/engine/systems/life.ts:478"
+    },
+    {
+     "what": "a workout’s fitness is Stamina",
+     "at": "src/engine/systems/attributes.ts:150"
+    },
+    {
+     "what": "a workout may hurt, at a run’s or a gym’s rate",
+     "at": "src/engine/systems/life.ts:496"
+    }
+   ],
+   "experienced": "At once: the toast, the dials and readiness on How You Are, the money on the account. Later: the class or the tape that reads readiness; Stamina on the Player Profile; the scale at midnight; an injury’s notice and its care.",
+   "saveLoad": "The dials, the payment, the development history and the body’s tally are in the save; the same actionId after a reload is lived once (fitness.test).",
    "evidence": {
     "tests": [
-     "tests/remaining-09-coverage.test.ts",
-     "tests/remaining-09-coverage-guard.test.ts",
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g06-life.test.ts",
+     "tests/evidence-g01-life.test.ts",
      "tests/fitness.test.ts",
-     "tests/evidence-g06-life.test.ts"
+     "tests/looking-after.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: a meal, a shower and an hour unwinding against a twin who let the same time pass; a workout in a run hour against one indoors"
+    ],
+    "mutations": [
+     "B20-LIFE-6",
+     "B20-LIFE-7",
+     "B20-LIFE-25"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "life.look_after"
+   "prior": "life.look_after",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.sleep",
    "kind": "command",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "TimeControls.tsx:164 SleepDialog (its button’s run('life.sleep') at :178; opened by the bar’s Sleep at :81). Until 2026-10-13 this said :157. | guide: Sleep | TimeControls.tsx",
-   "prerequisites": "Not at a commitment now or at the bedtime (occupiedAt); half an hour to sixteen hours; in a guided life, the guide’s chapter on sleep read | refused where: Say how long to sleep.; Say when to sleep.; You can’t go to sleep in the past.; A night can be planned a day ahead at most.; and 1 more",
-   "reads": "occupiedAt (done requiresPlayer items), stress/sleepQuality knob/hour (nightParts), sleepDebt, condition, morale, fitness, age",
-   "changes": "lastSleptAt, awakeSince, wokeWithDebt; applySleep: energy, sleepDebt, stress, condition, morale, nourishment; clock advanced | lastSleptAt; awakeSince; wokeWithDebt",
-   "consumers": [],
-   "laterText": "health.ts:presentForCare (an appointment or a therapy session missed while asleep: appointments.ts:145, therapy.ts:129); school.ts’s own present (classes, shifts and calls missed asleep, school.ts:1473); the PLAN_KIND handler (asleep->missed, quietly, plans.ts:129); the ‘You Slept Through N Commitments’ notice; life.ts:sleepAlone (no second night); readiness->school.ts:focusOf. Until 2026-10-13 this said health.ts:present for an appointment missed while asleep; appointments have read presentForCare since 2026-10-10. | readiness (systems/life.ts); sleepQuality (systems/life.ts); present, for classes, shifts and calls (systems/school.ts); presence at orientation, partner rehearsals and class moments (systems/coursework.ts, systems/classmates.ts); the waking charge (life.waking)",
-   "experienced": "TimeControls.tsx SleepDialog (suggestedSleep, sleepStandsForTheNight); 'You Slept Through N Commitments' notice | looks: dial, readiness, person",
-   "saveLoad": "wellbeing dials, clock | Person.lastSleptAt, awakeSince, wokeWithDebt, wellbeing",
+   "seeded": false,
+   "where": "The top bar’s Sleep (TimeControls.tsx SleepDialog; its button runs life.sleep with the hours on the slider, suggested by suggestedSleep). From 2026-10-21 the dialog says beside the next commitment when a full night before it starts (fullNightBefore), as Home’s Calendar and the Day look for today do.",
+   "prerequisites": "Hours that are a number (held from half an hour to sixteen), a start now or within the day ahead, and not in the middle of a commitment you went to (Sleep is gray, and says until when).",
+   "reads": "Stress, how deeply the person sleeps, the hour, the sleep debt, age, condition and fitness, morale; whether the night of the day it ends in is already on record (lastSleptAt).",
+   "changes": "The clock moves to the wake; the night is paid (applySleep): energy, stress, sleep debt, condition, morale, nourishment. Commitments in its hours are missed and named in a notice at the wake. A sleep after the night is on record adds no short night’s debt (from 2026-10-21).",
+   "consumers": [
+    {
+     "what": "readiness reads every dial the night moves",
+     "at": "src/engine/systems/life.ts:285"
+    },
+    {
+     "what": "the short night’s debt, counted for the night only",
+     "at": "src/engine/systems/life.ts:945"
+    },
+    {
+     "what": "the night nobody chose doesn’t come on top of a chosen one",
+     "at": "src/engine/systems/life.ts:1289"
+    },
+    {
+     "what": "a class finds the student asleep (present)",
+     "at": "src/engine/systems/school.ts:1573"
+    },
+    {
+     "what": "a work day finds the actor asleep (there)",
+     "at": "src/engine/systems/projobs.ts:1035"
+    },
+    {
+     "what": "a plan finds them asleep",
+     "at": "src/engine/world/plans.ts:138"
+    },
+    {
+     "what": "classes build by the readiness the night left (focusAt)",
+     "at": "src/engine/systems/school.ts:3511"
+    }
+   ],
+   "experienced": "At once: the clock at the wake, the dials on How You Are, the notice naming what was slept through. Later: the classes and the judged work of the day, read through readiness; the next night’s quality and owing; sleep debt carried.",
+   "saveLoad": "The dials, lastSleptAt, awakeSince, wokeWithDebt and the items’ statuses are in the save; a reload doesn’t sleep or miss anything again (evidence-g01-life across a reload).",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/b20-life-fatigue.test.ts",
+     "tests/b20-life-screens.test.ts",
      "tests/evidence-g01-life.test.ts",
-     "tests/evidence-g04-life.test.ts",
-     "tests/life-fixes.test.ts"
+     "tests/sleep-commitments.test.ts",
+     "tests/simulation.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-life-bite: eight hours against six and three the night before: energy, debt, readiness and a self-tape judged at eight",
+     "b20-life-fatigue: half an hour at four after a night of five against a twin who stayed up"
+    ],
+    "mutations": [
+     "B20-LIFE-1",
+     "B20-LIFE-2",
+     "B20-LIFE-5",
+     "B20-LIFE-21",
+     "B20-LIFE-32"
+    ],
+    "journeys": [
+     "b20-life-fatigue: a shoot week, to bed at eleven, at the named bedtime, and as brief 19’s scripted player"
+    ]
    },
-   "missing": "",
+   "missing": "Found and repaired (D3): a sleep after the night was charged the short night’s debt again, 7.4 hours for the half hour the dialog suggested at four; nothing said when to go to bed for an early call until it was too late. The Sleep dialog still sleeps from now: a bedtime later this evening can be planned only by opening it then.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "life.sleep"
+   "prior": "life.sleep",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "injury.comp",
    "kind": "scheduled",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "mayHurt with work arg",
-   "prerequisites": "Not recorded",
-   "reads": "injury.atWork",
-   "changes": "workers' comp posting",
-   "consumers": [],
-   "laterText": "injury.comp | scheduled by systems/injury.ts | ledger",
-   "experienced": "injury notice text",
-   "saveLoad": "ledger",
+   "seeded": false,
+   "where": "The clock: a week after an injury at work that keeps the player off work (mayHurt with work, e.g. a work-study shift or the Summer Cabaret), then each week to the day it ends.",
+   "prerequisites": "An injury at work with offWorkUntil; the state’s rules (New York, Connecticut, California) for its share, floor, ceiling and waiting days.",
+   "reads": "The injury’s state and week’s wage, the days off, the days already paid, the save’s currency.",
+   "changes": "A posting of the week’s workers’ compensation to the payee account; the days paid; the next week’s item.",
+   "consumers": [
+    {
+     "what": "compWeek pays the week",
+     "at": "src/engine/systems/injury.ts:231"
+    },
+    {
+     "what": "posted to the account as Workers’ compensation, income the return reads",
+     "at": "src/engine/systems/injury.ts:216"
+    }
+   ],
+   "experienced": "Each week while off: the money on the account and its line in the transactions.",
+   "saveLoad": "The injury’s atWork.paidDays and the posting are in the save; a reload pays no week twice.",
    "evidence": {
     "tests": [
-     "tests/evidence2-b02.test.ts",
+     "tests/life-fixes.test.ts",
+     "tests/injury.test.ts",
      "tests/evidence-g05-life.test.ts",
-     "tests/evidence-g07-life.test.ts",
-     "tests/defects-g8-13.test.ts",
-     "tests/life-fixes.test.ts"
+     "tests/evidence-g07-life.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-24"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "injury.comp"
+   "prior": "injury.comp",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.birthday",
    "kind": "scheduled",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "birthdays.ts armBirthdays",
-   "prerequisites": "Not recorded",
-   "reads": "birthInstant, condition",
-   "changes": "notice, next birthday, END drawn, endBand",
-   "consumers": [],
-   "laterText": "scheduled by systems/birthdays.ts | mortality END_KIND",
-   "experienced": "Calendar 'Your Birthday', notice",
-   "saveLoad": "scheduled",
+   "seeded": false,
+   "where": "The clock: at nine in the morning of the birthday where the player lives (armBirthdays, then each birthday puts on the next); on the calendar as Your Birthday.",
+   "prerequisites": "A player; born on 29 February, the 28th in other years.",
+   "reads": "The birth date, the town’s zone, the body’s condition at the birthday.",
+   "changes": "A notice “Happy Birthday: N”; the next birthday on the calendar; the year to it drawn for its end (decideStretch) and the body’s band kept.",
+   "consumers": [
+    {
+     "what": "the next birthday is put on",
+     "at": "src/engine/systems/birthdays.ts:95"
+    },
+    {
+     "what": "the year to it is drawn for its end",
+     "at": "src/engine/systems/birthdays.ts:51"
+    },
+    {
+     "what": "a life end drawn in it stops the clock there",
+     "at": "src/engine/systems/mortality.ts:121"
+    }
+   ],
+   "experienced": "The notice on the day; the age said on the Player Profile; the year’s end, if drawn, comes on its day, never shown before.",
+   "saveLoad": "The next birthday item and the drawn end are in universe.scheduled; the birthday comes once across a reload (evidence-g04-life).",
    "evidence": {
     "tests": [
-     "tests/evidence-g04-life.test.ts"
+     "tests/evidence-g04-life.test.ts",
+     "tests/mortality.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-18"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "life.birthday"
+   "prior": "life.birthday",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.commitment",
    "kind": "scheduled",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "calendar.schedule",
-   "prerequisites": "Not recorded",
-   "reads": "location, awakeSince, health.inHospitalUntil (from 2026-10-13, plans.ts:129)",
-   "changes": "done/missed, notice | status; resolvedAt",
-   "consumers": [],
-   "laterText": "life.commitment | scheduled by world/plans.ts | life.ts:occupiedAt",
-   "experienced": "Calendar, missed notice",
-   "saveLoad": "status",
+   "seeded": false,
+   "where": "The clock, at a plan of your own’s start (registerPlans in world/plans.ts); the stop’s Go answers it.",
+   "prerequisites": "A plan put on with calendar.schedule.",
+   "reads": "Where the player is against the plan’s town, whether they’re asleep or in hospital, and from 2026-10-21 whether they’re at another commitment they went to whose hours still run (occupiedAt).",
+   "changes": "Kept (done) with them there; missed quietly asleep or in hospital; missed with a notice when elsewhere, or (from 2026-10-21) when at another commitment.",
+   "consumers": [
+    {
+     "what": "its hours hold Sleep, Look After Yourself and practice while it runs (occupiedAt)",
+     "at": "src/engine/systems/life.ts:593"
+    },
+    {
+     "what": "a plan after it in its hours is settled as a clash",
+     "at": "src/engine/world/plans.ts:148"
+    },
+    {
+     "what": "Your Own Plans counts it Gone By when missed",
+     "at": "src/ui/looks/plans.tsx:163"
+    }
+   ],
+   "experienced": "At its hour: the stop, then its hours spent or the notice. Later: its entry’s status and Your Own Plans.",
+   "saveLoad": "The item’s status in universe.scheduled; plans written and opened again come due once each (evidence-g04-life).",
    "evidence": {
     "tests": [
      "tests/evidence-g04-life.test.ts",
+     "tests/b20-life-time.test.ts",
+     "tests/plans.test.ts",
      "tests/evidence-g01-life.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-time: two plans at eight and a third inside the first, against one after the first has ended"
+    ],
+    "mutations": [
+     "B20-LIFE-4"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "Found and repaired: a plan at the same hour as another, or inside another kept commitment, was kept too (D1, impossible scheduling).",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "life.commitment"
+   "prior": "life.commitment",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.day_rollover",
    "kind": "scheduled",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "index.ts armWorldClock",
-   "prerequisites": "Not recorded",
-   "reads": "all dials, body, money",
-   "changes": "settleTheBody, bodyDay, starvation END, night alone, groceries, hygiene floor 82, emits world.day_rollover (injury, end band) | lastSleptAt; awakeSince; wokeWithDebt",
-   "consumers": [],
-   "laterText": "life.day_rollover | scheduled by index.ts; systems/life.ts | injury.ts injury.day, birthdays.ts redrawIfChanged",
-   "experienced": "none direct",
-   "saveLoad": "dials, weight, ledger",
+   "seeded": false,
+   "where": "The clock, at each midnight where the player lives (armed by armWorldClock, then each rollover arms the next).",
+   "prerequisites": "A player.",
+   "reads": "Each person’s body and wellbeing, the day’s eating and exertion, the money for the day’s groceries, the night nobody chose.",
+   "changes": "Fitness drifts (held three days after a workout), condition toward what rest mends; the body’s weight by the day; starvation’s end; the night nobody chose where it’s owed; the day’s groceries bought and eaten, hygiene to at least 82; world.day_rollover for the bank’s, the card’s, the injury’s and the year’s end draws.",
+   "consumers": [
+    {
+     "what": "fitness and condition drift",
+     "at": "src/engine/systems/life.ts:1007"
+    },
+    {
+     "what": "the day on the scale",
+     "at": "src/engine/systems/life.ts:1010"
+    },
+    {
+     "what": "the day’s groceries bought, and nourishment up to the day’s",
+     "at": "src/engine/systems/life.ts:1079"
+    },
+    {
+     "what": "the morning’s wash",
+     "at": "src/engine/systems/life.ts:1084"
+    },
+    {
+     "what": "an injury weighs a day; everyday injury drawn",
+     "at": "src/engine/systems/injury.ts:223"
+    },
+    {
+     "what": "the year’s end redrawn when the body moves a band",
+     "at": "src/engine/systems/birthdays.ts:80"
+    },
+    {
+     "what": "the day’s money worry",
+     "at": "src/engine/systems/spending.ts:502"
+    }
+   ],
+   "experienced": "Each morning: the dials, the groceries on the account, the weight on the profile; notices the listeners send.",
+   "saveLoad": "The next rollover is a timeline item; its work is in the save; a midnight reached after a reload is applied once (evidence-g04-life).",
    "evidence": {
     "tests": [
      "tests/evidence-g04-life.test.ts",
-     "tests/defects-r3a-1.test.ts"
+     "tests/defects-r3a-1.test.ts",
+     "tests/b20-life-time.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-time: a month jumped in one move buys each midnight’s groceries once, as days moved one at a time do"
+    ],
+    "mutations": [
+     "B20-LIFE-11",
+     "B20-LIFE-26"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "life.day_rollover"
+   "prior": "life.day_rollover",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.end",
    "kind": "scheduled",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "mortality.ts decideStretch / starvedPastTheLimit",
-   "prerequisites": "Not recorded",
-   "reads": "person",
-   "changes": "meta.endedAt/endedAge",
-   "consumers": [],
-   "laterText": "scheduled by systems/mortality.ts | Simulation.advanceTo stops; ui/shell/LifeEnded",
-   "experienced": "LifeEnded screen",
-   "saveLoad": "meta",
+   "seeded": false,
+   "where": "The clock, at the end a birthday’s draw put on the calendar (a system item, never shown), or a minute after a midnight that finds the body starved past BMI 12.",
+   "prerequisites": "The player; drawn by the year’s chance (the 2024 life table, the country, the body’s frailty and weight), or starved.",
+   "reads": "The person, the day.",
+   "changes": "The life ends: meta.endedAt and endedAge, and a notice.",
+   "consumers": [
+    {
+     "what": "the clock moves no further",
+     "at": "src/engine/core/simulation.ts:405"
+    },
+    {
+     "what": "the save opens onto A Life, Ended",
+     "at": "src/ui/shell/GameShell.tsx:55"
+    }
+   ],
+   "experienced": "The game shows A Life, Ended with the life’s dates and what it came to; the save’s slot says how it ended.",
+   "saveLoad": "endedAt is kept; the save opens onto the ending and the clock stays there (evidence-g04-life).",
    "evidence": {
     "tests": [
      "tests/evidence-g04-life.test.ts",
-     "tests/evidence-g08-life.test.ts",
-     "tests/life-fixes.test.ts"
+     "tests/mortality.test.ts",
+     "tests/evidence-g08-life.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-22"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "life.end"
+   "prior": "life.end",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "world.tick",
    "kind": "scheduled",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "index.ts armWorldClock",
-   "prerequisites": "Not recorded",
-   "reads": "decisions, timeline",
-   "changes": "Closes a dated decision on the tick after its date (resolvedAt), and prunes: closed rows 180 days on, and the timeline’s done items after 400 days. Until 2026-10-14 it also dismissed an undated row after ninety days untouched and kept a closed row to a date still ahead, rules no played life reached. The owner had both go, and a save’s undated rows are dated on load (migrate).",
-   "consumers": [],
-   "laterText": "world.tick | scheduled by index.ts; world/world.ts | openDecisions",
-   "experienced": "Home; the decision look (ui/looks/attention.tsx), whose ninety-day words went on 2026-10-14",
-   "saveLoad": "decisions",
+   "seeded": false,
+   "where": "The clock, every two days (armed by armWorldClock).",
+   "prerequisites": "None.",
+   "reads": "Each decision’s date and whether it’s answered or dismissed; the timeline’s done items.",
+   "changes": "A question past its date is closed (resolvedAt); closed questions and old done items are pruned.",
+   "consumers": [
+    {
+     "what": "a question past its date is closed",
+     "at": "src/engine/world/world.ts:134"
+    },
+    {
+     "what": "What Needs You lists open questions only",
+     "at": "src/engine/world/world.ts:162"
+    },
+    {
+     "what": "done items past 400 days go",
+     "at": "src/engine/world/world.ts:140"
+    }
+   ],
+   "experienced": "A question whose day has passed leaves What Needs You at the next tick; the save stays bounded over a long life.",
+   "saveLoad": "The next tick is a timeline item; what it closed and pruned stays so after a reload (evidence-g04-life).",
    "evidence": {
     "tests": [
      "tests/evidence-g04-life.test.ts",
      "tests/decisions-2026-10-14.test.ts",
-     "tests/evidence2-b01.test.ts",
-     "tests/defects3-50-70.test.ts"
+     "tests/evidence2-b01.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-17"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "world.tick"
+   "prior": "world.tick",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.night_alone",
    "kind": "reactor",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "where": "The clock: at every stop of an advance (a passage reactor), for a jump of more than an hour through a night the player isn’t keeping them up in.",
+   "prerequisites": "Awake at the bedtime, no night on record since its midnight, before a sound sleeper would wake, and the clock sent more than an hour; a move of an hour or less is the player’s own, who keeps them up; and not at a commitment the player went to that runs past when a sound sleeper would be up, where none starts (from 2026-10-21).",
+   "reads": "awakeSince, lastSleptAt, nightEndsAt and nightOwedFrom, how far the clock was sent (advancing), stress and the sleep traits.",
+   "changes": "A night nobody chose, paid once in full when the clock is carried an hour into it: applySleep at 0.95 quality, energy never above 74 from it, stress at least 14; the day’s meals after it; asleep until a sound sleeper would wake.",
+   "consumers": [
+    {
+     "what": "the night is paid",
+     "at": "src/engine/systems/life.ts:1329"
+    },
+    {
+     "what": "no night starts at a commitment the player is at that runs past the night",
+     "at": "src/engine/systems/life.ts:1299"
+    },
+    {
+     "what": "a night alone tops out at 74 energy",
+     "at": "src/engine/systems/life.ts:1344"
+    },
+    {
+     "what": "a move of an hour or less is the player’s own",
+     "at": "src/engine/systems/life.ts:1257"
+    },
+    {
+     "what": "readiness reads what the night left",
+     "at": "src/engine/systems/life.ts:285"
+    }
+   ],
+   "experienced": "After a skip through the night: the morning’s dials; a poorer night than one chosen with Sleep.",
+   "saveLoad": "nightEndsAt and nightOwedFrom are kept, so a stop saved and opened carries the same night on (b20-life-time).",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/evidence-g08-life.test.ts",
+     "tests/simulation.test.ts",
+     "tests/b20-life-fatigue.test.ts"
+    ],
+    "comparisons": [
+     "b20-life-time: a week jumped in one move against the same week jumped to each next seven o’clock (the same save), and against hour moves with no Sleep (kept up)",
+     "b20-life-fatigue: a night not slept before a seven o’clock call against the twin in bed when the game says: the call under 60 and judged lower, and the day on set lived awake, its wrap under the rested twin’s (64.4 against 50.0 before the repair)"
+    ],
+    "mutations": [
+     "B20-LIFE-13",
+     "B20-LIFE-35"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found. A commitment that ends inside the night is lived inside it, as a stop in it is, which the comment over sleepAlone says it was made to do; how a long commitment in the small hours inside a night already paid reads wasn’t measured.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "life.waking",
    "kind": "reactor",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "seeded": false,
+   "where": "The clock: every stretch the clock crosses, a second of live play or a week skipped (a passage reactor).",
+   "prerequisites": "Awake (from awakeSince).",
+   "reads": "The stretch, the debt they woke with (wokeWithDebt), the dials and the personality’s stress and hygiene knobs.",
+   "changes": "Waking time charged: energy, nourishment and hygiene down; sleep debt up; stress cleared while there’s energy and climbing once empty; condition and morale for the hours hungry, grimy or overwrought.",
+   "consumers": [
+    {
+     "what": "the drain read at the debt they woke with",
+     "at": "src/engine/systems/life.ts:204"
+    },
+    {
+     "what": "readiness reads every dial it moves",
+     "at": "src/engine/systems/life.ts:285"
+    },
+    {
+     "what": "How You Are says it",
+     "at": "src/engine/systems/life.ts:321"
+    }
+   ],
+   "experienced": "As the clock runs: How You Are, the dials and readiness move by the hour.",
+   "saveLoad": "The dials and awakeSince/wokeWithDebt; an afternoon in minute steps and in one jump come to the same dials (b20-life-time).",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/wellbeing-bites.test.ts",
+     "tests/simulation.test.ts"
+    ],
+    "comparisons": [
+     "b20-life-time: an afternoon in one move against minute steps, to the millionth"
+    ],
+    "mutations": [
+     "B20-LIFE-14"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
-  },
-  {
-   "id": "life.sleep_started",
-   "kind": "event",
-   "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
-   "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
-   },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
-   "why": "",
-   "prior": null
-  },
-  {
-   "id": "life.woke",
-   "kind": "event",
-   "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
-   "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
-   "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
-   },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
-   "why": "",
-   "prior": null
+   "prior": null,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.energy",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "sleep, workout, illness",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "readiness; workout SPENT gate; practice/coursework SPENT; applyElapsedWellbeing empty->stress",
-   "experienced": "wellbeing.tsx",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are on Home, the Energy dial (look.dial), the Look After Yourself menu’s figures.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by waking time, nights (chosen and alone), a workout, a School call, a work day (from 2026-10-21), an illness.",
+   "changes": "The tank: readiness reads it; under 15 stress climbs; under 25 no workout or work on your feet.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:300"
+    },
+    {
+     "what": "stress climbs on empty",
+     "at": "src/engine/systems/life.ts:205"
+    },
+    {
+     "what": "a workout refused under 25",
+     "at": "src/engine/systems/life.ts:647"
+    },
+    {
+     "what": "practice on your feet refused under 25",
+     "at": "src/engine/systems/practice.ts:66"
+    },
+    {
+     "what": "a work day takes a School rehearsal call’s energy",
+     "at": "src/engine/systems/projobs.ts:1400"
+    }
+   ],
+   "experienced": "How You Are and readiness; the refusals; the judged work and the classes through readiness.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/b20-life-fatigue.test.ts",
      "tests/evidence-g06-life.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "comparisons": [
+     "b20-life-bite: sleep length",
+     "b20-life-fatigue: a shoot day against a plan of the same hours"
+    ],
+    "mutations": [
+     "B20-LIFE-3",
+     "B20-LIFE-14"
+    ],
+    "journeys": [
+     "b20-life-fatigue: a shoot week"
+    ]
    },
-   "missing": "",
+   "missing": "Found and repaired (D3): a professional work day took no energy but its waking hours.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "energy"
+   "prior": "energy",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.stress",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "empty, injury (injury.ts:109), nerves (attributes.ts:308), money worry at the midnight (spending.ts:501), a turn at school (feel, enjoyment.ts:113, from setStanding at school.ts:1817), loved work and the house (enjoyment.ts:86, :122), a rival’s lead on the cast list (school.ts:2541). Until 2026-10-13 this named the first three only.",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "readiness, sleepQuality, unattendedNight length, catching, overwrought->condition",
-   "experienced": "wellbeing.tsx",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are, the Stress dial, the menu’s Unwind and Shower lines.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by waking time (clears, or climbs on empty), nights, a shower, unwinding, a workout, injury, nerves, money worry, a turn at school, loved work, a rival’s lead.",
+   "changes": "Readiness reads it; a night’s quality loses to it; over 75 it wears condition every hour.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:301"
+    },
+    {
+     "what": "a night’s quality",
+     "at": "src/engine/systems/life.ts:867"
+    },
+    {
+     "what": "hours over 75 cost condition",
+     "at": "src/engine/systems/life.ts:215"
+    },
+    {
+     "what": "How You Are says it",
+     "at": "src/engine/systems/life.ts:327"
+    }
+   ],
+   "experienced": "How You Are and readiness; the next night; condition worn while it stays high.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
      "tests/evidence-g06-life.test.ts",
      "tests/evidence-g05-life.test.ts",
      "tests/evidence-g08-life.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: a shower and an hour unwinding against a twin who let the time pass"
+    ],
+    "mutations": [
+     "B20-LIFE-6"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "stress"
+   "prior": "stress",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.sleepDebt",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "waking, short nights",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "drain rate, applySleep owing, readiness, health.ts:catching",
-   "experienced": "wellbeing.tsx",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are, the Sleep Debt dial, the Sleep dialog’s suggestion.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by waking hours (a third of an hour each, held at 60), nights (a night clears with its rest; a night under six hours adds its shortfall, from 2026-10-21 once a night).",
+   "changes": "Readiness reads it; the next night gives back less; the waking drain runs faster; the suggestion asks for a longer night.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:302"
+    },
+    {
+     "what": "a night gives back less owing",
+     "at": "src/engine/systems/life.ts:910"
+    },
+    {
+     "what": "the waking drain",
+     "at": "src/engine/systems/life.ts:204"
+    },
+    {
+     "what": "How You Are says it",
+     "at": "src/engine/systems/life.ts:326"
+    }
+   ],
+   "experienced": "How You Are and readiness; the next night; the dialog’s longer suggestion and its reason.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
-    "tests": [],
-    "comparisons": [],
-    "mutations": [],
-    "journeys": []
+    "tests": [
+     "tests/b20-life-fatigue.test.ts",
+     "tests/b20-life-bite.test.ts",
+     "tests/simulation.test.ts",
+     "tests/wellbeing-bites.test.ts"
+    ],
+    "comparisons": [
+     "b20-life-fatigue: a half-hour nap after a night of five against staying up"
+    ],
+    "mutations": [
+     "B20-LIFE-1"
+    ],
+    "journeys": [
+     "b20-life-fatigue: a shoot week"
+    ]
    },
-   "missing": "",
+   "missing": "Found and repaired (D3): the short night’s debt was charged again to a sleep after the night.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "sleepDebt"
+   "prior": "sleepDebt",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.morale",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "meals, nights, depression, injury",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "readiness, applySleep settled (stress cleared)",
-   "experienced": "wellbeing.tsx",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are, the Morale dial.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by meals, a workout, unwinding, nights (toward where the body settles it), hunger and grime, injury, depression, the School’s turns.",
+   "changes": "Readiness reads it; a night clears more of the day’s stress the higher it is.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:304"
+    },
+    {
+     "what": "a night’s stress relief",
+     "at": "src/engine/systems/life.ts:922"
+    },
+    {
+     "what": "How You Are says it",
+     "at": "src/engine/systems/life.ts:333"
+    }
+   ],
+   "experienced": "How You Are and readiness; the night’s relief.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
      "tests/evidence-g06-life.test.ts",
-     "tests/evidence-g08-life.test.ts"
+     "tests/evidence-g08-life.test.ts",
+     "tests/wellbeing-bites.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: an hour unwinding against a twin who let it pass"
+    ],
+    "mutations": [
+     "B20-LIFE-25"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "morale"
+   "prior": "morale",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.condition",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "nights, hunger, stress, illness",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "mortality frailty + redraw, readiness, morale settle, school sickBelow (sickRefusal, school.ts:170) and the Condition look’s sick-day line (wellbeing.tsx:290, on the condition itself from 2026-10-13: until then on the figure shown, rounded), applySleep worn, medical leave (leave.ts:241 physicianRecommends, :249 clearedToReturn). Until 2026-10-13 this left out the look’s line and the leave’s two readers.",
-   "experienced": "wellbeing.tsx condition",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are, the Condition dial.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by nights (mends up to what fitness allows; under five hours of rest it falls), hunger, stress over 75, illness; drifts toward what rest mends at each midnight.",
+   "changes": "Readiness reads it; a worn body gets less from a night; under the School’s line a sick day is excused; it weighs the year’s chance of ending.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:311"
+    },
+    {
+     "what": "a night gives back less to a worn body",
+     "at": "src/engine/systems/life.ts:921"
+    },
+    {
+     "what": "a sick day excused under the line",
+     "at": "src/engine/systems/school.ts:185"
+    },
+    {
+     "what": "the year’s chance of ending",
+     "at": "src/engine/systems/mortality.ts:98"
+    },
+    {
+     "what": "the midnight drift",
+     "at": "src/engine/systems/life.ts:1048"
+    }
+   ],
+   "experienced": "How You Are and readiness; Call In Sick offered; the year’s end, never shown.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
      "tests/evidence-g06-life.test.ts",
-     "tests/evidence2-b03.test.ts"
+     "tests/evidence2-b03.test.ts",
+     "tests/wellbeing-bites.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-26"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "condition"
+   "prior": "condition",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.fitness",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "Work Out; from 2026-10-16 a class that trains the body as hard, attended: Movement Invention, stage combat (classTrains, life.ts; TRAINING_CLASSES, content/body.ts)",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "mendsTo, workoutCosts, Stamina: a whole task’s consistency inputs, and a piece judged in segments through its drain on every dimension tiredness reaches (piece.ts:276, from 2026-10-12), as the scene shown in class on 8 September reads it on five. Until 2026-10-13 this named consistency alone.",
-   "experienced": "wellbeing.tsx fitness",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "The Fitness dial, and Stamina on the Player Profile; Work Out on the menu.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Built by Work Out (a run a tenth more, a second the same day half) and a class that trains the body; held three days after; falls 0.18 a day toward 35.",
+   "changes": "Stamina; what rest can mend condition to; what a workout costs; how much a performance drains.",
+   "consumers": [
+    {
+     "what": "Stamina is fitness",
+     "at": "src/engine/systems/attributes.ts:150"
+    },
+    {
+     "what": "what rest mends condition to",
+     "at": "src/engine/systems/life.ts:145"
+    },
+    {
+     "what": "a workout’s energy cost",
+     "at": "src/engine/systems/life.ts:703"
+    }
+   ],
+   "experienced": "The Player Profile’s Stamina; How You Are’s condition over time; a performance’s drain.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
      "tests/evidence-g06-life.test.ts",
      "tests/evidence-g01-life.test.ts",
      "tests/fitness.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: a run against a workout indoors"
+    ],
+    "mutations": [
+     "B20-LIFE-7"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "fitness"
+   "prior": "fitness",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.nourishment",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "meals, groceries",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "readiness, hungry->condition/morale",
-   "experienced": "wellbeing.tsx",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are, the Nourishment dial, Eat A Meal and Order In.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by meals, the day’s groceries at midnight (to 76, or 40 when there’s no money), the waking hours and nights.",
+   "changes": "Readiness reads it; under 20 every hour costs condition and morale; full, a meal is refused.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:303"
+    },
+    {
+     "what": "hungry hours cost condition and morale",
+     "at": "src/engine/systems/life.ts:206"
+    },
+    {
+     "what": "a meal refused full",
+     "at": "src/engine/systems/life.ts:636"
+    },
+    {
+     "what": "How You Are says it",
+     "at": "src/engine/systems/life.ts:328"
+    }
+   ],
+   "experienced": "How You Are and readiness; the menu’s Needed Now.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
      "tests/evidence-g06-life.test.ts",
-     "tests/evidence-g01-life.test.ts"
+     "tests/evidence-g01-life.test.ts",
+     "tests/b20-life-time.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: a meal against a twin who let the forty minutes pass"
+    ],
+    "mutations": [
+     "B20-LIFE-8",
+     "B20-LIFE-11"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "nourishment"
+   "prior": "nourishment",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "dial.hygiene",
    "kind": "dial",
    "area": "life",
    "mechanic": true,
-   "seeded": true,
-   "where": "shower, drift, a workout’s sweat, the midnight floor of 82",
-   "prerequisites": "Not recorded",
-   "reads": "Not recorded",
-   "changes": "Not recorded",
-   "consumers": [],
-   "laterText": "readiness, grimy->morale",
-   "experienced": "wellbeing.tsx",
-   "saveLoad": "Not recorded",
+   "seeded": false,
+   "where": "How You Are, the Hygiene dial, Shower.",
+   "prerequisites": "None: every person has it.",
+   "reads": "Moved by Shower (to 100), waking hours, a workout’s sweat, and the morning wash to at least 82.",
+   "changes": "Readiness reads it a little; under 50 every hour wears on morale; a shower eases stress by what it washed off.",
+   "consumers": [
+    {
+     "what": "readiness",
+     "at": "src/engine/systems/life.ts:307"
+    },
+    {
+     "what": "grimy hours wear morale",
+     "at": "src/engine/systems/life.ts:227"
+    },
+    {
+     "what": "a shower refused when clean",
+     "at": "src/engine/systems/life.ts:646"
+    }
+   ],
+   "experienced": "How You Are and readiness; the menu’s Shower line.",
+   "saveLoad": "person.wellbeing in the save; changed only by the clock and the commands above, so a reload neither drops nor repeats a change.",
    "evidence": {
     "tests": [
+     "tests/b20-life-bite.test.ts",
      "tests/evidence-g06-life.test.ts",
      "tests/evidence2-b02.test.ts",
-     "tests/evidence-g01-life.test.ts",
      "tests/evidence-g08-life.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "b20-life-bite: a shower against a twin who let twenty minutes pass"
+    ],
+    "mutations": [
+     "B20-LIFE-6"
+    ],
     "journeys": []
    },
-   "missing": "",
+   "missing": "None found.",
    "status": "Implemented And Verified",
    "why": "",
-   "prior": "hygiene"
+   "prior": "hygiene",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.day",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home’s date and the Calendar panel’s title, a day’s cell; ui/looks/day.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The calendar’s entries for the date, their clashes, the holidays kept where the player is (keptCalendars), the light, the season, the sky; for today, from 2026-10-21, when a full night before what’s next starts (fullNightBefore).",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says what a day holds as the calendar and the clock have it: its commitments and clashes, what’s kept that day, the light and the sky, and for today the bedtime a full night before the next commitment asks.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/b20-life-screens.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-2",
+     "B20-LIFE-12",
+     "B20-LIFE-16",
+     "B20-LIFE-30",
+     "B20-LIFE-31",
+     "B20-LIFE-33"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "Found and repaired: “kept in United States” and “United States keeps” without the article; a sentence said the day’s light as a readout, “12h 54m”; Labor Day was said in the dataset’s British “Labour Day”.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says what a day holds as the calendar and the clock have it: its commitments and clashes, what’s kept that day, the light and the sky, and for today the bedtime a full night before the next commitment asks.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.entry",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "A thing on the calendar, from the Day look, Home and the Calendar; day.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The timeline item: its time on its town’s clock, length, status, when it was booked and settled, its town and trip, what it clashes with, what missing it costs (missCost).",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says one commitment truly: when, how long, where, its status, its clash and what missing it costs.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/defects-g5-1.test.ts",
+     "tests/journey-career.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says one commitment truly: when, how long, where, its status, its clash and what missing it costs.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.season",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The season beside the date on Home and on a day; day.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "seasonOf for the town, its months, the climate normal at its middle, the light then.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says the season the town is in and what it’s like there, as the climate model and the sun have it.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says the season the town is in and what it’s like there, as the climate model and the sun have it.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.daylight",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Daylight on a day and on a place; place.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "sunTimes for the town today, tomorrow and at the solstices.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says the day’s sunrise, sunset and length as the sun’s arithmetic gives them for the town.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says the day’s sunrise, sunset and length as the sun’s arithmetic gives them for the town.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.stretch",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "A commitment’s hours, from its entry; plans.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The entry’s window and hoursOn for its town: each hour’s temperature, condition, light.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: shows the sky over each hour a commitment takes, from the same hourly sky the game reads.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Shows the sky over each hour a commitment takes, from the same hourly sky the game reads.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.plans",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Your Own Plans, from a plan’s entry and the person; plans.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The plans you put on the calendar and their statuses.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: counts and lists the plans you made: waiting, called off and gone by.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/evidence-g33-ui.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-29"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Counts and lists the plans you made: waiting, called off and gone by.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.weather",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The weather on Home’s first line; weather.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "weatherAt for the town now (the sky Work Out reads), forecastFor for the week.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says the sky now and the week, the same sky a workout reads as its hour ends; the reading now never past the day’s high or low (from 2026-10-21).",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/weather.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-28",
+     "B20-LIFE-34"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says the sky now and the week, the same sky a workout reads as its hour ends.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.forecastday",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "A day of the week ahead, from the weather and a day; weather.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "forecastFor for that date in the town.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says one coming day’s sky as the forecast has it.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/day-bounds.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says one coming day’s sky as the forecast has it.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.hours",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The Rest Of Today and a day’s Hour By Hour; weather.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "hoursOn for the date in the town.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: shows the day’s weather hour by hour, the curve the game reads, never past the high and low the day shows (from 2026-10-21; until then a Fahrenheit town’s hours could read a degree past them).",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/day-bounds.test.ts",
+     "tests/weather.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-34"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Shows the day’s weather hour by hour, the curve the game reads.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.skyhour",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "One hour from a day’s hours or a commitment’s; weather.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The hour of hoursOn.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says one hour’s sky as the hourly curve has it.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says one hour’s sky as the hourly curve has it.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.skyweek",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "The Week Ahead, from the weather; weather.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "forecastFor for six days.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: shows the week’s days, each opening onto its sky.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Shows the week’s days, each opening onto its sky.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.dial",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Each dial on How You Are and the person look; wellbeing.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The dial’s figure and what it decides (mendsTo, moraleSettlesAt, workoutCosts and the lines the hourly charge reads).",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says the dial’s figure and what it does to the body, with the engine’s own figures.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/evidence-g06-life.test.ts",
+     "tests/evidence-g33-ui.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-27"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says the dial’s figure and what it does to the body, with the engine’s own figures.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "look.condition",
    "kind": "look",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "An injury or a long-term condition, from the person look and How You Are; wellbeing.tsx.",
+   "prerequisites": "None: it opens where its name is pressed.",
+   "reads": "The injury’s kind, mending date and what it keeps them from (injuryKeeps); a long-term condition kept up or let go.",
+   "changes": "Nothing: it shows what the engine holds.",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "When opened: says when an injury mends and what it keeps the player from, as the refusals it causes say; and what a long-term condition does left alone.",
+   "saveLoad": "Nothing of its own: it reads the save as it stands.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/looks.test.ts",
+     "tests/attributes-phase-2b.test.ts",
+     "tests/language-injury.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-15"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Says when an injury mends and what it keeps the player from, as the refusals it causes say; and what a long-term condition does left alone.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "notice.core/simulation#top",
    "kind": "notice",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "What Needs You and Home’s notices: “Something Didn’t Go Through” or “<label> Didn’t Go Through”, sent from core/simulation.ts as the clock runs.",
+   "prerequisites": "A scheduled handler that throws, or a command it raises that fails, while the clock moves.",
+   "reads": "The item’s label and category, the refusal’s words.",
+   "changes": "A notice; the item marked missed (the advance loop’s own).",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "The notice in What Needs You, and the item’s Missed status on its entry.",
+   "saveLoad": "The notice and the item’s status are in the save.",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/simulation.test.ts"
+    ],
     "comparisons": [],
     "mutations": [],
     "journeys": []
    },
-   "missing": "",
+   "missing": "No handler of the current game is known to fault or refuse as the clock runs, so no life the gate plays reaches it.",
    "status": "Implemented, Verification Incomplete",
-   "why": "",
-   "prior": null
+   "why": "The gate reaches it only through handlers tests/simulation.test.ts registers for it (“says a fault met as time passes in words, as missed where it was a calendar item, and never claims it undone”), which holds its words true; no current life’s play reaches it.",
+   "prior": null,
+   "purpose": "Tells the player, in words, that something the clock ran failed or was refused as time passed, and that a calendar item it was shows as missed, without claiming it undone.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   },
   {
    "id": "notice.systems/injury#mayHurt",
    "kind": "notice",
    "area": "life",
-   "mechanic": true,
-   "seeded": true,
-   "where": "",
-   "prerequisites": "",
-   "reads": "",
-   "changes": "",
+   "mechanic": false,
+   "seeded": false,
+   "where": "What Needs You and Home’s notices, the injury’s label as its title, sent by mayHurt (systems/injury.ts) when a workout, a run, a call, a shift or everyday life hurts.",
+   "prerequisites": "An injury drawn at its source’s rate, while not already hurt.",
+   "reads": "The injury’s kind and days, the School, the care’s cost through the plan, workers’ compensation’s state rules.",
+   "changes": "A notice (the injury itself, its bill and its stress and morale are mayHurt’s mechanic).",
    "consumers": [],
-   "laterText": "",
-   "experienced": "",
-   "saveLoad": "",
+   "experienced": "The notice the moment it happens; Go There to Papers, where the bill is.",
+   "saveLoad": "The notice is in the save; a reload sends it no second time (evidence-g04-life: said once).",
    "evidence": {
-    "tests": [],
+    "tests": [
+     "tests/evidence-g04-life.test.ts",
+     "tests/evidence-g07-life.test.ts",
+     "tests/evidence-g09-life.test.ts",
+     "tests/language-injury.test.ts"
+    ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "B20-LIFE-23"
+    ],
     "journeys": []
    },
-   "missing": "",
-   "status": "Implemented, Verification Incomplete",
+   "missing": "None found.",
+   "status": "Implemented And Verified",
    "why": "",
-   "prior": null
+   "prior": null,
+   "purpose": "Tells the player the injury, the day it mends, what it keeps them from and what its care costs or that work’s compensation pays.",
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes"
   }
  ],
  "promises": [
@@ -1021,484 +1590,958 @@
    "kind": "immediate",
    "claim": "A night is what moves energy, sleep debt and condition most.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "applySleep moves energy, sleep debt and condition by the night’s hours and quality (src/engine/systems/life.ts:924, :927, :961); a waking hour moves them by a few points (life.ts:219).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/wellbeing-bites.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/wellbeing-bites.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.how>body.look-after",
    "kind": "immediate",
    "claim": "A meal, a shower, a workout and an hour unwinding each move the measures they name, and the menu says by how much.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "applyLookingAfter moves each action’s measures (src/engine/systems/life.ts:714); the menu’s figures are applyLookingAfter on a copy (lookAfterOptions, life.ts:795).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/looking-after.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/looking-after.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.how>coursework.class",
    "kind": "evaluation",
    "claim": "Readiness sets how much a class or a lab builds that day.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A class builds each skill by focusAt, read from readiness (src/engine/systems/school.ts:3516, :950).",
+   "tests": [
+    "tests/evidence-g01-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g01-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.how>productions.nights",
    "kind": "evaluation",
    "claim": "A night on stage is judged with your readiness at curtain time: under ${EVALUATION.sufficientReadiness}, coming in tired costs you.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
+   "holds": "A night is judged with conditionAt’s readiness at the call (src/engine/systems/school.ts:967); under EVALUATION.sufficientReadiness the judgment names fatigue and takes it off (src/engine/systems/evaluation.ts:427).",
+   "tests": [
+    "tests/integration-mastery.test.ts",
+    "tests/b20-life-fatigue.test.ts"
+   ],
    "status": "Implemented, Verification Incomplete",
-   "why": "",
-   "seeded": true
+   "why": "No test the gate runs plays a School night through the clock at readiness under 60 and reads its fatigue. The rule is the evaluation’s, held for a taped piece at readiness 30 (tests/integration-mastery.test.ts) and for a shoot day judged tired through the clock (tests/b20-life-fatigue.test.ts), which read the same conditionAt and sufficientReadiness.",
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/integration-mastery.test.ts",
+     "tests/b20-life-fatigue.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.how>school.sick",
    "kind": "optional",
    "claim": "Under ${ESTIMATE.sickBelow} condition, calling in sick is excused.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "sickRefusal takes a sick day under ESTIMATE.sickBelow condition (src/engine/systems/school.ts:185), and the classes handler excuses the day (school.ts:3497).",
+   "tests": [
+    "tests/whynot-school.test.ts",
+    "tests/evidence-g05-life.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/whynot-school.test.ts",
+     "tests/evidence-g05-life.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.how>papers.conditions",
    "kind": "history",
    "claim": "Long-term conditions are kept up or let go on Papers, and your own page says which.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "health.treat keeps a long-term condition up or lets it go (src/engine/systems/health.ts:2387); the condition look says which (src/ui/looks/wellbeing.tsx, the condition look).",
+   "tests": [
+    "tests/evidence-g04-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g04-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.sleep>body.how",
    "kind": "immediate",
    "claim": "A night moves energy, stress, sleep debt, condition and morale by the time you wake.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "applySleep at the wake: energy, stress, sleep debt, condition and morale (src/engine/systems/life.ts:924, :949, :927, :961, :969).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/evidence-g08-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g08-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.sleep>day.calendar",
    "kind": "immediate",
    "claim": "A commitment during the night goes ahead without you, and it counts as missed.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Each handler finds the sleeper absent: a plan (src/engine/world/plans.ts:138), classes (src/engine/systems/school.ts:1573), a work day (src/engine/systems/projobs.ts:1035).",
+   "tests": [
+    "tests/evidence-g01-life.test.ts",
+    "tests/sleep-commitments.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g01-life.test.ts",
+     "tests/sleep-commitments.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.sleep>day.needs",
    "kind": "history",
    "claim": "Commitments you slept through are named in a notice the next morning.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "life.sleep names what it ran over in a notice as they wake (src/engine/systems/life.ts:439).",
+   "tests": [
+    "tests/evidence-g01-life.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g01-life.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.sleep>school.standing",
    "kind": "evaluation",
    "claim": "Classes and calls you sleep through are absences the faculty weigh at the end of the term.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Classes slept through are missed, unexcused, on the term’s tally (src/engine/systems/school.ts:1573, :3533), which the term review reads against ESTIMATE.attendanceFloor (school.ts:3233).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/evidence-g24-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g24-school.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.sleep>day.advance",
    "kind": "optional",
    "claim": "Skipping ahead through the night sleeps for you, but it’s a poorer night that stops at ${COASTING_ENERGY_CEILING} energy.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A jump of more than an hour through the night pays a night nobody chose at 0.95 of its quality, its energy held to COASTING_ENERGY_CEILING (src/engine/systems/life.ts:1329, :1344).",
+   "tests": [
+    "tests/evidence-g08-life.test.ts",
+    "tests/b20-life-time.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g08-life.test.ts",
+     "tests/b20-life-time.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.look-after>body.how",
    "kind": "immediate",
    "claim": "Each line moves the measures it names, and readiness with them.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "lookAfterOptions lists each line’s dials from and to, and the readiness it gives (src/engine/systems/life.ts:795); the command applies the same arithmetic (life.ts:487).",
+   "tests": [
+    "tests/looking-after.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/looking-after.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.look-after>day.weather",
    "kind": "evaluation",
    "claim": "Work Out checks the weather as its hour ends to decide whether it was a run.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Work Out reads trainingAt after its hour is lived, at s.now (src/engine/systems/life.ts:484, :55).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/evidence-g07-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g07-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.look-after>bank.payments",
    "kind": "immediate",
    "claim": "A meal is paid the way How You Pay pays the day’s spending: the debit card, the credit card or cash.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A meal is paid through spend, which pays as How You Pay is set (src/engine/systems/life.ts:478; src/engine/systems/spending.ts:323).",
+   "tests": [
+    "tests/evidence-g12-money.test.ts",
+    "tests/evidence-g01-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g12-money.test.ts",
+     "tests/evidence-g01-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.look-after>craft.profile",
    "kind": "history",
    "claim": "The fitness a workout builds is your Stamina on the Player Profile.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Stamina is fitness (src/engine/systems/attributes.ts:150); a workout records its gain as stamina (src/engine/systems/life.ts:489).",
+   "tests": [
+    "tests/attributes-phase-2b.test.ts",
+    "tests/fitness.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/attributes-phase-2b.test.ts",
+     "tests/fitness.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.body.look-after>papers.doctor",
    "kind": "scheduled",
    "claim": "An injury from a run or a workout needs care, and you may owe a share of its cost.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A workout may hurt at its rate (src/engine/systems/life.ts:496); the care is billed at what the plan leaves (src/engine/systems/injury.ts:134).",
+   "tests": [
+    "tests/evidence-g01-life.test.ts",
+    "tests/evidence-g08-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g01-life.test.ts",
+     "tests/evidence-g08-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.calendar>day.clock",
    "kind": "prerequisite",
    "claim": "A commitment only arrives as the clock moves, and Play opens with the chapter after this one.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Items run only as the clock reaches them (src/engine/core/simulation.ts:438); Play opens with The Clock (src/engine/content/tutorial.ts:175).",
+   "tests": [
+    "tests/plans.test.ts",
+    "tests/tutorial.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/plans.test.ts",
+     "tests/tutorial.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.calendar>day.advance",
    "kind": "immediate",
    "claim": "Every move of the clock, Advance and Choose An Event among them, stops here at each commitment.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Every advance from a screen stops at an item that wants the player (src/engine/core/simulation.ts:441; src/app/game-context.tsx:240, :377).",
+   "tests": [
+    "tests/b20-life-time.test.ts",
+    "tests/time-controls.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/time-controls.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.calendar>day.plans",
    "kind": "optional",
    "claim": "The plans you put on the calendar yourself are the commitments Skip It works on.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Skip It is a plan’s only (src/engine/world/plans.ts:205; src/engine/world/clock.ts:105).",
+   "tests": [
+    "tests/time-stops.test.ts",
+    "tests/coverage-gaps-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/time-stops.test.ts",
+     "tests/coverage-gaps-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.calendar>school.standing",
    "kind": "evaluation",
    "claim": "Classes, calls and shifts you went to or missed are counted at the end of each term’s classes.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The classes, calls and shifts kept or missed go on the term’s tally (src/engine/systems/school.ts:3509, :3533), which the term review reads (school.ts:3233).",
+   "tests": [
+    "tests/evidence-g24-school.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g24-school.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.calendar>school.sick",
    "kind": "optional",
    "claim": "Calling in sick before a school day begins excuses the commitments you’d otherwise miss.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A day called in sick is excused at its classes (src/engine/systems/school.ts:3497) and its calls (school.ts:3557).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/evidence-g19-school.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g19-school.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.calendar>coursework.partners",
    "kind": "optional",
    "claim": "A rehearsal with a classmate stops the clock like any commitment, and its dialog offers Call It Off, at a cost to their trust.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A partner’s rehearsal wants the player and stops the clock; its stop offers Call It Off (src/engine/world/clock.ts:114), which costs trust at short notice (src/engine/systems/coursework.ts:2030).",
+   "tests": [
+    "tests/time-stops.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/time-stops.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.clock>day.calendar",
    "kind": "immediate",
    "claim": "The live clock stops and pauses at each commitment on the calendar, and asks.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The live clock advances with stopOnPlayerRequired and halts at the stop (src/app/game-context.tsx:377, :215).",
+   "tests": [
+    "tests/plans.test.ts",
+    "tests/time-controls.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/plans.test.ts",
+     "tests/time-controls.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.clock>body.how",
    "kind": "immediate",
    "claim": "Every second the clock runs is charged to your energy, food and the rest of your wellbeing as waking time, as it passes.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Every stretch the clock crosses is charged as waking time (src/engine/systems/life.ts:354, :267).",
+   "tests": [
+    "tests/b20-life-time.test.ts",
+    "tests/wellbeing-bites.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/wellbeing-bites.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.clock>day.advance",
    "kind": "optional",
    "claim": "For hours you don’t want to wait through, Advance jumps them.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The Advance menu jumps the clock (src/ui/shell/TimeControls.tsx, AdvanceMenu; src/app/game-context.tsx:240).",
+   "tests": [
+    "tests/time-controls.test.ts",
+    "tests/b20-life-time.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/time-controls.test.ts",
+     "tests/b20-life-time.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.clock>body.sleep",
    "kind": "optional",
    "claim": "A live clock keeps you up past midnight; Sleep is how the night gets slept.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A move of an hour or less is the player’s, who keeps them up (src/engine/systems/life.ts:1257); Sleep sleeps the night (life.ts:433).",
+   "tests": [
+    "tests/b20-life-time.test.ts",
+    "tests/evidence-g01-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/evidence-g01-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.advance>day.calendar",
    "kind": "immediate",
    "claim": "Every jump stops at each commitment on the way, and the stop’s dialog asks whether you go.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Every jump stops at each commitment on the way (src/engine/core/simulation.ts:441), and the stop asks Go or Stand Here (TimeControls.tsx DueNow).",
+   "tests": [
+    "tests/b20-life-time.test.ts",
+    "tests/time-controls.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/time-controls.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.advance>body.sleep",
    "kind": "immediate",
    "claim": "A jump of more than an hour through the night sleeps your character from midnight, a night that stops at ${COASTING_ENERGY_CEILING} energy.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A jump of more than an hour sleeps the night alone from midnight, at most 74 energy (src/engine/systems/life.ts:1257, :1329, :1344).",
+   "tests": [
+    "tests/b20-life-time.test.ts",
+    "tests/evidence-g08-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/evidence-g08-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.advance>body.look-after",
    "kind": "scheduled",
    "claim": "Each midnight crossed buys the day’s groceries and tops up nourishment and hygiene.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Each midnight crossed buys the day’s groceries and eats up to the day’s nourishment, and washes to 82 (src/engine/systems/life.ts:1079, :1084).",
+   "tests": [
+    "tests/b20-life-time.test.ts",
+    "tests/evidence-g04-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-time.test.ts",
+     "tests/evidence-g04-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.advance>day.clock",
    "kind": "optional",
    "claim": "The hours you’d rather live than skip, the live clock runs one to one.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The live clock runs world time one to one (src/engine/core/realclock.ts:37; src/app/game-context.tsx:377).",
+   "tests": [
+    "tests/realclock.test.ts",
+    "tests/plans.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/realclock.test.ts",
+     "tests/plans.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.needs>taxes.return",
    "kind": "immediate",
    "claim": "Your return’s question carries File It, which files the year’s return as Papers would.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The return’s question carries File It, which runs the filing command (src/engine/systems/taxreturn.ts:1354).",
+   "tests": [
+    "tests/evidence-g02-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g02-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.needs>documents.work",
    "kind": "immediate",
    "claim": "When your US status is ending, its question carries Apply For OPT while that can still be applied for.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The status’s ending raises a question with Apply For OPT while it can be applied for (src/engine/systems/permission.ts:342).",
+   "tests": [
+    "tests/evidence-g15-papers.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g15-papers.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.needs>bank.upkeep",
    "kind": "immediate",
    "claim": "Before a long-untouched account goes to the state, the bank’s question carries Keep The Account.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A long-untouched account’s question carries Keep The Account (src/engine/systems/accountlife.ts:746).",
+   "tests": [
+    "tests/guide-examples-money.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/guide-examples-money.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.needs>body.sleep",
    "kind": "history",
    "claim": "A Sleep that ran over commitments leaves a notice naming each one it slept through.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "life.sleep’s notice names each commitment slept through (src/engine/systems/life.ts:439).",
+   "tests": [
+    "tests/evidence-g01-life.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g01-life.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.needs>start.find",
    "kind": "optional",
    "claim": "Go There takes you to the screen a notice or a question is about.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Each notice and question with a route has Go There, which goes to it (src/ui/screens/Home.tsx:300; src/ui/looks/attention.tsx:239).",
+   "tests": [
+    "tests/evidence-g32-ui.test.ts",
+    "tests/interface.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g32-ui.test.ts",
+     "tests/interface.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.plans>day.calendar",
    "kind": "scheduled",
    "claim": "A plan is a commitment: when the clock reaches it, the clock stops and asks Go or Skip It.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A plan wants the player (src/engine/world/plans.ts:187), so the clock stops at it (src/engine/core/simulation.ts:441) and its stop offers Skip It (src/engine/world/clock.ts:105).",
+   "tests": [
+    "tests/plans.test.ts",
+    "tests/time-stops.test.ts",
+    "tests/b20-life-time.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/plans.test.ts",
+     "tests/time-stops.test.ts",
+     "tests/b20-life-time.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.plans>body.sleep",
    "kind": "immediate",
    "claim": "The Sleep dialog lists a plan inside its hours as one you’d sleep through, and sleeping through misses it.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The Sleep dialog lists what its hours cross (src/ui/shell/TimeControls.tsx:326); asleep at it, the plan is missed (src/engine/world/plans.ts:138).",
+   "tests": [
+    "tests/evidence-g01-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g01-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.plans>body.look-after",
    "kind": "immediate",
    "claim": "A plan about to begin refuses anything in Look After Yourself that would run into it.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "lookAfterRefusal refuses what would run into anything wanting the player (src/engine/systems/life.ts:655).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/evidence-g02-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g02-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.plans>craft.practice",
    "kind": "immediate",
    "claim": "An hour of practice that would run into a plan is refused until the plan has passed.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "practiceRefusal refuses an hour that would run into a commitment (src/engine/systems/practice.ts:62).",
+   "tests": [
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.plans>day.needs",
    "kind": "history",
    "claim": "Skipping a plan, or sleeping through one, leaves a notice in What Needs You.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Skip It sends “You Didn’t Go To …” (src/engine/world/plans.ts:214); a Sleep over it names it (src/engine/systems/life.ts:439).",
+   "tests": [
+    "tests/coverage-gaps-life.test.ts",
+    "tests/evidence-g01-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/coverage-gaps-life.test.ts",
+     "tests/evidence-g01-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.plans>day.weather",
    "kind": "optional",
    "claim": "A plan’s hours open onto the sky over each of them.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "A plan’s entry opens its hours (src/ui/looks/day.tsx:619), each hour its sky (the stretch look, src/ui/looks/plans.tsx).",
+   "tests": [
+    "tests/b20-life-looks.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-looks.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.weather>body.look-after",
    "kind": "evaluation",
    "claim": "Work Out checks the weather as it ends: dry and mild, it was a run, building more fitness and burning more.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "trainingAt: dry and mild, a run, building TRAINING.run (src/engine/systems/life.ts:55); it burns a run’s MET (life.ts:495).",
+   "tests": [
+    "tests/b20-life-bite.test.ts",
+    "tests/evidence-g07-life.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-bite.test.ts",
+     "tests/evidence-g07-life.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.weather>start.home",
    "kind": "optional",
    "claim": "The weather is the same town’s, beside its time, season and daylight on Home.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "Home’s first line is the town’s weather now, beside its time, zone and season (src/ui/screens/Home.tsx:108).",
+   "tests": [
+    "tests/b20-life-looks.test.ts",
+    "tests/evidence3-home.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/b20-life-looks.test.ts",
+     "tests/evidence3-home.test.ts"
+    ]
+   }
   },
   {
    "id": "promise.day.weather>school.sick",
    "kind": "optional",
    "claim": "The flu comes in your town’s climate’s weeks for it, and a day with the flu is one to call in sick.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "",
-   "tests": [],
-   "status": "Implemented, Verification Incomplete",
+   "holds": "The flu’s week by the town’s climate (src/engine/systems/health.ts:1773); a day with the flu is one to call in sick (src/engine/systems/school.ts:185).",
+   "tests": [
+    "tests/evidence-g06-life.test.ts",
+    "tests/evidence-g07-life.test.ts",
+    "tests/b20-life-bite.test.ts"
+   ],
+   "status": "Implemented And Verified",
    "why": "",
-   "seeded": true
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "12c04ee1, with this branch’s changes",
+   "evidence": {
+    "tests": [
+     "tests/evidence-g06-life.test.ts",
+     "tests/evidence-g07-life.test.ts",
+     "tests/b20-life-bite.test.ts"
+    ]
+   }
   }
  ]
 }

@@ -403,6 +403,10 @@ export function registerLife(sim: Simulation): void {
       // first night across midnight and to any night that ended on the stroke
       // of midnight twenty hours or more after the last. For a night they
       // chose it is the wake that is stamped, never the bedtime.
+      // Whether it's the night, read before it's stamped: one that ends on a day whose night is already on record is a
+      // sleep after it, a nap as the suggestion calls one (`napNow`), and the night's shortfall isn't counted again
+      // (`applySleep`, from 2026-10-21, brief 20's D3).
+      const night = !(person.lastSleptAt !== undefined && person.lastSleptAt >= startOfLocalDay(s, wakeAt));
       person.lastSleptAt = wakeAt;
 
       // The night is read at the hour it starts. It used to be read when it was
@@ -421,14 +425,14 @@ export function registerLife(sim: Simulation): void {
       // are asleep until the wake, so it charges nothing for the night itself:
       // the night is paid for below, by `applySleep`.
       person.awakeSince = Math.max(person.awakeSince ?? wakeAt, wakeAt);
-      s.emit('life.sleep_started', { personId: person.id, hours, quality });
+      // The night was said on the event bus as it began and as they woke (`life.sleep_started`, `life.woke`) until
+      // 2026-10-21, and nothing listened to either or read a command's events: brief 20's life area found them written
+      // and never read, and they went. The night's quality and what it gave back are the command's answer.
       s.advanceTo(wakeAt);
 
-      applySleep(person, hours, quality, s.now, before);
+      applySleep(person, hours, quality, s.now, before, night);
       person.wokeWithDebt = person.wellbeing.sleepDebt;
       const recovered = person.wellbeing.energy - before.energy;
-
-      s.emit('life.woke', { personId: person.id, hours, quality, recovered });
 
       // Asleep at an item that wants them, they're not there for it: each one's handler finds them asleep (`present`,
       // `presentForCare`, the plan's own check), and it's missed.
@@ -554,13 +558,14 @@ export const SPENT = 25;
  * one too, until the career went on 2026-10-09. Until
  * 2026-09-27 a commitment took only the moment it began, and at ten in the
  * morning of a twelve-hour shoot the player could sleep for eight hours and
- * the day still counted as worked.
+ * the day still counted as worked. `except` leaves one out: a plan, asked at its own start, is already marked done there
+ * (`world/plans.ts`).
  */
-export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefined {
+export function occupiedAt(sim: Simulation, at: Instant, except?: string): ScheduledItem | undefined {
   const list = sim.universe.scheduled;
   for (let i = list.length - 1; i >= 0; i -= 1) {
     const one = list[i]!;
-    if (one.status !== 'done' || one.requiresPlayer !== true || !one.durationMinutes || one.at > at) continue;
+    if (one.id === except || one.status !== 'done' || one.requiresPlayer !== true || !one.durationMinutes || one.at > at) continue;
     if (one.payload.personId !== undefined && one.payload.personId !== sim.player.id) continue;
     if (at < one.at + one.durationMinutes * 60_000) return one;
   }
@@ -883,6 +888,7 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
 export function applySleep(
   person: Person, hours: number, quality: number, at?: number,
   bedtime: Pick<Wellbeing, 'condition' | 'morale' | 'fitness'> = person.wellbeing,
+  night = true,
 ): void {
   const w = person.wellbeing;
   // Copied, because the default is the dials themselves and the night below
@@ -926,7 +932,17 @@ export function applySleep(
   // first waking second did until waking was made to hold debt rather than
   // lower it, and after that three-hour nights left 191.7 owed by the
   // ninetieth.
-  if (hours < 6) {
+  //
+  // It's the night's, counted once (from 2026-10-21, brief 20's D3): a sleep
+  // after the night is on record (`night` false, `life.sleep`) adds none. Until
+  // then every sleep under six hours added it, so a half hour taken at four
+  // after a night of five, which the Sleep dialog suggested before a seven
+  // o'clock call two hours away, added 7.4 hours of debt to the night's 1.35
+  // and cleared 0.5, where staying up instead added 1.0 by the call. Played by the scripted actor
+  // of brief 19, to bed at eleven or before five, the first call of a shoot
+  // week found a debt of 15.8 where the same nights without the half hour left
+  // 2.4, and by the fifth 67.4 where they left 10.6.
+  if (night && hours < 6) {
     const short = (6 - hours) * 1.35;
     w.sleepDebt = Math.min(w.sleepDebt + short, Math.max(w.sleepDebt, DEBT_CEILING + short));
   }
@@ -1273,6 +1289,14 @@ function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
     if (person.lastSleptAt !== undefined && person.lastSleptAt >= midnight) return;
     const { sound } = unattendedNight(person);
     if (bedtime - midnight >= sound * MS_HOUR) return;
+    // At a commitment the player went to (`occupiedAt`) that runs past when a sound sleeper would be up, they're up for
+    // it, and no night nobody chose starts there: by its end, the night is over. One that ends sooner is lived inside the
+    // night, as a stop in it is (above). From 2026-10-21 (brief 20, the life area): until then Go at a seven o'clock call
+    // after a night not slept, which carries the clock to the wrap, started a night at seven, as if she'd slept on set.
+    // She wrapped a shoot day at energy 64.4, where the twin who'd slept wrapped at 50.0, and her record had her asleep
+    // that morning.
+    const busy = person.id === sim.player.id ? occupiedAt(sim, bedtime) : undefined;
+    if (busy && busy.at + busy.durationMinutes! * 60_000 - midnight >= sound * MS_HOUR) return;
     // Asleep until a sound sleeper would wake, which is when the clock starts
     // charging them again. The day is still a sound sleeper's day: taking the
     // lie-in out of the waking hours as well left a poor sleeper better rested
@@ -1441,22 +1465,7 @@ export const SHORTEST_SLEEP = 0.5;
 export function suggestedSleep(sim: Simulation): { hours: number; reason: string } {
   const next = nextCommitmentItem(sim);
   const person = sim.player;
-  const owed = Math.max(0, person.wellbeing.sleepDebt - A_NORMAL_DAYS_DEBT);
-  const night = nightParts(sim, person);
-  const restores = personalityOf(person, 'energyRecovery');
-  const age = recoveryFactorAt(yearsSince(person.birthInstant, sim.now));
-  // A night pays for the waking day beside it, and the longer the night, the
-  // shorter that day: an hour asleep is an hour nobody is charged for being
-  // awake. So the night is solved for, with each waking hour owed the share of
-  // a normal night that a normal day's hour is. Counted against a fixed day,
-  // as it was while the rollover charged twenty-four hours whatever the night,
-  // it asked an eighty-one-year-old for fourteen hours, which put back nearly
-  // three times the ten hours awake beside them, and said fourteen were not
-  // enough.
-  const perWakingHour = A_NORMAL_NIGHT / A_NORMAL_DAY;
-  const needed = (24 * perWakingHour + owed * 0.1) / (night.quality * restores * age + perWakingHour);
-  const ideal = clamp(needed, 6, LONGEST_NIGHT);
-  const hours = Math.round(ideal * 2) / 2;
+  const { owed, night, restores, age, needed, ideal, hours } = fullNight(sim, person);
   const why = sleepReason({ night, restores, age, owed, hours, needed });
   const nap = napNow(sim, person, hours, owed);
   if (!next) {
@@ -1492,6 +1501,72 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
   return { hours, reason: why };
 }
 
+/**
+ * A full night for this person, read at a moment with a sleep debt: the hours `suggestedSleep` suggests where nothing
+ * cuts them short, and what goes into them.
+ */
+function fullNight(sim: Simulation, person: Person, at: Instant = sim.now, debt = person.wellbeing.sleepDebt) {
+  const owed = Math.max(0, debt - A_NORMAL_DAYS_DEBT);
+  const night = nightParts(sim, person, at);
+  const restores = personalityOf(person, 'energyRecovery');
+  const age = recoveryFactorAt(yearsSince(person.birthInstant, at));
+  // A night pays for the waking day beside it, and the longer the night, the
+  // shorter that day: an hour asleep is an hour nobody is charged for being
+  // awake. So the night is solved for, with each waking hour owed the share of
+  // a normal night that a normal day's hour is. Counted against a fixed day,
+  // as it was while the rollover charged twenty-four hours whatever the night,
+  // it asked an eighty-one-year-old for fourteen hours, which put back nearly
+  // three times the ten hours awake beside them, and said fourteen were not
+  // enough.
+  const perWakingHour = A_NORMAL_NIGHT / A_NORMAL_DAY;
+  const needed = (24 * perWakingHour + owed * 0.1) / (night.quality * restores * age + perWakingHour);
+  const ideal = clamp(needed, 6, LONGEST_NIGHT);
+  return { owed, night, restores, age, needed, ideal, hours: Math.round(ideal * 2) / 2 };
+}
+
+/** A full night before the next commitment: the commitment, when to be asleep by, and the night's hours. */
+export interface FullNight { item: ScheduledItem; by: Instant; hours: number }
+
+/**
+ * When to be asleep for a full night before the next commitment (from 2026-10-21, the owner's brief 20, D3), or nothing
+ * where none is due within the day: its time, less the hour to get up and its trip (`GETTING_UP_MINUTES`,
+ * `travelMinutesOf`), as the Sleep dialog keeps them, less the full night `suggestedSleep` asks for, read at that bedtime
+ * with the debt the waking hours until then will have added, to the half hour above, so the dialog opened then has room
+ * for it. Until then nothing said it before it was too late: the Sleep dialog said only what a sleep from now would be,
+ * and opened at eleven before a seven o'clock call in New York, two hours from New Haven, it said there wasn't time for a
+ * full night and offered five hours, the night a player who went to bed at eleven took each night of a shoot week.
+ */
+export function fullNightBefore(sim: Simulation): FullNight | undefined {
+  const next = nextCommitmentItem(sim);
+  if (!next || next.at <= sim.now) return undefined;
+  const person = sim.player;
+  // The night before it already slept (`lastSleptAt` since its day's midnight, as `napNow` reads a night): nothing to say.
+  if (person.lastSleptAt !== undefined && person.lastSleptAt >= startOfLocalDay(sim, next.at)) return undefined;
+  const w = person.wellbeing;
+  const keep = (GETTING_UP_MINUTES + travelMinutesOf(next)) * 60_000;
+  const bedtime = (hours: number) => next.at - keep - Math.round(hours * MS_HOUR);
+  const first = bedtime(Math.ceil(fullNight(sim, person).ideal * 2) / 2);
+  const debt = Math.max(w.sleepDebt, Math.min(DEBT_CEILING, w.sleepDebt + (Math.max(0, first - sim.now) / MS_HOUR) * DEBT_PER_WAKING_HOUR));
+  const hours = Math.ceil(fullNight(sim, person, Math.max(sim.now, first), debt).ideal * 2) / 2;
+  const by = bedtime(hours);
+  return by - sim.now > MS_DAY ? undefined : { item: next, by, hours };
+}
+
+/**
+ * A full night before the next commitment in a sentence (`fullNightBefore`): the bedtime it asks for, or, past it, that
+ * it was the bedtime. What's kept before the commitment is said as the Sleep dialog's suggestion says it. The night's
+ * hours aren't said: the bedtime leaves room for the suggestion's, which are rounded to the nearest half hour where the
+ * bedtime takes the half hour above.
+ */
+export function fullNightWords(sim: Simulation, night: FullNight): string {
+  const trip = night.item.travelMinutes;
+  const keeps = trip === undefined ? 'an hour and a half to get up and get there'
+    : trip === 0 ? 'an hour to get up'
+      : `an hour to get up and ${trip % 30 === 0 ? hoursSaid(trip / 60).toLowerCase() : formatDurationWords(trip * 60_000)} to get there`;
+  const full = `A full night before it, with ${keeps}`;
+  return night.by >= sim.now ? `${full}, means being asleep by ${formatTime(night.by, sim.zone)}.` : `${full}, needed you asleep by ${formatTime(night.by, sim.zone)}.`;
+}
+
 /** Sleep owed past a normal day's that the suggestion calls real sleep debt (`sleepReason`), and treats as a night's at any hour. */
 const REAL_DEBT = 8;
 
@@ -1505,9 +1580,10 @@ const SMALL_HOURS_END = 5;
  * ending on a day already slept, from five in the morning on and with no real sleep debt, is a second sleep that day.
  * Its suggestion is what the sleep model says it would do:
  * with energy at `SPENT` or more, the line under which the game says to sleep before training, nothing is needed yet, and
- * the dialog starts at the shortest sleep with the reason why, since a sleep under six hours adds to the sleep owed
- * (`applySleep`); under it, the hours that bring energy back to full, as `applySleep` would pay them tonight, to the half
- * hour above and no longer than the night.
+ * the dialog starts at the shortest sleep with the reason why; under it, the hours that bring energy back to full, as
+ * `applySleep` would pay them tonight, to the half hour above and no longer than the night. Until 2026-10-21 both reasons
+ * said a sleep under six hours added to the sleep owed, as `applySleep` then had it of every sleep; it's the night's
+ * shortfall since (brief 20's D3), and a sleep after the night adds none.
  */
 function napNow(sim: Simulation, person: Person, hours: number, owed: number): { hours: number; reason: string } | undefined {
   if (person.nightEndsAt !== undefined && sim.now < person.nightEndsAt) return undefined;
@@ -1523,7 +1599,7 @@ function napNow(sim: Simulation, person: Person, hours: number, owed: number): {
   const energy = person.wellbeing.energy;
   const at = Math.round(energy);
   if (energy >= SPENT) {
-    return { hours: SHORTEST_SLEEP, reason: `You’ve already slept since midnight, and with your energy at ${at} you don’t need more sleep yet. A sleep under six hours adds to the sleep you owe, so it’s best kept for the night.` };
+    return { hours: SHORTEST_SLEEP, reason: `You’ve already slept since midnight, and with your energy at ${at} you don’t need more sleep yet.` };
   }
   const quality = sleepQuality(sim, person);
   let nap = SHORTEST_SLEEP;
@@ -1534,7 +1610,7 @@ function napNow(sim: Simulation, person: Person, hours: number, owed: number): {
   }
   return {
     hours: nap,
-    reason: `You’ve already slept since midnight, but your energy is down to ${at}. ${hoursSaid(nap)} would bring it back to full${nap < 6 ? ', though a sleep under six hours adds to the sleep you owe' : ''}.`,
+    reason: `You’ve already slept since midnight, but your energy is down to ${at}. ${hoursSaid(nap)} would bring it back to full.`,
   };
 }
 

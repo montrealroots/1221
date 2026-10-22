@@ -449,10 +449,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
   "status": "Rewritten",
-  "hash": "bb8f1b1b6f61",
+  "hash": "36a4066eb9d6",
   "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so the guide says why deferred pay is never paid as the screens do, once a sentence (the app's walks), to docs/STYLE.md; read with tests/guide*.test.ts, tools/guide-quotes.mjs and tools/voice-check.mjs passing",
-  "first": "Rewritten And Verified"
+  "evidence": "read against docs/STYLE.md; tests/b20-life-fatigue.test.ts holds the work day energy the cost line says",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
   "status": "Rewritten",
