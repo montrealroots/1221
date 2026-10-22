@@ -108,6 +108,8 @@ describe('a passport run out, renewed in time or not', () => {
       expect(now.issuedAt).toBe(applied.readyAt);
       expect(now.expiresAt).toBe(addYears(applied.readyAt, 10));
       expect(issued[0]!.body).toBe(`Your ${old.name}, ${now.number}, has arrived. It’s good until ${formatDate(now.expiresAt!, sim.zone)}. Your old passport is canceled.`);
+      // With Go There to Papers, as the papers guide promises of a notice about a document.
+      expect(issued[0]!.route).toBe('/workspace/papers');
       expect(documentsOf(sim.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
       // Charged once, never again on arrival.
       expect(sim.universe.transactions.filter((t) => t.memo.startsWith('British Passport'))).toHaveLength(1);
@@ -178,7 +180,7 @@ describe('an ID card, applied for or not, and the bank that asks for one', () =>
     tended(twin, got.readyAt + 2 * MS_DAY);
     for (const sim of [card, jumped]) {
       const arrived = titled(sim, 'Non-Driver Identification Card Arrived');
-      expect(arrived.map((n) => [n.at, n.body])).toEqual([[got.readyAt, 'It’s arrived, and you can use it from today.']]);
+      expect(arrived.map((n) => [n.at, n.body, n.route])).toEqual([[got.readyAt, 'It’s arrived, and you can use it from today.', '/workspace/papers']]);
       const held = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
       expect([held.status, held.issuedAt, held.expiresAt]).toEqual(['valid', got.readyAt, got.expiresAt]);
       expect(photoIdOf(sim.player, sim.now)?.id).toBe(held.id);
@@ -208,7 +210,7 @@ describe('a Social Security number, applied for or not', () => {
     for (const sim of [applies, opened, waits]) tended(sim, at(2026, 9, 27, 10));
     for (const sim of [applies, opened]) {
       expect(hasSsn(sim.player)).toBe(true);
-      expect(titled(sim, 'Your Social Security Card Has Arrived').map((n) => [n.at, n.body])).toEqual([[asked.arrivesAt, 'You now have a Social Security number. A bank that opens accounts online for people with a number can now open one for you that way.']]);
+      expect(titled(sim, 'Your Social Security Card Has Arrived').map((n) => [n.at, n.body, n.route])).toEqual([[asked.arrivesAt, 'You now have a Social Security number. A bank that opens accounts online for people with a number can now open one for you that way.', '/workspace/papers']]);
     }
     expect(hasSsn(waits.player)).toBe(false);
 

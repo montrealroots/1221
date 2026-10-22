@@ -1,17 +1,18 @@
 /**
- * Brief 20's papers area, B1 and B3 for health cover (docs/verification/audit-2026-10-21/criteria.md): three lives
+ * Brief 20's papers area, B1 and B3 for health cover (docs/verification/audit-2026-10-21/criteria.md): four lives
  * alike but for what they do about their cover and their appointment, from the same seed, through the commands Papers
  * sends and the clock. Ada Cole, a citizen from a Scraping family, withdraws from the School on Friday 9 October 2026,
  * after the fifteenth day of classes, so Yale Health covers her thirty days more (Bulletin 2026–27 p.174). One presses
- * Enroll on Papers that day and is given HUSKY D; her twins don't. In November the same week sends all three to the
+ * Enroll on Papers that day and is given HUSKY D; her twins don't. In November the same week sends all four to the
  * doctor, and each is booked at Fair Haven, New Haven's practice for anybody, 23.5 days on.
  *
  * The relevant side: the one HUSKY D covers is seen for nothing, and the uninsured twin is billed SLATE's uninsured
  * price, $183.98 (its $100 of 2024 grown by the physicians' services index to 2026 and marked up 1.75, as
  * tests/evidence-g05-life.test.ts works it), due thirty days on and paid from her checking account on its day; the
  * third, asleep at the appointment, isn't seen or billed, is told so and owes the visit, and is seen and billed once
- * when she books again. The no-leak side: the cover moves neither the week's draw nor the booking (the same day, hour
- * and practice for all three), and the bill is the only medical posting between the two who were seen.
+ * when she books again; the fourth, uninsured, jumps the clock from the booking past the bill's day in one move, and is
+ * seen, billed and paid once, as her twin is in steps. The no-leak side: the cover moves neither the week's draw nor the booking (the same day, hour
+ * and practice for all four), and the bill is the only medical posting between the two who were seen.
  *
  * Each consequence is also reached across a save and a load, and in one jump of the clock, and happens once.
  *
@@ -65,11 +66,12 @@ function forceVisit(sim: Simulation, week: number): void {
 }
 
 describe('B1 and B3: health cover, enrolled or not, and an appointment kept or missed', () => {
-  it('PLAYER JOURNEY: the same visit, booked alike for all three, is free under HUSKY D, $183.98 uninsured and paid on its day once across a reload and a jump, and slept through is neither seen nor billed until it’s booked again', () => {
+  it('PLAYER JOURNEY: the same visit, booked alike for all four, is free under HUSKY D, $183.98 uninsured and paid on its day once across a reload and a jump, kept and billed once by a jump of the clock past it, and slept through is neither seen nor billed until it’s booked again; every notice of it goes to Papers', () => {
     const covered = life('b20-papers-care');
     const bare = life('b20-papers-care');
     const asleep = life('b20-papers-care');
-    const all = [covered, bare, asleep];
+    const jumper = life('b20-papers-care');
+    const all = [covered, bare, asleep, jumper];
     for (const sim of all) {
       tended(sim, at(2026, 10, 9, 9));
       expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(false);
@@ -92,8 +94,7 @@ describe('B1 and B3: health cover, enrolled or not, and an appointment kept or m
     // No leak: the cover moves nothing about the booking. The same day, hour and practice for all three.
     const booked = all.map((sim) => appointmentsOf(sim.player).map((a) => [a.at, a.what, a.clinicId]));
     expect(booked[0]).toEqual([[at(2026, 12, 10, 10), 'A doctor’s visit', FAIR_HAVEN]]);
-    expect(booked[1]).toEqual(booked[0]);
-    expect(booked[2]).toEqual(booked[0]);
+    for (const b of booked.slice(1)) expect(b).toEqual(booked[0]);
     const visit = at(2026, 12, 10, 10);
     expect(coverOn(covered.player, visit)).toBe('medicaid');
     expect(coverOn(bare.player, visit)).toBeUndefined();
@@ -129,6 +130,13 @@ describe('B1 and B3: health cover, enrolled or not, and an appointment kept or m
       expect(healthOf(sim.player).bills.find((b) => b.id === bill.id)!.paid).toBe(true);
     }
     expect(billPosts(covered).filter((b) => b[1] === MEMO)).toEqual([]);
+    // The fourth, uninsured as her twin, jumps from the week's booking past the bill's day in one move of the clock: the
+    // appointment is kept once, billed once and paid once, on the same days as her twin's played in steps.
+    jumper.advanceTo(due + MS_DAY);
+    expect((healthOf(jumper.player).careLog ?? []).filter((c) => c.at === visit).map((c) => c.share)).toEqual([UNINSURED]);
+    expect(billPosts(jumper).filter((b) => b[1] === MEMO)).toEqual([[due, MEMO, -UNINSURED]]);
+    expect(titled(jumper, 'Missed The Doctor')).toEqual([]);
+
     // No leak: the cover changes what the visit costs and nothing else. Both had the same care on the same days (the
     // weeks' draws read no cover), each priced alike while Yale Health covered both, and differ only in this visit.
     const log = (sim: Simulation) => (healthOf(sim.player).careLog ?? []).map((c) => [c.at, c.care, c.what, c.at === visit ? 'this visit' : c.share]);
@@ -145,5 +153,12 @@ describe('B1 and B3: health cover, enrolled or not, and an appointment kept or m
     tended(asleep, again + MS_HOUR);
     expect(healthOf(asleep.player).owedVisit).toBeUndefined();
     expect(healthOf(asleep.player).bills.filter((b) => b.what === 'A doctor’s visit, Fair Haven Community Health Care').map((b) => [b.at, b.amount])).toEqual([[again, 187_20]]);
+
+    // Every notice about her cover, her care and its bills carries Go There to Papers (the papers guide's promise).
+    for (const sim of all) {
+      const health = sim.universe.notifications.filter((n) => n.category === 'health');
+      expect(health.length).toBeGreaterThan(2);
+      for (const n of health) expect([n.title, n.route]).toEqual([n.title, '/workspace/papers']);
+    }
   }, 120_000);
 });

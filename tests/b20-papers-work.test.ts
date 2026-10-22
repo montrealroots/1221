@@ -192,6 +192,7 @@ describe('B1 and B3: after the degree, OPT opens and closes outside work, throug
     expect(q.dueAt).toBe(at(2026, 11, 30, 11));
     expect(q.detail).toBe('Your permission to work in the United States has ended, and your status ends November 30, 2026. You can still apply for OPT before then. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.');
     expect(q.actions.map((a) => a.label)).toEqual(['Apply For OPT', 'Apply For OPT, Premium Processing']);
+    expect(q.route).toBe('/workspace/papers');
     expect(Object.values(us.universe.decisions).filter((d) => d.refType === 'us-status')).toEqual([]);
 
     // Premium processing pressed on Home: $470 and $1,780 leave her bank, once, and the question is settled.
@@ -245,6 +246,7 @@ describe('B1 and B3: after the degree, OPT opens and closes outside work, throug
       expect(o.status).toBe('cancelled');
       expect(titled(sim, 'OPT Ended')).toHaveLength(1);
       expect(titled(sim, 'Out Of Status')).toHaveLength(1);
+      for (const title of ['OPT Approved', 'OPT Ended', 'Out Of Status']) expect(titled(sim, title)[0]!.route).toBe('/workspace/papers');
       expect(sim.player.usOutOfStatus).toBe(o.endedAt);
       expect(f1Of(sim.player)!.status).toBe('cancelled');
     }
