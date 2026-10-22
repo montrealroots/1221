@@ -18,11 +18,11 @@
     },
     {
      "what": "Look After Yourself’s clash reads what’s on the timeline in the hour, so the hour is free again",
-     "at": "src/engine/systems/life.ts:655"
+     "at": "src/engine/systems/life.ts:657"
     },
     {
      "what": "an hour of practice’s commitmentWithin, the same",
-     "at": "src/engine/systems/life.ts:582"
+     "at": "src/engine/systems/life.ts:584"
     },
     {
      "what": "Your Own Plans counts it Called Off",
@@ -69,11 +69,11 @@
     },
     {
      "what": "Look After Yourself refuses what would run into it",
-     "at": "src/engine/systems/life.ts:655"
+     "at": "src/engine/systems/life.ts:657"
     },
     {
      "what": "practice refuses an hour that would run into it",
-     "at": "src/engine/systems/life.ts:582"
+     "at": "src/engine/systems/life.ts:584"
     },
     {
      "what": "a Sleep over it names it and misses it",
@@ -131,7 +131,7 @@
     },
     {
      "what": "no longer pending, it holds no hour against Look After Yourself",
-     "at": "src/engine/systems/life.ts:655"
+     "at": "src/engine/systems/life.ts:657"
     },
     {
      "what": "the jump carries on from the stop",
@@ -185,7 +185,7 @@
     },
     {
      "what": "the meal is paid through spend, the way How You Pay pays the day",
-     "at": "src/engine/systems/life.ts:478"
+     "at": "src/engine/systems/life.ts:480"
     },
     {
      "what": "a workout’s fitness is Stamina",
@@ -193,7 +193,7 @@
     },
     {
      "what": "a workout may hurt, at a run’s or a gym’s rate",
-     "at": "src/engine/systems/life.ts:496"
+     "at": "src/engine/systems/life.ts:498"
     }
    ],
    "experienced": "At once: the toast, the dials and readiness on How You Are, the money on the account. Later: the class or the tape that reads readiness; Stamina on the Player Profile; the scale at midnight; an injury’s notice and its care.",
@@ -240,11 +240,11 @@
     },
     {
      "what": "the short night’s debt, counted for the night only",
-     "at": "src/engine/systems/life.ts:945"
+     "at": "src/engine/systems/life.ts:947"
     },
     {
      "what": "the night nobody chose doesn’t come on top of a chosen one",
-     "at": "src/engine/systems/life.ts:1289"
+     "at": "src/engine/systems/life.ts:1297"
     },
     {
      "what": "a class finds the student asleep (present)",
@@ -272,7 +272,8 @@
      "tests/b20-life-screens.test.ts",
      "tests/evidence-g01-life.test.ts",
      "tests/sleep-commitments.test.ts",
-     "tests/simulation.test.ts"
+     "tests/simulation.test.ts",
+     "tests/language-dynamic.test.ts"
     ],
     "comparisons": [
      "b20-life-bite: eight hours against six and three the night before: energy, debt, readiness and a self-tape judged at eight",
@@ -283,13 +284,15 @@
      "B20-LIFE-2",
      "B20-LIFE-5",
      "B20-LIFE-21",
-     "B20-LIFE-32"
+     "B20-LIFE-32",
+     "B20-LIFE-36",
+     "B20-LIFE-37"
     ],
     "journeys": [
      "b20-life-fatigue: a shoot week, to bed at eleven, at the named bedtime, and as brief 19’s scripted player"
     ]
    },
-   "missing": "Found and repaired (D3): a sleep after the night was charged the short night’s debt again, 7.4 hours for the half hour the dialog suggested at four; nothing said when to go to bed for an early call until it was too late. The Sleep dialog still sleeps from now: a bedtime later this evening can be planned only by opening it then.",
+   "missing": "Found and repaired (D3): a sleep after the night was charged the short night’s debt and wear again, 7.4 hours of debt, 4.2 condition and 7.3 morale for the half hour the dialog suggested at four (the wear found by the journeys area, F1); nothing said when to go to bed for an early call until it was too late. The Sleep dialog still sleeps from now: a bedtime later this evening can be planned only by opening it then. Found and repaired: the slept-through notice’s title said its count as a figure, “You Slept Through 1 Commitment” (the journeys area, F12).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "life.sleep",
@@ -395,7 +398,7 @@
    "consumers": [
     {
      "what": "its hours hold Sleep, Look After Yourself and practice while it runs (occupiedAt)",
-     "at": "src/engine/systems/life.ts:593"
+     "at": "src/engine/systems/life.ts:595"
     },
     {
      "what": "a plan after it in its hours is settled as a clash",
@@ -443,19 +446,19 @@
    "consumers": [
     {
      "what": "fitness and condition drift",
-     "at": "src/engine/systems/life.ts:1007"
+     "at": "src/engine/systems/life.ts:1015"
     },
     {
      "what": "the day on the scale",
-     "at": "src/engine/systems/life.ts:1010"
+     "at": "src/engine/systems/life.ts:1018"
     },
     {
      "what": "the day’s groceries bought, and nourishment up to the day’s",
-     "at": "src/engine/systems/life.ts:1079"
+     "at": "src/engine/systems/life.ts:1087"
     },
     {
      "what": "the morning’s wash",
-     "at": "src/engine/systems/life.ts:1084"
+     "at": "src/engine/systems/life.ts:1092"
     },
     {
      "what": "an injury weighs a day; everyday injury drawn",
@@ -593,19 +596,19 @@
    "consumers": [
     {
      "what": "the night is paid",
-     "at": "src/engine/systems/life.ts:1329"
+     "at": "src/engine/systems/life.ts:1337"
     },
     {
      "what": "no night starts at a commitment the player is at that runs past the night",
-     "at": "src/engine/systems/life.ts:1299"
+     "at": "src/engine/systems/life.ts:1307"
     },
     {
      "what": "a night alone tops out at 74 energy",
-     "at": "src/engine/systems/life.ts:1344"
+     "at": "src/engine/systems/life.ts:1352"
     },
     {
      "what": "a move of an hour or less is the player’s own",
-     "at": "src/engine/systems/life.ts:1257"
+     "at": "src/engine/systems/life.ts:1265"
     },
     {
      "what": "readiness reads what the night left",
@@ -706,7 +709,7 @@
     },
     {
      "what": "a workout refused under 25",
-     "at": "src/engine/systems/life.ts:647"
+     "at": "src/engine/systems/life.ts:649"
     },
     {
      "what": "practice on your feet refused under 25",
@@ -761,7 +764,7 @@
     },
     {
      "what": "a night’s quality",
-     "at": "src/engine/systems/life.ts:867"
+     "at": "src/engine/systems/life.ts:869"
     },
     {
      "what": "hours over 75 cost condition",
@@ -813,7 +816,7 @@
     },
     {
      "what": "a night gives back less owing",
-     "at": "src/engine/systems/life.ts:910"
+     "at": "src/engine/systems/life.ts:912"
     },
     {
      "what": "the waking drain",
@@ -867,7 +870,7 @@
     },
     {
      "what": "a night’s stress relief",
-     "at": "src/engine/systems/life.ts:922"
+     "at": "src/engine/systems/life.ts:924"
     },
     {
      "what": "How You Are says it",
@@ -881,13 +884,15 @@
      "tests/b20-life-bite.test.ts",
      "tests/evidence-g06-life.test.ts",
      "tests/evidence-g08-life.test.ts",
-     "tests/wellbeing-bites.test.ts"
+     "tests/wellbeing-bites.test.ts",
+     "tests/b20-life-fatigue.test.ts"
     ],
     "comparisons": [
      "b20-life-bite: an hour unwinding against a twin who let it pass"
     ],
     "mutations": [
-     "B20-LIFE-25"
+     "B20-LIFE-25",
+     "B20-LIFE-36"
     ],
     "journeys": []
    },
@@ -915,7 +920,7 @@
     },
     {
      "what": "a night gives back less to a worn body",
-     "at": "src/engine/systems/life.ts:921"
+     "at": "src/engine/systems/life.ts:923"
     },
     {
      "what": "a sick day excused under the line",
@@ -927,7 +932,7 @@
     },
     {
      "what": "the midnight drift",
-     "at": "src/engine/systems/life.ts:1048"
+     "at": "src/engine/systems/life.ts:1056"
     }
    ],
    "experienced": "How You Are and readiness; Call In Sick offered; the year’s end, never shown.",
@@ -936,11 +941,13 @@
     "tests": [
      "tests/evidence-g06-life.test.ts",
      "tests/evidence2-b03.test.ts",
-     "tests/wellbeing-bites.test.ts"
+     "tests/wellbeing-bites.test.ts",
+     "tests/b20-life-fatigue.test.ts"
     ],
     "comparisons": [],
     "mutations": [
-     "B20-LIFE-26"
+     "B20-LIFE-26",
+     "B20-LIFE-36"
     ],
     "journeys": []
    },
@@ -972,7 +979,7 @@
     },
     {
      "what": "a workout’s energy cost",
-     "at": "src/engine/systems/life.ts:703"
+     "at": "src/engine/systems/life.ts:705"
     }
    ],
    "experienced": "The Player Profile’s Stamina; How You Are’s condition over time; a performance’s drain.",
@@ -1020,7 +1027,7 @@
     },
     {
      "what": "a meal refused full",
-     "at": "src/engine/systems/life.ts:636"
+     "at": "src/engine/systems/life.ts:638"
     },
     {
      "what": "How You Are says it",
@@ -1073,7 +1080,7 @@
     },
     {
      "what": "a shower refused when clean",
-     "at": "src/engine/systems/life.ts:646"
+     "at": "src/engine/systems/life.ts:648"
     }
    ],
    "experienced": "How You Are and readiness; the menu’s Shower line.",
@@ -1590,7 +1597,7 @@
    "kind": "immediate",
    "claim": "A night is what moves energy, sleep debt and condition most.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "applySleep moves energy, sleep debt and condition by the night’s hours and quality (src/engine/systems/life.ts:924, :927, :961); a waking hour moves them by a few points (life.ts:219).",
+   "holds": "applySleep moves energy, sleep debt and condition by the night’s hours and quality (src/engine/systems/life.ts:926, :929, :969); a waking hour moves them by a few points (life.ts:219).",
    "tests": [
     "tests/b20-life-bite.test.ts",
     "tests/wellbeing-bites.test.ts"
@@ -1612,7 +1619,7 @@
    "kind": "immediate",
    "claim": "A meal, a shower, a workout and an hour unwinding each move the measures they name, and the menu says by how much.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "applyLookingAfter moves each action’s measures (src/engine/systems/life.ts:714); the menu’s figures are applyLookingAfter on a copy (lookAfterOptions, life.ts:795).",
+   "holds": "applyLookingAfter moves each action’s measures (src/engine/systems/life.ts:716); the menu’s figures are applyLookingAfter on a copy (lookAfterOptions, life.ts:797).",
    "tests": [
     "tests/b20-life-bite.test.ts",
     "tests/looking-after.test.ts"
@@ -1720,7 +1727,7 @@
    "kind": "immediate",
    "claim": "A night moves energy, stress, sleep debt, condition and morale by the time you wake.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "applySleep at the wake: energy, stress, sleep debt, condition and morale (src/engine/systems/life.ts:924, :949, :927, :961, :969).",
+   "holds": "applySleep at the wake: energy, stress, sleep debt, condition and morale (src/engine/systems/life.ts:926, :951, :929, :969, :977).",
    "tests": [
     "tests/b20-life-bite.test.ts",
     "tests/evidence-g08-life.test.ts"
@@ -1810,7 +1817,7 @@
    "kind": "optional",
    "claim": "Skipping ahead through the night sleeps for you, but it’s a poorer night that stops at ${COASTING_ENERGY_CEILING} energy.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "A jump of more than an hour through the night pays a night nobody chose at 0.95 of its quality, its energy held to COASTING_ENERGY_CEILING (src/engine/systems/life.ts:1329, :1344).",
+   "holds": "A jump of more than an hour through the night pays a night nobody chose at 0.95 of its quality, its energy held to COASTING_ENERGY_CEILING (src/engine/systems/life.ts:1337, :1352).",
    "tests": [
     "tests/evidence-g08-life.test.ts",
     "tests/b20-life-time.test.ts"
@@ -1832,7 +1839,7 @@
    "kind": "immediate",
    "claim": "Each line moves the measures it names, and readiness with them.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "lookAfterOptions lists each line’s dials from and to, and the readiness it gives (src/engine/systems/life.ts:795); the command applies the same arithmetic (life.ts:487).",
+   "holds": "lookAfterOptions lists each line’s dials from and to, and the readiness it gives (src/engine/systems/life.ts:797); the command applies the same arithmetic (life.ts:489).",
    "tests": [
     "tests/looking-after.test.ts",
     "tests/b20-life-bite.test.ts"
@@ -1854,7 +1861,7 @@
    "kind": "evaluation",
    "claim": "Work Out checks the weather as its hour ends to decide whether it was a run.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "Work Out reads trainingAt after its hour is lived, at s.now (src/engine/systems/life.ts:484, :55).",
+   "holds": "Work Out reads trainingAt after its hour is lived, at s.now (src/engine/systems/life.ts:486, :55).",
    "tests": [
     "tests/b20-life-bite.test.ts",
     "tests/evidence-g07-life.test.ts"
@@ -1876,7 +1883,7 @@
    "kind": "immediate",
    "claim": "A meal is paid the way How You Pay pays the day’s spending: the debit card, the credit card or cash.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "A meal is paid through spend, which pays as How You Pay is set (src/engine/systems/life.ts:478; src/engine/systems/spending.ts:323).",
+   "holds": "A meal is paid through spend, which pays as How You Pay is set (src/engine/systems/life.ts:480; src/engine/systems/spending.ts:323).",
    "tests": [
     "tests/evidence-g12-money.test.ts",
     "tests/evidence-g01-life.test.ts"
@@ -1898,7 +1905,7 @@
    "kind": "history",
    "claim": "The fitness a workout builds is your Stamina on the Player Profile.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "Stamina is fitness (src/engine/systems/attributes.ts:150); a workout records its gain as stamina (src/engine/systems/life.ts:489).",
+   "holds": "Stamina is fitness (src/engine/systems/attributes.ts:150); a workout records its gain as stamina (src/engine/systems/life.ts:491).",
    "tests": [
     "tests/attributes-phase-2b.test.ts",
     "tests/fitness.test.ts"
@@ -1920,7 +1927,7 @@
    "kind": "scheduled",
    "claim": "An injury from a run or a workout needs care, and you may owe a share of its cost.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "A workout may hurt at its rate (src/engine/systems/life.ts:496); the care is billed at what the plan leaves (src/engine/systems/injury.ts:134).",
+   "holds": "A workout may hurt at its rate (src/engine/systems/life.ts:498); the care is billed at what the plan leaves (src/engine/systems/injury.ts:134).",
    "tests": [
     "tests/evidence-g01-life.test.ts",
     "tests/evidence-g08-life.test.ts"
@@ -2138,7 +2145,7 @@
    "kind": "optional",
    "claim": "A live clock keeps you up past midnight; Sleep is how the night gets slept.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "A move of an hour or less is the player’s, who keeps them up (src/engine/systems/life.ts:1257); Sleep sleeps the night (life.ts:433).",
+   "holds": "A move of an hour or less is the player’s, who keeps them up (src/engine/systems/life.ts:1265); Sleep sleeps the night (life.ts:433).",
    "tests": [
     "tests/b20-life-time.test.ts",
     "tests/evidence-g01-life.test.ts"
@@ -2182,7 +2189,7 @@
    "kind": "immediate",
    "claim": "A jump of more than an hour through the night sleeps your character from midnight, a night that stops at ${COASTING_ENERGY_CEILING} energy.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "A jump of more than an hour sleeps the night alone from midnight, at most 74 energy (src/engine/systems/life.ts:1257, :1329, :1344).",
+   "holds": "A jump of more than an hour sleeps the night alone from midnight, at most 74 energy (src/engine/systems/life.ts:1265, :1337, :1352).",
    "tests": [
     "tests/b20-life-time.test.ts",
     "tests/evidence-g08-life.test.ts"
@@ -2204,7 +2211,7 @@
    "kind": "scheduled",
    "claim": "Each midnight crossed buys the day’s groceries and tops up nourishment and hygiene.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "Each midnight crossed buys the day’s groceries and eats up to the day’s nourishment, and washes to 82 (src/engine/systems/life.ts:1079, :1084).",
+   "holds": "Each midnight crossed buys the day’s groceries and eats up to the day’s nourishment, and washes to 82 (src/engine/systems/life.ts:1087, :1092).",
    "tests": [
     "tests/b20-life-time.test.ts",
     "tests/evidence-g04-life.test.ts"
@@ -2288,7 +2295,7 @@
    "kind": "immediate",
    "claim": "Before a long-untouched account goes to the state, the bank’s question carries Keep The Account.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "A long-untouched account’s question carries Keep The Account (src/engine/systems/accountlife.ts:746).",
+   "holds": "A long-untouched account’s question carries Keep The Account (src/engine/systems/accountlife.ts:748).",
    "tests": [
     "tests/guide-examples-money.test.ts"
    ],
@@ -2396,7 +2403,7 @@
    "kind": "immediate",
    "claim": "A plan about to begin refuses anything in Look After Yourself that would run into it.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "lookAfterRefusal refuses what would run into anything wanting the player (src/engine/systems/life.ts:655).",
+   "holds": "lookAfterRefusal refuses what would run into anything wanting the player (src/engine/systems/life.ts:657).",
    "tests": [
     "tests/b20-life-bite.test.ts",
     "tests/evidence-g02-life.test.ts"
@@ -2480,7 +2487,7 @@
    "kind": "evaluation",
    "claim": "Work Out checks the weather as it ends: dry and mild, it was a run, building more fitness and burning more.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "trainingAt: dry and mild, a run, building TRAINING.run (src/engine/systems/life.ts:55); it burns a run’s MET (life.ts:495).",
+   "holds": "trainingAt: dry and mild, a run, building TRAINING.run (src/engine/systems/life.ts:55); it burns a run’s MET (life.ts:497).",
    "tests": [
     "tests/b20-life-bite.test.ts",
     "tests/evidence-g07-life.test.ts"

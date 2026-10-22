@@ -18,7 +18,7 @@ import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { formatDate, formatDurationWords, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant, type TimeZone } from '../core/time';
-import { spokenList } from '../core/text';
+import { countWords, spokenList, titleCaseLabel } from '../core/text';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
@@ -439,7 +439,9 @@ export function registerLife(sim: Simulation): void {
       if (crossed.length > 0) {
         s.notify({
           category: 'schedule',
-          title: `You Slept Through ${crossed.length} Commitment${crossed.length === 1 ? '' : 's'}`,
+          // The count in words under ten, as the game's other titles say one (from 2026-10-21, brief 20's journeys, F12):
+          // until then "You Slept Through 1 Commitment".
+          title: `You Slept Through ${titleCaseLabel(countWords(crossed.length))} ${crossed.length === 1 ? 'Commitment' : 'Commitments'}`,
           body: `You were asleep for ${spokenList(crossed.map((c) => c.label))}, so you missed ${crossed.length === 1 ? 'it' : 'them'}.`,
           importance: 70,
           route: '/workspace/calendar',
@@ -948,8 +950,14 @@ export function applySleep(
   }
   w.stress = clamp(w.stress - effective * 4.2 * settled, 0, 100);
   // Proportional, not a step. Five hours of real rest is break-even; more
-  // than that helps, less costs.
-  const restful = effective - 5;
+  // than that helps, less costs. What less costs is the night's, as its debt
+  // is (from 2026-10-21, the journeys area's F1 to brief 20's life area): a
+  // sleep after the night is on record wears neither condition nor mood. Until
+  // then the half hour at four after a night of five cost 4.2 condition and
+  // 7.3 morale that staying up for it didn't, and the scripted actor's
+  // condition fell from 89.1 at the first call of a shoot week to 54.4 at the
+  // fifth, with the debt already counted once.
+  const restful = night ? effective - 5 : Math.max(0, effective - 5);
   // And a good night still cannot take a body above what a body that age can
   // reach. The daily clamp is not enough on its own: a chosen night runs after it.
   // Nor past what the body's fitness lets rest mend it to (`mendsTo`), though

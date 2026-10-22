@@ -5,7 +5,7 @@
  * worked out from the rule's own numbers or its published source, never from the helper the engine computes them with.
  *
  * - `life.sleep`: a plan of your own slept through is missed quietly (the PLAN_KIND handler's asleep branch) and the
- *   night says so once, "You Slept Through 1 Commitment", and in the plural for two; a sleep inside a kept plan is
+ *   night says so once, "You Slept Through One Commitment" (a figure, "1", until 2026-10-21), and in the plural for two; a sleep inside a kept plan is
  *   refused in `occupiedAt`'s words; a start that isn't a number is refused "Say when to sleep."; the hours are held to
  *   half an hour and sixteen; the first classes read what a night chosen through Sleep left (`focusOf`), against the
  *   night the clock gives a player who chooses none. The Sleep dialog is rendered over the plan and its button pressed.
@@ -270,13 +270,13 @@ describe('life.sleep', () => {
     expect(sim.player.lastSleptAt).toBe(NH(15, 30));
     // Missed, and quietly: the night says what it slept through, the plan's own handler doesn't say it again.
     expect(sim.timeline.get(id)!.status).toBe('missed');
-    expect(notices(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
+    expect(notices(sim, 'You Slept Through One Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
     expect(notices(sim, 'You Missed Gym')).toHaveLength(0);
 
     const again = reload(sim);
     again.advanceTo(again.now + 2 * MS_HOUR);
     expect(again.timeline.get(id)!.status).toBe('missed');
-    expect(notices(again, 'You Slept Through 1 Commitment')).toHaveLength(1);
+    expect(notices(again, 'You Slept Through One Commitment')).toHaveLength(1);
     expect(notices(again, 'You Missed Gym')).toHaveLength(0);
   });
 
@@ -286,8 +286,8 @@ describe('life.sleep', () => {
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: NH(9, 30), durationMinutes: 60 } });
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Lunch', at: NH(12), durationMinutes: 60 } });
     expect(sleep(sim, { hours: 8 }).ok).toBe(true);
-    expect(notices(sim, 'You Slept Through 2 Commitments').map((n) => n.body)).toEqual(['You were asleep for Gym and Lunch, so you missed them.']);
-    expect(notices(sim, 'You Slept Through 1 Commitment')).toHaveLength(0);
+    expect(notices(sim, 'You Slept Through Two Commitments').map((n) => n.body)).toEqual(['You were asleep for Gym and Lunch, so you missed them.']);
+    expect(notices(sim, 'You Slept Through One Commitment')).toHaveLength(0);
   });
 
   it('is refused inside a plan kept, in the plan’s own words, with the clock and the dials as they were; taken once it’s over', () => {

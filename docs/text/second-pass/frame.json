@@ -2268,11 +2268,12 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/life.ts#registerLife <life.sleep>": {
-  "status": "Retained",
-  "hash": "d3937a9ef2a9",
-  "on": "2026-10-19",
-  "reason": "Each refusal names the obstacle, a time in the past, more than a day ahead, or where you are until when, and the missed notice names what you slept through.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ca489aa4fb47",
+  "on": "2026-10-22",
+  "reason": "The slept-through notice's title says its count in words under ten, as the game's other titles do (brief 20, the journeys' F12): until then \"You Slept Through 1 Commitment\".",
+  "evidence": "tests/evidence-g01-life.test.ts (You Slept Through One Commitment and Two Commitments), tests/language-dynamic.test.ts, tests/sleep-commitments.test.ts, tests/b20-life-bite.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#sleepReason": {
   "status": "Retained",

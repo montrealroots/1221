@@ -651,11 +651,17 @@ describe('knob:stressRecovery', () => {
   });
 });
 
-/** Four hours through Sleep at 7:30 AM, from energy 30, stress 30 and no debt (TEST SETUP), with the calendar cleared. */
+/**
+ * Four hours through Sleep at 7:30 AM, from energy 30, stress 30 and no debt (TEST SETUP), with the calendar cleared, as
+ * the night: no night on record since the morning before (TEST SETUP). A new life wakes with the night before on record
+ * (`lastSleptAt`), and from 2026-10-21 (brief 20) a sleep after the night costs nothing a short night costs: until then
+ * these four hours were short-night wear whenever they were taken.
+ */
 function shortNight(seed: string, traits: string[] = [], lean: Partial<Personality> = {}) {
   const sim = student(seed, traits, lean);
   clearCalendar(sim); // TEST SETUP
   dials(sim, { energy: 30, stress: 30, sleepDebt: 0, morale: 50 }); // TEST SETUP
+  sim.player.lastSleptAt = NH(23, 7, 30); // TEST SETUP
   const night = sleep4(sim);
   expect(sim.player.wellbeing.energy).toBeCloseTo(30 + night.recovered, 9);
   return { ...night, morale: sim.player.wellbeing.morale };

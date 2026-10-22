@@ -65,6 +65,12 @@ const NH = CITIES.get('us-ct-newhaven')!;
 describe('the sky the looks show is the sky the game reads', () => {
   it('weather, forecastday, hours, skyhour and skyweek say weatherAt’s, forecastFor’s and hoursOn’s figures', () => {
     const sim = student('b20-looks-sky');
+    // The reading now at nine in the morning, when it isn't the day's high: at two in the afternoon it is, once each is
+    // rounded from the same figure (from 2026-10-21), and a look that said the high for the reading would read the same.
+    go(sim, at(2026, 8, 24, 9));
+    const morning = weatherAt(sim, NH.id)!;
+    expect(morning.temperature).toBeLessThan(morning.high);
+    expect(look(sim, 'weather', NH.id)).toContain(`It’s ${morning.temperature}°F`);
     go(sim, at(2026, 8, 24, 14));
     const now = weatherAt(sim, NH.id)!;
     expect(look(sim, 'weather', NH.id)).toContain(`It’s ${now.temperature}°F`);

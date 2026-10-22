@@ -214,7 +214,7 @@ describe('a class day slept through', () => {
     const t = (s: Simulation) => s.player.school!.tally;
     expect([t(slept).classDays, t(slept).attended, t(slept).excused]).toEqual([1, 0, 0]);
     expect([t(woke).classDays, t(woke).attended, t(woke).excused]).toEqual([1, 1, 0]);
-    expect(slept.universe.notifications.some((n) => n.title === 'You Slept Through 1 Commitment' && n.body === 'You were asleep for Classes, so you missed it.')).toBe(true);
+    expect(slept.universe.notifications.some((n) => n.title === 'You Slept Through One Commitment' && n.body === 'You were asleep for Classes, so you missed it.')).toBe(true);
   });
 });
 

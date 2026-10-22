@@ -526,7 +526,7 @@ describe('life.commitment', () => {
     const night = sleepFor(sim, 8);
     expect(night.value!.wokeAt).toBe(EDT(2026, 8, 25, 7));
     expect(sim.timeline.get(gym)!.status).toBe('missed');
-    expect(titled(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
+    expect(titled(sim, 'You Slept Through One Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
     expect(titled(sim, 'You Missed Gym')).toHaveLength(0);
     // Missed, its hours to 9 AM aren't spent at it: a nap at 7 isn't refused as "You're at Gym until 9:00 AM."
     const nap = sleepFor(sim, 1);

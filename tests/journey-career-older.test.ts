@@ -104,8 +104,8 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     // Played on until she has such a job: her student film, Ivy in Paper Moons, judged Strong, its director the one who
     // refers her, asked on 22 November 2029. Ivy was Working until brief 20's life area (2026-10-21, D3): this player
     // goes to bed at eleven or before five with the Sleep dialog's suggestion, and the half hour it suggests at four
-    // before a seven o'clock call was charged a short night's debt on top of the night's, so her readiness at the film's
-    // three calls was 70.7, 37.5 and 23.6, and 88.3, 74.5 and 65.6 once the short night's debt was the night's alone.
+    // before a seven o'clock call was charged a short night's debt and wear on top of the night's, so her readiness at the
+    // film's three calls was 70.7, 37.5 and 23.6, and 94.5, 85.4 and 80.8 once a short night's costs were the night's alone.
     // Then the first job that could refer her was Hester Vane in The Winter Ledger, cast from an open call in January 2030
     // and judged Strong, its run closed in April, and the referral was asked for on 21 April 2030. Before that, when the
     // parts weren't yet written for an actor, an actress or either, it was Theo in Paper Moons (an actor's part since,

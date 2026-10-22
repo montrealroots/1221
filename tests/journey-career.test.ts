@@ -407,8 +407,10 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const signed = sg.player.pro!.agreements[0]!;
     expect([signed.status, formatDate(signed.signedAt!, zone), formatDate(signed.endsAt!, zone)]).toEqual(['accepted', 'June 6, 2029', 'June 6, 2030']);
     expect(relationOf(sg.player, AGENT.id)!.stage).toBe('represented');
+    // Checked and sent at 10:20 from 2026-10-21, when brief 20's life area had a sleep after the night stop costing
+    // condition and mood as a short night does, and her morning went otherwise by twenty minutes; at 10:00 until then.
     expect(met(A.lines, /^(NOTICE \| (The School’s Follow-Up|A Meeting|You Met|He Offered)|PRESS \| (Check|Send Your|Accept The Agreement)|STOP \| Meeting)/)).toEqual([
-      'May 11, 2029 at 10:00 AM | NOTICE: The School’s Follow-Up After The Showcase', 'May 11, 2029 at 10:00 AM | PRESS: Check Your Materials', 'May 11, 2029 at 10:00 AM | PRESS: Send Your Materials',
+      'May 11, 2029 at 10:00 AM | NOTICE: The School’s Follow-Up After The Showcase', 'May 11, 2029 at 10:20 AM | PRESS: Check Your Materials', 'May 11, 2029 at 10:20 AM | PRESS: Send Your Materials',
       'May 18, 2029 at 10:00 AM | NOTICE: A Meeting Is Set', 'May 25, 2029 at 11:00 AM | STOP: Meeting At Halberd Talent | Ask To Move',
       'June 1, 2029 at 11:00 AM | STOP: Meeting At Halberd Talent | Go', 'June 1, 2029 at 11:00 AM | NOTICE: You Met His Office',
       'June 6, 2029 at 10:00 AM | NOTICE: He Offered You Representation', 'June 6, 2029 at 10:00 AM | PRESS: Accept The Agreement',

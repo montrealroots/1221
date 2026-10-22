@@ -10,10 +10,11 @@
  * - The body's figures were right: a player in bed at eight with the Sleep dialog's suggestion met every call at energy
  *   91 and readiness 95, the work judged the same each day. A player in bed at eleven had five-hour nights, which is what
  *   the dialog offered then, and wore down a day at a time, as short nights do.
- * - What made brief 19's actor fall to energy 0 and readiness 20 by the third day was a sleep debt counted twice: the
+ * - What made brief 19's actor fall to energy 0 and readiness 20 by the third day was a short night counted twice: the
  *   scripted player goes to bed at eleven or before five, so it took the half hour the dialog suggested at four, after a
- *   night of five, and every sleep under six hours was charged the short night's debt. That half hour added 7.4 hours of
- *   debt; staying up added 1.0. Now the short night's debt is the night's (`applySleep`, `life.sleep`).
+ *   night of five, and every sleep under six hours was charged the short night's debt and wear. That half hour added 7.4
+ *   hours of debt where staying up added 1.0, and took 4.2 condition and 7.3 morale. Now a short night's costs are the
+ *   night's (`applySleep`, `life.sleep`).
  * - Nothing told the player when to go to bed for the call until the Sleep dialog, opened at bedtime, said there wasn't
  *   time for a full night. Now Home's Calendar, the Day look and the Sleep dialog say by when (`fullNightBefore`); this
  *   file holds the engine's figure, tests/b20-life-screens.test.ts the screens.
@@ -76,18 +77,22 @@ describe('D3: five shoot days in a row, a 7 AM call two hours away', () => {
     expect(late[4]!.debt).toBeLessThan(12);
   });
 
-  it('brief 19’s scripted player, in bed at eleven or before five, no longer piles up debt from the half hour it takes at four', () => {
+  it('brief 19’s scripted player, in bed at eleven or before five, no longer piles up debt or wears its body from the half hour it takes at four', () => {
     const s = reload(base);
     const debts: number[] = [];
-    while (s.now < END) hour(s, { stop: (x, item) => { if (item.kind === WORK_DAY_KIND) debts.push(x.player.wellbeing.sleepDebt); return 'go'; } });
+    const conditions: number[] = [];
+    while (s.now < END) hour(s, { stop: (x, item) => { if (item.kind === WORK_DAY_KIND) { debts.push(x.player.wellbeing.sleepDebt); conditions.push(x.player.wellbeing.condition); } return 'go'; } });
     expect(debts).toHaveLength(5);
     // Before 2026-10-21: 15.8 at the first call and 67.4 at the fifth (the report's table).
     expect(Math.max(...debts)).toBeLessThan(8);
+    // And condition: 89.1 at the first call and 54.4 at the fifth with the debt counted once and the half hour still
+    // charged the short night's wear; 97.5 and 94.5 since.
+    expect(conditions[0]! - conditions[4]!).toBeLessThan(5);
   });
 });
 
-describe('D3: the short night’s sleep debt is counted once', () => {
-  it('half an hour at four, after a night of five, adds no debt of its own: it clears what its sleep clears, and staying up adds the waking hour’s', () => {
+describe('D3: the short night’s costs are counted once', () => {
+  it('half an hour at four, after a night of five, adds no debt and wears neither body nor mood: it clears what its sleep clears, and staying up adds the waking hour’s', () => {
     const s = reload(base);
     play(s, at(2026, 9, 13, 23), () => false);
     const d0 = s.player.wellbeing.sleepDebt;
@@ -102,6 +107,12 @@ describe('D3: the short night’s sleep debt is counted once', () => {
     expect(napped.player.wellbeing.sleepDebt).toBeCloseTo(Math.max(0, d1 - 0.5 * nap * 1.4), 6);
     expect(awake.player.wellbeing.sleepDebt).toBeCloseTo(d1 + 0.5 * 0.34, 6);
     expect(napped.player.wellbeing.sleepDebt).toBeLessThan(awake.player.wellbeing.sleepDebt);
+    // The night's wear is the night's too (the journeys area's F1): until 2026-10-21 the half hour left condition 4.2
+    // and morale 7.3 under the twin who stayed up. Now condition is the twin's, and morale only drifts a little towards
+    // where it settles, as any sleep moves it.
+    expect(napped.player.wellbeing.condition).toBeCloseTo(awake.player.wellbeing.condition, 6);
+    expect(napped.player.wellbeing.morale).toBeGreaterThan(awake.player.wellbeing.morale - 1);
+    expect(napped.player.wellbeing.energy).toBeGreaterThan(awake.player.wellbeing.energy);
   });
 });
 

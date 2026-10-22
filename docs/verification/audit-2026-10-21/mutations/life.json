@@ -351,5 +351,26 @@
   "tests": [
    "tests/b20-life-fatigue.test.ts"
   ]
+ },
+ {
+  "id": "B20-LIFE-36",
+  "what": "A sleep after the night wears condition and mood as a short night does (the nap's wear repair undone)",
+  "file": "src/engine/systems/life.ts",
+  "find": "  const restful = night ? effective - 5 : Math.max(0, effective - 5);\n",
+  "replace": "  const restful = effective - 5;\n",
+  "tests": [
+   "tests/b20-life-fatigue.test.ts"
+  ]
+ },
+ {
+  "id": "B20-LIFE-37",
+  "what": "The slept-through notice's title says its count as a figure",
+  "file": "src/engine/systems/life.ts",
+  "find": "          title: `You Slept Through ${titleCaseLabel(countWords(crossed.length))} ${crossed.length === 1 ? 'Commitment' : 'Commitments'}`,\n",
+  "replace": "          title: `You Slept Through ${crossed.length} ${crossed.length === 1 ? 'Commitment' : 'Commitments'}`,\n",
+  "tests": [
+   "tests/b20-life-bite.test.ts",
+   "tests/sleep-commitments.test.ts"
+  ]
  }
 ]
