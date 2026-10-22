@@ -512,9 +512,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]": {
   "status": "Rewritten",
-  "hash": "9177ac9d44d1",
+  "hash": "791e4f9fcc1b",
   "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
+  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md: Equity joined by a first day under an Equity contract as by the degree, read against tests/b20-career-defects.test.ts, which plays it",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {

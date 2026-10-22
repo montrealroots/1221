@@ -387,7 +387,8 @@ export interface OutsideWorkRequest {
   id: ProId;
   opportunityId: ProId;
   at: Instant;
-  firstDay: Instant;
+  // `firstDay` went on 2026-10-21 (brief 20's D1, a value written and never read): the work's first day is its
+  // opportunity's (`datesOf`), which the dean's conditions read. A save that has it keeps it, unread.
   workingDays: number;
   classDays: number;
   status: 'pending' | 'approved' | 'refused';

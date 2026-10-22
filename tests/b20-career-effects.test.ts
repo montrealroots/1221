@@ -12,7 +12,8 @@
  * 6. a credit: the résumé, his office's reading of the record, and the part never posted again; every other part's
  *    postings, the same;
  * 7. permission to work (an F-1 graduate on OPT or not): accepting an offer; the roles posted, the audition's judgment
- *    and casting's word, the same.
+ *    and casting's word, the same;
+ * 8. a screen credit's release, on the clock: its footage on a reel then and not before.
  *
  * TEST SETUP, said where it's done, each an input and never the consequence checked: the graduate made by the School's
  * own handlers brought forward; the body tended as the clock moves; for the parts offered, a life at the top of every
@@ -23,7 +24,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY, formatDate } from '@/engine/core/time';
+import { MS_DAY, formatDate, zonedParts } from '@/engine/core/time';
 import { projectById } from '@/engine/content/careerwork';
 import { genreState } from '@/engine/systems/engagement';
 import { f1Of } from '@/engine/systems/permission';
@@ -251,6 +252,30 @@ describe('B1 and B3: the career’s inputs, each changed alone', () => {
     expect(refused.error).toMatch(/^There’s no permission to work in the US among your papers\. .+ That rules out work on \w+ \d+, 20\d\d\.$/);
     expect(opp(without, found!).status).toBe('offered');
     expect(eng(onOpt, opp(onOpt, found!).engagementId!).eligibility).toMatchObject({ authorized: true, basis: 'opt' });
+  }, 240_000);
+
+  it('8. PLAYER JOURNEY: a screen credit’s release comes on the clock, said, and its footage goes on a reel then and not before', () => {
+    const { sim, o } = offeredPart('b20-skill-0', 'route-nine');
+    const id = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } }).engagementId;
+    played(sim, eng(sim, id).days.at(-1)!.to + MS_DAY);
+    const credit = sim.player.pro!.credits.find((c) => c.engagementId === id)!;
+    expect(credit.status).toBe('shot');
+    const footage = `footage:${credit.id}`;
+    const released = sim.universe.scheduled.find((i) => i.kind === 'pro.release' && i.status === 'pending' && i.payload.creditId === credit.id)!;
+    expect(released).toBeDefined();
+    // Before it's out: no footage to cut, and the reel's refusal says the piece isn't recorded work.
+    tended(sim, released.at - MS_DAY);
+    expect(sim.execute({ kind: 'pro.cut_reel', payload: { pieces: [footage] } }).ok).toBe(false);
+    tended(sim, released.at + 2 * 3_600_000);
+    expect(credit).toMatchObject({ status: 'released', releasedAt: released.at });
+    expect(sim.universe.notifications.filter((n) => n.title === 'Static On Route 9 Is Released')).toHaveLength(1);
+    // Out, it's cut into a reel, which then holds the work at its band, for his office and screen casting to read.
+    const p = zonedParts(sim.now, zone);
+    played(sim, at(p.year, p.month, p.day + (p.hour >= 10 ? 1 : 0), 10));
+    sim.must({ kind: 'pro.cut_reel', payload: { pieces: [footage] } });
+    const cut = [...sim.player.pro!.materials].filter((m) => m.kind === 'reel').sort((a, b) => b.made - a.made)[0]!;
+    expect(cut.pieces).toEqual([expect.objectContaining({ ref: footage, from: 'footage', band: credit.band })]);
+    expect(interestOf(sim, sim.player, AGENT, sim.now).factors.find((f) => f.id === 'work')!.words).toContain('your reel');
   }, 240_000);
 });
 

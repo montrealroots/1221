@@ -76,7 +76,8 @@ import { BAND_LABEL, prepLean, type Band } from './coursework';
 import { bandOfQuality, chiefLimit, evaluate, recordWork, type EvalContext, type Evaluation } from './evaluation';
 import { BRIEF, type BriefStep } from './briefs';
 import { PROCESS } from './production';
-import { repeatsToday, stepSpeed } from './attributes';
+import { nerves, repeatsToday, stepSpeed } from './attributes';
+import { enjoyWork } from './enjoyment';
 import { exerts } from './body';
 import { trainingRefusal } from './injury';
 import { SPENT, startRefusal } from './life';
@@ -1431,6 +1432,10 @@ export function registerProJobs(sim: Simulation): void {
       rehearse(e);
       (e.log ??= []).push({ day: i, at: item.at, status: 'worked' });
     } else {
+      // Nerves before a house, as before a School night (`nerves`): stress by composure and extraversion, and composure
+      // and presence grown by facing it. A shoot day has a crew, not a house, as a School tape has none. From 2026-10-21
+      // (brief 20, found by the creation area): until then a professional night read neither.
+      if (kind === 'performance') nerves(s, person, 'performance');
       const ev = evaluate(s, person, workContext(s, person, e, t, i));
       const band = bandOfQuality(ev.overall);
       recordWork(s, person, ev, { at: item.at, what: `${t.role.part}, ${t.project}: ${kind === 'performance' ? 'Performance' : `Shoot Day ${i + 1}`}`, band });
@@ -1448,6 +1453,12 @@ export function registerProJobs(sim: Simulation): void {
         e.creditId = c.id;
       }
     }
+    // The day's work taken as a School night or rehearsal is (`enjoyWork`): a project of a kind they love a better day, and
+    // a rehearsal by agreeableness. From 2026-10-21 (brief 20, found by the creation area): until then a professional day
+    // read neither, while the creation screen and the guide said a day's work in a loved genre is a better day.
+    // The project's kinds of story, as a School play's are (`genresOfPlay`), set beside what the player loves only there.
+    const { genres: kinds } = t;
+    enjoyWork(person, { genres: kinds, ...(kind === 'rehearsal' ? { rehearsal: true } : {}) });
     if (e.log.filter((l) => l.status === 'worked').length === 1) noteEvent(s, e, { kind: 'worked', key: 'first', words: `Your first day as ${t.role.part} in ${t.project}.` });
     if (i === e.days.length - 1 && e.status === 'working') finish(s, person, e, t);
   });
@@ -1584,7 +1595,7 @@ export function registerProJobs(sim: Simulation): void {
     s.advanceTo(start + OUTSIDE_WORK.minutes * MIN);
     const pro = ensurePro(s, person);
     const decides = dayAt(addDays(start, OUTSIDE_WORK.decisionDays, NY), OUTSIDE_WORK.decisionHour);
-    const req: OutsideWorkRequest = { id: s.nextId('pro'), opportunityId: o!.id, at: start, firstDay: days[0]!.from, workingDays: days.length, classDays: classDaysIn(person, days, t.place.cityId), status: 'pending' };
+    const req: OutsideWorkRequest = { id: s.nextId('pro'), opportunityId: o!.id, at: start, workingDays: days.length, classDays: classDaysIn(person, days, t.place.cityId), status: 'pending' };
     (pro.outsideWork ??= []).push(req);
     s.schedule({ at: decides, kind: SCHOOL_ANSWER_KIND, label: 'The Dean Decides On Your Outside Work', category: 'career', priority: 40, refType: 'pro.opportunity', refId: o!.id, payload: { personId: person.id, opportunityId: o!.id } });
     note(s, person, o!, { kind: 'requested', key: 'school:asked', words: `You asked the School to approve ${t.role.part} in ${t.project} in term: ${counted(days.length, 'working day')}, ${counted(req.classDays, 'class day')}.` });
