@@ -71,7 +71,7 @@ import { activeAgreement, ENGAGEMENTS_KEPT, finished } from '../src/engine/syste
 import { roundToCome } from '../src/engine/systems/projobs';
 import { optRefusal, usWorkAuthorized } from '../src/engine/systems/permission';
 import { documentsOf, inForce } from '../src/engine/systems/documents';
-import { playOfCredit } from '../src/engine/systems/engagement';
+import { playOfCredit, requirementOfPlay, requirementOfRole } from '../src/engine/systems/engagement';
 import { genresOfPlay } from '../src/engine/content/plays';
 import { projectById } from '../src/engine/content/careerwork';
 import { inTheBank } from '../src/engine/systems/spending';
@@ -457,10 +457,13 @@ function coherence(sim: Simulation, rec: BRec): Record<string, { pass: boolean; 
     }
     const credited = new Set<string>();
     // The plays the School cast them in: its runs (each with its play, or a production named for one), its credits and the
-    // casting under way; and the career's projects worked in.
-    const plays = [...(s?.runs ?? []).map((x) => x.play ?? playOfCredit(x.production)), ...(s?.credits ?? []).map((c) => playOfCredit(c.production)), s?.casting?.play];
-    for (const play of plays) for (const g of genresOfPlay(play) ?? []) credited.add(g);
-    for (const e of pro?.engagements ?? []) if (e.log?.some((l) => l.status === 'worked')) for (const g of projectById(e.projectId)?.genres ?? []) credited.add(g);
+    // casting under way; and the career's projects worked in. Each with its tags and, from brief 22 (2026-10-22), what the
+    // part played asks where its play states it otherwise (`requirementOfPlay`): Bottom's farce in A Midsummer Night's
+    // Dream, whose tags are romantic comedy and fairy tale. Until then the tags alone were read, and b20-2's farce,
+    // practised as Bottom, read as practised with no play of its own.
+    const parts = [...(s?.runs ?? []).map((x) => [x.play ?? playOfCredit(x.production), (x as { role?: string }).role] as const), ...(s?.credits ?? []).map((c) => [playOfCredit(c.production), c.role] as const), [s?.casting?.play, s?.casting?.role] as const];
+    for (const [play, role] of parts) for (const g of [...(genresOfPlay(play) ?? []), ...requirementOfPlay(play, role).needs.map((n) => n.id)]) credited.add(g);
+    for (const e of pro?.engagements ?? []) if (e.log?.some((l) => l.status === 'worked')) for (const g of [...(projectById(e.projectId)?.genres ?? []), ...requirementOfRole(projectById(e.projectId)!).needs.map((n) => n.id)]) credited.add(g);
     const byGenre = Object.entries(p.engagement?.byGenre ?? {});
     const practicedWithout = byGenre.filter(([g, x]) => (x?.practice ?? 0) > 0 && !credited.has(g)).map(([g]) => g);
     const tapes = Object.entries(rec.commands).filter(([k]) => k.startsWith('practice.self_tape') && !k.includes('refused')).length;
