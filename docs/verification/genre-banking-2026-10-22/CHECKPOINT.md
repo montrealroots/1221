@@ -63,7 +63,8 @@ exact test results. Updated as each module lands; the criteria are `criteria.md`
 
 ## Left
 
-- The gate again on the receipt's commit (`gate-receipt.txt`).
+- Nothing: the merge and any deployment wait on the owner's word.
+- Done: the gate again on the receipt's commit, `4b9cda04`, exit 0, the same totals (`gate-receipt.txt`).
 - Done: the gate in a clean clone of `e8e09123`, exit 0 read from its file, 482 of 482 files, 5,547 of 5,547 tests, none
   skipped, all 22 checks; its figure folded in, the matrix 632 of 658.
 

@@ -240,8 +240,9 @@ The full gate in a clean clone, its exit read from its file:
 - **On the fold's commit, `e8e09123`** (its `src` the tested commit's): exit 0; 482 of 482 test files and 5,547 of
   5,547 tests, none skipped; all 22 checks, the completion matrix last (`final-runs/runs/gate.txt`). Its figure was
   folded in after it, and the matrix moved from 631 to 632.
-- **On this receipt's commit:** run again after these records were written; its figure is in
-  `final-runs/runs/gate-receipt.txt` and below.
+- **On this receipt's commit, `4b9cda04`:** run again after these records were written, as the brief asks after
+  integration: exit 0; 482 of 482 test files and 5,547 of 5,547 tests, none skipped; all 22 checks, the matrix at 632
+  (`final-runs/runs/gate-receipt.txt`). Only this figure was written after it.
 - **Brief 21 added:** 3 test files and 66 tests to brief 20's 479 and 5,481.
 - **Earlier full suites:**
   - on `59e9c4af`: 5,544 of 5,545, the one failure (language-money's old sentence) fixed then;

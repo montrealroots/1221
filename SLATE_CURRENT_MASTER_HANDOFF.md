@@ -43,7 +43,8 @@ instruction."): no pull request is open for it. Nothing is deployed. There is no
 - **Found, not fixed, for the owner:** b20-4, played again, worked 48 days of a booked run after OPT ended mid-run
   (`systems/permission.ts`, `systems/projobs.ts`, neither changed by brief 21; OPT's rules are outside this brief).
 - **The gate:** in a clean clone of `e8e09123` (the fold, its `src` the tested commit's), exit 0 read from its file: 482
-  of 482 test files, 5,547 of 5,547 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`).
+  of 482 test files, 5,547 of 5,547 tests, none skipped, all 22 checks (`final-runs/runs/gate.txt`). Run again on the
+  receipt's commit, `4b9cda04`, the same (`final-runs/runs/gate-receipt.txt`).
 - **For the owner:**
   - the Genre Audit's question (`final-runs/judge-moved.json`);
   - whether a US minimum payment due includes what's past due (SLATE's reading);
