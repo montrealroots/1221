@@ -1,0 +1,42 @@
+[
+ {
+  "id": "F-P1",
+  "claim": "callOff leaves the dropped weeks' paydays on the clock, as before the fix",
+  "file": "src/engine/systems/projobs.ts",
+  "old": "  dropPaydays(sim, e);\n  return worked;",
+  "new": "  return worked;",
+  "tests": [
+   "tests/b22-authorization.test.ts"
+  ]
+ },
+ {
+  "id": "F-P2",
+  "claim": "opening a save takes nothing off: an older save's stale paydays stay",
+  "file": "src/engine/index.ts",
+  "old": "if (e.status === 'canceled') dropPaydays(sim, e);",
+  "new": "if (e.status === 'canceled' && false) dropPaydays(sim, e);",
+  "tests": [
+   "tests/b22-authorization.test.ts"
+  ]
+ },
+ {
+  "id": "F-P3",
+  "claim": "dropPaydays cancels every payday of the engagement, the worked weeks' too",
+  "file": "src/engine/systems/propay.ts",
+  "old": "i.payload.engagementId === e.id && !owed.has(String(i.payload.key)) &&",
+  "new": "i.payload.engagementId === e.id &&",
+  "tests": [
+   "tests/b22-authorization.test.ts"
+  ]
+ },
+ {
+  "id": "F-G1",
+  "claim": "In Progress says 'answers' whoever answers, as before the fix",
+  "file": "src/ui/career/OpportunitiesPane.tsx",
+  "old": "${agrees(t, 'answers', 'answer')} soon.",
+  "new": "answers soon.",
+  "tests": [
+   "tests/pro-opportunities-screen.test.ts"
+  ]
+ }
+]

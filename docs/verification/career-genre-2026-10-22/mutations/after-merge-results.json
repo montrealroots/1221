@@ -1,0 +1,64 @@
+{
+ "F-P1": {
+  "claim": "callOff leaves the dropped weeks' paydays on the clock, as before the fix",
+  "file": "src/engine/systems/projobs.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed (1)",
+   "Tests  2 failed | 10 passed (12)"
+  ],
+  "failing": [
+   "× A1: b20-4, the life that worked 47 days after its OPT ended, opened from its save of 1 September 2029 > PLAYER JOURNEY: its OPT ends at the end of 1 September, its 91st day without work, the days before The Winter Ledger began counting as days without work; the run is released that midnight, before its first day, and not one day of it is worked, judged, practiced, paid or credited 293ms",
+   "× A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows 85ms"
+  ]
+ },
+ "F-P2": {
+  "claim": "opening a save takes nothing off: an older save's stale paydays stay",
+  "file": "src/engine/index.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed (1)",
+   "Tests  1 failed | 11 passed (12)"
+  ],
+  "failing": [
+   "× An older save’s paydays: b20-4 opened from its save of 2 September 2029 at 9 AM, written by the build before 2026-10-22, the run released at midnight > PLAYER JOURNEY: the nine paydays that build left on the clock for The Winter Ledger, owed nothing, come off it on opening; nothing says \"Payday: The Winter Ledger\" any more, and a second opening changes nothing 33ms"
+  ]
+ },
+ "F-P3": {
+  "claim": "dropPaydays cancels every payday of the engagement, the worked weeks' too",
+  "file": "src/engine/systems/propay.ts",
+  "tests": [
+   "tests/b22-authorization.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed (1)",
+   "Tests  2 failed | 10 passed (12)"
+  ],
+  "failing": [
+   "× A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT > PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows 98ms",
+   "× A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 2026 > PLAYER JOURNEY, during: a two-day shoot whose second day falls after OPT’s end date (TEST SETUP: the end moved to the first day’s evening) works the first day, refuses the second at its hour, and pays the one day worked; no screen credit for a shoot not finished 265ms"
+  ]
+ },
+ "F-G1": {
+  "claim": "In Progress says 'answers' whoever answers, as before the fix",
+  "file": "src/ui/career/OpportunitiesPane.tsx",
+  "tests": [
+   "tests/pro-opportunities-screen.test.ts"
+  ],
+  "result": "killed",
+  "summary": [
+   "Test Files  1 failed (1)",
+   "Tests  1 failed | 6 passed (7)"
+  ],
+  "failing": [
+   "× the Opportunities tab > a role submitted for says who answers, its verb agreeing: \"The producers answer soon.\", \"Pennick Casting answers soon.\" 134ms"
+  ]
+ }
+}

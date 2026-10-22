@@ -316,6 +316,17 @@ The pages captured on the built app after #54's merge (2026-10-22) showed two de
 - **"The producers answers soon."** on Opportunities' In Progress, of a role the producers cast, where the submission's
   own notice said "answer". It agrees now (`agrees`), tested in `tests/pro-opportunities-screen.test.ts`, whose earlier
   test took either form.
+- **Deliberate faults** (`mutations/after-merge-mutations.json`, run by `mutations/run.py` in a clean clone of
+  `a2af3b46`, `mutations/after-merge-results.json`): four, each killed by the test written for it.
+  - the dropped weeks' paydays left on the clock: A1;
+  - nothing taken off on opening: "An older save's paydays";
+  - every payday of the engagement taken off, the worked weeks' too: A7;
+  - "answers" whoever answers: the screen test.
+- **On the built app** (`a2af3b46`, the capture's sixteen pages at 1440 again):
+  - **2 September 2029, from the save written before the fix:** "Payday: The Winter Ledger" 0 times on Home and 0 on the
+    calendar, where `main`'s build showed it 4 and 7 times.
+  - **1 September, the run booked:** its six paydays shown on the calendar, as on `main`.
+  - **16 August, Robin's self-tape:** "Submitted. The producers answer soon."
 - **The matrix:** the fix changed `src/engine`, so the 46 rows measured on the engine's or the app's whole source read as
   measured before what they read last changed until final runs measure them again: 588 of 658 until then.
 
