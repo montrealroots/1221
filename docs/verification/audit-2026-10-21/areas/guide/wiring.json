@@ -79,7 +79,7 @@
    "kind": "finance.pay_card",
    "payload": "{ amount: 'full', accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1127"
+   "handler": "src/engine/systems/credit.ts:1216"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -109,7 +109,7 @@
    "kind": "finance.set_autopay",
    "payload": "{ mode: state.autopay === 'full' ? 'minimum' : 'full', accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1146"
+   "handler": "src/engine/systems/credit.ts:1235"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -149,7 +149,7 @@
    "kind": "card.set_everyday",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1158"
+   "handler": "src/engine/systems/credit.ts:1247"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -169,7 +169,7 @@
    "kind": "card.refund_credit",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1120"
+   "handler": "src/engine/systems/credit.ts:1209"
   },
   {
    "file": "src/ui/bank/BankCardOffers.tsx",
@@ -409,7 +409,7 @@
    "kind": "bank.cancel_scheduled",
    "payload": "{ id: item.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:307"
+   "handler": "src/engine/systems/payments.ts:343"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -419,7 +419,7 @@
    "kind": "bank.cancel_standing_order",
    "payload": "{ id: order.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:280"
+   "handler": "src/engine/systems/payments.ts:316"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -429,7 +429,7 @@
    "kind": "bank.set_payments",
    "payload": "{ linkSavings: !pay.linkSavings }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:247"
+   "handler": "src/engine/systems/payments.ts:283"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -439,7 +439,7 @@
    "kind": "bank.schedule_payment",
    "payload": "{ fromId: from, toId: to, amount: cents(spAmount), at }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:290"
+   "handler": "src/engine/systems/payments.ts:326"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -449,7 +449,7 @@
    "kind": "bank.add_standing_order",
    "payload": "{ toId: soTo || savings[0]?.id, amount: cents(soAmount), day: Number(soDay) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:264"
+   "handler": "src/engine/systems/payments.ts:300"
   },
   {
    "file": "src/ui/bank/BankPayments.tsx",
@@ -458,7 +458,7 @@
    "kind": "bank.set_payments",
    "payload": "{ everyday: e.target.value }",
    "verdict": "Right",
-   "handler": "src/engine/systems/payments.ts:247",
+   "handler": "src/engine/systems/payments.ts:283",
    "note": "A select, its options cash, credit and debit, sending the one chosen."
   },
   {
@@ -519,7 +519,7 @@
    "kind": "bank.set_alerts",
    "payload": "{ lowBalance: cents(low), largePayment: cents(large) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/statements.ts:517"
+   "handler": "src/engine/systems/statements.ts:520"
   },
   {
    "file": "src/ui/bank/BankStatements.tsx",
@@ -529,7 +529,7 @@
    "kind": "bank.set_alerts",
    "payload": "{ upcoming: alerts.upcoming === false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/statements.ts:517"
+   "handler": "src/engine/systems/statements.ts:520"
   },
   {
    "file": "src/ui/bank/BankStatements.tsx",
@@ -539,7 +539,7 @@
    "kind": "bank.set_alerts",
    "payload": "{ statements: !alerts.statements }",
    "verdict": "Right",
-   "handler": "src/engine/systems/statements.ts:517"
+   "handler": "src/engine/systems/statements.ts:520"
   },
   {
    "file": "src/ui/bank/RoundUps.tsx",
@@ -1043,7 +1043,7 @@
    "kind": "school.request_conversion",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3693"
+   "handler": "src/engine/systems/school.ts:3696"
   },
   {
    "file": "src/ui/components/StudyPlanPanels.tsx",
@@ -1400,7 +1400,7 @@
    "kind": "bank.close_savings",
    "payload": "{ accountId: account.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/banking.ts:1013"
+   "handler": "src/engine/systems/banking.ts:1062"
   },
   {
    "file": "src/ui/workspaces/BankWorkspace.tsx",
@@ -1410,7 +1410,7 @@
    "kind": "bank.transfer",
    "payload": "{ fromId, toId, amount: cents, ...(moving?.currency ? { in: moving.currency } : {}) }",
    "verdict": "Right",
-   "handler": "src/engine/systems/banking.ts:953"
+   "handler": "src/engine/systems/banking.ts:1002"
   },
   {
    "file": "src/ui/workspaces/BankWorkspace.tsx",
@@ -1420,7 +1420,7 @@
    "kind": "bank.open_savings",
    "payload": "{ bankId: there.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/banking.ts:1000"
+   "handler": "src/engine/systems/banking.ts:1049"
   },
   {
    "file": "src/ui/workspaces/CalendarWorkspace.tsx",
@@ -1865,7 +1865,7 @@
    "kind": "school.buy_ppe",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:3624"
+   "handler": "src/engine/systems/school.ts:3627"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1875,7 +1875,7 @@
    "kind": "school.call_in_sick",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4388"
+   "handler": "src/engine/systems/school.ts:4391"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1885,7 +1885,7 @@
    "kind": "school.cabaret",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4043"
+   "handler": "src/engine/systems/school.ts:4046"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1895,7 +1895,7 @@
    "kind": "school.summer_cabaret",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4119"
+   "handler": "src/engine/systems/school.ts:4122"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1924,7 +1924,7 @@
    "kind": "school.take_shift",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4397"
+   "handler": "src/engine/systems/school.ts:4400"
   },
   {
    "file": "src/ui/workspaces/SchoolWorkspace.tsx",
@@ -1934,7 +1934,7 @@
    "kind": "school.withdraw",
    "payload": "{ confirm: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/school.ts:4349"
+   "handler": "src/engine/systems/school.ts:4352"
   }
  ],
  "decisionAnswers": [

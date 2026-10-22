@@ -33,7 +33,7 @@
       "id": "h-money",
       "testsAdded": [
         { "title": "h-money > PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: the line names it, and “No account” is reached by no life", "closes": "Strengthens the unreachability argument from the life with the fewest accounts creation can make: one checking, bank.close_current refused in its words, the line 'Chase Total Checking: $43.00. Worth $43.'", "evidenceKind": "command" },
-        { "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off at the sixth … the checking still named on the Money line …", "closes": "A charge-off to collections, the one path that closes an account by the bank's hand in a played life, leaves the checking open and named: 'Money Chase Total Checking: $0.00.'", "evidenceKind": "command" }
+        { "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off 180 days past the first due date missed … the checking still named on the Money line …", "closes": "A charge-off to collections, the one path that closes an account by the bank's hand in a played life, leaves the checking open and named: 'Money Chase Total Checking: $0.00.'", "evidenceKind": "command" }
       ],
       "gapsClosed": [],
       "gapsOpen": [

@@ -596,16 +596,16 @@
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-lloyds]": {
   "status": "Rewritten",
-  "hash": "2624707527a6",
+  "hash": "2c1975a6f9d7",
   "on": "2026-10-22",
-  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "evidence": "read again on 2026-10-22 (brief 21): the date the source was read is written as a player reads a date, October 22, 2026, which tests/language-data-dates.test.ts holds; the yield and when it's credited were read against docs/verification/genre-banking-2026-10-22/banking-sources.md and played in tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-nationwide]": {
   "status": "Rewritten",
-  "hash": "cb4165c1a0e5",
+  "hash": "6c4ce19aa78d",
   "on": "2026-10-22",
-  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "evidence": "read again on 2026-10-22 (brief 21): the date the source was read is written as a player reads a date, October 22, 2026, which tests/language-data-dates.test.ts holds; the yield and when it's credited were read against docs/verification/genre-banking-2026-10-22/banking-sources.md and played in tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-natwest]": {
@@ -799,9 +799,9 @@
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-bank-of-america]": {
   "status": "Rewritten",
-  "hash": "4e7f69951216",
+  "hash": "3a1122eb7c50",
   "on": "2026-10-22",
-  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "evidence": "read again on 2026-10-22 (brief 21): the date the source was read is written as a player reads a date, October 22, 2026, which tests/language-data-dates.test.ts holds; the yield and when it's credited were read against docs/verification/genre-banking-2026-10-22/banking-sources.md and played in tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-capital-one]": {
@@ -813,9 +813,9 @@
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-chase]": {
   "status": "Rewritten",
-  "hash": "a69d77546da8",
+  "hash": "4dadfda68e02",
   "on": "2026-10-22",
-  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "evidence": "read again on 2026-10-22 (brief 21): the date the source was read is written as a player reads a date, October 22, 2026, which tests/language-data-dates.test.ts holds; the yield and when it's credited were read against docs/verification/genre-banking-2026-10-22/banking-sources.md and played in tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-citi]": {
@@ -827,9 +827,9 @@
  },
  "src/engine/content/banks-thirteen.ts#THIRTEEN [us-wells-fargo]": {
   "status": "Rewritten",
-  "hash": "e003e0c528e3",
+  "hash": "5facc449bf08",
   "on": "2026-10-22",
-  "evidence": "docs/verification/genre-banking-2026-10-22/banking-sources.md's dated sources for each yield and when it's credited; tests/b21-banking-proof.test.ts plays them; an estimate says so",
+  "evidence": "read again on 2026-10-22 (brief 21): the date the source was read is written as a player reads a date, October 22, 2026, which tests/language-data-dates.test.ts holds; the yield and when it's credited were read against docs/verification/genre-banking-2026-10-22/banking-sources.md and played in tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/engine/content/banks-world-fees.ts#WORLD_FEES": {

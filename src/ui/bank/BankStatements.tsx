@@ -153,7 +153,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <p className="small" style={{ margin: 0 }}>
           {st.terms.kind === 'charge'
             ? `${st.terms.issuer ?? 'The bank'} takes the whole ${money(st.newBalance)} from your checking account${due ? ` on ${formatDate(due, sim.zone)}` : ''}.`
-            : `${onPlan ? 'The plan’s payment' : 'The minimum payment'} is ${money(least!)}${due ? `, due ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)}, and ${carried ? 'new spending isn’t charged interest, though the interest that built up since this statement still comes on the next one' : 'none of it is charged interest'}.`}
+            : `${onPlan ? 'The plan’s payment' : 'The minimum payment'} is ${money(least!)}${st.pastDue && !onPlan ? `, ${money(st.pastDue)} of it past due` : ''}${due ? `, due ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)}, and ${carried ? 'new spending isn’t charged interest, though the interest that built up since this statement still comes on the next one' : 'none of it is charged interest'}.`}
         </p>
       )}
       {/* On a plan nothing draws interest and nothing new goes on the card, so paying the plan’s payment clears it in so many

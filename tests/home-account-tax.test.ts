@@ -12,16 +12,17 @@
  *   1,567,000¢, without the 53¢ (IRC 862(a)(1), 872(a)); Connecticut's tax is on the same 1,567,000¢. Until the current
  *   account opened with its fees, 54¢. Until 2026-10-16 this was 54¢, 472¢ and 589¢: SMBC's fee overdrew the empty current account, and the
  *   overdraft's set-off settled the savings' interest on 31 October and 31 December as if closing it.
- * - A US citizen raised in London, at HSBC UK: its interest, 142 + 610 + 630 + 611 + 632 = 2,625¢, is on the 1040,
- *   1,567,000 + 2,625 = 1,569,625¢; Britain took nothing, so nothing is credited.
+ * - A US citizen raised in London, at HSBC UK: its interest, 141 + 607 + 628 + 608 + 628 + 630 = 2,612¢, is on the
+ *   1040, 1,567,000 + 2,612 = 1,569,612¢; Britain took nothing, so nothing is credited. (Until brief 21, 2026-10-22,
+ *   HSBC's 1.05% AER ran as the nominal rate, 2,625¢.)
  * - A US citizen raised in Tokyo, wealthy, at SMBC: August's 3,168¢ of interest, Japan's 485¢ taken (until 2026-10-16,
  *   65,204¢ and 9,986¢, the set-off's early payments beside it). With $30,000 of wages beside it (TEST SETUP), income
  *   is 3,000,000 + 165,600 + 3,168 = 3,168,768¢; less the $16,100 deduction 1,558,768¢ taxed, $1,240 at 10% to $12,400
  *   and 12% of the $3,187.68 over it, 382.52, so 162,252¢ before the credit. The credit is the lesser of Japan's 485¢
  *   and the US tax on the interest, 162,252 × 3,168 / 3,168,768 = 162.21, so 162¢. With $250,000 instead, the US tax
  *   on it is past Japan's, and the credit is Japan's 485¢ whole.
- * - FBAR: the comfortable citizen's Flexible Saver at most £36,199.03 in 2026, 3,619,903 / 0.79 = 4,582,155.7, so
- *   $45,821.56, over $10,000: told once, through a reload. The modest one's £5,601.74 ($7,090.81) isn't. The modest one
+ * - FBAR: the comfortable citizen's Flexible Saver at most £36,198.38 in 2026, 3,619,838 / 0.79 = 4,582,073.4, so
+ *   $45,820.73 ($45,821.56 until brief 21's AER, above), over $10,000: told once, through a reload. The modest one's £5,601.63 ($7,090.67) isn't. The modest one
  *   who sent $4,000 to HSBC UK and £3,000 back passed $10,000 for some days only, and is told.
  * - Form 8938: the wealthy citizen's savings open ¥7,480 lower, 6,194,897,000 sen, the current account holding it, and
  *   earn the same 3,168¢ (41,299,313¢ at 0.40% for seven nights, 3,168.17), 2,683¢ after Japan's tax, which is ¥4,024.50,
@@ -98,16 +99,18 @@ describe('the interest of an account kept at home, on the return', () => {
   it('puts a US citizen’s interest from HSBC UK on the 1040 and Connecticut’s, with no credit for Britain’s nothing', async () => {
     const sim = await make(life('modest', { ...american, ...london }));
     sim.advanceTo(SEASON);
-    expect(interestAt(sim, 'gb-hsbc')).toEqual([[142, 0], [610, 0], [630, 0], [611, 0], [632, 0], [632, 0]]);
+    // HSBC's 1.05% AER worked from its nominal 1.045% a year, credited monthly (from 2026-10-22, brief 21: until then the
+    // 1.05% ran as nominal, 142, 610, 630, 611, 632 and 632, $26.25); each month about 1.04498/1.05 of what it was.
+    expect(interestAt(sim, 'gb-hsbc')).toEqual([[141, 0], [607, 0], [628, 0], [608, 0], [628, 0], [630, 0]]);
     const y = yearOf(sim.player, 2026);
-    expect(y.foreignInterest).toEqual({ GB: { gross: 2_625, withheld: 0 } });
+    expect(y.foreignInterest).toEqual({ GB: { gross: 2_612, withheld: 0 } });
     const f = figuresFor(sim.player, 2026);
     expect(f.form).toBeUndefined();
-    expect(f.income).toBe(1_569_625);
+    expect(f.income).toBe(1_569_612);
     expect(f.foreignCredit).toBe(0);
     // Connecticut taxes the interest with the rest: its tax on the whole, not on the whole less the interest.
-    expect(f.states).toEqual([{ state: 'us-ct', tax: connecticutTax(1_569_625), credit: 0 }]);
-    expect(connecticutTax(1_569_625)).toBeGreaterThan(connecticutTax(1_567_000));
+    expect(f.states).toEqual([{ state: 'us-ct', tax: connecticutTax(1_569_612), credit: 0 }]);
+    expect(connecticutTax(1_569_612)).toBeGreaterThan(connecticutTax(1_567_000));
   }, 120_000);
 
   it('credits Japan’s 15.315% to a US citizen up to the US tax on the interest, and whole where that tax is more', async () => {
@@ -135,15 +138,15 @@ describe('FBAR and Form 8938, said once at the return, to a US person', () => {
     expect(told(sim)).toEqual([]);
     const again = await reload(sim);
     again.advanceTo(SEASON);
-    expect(told(again)).toEqual([`Your accounts at banks outside America held $45,821.56 together at most in 2026 (the highest each held at a day’s end, at an estimated exchange rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. ${FOOTER}`]);
-    expect(at(again, 'gb-hsbc', 'savings').peak?.['2026']?.max).toBe(3_619_903);
+    expect(told(again)).toEqual([`Your accounts at banks outside America held $45,820.73 together at most in 2026 (the highest each held at a day’s end, at an estimated exchange rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. ${FOOTER}`]);
+    expect(at(again, 'gb-hsbc', 'savings').peak?.['2026']?.max).toBe(3_619_838);
     const later = await reload(again);
     later.advanceTo(SEASON + 20 * 86_400_000);
     expect(told(later)).toHaveLength(1);
 
     const modest = await make(life('modest', { ...american, ...london }));
     modest.advanceTo(SEASON);
-    expect(at(modest, 'gb-hsbc', 'savings').peak?.['2026']?.max).toBe(560_174);
+    expect(at(modest, 'gb-hsbc', 'savings').peak?.['2026']?.max).toBe(560_163);
     expect(told(modest)).toEqual([]);
   }, 180_000);
 

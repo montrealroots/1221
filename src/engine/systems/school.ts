@@ -85,7 +85,7 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { classTrains, readiness } from './life';
-import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
+import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfHolder, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
 import { expenseFor, owe, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
@@ -2525,14 +2525,14 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   const proc = hasProcess(holder) ? holder.process : undefined;
   const playing = proc?.playing;
   // The play's genres known (from 2026-10-22, the owner's brief 21: until then a night read none, `genrePart`).
-  const genre = genrePart(person, genresOfPlay(holder.play) ?? []);
+  const genre = genrePart(person, genresOfHolder(holder) ?? []);
   const prepWith: Record<string, number> = { ...prep, ...genre.prep };
   Object.assign(required, genre.required);
   const read = material || playing ? materialContext(E, material && withPart(material, piece.night!), playing, proc?.direction) : undefined;
   if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = read?.required ?? PLAYING.complete; }
   const ctx = {
     task: E, techniques: castingReads(holder), prep: prepWith, required, difficulty: NIGHT_DIFFICULTY[where][size],
-    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
+    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain } : { families: familiesOf(genresOfHolder(holder) ?? []) }), key: `night:${person.id}:${key}`,
     ...(expected ? { expected: true } : {}),
   };
   return evaluatePiece(sim, person, ctx, piece);
@@ -2565,7 +2565,7 @@ export function nightTogether(sim: Simulation, person: Person, holder: NightHold
   // The part's text as the night read it (from 2026-10-16, brief 10): its own night where it kept one, a supporting part's where not.
   const night = evaluation.inputs.piece?.night ?? playPiece(holder).night!;
   const lean = material || proc?.playing ? materialContext(TASK_PROFILES.performance!, material && withPart(material, night), proc?.playing, proc?.direction).lean : undefined;
-  const weights = lean ? pieceWeights(TASK_PROFILES.performance!, lean, playPiece(holder)) : leanedWeights(TASK_PROFILES.performance!, familiesOf(genresOfPlay(holder.play) ?? []));
+  const weights = lean ? pieceWeights(TASK_PROFILES.performance!, lean, playPiece(holder)) : leanedWeights(TASK_PROFILES.performance!, familiesOf(genresOfHolder(holder) ?? []));
   const norm = (id: AbilityId) => Math.min(1, abilityOf(sim, person, id) / Math.max(1, abilityFull(sim, person, id)));
   return sharedOf(evaluation, read, sim.universe.meta.seed, evaluation.inputs.key, (norm('listening') + norm('adaptability')) / 2, weights);
 }
@@ -2583,7 +2583,7 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const piece = playPiece(holder, 'supporting');
   const read = materialContext(E, material && withPart(material, piece.night!), chosen, proc?.direction);
   // The play's genres as known now (from 2026-10-22, the owner's brief 21): rehearsal completes the rest, not that.
-  const genre = genrePart(person, genresOfPlay(holder.play) ?? []);
+  const genre = genrePart(person, genresOfHolder(holder) ?? []);
   const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1, ...genre.prep }, required: { lines: 1, blocking: 1, notes: 1, approach: 1, ...genre.required }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `preview:${holder.play ?? ''}`, expected: true };
   // A supporting part's workload and text, as its difficulty is (from 2026-10-16, brief 10): the same for every choice compared.
   return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece);
@@ -3768,7 +3768,7 @@ export function registerSchool(sim: Simulation): void {
     // A house answered night after night: listening grows by it (`content/abilities.ts`), and the play's kinds are
     // practiced, one night's worth shared among them (`practiceGenres`).
     ordinary(s, person, 'listening', focusAt(s, person, item.at), 0.5, 'night');
-    practiceGenres(s, person, genresOfPlay(casting.play) ?? []);
+    practiceGenres(s, person, genresOfHolder(casting) ?? []);
     (casting.nights ??= {})[night] = (casting.nights[night] ?? 0) + 1;
     // The night together (from 2026-10-12, `systems/ensemble.ts`): your own night is the band and the record; how the
     // show went as a whole, with the company, is the mood it leaves you in.
@@ -3906,7 +3906,7 @@ export function registerSchool(sim: Simulation): void {
       // A play of a kind they love is a better night, as a rehearsal of it is (from 2026-10-13: until then a School or
       // Rep night, its run-through and a night on call read no genre, while the creation screen and the guide said a
       // night of a play of its kind was a better day; found by the review of that day).
-      enjoyWork(person, { genres: genresOfPlay(casting.play) });
+      enjoyWork(person, { genres: genresOfHolder(casting) });
       // Said of the run-through, not a night (from 2026-10-20, brief 17): until then “today: a solid night” of an afternoon,
       // and an understudy of the company “played An Understudy In The Company through”.
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Your Understudy Run-Through', body: `${bySize(casting.role) ? 'You played the understudies’ run-through' : `You played ${casting.role} through`} for the director today, and ${night === 'off' ? 'it was an off day' : `it was ${night}`}.`, importance: 60, route: '/workspace/school' });
@@ -3925,7 +3925,7 @@ export function registerSchool(sim: Simulation): void {
         // Not judged, as it never was: its energy is the evening of the part it covers (from 2026-10-16, brief 10; at that
         // part's size from 2026-10-20, `partSizeOf`, where until then a lead's).
         tire(person, energyOfNight(nightEvaluation(s, person, `oncall-${item.at}`, casting, item.at, partSizeOf(casting), 'rep', true)));
-        enjoyWork(person, { genres: genresOfPlay(casting.play) });
+        enjoyWork(person, { genres: genresOfHolder(casting) });
         if (person.id === s.universe.playerId) s.notify(wentOn(casting, item.at));
         return;
       }
@@ -3954,7 +3954,7 @@ export function registerSchool(sim: Simulation): void {
         const { energy } = reckonNight(s, person, casting, item, item.payload.which === 'rep');
         grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));
         tire(person, energy);
-        enjoyWork(person, { genres: genresOfPlay(casting.play) });
+        enjoyWork(person, { genres: genresOfHolder(casting) });
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify(wentOn(casting, item.at));
       } else {
         const stage = (item.payload.stage as Stage | undefined) ?? 'work';
@@ -3966,7 +3966,7 @@ export function registerSchool(sim: Simulation): void {
           (casting as Casting & { process?: { dress?: string } }).process!.dress = dress;
         }
         tire(person, ESTIMATE.energy.rehearsal);
-        enjoyWork(person, { rehearsal: true, genres: genresOfPlay(casting.play), novel: casting.kind === 'hughes' || casting.kind === 'carlotta' });
+        enjoyWork(person, { rehearsal: true, genres: genresOfHolder(casting), novel: casting.kind === 'hughes' || casting.kind === 'carlotta' });
       }
       return;
     }

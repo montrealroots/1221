@@ -410,7 +410,7 @@ describe('S: a save from before brief 21 with a US card behind', () => {
     for (const due of CHASE_DUES.slice(0, 2)) miss(sim, due);
     // TEST SETUP: what a save written before 2026-10-22 held at the second miss: no due dates kept, only the count and the
     // last late fee's time; the penalty rate noticed and the introductory rate ended by the old rule.
-    const state = stateOf(sim.player, card()) as Record<string, unknown>;
+    const state = stateOf(sim.player, card()) as unknown as Record<string, unknown>;
     for (const k of ['pastDue', 'noticedFor', 'introEndsAt', 'defaultNoticedFor']) delete state[k];
     state.penalty = { noticeAt: CHASE_DUES[1]! + 60_000, from: CHASE_DUES[1]! + 60_000 + 45 * MS_DAY, onTime: 0 };
     state.introLost = true;

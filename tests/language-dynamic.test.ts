@@ -372,7 +372,9 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     for (const [missed, words] of [[2, 'two'], [5, 'five']] as const) {
       Object.assign(state, { suspended: 'late', missed });
       const line = cardText().split('\n').find((l) => l.startsWith('Suspended:'))!;
-      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. Miss six in a row, and what’s owed is charged off to collections.`);
+      // A US card's charge-off by days (from 2026-10-22, brief 21: until then "Miss six in a row, and what’s owed is charged
+      // off to collections."); this record, set by hand, keeps no due dates, so the rule is said without them.
+      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. If a minimum payment goes unpaid for 180 days after its due date, what’s owed is charged off to collections.`);
       sound(line);
     }
     delete state.suspended; state.missed = 0;

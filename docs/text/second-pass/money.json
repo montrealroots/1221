@@ -1499,9 +1499,9 @@
  },
  "src/ui/bank/BankCard.tsx#CardPanel": {
   "status": "Rewritten",
-  "hash": "3ce1eb3f53bd",
+  "hash": "276ec44a712d",
   "on": "2026-10-22",
-  "evidence": "tests/language-dynamic.test.ts 'a card payment' and tests/language-money.test.ts read the panel's due day; the past-due clause is the statement's own words, read in tests/editorial17-money.test.ts",
+  "evidence": "tests/editorial17-money.test.ts reads the suspended card's charge-off day and the 60-day penalty rule; docs/verification/genre-banking-2026-10-22/app/walk.mjs reads them on the built app's Cards tab at 1440 and 390",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
@@ -1625,9 +1625,9 @@
  },
  "src/ui/bank/BankStatements.tsx#CardStatementView": {
   "status": "Rewritten",
-  "hash": "974ec452b0e1",
-  "on": "2026-10-19",
-  "evidence": "tests/statements-hardship.test.ts, it('asks the plan’s payment, which the due date judges …') and tests/hardship-plan-minimum.test.ts render the minimum line",
+  "hash": "82f3b9c8e29b",
+  "on": "2026-10-22",
+  "evidence": "docs/verification/genre-banking-2026-10-22/app/walk.mjs reads the November statement's minimum with what's past due on the built app's Statements tab at 1440 and 390; tests/b21-banking-proof.test.ts",
   "first": "Pending"
  },
  "src/ui/bank/BankStatements.tsx#Lines": {

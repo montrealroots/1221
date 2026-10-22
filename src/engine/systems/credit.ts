@@ -113,7 +113,7 @@ export interface CardState {
    * so; a plan begun before a statement’s due date sets it in that statement’s place too (`card.request_hardship`).
    * Until 2026-10-13 a plan’s statement kept the card’s own minimum; `plan` is absent on one kept before then.
    */
-  issued?: { at: Instant; minimum: Money; terms: CardTerms; plan?: boolean }[];
+  issued?: { at: Instant; minimum: Money; terms: CardTerms; plan?: boolean; pastDue?: Money }[];
   /** When the yearly fee was last charged (from 2026-10-10), so a month with two statements charges it once. */
   feeAt?: Instant;
   /** Due dates in a row with less than the minimum paid. */
@@ -977,7 +977,9 @@ export function registerCredit(sim: Simulation): void {
     // What this statement says, kept as it said it: on a hardship plan, the plan’s payment (`autopayAsk`), as the due date
     // judges it (from 2026-10-13: until then the card’s own minimum, about $48 on a plan whose due date judged $101; found
     // by that day’s guide audit).
-    (credit.issued ??= []).push({ at: s.now, minimum: credit.statementBalance > 0 ? autopayAsk(s, person, card).due : 0, terms, plan: credit.hardship !== undefined });
+    // With what of it is past due, which the statement says (from 2026-10-22, brief 21).
+    const asks = credit.statementBalance > 0 ? autopayAsk(s, person, card) : undefined;
+    (credit.issued ??= []).push({ at: s.now, minimum: asks?.due ?? 0, terms, plan: credit.hardship !== undefined, ...(asks?.pastDue ? { pastDue: asks.pastDue } : {}) });
     if (credit.issued.length > 60) credit.issued.splice(0, credit.issued.length - 60);
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays, card);
     // Nothing owed: the month is reported now, paid as agreed, and a hardship plan paid off ends, as a due date met would

@@ -73,17 +73,17 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'us-chase', name: 'Chase', iso: 'US', currency: 'USD', format: 'us', code: '021000021',
         current: p('Chase Total Checking', 'chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts', { deposits: 'electronic', monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00 } }),
-        savings: p('Chase Savings', 'chase.com: $5 a month, waived with a $300 balance; 0.01% APY, compounded and credited monthly on the daily collected balance (chase.com savings page, read 2026-10-22)', { rate: 0.0001, quoted: 'APY', monthlyFee: 5_00, waiver: { balanceAtLeast: 300_00 } }),
+        savings: p('Chase Savings', 'chase.com: $5 a month, waived with a $300 balance; 0.01% APY, compounded and credited monthly on the daily collected balance (chase.com savings page, read October 22, 2026)', { rate: 0.0001, quoted: 'APY', monthlyFee: 5_00, waiver: { balanceAtLeast: 300_00 } }),
       },
       {
         id: 'us-bank-of-america', name: 'Bank of America', iso: 'US', currency: 'USD', format: 'us', code: '026009593',
         current: p('Advantage Plus Banking', 'NerdWallet review of Bank of America: $12 a month, waived with a $250 direct deposit or a $1,500 daily balance', { deposits: 'electronic', monthlyFee: 12_00, waiver: { depositsAtLeast: 250_00, balanceAtLeast: 1_500_00 } }),
-        savings: p('Advantage Savings', 'NerdWallet review of Bank of America: 0.01% APY; a daily periodic rate, compounded and paid monthly (bankofamerica.com savings FAQ and Clarity Statement, read 2026-10-22)', { rate: 0.0001, quoted: 'APY' }),
+        savings: p('Advantage Savings', 'NerdWallet review of Bank of America: 0.01% APY; a daily periodic rate, compounded and paid monthly (bankofamerica.com savings FAQ and Clarity Statement, read October 22, 2026)', { rate: 0.0001, quoted: 'APY' }),
       },
       {
         id: 'us-wells-fargo', name: 'Wells Fargo', iso: 'US', currency: 'USD', format: 'us', code: '121000248',
         current: p('Everyday Checking', 'wellsfargo.com: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, $5,000 in linked Wells Fargo accounts (the game takes it as an average), or ages 17 to 24; the military direct-deposit waiver applies to no one in the game', { deposits: 'electronic', monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00, ageBelow: 25 } }),
-        savings: p('Way2Save Savings', 'wellsfargo.com: 0.01% APY, compounded daily and paid monthly, on a 365-day year (Way2Save page and consumer disclosures, read 2026-10-22)', { rate: 0.0001, quoted: 'APY', compounds: 'daily' }),
+        savings: p('Way2Save Savings', 'wellsfargo.com: 0.01% APY, compounded daily and paid monthly, on a 365-day year (Way2Save page and consumer disclosures, read October 22, 2026)', { rate: 0.0001, quoted: 'APY', compounds: 'daily' }),
       },
       {
         id: 'us-citi', name: 'Citi', iso: 'US', currency: 'USD', format: 'us', code: '021000089',
@@ -171,7 +171,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'gb-lloyds', name: 'Lloyds Bank', iso: 'GB', currency: 'GBP', format: 'gb', code: '30',
         current: p('Classic Account', 'lloydsbank.com: no monthly fee'),
-        savings: p('Easy Saver', 'lloydsbank.com: up to 1.00% AER variable; interest paid 12 months after the account opens (lloydsbank.com Easy Saver page, read 2026-10-22)', { rate: 0.01, quoted: 'AER', creditsEvery: 12 }),
+        savings: p('Easy Saver', 'lloydsbank.com: up to 1.00% AER variable; interest paid 12 months after the account opens (lloydsbank.com Easy Saver page, read October 22, 2026)', { rate: 0.01, quoted: 'AER', creditsEvery: 12 }),
       },
       {
         id: 'gb-natwest', name: 'NatWest', iso: 'GB', currency: 'GBP', format: 'gb', code: '60',
@@ -191,7 +191,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'gb-nationwide', name: 'Nationwide Building Society', iso: 'GB', currency: 'GBP', format: 'gb', code: '07',
         current: p('FlexAccount', 'nationwide.co.uk: no monthly fee'),
-        savings: p('Flex Instant Saver', 'nationwide.co.uk: 2.30% AER/gross, calculated daily and credited once a year (read 2026-10-22)', { rate: 0.023, quoted: 'AER', creditsEvery: 12 }),
+        savings: p('Flex Instant Saver', 'nationwide.co.uk: 2.30% AER/gross, calculated daily and credited once a year (read October 22, 2026)', { rate: 0.023, quoted: 'AER', creditsEvery: 12 }),
       },
     ],
   },

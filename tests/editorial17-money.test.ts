@@ -181,8 +181,10 @@ describe('the card’s panel says the next payment and what it costs first, and 
     expect(text).toContain(first);
     const at = (s: string) => { const i = text.indexOf(s); expect(i, s).toBeGreaterThanOrEqual(0); return i; };
     expect(at(first)).toBeLessThan(at('Paying less than the minimum by the due date costs $30 the first time'));
-    expect(at('Paying less than the minimum by the due date costs $30 the first time')).toBeLessThan(at('Miss two payments in a row, and the rate goes up to 29.99% after 45 days’ notice.'));
-    expect(at('Miss two payments in a row, and the rate goes up to 29.99% after 45 days’ notice.')).toBeLessThan(at('The Card’s Terms'));
+    // The penalty rule by days from the due date (from 2026-10-22, brief 21: until then "Miss two payments in a row, and the
+    // rate goes up to 29.99% after 45 days’ notice.").
+    expect(at('Paying less than the minimum by the due date costs $30 the first time')).toBeLessThan(at('A minimum payment more than 60 days late raises the rate to 29.99%, 45 days after the bank’s notice, until six minimum payments in a row are on time.'));
+    expect(at('A minimum payment more than 60 days late raises the rate to 29.99%, 45 days after the bank’s notice, until six minimum payments in a row are on time.')).toBeLessThan(at('The Card’s Terms'));
     // A US card's due day each month (from 2026-10-22, brief 21: until then "payment is due 21 days after each one").
     expect(at('The Card’s Terms')).toBeLessThan(at('Statements come on the 20th, and payment is due on the 13th of the next month, at least 21 days after each one.'));
     // The terms are a native disclosure, shut until opened, with the minimum's rule and the rate inside it.
@@ -196,7 +198,9 @@ describe('the card’s panel says the next payment and what it costs first, and 
     missEach(sim, 2);
     const card = cardsOf(sim, sim.player)[0]!;
     expect(stateOf(sim.player, card).suspended).toBe('late');
-    expect(drawn(sim, BankCard as FunctionComponent<Record<string, unknown>>, { bankId: 'us-chase' }).text).toContain('Suspended: you’ve missed two payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. Miss six in a row, and what’s owed is charged off to collections.');
+    // The charge-off by days from the oldest minimum short, its day named (from 2026-10-22, brief 21: until then "Miss six
+    // in a row, and what’s owed is charged off to collections.").
+    expect(drawn(sim, BankCard as FunctionComponent<Record<string, unknown>>, { bankId: 'us-chase' }).text).toContain('Suspended: you’ve missed two payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. The oldest minimum still short was due October 13, 2026. Pay it before April 11, 2027, 180 days after it was due, or what’s owed is charged off to collections.');
   }, 300_000);
 });
 

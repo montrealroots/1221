@@ -22,11 +22,31 @@ exact test results. Updated as each module lands; the criteria are `criteria.md`
 - The banking-related tests the rules moved, brought to them with dated notes and hand-worked figures; renamed titles
   repointed in the audit and the surfaces matrix.
 
+- Committed and pushed: `63091d78` (genre proof), `168fabdc` (banking), `22dc917c` (effects citations remapped, 251
+  followed and 6 placed by hand; DEVMAP and TRACEABILITY regenerated). The banking-related files on `168fabdc`'s code:
+  1,659 of 1,660, the last (the six-miss journey's past-due words) brought to it after: 91 of 91 in the seven files the
+  wording reaches. The container restarted during the first full suite on `168fabdc` (killed, no result); rerun.
+- After `22dc917c`, uncommitted until the tested commit:
+  - The built-app walk (`app/walk.mjs`, three saves from `app/make-saves.ts`) found the card's panel saying "Miss six
+    in a row" and "Miss two payments in a row" where the rule is days past due, and the Statements tab dating a US
+    card's payment without the 13th; fixed. It passes at 1440 and 390, nothing found.
+  - The banking proof found a payment made after a statement clearing a past-due short and the new minimum at once;
+    fixed (`towardPastDue`), and a US card's minimum payment due now includes what's past due, as Regulation Z's sample
+    statement shows it (`banking-sources.md`). The late notice and the statement say how much of it is past due.
+  - J2 (`tests/b21-journeys.test.ts`) found the Rep's 2026–27 Seagull, a first year's only stage work, read and taught
+    no genre: it's in no play catalog and its casting names no play. Fixed: `SEAGULL_2027.kinds` (tragicomedy and
+    drama, as Uncle Vanya's), read through `genresOfHolder` wherever a School holder's genres are read (calls, nights,
+    the lines' speed, a night's genre part and families, enjoyment). Three tests the fix moved, brought to it: g21 (the
+    delivery the chair reads, now worked from the runs' unrounded records and held exactly), b08 (its night rule now
+    reads the genre part at its 0.75 floor), g27 (her Ilse and his Melchior Gabor, the bond rule checked over both
+    casts). Regression tests: three in `tests/b21-genre-proof.test.ts`. J1 and J2 pass (17 s and 24 s).
+  - Not changed, recorded: the class's expected genre record (`classGenres`) counts School productions and never the
+    Rep, as before; a class scene of The Seagull (`seagull-4`) still reads no genre speed, since `genresOfPlay` keeps
+    to the catalogs and migration 92 reads it (a class scene is outside the paths the brief names).
+
 ## Left
 
-- P3: mutations, genre and banking, in the base clone brought to the new code.
-- J: journeys (school into professional work, mixed genres, banking deadlines, older saves, continuous and reopened);
-  the built app at 1440 and 390.
+- P3: 27 mutations (`B21-G1`–`G11`, `B21-B1`–`B16`), in a clone of the tested commit.
 - The full suite, the effects matrix's file:line citations, devmap and traceability, then the gate in a clean clone and
   the final runs; R: handoff, receipt.
 

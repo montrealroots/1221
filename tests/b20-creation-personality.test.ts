@@ -262,11 +262,12 @@ describe('every disposition moves what it says, through the clock or a command',
     expect(shy.readThrough).toEqual(bold.readThrough);
   });
 
-  it('PLAYER JOURNEY: Risk Tolerance: over 65 the card’s autopay starts on the minimum, so a Scraping family’s $913 is paid down $40 on 11 October and the rest carried; at 50 it’s cleared', () => {
+  // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: Risk Tolerance: over 65 the card’s autopay starts on the minimum, so a Scraping family’s $913 is paid down $40 on 11 October and the rest carried; at 50 it’s cleared”; Chase's due day became the 13th.
+  it('PLAYER JOURNEY: Risk Tolerance: over 65 the card’s autopay starts on the minimum, so a Scraping family’s $913 is paid down $40 on 13 October and the rest carried; at 50 it’s cleared', () => {
     const card = (risk: number) => {
       const sim = begun('b20-c-p-risk', withFamily(ada({ personality: { ...defaultPersonality(), riskTolerance: risk } }), 'scraping'));
       expect(sim.player.credit!.autopay).toBe(risk > 65 ? 'minimum' : 'full');
-      sim.advanceTo(EDT(2026, 10, 12, 12));
+      sim.advanceTo(EDT(2026, 10, 14, 12));
       return Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'credit_card')!.balance;
     };
     expect(card(50)).toBe(0);

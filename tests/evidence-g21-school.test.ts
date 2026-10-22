@@ -569,11 +569,24 @@ describe('school.call', () => {
     expect(read(hosp)).toMatchObject({ source: 'school', nights: 3 });
     expect(read(away)).toMatchObject({ source: 'school', nights: 4 });
     expect(read(away).delivery).toBeCloseTo(read(hosp).delivery * 3 / 4, 3);
-    // And the delivery the chair reads, each run weighted by its nights to eight and its kind.
+    // And the delivery the chair reads, each run weighted by its nights to eight and its kind, worked from the runs' own
+    // records as they stand (the record before at the delivery and weight it was kept at), and kept to three places.
+    // Until 2026-10-22 this was worked from the parts as the casting shows them, each to three places, and held to three:
+    // the whole worked from parts each rounded can be a thousandth off the whole kept, and it held by luck until the
+    // Rep's Seagull came to read its kinds (the owner's brief 21) and the parts came to 0.995 against 0.9945.
     for (const s of [hosp, away]) {
       const lw = s.player.school!.lastWork!;
-      const parts = lw.from!.map((f) => ({ d: f.delivery, w: f.source === 'before' ? f.weight : Math.min(f.nights!, 8) * RUN_WEIGHT[f.source]! }));
-      expect(lw.delivery!).toBeCloseTo(parts.reduce((a, p) => a + p.d * p.w, 0) / parts.reduce((a, p) => a + p.w, 0), 3);
+      const term = Math.max(...s.player.school!.runs!.map((r) => r.readAtCasting ?? -1));
+      const runs = s.player.school!.runs!.filter((r) => r.readAtCasting === term && r.nights > 0);
+      const shown = lw.from!.filter((f) => f.source !== 'before');
+      expect(shown.map((f) => [f.what, f.source, f.nights])).toEqual(runs.map((r) => [r.play ?? r.production, r.source, r.nights]));
+      const parts = [
+        ...lw.from!.filter((f) => f.source === 'before').map((f) => ({ d: f.delivery, w: f.weight! })),
+        ...runs.map((r) => ({ d: r.delivered / r.nights, w: Math.min(r.nights, 8) * RUN_WEIGHT[r.source]! })),
+      ];
+      // Each part shown is its run's to three places.
+      for (const [n, f] of shown.entries()) expect(f.delivery).toBe(Math.round((runs[n]!.delivered / runs[n]!.nights) * 1000) / 1000);
+      expect(lw.delivery!).toBe(Math.round((parts.reduce((a, p) => a + p.d * p.w, 0) / parts.reduce((a, p) => a + p.w, 0)) * 1000) / 1000);
     }
     expect(away.player.school!.lastWork!.delivery!).toBeLessThan(hosp.player.school!.lastWork!.delivery!);
   });

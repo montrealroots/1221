@@ -18,7 +18,10 @@
 
 import { describe, expect, it } from 'vitest';
 import { genreNeeds, relevantGenre } from '@/engine/systems/engagement';
-import { genresOfPlay } from '@/engine/content/plays';
+import { genresOfHolder, genresOfPlay } from '@/engine/content/plays';
+import { SEAGULL_2027 } from '@/engine/content/school';
+import { nightEvaluation } from '@/engine/systems/school';
+import { callAnswered } from '@/engine/systems/production';
 import { PROJECTS, projectById } from '@/engine/content/careerwork';
 import { BRIEFS } from '@/engine/content/briefs';
 import { GENRE_DEFS } from '@/engine/content/genres';
@@ -226,4 +229,45 @@ describe('casting’s reading and a rehearsal day’s lines', () => {
       expect(at({ [UNRELATED]: 100 }), m.name).toBe(0.12);
     });
   }, 120_000);
+});
+
+describe('the Rep’s 2026–27 Seagull, which no play catalog names', () => {
+  // REGRESSION (2026-10-22, found by tests/b21-journeys.test.ts's J2): a first year's only stage work, The Seagull at
+  // the Rep, read no genre and taught none, rehearsed or played, because the catalogs have no play of that name and its
+  // casting names none. The student of J2 went on as Nina twice and came to April knowing no genre.
+  const seagull = (kind: 'understudy' | 'role') => ({ production: SEAGULL_2027.name, role: 'Nina', kind, process: { lines: 1, blocking: 1, blockingMissed: 0, calls: 11, of: 11, notes: [], trained: 0 } });
+
+  it('reads its kinds as Uncle Vanya’s are read, a play the Rep names by its own, and a new play none', () => {
+    expect(genresOfHolder(seagull('understudy'))).toEqual(['tragicomedy', 'drama']);
+    expect(genresOfHolder(seagull('role'))).toEqual(['tragicomedy', 'drama']);
+    expect(genresOfHolder({ production: 'Yale Rep’s March Production', play: 'A Doll’s House', kind: 'understudy' })).toEqual(['domestic_drama', 'drama']);
+    expect(genresOfHolder({ production: 'Carlotta Festival Of New Plays', kind: 'carlotta' })).toBeUndefined();
+    // A School production that happens to carry the name, but not as the Rep's company, isn't it.
+    expect(genresOfHolder({ production: SEAGULL_2027.name, kind: 'thesis' })).toBeUndefined();
+  });
+
+  it('a night of it as Nina’s understudy takes the genre part by the rule: none known 0, both at 45 half of complete, both at 90 complete, an unrelated genre nothing', () => {
+    for (const seed of SEEDS) {
+      const sim = actor(seed);
+      const night = (known: Known) => knowing(sim.player, known, () => nightEvaluation(sim, sim.player, 'proof:seagull', seagull('understudy'), sim.now, 'lead', 'rep'));
+      const [none, medium, max, unrelated] = [night({}), night({ tragicomedy: 45, drama: 45 }), night({ tragicomedy: 90, drama: 90 }), night({ [UNRELATED]: 100 })];
+      // Tragicomedy listed first carries half, drama the other half: 0.5 × 0.45 + 0.5 × 0.45 = 0.45; at 90, 0.9.
+      expect(none.inputs.prep.genre, seed).toBe(0);
+      expect(medium.inputs.prep.genre, seed).toBeCloseTo(0.45, 12);
+      expect(max.inputs.prep.genre, seed).toBeCloseTo(COMPLETE, 12);
+      expect(unrelated.inputs.prep.genre, seed).toBe(0);
+      expect(unrelated.overall, seed).toBe(none.overall);
+      expect(max.overall, seed).toBeGreaterThanOrEqual(medium.overall);
+      expect(medium.overall, seed).toBeGreaterThanOrEqual(none.overall);
+    }
+  }, 120_000);
+
+  it('a call kept there is practice in both its kinds, half a session’s worth each: 5 of what’s left to 100', () => {
+    const sim = actor(SEEDS[0]);
+    sim.player.engagement = { byGenre: {} };
+    callAnswered(sim, sim.player, seagull('understudy'), 'understudy', 1, 11, {}, 'rep');
+    const g = sim.player.engagement!.byGenre;
+    // 100 × 0.1 (a session's practice) × 0.5 (each kind's weight) × (1 − 0/100) = 5.
+    expect([g.tragicomedy?.practice, g.drama?.practice]).toEqual([5, 5]);
+  });
 });
