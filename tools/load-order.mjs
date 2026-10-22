@@ -7,13 +7,22 @@
  * was blank on every page for that reason (`projobs.ts` made a Set of `proagent.ts`'s `MEETING_KIND` as it loaded), and
  * the suite passed. Exits 0 when the modules loaded, 1 when they didn't.
  *
- *   node tools/load-order.mjs
+ * It takes an entry other than `src/main.tsx` (from 2026-10-21, brief 20's School area): a module bundled as the only
+ * entry loads its own imports first, so a ring the app's own order happens to enter at a safe point is entered at
+ * another. Until then only `main.tsx` was bundled, and `projobs.ts` bundled alone stopped at `coursework.ts`'s
+ * `PARTNER_KIND` (read by `world/clock.ts` as it loaded, across the ring proagent → school → projobs → proagent), which
+ * the handoff recorded and nothing held. An entry that isn't `main.tsx` has no page to reach for, so any error fails it.
+ *
+ *   node tools/load-order.mjs                                   the app's own bundle
+ *   node tools/load-order.mjs src/engine/systems/projobs.ts     one module as the bundle's entry
  */
 import { mkdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const root = process.cwd();
+const entry = resolve(root, process.argv[2] ?? 'src/main.tsx');
+const page = /[\\/]src[\\/]main\.tsx$/.test(entry);
 const { build } = await import(pathToFileURL(resolve(root, 'node_modules/vite/dist/node/index.js')).href);
 // Inside the repository's node_modules, so the bundle's own imports (react and the rest) resolve from it.
 const cache = resolve(root, 'node_modules/.cache');
@@ -23,11 +32,11 @@ try {
   await build({
     configFile: false, logLevel: 'error',
     resolve: { alias: { '@': resolve(root, 'src') } },
-    build: { ssr: resolve(root, 'src/main.tsx'), outDir: out, emptyOutDir: false, target: 'es2022', minify: false, rollupOptions: { output: { format: 'es', entryFileNames: 'bundle.mjs' } } },
+    build: { ssr: entry, outDir: out, emptyOutDir: false, target: 'es2022', minify: false, rollupOptions: { output: { format: 'es', entryFileNames: 'bundle.mjs' } } },
   });
   let why;
   try { await import(pathToFileURL(join(out, 'bundle.mjs')).href); } catch (e) { why = e; }
-  const loaded = !why || (why instanceof ReferenceError && /\b(document|window) is not defined\b/.test(why.message));
+  const loaded = !why || (page && why instanceof ReferenceError && /\b(document|window) is not defined\b/.test(why.message));
   console.log(loaded ? `modules loaded${why ? `: main.tsx stopped at "${why.message}", there being no page` : ''}` : `modules didn't load: ${why}`);
   process.exitCode = loaded ? 0 : 1;
 } finally {

@@ -1,0 +1,263 @@
+[
+ {
+  "id": "B20-SCHOOL-1",
+  "what": "A class day slept through is counted as attended: the meeting no longer asks whether the student is there (present)",
+  "file": "src/engine/systems/school.ts",
+  "find": "    if (present(person, item.at)) {\n      school.tally.attended += 1;",
+  "replace": "    if (true) {\n      school.tally.attended += 1;",
+  "tests": [
+   "tests/b20-school-attendance.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-2",
+  "what": "A course is never failed on its meetings: the pass floor on unexcused absences dropped",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "if (counted > 0 && r.attended / counted < COURSE_RULES.passFloor) {",
+  "replace": "if (counted > 0 && r.attended / counted < 0) {",
+  "tests": [
+   "tests/b20-school-attendance.test.ts",
+   "tests/b20-school-degree.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-3",
+  "what": "The repair undone: a last year’s faculty-review warning withholds the degree at once, the repeat it names refused",
+  "file": "src/engine/systems/school.ts",
+  "find": "(stepped !== 'warning' || reviewed)",
+  "replace": "stepped !== 'warning'",
+  "tests": [
+   "tests/b20-school-degree.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-4",
+  "what": "Unpaid at its date, no hold is put on the Yale account",
+  "file": "src/engine/systems/leave.ts",
+  "find": "  school.hold ??= sim.now;\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-school-account.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-5",
+  "what": "Paid, the hold isn’t lifted",
+  "file": "src/engine/systems/leave.ts",
+  "find": "  delete school.hold;\n  notify(sim, person, 'The Financial Hold Is Lifted'",
+  "replace": "  notify(sim, person, 'The Financial Hold Is Lifted'",
+  "tests": [
+   "tests/b20-school-account.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-6",
+  "what": "A leave’s notice deadline passes with no reminder and no dismissal",
+  "file": "src/engine/systems/leave.ts",
+  "find": "if (!person || !school || !l || l.status !== 'on' || l.noticeAt !== undefined) return;",
+  "replace": "if (!person || !school || !l || l.status !== 'on' || l.noticeAt !== undefined || l) return;",
+  "tests": [
+   "tests/b20-school-account.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-7",
+  "what": "Work-study pay never reaches the year’s earnings record",
+  "file": "src/engine/systems/school.ts",
+  "find": "    recordWages(person, item.at, zone(), { gross: pay, workStudy: true });\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-school-workstudy.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-8",
+  "what": "A Saturday shift slept through is worked and paid: the shift no longer asks whether the student is there",
+  "file": "src/engine/systems/school.ts",
+  "find": "    if (present(person, item.at)) {\n      if (!elective) school.tally.worked += 1;",
+  "replace": "    if (true) {\n      if (!elective) school.tally.worked += 1;",
+  "tests": [
+   "tests/b20-school-workstudy.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-9",
+  "what": "Hours excused ill are never converted: the processing counts none",
+  "file": "src/engine/systems/school.ts",
+  "find": "const hours = convertibleHours(person, key, countsUnassigned(item.at));",
+  "replace": "const hours = 0;",
+  "tests": [
+   "tests/b20-school-workstudy.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-10",
+  "what": "A rehearsal slept through costs the partner no trust",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "    moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed });\n    noteIncident(mate, when, 'missed');",
+  "replace": "    noteIncident(mate, when, 'missed');",
+  "tests": [
+   "tests/b20-school-trust.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-11",
+  "what": "A partner under the wary line never declines an ask",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "if (trustOf(mate) < WORK.trust.wary) return { declines: `${first} would rather work on it alone, after last time.` };",
+  "replace": "if (trustOf(mate) < 0) return { declines: `${first} would rather work on it alone, after last time.` };",
+  "tests": [
+   "tests/b20-school-trust.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-12",
+  "what": "Making amends gives back no trust",
+  "file": "src/engine/systems/classmates.ts",
+  "find": "    move(person, mate, open.reduce((n, x) => n + CLASS.amends[x.kind].trust, 0), open.reduce((n, x) => n + CLASS.amends[x.kind].bond, 0));",
+  "replace": "    move(person, mate, 0, open.reduce((n, x) => n + CLASS.amends[x.kind].bond, 0));",
+  "tests": [
+   "tests/b20-school-trust.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-13",
+  "what": "Orientation’s registration session registers nobody",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "      school.registeredAt ??= sim.now;\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-school-firsts.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-14",
+  "what": "An Incomplete’s deadline passes and it stays Incomplete, never Permanent",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "    r.result = 'permanent';\n    r.why = 'an Incomplete not made up in time';",
+  "replace": "    r.why = 'an Incomplete not made up in time';",
+  "tests": [
+   "tests/b20-school-degree.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-15",
+  "what": "A degree waiting on an Incomplete is never conferred once it’s made up",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (open.failed.length || open.incomplete.length || school.hold !== undefined) return;\n  delete school.awaitingDegree;",
+  "replace": "if (open.failed.length || open.incomplete.length || school.hold !== undefined || school) return;\n  delete school.awaitingDegree;",
+  "tests": [
+   "tests/b20-school-degree.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-16",
+  "what": "The load-order hazard back: the clock’s own stop choices declared as the module loads, reading PARTNER_KIND across the import ring",
+  "file": "src/engine/world/clock.ts",
+  "find": "let ownDeclared = false;\n",
+  "replace": "let ownDeclared = true;\ndeclareOwn();\n",
+  "tests": [
+   "tests/module-load-order.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-17",
+  "what": "A class day slept through isn’t said: no “You Missed Classes” that morning",
+  "file": "src/engine/systems/school.ts",
+  "find": "    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes',",
+  "replace": "    if (false) s.notify({ category: 'school', title: 'You Missed Classes',",
+  "tests": [
+   "tests/b20-school-attendance.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-18",
+  "what": "A last year’s thirty days end with nothing asked and the degree isn’t withheld",
+  "file": "src/engine/systems/leave.ts",
+  "find": "  sim.onSchedule(REPEAT_DUE_KIND, (item, s) => {\n    const person = personOf(item);\n    const school = person?.school;\n    if (!person || !school || schoolEnded(school.standing) || school.repeatBy === undefined) return;",
+  "replace": "  sim.onSchedule(REPEAT_DUE_KIND, (item, s) => {\n    const person = personOf(item);\n    const school = person?.school;\n    if (!person || !school || schoolEnded(school.standing) || school.repeatBy === undefined || school) return;",
+  "tests": [
+   "tests/b20-school-degree.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-19",
+  "what": "Each Sunday plans the week ahead twice, so every class day and shift is booked twice",
+  "file": "src/engine/systems/school.ts",
+  "find": "    if (person) planWeek(s, person, item.at + MS_DAY);",
+  "replace": "    if (person) { planWeek(s, person, item.at + MS_DAY); planWeek(s, person, item.at + MS_DAY); }",
+  "tests": [
+   "tests/b20-school-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-20",
+  "what": "A late payment fee charged without the term’s cap: every month’s fee charged in full",
+  "file": "src/engine/systems/leave.ts",
+  "find": "const fee = Math.min(usd(sim, EXTENDED_STUDY.lateFee), usd(sim, EXTENDED_STUDY.lateFeeTermCap) - (fees[key] ?? 0));",
+  "replace": "const fee = usd(sim, EXTENDED_STUDY.lateFee);",
+  "tests": [
+   "tests/b20-school-account.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-21",
+  "what": "Registration read by nothing: registered() ignores both the registration session and a registration caught up, so no first-year is counted in class (B20-SCHOOL-13 survived on one of the two marks; this breaks the reader)",
+  "file": "src/engine/systems/school.ts",
+  "find": "return school.registeredAt !== undefined || cw?.orientation.behind === true || cw?.orientation.done.register !== undefined || school.termsBegun > 1;",
+  "replace": "return cw?.orientation.behind === true || school.termsBegun > 1;",
+  "tests": [
+   "tests/b20-school-firsts.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-22",
+  "what": "A class grows a student the same however rested: the class day no longer reads focus at its hour",
+  "file": "src/engine/systems/school.ts",
+  "find": "      const focus = focusAt(s, person, item.at);\n      const weights = meet(true, false);",
+  "replace": "      const focus = 1;\n      const weights = meet(true, false);",
+  "tests": [
+   "tests/b20-school-time.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-23",
+  "what": "The review counts days called in sick against attendance: excused days no longer left out of what was asked",
+  "file": "src/engine/systems/school.ts",
+  "find": "const expected = (t.classDays - t.excused) + t.calls + t.shifts;",
+  "replace": "const expected = t.classDays + t.calls + t.shifts;",
+  "tests": [
+   "tests/b20-school-degree.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-24",
+  "what": "The School look says good standing whatever the standing",
+  "file": "src/ui/looks/school.tsx",
+  "find": "${STANDING_SAID[school.standing]}",
+  "replace": "${STANDING_SAID.good}",
+  "tests": [
+   "tests/b20-school-looks.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-25",
+  "what": "The review counts assigned shifts as worked whether or not they were",
+  "file": "src/engine/systems/school.ts",
+  "find": "const attendance = expected > 0 ? (t.attended + t.answered + t.worked) / expected : 1;",
+  "replace": "const attendance = expected > 0 ? (t.attended + t.answered + t.shifts) / expected : 1;",
+  "tests": [
+   "tests/b20-school-workstudy.test.ts"
+  ]
+ },
+ {
+  "id": "B20-SCHOOL-26",
+  "what": "Most of a term’s class days missed ill never asks for Yale Health’s assessment: the excused share is never met",
+  "file": "src/engine/systems/leave.ts",
+  "find": "if (t.classDays >= MANDATORY_LEAVE.minClassDays && t.excused / t.classDays >= MANDATORY_LEAVE.excusedShare)",
+  "replace": "if (t.classDays >= MANDATORY_LEAVE.minClassDays && t.excused / t.classDays >= 2)",
+  "tests": [
+   "tests/b20-school-welfare.test.ts"
+  ]
+ }
+]

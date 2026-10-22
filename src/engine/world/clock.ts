@@ -54,11 +54,30 @@ export function defineStop(kind: string, choices: readonly StopChoice[]): void {
   STOPS.set(kind, choices);
 }
 
+/**
+ * The table, with this module's own declarations (below) made the first time it's read, never at this module's load.
+ * `coursework.ts` imports `school.ts`, which imports `projobs.ts`, which imports `proagent.ts`, which imports this module
+ * for `defineStop`; and this module imports `coursework.ts` for `PARTNER_KIND`. A bundle that enters that ring at
+ * `projobs.ts` runs this module's top level while `coursework.ts` is still loading. Until 2026-10-21 (brief 20's School
+ * area, its D4) the declarations ran at load, and `projobs.ts` bundled as its own entry stopped at `Cannot access
+ * 'PARTNER_KIND' before initialization` (`tools/load-order.mjs src/engine/systems/projobs.ts`); the app's own entry,
+ * `main.tsx`, entered the ring elsewhere and loaded. A kind declared here and again by a system still throws, the first
+ * time the table is read.
+ */
+let ownDeclared = false;
+function table(): Map<string, readonly StopChoice[]> {
+  if (!ownDeclared) {
+    ownDeclared = true;
+    declareOwn();
+  }
+  return STOPS;
+}
+
 /** What a kind of commitment offers at its stop beyond Go and Stand Here: nothing, unless it declared something. */
-export const stopChoices = (kind: string): readonly StopChoice[] => STOPS.get(kind) ?? [];
+export const stopChoices = (kind: string): readonly StopChoice[] => table().get(kind) ?? [];
 
 /** Every command a stop's choice runs: the controls the stop gates (`tests/tutorial.test.ts` reads them). */
-export const stopCommands = (): string[] => [...STOPS.values()].flatMap((choices) => choices.map((c) => c.command));
+export const stopCommands = (): string[] => [...table().values()].flatMap((choices) => choices.map((c) => c.command));
 
 /** A stop: what the clock stopped at, where the jump was headed, and where it was sent from. */
 export interface Stop { item: ScheduledItem; wanted: Instant; sentFrom: Instant }
@@ -102,24 +121,27 @@ export function answerStop(sim: Simulation, stop: Stop, answer: Answer): { refus
 // The kinds that offer more than Go and Stand Here
 // ---------------------------------------------------------------------------------------------------------------------
 
-defineStop(PLAN_KIND, [{
-  label: 'Skip It',
-  command: 'calendar.skip',
-  payload: (item) => ({ entryId: item.id }),
-  then: 'carry-on',
-  does: 'marks your plan missed, at no cost but the plan',
-  ahead: 'skip a plan of your own',
-}]);
+/** The world's own kinds' choices, declared the first time the table is read (`table`, above), not as this module loads. */
+function declareOwn(): void {
+  defineStop(PLAN_KIND, [{
+    label: 'Skip It',
+    command: 'calendar.skip',
+    payload: (item) => ({ entryId: item.id }),
+    then: 'carry-on',
+    does: 'marks your plan missed, at no cost but the plan',
+    ahead: 'skip a plan of your own',
+  }]);
 
-defineStop(PARTNER_KIND, [{
-  label: 'Call It Off',
-  command: 'school.cancel_rehearsal',
-  payload: (item) => ({ assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId }),
-  then: 'carry-on',
-  does: 'calls the rehearsal off',
-  ahead: 'call off a rehearsal with a partner, though at short notice that costs their trust',
-  done: 'Rehearsal called off. At this short notice, it costs your partner’s trust.',
-}]);
+  defineStop(PARTNER_KIND, [{
+    label: 'Call It Off',
+    command: 'school.cancel_rehearsal',
+    payload: (item) => ({ assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId }),
+    then: 'carry-on',
+    does: 'calls the rehearsal off',
+    ahead: 'call off a rehearsal with a partner, though at short notice that costs their trust',
+    done: 'Rehearsal called off. At this short notice, it costs your partner’s trust.',
+  }]);
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The Advance menu's lines
