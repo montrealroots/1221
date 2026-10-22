@@ -5507,7 +5507,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -5803,13 +5803,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-profiles",
@@ -5829,7 +5831,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -6085,13 +6087,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-expected-first",
@@ -6111,7 +6115,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -6367,13 +6371,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-neglect",
@@ -6393,7 +6399,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -6769,13 +6775,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-recovery",
@@ -6795,7 +6803,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -7131,13 +7139,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-1",
@@ -7157,7 +7167,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -7453,13 +7463,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-2",
@@ -7479,7 +7491,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -7855,13 +7867,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-3",
@@ -7881,7 +7895,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -8177,13 +8191,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-4",
@@ -8203,7 +8219,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -8499,13 +8515,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-5",
@@ -8525,7 +8543,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -8861,13 +8879,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-6",
@@ -8887,7 +8907,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -9183,13 +9203,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-7",
@@ -9209,7 +9231,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -9505,13 +9527,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-8",
@@ -9531,7 +9555,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -10027,13 +10051,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-9",
@@ -10053,7 +10079,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -10389,13 +10415,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-check-10",
@@ -10415,7 +10443,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -10711,13 +10739,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.4-focused",
@@ -10737,7 +10767,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -10993,13 +11023,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-completed-stay",
@@ -11019,7 +11051,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -11235,13 +11267,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-once",
@@ -11261,7 +11295,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -11517,13 +11551,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-advice-acknowledges",
@@ -11543,7 +11579,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -11799,13 +11835,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-feedback-current",
@@ -11825,7 +11863,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -12081,13 +12119,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-variety",
@@ -12107,7 +12147,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -12323,13 +12363,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-words-alone",
@@ -12349,7 +12391,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -12565,13 +12607,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-repetition-record",
@@ -12591,7 +12635,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -12807,13 +12851,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-defects-fixed",
@@ -12833,7 +12879,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -13409,13 +13455,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.6-interpretations",
@@ -13478,7 +13526,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -13734,13 +13782,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-attributes",
@@ -13760,7 +13810,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -14016,13 +14066,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-genres",
@@ -14042,7 +14094,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -14298,13 +14350,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-specialists",
@@ -14324,7 +14378,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -14620,13 +14674,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-advice-forecasts",
@@ -14646,7 +14702,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -14942,13 +14998,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-stamina",
@@ -14968,7 +15026,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -15224,13 +15282,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-ledger",
@@ -15250,7 +15310,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -15506,13 +15566,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "journeys.7-save",
@@ -15532,7 +15594,7 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "citations": [
     {
@@ -15828,13 +15890,15 @@
     },
     {
      "file": "docs/verification/genre-banking-2026-10-22/final-runs/journeys-final/summary.json"
+    },
+    {
+     "file": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final/summary.json"
     }
    ],
    "measured": {
-    "commit": "fd32e869",
+    "commit": "0ae97df3",
     "watch": "engine"
-   },
-   "missing": "Played again on brief 22's commit 16b50e07 (runs22.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 24 with all ten checks passed; failed: J18; each ending as brief 21's final run ended."
+   }
   },
   {
    "id": "Genre Audit-R",

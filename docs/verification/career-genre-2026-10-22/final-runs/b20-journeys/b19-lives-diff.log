@@ -1,0 +1,948 @@
+Only in docs/verification/career-2026-10-20/playthroughs/transcripts: at-0099d518
+Only in docs/verification/career-2026-10-20/playthroughs/transcripts: at-a483247d
+diff -r docs/verification/career-2026-10-20/playthroughs/transcripts/life-a-v1-21.txt /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys/b19-lives/life-a-v1-21.txt
+31c31
+< January 23, 2029 at 9:00 AM | NOTICE | Lucia: A Different Reading | Lucia reads the obstacle in Bed Fourteen as “The patient is threatening to sue”, where you have “Every error has to be reported, and the one person who could leave it out is her boss”, and asks what you think.
+---
+> January 23, 2029 at 9:00 AM | NOTICE | Lucia: A Different Reading | Lucia reads the obstacle in Office Hours as “The teacher has it in for his family”, where you have “Five missing lab reports, and he didn’t know”, and asks what you think.
+47c47
+< January 31, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Office Hours on February 3, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+---
+> January 31, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Hedda Gabler on February 3, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+59c59
+< February 2, 2029 at 9:00 AM | NOTICE | Caleb: A Different Reading | Caleb asks, gently, whether the obstacle in Office Hours could be “The teacher has it in for his family”. You have “Five missing lab reports, and he didn’t know”.
+---
+> February 2, 2029 at 9:00 AM | NOTICE | Caleb: A Different Reading | Caleb asks, gently, whether the obstacle in Hedda Gabler could be “He’s drunk and can’t keep his head”. You have “She is married now, and won’t let him speak to her as he used to”.
+61c61
+< February 2, 2029 at 5:00 PM | NOTICE | You’re In The Actor Showcase | No course was incomplete at the end of the term’s fourth week, so you take part in the Actor Showcase. Your scenes: The Father in Office Hours and Priya in Bed Fourteen. Prepare them on the Coursework tab: they’re due in New York on April 30. The course’s rehearsal calls begin on April 17.
+---
+> February 2, 2029 at 5:00 PM | NOTICE | You’re In The Actor Showcase | No course was incomplete at the end of the term’s fourth week, so you take part in the Actor Showcase. Your scenes: Lovborg in Hedda Gabler and The Father in Office Hours. Prepare them on the Coursework tab: they’re due in New York on April 30. The course’s rehearsal calls begin on April 17.
+108,109c108,109
+< February 21, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Office Hours on February 24, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+< February 21, 2029 at 9:00 AM | NOTICE | Lucia: A Different Reading | Lucia reads your objective in Bed Fourteen as “Find out whether she’s fit to be a nurse at all”, where you have “Keep the error off her record, since a second report puts her under review”, and asks what you think.
+---
+> February 21, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Hedda Gabler on February 24, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+> February 21, 2029 at 9:00 AM | NOTICE | Lucia: A Different Reading | Lucia reads your objective in Office Hours as “Find out how it got this far without his knowing”, where you have “Keep his son on the team”, and asks what you think.
+118c118
+< February 26, 2029 at 7:00 PM | NOTICE | Caleb Didn’t Come | You waited for Caleb to rehearse Office Hours, and they didn’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Caleb, or use Run It With A Reader to work on your side of it.
+---
+> February 26, 2029 at 7:00 PM | NOTICE | Caleb Didn’t Come | You waited for Caleb to rehearse Hedda Gabler, and they didn’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Caleb, or use Run It With A Reader to work on your side of it.
+138c138
+< March 13, 2029 at 9:00 AM | NOTICE | Caleb: An Apology | Caleb apologizes for not coming to rehearse Office Hours on February 26. They lost track of the day, and they’re sorry to have left you waiting.
+---
+> March 13, 2029 at 9:00 AM | NOTICE | Caleb: An Apology | Caleb apologizes for not coming to rehearse Hedda Gabler on February 26. They lost track of the day, and they’re sorry to have left you waiting.
+143c143
+< March 16, 2029 at 9:00 AM | NOTICE | Caleb: A Different Reading | Caleb asks, gently, whether the obstacle in Office Hours could be “The teacher has it in for his family”. You have “Five missing lab reports, and he didn’t know”.
+---
+> March 16, 2029 at 9:00 AM | NOTICE | Caleb: A Different Reading | Caleb asks, gently, whether the obstacle in Hedda Gabler could be “He’s drunk and can’t keep his head”. You have “She is married now, and won’t let him speak to her as he used to”.
+153c153
+< March 21, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Office Hours on March 24, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+---
+> March 21, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Hedda Gabler on March 24, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+164c164
+< March 24, 2029 at 7:00 PM | NOTICE | Caleb Didn’t Come | You waited for Caleb to rehearse Office Hours, and they didn’t come. It’s the second time they haven’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Caleb, or use Run It With A Reader to work on your side of it.
+---
+> March 24, 2029 at 7:00 PM | NOTICE | Caleb Didn’t Come | You waited for Caleb to rehearse Hedda Gabler, and they didn’t come. It’s the second time they haven’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Caleb, or use Run It With A Reader to work on your side of it.
+172c172
+< March 28, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Office Hours on March 31, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+---
+> March 28, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Hedda Gabler on March 31, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+190c190
+< April 6, 2029 at 9:00 AM | NOTICE | Caleb: An Apology | Caleb apologizes for not coming to rehearse Office Hours on March 24. They lost track of the day, and they’re sorry to have left you waiting. That’s two rehearsals they’ve missed with you.
+---
+> April 6, 2029 at 9:00 AM | NOTICE | Caleb: An Apology | Caleb apologizes for not coming to rehearse Hedda Gabler on March 24. They lost track of the day, and they’re sorry to have left you waiting. That’s two rehearsals they’ve missed with you.
+199c199
+< April 11, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Office Hours on April 14, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+---
+> April 11, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Hedda Gabler on April 14, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+209c209
+< April 18, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Office Hours on April 21, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+---
+> April 18, 2029 at 9:00 AM | NOTICE | Caleb Asks To Rehearse | Caleb asks to rehearse Hedda Gabler on April 21, 2029 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Caleb on the Coursework tab. Saying no costs nothing.
+220c220
+< April 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $162,280 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+---
+> April 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $162,280 now, because your credit score is 700 or more, you haven’t paid late in the past year, and your income or savings cover the payments on it.
+232c232
+< April 25, 2029 at 9:00 AM | NOTICE | Lucia: A Different Reading | Lucia reads the given circumstances in Bed Fourteen as “The middle of a code, with the patient crashing”, where you have “The quiet hours before dawn, alone at the station, with the report due by seven”, and asks what you think.
+---
+> April 25, 2029 at 9:00 AM | NOTICE | Lucia: A Different Reading | Lucia reads the given circumstances in Office Hours as “In the stands at a basketball game”, where you have “Late in an empty classroom, the other parents gone, Friday’s deadline close”, and asks what you think.
+243c243
+< April 30, 2029 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. The Father in Office Hours: Working, 61 of 100. Priya in Bed Fourteen: Working, 60 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
+---
+> April 30, 2029 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. Lovborg in Hedda Gabler: Working, 60 of 100. The Father in Office Hours: Working, 61 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
+245c245
+< May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. The Father in Office Hours: Working, 60 of 100. Priya in Bed Fourteen: Working, 60 of 100. You play them again in Los Angeles on May 8.
+---
+> May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. Lovborg in Hedda Gabler: Working, 60 of 100. The Father in Office Hours: Working, 61 of 100. You play them again in Los Angeles on May 8.
+247c247
+< May 8, 2029 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. The Father in Office Hours: Working, 62 of 100. Priya in Bed Fourteen: Working, 61 of 100. You passed Actor Showcase.
+---
+> May 8, 2029 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. Lovborg in Hedda Gabler: Working, 62 of 100. The Father in Office Hours: Working, 61 of 100. You passed Actor Showcase.
+249,250c249,250
+< May 11, 2029 at 10:00 AM | PRESS | Check Your Materials | done
+< May 11, 2029 at 10:00 AM | PRESS | Send Your Materials | done
+---
+> May 11, 2029 at 10:20 AM | PRESS | Check Your Materials | done
+> May 11, 2029 at 10:20 AM | PRESS | Send Your Materials | done
+286c286
+< June 18, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Brisbane Hall Casting answers on Wednesday, June 20, 2029.
+---
+> June 18, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on March 5, 2029: Submissions for Jess closed on March 12, 2029. Brisbane Hall Casting answers on Wednesday, June 20, 2029.
+333,352d332
+< July 16, 2029 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from July 3, 2029. Ostrander Vale Casting answers on Wednesday, July 18, 2029.
+< July 18, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, July 23, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+< July 18, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< July 18, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< July 18, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< July 18, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< July 18, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< July 18, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< July 18, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 18, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< July 19, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+354,355d333
+< July 23, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+< July 24, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting didn’t call you back for Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+376c354
+< July 31, 2029 at 5:00 PM | NOTICE | Not Cast As Nell | Thomas Ashgrove passed this on: Pennick Casting didn’t call you back for Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+---
+> July 31, 2029 at 5:00 PM | NOTICE | A Callback For Nell | Thomas Ashgrove passed this on: Pennick Casting wants to see you again for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, August 6, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+377a356,357
+> August 6, 2029 at 2:00 PM | STOP | Callback: Nell, A House On Calder Street | Go
+> August 9, 2029 at 5:00 PM | NOTICE | Not Cast As Nell | Thomas Ashgrove passed this on: Pennick Casting cast another actor as Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+379c359,361
+< August 27, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, August 29, 2029.
+---
+> August 27, 2029 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from July 3, 2029. It’s a new casting of the part. The last time it was posted to you, on May 14, 2029: Submissions for Hester Vane closed on May 21, 2029. Ostrander Vale Casting answers on Wednesday, August 29, 2029.
+> August 27, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 11, 2029: Kettering Casting cast another actor as Desk Clerk. Kettering Casting answers on Wednesday, August 29, 2029.
+> August 29, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, September 3, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+381,399c363,400
+< August 29, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for calloway-files | done
+< August 29, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for calloway-files | done
+< August 29, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+< August 29, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+< August 29, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+< August 29, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 29, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 30, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< August 30, 2029 at 10:00 AM | PRESS | Tape It for calloway-files | done
+---
+> August 29, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> August 29, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> August 29, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> August 29, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> August 29, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> August 29, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 29, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 30, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> August 30, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for calloway-files | done
+> August 30, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for calloway-files | done
+> August 30, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+> August 30, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+> August 30, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+> August 30, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 30, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 31, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> August 31, 2029 at 10:00 AM | PRESS | Tape It for calloway-files | done
+401c402,404
+< September 3, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. Quillon Casting answers on Wednesday, September 5, 2029.
+---
+> September 3, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 25, 2029: Quillon Casting didn’t call you back for Wren. Quillon Casting answers on Wednesday, September 5, 2029.
+> September 3, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+> September 4, 2029 at 5:00 PM | NOTICE | A Callback For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you again for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, September 10, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+403d405
+< September 5, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for gull-season | done
+405c407
+< September 5, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for gull-season | done
+---
+> September 5, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for gull-season | done
+408,413c410,416
+< September 5, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+---
+> September 5, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> September 5, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+415,421c418,424
+< September 5, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 5, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+---
+> September 5, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 5, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> September 6, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+424,427c427,433
+< September 6, 2029 at 10:20 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< September 6, 2029 at 11:05 AM | PRESS | Tape It for gull-season | done
+< September 10, 2029 at 5:00 PM | NOTICE | Not Cast As Wren | Thomas Ashgrove passed this on: Quillon Casting didn’t call you back for Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+< September 24, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. Brisbane Hall Casting answers on Wednesday, September 26, 2029.
+---
+> September 6, 2029 at 10:45 AM | PRESS | Tape It for gull-season | done
+> September 10, 2029 at 2:00 PM | STOP | Callback: Hester Vane, The Winter Ledger | Go
+> September 10, 2029 at 5:00 PM | NOTICE | A Callback For Wren | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for the callback for Wren in Gull Season, due Thursday, September 13, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+> September 10, 2029 at 5:45 PM | PRESS | Tape It for gull-season | done
+> September 13, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting cast another actor as Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+> September 16, 2029 at 5:00 PM | NOTICE | Not Cast As Wren | Thomas Ashgrove passed this on: Quillon Casting cast another actor as Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+> September 24, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 18, 2029: Brisbane Hall Casting cast another actor as Jess. Brisbane Hall Casting answers on Wednesday, September 26, 2029.
+429,448c435,453
+< September 26, 2029 at 10:05 AM | PRESS | Prepare the sides (read) for route-nine | done
+< September 26, 2029 at 10:35 AM | PRESS | Prepare the sides (read) for route-nine | done
+< September 26, 2029 at 11:05 AM | PRESS | Prepare the sides (lines) for route-nine | done
+< September 26, 2029 at 11:35 AM | PRESS | Prepare the sides (lines) for route-nine | done
+< September 26, 2029 at 12:05 PM | PRESS | Prepare the sides (lines) for route-nine | done
+< September 26, 2029 at 12:35 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 1:20 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 2:05 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 2:50 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 3:35 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 4:20 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 5:05 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 5:50 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 6:35 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 7:20 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 8:05 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 8:50 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 26, 2029 at 9:35 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 27, 2029 at 9:20 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< September 27, 2029 at 10:05 AM | PRESS | Tape It for route-nine | done
+---
+> September 26, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for route-nine | done
+> September 26, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for route-nine | done
+> September 26, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for route-nine | done
+> September 26, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> September 26, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> September 26, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 26, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 27, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> September 27, 2029 at 10:00 AM | PRESS | Tape It for route-nine | done
+450,470d454
+< October 8, 2029 at 9:00 AM | NOTICE | Submitted For Nell | Thomas Ashgrove submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from July 3, 2029. Pennick Casting answers on Wednesday, October 10, 2029.
+< October 10, 2029 at 10:00 AM | NOTICE | An Audition For Nell | Thomas Ashgrove passed this on: Pennick Casting wants to see you for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, October 15, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+< October 10, 2029 at 10:05 AM | PRESS | Prepare the sides (read) for calder-street | done
+< October 10, 2029 at 10:35 AM | PRESS | Prepare the sides (read) for calder-street | done
+< October 10, 2029 at 11:05 AM | PRESS | Prepare the sides (lines) for calder-street | done
+< October 10, 2029 at 11:35 AM | PRESS | Prepare the sides (lines) for calder-street | done
+< October 10, 2029 at 12:05 PM | PRESS | Prepare the sides (lines) for calder-street | done
+< October 10, 2029 at 12:35 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 1:20 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 2:05 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 2:50 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 3:35 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 4:20 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 5:05 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 5:50 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 6:35 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 7:20 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 8:05 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 8:50 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 10, 2029 at 9:35 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< October 11, 2029 at 9:20 AM | PRESS | Prepare the sides (rehearse) for calder-street | done
+472,476d455
+< October 15, 2029 at 11:00 AM | STOP | Audition: Nell, A House On Calder Street | Go
+< October 16, 2029 at 5:00 PM | NOTICE | A Callback For Nell | Thomas Ashgrove passed this on: Pennick Casting wants to see you again for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, October 22, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+< October 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $194,736 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+< October 22, 2029 at 2:00 PM | STOP | Callback: Nell, A House On Calder Street | Go
+< October 25, 2029 at 5:00 PM | NOTICE | Not Cast As Nell | Thomas Ashgrove passed this on: Pennick Casting cast another actor as Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+480c459
+< November 12, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, November 14, 2029.
+---
+> November 12, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on August 27, 2029: Kettering Casting cast another actor as Desk Clerk. Kettering Casting answers on Wednesday, November 14, 2029.
+483,513c462,481
+< November 14, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for calloway-files | done
+< November 14, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for calloway-files | done
+< November 14, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+< November 14, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+< November 14, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+< November 14, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 14, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 15, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+< November 15, 2029 at 9:45 AM | PRESS | Tape It for calloway-files | done
+< November 19, 2029 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from July 3, 2029. Ostrander Vale Casting answers on Wednesday, November 21, 2029.
+< November 21, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, November 26, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+< November 21, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< November 21, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< November 21, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< November 21, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< November 21, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< November 21, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+---
+> November 14, 2029 at 10:20 AM | PRESS | Prepare the sides (read) for calloway-files | done
+> November 14, 2029 at 10:50 AM | PRESS | Prepare the sides (read) for calloway-files | done
+> November 14, 2029 at 11:20 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+> November 14, 2029 at 11:50 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+> November 14, 2029 at 12:20 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+> November 14, 2029 at 12:50 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 1:35 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 2:20 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 3:05 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 3:50 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 4:35 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 5:20 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 6:05 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 6:50 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 7:35 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 8:20 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 9:05 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 14, 2029 at 9:50 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 15, 2029 at 9:35 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+> November 15, 2029 at 10:20 AM | PRESS | Tape It for calloway-files | done
+515,534c483,494
+< November 21, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 21, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 22, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< November 22, 2029 at 10:00 AM | PRESS | Accept The Offer for calloway-files | done
+< November 22, 2029 at 10:00 AM | PRESS | Prepare the part (read) for calloway-files | done
+< November 22, 2029 at 11:00 AM | PRESS | Prepare the part (lines) for calloway-files | done
+< November 22, 2029 at 12:00 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+< November 22, 2029 at 1:30 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+< November 22, 2029 at 3:00 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+< November 22, 2029 at 4:30 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+< November 22, 2029 at 6:00 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+< November 22, 2029 at 7:30 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+< November 26, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. Quillon Casting answers on Wednesday, November 28, 2029.
+< November 26, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+< November 27, 2029 at 5:00 PM | NOTICE | A Callback For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you again for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, December 3, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+---
+> November 21, 2029 at 5:20 PM | PRESS | Accept The Offer for calloway-files | done
+> November 21, 2029 at 5:20 PM | PRESS | Prepare the part (read) for calloway-files | done
+> November 21, 2029 at 6:20 PM | PRESS | Prepare the part (read) for calloway-files | done
+> November 21, 2029 at 7:20 PM | PRESS | Prepare the part (read) for calloway-files | done
+> November 21, 2029 at 8:20 PM | PRESS | Prepare the part (lines) for calloway-files | done
+> November 21, 2029 at 9:20 PM | PRESS | Prepare the part (lines) for calloway-files | done
+> November 22, 2029 at 9:20 AM | PRESS | Prepare the part (lines) for calloway-files | done
+> November 22, 2029 at 10:20 AM | PRESS | Prepare the part (rehearse) for calloway-files | done
+> November 22, 2029 at 11:50 AM | PRESS | Prepare the part (rehearse) for calloway-files | done
+> November 22, 2029 at 1:20 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+> November 22, 2029 at 2:50 PM | PRESS | Prepare the part (rehearse) for calloway-files | done
+> November 26, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from July 3, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on September 3, 2029: Quillon Casting cast another actor as Wren. Quillon Casting answers on Wednesday, November 28, 2029.
+536,555c496,516
+< November 28, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for gull-season | done
+< November 28, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for gull-season | done
+< November 28, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for gull-season | done
+< November 28, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for gull-season | done
+< November 28, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
+< November 28, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 28, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 29, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< November 29, 2029 at 9:45 AM | PRESS | Tape It for gull-season | done
+< December 3, 2029 at 2:00 PM | STOP | Callback: Hester Vane, The Winter Ledger | Go
+---
+> November 28, 2029 at 10:20 AM | PRESS | Prepare the sides (read) for gull-season | done
+> November 28, 2029 at 10:50 AM | PRESS | Prepare the sides (read) for gull-season | done
+> November 28, 2029 at 11:20 AM | PRESS | Prepare the sides (lines) for gull-season | done
+> November 28, 2029 at 11:50 AM | PRESS | Prepare the sides (lines) for gull-season | done
+> November 28, 2029 at 12:20 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> November 28, 2029 at 12:50 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 1:35 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 2:20 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 3:05 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 3:50 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 4:35 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 5:20 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 6:05 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 6:50 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 7:35 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 8:20 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 9:05 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 28, 2029 at 9:50 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 29, 2029 at 9:35 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> November 29, 2029 at 10:20 AM | PRESS | Tape It for gull-season | done
+> December 3, 2029 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from July 3, 2029. It’s a new casting of the part. The last time it was posted to you, on August 27, 2029: Ostrander Vale Casting cast another actor as Hester Vane. Ostrander Vale Casting answers on Wednesday, December 5, 2029.
+556a518,536
+> December 5, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, December 10, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+> December 5, 2029 at 10:20 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> December 5, 2029 at 10:50 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> December 5, 2029 at 11:20 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> December 5, 2029 at 11:50 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> December 5, 2029 at 12:20 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> December 5, 2029 at 12:50 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 1:35 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 2:20 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 3:05 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 3:50 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 4:35 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 5:20 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 6:05 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 6:50 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 7:35 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 8:20 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 9:05 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 5, 2029 at 9:50 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+559c539,542
+< December 6, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting cast another actor as Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+---
+> December 6, 2029 at 10:35 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> December 10, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+> December 11, 2029 at 5:00 PM | NOTICE | A Callback For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you again for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, December 17, 2029 at 2:00 PM. Getting there takes about two hours each way. It clashes with The Calloway Files: Shoot Day 1 at 7:00 AM. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once. Prepare the sides on the Career screen’s Opportunities tab before you go.
+> December 11, 2029 at 5:30 PM | PRESS | Ask For Another Time for winter-ledger-hester | done
+566a550
+> December 19, 2029 at 11:00 AM | STOP | Callback: Hester Vane, The Winter Ledger | Go
+567a552
+> December 22, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting cast another actor as Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+569,591c554
+< January 28, 2030 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from December 18, 2029. Ostrander Vale Casting answers on Wednesday, January 30, 2030.
+< January 30, 2030 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, February 4, 2030 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+< January 30, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< January 30, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+< January 30, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< January 30, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< January 30, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+< January 30, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 30, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< January 31, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+< February 4, 2030 at 9:00 AM | NOTICE | Submitted For Nell | Thomas Ashgrove submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from December 18, 2029. Pennick Casting answers on Wednesday, February 6, 2030.
+< February 4, 2030 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+< February 5, 2030 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting didn’t call you back for Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+---
+> February 4, 2030 at 9:00 AM | NOTICE | Submitted For Nell | Thomas Ashgrove submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from December 18, 2029. It’s a new casting of the part. The last time it was posted to you, on July 23, 2029: Pennick Casting cast another actor as Nell. Pennick Casting answers on Wednesday, February 6, 2030.
+593,610c556,573
+< February 6, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for calder-street | done
+< February 6, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for calder-street | done
+< February 6, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for calder-street | done
+< February 6, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for calder-street | done
+< February 6, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for calder-street | done
+< February 6, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 6, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+< February 7, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calder-street | done
+---
+> February 6, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for calder-street | done
+> February 6, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for calder-street | done
+> February 6, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for calder-street | done
+> February 6, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for calder-street | done
+> February 6, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for calder-street | done
+> February 6, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 6, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+> February 7, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for calder-street | done
+612,613c575,591
+< February 12, 2030 at 5:00 PM | NOTICE | Not Cast As Nell | Thomas Ashgrove passed this on: Pennick Casting didn’t call you back for Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+< March 11, 2030 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from December 18, 2029 and your reel from April 28, 2029. Brisbane Hall Casting answers on Wednesday, March 13, 2030.
+---
+> February 12, 2030 at 5:00 PM | NOTICE | A Callback For Nell | Thomas Ashgrove passed this on: Pennick Casting wants to see you again for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, February 18, 2030 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+> February 18, 2030 at 2:00 PM | STOP | Callback: Nell, A House On Calder Street | Go
+> February 21, 2030 at 5:00 PM | WHAT NEEDS YOU | An Offer For Nell | Thomas Ashgrove passed on an offer. Pennick Casting offers you Nell in A House On Calder Street, a fictional Off-Broadway play. It pays $1,051.00 a week for 10 weeks, an estimate. The work is from March 12, 2030 to May 19, 2030, in New York. The offer stands until February 24, 2030 at 5:00 PM. | Accept The Offer, Decline The Offer
+> February 21, 2030 at 5:45 PM | PRESS | Accept The Offer for calder-street | done
+> February 21, 2030 at 5:45 PM | PRESS | Prepare the part (read) for calder-street | done
+> February 21, 2030 at 6:45 PM | PRESS | Prepare the part (read) for calder-street | done
+> February 21, 2030 at 7:45 PM | PRESS | Prepare the part (read) for calder-street | done
+> February 21, 2030 at 8:45 PM | PRESS | Prepare the part (lines) for calder-street | done
+> February 21, 2030 at 9:45 PM | PRESS | Prepare the part (lines) for calder-street | done
+> February 22, 2030 at 9:45 AM | PRESS | Prepare the part (lines) for calder-street | done
+> February 22, 2030 at 10:45 AM | PRESS | Prepare the part (rehearse) for calder-street | done
+> February 22, 2030 at 12:15 PM | PRESS | Prepare the part (rehearse) for calder-street | done
+> February 22, 2030 at 1:45 PM | PRESS | Prepare the part (rehearse) for calder-street | done
+> February 22, 2030 at 3:15 PM | PRESS | Prepare the part (rehearse) for calder-street | done
+> March 11, 2030 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from December 18, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on September 24, 2029: Brisbane Hall Casting cast another actor as Jess. Brisbane Hall Casting answers on Wednesday, March 13, 2030.
+> March 12, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 13, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+615,634c593,625
+< March 13, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for route-nine | done
+< March 13, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for route-nine | done
+< March 13, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for route-nine | done
+< March 13, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
+< March 13, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+< March 13, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 13, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 14, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< March 14, 2030 at 9:45 AM | PRESS | Tape It for route-nine | done
+< March 18, 2030 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from December 18, 2029 and your reel from April 28, 2029. Quillon Casting answers on Wednesday, March 20, 2030.
+---
+> March 13, 2030 at 6:00 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 6:30 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 7:00 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 7:30 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 8:00 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 8:30 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 9:00 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 13, 2030 at 9:30 PM | PRESS | Prepare the sides (read) for route-nine | done
+> March 14, 2030 at 9:00 AM | PRESS | Prepare the sides (read) for route-nine | done
+> March 14, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 14, 2030 at 6:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 6:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 7:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 7:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 8:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 8:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 9:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 14, 2030 at 9:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 15, 2030 at 9:00 AM | PRESS | Prepare the sides (lines) for route-nine | done
+> March 15, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 15, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 15, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 15, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 15, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 15, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 15, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 16, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 16, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 16, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> March 16, 2030 at 6:45 PM | PRESS | Tape It for route-nine | done
+> March 18, 2030 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from December 18, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on November 26, 2029: Quillon Casting didn’t call you back for Wren. Quillon Casting answers on Wednesday, March 20, 2030.
+> March 19, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 20, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+636,671c627,716
+< March 20, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for gull-season | done
+< March 20, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for gull-season | done
+< March 20, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for gull-season | done
+< March 20, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for gull-season | done
+< March 20, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for gull-season | done
+< March 20, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 5:00 PM | WHAT NEEDS YOU | An Offer For Jess | Thomas Ashgrove passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $308.00 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $280.00. The work is from April 15, 2030 to April 18, 2030, in New York. The offer stands until March 23, 2030 at 5:00 PM. | Accept The Offer, Decline The Offer
+< March 20, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 20, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 21, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+< March 21, 2030 at 10:00 AM | PRESS | Tape It for gull-season | done
+< March 21, 2030 at 11:00 AM | PRESS | Accept The Offer for route-nine | done
+< March 21, 2030 at 11:00 AM | PRESS | Prepare the part (read) for route-nine | done
+< March 21, 2030 at 12:00 PM | PRESS | Prepare the part (lines) for route-nine | done
+< March 21, 2030 at 1:00 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 21, 2030 at 2:30 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 21, 2030 at 4:00 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 21, 2030 at 5:30 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 21, 2030 at 7:00 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 21, 2030 at 8:30 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 22, 2030 at 9:00 AM | PRESS | Prepare the part (rehearse) for route-nine | done
+< March 25, 2030 at 5:00 PM | NOTICE | A Callback For Wren | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for the callback for Wren in Gull Season, due Thursday, March 28, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+< March 25, 2030 at 5:30 PM | PRESS | Tape It for gull-season | done
+< March 31, 2030 at 5:00 PM | NOTICE | Not Cast As Wren | Thomas Ashgrove passed this on: Quillon Casting cast another actor as Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+< April 15, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 1 | Go
+< April 16, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 2 | Go
+< April 17, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 3 | Go
+---
+> March 20, 2030 at 5:00 PM | NOTICE | Not Cast As Jess | Thomas Ashgrove passed this on: Brisbane Hall Casting cast another actor as Jess. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+> March 20, 2030 at 6:00 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 6:30 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 7:00 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 7:30 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 8:00 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 8:30 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 9:00 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 20, 2030 at 9:30 PM | PRESS | Prepare the sides (read) for gull-season | done
+> March 21, 2030 at 9:00 AM | PRESS | Prepare the sides (read) for gull-season | done
+> March 21, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 21, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of March 12, 2030, into Halberd Talent’s client trust account, less $80.40 withheld for tax and $26.28 in Equity’s working dues. Halberd Talent passes it on to you by March 26, 2030, less $105.10 commission.
+> March 21, 2030 at 6:00 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 6:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 7:00 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 7:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 8:00 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 8:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 9:00 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 21, 2030 at 9:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 22, 2030 at 9:00 AM | PRESS | Prepare the sides (lines) for gull-season | done
+> March 22, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 22, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 22, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 22, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 22, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 22, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 22, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 23, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 23, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 23, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+> March 23, 2030 at 6:45 PM | PRESS | Tape It for gull-season | done
+> March 25, 2030 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from December 18, 2029. It’s a new casting of the part. The last time it was posted to you, on December 3, 2029: Ostrander Vale Casting cast another actor as Hester Vane. Ostrander Vale Casting answers on Wednesday, March 27, 2030.
+> March 25, 2030 at 5:00 PM | NOTICE | Not Cast As Wren | Thomas Ashgrove passed this on: Quillon Casting didn’t call you back for Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+> March 26, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 26, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for A House On Calder Street, the week of March 12, 2030: $944.32 held for you, less $105.10 commission, so $839.22 went into your Chase Total Checking.
+> March 27, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 27, 2030 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, April 1, 2030 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+> March 27, 2030 at 6:00 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 6:30 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 7:00 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 7:30 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 8:00 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 8:30 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 9:00 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 27, 2030 at 9:30 PM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 28, 2030 at 9:00 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+> March 28, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 28, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of March 19, 2030, into Halberd Talent’s client trust account, less $80.40 withheld for tax and $26.28 in Equity’s working dues. Halberd Talent passes it on to you by April 2, 2030, less $105.10 commission.
+> March 28, 2030 at 6:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 6:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 7:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 7:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 8:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 8:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 9:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 28, 2030 at 9:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 29, 2030 at 9:00 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
+> March 29, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 29, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 29, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 29, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 29, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 29, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 29, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 30, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> March 30, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> March 30, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+> April 1, 2030 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+> April 2, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> April 2, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for A House On Calder Street, the week of March 19, 2030: $944.32 held for you, less $105.10 commission, so $839.22 went into your Chase Total Checking.
+> April 2, 2030 at 5:00 PM | NOTICE | A Callback For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you again for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, April 8, 2030 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+> April 3, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> April 4, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> April 4, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of March 26, 2030, into Halberd Talent’s client trust account, less $80.41 withheld for tax and $26.28 in Equity’s working dues. Halberd Talent passes it on to you by April 9, 2030, less $105.10 commission.
+> April 5, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> April 6, 2030 at 10:00 AM | STOP | A House On Calder Street: Rehearsal | Go
+> April 8, 2030 at 2:00 PM | STOP | Callback: Hester Vane, The Winter Ledger | Go
+> April 9, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for A House On Calder Street, the week of March 26, 2030: $944.31 held for you, less $105.10 commission, so $839.21 went into your Chase Total Checking.
+> April 9, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 10, 2030 at 9:30 AM | PRESS | Update Your Résumé | done
+> April 10, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 11, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of April 2, 2030, into Halberd Talent’s client trust account, less $80.40 withheld for tax and $26.28 in Equity’s working dues. Halberd Talent passes it on to you by April 16, 2030, less $105.10 commission.
+> April 11, 2030 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting cast another actor as Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+> April 11, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 12, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 13, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 14, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 16, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for A House On Calder Street, the week of April 2, 2030: $944.32 held for you, less $105.10 commission, so $839.22 went into your Chase Total Checking.
+> April 16, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+673,678c718,733
+< April 18, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 4 | Go
+< April 18, 2030 at 7:00 AM | NOTICE | You Wrapped Static On Route 9 | Static On Route 9 wrapped, and Jess is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about 10 months on, estimated. Update your résumé on the Portfolio tab to add it.
+< April 18, 2030 at 6:00 PM | PRESS | Update Your Résumé | done
+< April 20, 2030 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $233,683 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+< April 25, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Dead Air Films paid $1,232.00 for Static On Route 9, the week of April 15, 2030, into Halberd Talent’s client trust account, less $94.24 withheld for tax and $19.40 in SAG-AFTRA’s working dues. Halberd Talent passes it on to you by April 30, 2030, less $112.00 commission.
+< April 30, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for Static On Route 9, the week of April 15, 2030: $1,118.36 held for you, less $112.00 commission, so $1,006.36 went into your Chase Total Checking.
+---
+> April 17, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 18, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of April 9, 2030, into Halberd Talent’s client trust account, less $80.40 withheld for tax and $26.28 in Equity’s working dues. Halberd Talent passes it on to you by April 23, 2030, less $105.10 commission.
+> April 18, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 19, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 20, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 21, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 23, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for A House On Calder Street, the week of April 9, 2030: $944.32 held for you, less $105.10 commission, so $839.22 went into your Chase Total Checking.
+> April 23, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 24, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 25, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Marrow Lane Theater Company paid $1,051.00 for A House On Calder Street, the week of April 16, 2030, into Halberd Talent’s client trust account, less $80.40 withheld for tax and $26.28 in Equity’s working dues. Halberd Talent passes it on to you by April 30, 2030, less $105.10 commission.
+> April 25, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 26, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 27, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 28, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+> April 30, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for A House On Calder Street, the week of April 16, 2030: $944.32 held for you, less $105.10 commission, so $839.22 went into your Chase Total Checking.
+> April 30, 2030 at 8:00 PM | STOP | A House On Calder Street: Performance | Go
+681,682c736,737
+< May 1, 2030 at 9:00 AM | PRESS | End It By Agreement | done
+< May 1, 2030 at 9:00 AM | NOTICE | Your Agreement With Thomas Ashgrove Ended | Your agreement with Thomas Ashgrove at Halberd Talent ended on May 1, 2030, by agreement. No pay is still to come from contracts you made while it ran, so no commission is still owed on them. An offer he passed on while it ran that you accept within 60 days after it ended owes commission too.
+---
+> May 1, 2030 at 9:30 AM | PRESS | End It By Agreement | done
+> May 1, 2030 at 9:30 AM | NOTICE | Your Agreement With Thomas Ashgrove Ended | Your agreement with Thomas Ashgrove at Halberd Talent ended on May 1, 2030, by agreement. Commission stays owed on the pay still to come from contracts you made while it ran: Nell in A House On Calder Street. It comes out of that pay when it’s paid. An offer he passed on while it ran that you accept within 60 days after it ended owes commission too.
+diff -r docs/verification/career-2026-10-20/playthroughs/transcripts/life-b-v1-7.txt /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys/b19-lives/life-b-v1-7.txt
+220c220
+< April 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $162,280 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+---
+> April 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $162,280 now, because your credit score is 700 or more, you haven’t paid late in the past year, and your income or savings cover the payments on it.
+247,249c247,249
+< May 11, 2029 at 10:00 AM | PRESS | Cut A Reel (one piece) | done
+< May 11, 2029 at 12:00 PM | PRESS | Check Your Materials | done
+< May 11, 2029 at 12:00 PM | PRESS | Send Your Materials | done
+---
+> May 11, 2029 at 10:20 AM | PRESS | Cut A Reel (one piece) | done
+> May 11, 2029 at 12:20 PM | PRESS | Check Your Materials | done
+> May 11, 2029 at 12:20 PM | PRESS | Send Your Materials | done
+diff -r docs/verification/career-2026-10-20/playthroughs/transcripts/v16-graduate.txt /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys/b19-lives/v16-graduate.txt
+60c60
+< August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Sam | The producers ask for a self-tape for Sam in Last Bus To Eastview, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+---
+> August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Robin | The producers ask for a self-tape for Robin in Last Bus To Eastview, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+81c81
+< September 5, 2029 at 5:00 PM | NOTICE | Not Cast As Sam | The producers cast another actor as Sam. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+---
+> September 5, 2029 at 5:00 PM | NOTICE | Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+87c87
+< October 8, 2029 at 9:30 AM | PRESS | Submit Yourself for route-nine | done
+---
+> October 8, 2029 at 9:00 AM | PRESS | Submit Yourself for route-nine | done
+88a89
+> October 10, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for route-nine | done
+90c91
+< October 10, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for route-nine | done
+---
+> October 10, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for route-nine | done
+93,108c94,109
+< October 10, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for route-nine | done
+< October 10, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 10, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 11, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+< October 11, 2029 at 9:45 AM | PRESS | Tape It for route-nine | done
+< October 15, 2029 at 12:45 PM | PRESS | Update Your Résumé | done
+---
+> October 10, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 10, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 11, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+> October 11, 2029 at 10:00 AM | PRESS | Tape It for route-nine | done
+> October 15, 2029 at 12:00 PM | PRESS | Update Your Résumé | done
+110,121c111,121
+< October 17, 2029 at 5:45 PM | PRESS | Accept The Offer for route-nine | done
+< October 17, 2029 at 5:45 PM | PRESS | Prepare the part (read) for route-nine | done
+< October 17, 2029 at 6:45 PM | PRESS | Prepare the part (read) for route-nine | done
+< October 17, 2029 at 7:45 PM | PRESS | Prepare the part (read) for route-nine | done
+< October 17, 2029 at 8:45 PM | PRESS | Prepare the part (lines) for route-nine | done
+< October 17, 2029 at 9:45 PM | PRESS | Prepare the part (lines) for route-nine | done
+< October 18, 2029 at 9:45 AM | PRESS | Prepare the part (lines) for route-nine | done
+< October 18, 2029 at 10:45 AM | PRESS | Prepare the part (rehearse) for route-nine | done
+< October 18, 2029 at 12:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< October 18, 2029 at 1:45 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< October 18, 2029 at 3:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+< October 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $194,736 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+---
+> October 17, 2029 at 5:00 PM | PRESS | Accept The Offer for route-nine | done
+> October 17, 2029 at 5:00 PM | PRESS | Prepare the part (read) for route-nine | done
+> October 17, 2029 at 6:00 PM | PRESS | Prepare the part (read) for route-nine | done
+> October 17, 2029 at 7:00 PM | PRESS | Prepare the part (read) for route-nine | done
+> October 17, 2029 at 8:00 PM | PRESS | Prepare the part (lines) for route-nine | done
+> October 17, 2029 at 9:00 PM | PRESS | Prepare the part (lines) for route-nine | done
+> October 18, 2029 at 9:00 AM | PRESS | Prepare the part (lines) for route-nine | done
+> October 18, 2029 at 10:00 AM | PRESS | Prepare the part (rehearse) for route-nine | done
+> October 18, 2029 at 11:30 AM | PRESS | Prepare the part (rehearse) for route-nine | done
+> October 18, 2029 at 1:00 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+> October 18, 2029 at 2:30 PM | PRESS | Prepare the part (rehearse) for route-nine | done
+131c131
+< November 21, 2029 at 10:00 AM | NOTICE | A Self-Tape For Sam | The producers ask for a self-tape for Sam in Last Bus To Eastview, due Sunday, November 25, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+---
+> November 21, 2029 at 10:00 AM | NOTICE | A Self-Tape For Robin | The producers ask for a self-tape for Robin in Last Bus To Eastview, due Sunday, November 25, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+134,135c134,135
+< November 21, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for eastview | done
+< November 21, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for eastview | done
+---
+> November 21, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for eastview | done
+> November 21, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for eastview | done
+137,160c137,151
+< November 21, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 1:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 2:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 2:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 3:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 3:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 4:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 4:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 5:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 5:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 6:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 6:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 7:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 7:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 8:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 8:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 9:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 21, 2029 at 9:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+< November 22, 2029 at 9:00 AM | PRESS | Prepare the sides (lines) for eastview | done
+< November 22, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+< November 22, 2029 at 10:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+< November 22, 2029 at 11:00 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+< November 22, 2029 at 11:45 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+---
+> November 21, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 21, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 22, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+> November 22, 2029 at 10:00 AM | PRESS | Tape It for eastview | done
+diff -r docs/verification/career-2026-10-20/playthroughs/transcripts/v16-mid-term.txt /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f22b-b20journeys/b19-lives/v16-mid-term.txt
+16c16
+< March 5, 2029 at 7:00 PM | NOTICE | Maya Didn’t Come | You waited for Maya to rehearse The Seagull, and they didn’t come. It’s the sixth time they haven’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Maya, or use Run It With A Reader to work on your side of it.
+---
+> March 5, 2029 at 7:00 PM | NOTICE | Maya Didn’t Come | You waited for Maya to rehearse Office Hours, and they didn’t come. It’s the sixth time they haven’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Maya, or use Run It With A Reader to work on your side of it.
+40c40
+< March 22, 2029 at 9:00 AM | NOTICE | Maya: A Different Reading | Maya reads your objective in The Seagull as “Get her out before his mother sees her”, where you have “Make her stay, or take him with her”, and asks what you think.
+---
+> March 22, 2029 at 9:00 AM | NOTICE | Maya: A Different Reading | Maya reads your objective in Office Hours as “Find out how it got this far without his knowing”, where you have “Keep his son on the team”, and asks what you think.
+103c103
+< April 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $162,280 now, because your credit score is 700 or more and you haven’t paid late in the past year.
+---
+> April 20, 2029 at 9:00 AM | NOTICE | Your Card Limit Went Up | The Chase Freedom Unlimited’s limit is $162,280 now, because your credit score is 700 or more, you haven’t paid late in the past year, and your income or savings cover the payments on it.
+127c127
+< April 30, 2029 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. Hedda in Hedda Gabler: Working, 62 of 100. Konstantin in The Seagull: Working, 59 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
+---
+> April 30, 2029 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. Hedda in Hedda Gabler: Working, 62 of 100. The Father in Office Hours: Working, 63 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
+129c129
+< May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. Hedda in Hedda Gabler: Working, 63 of 100. Konstantin in The Seagull: Working, 60 of 100. You play them again in Los Angeles on May 8.
+---
+> May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. Hedda in Hedda Gabler: Working, 63 of 100. The Father in Office Hours: Working, 63 of 100. You play them again in Los Angeles on May 8.
+131c131
+< May 8, 2029 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. Hedda in Hedda Gabler: Working, 63 of 100. Konstantin in The Seagull: Working, 59 of 100. You passed Actor Showcase.
+---
+> May 8, 2029 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. Hedda in Hedda Gabler: Working, 63 of 100. The Father in Office Hours: Working, 63 of 100. You passed Actor Showcase.
+133,134c133,134
+< May 11, 2029 at 10:00 AM | PRESS | Check Your Materials | done
+< May 11, 2029 at 10:00 AM | PRESS | Send Your Materials | done
+---
+> May 11, 2029 at 10:20 AM | PRESS | Check Your Materials | done
+> May 11, 2029 at 10:20 AM | PRESS | Send Your Materials | done

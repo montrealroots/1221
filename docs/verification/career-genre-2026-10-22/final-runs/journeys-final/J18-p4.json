@@ -14,28 +14,28 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 18,
+   "secs": 29,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 60,
+   "secs": 95,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 97,
+   "secs": 132,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-01",
    "to": "2029-08-04",
-   "secs": 4,
+   "secs": 6,
    "reloads": 2
   }
  ],
@@ -461,8 +461,8 @@
   "genreSpeed": {
    "known": "satire",
    "speed": 1.16,
-   "unknown": "absurdist",
-   "speedUnknown": 1.06
+   "unknown": "action",
+   "speedUnknown": 1
   },
   "firstLimits": {
    "preparation": 86,
@@ -511,18 +511,16 @@
    "fails": []
   },
   "3 development": {
-   "pass": false,
+   "pass": true,
    "evidence": [
     "abilities emotionalDepth 54.6→69.6, presence 68.9→70.5, listening 50.1→65.2, imagination 49.5→63.3, focus 49.9→58.3, memory 50.9→62.7, adaptability 51.6→55.9, composure 44.3→53.3, vocal 51.9→66.5, physical 55.7→70.3, discipline 57.5→60.2, stamina 50→35",
     "last pieces at their own levels, then with what rose put back: 69.37/63.68 65.75/61 63.52/55.65 64.54/57.24 69/61.21 56.88/48.27 61.1/53.06 61.61/53.39 61.17/53.06 61.67/53.4 61.24/53.07 61.74/53.4",
     "with what fell put back up: 69.37→70.98 (stamina) 65.75→69.08 (stamina) 63.52→64.41 (stamina) 64.54→64.88 (stamina) 69→71.15 (stamina) 56.88→58.32 (stamina) 61.1→61.35 (stamina) 61.61→61.87 (stamina) 61.17→61.41 (stamina) 61.67→61.93 (stamina) 61.24→61.48 (stamina) 61.74→62 (stamina)",
     "first limits short of mastery: {\"preparation\":86,\"ability\":261,\"technique\":5,\"condition\":3}",
-    "genres known 8; satire speed 1.16, unmet absurdist 1.06",
+    "genres known 8; satire speed 1.16, unmet action 1",
     "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
    ],
-   "fails": [
-    "an unmet genre (absurdist) at 1.06, not 1"
-   ]
+   "fails": []
   },
   "4 advice": {
    "pass": true,

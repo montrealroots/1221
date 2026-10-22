@@ -579,9 +579,9 @@
   "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
   "held": false,
   "files": 102,
-  "same": 6,
+  "same": 0,
   "explained": {
-   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 174,
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 199,
    "a measure of words: the journeys’ continuity counts text": 33,
    "a count of notices: a rewrite changes which merge; the events are compared apart": 842
   },
@@ -819,7 +819,7 @@
     ]
    },
    "J18-p4.json": {
-    "differences": 182,
+    "differences": 180,
     "first": [
      ".advice[75][3]: 0.82 before, 0.84 after",
      ".advice[78][3]: 0.6 before, 0.59 after",
@@ -919,12 +919,6 @@
      ".J03 J04 J05.followersLastTwelve.atIgnorers: 72.53 before, 72.54 after",
      ".J03 J04 J05.risesOfTheAdvised.partly: 185.2 before, 185.3 after"
     ]
-   },
-   "summary.json": {
-    "differences": 1,
-    "first": [
-     "[17].checks.3 development: 'pass' before, 'FAIL: an unmet genre (absurdist) at 1.06, not 1' after"
-    ]
    }
   },
   "missing": []
@@ -936,10 +930,20 @@
   "files": 1,
   "same": 0,
   "explained": {},
-  "unexplained": {},
-  "missing": [
-   "summary.json"
-  ]
+  "unexplained": {
+   "summary.json": {
+    "differences": 52,
+    "first": [
+     ".exits: 21 items before, 22 after",
+     ".runs[0].commit: 'fd32e869' before, '16b50e07' after",
+     ".runs[0].log: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after",
+     ".runs[0].screenshots[0]: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after",
+     ".runs[0].screenshots[1]: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after",
+     ".runs[0].screenshots[2]: 'docs/verification/genre-banking-2026-10-22/final-runs/interf' before, 'docs/verification/career-genre-2026-10-22/final-runs/interfa' after"
+    ]
+   }
+  },
+  "missing": []
  },
  "journeys14-final": {
   "before": "docs/verification/genre-banking-2026-10-22/final-runs/journeys14-final",
