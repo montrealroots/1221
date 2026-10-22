@@ -52,7 +52,8 @@ step records whether they do (below).
   tape; the variety run; freshness 8 runs, none repeated; the scenario saves 15 of 15; 40 of 40 advice cases.
 - **MA5:** every payoff 100; the musical plan mastered on 4 October 2030, a day later than brief 21's 3 October, its
   practice shared by the material's weights. The other five plans on the same days.
-- **INT-gate:** run after the fold, on the commit that holds it (`gate.txt`).
+- **INT-gate:** run after the fold, on `cf83e61d`, the commit holding it and the receipt (`gate.txt`): exit 0, 486 of 486
+  test files, 5,596 of 5,596 tests, none skipped, every check. Folded in after it ran.
 
 What moved inside the files, every number compared (`../numbers-same.json`, "runs"), none of it a figure the matrix reads:
 the lives' casting fits by a tenth here and there, the mastery plans' hours and readiness by the day or so their practice

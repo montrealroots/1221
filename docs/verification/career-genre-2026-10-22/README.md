@@ -257,14 +257,26 @@ Built from the tested commit and walked at 1440 and 390 (`final-runs/app/`):
 - **Brief 22's own rows,** from `final-runs/judge-result.json`, `final-runs/final-result.json` and
   `final-runs/verification-result.json`.
 
-Before the gate's own figure, the matrix read 633 of 658 Implemented And Verified (96.2%); 21 Implemented, Verification
-Incomplete; 4 Decision Required; 41 Explicitly Deferred. INT-gate waited on the gate below. The other 20 Verification
-Incomplete rows are the bank and tax commands no current life can reach, each waiting on the owner's scope decision, as
+Before the gate's own figure, the matrix read 633 of 658 Implemented And Verified (96.2%), INT-gate waiting on the gate
+below. With it: 634 of 658 (96.3%); 20 Implemented, Verification Incomplete; 4 Decision Required; 41 Explicitly
+Deferred. The 20 are the bank and tax commands no current life can reach, each waiting on the owner's scope decision, as
 at brief 21's close.
 
 The effects matrix (`../audit-2026-10-21/effects/`) reads brief 22's features against what they change: the release, its
 notice and its reactor; each genre consumer; the guide's promises about genres and OPT, each held by a test the gate
 runs.
+
+## The Gate
+
+The full gate in a clean clone, its exit read from its file:
+- **On the receipt's first commit, `cf83e61d`** (its `src` the tested commit's): exit 0; 486 of 486 test files and 5,596
+  of 5,596 tests, none skipped; all 22 checks, the completion matrix last (`final-runs/runs/gate.txt`). Its figure was
+  folded in after it, and the matrix moved from 633 to 634.
+- **On the commit that folds it:** run again after these records were written (`final-runs/runs/gate-receipt.txt`).
+- **Brief 22 added:** 4 test files and 49 tests to brief 21's 482 and 5,547.
+- **Earlier full suites:** on the tree before `d69ad309`, 11 failures in 8 files, each a figure the weights or the
+  coefficients moved, read and restated with a dated note (`CHECKPOINT.md`); at `8aa87539`, the three Papers tests
+  restated with the status's last day (defect 6).
 
 ## For The Owner
 

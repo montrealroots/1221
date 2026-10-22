@@ -34,9 +34,11 @@ For the next session or the other account, beside the handoff. The tree outranks
 - **The fold** (`07ae403c`): 633 of 658 Implemented And Verified, INT-gate waiting on the gate.
 - **The receipt and the handoff:** `README.md`, and the handoff's top section.
 
+- **The gate** in a clean clone of `cf83e61d`: exit 0, 486 of 486 files, 5,596 of 5,596 tests, every check
+  (`final-runs/runs/gate.txt`); folded, the matrix at 634 of 658.
+
 ## Next
 
-1. The full gate in a clean clone of the commit holding the receipt, its exit read from its file
-   (`final-runs/runs/gate.txt`); its figure folded (`runs/figures.py`, `criteria.py`, the matrix) and the handoff's line
-   set to the matrix's; the gate again on that commit (`gate-receipt.txt`).
+1. The gate again on the commit that folds it (`final-runs/runs/gate-receipt.txt`), its figure written into the receipt
+   and the handoff.
 2. Nothing merged or deployed until the owner says.

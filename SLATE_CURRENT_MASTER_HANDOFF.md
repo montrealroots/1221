@@ -6,13 +6,13 @@ brief 21's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `4682
 force-pushed. It is not merged: "Keep the changes reviewable. Do not merge or deploy without my instruction." No pull
 request is open for it. Nothing is deployed. There is no stash and one worktree.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (632 at brief 21's close. Brief 22's final runs measured every row again on its tested commit
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`):
   - **the Genre Audit as written:** superseded at the owner's word, so Explicitly Deferred, its figure and history kept;
   - **Genre Audit-R, its replacement,** and **genres.7-measured:** both verified;
-  - **INT-gate:** waits on the gate run on the commit that holds this fold.)
+  - **INT-gate:** verified by the gate below, and folded in after it ran (633 until then).)
 
 - **Read first:** `docs/verification/career-genre-2026-10-22/README.md` (the receipt), `criteria.md` (the items, written
   before any fix), `CHECKPOINT.md` (the record as the work went), `authorization-trace.md` (each stage of an engagement,
@@ -52,6 +52,10 @@ request is open for it. Nothing is deployed. There is no stash and one worktree.
   - **Brief 13's:** 25 of 25 with all checks passed.
   - **Brief 19's lives:** only the showcase's scenes moved.
   - **The built app,** at 1440 and 390: brief 22's walk and every earlier walk, nothing found.
+- **The gate:** in a clean clone of `cf83e61d` (the receipt and this section, its `src` the tested commit's), exit 0
+  read from its file: 486 of 486 test files, 5,596 of 5,596 tests, none skipped, all 22 checks
+  (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate.txt`). Brief 22 added 4 test files and 49 tests to
+  brief 21's 482 and 5,547. It is run again on the commit that folds its figure (`gate-receipt.txt`).
 - **Not merged, not deployed:** both wait on the owner's word. Base44 deployment waits on the gate and that word (rule
   14), and §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of
   brief 20's or 21's line accepts this line's saves.
