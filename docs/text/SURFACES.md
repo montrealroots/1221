@@ -15,9 +15,8 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | health | 178 | 178 |
 | material-a | 507 | 507 |
 | material-b | 492 | 492 |
-| money | 264 | 264 |
+| money | 265 | 265 |
 | money-data | 522 | 522 |
-| new | 1 | 1 |
 | papers | 475 | 475 |
 | profile | 621 | 621 |
 | school | 638 | 638 |

@@ -8687,7 +8687,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:164, :174",
+    "where": "tests/defects-g4-2.test.ts:166, :176",
     "asserts": "Into savings at the current account's bank (Bank of America), not Citi's; with none there, nothing moves.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -8696,7 +8696,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:183 'move Wells Fargo’s flat $1...'",
+    "where": "tests/defects-g4-2.test.ts:185 'move Wells Fargo’s flat $1...'",
     "asserts": "Pending is 1_00 and then 2_00.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -8705,7 +8705,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:195",
+    "where": "tests/defects-g4-2.test.ts:197",
     "asserts": "TD rounds up; the rendered panel shows each bank's words and SLATE's estimate note.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -19955,7 +19955,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "createSave(defaultConfig with openness 80) stores personality.openness 80",
     "reachesAction": true,
     "checksConsequence": false,
@@ -19983,7 +19983,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "None. The built-app step tools/acceptance-ui.mjs:125 clicks Continue past this step with the default sliders. tests/creation.test.ts:130 only scans the source for the strings `{ key: 'openness',` and type=\"range\". No render test."
+   "have": "None. The built-app step tools/acceptance-ui.mjs:125 clicks Continue past this step with the default sliders. tests/creation.test.ts:131 only scans the source for the strings `{ key: 'openness',` and type=\"range\". No render test."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20024,7 +20024,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "agreeableness 65 is stored",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20043,7 +20043,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "None. The built-app creation step leaves the sliders at their defaults. There is a source-string scan only (creation.test.ts:130)."
+   "have": "None. The built-app creation step leaves the sliders at their defaults. There is a source-string scan only (creation.test.ts:131)."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20087,7 +20087,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "Traits stored as given",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20096,7 +20096,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/creation.test.ts:150 'says why a trait can't be picked, and says nothing when it can'",
+    "where": "tests/creation.test.ts:151 'says why a trait can't be picked, and says nothing when it can'",
     "asserts": "blockedTraitReason wording for a conflict, for four already held, and for a free trait",
     "reachesAction": false,
     "checksConsequence": true,
@@ -20124,7 +20124,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Only the downstream Profile render (defects-g3-1.test.ts:90). The creation trait buttons have no render or built-app test. The max and conflict lines are held by source-string scans (creation.test.ts:145-147). The built-app creation step picks no trait."
+   "have": "Only the downstream Profile render (defects-g3-1.test.ts:90). The creation trait buttons have no render or built-app test. The max and conflict lines are held by source-string scans (creation.test.ts:146-148). The built-app creation step picks no trait."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20254,7 +20254,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:211 'carries the genres and the background, and no interests'",
+    "where": "tests/creation.test.ts:212 'carries the genres and the background, and no interests'",
     "asserts": "createSave stores background 'Raised by the sea.'",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20263,7 +20263,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:298 and src/ui/looks/wellbeing.tsx:139",
+    "where": "tests/creation.test.ts:310 and src/ui/looks/wellbeing.tsx:139",
     "asserts": "The source still has id=\"background\"; the look prints it",
     "reachesAction": false,
     "checksConsequence": false,
@@ -20339,7 +20339,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "None. The warning text 'Give both, or neither' and 'Out of range, so the body will be drawn instead' (CharacterCreation.tsx:303-311) has no render or built-app test. creation.test.ts:222 only checks that <BodyFields> sits on the step."
+   "have": "None. The warning text 'Give both, or neither' and 'Out of range, so the body will be drawn instead' (CharacterCreation.tsx:303-311) has no render or built-app test. creation.test.ts:223 only checks that <BodyFields> sits on the step."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -20406,7 +20406,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:240 (the test the row cites)",
+    "where": "tests/creation.test.ts:252 (the test the row cites)",
     "asserts": "A defaultConfig life in New York is placed in New York, on New York's zone",
     "reachesAction": true,
     "checksConsequence": true,
@@ -20421,7 +20421,7 @@
   "verdict": "verified",
   "partialClass": "none",
   "gaps": [
-   "The row cites tests/creation.test.ts:240, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
+   "The row cites tests/creation.test.ts:252, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
    "The row cites stale lines: CharacterCreation.tsx:846-909 is now 864-905, bootstrap.ts:156-165,183-186,272-305 has moved (atSchool 159-168, newLifeFrom 199-202), and index.ts:227 enroll is now 241."
   ],
   "todo": "",
@@ -20450,7 +20450,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:233 'asks where you live and what you start with'",
+    "where": "tests/creation.test.ts:234 'asks where you live and what you start with'",
     "asserts": "The source contains id=\"live-here\", idPrefix=\"live\" and id=\"wealth\"",
     "reachesAction": false,
     "checksConsequence": false,
@@ -20494,7 +20494,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:247 'opens the accounts the money answer promises, and balances them'",
+    "where": "tests/creation.test.ts:259 'opens the accounts the money answer promises, and balances them'",
     "asserts": "A defaultConfig wealthy life in New York: checking > 0, savings > 0, balances sum to 0, the ledger audit is clean",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20700,7 +20700,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:240 (the test the row cites)",
+    "where": "tests/creation.test.ts:252 (the test the row cites)",
     "asserts": "Location and zone",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20715,7 +20715,7 @@
   "verdict": "informational",
   "partialClass": "stale-claim",
   "gaps": [
-   "The cited test (creation.test.ts:240) does not hold the start date. The evidence is school.test.ts:175 and :200.",
+   "The cited test (creation.test.ts:252) does not hold the start date. The evidence is school.test.ts:175 and :200.",
    "The row cites stale lines: bootstrap.ts:279-282 is now 295-298, and CharacterCreation.tsx:1189-1190 is now 1224."
   ],
   "todo": "Re-cite the row to tests/school.test.ts:175 and :200, and correct the line references.",
@@ -21266,7 +21266,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:163-209",
+    "where": "tests/defects-g4-2.test.ts:165-211",
     "asserts": "round-ups land in savings at the current account's bank; none moved without savings there; Wells Fargo's flat $1; TD's panel says SLATE's estimate",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22271,7 +22271,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "After createSave with the names set, p.firstName === 'Sigrún' and p.lastName === 'Halldórsdóttir'.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22317,7 +22317,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "p.displayName === 'Siggi' after createSave.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22363,7 +22363,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/creation.test.ts:99 'settles the title from the pronouns, and only they/them opens the choice'",
+    "where": "tests/creation.test.ts:100 'settles the title from the pronouns, and only they/them opens the choice'",
     "asserts": "settledTitle('he/him') is 'actor', 'she/her' is 'actress', 'they/them' is undefined; case and spacing don't change the answer.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22372,7 +22372,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:184 'lets the pronouns decide a save the engine was handed with no title'",
+    "where": "tests/creation.test.ts:185 'lets the pronouns decide a save the engine was handed with no title'",
     "asserts": "createSave with pronouns and no title stores actress, actor and actor (for they/them).",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22381,7 +22381,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:83 'bills them as an actor or an actress, and will not go on until it is settled'",
+    "where": "tests/creation.test.ts:84 'bills them as an actor or an actress, and will not go on until it is settled'",
     "asserts": "The source contains 'performerTitle: settledTitle(pronouns)', the settled/open branches in that order, and validate's refusal message.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22390,7 +22390,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "p.pronouns === 'she/her'.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22409,7 +22409,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source-text checks only (creation.test.ts:83). The built app presses Actress under the default they/them (acceptance-ui.mjs:127-128) but never changes the pronouns or reads Billed As back."
+   "have": "Source-text checks only (creation.test.ts:84). The built app presses Actress under the default they/them (acceptance-ui.mjs:127-128) but never changes the pronouns or reads Billed As back."
   },
   "verdict": "informational",
   "partialClass": "none",
@@ -22435,7 +22435,7 @@
   "evidence": [
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:83 'bills them as an actor or an actress, and will not go on until it is settled'",
+    "where": "tests/creation.test.ts:84 'bills them as an actor or an actress, and will not go on until it is settled'",
     "asserts": "The source has the Billed As label, the settled/open branches, the reset on a pronoun change, and validate's message.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22444,7 +22444,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:179 'keeps a pick made under they/them, either way'",
+    "where": "tests/creation.test.ts:180 'keeps a pick made under they/them, either way'",
     "asserts": "createSave with they/them stores 'actress' or 'actor' as picked.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22453,7 +22453,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:191 'names the slot by the title it stored, which the pronouns cannot supply'",
+    "where": "tests/creation.test.ts:192 'names the slot by the title it stored, which the pronouns cannot supply'",
     "asserts": "careerLabel is 'Actress' after creation and again after refreshMeta.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22508,7 +22508,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source-text checks (creation.test.ts:83) and an unasserted Actress press in the built app. No render or built-app check of Billed As, Home's title or a casting by title."
+   "have": "Source-text checks (creation.test.ts:84) and an unasserted Actress press in the built app. No render or built-app check of Billed As, Home's title or a casting by title."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -22542,7 +22542,7 @@
   "evidence": [
    {
     "kind": "fixture",
-    "where": "tests/creation.test.ts:108 'caps the birth year so nobody starts under eighteen, or twenty-one at drama school'",
+    "where": "tests/creation.test.ts:109 'caps the birth year so nobody starts under eighteen, or twenty-one at drama school'",
     "asserts": "latestBirthYear gives 2008, 2012, and 2005 for drama school.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -22560,7 +22560,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:292 'starts everybody at fifty, no fitter than the age allows'",
+    "where": "tests/creation.test.ts:304 'starts everybody at fifty, no fitter than the age allows'",
     "asserts": "createSave with birthYear 1944 gives fitness ≈ min(50, ceilingAt(81.5).fitness); 2001 gives 50.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22715,7 +22715,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "Born in Reykjavík and living in New York gives citizenshipId 'is'.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22814,7 +22814,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:114 'carries every answer into the save'",
+    "where": "tests/creation.test.ts:115 'carries every answer into the save'",
     "asserts": "raceEthnicity equals ['white', 'asian'].",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22924,7 +22924,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "emotionalStability 90 is stored.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22934,7 +22934,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source text only: creation.test.ts:130 checks the slider row exists. Nothing renders the creation sentence or the Profile's Dispositions line (ProfileWorkspace.tsx:156)."
+   "have": "Source text only: creation.test.ts:131 checks the slider row exists. Nothing renders the creation sentence or the Profile's Dispositions line (ProfileWorkspace.tsx:156)."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -23004,7 +23004,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "conscientiousness 30 is stored.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -23014,7 +23014,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Source text only (creation.test.ts:130). No render of the creation sentence or the Profile's Dispositions line."
+   "have": "Source text only (creation.test.ts:131). No render of the creation sentence or the Profile's Dispositions line."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -23071,7 +23071,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:163 'carries every disposition and trait into the save'",
+    "where": "tests/creation.test.ts:164 'carries every disposition and trait into the save'",
     "asserts": "ambition 40 is stored.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -23835,7 +23835,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/creation.test.ts:211-216",
+    "where": "tests/creation.test.ts:212-217",
     "asserts": "A life made from creation's config has no 'interests'.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -23865,7 +23865,7 @@
   "evidence": [
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:202-209",
+    "where": "tests/creation.test.ts:203-210",
     "asserts": "The source text of PersonalStep contains '<h2>Genres</h2>' and '<h2>Background</h2>', but not '<h2>Interests</h2>'.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -23874,7 +23874,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/creation.test.ts:262-271",
+    "where": "tests/creation.test.ts:274-283",
     "asserts": "ReviewStep's source does not contain label=\"Interests\".",
     "reachesAction": false,
     "checksConsequence": false,

@@ -2169,7 +2169,7 @@
  ],
  "promises": [
   {
-   "id": "promise.taxes.return>bank.accounts",
+   "id": "promise.taxes.return>bank.accounts#immediate",
    "kind": "immediate",
    "claim": "Filing takes any balance from your accounts at once, the checking account first and then savings.",
    "entryFile": "src/engine/content/guide/taxes.ts",
@@ -2231,7 +2231,7 @@
    "readAt": "c4832549"
   },
   {
-   "id": "promise.taxes.return>bank.accounts",
+   "id": "promise.taxes.return>bank.accounts#scheduled",
    "kind": "scheduled",
    "claim": "A refund is paid into your checking account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number.",
    "entryFile": "src/engine/content/guide/taxes.ts",
@@ -2315,7 +2315,7 @@
    "readAt": "c4832549"
   },
   {
-   "id": "promise.taxes.pay>bank.accounts",
+   "id": "promise.taxes.pay>bank.accounts#immediate",
    "kind": "immediate",
    "claim": "Each payment leaves your accounts at once, the checking account first and then savings.",
    "entryFile": "src/engine/content/guide/taxes.ts",
@@ -2359,7 +2359,7 @@
    "readAt": "c4832549"
   },
   {
-   "id": "promise.taxes.pay>bank.accounts",
+   "id": "promise.taxes.pay>bank.accounts#scheduled",
    "kind": "scheduled",
    "claim": "If you leave it owing, a levy takes what your accounts hold on its day.",
    "entryFile": "src/engine/content/guide/taxes.ts",

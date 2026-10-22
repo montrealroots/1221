@@ -21,7 +21,7 @@ owning area's test that holds the rest. `node tools/effects.mjs --todo guide` li
 here. No control issues the wrong command, sends the wrong id, or sends a key its handler doesn't take, and every one of
 the 180 commands registered is issued by some control. `tests/b20-guide-wiring.test.ts` holds it, and fails when a control
 is added or changed: after integration, `node tools/wiring.mjs --write`, then a verdict for each new line. Notes on single
-lines: Papers' Renew is always greyed and its command always refuses; Home's "Mark N Read" marks every unread notice, those
+lines: Papers' Renew is always grayed and its command always refuses; Home's "Mark N Read" marks every unread notice, those
 past the six shown too; the NHS prepay labels write £32.05 and £114.50 by hand, which match the content's figures today.
 
 ## Defects Repaired
@@ -93,7 +93,7 @@ debt was added to that test, marked TEST SETUP, and the second run killed it.
 - **Already failing at `c4832549`** (in a fresh clone): `tools/coverage.mjs --check`, "cardlife.test.ts:99 isn't inside a
   test", and devmap, traceability and the completion matrix behind; with `EFFECTS.md`, those pages want writing again.
   (The coordinator's `16630746` carried the citations forward and wrote them again.)
-- **LienPanels (the benefits area's):** the greyed reason's line names the button "Ask For Its Withdrawal" even where it
+- **LienPanels (the benefits area's):** the grayed reason's line names the button "Ask For Its Withdrawal" even where it
   reads "Ask For Its Release As Erroneous".
 - **`tests/guide-examples-start-day-body.test.ts`:** its `tomorrowMorning` helper is behind the rule; it runs only from
   evenings, where the old rule and the new agree.

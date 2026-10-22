@@ -371,7 +371,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g4-2.test.ts:163-209",
+    "where": "tests/defects-g4-2.test.ts:165-211",
     "asserts": "round-ups land in savings at the current account's bank; none moved without savings there; Wells Fargo's flat $1; TD's panel says SLATE's estimate",
     "reachesAction": true,
     "checksConsequence": true,

@@ -6,7 +6,7 @@
  * - `tend`: the day's wellbeing held rested and fed each time the clock moves (energy 90, stress 10, no sleep debt,
  *   nourishment 80, hygiene 80, morale 70). Both twins of a comparison are tended alike, so it's never the input under
  *   test, except where a test stops tending one twin to let the clock tire it (`live`'s `upFrom`).
- * - `clearDay`: the clock's commitments that need the player cancelled, as tests/workbook.test.ts does, so a command
+ * - `clearDay`: the clock's commitments that need the player canceled, as tests/workbook.test.ts does, so a command
  *   isn't refused for a class or an orientation session within its hour. Used only by tests that work at commands alone.
  * - `setAbility`: an ability or a technique written before the life is played, the input a comparison changes.
  *
@@ -34,7 +34,7 @@ export function tend(sim: Simulation): void {
   sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
 }
 
-/** TEST SETUP: the clock's commitments that need the player, cancelled, for a test that works at commands alone. */
+/** TEST SETUP: the clock's commitments that need the player, canceled, for a test that works at commands alone. */
 export function clearDay(sim: Simulation): void {
   for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.requiresPlayer) sim.timeline.cancel(item.id, sim.now);
 }

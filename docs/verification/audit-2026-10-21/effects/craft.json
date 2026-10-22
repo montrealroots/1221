@@ -2196,7 +2196,7 @@
    "readAt": "12c04ee1"
   },
   {
-   "id": "promise.productions.cabaret>productions.casting",
+   "id": "promise.productions.cabaret>productions.casting#prerequisite",
    "kind": "prerequisite",
    "claim": "A Cabaret week has to miss every casting call and night on call; with the School and the Rep both calling in its weeks, you can’t take one.",
    "entryFile": "src/engine/content/guide/productions.ts",
@@ -2259,7 +2259,7 @@
    "readAt": "12c04ee1"
   },
   {
-   "id": "promise.productions.cabaret>productions.casting",
+   "id": "promise.productions.cabaret>productions.casting#evaluation",
    "kind": "evaluation",
    "claim": "A Cabaret or Summer run counts ${pct(R.weight.cabaret)} of a School production’s in what the chair reads you delivered.",
    "entryFile": "src/engine/content/guide/productions.ts",

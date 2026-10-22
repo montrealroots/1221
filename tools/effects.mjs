@@ -25,6 +25,7 @@
  *                                     consumer at a file or a line that isn't there, a test the gate doesn't run or that
  *                                     isn't there, a verified row with no test, a verified command none of whose tests
  *                                     issues it, or EFFECTS.md behind the rows
+ *   node tools/effects.mjs --check --all  every problem, where --check alone prints the first 200
  *   node tools/effects.mjs --todo [<area>]  lists the rows still seeded, by area
  */
 import ts from 'typescript';
@@ -151,6 +152,15 @@ function guide() {
       }
     });
   }
+  // An entry may connect to the same entry twice, in two ways (`taxes.pay` to `bank.accounts` at once and on its date):
+  // each such pair carries its kind in its id (from 2026-10-21, found by the benefits area, where the two shared one id).
+  const pairs = new Map();
+  for (const p of promises) pairs.set(p.id, (pairs.get(p.id) ?? 0) + 1);
+  for (const p of promises) if (pairs.get(p.id) > 1) p.id = `${p.id}#${p.kind}`;
+  // And where the same kind comes twice too (`documents.passport-id` to `documents.work`, two prerequisites), the second
+  // and after carry their place.
+  const seen = new Map();
+  for (const p of promises) { const n = (seen.get(p.id) ?? 0) + 1; seen.set(p.id, n); if (n > 1) p.id = `${p.id}-${n}`; }
   return { entries, promises };
 }
 
@@ -399,7 +409,7 @@ else if (args.includes('--todo')) {
   const out = problems();
   if (existsSync(PAGE) && read(PAGE) !== page()) out.push(`${PAGE} is behind the rows: node tools/effects.mjs --write`);
   if (!existsSync(PAGE)) out.push(`${PAGE} isn't written: node tools/effects.mjs --write`);
-  for (const p of out.slice(0, 200)) console.log(p);
+  for (const p of args.includes('--all') ? out : out.slice(0, 200)) console.log(p);
   console.log(out.length ? `effects: ${out.length} problem${out.length === 1 ? '' : 's'}` : 'effects: every feature found in the code has a row read against it');
   process.exitCode = out.length ? 1 : 0;
 } else {

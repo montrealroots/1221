@@ -2799,14 +2799,14 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g4-2.test.ts:164, :174",
+            "where": "tests/defects-g4-2.test.ts:166, :176",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
           },
           {
             "kind": "command",
-            "where": "tests/defects-g4-2.test.ts:183 'move Wells Fargo’s flat $1...'",
+            "where": "tests/defects-g4-2.test.ts:185 'move Wells Fargo’s flat $1...'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -2814,7 +2814,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g4-2.test.ts:195",
+            "where": "tests/defects-g4-2.test.ts:197",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
