@@ -8,7 +8,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation, The Agreement: Accept The Agreement, grayed with answerRefusal's words; behind the guide's chapter \"Representation\".",
    "prerequisites": "An agreement he offered and still standing (fourteen days, `AGREEMENT.offerStandsDays`); refused \"He hasn't offered you an agreement.\" or \"The offer stood until …\" (`answerRefusal`).",
    "reads": "The offered agreement (`offeredAgreement`) and its standing date.",
@@ -16,7 +16,7 @@
    "consumers": [
     {
      "what": "the agreement in force on a date, the one rule the rest read",
-     "at": "src/engine/systems/pro.ts:526"
+     "at": "src/engine/systems/pro.ts:527"
     },
     {
      "what": "the week's postings: parts released to agents reach the actor through him",
@@ -65,7 +65,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities, Offers: Accept The Offer, and What Needs You's question with the same action; grayed with acceptRefusal's words.",
    "prerequisites": "An offer standing (`acceptRefusal`): not lapsed; permission to work on every day of the work (`usWorkAuthorized`); SAG-AFTRA membership for SAG-AFTRA work from the 30th day after a first job (`sagWorkRefusal`); no other booking on its days; out of term, no School call held on them.",
    "reads": "The offer, its days (`datesOf`), the papers, the unions, the bookings, the School's calendar and the agreement in force.",
@@ -124,7 +124,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation, How To Reach Him: Check Your Materials, grayed with checkRefusal's words.",
    "prerequisites": "The notice read; no approach under way; not checked already for this approach; headshots and a résumé (`materialsCheck`, blocking).",
    "reads": "The relation's stage and history, the materials (`materialsCheck` for representation).",
@@ -165,7 +165,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation: the notice that he and his agency are invented, at the top of his panel, and I've Read This.",
    "prerequisites": "Not read already (`noticeRefusal`).",
    "reads": "The relation, if any.",
@@ -205,7 +205,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation, How To Reach Him: Ask For A Referral beside each finished job, grayed with its reason.",
    "prerequisites": "The notice read; materials checked; no approach under way or held (`tooSoon`); a finished job judged Strong or better (`REFERRAL_BAND`) not referred before (`referralRefusal`).",
    "reads": "The finished engagements, their credits' bands, the referrals made.",
@@ -255,7 +255,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The stop at his meeting: Ask To Move (`defineStop`), and the Representation tab's Ask To Move.",
    "prerequisites": "A meeting set and still to come, not moved before (`moveRefusal`, once).",
    "reads": "The meeting and its item on the calendar.",
@@ -296,7 +296,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Portfolio: Cut A Reel, choosing up to four recorded pieces; grayed with reelRefusal's words.",
    "prerequisites": "Recorded work usable on a reel (a camera self-tape, the posted filmed monologues, a released screen credit's footage); one to four pieces, each once; not the same set again; two free hours; $250 the bank can cover.",
    "reads": "The recorded work (`reelSources`), the current reel, the clock, the bank.",
@@ -349,7 +349,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation, The Agreement: Decline The Agreement, grayed with answerRefusal's words.",
    "prerequisites": "An agreement he offered, still standing (`answerRefusal`).",
    "reads": "The offered agreement.",
@@ -400,7 +400,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities, Offers: Decline The Offer, and What Needs You's Decline action.",
    "prerequisites": "An offer standing (\"There's no offer to decline.\" otherwise).",
    "reads": "The opportunity's status.",
@@ -443,7 +443,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation, The Agreement: End It By Agreement, End It: No Offer In 90 Days, End It: Too Little Work, each grayed with endRefusal's words.",
    "prerequisites": "Represented by him; by agreement any time; Equity's 90 days with no real offer through him, extended by days employed, and not while employed on covered work; SAG-AFTRA's 151 days and fewer than ten days' covered work in the last 91 (`endRefusal`).",
    "reads": "The agreement in force, the offers through him, the engagements under it.",
@@ -451,7 +451,7 @@
    "consumers": [
     {
      "what": "the agreement no longer in force for later dates",
-     "at": "src/engine/systems/pro.ts:526"
+     "at": "src/engine/systems/pro.ts:527"
     },
     {
      "what": "commission still owed on contracts made in the term",
@@ -484,7 +484,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Portfolio: Book A Headshot Session, grayed with headshotRefusal's words.",
    "prerequisites": "Four free hours from 9 AM to 4 PM; $700 the bank can cover (`headshotRefusal`).",
    "reads": "The clock, the calendar, the bank.",
@@ -525,7 +525,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Work, Your Unions: Join SAG-AFTRA, grayed with joinSagRefusal's words.",
    "prerequisites": "Eligible (a SAG-AFTRA principal role worked), not a member, the fee in the bank (`joinSagRefusal`).",
    "reads": "The SAG-AFTRA eligibility and the bank.",
@@ -575,7 +575,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities, In Progress: Ask For Another Time, grayed with moveRefusal's words.",
    "prerequisites": "An audition in person to come, more than a day away, not moved before, and a time casting has clear of the calendar (`moveRefusal`, `otherTime`).",
    "reads": "The round, the calendar.",
@@ -608,7 +608,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities: Break It Down, Learn The Lines, Rehearse It On Your Feet, on the sides of an audition to come and on the part once booked.",
    "prerequisites": "Sides sent with an audition, or live booked work; the step not done to its most; lines before rehearsal; awake; on your feet, rested and uninjured; the step's time free (`prepareRefusal`).",
    "reads": "The preparation so far, the hour's focus, the same step done today, the ability it trains, the way you prepare.",
@@ -658,7 +658,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities: Ask The School under In Term At The School, grayed with requestRefusal's words.",
    "prerequisites": "A student in good standing; a part not settled whose days fall in term; not asked already; not refused by an F-1 (`requestRefusal`); an hour free.",
    "reads": "The School's standing, the term's calendar, the papers.",
@@ -695,7 +695,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation: Send Your Materials, grayed with sendRefusal's words.",
    "prerequisites": "The notice read; no approach under way; a route (the School's follow-up or a referral), else the agency's rule; checked; no hold running and something new since the last decision (`sendRefusal`).",
    "reads": "The relation, the route, the hold, the record's case keys, the reel.",
@@ -741,7 +741,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Portfolio, Your Professional Name: Use This Name, grayed with nameRefusal's words.",
    "prerequisites": "Letters with spaces, hyphens, apostrophes and periods, at most 40; not the name already (`nameRefusal`).",
    "reads": "The display name and the professional name.",
@@ -779,7 +779,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities, Open Calls: Submit Yourself, grayed with submitRefusal's words.",
    "prerequisites": "An open role taking the actor's own submission, its window open; the ages, the union of a members' call, the required skills, no booking on its days; headshots, a résumé and a reel where casting asks (`submitRefusal`).",
    "reads": "The opportunity, the actor's eligibility and materials.",
@@ -817,7 +817,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Representation: Send What His Office Asked For, grayed with supplyRefusal's words.",
    "prerequisites": "A request standing; each thing asked for made since (`supplyRefusal`).",
    "reads": "The request and the materials.",
@@ -857,7 +857,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Opportunities, In Progress: Tape It, grayed with tapeRefusal's words.",
    "prerequisites": "A self-tape asked for and not yet due, with its hour before the deadline; awake; the hour free (`tapeRefusal`).",
    "reads": "The sides' preparation, the role's techniques and families, the genre known for its project, the day's condition.",
@@ -899,7 +899,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "Career, Portfolio: Make Your Résumé or Update Your Résumé, grayed with resumeRefusal's words.",
    "prerequisites": "No résumé, or one behind the record; an hour free (`resumeRefusal`).",
    "reads": "The record as a résumé would say it (`resumeNow`): the name, the unions, the training, the credits, the special skills.",
@@ -942,7 +942,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, five weekdays after a meeting kept (`DECISION_KIND`).",
    "prerequisites": "The relation deciding on that meeting.",
    "reads": "His office's factors (`interestOf`) and the approach's offer draw (`drawOf`).",
@@ -985,7 +985,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, three days after the showcase's last performance (`FOLLOW_UP_KIND`), put on by the showcase.",
    "prerequisites": "A showcase performed and not followed up.",
    "reads": "The showcase's performances, his factors and the follow-up's draw.",
@@ -1027,7 +1027,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock at the meeting, a stop with Go, Stand Here and Ask To Move (`MEETING_KIND`).",
    "prerequisites": "The meeting set and its item pending.",
    "reads": "Whether the actor is there (awake, not in hospital or laid up) and not at an audition whose trip meets it (`attendedAcross`).",
@@ -1068,7 +1068,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, the agreement's last day (`OFFER_LAPSE_KIND`).",
    "prerequisites": "The agreement still offered.",
    "reads": "The agreement's status.",
@@ -1108,7 +1108,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, the request's last day (`REQUEST_DUE_KIND`).",
    "prerequisites": "The request still standing.",
    "reads": "The request and his factors.",
@@ -1141,7 +1141,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, six weeks after a send left unanswered (`SILENCE_KIND`).",
    "prerequisites": "The relation waiting on that approach.",
    "reads": "The relation's stage and approach.",
@@ -1174,7 +1174,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, the agreement's year's end (`TERM_END_KIND`).",
    "prerequisites": "The agreement accepted.",
    "reads": "The agreement.",
@@ -1182,7 +1182,7 @@
    "consumers": [
     {
      "what": "no longer in force after its end",
-     "at": "src/engine/systems/pro.ts:526"
+     "at": "src/engine/systems/pro.ts:527"
     }
    ],
    "experienced": "A notice that it ended at the end of its year; his breakdowns stop.",
@@ -1207,7 +1207,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock at an audition in person, a stop with its trip (`AUDITION_KIND`).",
    "prerequisites": "The round set at that time.",
    "reads": "Whether the actor is there, at a work day, or at another commitment whose trip meets it; the sides' preparation, the role's techniques, the day's condition.",
@@ -1247,7 +1247,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, a day after a round casting cuts from, three after the last (`CASTING_KIND`).",
    "prerequisites": "The round done and not yet decided.",
    "reads": "The round's band, the role's fit (genre known and techniques), the field, a booking on its days.",
@@ -1287,7 +1287,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, the offer's last moment (`OFFER_KIND`).",
    "prerequisites": "The offer still standing.",
    "reads": "The opportunity.",
@@ -1323,7 +1323,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, a screen project's release, months after its wrap (`RELEASE_KIND` in projobs).",
    "prerequisites": "A screen credit shot.",
    "reads": "The credit.",
@@ -1361,7 +1361,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, two days after a submission (`REPLY_KIND` in projobs).",
    "prerequisites": "The opportunity still submitted.",
    "reads": "The project's stages.",
@@ -1403,7 +1403,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, a week after a request to the School (`SCHOOL_ANSWER_KIND`).",
    "prerequisites": "The request pending.",
    "reads": "The School's conditions at the request's date (`conditionsFor`).",
@@ -1436,7 +1436,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, the self-tape's deadline (`TAPE_DUE_KIND`).",
    "prerequisites": "The round still set.",
    "reads": "The round.",
@@ -1469,7 +1469,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock at each booked day, a stop with its trip (`WORK_DAY_KIND`).",
    "prerequisites": "Live booked work, the day not yet logged.",
    "reads": "Whether the actor is there; the part's preparation, the role's techniques and families, the project's genres known, the day's condition; at a night, composure and extraversion; the genres loved and agreeableness; in term, the School's approval.",
@@ -1542,7 +1542,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "The clock, every Monday at nine it passes (`onPassage`): the Opportunities tab's Open Calls and Through An Agent.",
    "prerequisites": "The player's life; a part written for the actor; a way to reach them (open, or through an agent in force within his fields); not posted again until ten weeks on and the work its last posting cast is over; never once booked or credited.",
    "reads": "The agreement in force that Monday, who each part is written for, the record's postings, bookings and credits, the week's draw (`pro.posting`).",
@@ -1596,7 +1596,7 @@
    "mechanic": true,
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "An event: said by the School at the degree (`setStanding`) and, from brief 20, by the work loop at an Equity contract's first day (`unionsFrom`).",
    "prerequisites": "Not already a member.",
    "reads": "The membership and the bills on record.",
@@ -1641,7 +1641,7 @@
    "purpose": "Tells the player what his office did, in his name and his agency's, as it happens, and where to act next.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, from the agent's steps (`tell`), routed to the Representation tab.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1672,7 +1672,7 @@
    "purpose": "Tells the player what casting, the agent and the work did: a round set, a pass, an offer lapsed, a wrap, a release, a missed day.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, from the work loop's steps (`tell`), routed to the Career screen.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1703,7 +1703,7 @@
    "purpose": "Says what the production paid, what was withheld and taken, and where it went.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, at a payday: paid, or held in the agency's trust account.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1733,7 +1733,7 @@
    "purpose": "Says what was held, the commission and what reached the bank.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, when the agency passes pay on.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1762,7 +1762,7 @@
    "purpose": "Says the bill was paid or owed.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, at a union bill.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1791,7 +1791,7 @@
    "purpose": "Says the fee, its parts and dates, and how the membership came.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, when Equity's membership begins.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1821,7 +1821,7 @@
    "purpose": "Says what Equity is owed and that nothing was charged for a past date.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, once, on an older graduate's first opening.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1851,7 +1851,7 @@
    "purpose": "Says the showcase's dates and what to choose by when.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, at the final term's start.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1880,7 +1880,7 @@
    "purpose": "Says the student is in the showcase with their scenes, or out for an Incomplete.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce",
+   "readAt": "e0b60f74",
    "where": "What Needs You, at the fourth week's end.",
    "prerequisites": "The player's own life (`person.id === sim.universe.playerId`).",
    "reads": "What the step that sends it decided.",
@@ -1921,7 +1921,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.overview>documents.work",
@@ -1943,7 +1943,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.profile>career.resume",
@@ -1963,7 +1963,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.profile>craft.profile",
@@ -1985,7 +1985,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.headshots>career.overview",
@@ -2007,7 +2007,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.headshots>bank.accounts",
@@ -2027,7 +2027,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.resume>career.overview",
@@ -2049,7 +2049,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.resume>productions.nights",
@@ -2069,7 +2069,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reel>craft.brief-tape",
@@ -2091,7 +2091,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reel>career.overview",
@@ -2111,7 +2111,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent>career.headshots",
@@ -2131,7 +2131,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent>career.resume",
@@ -2151,7 +2151,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent>career.agent-answers",
@@ -2173,7 +2173,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent-answers>career.reasons",
@@ -2195,7 +2195,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agent-answers>day.clock",
@@ -2215,7 +2215,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reasons>career.reel",
@@ -2237,7 +2237,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.reasons>career.agent",
@@ -2261,7 +2261,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agreement>documents.work",
@@ -2283,7 +2283,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.agreement>career.agent",
@@ -2303,7 +2303,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.pay>bank.accounts",
@@ -2327,7 +2327,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.pay>taxes.return",
@@ -2347,7 +2347,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.pay>documents.work",
@@ -2371,7 +2371,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.commission>career.pay",
@@ -2393,7 +2393,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.commission>taxes.return",
@@ -2415,7 +2415,7 @@
    "why": "Each link is tested: tests/propay.test.ts reads a played payment's commission in the year, and tests/safetynet.test.ts the deduction from wages recorded by hand. No test plays a career's commission through to a return's deduction: it needs two qualifying employers in a year, which no played life here has had.",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.unions>bank.accounts",
@@ -2437,7 +2437,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.unions>career.resume",
@@ -2459,7 +2459,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.unions>taxes.return",
@@ -2483,7 +2483,7 @@
    "why": "Each link is tested: tests/propay.test.ts reads the working dues in the year and tests/b20-career-defects.test.ts the fee and the dues paid from the bank, both played; tests/safetynet.test.ts the deduction from wages recorded by hand. No test plays a career through to a return's deduction, which needs two qualifying employers in a year. Until brief 20 only the working dues reached the year (a defect, repaired).",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.opportunities>career.headshots",
@@ -2503,7 +2503,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.opportunities>career.auditions",
@@ -2527,7 +2527,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.auditions>career.offers",
@@ -2549,7 +2549,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.auditions>day.calendar",
@@ -2571,7 +2571,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.offers>documents.work",
@@ -2593,7 +2593,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.offers>career.resume",
@@ -2615,7 +2615,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.offers>day.calendar",
@@ -2637,7 +2637,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.outside-work>school.standing",
@@ -2657,7 +2657,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.career.outside-work>career.offers",
@@ -2679,7 +2679,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>coursework.prepare",
@@ -2699,7 +2699,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>coursework.feedback",
@@ -2719,7 +2719,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>school.repeat",
@@ -2739,7 +2739,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   },
   {
    "id": "promise.coursework.showcase>career.overview",
@@ -2759,7 +2759,7 @@
    "why": "",
    "seeded": false,
    "readBy": "career",
-   "readAt": "0906d5ce"
+   "readAt": "e0b60f74"
   }
  ]
 }
