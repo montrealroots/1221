@@ -79,7 +79,7 @@ export interface NewSaveConfig {
    * `newLifeFrom`): there Place Of Birth writes it and doesn't read it, Where You Live isn't drawn, and nothing the
    * engine does reads it (`createUniverse` never has). Found 2026-10-21 (brief 20); whether the start outside the School
    * comes back or goes, and this and Starting Point's controls for it with it, is the owner's to say
-   * (docs/verification/audit-2026-10-21/areas/creation/REPORT.md).
+   * (docs/verification/audit-2026-10-21/effects/creation.json, `create.livesWhereBorn`).
    */
   livesWhereBorn: boolean;
   /** Headshot as a data URL, already fitted to the portrait frame. */

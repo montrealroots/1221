@@ -236,7 +236,8 @@ describe('Starting Point', () => {
   // Until 2026-10-21 (brief 20) this was called "asks where you live and what you start with", and held that the step's
   // source had the controls: no player meets them. They're drawn only for a life outside the School, and creation begins
   // every life at it (`newLifeConfig`, `newLifeFrom`), the family chosen on Genres & Background, so `livesWhereBorn` is
-  // written there and read by nothing a player's life reaches (docs/verification/audit-2026-10-21/areas/creation/REPORT.md).
+  // written there and read by nothing a player's life reaches (docs/verification/audit-2026-10-21/effects/creation.json,
+  // `create.livesWhereBorn`).
   it('asks where you live and what you start with only for a life outside the School, which creation never begins', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
     const outside = step.slice(step.indexOf('{!config.school && (<>'));
