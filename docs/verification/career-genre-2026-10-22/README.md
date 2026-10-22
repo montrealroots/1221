@@ -299,7 +299,8 @@ Readings made on SLATE's judgment, each for the owner to keep or change:
 
 ## Not Done, And What Limits This
 
-- **Nothing is merged or deployed,** as the brief says.
+- **Nothing was merged or deployed** while the brief ran, as it said. At the owner's "lets just merge everything"
+  (2026-10-22) it went to `main` in #54, merged as `9aed9ed4`. Nothing is deployed.
 - **No person has played this:** the journeys are played by fixed players on fixed seeds.
 - **No route back to status after a breach:** none is in the game, and the brief adds no immigration category.
 - **No blocker** stopped an item of the brief.

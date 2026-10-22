@@ -42,4 +42,5 @@ For the next session or the other account, beside the handoff. The tree outranks
 
 ## Next
 
-Nothing in the brief is left. Nothing is merged or deployed until the owner says.
+Nothing in the brief is left. Until 2026-10-22 nothing was merged; at the owner's "lets just merge everything" it went to
+`main` in #54 (`9aed9ed4`). Nothing is deployed.
