@@ -204,9 +204,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [weather]": {
   "status": "Rewritten",
-  "hash": "e33125302ecf",
-  "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter weather, and follow-1440/chapter-10-weather.txt; today’s weather opened",
+  "hash": "8c0a4e022423",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-guide-chapters.test.ts, '10. Weather': the day's weather decides the run (trainingAt) and the flu's weeks are the town's (fluByWeek), the same in two worlds whose skies differ; the chapter's new sentence read against docs/STYLE.md",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [welcome]": {

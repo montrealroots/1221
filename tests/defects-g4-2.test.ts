@@ -132,7 +132,9 @@ describe('Skip To Event, for an entry in another city', () => {
     expect(target.elsewhere).toBe(true);
     expect('needsTravel' in target).toBe(false);
     expect(target.travelNote).toBe(`You’re in ${CITIES.get(here)!.name} and this is in ${CITIES.get(there)!.name}.`);
-    expect(TIME_CONTROLS).toContain('{entry.elsewhere && <span className="chip chip-negative">Elsewhere</span>}');
+    // Of one that needs you there already, as this does: from 2026-10-21 (brief 20) a commitment carrying its own trip
+    // (`travelMinutes`, the career's) isn't marked Elsewhere, its trip being part of it (tests/b20-guide-screens.test.ts).
+    expect(TIME_CONTROLS).toContain('{entry.elsewhere && entry.item.travelMinutes === undefined && <span className="chip chip-negative">Elsewhere</span>}');
     expect(TIME_CONTROLS).not.toMatch(/>Travel</);
   });
 });

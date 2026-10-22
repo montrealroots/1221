@@ -364,11 +364,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [optional]": {
-  "status": "Retained",
-  "hash": "38c3a669bb27",
-  "on": "2026-10-19",
-  "reason": "Two short lines under Worth Doing With It: the weather is the same town hour by hour, and Go There on a notice opens its screen.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "40507328b733",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-guide-promises.test.ts, start.find > day.needs: Go There goes to the route the notice names, its tab where it names one, and tests/b20-guide-screens.test.ts holds the provider keeping that tab; read against docs/STYLE.md",
+  "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [prerequisite]": {
   "status": "Rewritten",

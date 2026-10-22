@@ -132,7 +132,10 @@ export const START: readonly GuideEntry[] = [
     related: ['start.guide', 'start.home', 'day.needs'],
     connections: [
       { to: 'start.guide', kind: 'prerequisite', why: 'A place joins the menu once you’ve read its chapter.' },
-      { to: 'day.needs', kind: 'optional', why: 'Go There on a notice takes you to its screen and tab.' },
+      // Until 2026-10-21 (the owner's brief 20, C3) this said Go There took you to a notice's screen and tab, though
+      // most notices name only their screen (`route`), which opens at the tab it was left on: a notice names its tab
+      // only where its route carries one (`?tab=`, read by `moved` in `app/game-context.tsx`), as the pay's do.
+      { to: 'day.needs', kind: 'optional', why: 'Go There on a notice takes you to its screen, and to its tab where the notice names one.' },
     ],
     // Until 2026-10-20 (brief 17, section 9) this pressed H and then a School breadcrumb on Home, which Home never shows:
     // going to a screen already in the breadcrumbs cuts them back to it, and Home is always the first, so on Home there
