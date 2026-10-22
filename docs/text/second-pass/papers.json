@@ -15,10 +15,10 @@
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten",
-  "hash": "74b7e2e395c4",
+  "hash": "7d1aaeef8e4d",
   "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples",
-  "first": "Rewritten And Verified"
+  "evidence": "tests/b20-papers-defects.test.ts (P1: the Permission To Work entry's Status line says Approved, as the row does)",
+  "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
   "status": "Rewritten",
@@ -169,9 +169,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten",
-  "hash": "db6c7035ca1d",
-  "on": "2026-10-20",
-  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check; its notice quote checked against healthMonth in systems/health.ts",
+  "hash": "76e0ea9669ba",
+  "on": "2026-10-22",
+  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
@@ -197,9 +197,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [scheduled]": {
   "status": "Rewritten",
-  "hash": "ba56db431cf8",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a long-term condition left untreated takes its toll)",
+  "hash": "ba488acc93d2",
+  "on": "2026-10-22",
+  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PRACTICE": {
@@ -3039,9 +3039,9 @@
  },
  "src/ui/looks/papers.tsx#top": {
   "status": "Rewritten",
-  "hash": "374b0109f28c",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'a document reported stolen says stolen on its page, and one reported lost says lost' resolves the look",
+  "hash": "88b3bb8d06f0",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-papers-defects.test.ts (P1: an OPT approved before the program ends reads Approved, and its page says the day it starts)",
   "first": "Pending"
  },
  "src/ui/looks/papers.tsx#whatItDoes": {
@@ -3053,9 +3053,9 @@
  },
  "src/ui/papers/Documents.tsx#DocumentList": {
   "status": "Rewritten",
-  "hash": "5ca1d479c36d",
-  "on": "2026-10-20",
-  "evidence": "brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/editorial-papers.test.ts (brief 17: Your ID says what Get costs), tests/editorial17-papers.test.ts (Going Abroad says, in sight) and tests/defects-g25-1.test.ts",
+  "hash": "250fb7571cad",
+  "on": "2026-10-21",
+  "evidence": "tests/b20-papers-defects.test.ts (P1: the Work tab's row reads Approved until the OPT's first day)",
   "first": "Pending"
  },
  "src/ui/papers/Documents.tsx#idCardWords": {
@@ -3221,9 +3221,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#HealthPane": {
   "status": "Rewritten",
-  "hash": "f337c758e206",
-  "on": "2026-10-20",
-  "evidence": "brief 17: read on scratchpad b17/papers-work/walk-after (the built app at 1440 and 390 on the tax, lien, missed-plan, nonfiler, withdraw, health and F-1 saves); held by tests/scope-taxpapers.test.ts (brief 17: Papers says what File It takes, what a missed plan payment needs, and what the letters do next), tests/remaining-tax.test.ts (Catch Up drawn on Papers) and tests/editorial17-papers.test.ts",
+  "hash": "9d3efb8762e9",
+  "on": "2026-10-22",
+  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
   "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel": {

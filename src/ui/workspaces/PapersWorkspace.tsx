@@ -604,6 +604,11 @@ function HealthPane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
+  // The state where they live, where its law keeps medical debt off a credit record (`MEDICAL_DEBT.barredIn`), for
+  // Medical Debt's note: from 2026-10-22 (brief 20's papers area), when until then it said the debt went on the record
+  // once a year past due, "never in New York or California", to a student in New Haven, where Connecticut bars it too.
+  const region = CITIES.get(person.currentLocationId)?.parentId ?? '';
+  const debtBarredBy = !MEDICAL_DEBT.barredIn.includes(region) ? undefined : region === 'us-ct' ? 'Connecticut' : region === 'us-ny' ? 'New York' : region === 'us-ca' ? 'California' : undefined;
   const h = healthOf(person);
   const cover = coverOn(person, sim.now);
   // A program by its own name, HUSKY D or Covered Connecticut in New Haven (`coverLabel`, from 2026-10-12: until then
@@ -695,7 +700,7 @@ function HealthPane() {
         help="papers.health-cover"
       >
         <div className="col gap-3">
-          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`It goes on your credit record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, once a year past due, and never in New York or California`} />}
+          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={debtBarredBy ? `${debtBarredBy}’s law keeps it off your credit record` : `It goes on your credit record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, once a year past due`} />}
           {bills.length > 0 && (
             <div className="table-scroll">
               <table>

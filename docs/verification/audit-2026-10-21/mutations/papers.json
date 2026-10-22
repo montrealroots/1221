@@ -1,0 +1,223 @@
+[
+ {
+  "id": "B20-PAPERS-1",
+  "what": "the document's page takes an OPT approved ahead as in force, as until 2026-10-21 (P1)",
+  "file": "src/ui/looks/papers.tsx",
+  "find": "  if (doc.status === 'valid' && doc.issuedAt !== undefined && doc.issuedAt > now) return 'approved';\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-papers-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-2",
+  "what": "the Work tab's row reads In Force for an OPT approved ahead, as until 2026-10-21 (P1)",
+  "file": "src/ui/papers/Documents.tsx",
+  "find": "d.status === 'valid' && d.issuedAt !== undefined && d.issuedAt > sim.now ? 'Approved' : ",
+  "replace": "",
+  "tests": [
+   "tests/b20-papers-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-3",
+  "what": "a session after the first comes a week on to the minute, whatever the day, as until 2026-10-21 (P2)",
+  "file": "src/engine/systems/therapy.ts",
+  "find": "if (course.done < THERAPY.sessions) { scheduleSession(s, person, t, sessionSlot(t, item.at + 7 * MS_DAY)); return; }",
+  "replace": "if (course.done < THERAPY.sessions) { scheduleSession(s, person, t, item.at + 7 * MS_DAY); return; }",
+  "tests": [
+   "tests/b20-papers-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-4",
+  "what": "a session's working day reads no public holiday (P2)",
+  "file": "src/engine/systems/therapy.ts",
+  "find": " || holidaysOn(at, zone, city.countryId, city.parentId).some((h) => h.type === 'public')",
+  "replace": "",
+  "tests": [
+   "tests/b20-papers-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-5",
+  "what": "permission to work doesn't read citizenship",
+  "file": "src/engine/systems/permission.ts",
+  "find": "  if (citizenOf(person, 'US')) return true;\n  // Out of status needs no line",
+  "replace": "  // Out of status needs no line",
+  "tests": [
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-6",
+  "what": "acceptance doesn't read permission to work",
+  "file": "src/engine/systems/projobs.ts",
+  "find": "  const bad = days.find((d) => !usWorkAuthorized(person, d.from));",
+  "replace": "  const bad = undefined as { from: number } | undefined;",
+  "tests": [
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-7",
+  "what": "OPT's weeks count every day as without work, the engagements' days not read",
+  "file": "src/engine/systems/permission.ts",
+  "find": "    doc.idleDays = (doc.idleDays ?? 0) + 7 - worked;",
+  "replace": "    doc.idleDays = (doc.idleDays ?? 0) + 7;",
+  "tests": [
+   "tests/b20-papers-work.test.ts",
+   "tests/propay.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-8",
+  "what": "the program's end raises no Your US Status Is Ending",
+  "file": "src/engine/systems/permission.ts",
+  "find": "      if (ends > s.now && !usPermits(person).some((d) => d.status === 'valid' && inForce(d, s.now)) && mine) {",
+  "replace": "      if (false) {",
+  "tests": [
+   "tests/b20-papers-work.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-9",
+  "what": "a new bank takes a document run out as photo ID",
+  "file": "src/engine/systems/documents.ts",
+  "find": "  return documentsOf(person).find((d) => inForce(d, at) && (d.kind === 'passport' || d.kind === 'license' || d.kind === 'idcard'));",
+  "replace": "  return documentsOf(person).find((d) => d.status === 'valid' && (d.kind === 'passport' || d.kind === 'license' || d.kind === 'idcard'));",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-10",
+  "what": "the Social Security office doesn't ask for the passport",
+  "file": "src/engine/systems/taxid.ts",
+  "find": "  if (!passportOf(person, sim.now)) return 'The office asks for your passport, and you don’t have one in force.';\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-11",
+  "what": "a passport applied for is never issued on its day",
+  "file": "src/engine/systems/documents.ts",
+  "find": "      issue(s, person, doc);",
+  "replace": "      void doc;",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-12",
+  "what": "a new passport leaves the one it replaces in force",
+  "file": "src/engine/systems/documents.ts",
+  "find": "    old.status = 'cancelled';\n    for (const d of documentsOf(person)) if (d.passportId === old.id && d.kind === 'authorization'",
+  "replace": "    for (const d of documentsOf(person)) if (d.passportId === old.id && d.kind === 'authorization'",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-13",
+  "what": "a bank sends somebody with a number to a branch all the same",
+  "file": "src/engine/systems/bankmoves.ts",
+  "find": "  return !hasSsn(person) && openingOf(bank)?.withoutSsn === 'branch' ? 'branch' : 'online';",
+  "replace": "  return openingOf(bank)?.withoutSsn === 'branch' ? 'branch' : 'online';",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-14",
+  "what": "the Social Security card's day issues no number",
+  "file": "src/engine/systems/taxid.ts",
+  "find": "    person.ssn = { ...person.ssn, status: 'issued' };",
+  "replace": "    person.ssn = { ...person.ssn };",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-15",
+  "what": "an ID card's day leaves it pending",
+  "file": "src/engine/systems/identity.ts",
+  "find": "    doc.status = 'valid';\n    doc.issuedAt = item.at;",
+  "replace": "    doc.issuedAt = item.at;",
+  "tests": [
+   "tests/b20-papers-ids.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-16",
+  "what": "cover doesn't read a program of her own",
+  "file": "src/engine/systems/health.ts",
+  "find": "  if (active(h?.program, at)) return h!.program!.kind;\n",
+  "replace": "",
+  "tests": [
+   "tests/b20-papers-health.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-17",
+  "what": "an appointment slept through is kept and billed",
+  "file": "src/engine/systems/appointments.ts",
+  "find": "    if (!presentForCare(person, item.at)) {",
+  "replace": "    if (false) {",
+  "tests": [
+   "tests/b20-papers-health.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-18",
+  "what": "a bill's day marks it paid without paying it",
+  "file": "src/engine/systems/health.ts",
+  "find": "    if (payFromCurrent(s, person, bill.amount, `Medical bill: ${bill.what}`, 'health')) { bill.paid = true; return; }",
+  "replace": "    { bill.paid = true; return; }",
+  "tests": [
+   "tests/b20-papers-health.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-19",
+  "what": "a nonresident's year counts toward Social Security credits",
+  "file": "src/engine/systems/socialsecurity.ts",
+  "find": "  if (!y || nonresidentFor(person, year)) return 0;",
+  "replace": "  if (!y) return 0;",
+  "tests": [
+   "tests/b20-papers-pension.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-20",
+  "what": "an F-1's stipend has FICA withheld as a citizen's",
+  "file": "src/engine/systems/school.ts",
+  "find": "    const fica = nra ? taxOf(before + pay).payroll - taxOf(before).payroll : 0;",
+  "replace": "    const fica = 0;",
+  "tests": [
+   "tests/b20-papers-pension.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-21",
+  "what": "Connecticut doesn't bar reporting medical debt, as until 2026-10-22 (P3)",
+  "file": "src/engine/content/safetynet.ts",
+  "find": "barredIn: ['us-ny', 'us-ca', 'us-ct']",
+  "replace": "barredIn: ['us-ny', 'us-ca']",
+  "tests": [
+   "tests/b20-papers-defects.test.ts"
+  ]
+ },
+ {
+  "id": "B20-PAPERS-22",
+  "what": "the care log keeps every event, none let go (P4's pruning)",
+  "file": "src/engine/systems/health.ts",
+  "find": "  h.careLog = (h.careLog ?? []).filter((e) => e.at >= now - CARE_LOG.keepDays * MS_DAY || (e.billId && open.has(e.billId)));",
+  "replace": "  h.careLog = (h.careLog ?? []).filter((e) => e.at >= 0 || open.has(e.billId ?? ''));",
+  "tests": [
+   "tests/finance-paths.test.ts"
+  ]
+ }
+]

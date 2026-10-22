@@ -272,7 +272,7 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
     expect(bill.denied!.appealedAt).toBe(sim.now);
   });
 
-  it('PLAYER JOURNEY: a medical debt of exactly the reporting figure is reported, and the notice says “or more”', () => {
+  it('LOCATION FIXTURE (a life in Chicago, where no state law bars it, which no life at Yale is): a medical debt of exactly the reporting figure is reported, and the notice says “or more”', () => {
     const sim = student('g86-debt-notice');
     broke(sim);
     const cur = saveCurrency(sim.universe);
@@ -281,6 +281,9 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
     expect(bill.inDebt).toBe(true);
     // FIXTURE: the debt a year old, as a year unpaid leaves it.
     healthOf(sim.player).debtSince = sim.now - 366 * MS_DAY;
+    // Until 2026-10-22 this was read in New Haven: Connecticut has barred reporting medical debt since 1 July 2024
+    // (Public Act 24-6; `MEDICAL_DEBT.barredIn`, brief 20's papers area).
+    sim.player.currentLocationId = 'us-il-chicago';
     healthMonth(sim, sim.player, sim.now);
     const notice = titled(sim, 'A Medical Debt Is On Your Record');
     expect(notice).toHaveLength(1);

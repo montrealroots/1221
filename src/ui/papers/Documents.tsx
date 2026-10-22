@@ -83,7 +83,9 @@ function DocumentList({ kinds, none }: { kinds: readonly PersonDocument['kind'][
                 <td>{d.issuedAt && d.status !== 'pending' ? <Open subject={at('day', dateKey(d.issuedAt, sim.homeZone))}>{formatDate(d.issuedAt, sim.zone)}</Open> : '—'}</td>
                 <td>{d.expiresAt ? <Open subject={at('day', dateKey(d.expiresAt, sim.homeZone))}>{formatDate(d.expiresAt, sim.zone)}</Open> : d.readyAt ? <>Ready <Open subject={at('day', dateKey(d.readyAt, sim.homeZone))}>{formatDate(d.readyAt, sim.zone)}</Open></> : '—'}</td>
                 {/* An ID card past every check is on its way, not being decided (from 2026-10-17, `idCardOnItsWay`). */}
-                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : idCardOnItsWay(d, sim.now) ? 'On Its Way' : STATUS_WORD[d.status]}</Open></td>
+                {/* Approved and starting on a later day, an OPT decided before the program's end (from 2026-10-21, brief 20's
+                    papers area): until then it read In Force while nothing took it as in force before its first day. */}
+                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : idCardOnItsWay(d, sim.now) ? 'On Its Way' : d.status === 'valid' && d.issuedAt !== undefined && d.issuedAt > sim.now ? 'Approved' : STATUS_WORD[d.status]}</Open></td>
                 <td>
                   {/* What replaces a document run out, said on its row (from 2026-10-16: until then its action cell was empty,
                       and a New Yorker whose license ran out mid-program met it first as a new bank's refusal; found playing

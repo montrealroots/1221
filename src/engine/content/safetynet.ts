@@ -338,10 +338,17 @@ export const CHARITY = {
  * A medical debt goes on a credit record only at $500 or more, unpaid, and a
  * year past due, by the credit bureaus' own policy since the federal rule was
  * vacated in 2025; New York and California bar it for their residents (both
- * laws were being challenged in 2026). A bill is due in 30 days. What a
- * reported debt costs the record is SLATE's estimate.
+ * laws were being challenged in 2026), and so does Connecticut, from 1 July
+ * 2024: Public Act 24-6, "An Act Concerning the Reporting of Medical Debt",
+ * signed on 9 May 2024, forbids a health care provider or a hospital to report
+ * any part of a medical debt to a credit rating agency and voids one so
+ * reported (the governor's release, portal.ct.gov, read 2026-10-22). Every life
+ * lives in New Haven, so none's is reported; until 2026-10-22 Connecticut wasn't
+ * among them, and every played life's medical debt a year unpaid marked its
+ * record (brief 20's papers area). A bill is due in 30 days. What a reported
+ * debt costs the record is SLATE's estimate.
  */
-export const MEDICAL_DEBT = { reportAt: 500_00, reportAfterDays: 365, dueDays: 30, recordHit: 40, barredIn: ['us-ny', 'us-ca'] as readonly string[] } as const;
+export const MEDICAL_DEBT = { reportAt: 500_00, reportAfterDays: 365, dueDays: 30, recordHit: 40, barredIn: ['us-ny', 'us-ca', 'us-ct'] as readonly string[] } as const;
 
 /**
  * A return where more than one state is in the year. New York, California

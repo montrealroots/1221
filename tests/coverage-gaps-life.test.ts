@@ -67,10 +67,22 @@ describe('medical debt paid off (the student’s own care bill)', () => {
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 1 } }).error).toBe('You owe nothing for care.');
   });
 
-  it('unpaid a year, is reported once; paid after, the report stays on the record', () => {
+  it('unpaid a year, isn’t reported in Connecticut, which bars it', () => {
+    const { sim } = inDebt('gap-debt-barred');
+    const marks = () => (sim.player.credit?.marks ?? []).length;
+    const before = marks();
+    yearOn(sim);
+    expect(reports(sim)).toBe(0);
+    expect(marks()).toBe(before);
+  });
+
+  it('LOCATION FIXTURE (a life in Chicago, where no state law bars it, which no life at Yale is): unpaid a year, is reported once; paid after, the report stays on the record', () => {
     const { sim } = inDebt('gap-debt-reported');
     const marks = () => (sim.player.credit?.marks ?? []).length;
     const before = marks();
+    // Until 2026-10-22 this was played in New Haven: Connecticut has barred reporting medical debt since 1 July 2024
+    // (Public Act 24-6; `MEDICAL_DEBT.barredIn`, brief 20's papers area).
+    sim.player.currentLocationId = 'us-il-chicago';
     yearOn(sim);
     yearOn(sim);
     expect(reports(sim)).toBe(1);

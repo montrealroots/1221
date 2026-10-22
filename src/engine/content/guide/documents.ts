@@ -285,7 +285,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     ],
     interpret: [
       'Your US Status reads Held while you study or an application is being decided; Ends with its date once school is over and nothing is being decided (on OPT, the day its days without work run out, with no grace period after); or Out Of Status.',
-      'An approved OPT reads In Force with its dates, and Canceled once its days without work have run out.',
+      'An approved OPT reads Approved until its first day, the later of your program’s end and the approval, then In Force with its dates, and Canceled once its days without work have run out.',
       'The game keeps no actual Social Security number, only whether you hold one, so no number is shown.',
     ],
     next: [
