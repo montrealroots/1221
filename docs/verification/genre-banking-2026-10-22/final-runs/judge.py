@@ -43,7 +43,9 @@ g_audit = text(f'{F}/genre-audit.md') == text(f'{B19F}/genre-audit.md')
 row('genres.7-measured', not g_moved and g_audit and not bad,
     f"The same commands and seeds on brief 21's tested commit, {at} (measure.sh genres-a, genres-b, stage, ag): "
     + (f"{', '.join(g_files)} the same as brief 19's in every number, and genre-audit.md word for word, so each genre criterion holds where it held and fails where it failed"
-       if not g_moved and g_audit else f"moved from brief 19's: {', '.join(g_moved + ([] if g_audit else ['genre-audit.md']))}")
+       if not g_moved and g_audit else
+       f"{', '.join(f for f in g_files if f not in g_moved) or 'none'} the same as brief 19's in every number; moved: {', '.join(g_moved + ([] if g_audit else ['genre-audit.md']))}"
+       + ("" if g_audit else ". The audit's leaks moved: knowing a genre now moves its own kind's or its broad genre's brief, which the Genre Audit row puts to the owner (Decision Required, judge-moved.json); this item's 'moves another genre's in 0' waits on it"))
     + (f"; not exit 0: {', '.join(bad)}" if bad else ''), g_files + ['genre-audit.md'])
 
 # L3-R's journeys and their verdict, as l3r.json writes it.

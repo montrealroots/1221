@@ -620,8 +620,9 @@ if FIG20R and FIG19R:
 # the judge's measurements watch (a night's interpretation reads the genre, `content/tasks.ts`; a taped brief's practice
 # shared by weight, `systems/briefs.ts`; the Seagull's kinds, `content/plays.ts`), so every criterion brief 19 measured is
 # measured again on brief 21's tested commit, each figure beside brief 19's ("the same" where it is). Brief 20 ran no
-# judge lanes, none of its files being among them. A figure that moved is read against its criterion in judge-moved.json,
-# and one moved with no reading that its criterion still holds leaves its row Implemented, Verification Incomplete.
+# judge lanes, none of its files being among them. A figure that moved is read against its criterion in judge-moved.json:
+# one read as holding stays verified, one whose reading puts a question to the owner is Decision Required, and one moved
+# with no reading leaves its row Implemented, Verification Incomplete.
 B21F = 'docs/verification/genre-banking-2026-10-22/final-runs/final'
 B21MOVED = 'docs/verification/genre-banking-2026-10-22/final-runs/judge-moved.json'
 if os.path.exists(f'{B21F}/figures.json') and os.path.exists(f'{B19F}/figures.json'):
@@ -638,7 +639,11 @@ if os.path.exists(f'{B21F}/figures.json') and os.path.exists(f'{B19F}/figures.js
             r['failure'] = f"{r['failure']}; on brief 21's tested commit ({B21AT}): {'the same' if same else FIG21[r['id']]}{'' if same or not read else ' (' + read['why'] + ')'}"
             r['evidence'] = f"{r['evidence']}; {B21F}/README.md"
             r['citations'] = r['citations'] + [{'file': f'{B21F}/figures.json'}] + ([] if same else [{'file': B21MOVED}] if read else [])
-            if not held and r['status'] == IAV:
+            # A move its reading leaves to the owner (the criterion as written against what brief 21 asked) is a decision.
+            if not held and r['status'] == IAV and read and read.get('decision'):
+                r['status'] = DR
+                r['decision'] = read['decision']
+            elif not held and r['status'] == IAV:
                 r['status'] = IVI
                 r['missing'] = f"brief 21's figure moved from brief 19's ({FIG19.get(r['id'])}) to {FIG21[r['id']]}, with no reading in {B21MOVED} that its criterion still holds"
 # Brief 21's runs (genre-banking-2026-10-22/final-runs/, from 2026-10-22), as brief 20's: a pass that changed how genres

@@ -1,6 +1,57 @@
-# Read First: Brief 20, The Functional And Downstream-Effects Audit, Merged, 2026-10-22
+# Read First: Brief 21, Genre Integration And Banking Correctness, 2026-10-22
 
-**This section is the current status, and where a new session starts.** The owner gave brief 20
+**This section is the current status, and where a new session starts.** The owner gave brief 21
+(`docs/verification/briefs-2026-10-16/21-complete-genre-integration-and-banking-correctness.txt`, kept verbatim) after
+brief 20's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `e50865df` (`main`, #51), pushed and never
+force-pushed. It is kept out of `main` at the owner's word ("Keep the work reviewable. Do not merge or deploy without my
+instruction."): no pull request is open for it. Nothing is deployed. There is no stash and one worktree.
+
+**Completion, by the matrix:** 631 of 658 rows in scope Implemented And Verified (95.8%); 22 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+
+  (634 at brief 20's close. Brief 21's final runs on `fd32e869` measured every row again
+  (`docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md`). Three moved:
+  - **the Genre Audit, Decision Required:** a genre's own kind now counts toward it, which its "leaks into none" didn't
+    allow;
+  - **genres.7-measured, Verification Incomplete:** it holds that 0, so it waits on the same decision;
+  - **INT-gate:** held until the gate's figure is folded in.)
+
+- **Read first:** `docs/verification/genre-banking-2026-10-22/README.md` (the receipt), `criteria.md` (the items, written
+  before any fix) and `CHECKPOINT.md` (the record as the work went).
+- **Genres:**
+  - **One weighed measure** (`relevantGenre`): tags deduplicated; the first listed carries half where there are two or
+    more; a broad genre beside its own kind is absorbed into it; a kind counts 0.75 toward its broad genre and a broad
+    genre 0.5 toward its kinds; anything else counts 0.
+  - **Read wherever the work calls for it:** a taped brief, a self-tape, an audition in person and its callback, a
+    shoot day, a night on stage (the School's and a professional run's), School casting, professional casting's fit,
+    and a part's lines.
+  - **Practised:** at School calls and professional rehearsal days.
+  - **The Seagull:** the Rep's 2026–27 production taught no genre until J2 found it.
+  - **The proof:** `tests/b21-genre-proof.test.ts` and `genre-proof.md`, six seeds, every path.
+- **Banking:**
+  - **A yield** (APY, AER, TAE, GAT) is converted to the nominal rate that earns it, and the interest is credited as
+    each bank credits it.
+  - **A US card past due** gets its notice on the 61st day, its penalty rate and the end of its introductory rate 45
+    days later, its default notice on the 150th, and its charge-off on the 180th, counted in days.
+  - **A US card's due day** is one day each month.
+  - **A British, EU or EEA standing order** on a weekend or holiday is made on the next business day.
+  - **The sources:** `banking-sources.md`, read 2026-10-22, each verified or marked as SLATE's assumption.
+  - **The proof:** `tests/b21-banking-proof.test.ts`.
+- **Saves:** the schema version stays 94. One migration dates a US card that was behind; it posts nothing and charges
+  nothing.
+- **Mutations:** 27, all killed. Three were killed only after their tests were strengthened.
+- **Defects found and fixed:** 14, listed in the receipt with each one's test.
+- **Found, not fixed, for the owner:** b20-4, played again, worked 48 days of a booked run after OPT ended mid-run
+  (`systems/permission.ts`, `systems/projobs.ts`, neither changed by brief 21; OPT's rules are outside this brief).
+- **The gate:** run in a clean clone after this fold (see the receipt).
+- **For the owner:**
+  - the Genre Audit's question (`final-runs/judge-moved.json`);
+  - whether a US minimum payment due includes what's past due (SLATE's reading);
+  - the OPT gap above, with brief 20's F3;
+  - the readings listed in the receipt's For The Owner.
+
+# Earlier: Brief 20, The Functional And Downstream-Effects Audit, Merged, 2026-10-22
+
+**This was the current status until brief 21.** The owner gave brief 20
 (`docs/verification/briefs-2026-10-16/20-complete-functional-and-downstream-effects-audit.txt`, kept verbatim) after
 brief 19's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `340ce7ae` (`main`, #49), pushed and never
 force-pushed. Until the owner's word it was kept out of `main` ("Keep the work reviewable. Do not merge or deploy without

@@ -1,0 +1,24 @@
+{
+ "id": "old-tax-plan-ff837dfa",
+ "part": 1,
+ "from": "2027-04-18",
+ "to": "2028-02-16",
+ "secs": 49,
+ "reloads": 14,
+ "done": false,
+ "standing": "good",
+ "notSame": 0,
+ "transitions": [
+  "2027-04-18T18:25 opened: same",
+  "2027-05-02T20:10 term 1 reviewed: good: same",
+  "2027-12-10T22:15 term 2 reviewed: good: same",
+  "2028-01-01T12:55 the end of 2027: same"
+ ],
+ "forks": [
+  "2027-04-18T19:25 a rehearsal with a partner booked for 2027-04-18T23:00 on A Simulated Rehearsal: same"
+ ],
+ "workDays": 0,
+ "notices": 620,
+ "bank": 0,
+ "errors": []
+}

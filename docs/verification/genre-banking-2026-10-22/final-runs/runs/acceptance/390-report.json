@@ -1,0 +1,393 @@
+{
+ "width": 390,
+ "steps": [
+  {
+   "name": "startup: the save slots load",
+   "ok": true,
+   "note": "3 empty slots"
+  },
+  {
+   "name": "creation: five steps, Continue held until each validates, Begin",
+   "ok": true,
+   "note": "began as Alex; step one asked: Choose the town or city you were born in."
+  },
+  {
+   "name": "guide: a new player’s controls are locked until its chapters are read; read, they open",
+   "ok": true,
+   "note": "12 locked at the start; 20 chapters read; none locked now"
+  },
+  {
+   "name": "home: what needs you on the first day: no decision waiting, in the panel’s own words",
+   "ok": true,
+   "note": "No questions are waiting on you."
+  },
+  {
+   "name": "advance: One Hour moves the clock an hour",
+   "ok": true,
+   "note": "7:30 AM → 8:30 AM"
+  },
+  {
+   "name": "look after yourself: an item from its menu, and what it says",
+   "ok": true,
+   "note": "\"Eat A MealMost Worth It\": Eat A Meal: done at 9:10 AM."
+  },
+  {
+   "name": "advance: Next Monday, to term, until coursework is set",
+   "ok": true,
+   "note": "August 31, 2026 3:00 PM; dialogs: On The Way, Registration And Your Account, Meeting Your Class, Meeting The Acting Faculty, The Building, The Studios And The Library, The Courses And What They Ask, Classes"
+  },
+  {
+   "name": "school: registration and orientation are findable, and say what they ask",
+   "ok": true,
+   "note": "orientation panel shown; Register button absent (registered)"
+  },
+  {
+   "name": "coursework: a step of preparation done from its button, the clock moved and the step counted",
+   "ok": true,
+   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 43%; Read The Scene: 40 minutes, Knows The Scene up 43%."
+  },
+  {
+   "name": "coursework: a way of playing it chosen and rehearsed in",
+   "ok": true,
+   "note": "Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
+  },
+  {
+   "name": "coursework: table work answered from its select",
+   "ok": true,
+   "note": "4 options, “dusk” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+  },
+  {
+   "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
+   "ok": true,
+   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 25%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into The Second Half\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 25%. | Learn Lines: 45 minutes, Lines up 18%. | Work It"
+  },
+  {
+   "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
+   "ok": true,
+   "note": "Preparing Coursework → Orientation Week → Back; the tab and the focus kept; August 31, 2026 5:50 PM"
+  },
+  {
+   "name": "help: the keyboard: ? opens the contents, / goes to the search, a word finds entries",
+   "ok": true,
+   "note": "7 entries for \"partner\""
+  },
+  {
+   "name": "help: Show Me Where goes to the entry’s screen and tab, Back To Help returns to the same trail",
+   "ok": true,
+   "note": "“A Card’s Offers”: Accounts → #/workspace/bank, Cards; back to Contents › Search: transfer › A Card’s Offers"
+  },
+  {
+   "name": "help: a half-typed amount kept across How This Works, closed with Escape and with Close",
+   "ok": true,
+   "note": "kept: 12.34, closed with Escape and with Close"
+  },
+  {
+   "name": "help: opened from the Advance and Look After Yourself menus, closed with Close and with Escape: the menu still open, the focus on its How This Works",
+   "ok": true,
+   "note": "Advance Time: Close; Advance Time: Escape; Look After Yourself: Close; Look After Yourself: Escape"
+  },
+  {
+   "name": "navigation keeps context: School’s tab kept across Money and back",
+   "ok": true,
+   "note": "Casting"
+  },
+  {
+   "name": "casting: with no part yet, the tab says when casting comes; with one, its rehearsal controls",
+   "ok": true,
+   "note": "Not Cast Yet How This Works The chair casts every student each term from the first spring: the Carlotta Festival then; a thesis or the Hughes Festival in a second-year’s and a third-year’s fall; a the"
+  },
+  {
+   "name": "practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained",
+   "ok": true,
+   "note": "5:50 PM → 6:50 PM: Sense Memory: +0.12. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
+  },
+  {
+   "name": "profile: the development history shows the hour",
+   "ok": true,
+   "note": "August 31, 2026: Emotional Depth +0.124, Sense Memory"
+  },
+  {
+   "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
+   "ok": true,
+   "note": "Chase Total Checking has only $90,404.00 available, so nothing was moved. / Chase Total Checking has only $90,404.00 available, so nothing was moved. | Moved $1 to Chase Savings."
+  },
+  {
+   "name": "papers: its five tabs open",
+   "ok": true,
+   "note": "all five"
+  },
+  {
+   "name": "save and exit, then Continue: the same day and hour",
+   "ok": true,
+   "note": "August 31, 2026 6:50 PM"
+  },
+  {
+   "name": "address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School",
+   "ok": true,
+   "note": "#/workspace/school at Coursework; #/workspace/school?help=school.repeat, then #/workspace/school"
+  },
+  {
+   "name": "address: Skip To Content, from the keyboard, moves the focus to the content and leaves School where it is",
+   "ok": true,
+   "note": "#/workspace/school, the focus on #main"
+  },
+  {
+   "name": "interruption: an advance past a commitment stops at it and asks; Stand Here leaves the clock where it is",
+   "ok": true,
+   "note": "stopped at September 1, 2026 9:00 AM; Stand Here kept it there"
+  },
+  {
+   "name": "health: Health Cover names the student’s cover and says the School meets the work rules, offering no work hours",
+   "ok": true,
+   "note": "THIS MONTH Yale Health; From 2027 Medicaid also has work rules. You meet them in any month you spend some of at the School, or in a month with $580."
+  },
+  {
+   "name": "stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s sleep gives the Energy back",
+   "ok": true,
+   "note": "Work Out: done at 8:00 AM.; Energy 74 → 61, Stamina 48.4 → 49.1 (Today: Not held back today); slept to September 3, 2026 7:00 AM, Energy 74"
+  },
+  {
+   "name": "papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term said; saved and continued, it’s still on its way",
+   "ok": true,
+   "note": "You applied for the Non-Driver Identification Card and paid $28.00. The card comes October 2, 2026, and it’s good until June 14, 2034. After Continue: “One is already on its way.”"
+  },
+  {
+   "name": "[save: tax-plan scenario] papers: who it’s owed to, a part paid to Connecticut, its plan asked for",
+   "ok": true,
+   "note": "Paid Connecticut DRS: $0.00 to the tax, $10.00 to penalties and $0.00 to interest. You still owe $1,492.10. / Paid Connecticut DRS: $0.00 to the tax, $10.00 to penalties and $0.00 to interest. You still owe $1,492.10. | Applied: $124.35 a month. Connecticut DRS decides by May 25, 2027."
+  },
+  {
+   "name": "[save: tax-plan scenario] papers: the IRS plan in force, its own panel saying what it covers, each month and the next payment",
+   "ok": true,
+   "note": "COVERS $5,880.47 2026 / EACH MONTH $81.68 By direct debit / NEXT PAYMENT June 20, 2027"
+  },
+  {
+   "name": "[save: leave scenario] school: Your Classes, the first class’s productions, the evaluations",
+   "ok": true,
+   "note": "the first class’s 2 productions; 1 terms evaluated: Fall Term 2026 Good Standing"
+  },
+  {
+   "name": "[save: leave scenario] casting: the rehearsal controls work, or say why not",
+   "ok": true,
+   "note": "grayed: Learn The Part: You already know the part.\nCatch Up The Blocking: You haven’t missed any blocking.\nWork On The Note: There’s no note to work on."
+  },
+  {
+   "name": "[save: rehearsal scenario] casting: Learn The Part, and the lines rise on the screen",
+   "ok": true,
+   "note": "An hour on the part: lines at 76%.; lines 64% → 76%"
+  },
+  {
+   "name": "[save: rehearsal scenario] casting: Work On The Note, and the note is marked worked on",
+   "ok": true,
+   "note": "An hour on the part: lines at 76%. | Worked on: the next call will show it."
+  },
+  {
+   "name": "[save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call",
+   "ok": true,
+   "note": "Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
+  },
+  {
+   "name": "[save: decision scenario] home: Your 2026 Tax Return on its card, File It pressed, the card gone and the return filed",
+   "ok": true,
+   "note": "1 → 0 cards; the 2026 Return: Filed February 11, 2027"
+  },
+  {
+   "name": "[save: direction scenario] casting: a craft note from the director, its problem, its place and its figure, not yet worked",
+   "ok": true,
+   "note": "The director’s last note, April 23, 2027: Keep at the last note: think about who they are to you in the second half, and let us see it. · Not Worked On Yet"
+  },
+  {
+   "name": "[save: direction scenario] help: the note’s How This Works, a connected system followed and back, the note and its ways as they were",
+   "ok": true,
+   "note": "The Director’s Notes → Learning A Part → Back; the note and its way as they were"
+  },
+  {
+   "name": "[save: direction scenario] casting: the ways inspected, a change of how it’s played tried, its evidence said, and kept",
+   "ok": true,
+   "note": "\"Play The Second Half Measured\" of 7; 9:00 AM → 9:30 AM: Worked play the second half measured: 51.1 to 50.2. Keep it or put it back, below.; kept, 66% rehearsed in"
+  },
+  {
+   "name": "[save: direction scenario] casting: worked once, Work On The Note is refused, its reason said in words, and pressing it does nothing",
+   "ok": true,
+   "note": "Learn The Part: You already know the part.\nCatch Up The Blocking: You haven’t missed any blocking.\nWork On The Note: You’ve worked on it: the next call will sho"
+  },
+  {
+   "name": "[save: direction scenario] the next call: the change rehearsed in further, the note taken or still there, the night now, and the history",
+   "ok": true,
+   "note": "April 23, 2027: Keep at the last note: think about who they are to you in the second half, and let us see it. · Tried: Learned From, Not Moved · Worked play the; rehearsed in 66% → 75%; a night now 50.2 → 52.5; next: a note on another thing"
+  },
+  {
+   "name": "[save: direction scenario] save and exit, Continue: the note’s outcome and the try kept",
+   "ok": true,
+   "note": "1 tries kept, the notes as they were"
+  },
+  {
+   "name": "[save: direction scenario] left unanswered: at the next call the note is not taken, and comes again as still there or is shown so",
+   "ok": true,
+   "note": "April 23, 2027: Keep at the last note: think about who they are to you in the second half, and let us see it. · Not Taken"
+  },
+  {
+   "name": "[save: roundups scenario] bank: Citi’s Spend & Save, its words, its choices, refused with why until they’re made",
+   "ok": true,
+   "note": "Round-Ups, Spend & Save. Each purchase on your Citi debit card or Citi credit card is rounded up to the next whole dollar into a running tally, paid from your c"
+  },
+  {
+   "name": "[save: roundups scenario] help: the panel’s How This Works, searched, a connected entry and back; the choices and the clock as they were",
+   "ok": true,
+   "note": "Round-Ups → How You Pay → Back; \"keep the change\" finds it; Weekly and $75 kept; August 28, 2026 4:50 PM"
+  },
+  {
+   "name": "[save: roundups scenario] bank: turned on, a week played: what came of it said, a transfer of up to $15 or purchases that rounded up to nothing",
+   "ok": true,
+   "note": "8 purchases since the last transfer were already a multiple of $1.00, so they added nothing."
+  },
+  {
+   "name": "[save: roundups scenario] save and exit, Continue: still on, its choices and its last transfer kept",
+   "ok": true,
+   "note": "kept"
+  },
+  {
+   "name": "[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day",
+   "ok": true,
+   "note": "A Word On Your Coursework So far this term, 3 of the 6 pieces you’ve shown were Unready. This is a warning. The term review is on December 10, 2027. If half or more of the term’s pieces are Unready or not shown by then, "
+  },
+  {
+   "name": "[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy",
+   "ok": true,
+   "note": "Speech And Accents II: Sound Changes And A Text, due September 28, 2027. Shown today, it would come to about 49.3 of 100 (Unready). Still to | Shown Today: if you showed it today, on a good day, it would come to about 22.8 of 100 (Unready). “Alone” isn’t complete, and that costs your execution 42 points out of 100. Still to finish: The Chore"
+  },
+  {
+   "name": "[save: workload scenario] coursework: Run It With A Reader pressed, and Shown Today rises",
+   "ok": true,
+   "note": "waited for the evening [Not now: You’re at Classes until 3:00 PM.]; assignment_00002s: Shown Today rose to 27"
+  },
+  {
+   "name": "[save: workload scenario] save and exit, Continue: Shown Today and the warning as they were",
+   "ok": true,
+   "note": "kept at 27"
+  },
+  {
+   "name": "[save: workload scenario] coursework: Table Work, written work, offers no way of playing it",
+   "ok": true,
+   "note": "Text Analysis II: Table Work"
+  },
+  {
+   "name": "[save: roundups scenario] coursework: a stage scene’s How You’ll Play It names its circumstances, not the house; the side that suits it chosen and kept",
+   "ok": true,
+   "note": "Scale Restrained Less shown than felt: the feeling held under the surface. Suits The Scene What’s Kept Hidden: for it A Private Exchange: for it Drama’s Played "
+  },
+  {
+   "name": "[save: withdraw scenario] school: the class left goes on, and says so",
+   "ok": true,
+   "note": "The class of 2029, who went on without you after you left the School on April 7, 2027: Nadia Donovan, Zoe Park, Aaliyah Bennett, Priya Patel, Ethan Haddad, Chlo"
+  },
+  {
+   "name": "[save: nonfiler scenario] papers: Connecticut’s own assessment of a return never filed, and its rules in words",
+   "ok": true,
+   "note": "Connecticut DRS assessed this year on September 14, 2027, with no return from you. File your own return to replace its assessment."
+  },
+  {
+   "name": "[save: brief scenario] profile: a genre’s brief opened, the scene and what it asks shown before any time is spent",
+   "ok": true,
+   "note": "The Spare Key / A practice brief for Drama: an original scene written for SLATE, taped to a reader off camera."
+  },
+  {
+   "name": "[save: brief scenario] brief: broken down, lines learned, a reading chosen and rehearsed, each spending its time",
+   "ok": true,
+   "note": "4:05 PM → 6:10 PM; it would come to about 47.1 (Unready)."
+  },
+  {
+   "name": "[save: brief scenario] brief: taped, the result read, what held it back and what to work on shown",
+   "ok": true,
+   "note": "Reading it as Hearing Him Out. | Rehearse It On Your Feet: 45 minutes, 46% further. | Taped: 46.5, Unready. / undefined"
+  },
+  {
+   "name": "[save: brief scenario] advice: What To Work On says what its forecast assumes of the work and whether preparation, training or both deserve attention",
+   "ok": true,
+   "note": "Of your last 6 pieces, 3 were fully prepared, and 3 were underprepared and are counted as they were. / Both preparation and training are worth your time now, preparation more: coming to your recent work fully prepared would have added about 4.24 points a piece as you are now (3.66 from each piece’s own"
+  },
+  {
+   "name": "[save: brief scenario] brief: the weakness trained from the brief, an hour of practice",
+   "ok": true,
+   "note": "Taped: 46.5, Unready. | Voice Work: +0.16."
+  },
+  {
+   "name": "[save: brief scenario] brief: prepared further and taped again, better, and the record says why",
+   "ok": true,
+   "note": "46.5 → 51.1: September 12, 2026 Hearing Him Out Left open Better prepared or better able than last time: it should show. 51.1 Your emotional depth held back your believabili"
+  },
+  {
+   "name": "[save: brief scenario] brief: Work It Through on its beats: a problem named, a way tried, its evidence shown, kept",
+   "ok": true,
+   "note": "\"The Turn Into Beat 2\" → Work It Slowly (30 Min), 11:15 PM → 11:45 PM: Taped: 51.1, Working. | Work It Slowly: 48.4 to 52.1."
+  },
+  {
+   "name": "[save: brief scenario] brief: a classmate chosen to read opposite, taped, the take together said beside your own",
+   "ok": true,
+   "note": "Work It Slowly: 48.4 to 52.1. | Reading with Nadia Donovan.; Work It Slowly: 48.4 to 52.1. | Reading with Nadia Donovan. | Taped: 49.8, Unready.; Nadia Isn’t There Yet Together it would come to 46.9, against 52.9 for your own work: Nadia’s preparation is at 0%."
+  },
+  {
+   "name": "[save: brief scenario] save and exit, Continue: the brief, its takes and its preparation kept",
+   "ok": true,
+   "note": "kept"
+  },
+  {
+   "name": "[save: brief scenario] genres: the seven pairs that once read alike each say a different register on their briefs",
+   "ok": true,
+   "note": "Biker: Command Of The Frame / Coming Of Age: Caught Live; Children’s: Played Straight / Science Fantasy: Belief In What Isn’t There; Christmas: Played Straight / Holiday: Played Straight; Dystopian: Belief In What Isn’t There / Medical Drama: Dense Text, Exact; Espionage: Feeling Held In / Neorealism: Caught Live; Family: Played Between Two / Steampunk: Belief In What Isn’t There; Nordic Noir: Fee"
+  },
+  {
+   "name": "[save: brief scenario] genres: Nordic Noir’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again",
+   "ok": true,
+   "note": "Reading it as Closed And Exact. | Rehearse It On Your Feet: 45 minutes, 46% further. | Taped: 45.0, Unready.; Your composure holds back your consistency by 27 points out of 100: Nordic Noir’s Feeling Held In asks for it; after Continue: Rehearse It On Your Feet: 45 minutes, 12% further. | Taped: 47.2, Unready."
+  },
+  {
+   "name": "[save: brief scenario] genres: Social Realism’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again",
+   "ok": true,
+   "note": "Reading it as Too Tired To Fight. | Rehearse It On Your Feet: 45 minutes, 40% further. | Taped: 43.1, Unready.; (no concern behind the limit); after Continue: Rehearse It On Your Feet: 45 minutes, 27% further. | Taped: 47.8, Unready."
+  },
+  {
+   "name": "[save: brief scenario] interpretation: Melodrama played the way its scene suits, the take saying what the way gave, the advice forecast, saved and continued",
+   "ok": true,
+   "note": "Expansive suits, Restrained either; This choice is complete once it’s rehearsed to 83%: it suits the scene, so it asks less; Rehearse It On Your Feet: 45 minutes, 38% further. | Rehearse It On Your Feet: 45 minutes, 11% further. | Taped: 40.1, Unready.; Played that way, it suited the scene (Expansive, Suits The Scene) and added 0.7 points. Your abilities and techniques cost it 19.9 points.; Estima"
+  },
+  {
+   "name": "[save: lien scenario] papers: Connecticut’s lien filed, its release refused with why until it’s paid",
+   "ok": true,
+   "note": "Connecticut Tax Lien · Filed. It was filed for $1,502.10 when collection reached that stage, and recorded in the town cl / Not now: You can ask for its release once what it was filed for is paid in full."
+  },
+  {
+   "name": "[save: lien scenario] papers: paid in full, then its release asked, and the lien says so",
+   "ok": true,
+   "note": "Paid Connecticut DRS in full. / Paid Connecticut DRS in full. | Asked. It’s to be released by July 15, 2027."
+  },
+  {
+   "name": "[save: lien scenario] save and exit, Continue, and weeks on: released",
+   "ok": true,
+   "note": "Connecticut Tax Lien · Released. It was filed for $1,502.10 when collection reached that stage, and recorded in the town clerk’s land records and the Secretary of the State’s UCC filings on June 14, 2"
+  },
+  {
+   "name": "[save: lien scenario] papers: the IRS plan says it covers federal tax only, a state’s being the state’s, and is applied for from its own panel",
+   "ok": true,
+   "note": "Applied. The IRS answers by July 20, 2027, and the setup fee is $29.00."
+  },
+  {
+   "name": "[save: missed-plan scenario] papers: the IRS plan in default, caught up, and back in force",
+   "ok": true,
+   "note": "Caught up: $81.68 paid."
+  },
+  {
+   "name": "home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves money to it, and the pounds and dollars both show",
+   "ok": true,
+   "note": "Kept At HSBC UK: £326,303 In Flexible Saver / Chase sends $100.00 for a $5.00 fee. At 2.6% under the estimated exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £71.95 after its £5.00 fee for a payment from abroad, on Thursday, August 27, 2026 (an estimate: the bank publishes no time, so the game uses"
+  },
+  {
+   "name": "phone: the drawer opens and closes, and Home is reachable from it",
+   "ok": true,
+   "note": "ok"
+  }
+ ],
+ "errors": [],
+ "overflows": [],
+ "failed": 0
+}

@@ -1,0 +1,86 @@
+help-the-career-screen (last-term.json, 390 wide)
+
+How This Works
+✕
+Contents
+›
+The Career Screen
+Search How This Works
+Search
+The Career Screen
+Show Less
+
+Career shows where you stand as a professional actor and what your portfolio holds. Overview says what training you have, when you’re free for work, whether you can work in the US, your unions, and what your portfolio is missing, with what to do next.
+
+Everything on it is read from your record as it is now, so it changes as your record does.
+
+Where To Find It
+Career, Overview.
+When You Can Use It
+From the guide’s chapter “Your Career”. Career is in the menu under Your Work.
+Show Me Where
+What To Press
+Press Career in the menu, under Your Work.
+On Overview, read Where You Stand: your training, your availability, where you’re based, your permission to work and your unions.
+Under What’s Missing, read what your portfolio needs. Needed For Any Submission comes first, then Worth Doing.
+Press Go To Portfolio to make or update what’s missing.
+What You Need First
+Its chapter in the guide, read: the screen opens with it.
+TIME AND MONEY
+Time
+None: reading it moves no clock
+Money
+None
+What Happens
+STRAIGHT AWAY
+The screen shows your record and doesn’t move it.
+LATER ON
+What’s Missing changes as you make materials, and as your record moves on past them: a new credit, a new skill or new recorded work.
+READING THE RESULT
+Needed For Any Submission is what a submission can’t go without: headshots and a résumé.
+Worth Doing is what would help: a reel, newer headshots, or a résumé brought up to date.
+The Way You’re On says whether you’re completing the degree, have graduated, or left without it. The School’s Bulletin lets the faculty shorten the residency only on rare occasions, never below two years, and publishes no way to ask, so the game offers no early degree.
+How It Connects
+COMES FIRST
+Permission To Work: Permission To Work on the Overview is the same permission Papers shows under Permission To Work.
+WORTH DOING WITH IT
+Headshots: What’s Missing names headshots first when you have none, since every submission starts with one.
+WHAT LEADS HERE
+The Actor Showcase: How each scene went at each showcase day stays on your professional record.
+Headshots: Once you have headshots, What’s Missing stops asking for them, until they’re more than two years old.
+Your Résumé: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.
+Your Reel: Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it.
+What To Do Next
+Press Go To Portfolio and start with the first thing What’s Missing names.
+If You Can’t
+Career is Locked until you’ve read its chapter in the guide.
+MISTAKES, AND PUTTING THEM RIGHT
+Reading Availability as permission to work. Availability is when you’re free; Permission To Work is whether you may work for an employer in the US.
+What Decides It
+Training
+Your School record: the degree completed and its year, your year as a candidate, or the terms you studied and left
+Permission To Work
+The papers you hold, the same ones Papers shows under Permission To Work
+What’s Missing
+Your headshots, résumé and reel, measured against your record now
+A Worked Example
+
+A first-year student who has made nothing for a portfolio yet.
+
+Open Career.
+Read What’s Missing.
+
+What comes of it. Needed For Any Submission lists headshots and a résumé. Worth Doing says there’s no reel and nothing recorded to cut one from yet.
+
+READ WITH IT
+Your Professional Profile
+Headshots
+Your Résumé
+Your Reel
+Permission To Work
+The clock waits while you read.
+Back
+Close
+
+----- 27 controls; Tab reached 27 of the 27 it can; 0 grayed
+Nothing found.

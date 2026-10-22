@@ -1,0 +1,13 @@
+{
+ "Genre Audit": {
+  "was": "helps its own brief in 149 of 149, moves another genre’s in 0",
+  "now": "helps its own brief in 149 of 149, moves another genre’s in 9",
+  "holds": false,
+  "why": "brief 21's measure credits a kind toward its broad genre (0.75) and a broad genre toward its kinds (0.5), so the audit's next genre over moves where it's a kind or the broad genre of the one known: action to action comedy, comedy to coming of age, horror to horror comedy, romance to romantic comedy and tragedy to tragicomedy at half, christmas to comedy, docufiction to documentary, domestic drama to drama and science fantasy to science fiction at three quarters; none of the nine is unrelated, and the 140 others move nothing",
+  "decision": {
+   "question": "The Genre Audit's threshold (the owner's genre acceptance brief, 2026-10-16) says knowing a genre helps its own work and transfers to no other. Brief 21 asked that unrelated genres give nothing and that overlapping tags count once, and its measure credits a genre's own kind toward it at 0.75 and its broad genre at 0.5. Should a kind and its broad genre count toward each other, or should the audit's 'leaks into none' stand and both credits be 0?",
+   "evidence": "docs/verification/genre-banking-2026-10-22/final-runs/final/genre-audit.md (the nine, each a genre and its own kind); tests/b21-genre-proof.test.ts ('counts a tag listed twice once, and a broad genre beside its kind as one requirement, met by the kind whole and by the broad genre at half'); src/engine/content/engagement.ts ENGAGEMENT.related; docs/verification/genre-banking-2026-10-22/README.md, The Genre Formula",
+   "recommendation": "Keep brief 21's credits and read the audit's threshold as leaking into no unrelated genre, which holds in all 149: an actor who knows psychological horror knows horror in part, and one who knows horror knows something of its kinds. Setting ENGAGEMENT.related's two figures to 0 restores 'leaks into none' at once, with nothing else to change."
+  }
+ }
+}

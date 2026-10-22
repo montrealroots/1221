@@ -1,0 +1,428 @@
+{
+ "width": 390,
+ "base": "http://localhost:4221",
+ "commit": "fd32e869",
+ "at": "2026-10-22T11:34:29.077Z",
+ "saves": [
+  {
+   "save": "journey-j01-degree-8283f80c",
+   "ms": 24431,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "10:15 AM · August 4, 2029",
+     "ms": 4974,
+     "picture": "journey-j01-degree-8283f80c-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Morning, Ada.",
+     "picture": "journey-j01-degree-8283f80c-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "journey-j01-degree-8283f80c-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "journey-j01-degree-8283f80c-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "journey-j01-degree-8283f80c-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "journey-j01-degree-8283f80c-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "journey-j01-degree-8283f80c-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "journey-j01-degree-8283f80c-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "7:00 AM · August 5, 2029",
+     "stops": 0,
+     "picture": "journey-j01-degree-8283f80c-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "7:00 AM · August 5, 2029",
+     "after": "7:00 AM · August 5, 2029",
+     "picture": "journey-j01-degree-8283f80c-10"
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "journey-j01-last-term-8283f80c",
+   "ms": 25379,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "7:05 AM · March 1, 2029",
+     "ms": 4787,
+     "picture": "journey-j01-last-term-8283f80c-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Morning, Ada.",
+     "picture": "journey-j01-last-term-8283f80c-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "journey-j01-last-term-8283f80c-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "journey-j01-last-term-8283f80c-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "journey-j01-last-term-8283f80c-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "journey-j01-last-term-8283f80c-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "journey-j01-last-term-8283f80c-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "journey-j01-last-term-8283f80c-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "9:00 AM · March 1, 2029",
+     "stops": 1,
+     "picture": "journey-j01-last-term-8283f80c-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "9:00 AM · March 1, 2029",
+     "after": "9:00 AM · March 1, 2029",
+     "picture": "journey-j01-last-term-8283f80c-10"
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "journey-j01-year-one-8283f80c",
+   "ms": 24413,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "7:05 AM · June 1, 2027",
+     "ms": 4901,
+     "picture": "journey-j01-year-one-8283f80c-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Morning, Ada.",
+     "picture": "journey-j01-year-one-8283f80c-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "journey-j01-year-one-8283f80c-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "journey-j01-year-one-8283f80c-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "journey-j01-year-one-8283f80c-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "journey-j01-year-one-8283f80c-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "journey-j01-year-one-8283f80c-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "journey-j01-year-one-8283f80c-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "7:00 AM · June 2, 2027",
+     "stops": 0,
+     "picture": "journey-j01-year-one-8283f80c-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "7:00 AM · June 2, 2027",
+     "after": "7:00 AM · June 2, 2027",
+     "picture": "journey-j01-year-one-8283f80c-10"
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "old-leave-ff837dfa",
+   "ms": 24127,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "8:35 AM · March 12, 2028",
+     "ms": 4912,
+     "picture": "old-leave-ff837dfa-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Morning, Ada.",
+     "picture": "old-leave-ff837dfa-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "old-leave-ff837dfa-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "old-leave-ff837dfa-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "old-leave-ff837dfa-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "old-leave-ff837dfa-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "old-leave-ff837dfa-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "old-leave-ff837dfa-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "7:00 AM · March 13, 2028",
+     "stops": 0,
+     "picture": "old-leave-ff837dfa-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "7:00 AM · March 13, 2028",
+     "after": "7:00 AM · March 13, 2028",
+     "picture": "old-leave-ff837dfa-10"
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "old-nonfiler-086d00ca",
+   "ms": 23980,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "7:10 AM · May 24, 2028",
+     "ms": 4888,
+     "picture": "old-nonfiler-086d00ca-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Morning, Ada.",
+     "picture": "old-nonfiler-086d00ca-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "old-nonfiler-086d00ca-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "old-nonfiler-086d00ca-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "old-nonfiler-086d00ca-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "old-nonfiler-086d00ca-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "old-nonfiler-086d00ca-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "old-nonfiler-086d00ca-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "7:00 AM · May 25, 2028",
+     "stops": 0,
+     "picture": "old-nonfiler-086d00ca-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "7:00 AM · May 25, 2028",
+     "after": "7:00 AM · May 25, 2028",
+     "picture": "old-nonfiler-086d00ca-10"
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "old-state-plan-086d00ca",
+   "ms": 24104,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "7:15 PM · February 22, 2028",
+     "ms": 4895,
+     "picture": "old-state-plan-086d00ca-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Evening, Ada.",
+     "picture": "old-state-plan-086d00ca-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "old-state-plan-086d00ca-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "old-state-plan-086d00ca-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "old-state-plan-086d00ca-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "old-state-plan-086d00ca-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "old-state-plan-086d00ca-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "old-state-plan-086d00ca-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "7:00 AM · February 23, 2028",
+     "stops": 0,
+     "picture": "old-state-plan-086d00ca-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "7:00 AM · February 23, 2028",
+     "after": "7:00 AM · February 23, 2028",
+     "picture": "old-state-plan-086d00ca-10"
+    }
+   ],
+   "found": []
+  },
+  {
+   "save": "old-tax-plan-ff837dfa",
+   "ms": 24066,
+   "steps": [
+    {
+     "step": "opened with Continue",
+     "clock": "2:25 PM · April 18, 2027",
+     "ms": 4876,
+     "picture": "old-tax-plan-ff837dfa-01"
+    },
+    {
+     "step": "rail: Home",
+     "heading": "Good Afternoon, Ada.",
+     "picture": "old-tax-plan-ff837dfa-02"
+    },
+    {
+     "step": "rail: Player Profile",
+     "heading": "Ada Cole",
+     "picture": "old-tax-plan-ff837dfa-03"
+    },
+    {
+     "step": "rail: School",
+     "heading": "David Geffen School of Drama at Yale University",
+     "picture": "old-tax-plan-ff837dfa-04"
+    },
+    {
+     "step": "rail: Career",
+     "heading": "Career",
+     "picture": "old-tax-plan-ff837dfa-05"
+    },
+    {
+     "step": "rail: Money",
+     "heading": "Chase",
+     "picture": "old-tax-plan-ff837dfa-06"
+    },
+    {
+     "step": "rail: Papers",
+     "heading": "Papers",
+     "picture": "old-tax-plan-ff837dfa-07"
+    },
+    {
+     "step": "rail: Ada Cole",
+     "heading": "Ada Cole",
+     "picture": "old-tax-plan-ff837dfa-08"
+    },
+    {
+     "step": "Advance → Tomorrow Morning",
+     "clock": "7:00 AM · April 19, 2027",
+     "stops": 0,
+     "picture": "old-tax-plan-ff837dfa-09"
+    },
+    {
+     "step": "Save & Exit, then Continue",
+     "before": "7:00 AM · April 19, 2027",
+     "after": "7:00 AM · April 19, 2027",
+     "picture": "old-tax-plan-ff837dfa-10"
+    }
+   ],
+   "found": []
+  }
+ ]
+}

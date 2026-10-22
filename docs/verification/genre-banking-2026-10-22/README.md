@@ -1,7 +1,5 @@
 # Brief 21: Genre Integration And Banking Correctness, 2026-10-22
 
-**Draft, while the final runs on `fd32e869` finish: each PENDING below is filled from them.**
-
 The owner's brief 21 (`../briefs-2026-10-16/21-complete-genre-integration-and-banking-correctness.txt`, kept verbatim)
 asked that genre knowledge be read, weighed and counted once wherever the work calls for it, and that banking follow
 dated rules. Five things were named: the APY treated as nominal; the penalty rate at 30 days; the charge-off at 150; due
@@ -15,7 +13,9 @@ say there are no defects left.
 
 ## The Tested Commit
 
-PENDING_TESTED
+`fd32e869` on `claude/peaceful-hamilton-59zdbb`, from `e50865df` (`main`, #51). Every final run was made on it, each lane in
+a clean clone (`final-runs/runs/README.md`). Every later commit changes documents and the runs' scripts only, nothing
+under `src`. The gate, in a clean clone, its exit read from its file: The Gate, below.
 
 The starting point, `e50865df` (`main`, #51): brief 20's gate on the same source, exit 0, 479 of 479 test files and
 5,481 of 5,481 tests, all 22 checks.
@@ -30,7 +30,8 @@ Brief 21's commits, in order:
 | `168fabdc` | B and S: yields, a US card's days past due, its due day, standing orders; the old-save migration |
 | `22dc917c` | The effects matrix's citations, the dev map and traceability brought to the new code |
 | `59e9c4af` | What the proof, the journeys and the built app found, fixed (below) |
-| PENDING_LATER | PENDING_LATER_WHAT |
+| `fd32e869` | The mutations' three survivors killed by stronger tests; the tutorial's Your Bank brought to the US days (D14): the tested commit |
+| after | The fold (the runs gathered, the matrix, the receipt, the handoff) and the gate's figures: documents only |
 
 ## The Defects And Their Fixes
 
@@ -170,16 +171,68 @@ In short:
   balance, posting, notice and the card. J2 found D12.
 - **The built app** (`app/walk.mjs`, three saves from `app/make-saves.ts`, at 1440 and 390): Money's tabs, the card's
   terms, the last statement; the words brief 21 changed read off the screens; Advance, Save & Exit and Continue. It found
-  D11. PENDING_APP
-- **The final runs** (`final-runs/runs/README.md`): PENDING_RUNS
+  D11. On the tested commit (`final-runs/app/`), each at 1440 and 390, nothing found:
+  - brief 21's walk on its three saves;
+  - brief 19's career walk, 52 surfaces of a played life's saves;
+  - the seven older saves, each opened, every destination pressed, the clock moved, saved and continued.
+- **The final runs** (`final-runs/runs/README.md`): brief 20's lanes, brief 19's judge lanes and brief 21's walk on `fd32e869`, 09:43 to 11:54 UTC. Every step exited 0
+  but the one that records whether brief 19's four lives still play line for line; one of them doesn't (below).
+  - **Brief 13's 25 journeys:** each played to the end with all ten checks passed, each ending as brief 20's did.
+  - **The interface:** brief 13's three playthroughs and brief 14's three journeys, every step passed at both widths.
+  - **The advice:** its four rows hold, (c) 120 of 120 at 1.96 times a random input.
+  - **Brief 20's journeys:** 163 of 163 transitions and 52 of 52 forks the same to the byte, every check passed but one.
+    That one is b20-4's papers: its OPT ended mid-run and 48 days of a booked run were worked without permission. It's
+    an older gap, recorded under For The Owner.
+  - **The career's draws** moved in six lives, as auditions now read the project's genres. Brief 19's life A is now
+    called back and cast as Nell in A House On Calder Street, a domestic drama, a genre it knows from the School.
+  - **The long runs:** as brief 20's, but that the New York attentive workload life ends its third term with a notice of
+    academic concern. Its Blood Wedding nights read the play's genres, known at about 66 of the 90 that complete them,
+    and come out 1% lower (396.1 against 400.0 over eight nights), which puts its term's work at the floor. Its
+    threshold (breaches, unbalanced and errors 0) holds.
+  - **The judge** (`final-runs/final/README.md`): 29 of 35 outputs brief 19's in every number, the six others moved by
+    a taped brief's practice shared by weight, L3-R met as before. Its figures are 35 of 36 the same; the Genre Audit's
+    moved, its "leaks into none" now meeting nine pairs of a genre and its own kind, each credited by the new measure
+    and none unrelated. That's a decision for the owner.
 
 ## Mutations
 
-PENDING_MUTATIONS
+27 deliberate faults (`mutations/mutations.json`, `run.py`), each applied alone in a clone of `59e9c4af` (the code of
+`fd32e869` but the tutorial's sentence), its tests run, then put back:
+- **24 killed on the first run**, each by an assertion failing in milliseconds; none was a timeout or a setup error
+  (`mutations/results.json`).
+- **Three survived, and each named a weak test, not wrong code:**
+  - **G5** (a tag listed twice counted again): the test listed `['comedy', 'comedy']`, whose two halves make the whole.
+    A duplicate with another tag between now tells 0.4 from 0.2.
+  - **G9** (a professional rehearsal day's practice): the tests read shoot days and nights, which credit the same
+    genres. A played test of Calder Street's twenty rehearsal days alone now tells.
+  - **B12** (a payment toward the past due counted once): the notice date can't tell. The past-due list after the next
+    due date now does.
+- **All three killed on the rerun** (`mutations/results-rerun.json`).
+- **What they cover:**
+  - genre: the weights, the relations, absorption, deduplication, the bound, the School night's completion, a rehearsal
+    day's lines and practice, the Seagull, and a call's practice;
+  - banking: the yield's conversion, daily compounding, yearly and half-yearly crediting, the 61st day, the 45 days,
+    the 150th, the 180th, the due day, the business day both ways, oldest first, the migration both ways, the minimum
+    with what's past due, and the statement's words.
 
 ## The Completion Matrix
 
-PENDING_MATRIX
+**631 of 658 rows in scope Implemented And Verified (95.8%)**: 22 Implemented, Verification Incomplete, 5 Decision
+Required, 40 Explicitly Deferred (`../integration-2026-10-16/COMPLETION-MATRIX.md`), before the gate's own figure is folded
+in (The Gate).
+- **Its course this brief:** brief 21 changed `src/engine`, `src/ui` and three files the judge watches, so every row
+  measured on them read as measured before what it reads last changed. The final runs measured them again on
+  `fd32e869`. Every figure but three held, each read row by row:
+  - the long runs' workload count, whose threshold holds;
+  - the mastery plans' dates, every payoff still 100;
+  - the Genre Audit.
+- **What it left:**
+  - **the Genre Audit, Decision Required:** its question, evidence and recommendation are in
+    `final-runs/judge-moved.json`;
+  - **genres.7-measured, Verification Incomplete:** it holds the audit's 0 too, so it waits on the same decision;
+  - **the other 20 and 4:** earlier briefs' rows, as before.
+- **The four judge-held area items** are restated from brief 21's own outputs (`final-runs/judge.py`): three verified,
+  genres.7 waiting as above.
 
 ## The Gate
 
@@ -188,6 +241,15 @@ PENDING_GATE
 ## For The Owner
 
 - **No merge, no deployment.** The branch is pushed; `main` is untouched.
+- **The Genre Audit's question** (`final-runs/judge-moved.json`): brief 21's measure lets a genre's own kind count toward
+  it (0.75 one way, 0.5 the other), and the audit's earlier threshold said knowing a genre transfers to no other. The
+  nine pairs it now finds are each a genre and its own kind. Recommended: keep the credits and read the threshold as no
+  unrelated genre. Setting `ENGAGEMENT.related`'s two figures to 0 restores "leaks into none".
+- **OPT ending mid-run** (found by brief 20's b20-4, played again; `final-runs/runs/README.md`): the OPT week ends
+  permission at 91 days without work whatever is booked ahead, and a booked run goes on being worked after it (48
+  days). It's an older gap: brief 21 changed neither file. It touches OPT's rules, which this brief leaves out, and brief
+  20's F3 (whether the days between gigs count). Two ways out: count a booked run's days as work, or stop a run's days
+  once permission ends and say so.
 - **SLATE's readings to confirm or change:**
   - a US minimum payment due includes what's past due;
   - the penalty rate not applied to new transactions earlier than the 45 days;
@@ -203,7 +265,15 @@ PENDING_GATE
 
 ## Not Done, Or Not Measured
 
-PENDING_NOTDONE
+- **No person has played it.** The journeys are scripted players, and the built app's walks are automated.
+- **Not fixed, outside this brief:** b20-4's 48 days worked after OPT ended mid-run (For The Owner).
+- **Not measured:**
+  - a US card behind across a daylight-saving change at the 180th day;
+  - a hardship plan started after the 61st day's notice.
+- **Not changed:**
+  - the class's expected genre record leaves the Rep out;
+  - the Seagull's class scene reads no genre speed;
+  - the Profile's next genre to study doesn't look at the Rep's part.
 
 ## To Look For Yourself
 

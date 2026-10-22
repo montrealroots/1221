@@ -63,7 +63,22 @@ exact test results. Updated as each module lands; the criteria are `criteria.md`
 
 ## Left
 
-- The final runs on the tested commit, then the matrix fold, the gate in a clean clone, the receipt and the handoff.
+- The gate in a clean clone of the fold's commit, its figure folded in, and the gate again on the receipt's commit.
+
+## The Final Runs (fd32e869, 09:43 to 11:54 UTC)
+
+- **The lanes:** every step exit 0 but `b19-lives-diff`, which records that brief 19's lives don't play line for line
+  (only life A differs from brief 20's run).
+- **The fold:** gathered, then figures, numbers-same, verify (36 rows held), the advice's close (four rows held) and
+  judge.py, with the Genre Audit read in `final-runs/judge-moved.json`. The matrix is 631 of 658 before the gate's own
+  figure; the handoff states it.
+- **What moved, each read in `final-runs/runs/README.md` and `final-runs/final/README.md`:**
+  - the New York workload life's concern: Blood Wedding's nights 1% lower with its genres read;
+  - two mastery plans a day sooner;
+  - six lives' career draws;
+  - brief 19's life A cast as Nell;
+  - the Genre Audit's nine pairs: a decision;
+  - b20-4's 48 days worked after OPT ended: an older gap, for the owner.
 - The full suite, the effects matrix's file:line citations, devmap and traceability, then the gate in a clean clone and
   the final runs; R: handoff, receipt.
 

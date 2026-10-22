@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 631 of 658 rows in scope Implemented And Verified (95.8%); 22 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -37,7 +37,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: tax | 18 | 16 |  |  |  |  |  | 2 |
 | Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
 | Brief 09 Area: coverage | 14 | 13 |  |  |  |  | 1 |  |
-| Brief 09 Area: genres | 21 | 21 |  |  |  |  |  |  |
+| Brief 09 Area: genres | 21 | 20 | 1 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 4 |  |  |  |  |  | 6 |
 | Brief 10 Area: advice | 14 | 14 |  |  |  |  |  |  |
@@ -49,13 +49,13 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Attributes | 25 | 22 |  |  |  |  |  | 3 |
 | Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  |  | 1 |
 | Criteria: Mastery Through Play | 8 | 8 |  |  |  |  |  |  |
-| Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
-| Integration | 9 | 9 |  |  |  |  |  |  |
+| Criteria: The Genres | 5 | 4 |  |  |  |  | 1 |  |
+| Integration | 9 | 8 | 1 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 | 4 |  |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 33 |  |  |  |  |  |  |
-| **All** | **698** | **634** | **20** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **698** | **631** | **22** | **0** | **0** | **0** | **5** | **40** |
 
 ## Life, Health And Time
 
@@ -188,13 +188,13 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `bank.standing_order` | bank.add_standing_order schedules it. On its day the handler (payments.ts:198-219) moves the amount from the account it was set up on into … | Implemented And Verified | verified | evidence2-b05.test.ts ‘PLAYER JOURNEY: moved to Capital One before a penny is in it, the $50 order doesn’t go on Friday 28 August, from there or from Chase, an… |
 | `bank.switch_complete` | bank.switch schedules bank.switch_complete on the switching service's working days. completeSwitch then opens accounts at the new bank, mov… | Implemented, Verification Incomplete | unresolved | tests/scope-money.test.ts ‘bank.switch_complete’ (London FIXTURE, held back for pending groceries, to the penny); lending.test.ts, bank-lifecycle.test.ts, paym… |
 | `card.arrives` | card.apply schedules card.arrives a week out. The handler (cardlife.ts:70-97) opens the card at the applied limit with its own last four, p… | Implemented And Verified | verified | cardlife.test.ts:100; cardoffers.test.ts:94 |
-| `card.due` | On the due date the handler (credit.ts:792-905) does the following. Autopay asks its amount (autopayAsk) from the account it was set up on,… | Implemented And Verified | verified | tests/defects3-bank.test.ts:223 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November’; tests/evidence… |
-| `card.replaced` | card.report, card.dispute, bank.new_number and a bank's fraud stop all call replace() (security.ts:139-148), which stops the card and sched… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:482 ‘reported lost and then moved to a new number, the debit card arrives once, unlocked, across a save and a load’, :505 ‘whi… |
-| `card.statement` | On its day the handler (credit.ts:702-790) does the following. It charges cash-advance interest, offers' interest and fees, and the cycle's… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:524 ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps i… |
+| `card.due` | On the due date the handler (credit.ts:792-905) does the following. Autopay asks its amount (autopayAsk) from the account it was set up on,… | Implemented And Verified | verified | tests/defects3-bank.test.ts:226 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 13 November’; tests/evidence… |
+| `card.replaced` | card.report, card.dispute, bank.new_number and a bank's fraud stop all call replace() (security.ts:139-148), which stops the card and sched… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:486 ‘reported lost and then moved to a new number, the debit card arrives once, unlocked, across a save and a load’, :509 ‘whi… |
+| `card.statement` | On its day the handler (credit.ts:702-790) does the following. It charges cash-advance interest, offers' interest and fees, and the cycle's… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:528 ‘raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps i… |
 | `daily food spending` | At each day's rollover, life.ts:1008 calls buyTheDaysFood (spending.ts:384-411): EBT first, then spend (spending.ts:307-377) by the payer's… | Implemented And Verified | verified | tests/defects-r3a-1.test.ts:103 ‘buys both, the meal at 11:40 PM and the groceries at midnight, where there’s money for both’ (through the clock); tests/eviden… |
 | `ledger` | Every Account balance changes only through Ledger.post (sim.post), which refuses fewer than two postings, a non-integer amount, or postings… | Implemented And Verified | verified | journey-money.test.ts:32; money.test.ts:89,103,114,130,167,179; cardlife.test.ts:326 (audit) |
-| `credit score` | The score moves as follows. reportMonth at each statement or due date: +3 paid as agreed, shared across the cards; the whole late mark; min… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:565 ‘asked to move the statement day every morning, it moves once a cycle: … and at day 125 the score has gained nothing on a … |
-| `statements` | The Statements screen (BankStatements.tsx) shows each account's periods (a calendar month, a quarter, or a card cycle), the lines with thei… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:680 ‘shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-onl… |
+| `credit score` | The score moves as follows. reportMonth at each statement or due date: +3 paid as agreed, shared across the cards; the whole late mark; min… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:569 ‘asked to move the statement day every morning, it moves once a cycle: … and at day 125 the score has gained nothing on a … |
+| `statements` | The Statements screen (BankStatements.tsx) shows each account's periods (a calendar month, a quarter, or a card cycle), the lines with thei… | Implemented And Verified | verified | tests/evidence-g13-money.test.ts:686 ‘shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-onl… |
 | `bank.open_current` | Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close… | Implemented And Verified | verified | tests/evidence-g14-money.test.ts (bank.open_current, from :226) ‘refuses Chase for the $30 it charged off and three banks on its ChexSystems report…’, ‘refuses… |
 | `bank.set_primary` | Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close… | Implemented And Verified | verified | tests/evidence-g14-money.test.ts:389 ‘moves the night’s groceries, $40 from a machine and $100 paid to the Chase card by hand to Capital One once it’s primary,… |
 | `bank.redirect_deposits` | Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close… | Implemented And Verified | verified | tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders...’; tests/cross-journeys.test.ts ‘opens and funds Capital One, has Yale pay there… |
@@ -295,7 +295,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `brief.prepare` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Read It Through, Learn The Lines … | Implemented And Verified | verified | tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (30 minutes a step, the take improved by the prepara… |
 | `brief.choose` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Choose It sets the reading a take… | Implemented And Verified | verified | tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (a change of reading keeps half the breakdown, the t… |
 | `brief.reader` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Read With chooses who reads the o… | Implemented And Verified | verified | tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (5/9 of the way’s rehearsal at the f… |
-| `genre.study` | Practice an exercise for an hour, at a tier and with a focus, and study a genre / Study It (ProfileWorkspace.tsx:416) and Study The Genre (… | Implemented And Verified | verified | tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles moves… |
+| `genre.study` | Practice an exercise for an hour, at a tier and with a focus, and study a genre / Study It (ProfileWorkspace.tsx:416) and Study The Genre (… | Implemented And Verified | verified | tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: two studies of drama the same day come to 8 and then 11.68, and the first read of a scene from Trifles, half… |
 | `school.term` | TERM_KIND (scheduled at enrollment and by each term for the next) runs followFormerClasses and the leave start or return. It sets termsBegu… | Implemented And Verified | verified | tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carrie… |
 | `school.week` | planWeek runs at enrollment, at an additional term's start, and every Sunday at 18:00 through WEEK_KIND, for the day after. For each day up… | Implemented And Verified | verified | tests/evidence-g21-school.test.ts ‘school.week’: ‘PLAYER JOURNEY: books the first year’s 24 class-week Saturdays and the second year’s 25 to Yale’s 150 assigne… |
 | `school.classes` | CLASSES_KIND (booked by planWeek) adds a class day to the tally. Classmates in class grow craft, and abilities by their kin. Each course's … | Implemented And Verified | verified | tests/evidence-g21-school.test.ts ‘school.classes’: ‘PLAYER JOURNEY: grows the abilities of each classmate in the room by the courses’ kin, never composure, an… |
@@ -603,7 +603,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `genres.4-kept` | The 41 genres kept as they were, each with its reason | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09.md ‘§4, the per-genre table’ (static) |
 | `genres.5-saves` | An older save that prepared or taped a retired brief | Implemented And Verified | older-save compatibility kept and tested | tests/remaining-genres.test.ts ‘a save that prepared a retired brief > keeps its record as it was across a reload, and nothing offers it or reads it as the new… |
 | `genres.6-table` | The per-genre table, before and after | Implemented And Verified | implemented | docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json ‘npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …’ (static) |
-| `genres.7-measured` | Measured again after the changes | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
+| `genres.7-measured` | Measured again after the changes | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
 | `genres.8-docs` | docs/GENRE-COVERAGE.md and guide text that names a brief’s scene | Implemented And Verified | verified as it stands | tests/genre-coverage.test.ts ‘the coverage record > is what the tables say, and accounts for every genre once’ (static) |
 
 ## Brief 09 Area: journeys
@@ -826,7 +826,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `S2` | Contrasting genres differ and related ones overlap (revised) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
 | `S3` | Contrasting genres change outcomes on the same scene (revised), on all four samples | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
 | `S4` | No two briefs of different genres identical in every number a take reads (G2) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.m… |
+| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Decision Required | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.m… |
 
 ## Integration
 
@@ -840,7 +840,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
 | `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
 | `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
-| `INT-gate` | The gate and the build on the final revision | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
+| `INT-gate` | The gate and the build on the final revision | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
 
 ## Known Shortfalls And Missing Tests
 
@@ -914,7 +914,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (20)
+### Implemented, Verification Incomplete (22)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -936,6 +936,8 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
+- **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
+- **`INT-gate`** (Integration): It was measured on cbec90d8, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/engagement.ts, …): measure it again
 
 ### Partially Implemented (0)
 
@@ -949,10 +951,11 @@ None.
 
 None.
 
-### Decision Required (4)
+### Decision Required (5)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
+- **`Genre Audit`** (Criteria: The Genres): The Genre Audit's threshold (the owner's genre acceptance brief, 2026-10-16) says knowing a genre helps its own work and transfers to no other. Brief 21 asked that unrelated genres give nothing and that overlapping tags count once, and its measure credits a genre's own kind toward it at 0.75 and its broad genre at 0.5. Should a kind and its broad genre count toward each other, or should the audit's 'leaks into none' stand and both credits be 0? Evidence: docs/verification/genre-banking-2026-10-22/final-runs/final/genre-audit.md (the nine, each a genre and its own kind); tests/b21-genre-proof.…
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
 - **`ST6-R2.e`** (Brief 12: Replacement Criteria): Should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged with the scene's grain at nothing, with the margins as played kept as the record; and should (e3.5) on stage be read on the size counterparts' own opportunities (varied on every actor) with their 10 gains reported, rather than the gains alone? Evidence: As in results; acting/st6r2-13-e.json (verdict.e2, verdict.e3, atNoGrain, and per actor extraNotOver005 and otherSideNotBehind), and the trace of romantic_drama-2/plan above.. Recommended: Accept both and close ST6-R2.e. The specialist advantage th…
 
