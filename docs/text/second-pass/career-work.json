@@ -463,9 +463,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#InProgress": {
   "status": "Rewritten",
-  "hash": "a00e6f8964b2",
-  "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "6d2ea6d7f0eb",
+  "on": "2026-10-22",
+  "evidence": "Read again on 2026-10-22, its first line's verb now agreeing with who answers (\"The producers answer soon.\", \"Pennick Casting answers soon.\"), where until then it read \"The producers answers soon.\"; read where the player meets it in tests/pro-opportunities-screen.test.ts and on the built app's Opportunities tab, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
  "src/ui/career/OpportunitiesPane.tsx#NY": {

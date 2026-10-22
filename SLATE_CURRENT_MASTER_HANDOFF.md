@@ -8,7 +8,11 @@ without my instruction."); it went to `main` at "lets just merge everything" (20
 `9aed9ed4`, and this record of the merge followed it there. No other pull request was open. Nothing is deployed. There
 is no stash and one worktree.
 
-**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at #54's merge. The follow-up below changed `src/engine`, so the 46 rows brief 22's final runs measured on the
+  engine's or the app's whole source read as measured before what they read last changed, and this says 588 until final
+  runs measure them again, as it said 588 after brief 20's D2 until brief 20's final runs.)
 
   (632 at brief 21's close. Brief 22's final runs measured every row again on its tested commit
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`):
@@ -61,7 +65,14 @@ is no stash and one worktree.
   (`final-runs/runs/gate-receipt.txt`). Only that figure was written after it.
 - **Merged, not deployed:** #54 (`9aed9ed4`). Base44 deployment waits on the gate and the owner's word (rule 14), and
   §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of brief 20's
-  or 21's line accepts this line's saves. The next session starts from the owner's next brief.
+  or 21's line accepts this line's saves.
+- **A follow-up on `claude/peaceful-hamilton-59zdbb`, not merged** (the owner's "Yes", 2026-10-22, to fixing two defects
+  the pages captured after the merge showed; the receipt's After The Merge):
+  - **Paydays for work called off:** a week owed nothing kept its payday on the clock, so after b20-4's release Home and
+    the calendar still said "Payday: The Winter Ledger" four times. They come off with the week now (`dropPaydays`), and
+    an older save's come off on opening.
+  - **"The producers answers soon."** on Opportunities' In Progress: its verb agrees now.
+  - Merging it waits on the owner's word; measuring the 46 rows again waits on final runs.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
   - enjoyment read from tags;

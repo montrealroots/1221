@@ -145,6 +145,20 @@ describe('the Opportunities tab', () => {
     expect(html).toMatch(/<summary>What Happened \(3\)<\/summary>/);
   });
 
+  it('a role submitted for says who answers, its verb agreeing: "The producers answer soon.", "Pennick Casting answers soon."', () => {
+    const sim = student('opps-who-answers');
+    tended(sim, at(2026, 9, 14, 12));
+    // TEST SETUP: two submissions standing, no audition set yet, as a submission leaves one.
+    for (const projectId of ['eastview', PROJECTS.find((t) => t.casting === 'Pennick Casting')!.id]) {
+      sim.player.pro!.opportunities.push({ id: sim.nextId('pro'), projectId, via: 'open', status: 'submitted', postedAt: at(2026, 9, 14), submitBy: at(2026, 9, 21), history: [], counts: {} });
+    }
+    const { shown } = drawn(sim);
+    // Until 2026-10-22 the first read "The producers answers soon.", and the test above took either.
+    expect(shown).toContain('Submitted. The producers answer soon.');
+    expect(shown).toContain('Submitted. Pennick Casting answers soon.');
+    expect(shown).not.toContain('The producers answers');
+  });
+
   it('PLAYER JOURNEY: an offer shows its terms; Accept The Offer is grayed for an F-1 student in term with the reason, and open to a citizen with what the School’s rule brings', () => {
     const f1 = student('opps-f1', { homeRegionId: 'uk-eng-london' });
     tended(f1, at(2026, 9, 14, 12));

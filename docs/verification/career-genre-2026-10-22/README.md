@@ -297,6 +297,28 @@ Readings made on SLATE's judgment, each for the owner to keep or change:
   only abroad; ST6-R2.e's margins), the 20 rows they hold Verification Incomplete, and brief 21's question whether a US
   minimum payment due includes what's past due.
 
+## After The Merge
+
+The pages captured on the built app after #54's merge (2026-10-22) showed two defects, and the owner said to fix them
+("Yes"), on the branch and not merged:
+- **Paydays for work called off.** `callOff` dropped a week with nothing worked from what was owed and took the work's
+  calls off the calendar, but not the week's payday, which went on the clock under another reference. So on 2 September
+  2029, b20-4 released as Hester Vane at midnight with nothing owed, Home and the calendar still said "Payday: The Winter
+  Ledger" for 13, 20 and 27 September and 4 October. Each would have fired and paid nothing. Older than brief 22 (a
+  replacement calls work off the same way), made common by its release.
+  - **Fixed:** the dropped weeks' paydays come off the clock with them (`dropPaydays`, `systems/propay.ts`). A save made
+    before has its own taken off on opening (`loadSave`); with nothing to take off, a save made since opens to the same
+    bytes.
+  - **Tests:** A1, the nine paydays cancelled at that midnight; A7, weeks five to nine's cancelled at the release and the
+    four worked weeks' paid; "An older save's paydays", the save written by the build before this fix
+    (`tests/fixtures/b22/b20-4-released-2029-09-02.json.gz`), its nine stale paydays off the clock on opening and a
+    second opening the same to the byte.
+- **"The producers answers soon."** on Opportunities' In Progress, of a role the producers cast, where the submission's
+  own notice said "answer". It agrees now (`agrees`), tested in `tests/pro-opportunities-screen.test.ts`, whose earlier
+  test took either form.
+- **The matrix:** the fix changed `src/engine`, so the 46 rows measured on the engine's or the app's whole source read as
+  measured before what they read last changed until final runs measure them again: 588 of 658 until then.
+
 ## Not Done, And What Limits This
 
 - **Nothing was merged or deployed** while the brief ran, as it said. At the owner's "lets just merge everything"

@@ -97,7 +97,7 @@ import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/
 import { beginPro, buildOnOpening, registerPro } from './systems/pro';
 import { beginOnOpening, registerShowcase } from './systems/proshowcase';
 import { registerProAgent } from './systems/proagent';
-import { equityOnOpening, registerProPay } from './systems/propay';
+import { dropPaydays, equityOnOpening, registerProPay } from './systems/propay';
 import { registerProJobs } from './systems/projobs';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
@@ -498,6 +498,10 @@ export function loadSave(universe: SaveUniverse): Simulation {
     equityOnOpening(sim);
     opened.push('pro.unions');
   }
+  // A payday a save from before 2026-10-22 kept on the clock for a week of work called off and owed nothing, taken off
+  // (`dropPaydays`, `systems/propay.ts`). On every opening, as it changes nothing where there's nothing to take off: a
+  // save made since opens to the same bytes, and no step is marked.
+  for (const person of Object.values(universe.people)) for (const e of person.pro?.engagements ?? []) if (e.status === 'canceled') dropPaydays(sim, e);
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;
   // A save from before the attributes draws them on opening, the same draw a new life makes.

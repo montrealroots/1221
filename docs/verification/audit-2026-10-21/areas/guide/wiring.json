@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1602"
+   "handler": "src/engine/systems/projobs.ts:1604"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1645"
+   "handler": "src/engine/systems/projobs.ts:1647"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1627"
+   "handler": "src/engine/systems/projobs.ts:1629"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1689"
+   "handler": "src/engine/systems/projobs.ts:1691"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1677"
+   "handler": "src/engine/systems/projobs.ts:1679"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1593"
+   "handler": "src/engine/systems/projobs.ts:1595"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1612"
+   "handler": "src/engine/systems/projobs.ts:1614"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -740,7 +740,7 @@
    "kind": "pro.join_sag",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/propay.ts:765"
+   "handler": "src/engine/systems/propay.ts:782"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -1968,7 +1968,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1645"
+   "handler": "src/engine/systems/projobs.ts:1647"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -1976,7 +1976,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1677"
+   "handler": "src/engine/systems/projobs.ts:1679"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -1994,8 +1994,8 @@
    "label": "Ask To Move",
    "kind": "pro.ask_to_move",
    "payload": "(item) => ({ meetingId: item.payload.meetingId })",
-   "handler": "src/engine/systems/proagent.ts:1097",
-   "verdict": "Right"
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1097"
   },
   {
    "file": "src/engine/world/clock.ts",
