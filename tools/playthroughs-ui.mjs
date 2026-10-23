@@ -208,29 +208,42 @@ async function savedSeed() {
 
 // --- Home.
 
-const needsPanel = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'What Needs You', exact: true }) }).first();
-const notices = async () => (await needsPanel().locator('.list-item').allInnerTexts().catch(() => [])).map(clean);
-/** Home's notices as a fresh Home draws them, the six heaviest: Show All is the panel's own, and a screen opened again starts without it. */
+// From brief 23 (2026-10-23) Home's notices are Recent Updates, the four most important unread with a run of one notice on
+// one line, and every notice is on Updates, reached by View All Updates; What Needs You keeps the questions and what to put
+// right. Until then they were What Needs You's rows, six with Show All past them, and this read them there: on brief 23's
+// commit it found none, and every step that reads a notice failed (the final runs played again, 2026-10-23).
+const recentPanel = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'Recent Updates', exact: true }) }).first();
+/** A notice's line on the screen it's read on: Recent Updates' on Home, the list's on Updates. */
+const noticeRows = () => recentPanel().locator('.list-item').or(page.locator('ul.notice-list > li.notice'));
+const notices = async () => (await noticeRows().allInnerTexts().catch(() => [])).map(clean);
+/** Home's notices as a fresh Home draws them, the four most important unread. */
 async function homeAsOpened() {
-  const back = needsPanel().getByRole('button', { name: /^Show The Six Most Important$/ });
-  if (await back.count()) await press(back);
   await rail('Home');
   return notices();
 }
-const noticeRow = (re) => needsPanel().locator('.list-item').filter({ has: page.locator('.strong', { hasText: re }) }).first();
-/** A notice read on Home by its title: its title and its words, or why it isn't there. */
+const noticeRow = (re) => noticeRows().filter({ has: page.locator('.strong', { hasText: re }) }).first();
+/** A notice read by its title, on Home or else on Updates: its title and its words, or why it isn't there. */
 async function readNotice(re) {
   await rail('Home');
   const row = noticeRow(re);
-  // Past the six heaviest, by Show All, as a player looking for it does (the panel offers it from 2026-10-17: until then
-  // a notice past the sixth was on no screen, found by this playthrough's first run).
-  const all = needsPanel().getByRole('button', { name: /^Show All \d+$/ });
-  if (!(await row.count()) && await all.count()) { said(clean(await all.locator('xpath=..').innerText())); await press(all); await wait(500); }
-  must(await row.count(), `no notice ${re} among Home's: ${(await notices()).map((n) => n.slice(0, 60)).join(' | ') || 'none'}`);
+  // Past Recent Updates' four, by View All Updates, as a player looking for it does; on Updates, among the unread first
+  // and then all of them, a notice already read being there too.
+  if (!(await row.count())) await toUpdates(re);
+  must(await row.count(), `no notice ${re} on Home or Updates: ${(await notices()).map((n) => n.slice(0, 60)).join(' | ') || 'none'}`);
   const title = clean(await row.locator('.strong').first().innerText());
-  const body = clean(await row.locator('.xs.muted').first().innerText().catch(() => ''));
+  const body = clean(await row.locator('.xs.muted, .notice-body').first().innerText().catch(() => ''));
   said(`notice “${title}”: ${body}`);
   return { row, title, body };
+}
+/** View All Updates pressed from Home, and All pressed there where the unread don't hold the notice. */
+async function toUpdates(re) {
+  const view = recentPanel().getByRole('button', { name: /^View All Updates$/ });
+  if (!(await view.count())) return;
+  said(clean(await recentPanel().locator('.panel-foot').innerText().catch(() => '')) || 'View All Updates');
+  await press(view, 'View All Updates'); await wait(600);
+  if (await noticeRow(re).count()) return;
+  const all = page.getByRole('group', { name: 'Show' }).getByRole('button', { name: /^All \(\d+\)$/ });
+  if (await all.count()) { await press(all, 'All'); await wait(400); }
 }
 
 // --- A look, opened in place.
@@ -1122,12 +1135,11 @@ async function newestToastWithTone() {
   if (!(await t.count())) return { text: '', tone: '' };
   return { text: clean(await t.innerText().catch(() => '')), tone: (await t.getAttribute('data-tone').catch(() => '')) ?? '' };
 }
-/** A notice on Home by its title, or nothing: Show All pressed where it's past the six heaviest. */
+/** A notice by its title, on Home or else on Updates, or nothing (until brief 23, on Home with Show All). */
 async function findNotice(re) {
   await rail('Home');
   if (await noticeRow(re).count()) return noticeRow(re);
-  const all = needsPanel().getByRole('button', { name: /^Show All \d+$/ });
-  if (await all.count()) { await press(all); await wait(500); }
+  await toUpdates(re);
   return (await noticeRow(re).count()) ? noticeRow(re) : undefined;
 }
 /** Look After Yourself opened: the menu, for a step to read and press in. */

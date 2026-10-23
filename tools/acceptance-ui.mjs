@@ -874,7 +874,10 @@ if (DIR && existsSync(`${DIR}/leave.json`)) {
     // Back from a leave, a term has been evaluated: the panel lists it, each row with its standing.
     const evaluations = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^Term Reviews$/ }) }).first();
     must(await evaluations.count(), 'no Term Reviews panel');
-    const rows = await evaluations.locator('tbody tr').allInnerTexts();
+    // A review's figures are its first row, and why the second, across the table (`.review-why`), from brief 23
+    // (2026-10-23): until then why was the row's seventh cell, and on brief 23's commit this read why as a row with no
+    // standing (the final runs played again, 2026-10-23).
+    const rows = await evaluations.locator('tbody tr:not(.review-why)').allInnerTexts();
     must(rows.length > 0, `no term evaluated on a save back from a leave: ${(await evaluations.innerText()).slice(0, 160)}`);
     must(rows.every((r) => /Good Standing|Academic Concern|Academic Warning/.test(r)), `a row with no standing: ${rows.join(' | ').slice(0, 200)}`);
     return `the first class’s ${productions.length} productions; ${rows.length} terms evaluated: ${rows.map((r) => r.split('\t').slice(0, 2).join(' ')).join('; ').slice(0, 200)}`;
