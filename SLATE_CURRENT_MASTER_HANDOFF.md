@@ -84,6 +84,8 @@ other pull request was open. Nothing is deployed. There is no stash and one work
     the judge's, whose rows read nothing the fix touched. The one number that moved from the first runs, b20-4's save 45
     bytes longer at one transition, is the fix. `tools/advice.ts` counts a tree clean but for the runs' own outputs now,
     so a lane played again over its first run's committed outputs reads clean where the code is.
+- **Pages on the built app:** brief 22's sixteen pages, each whole, in the order a player meets them, captured on
+  `main` at `58231c69` at the owner's word (2026-10-23): `docs/verification/career-genre-2026-10-22/captures/README.md`.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
   - enjoyment read from tags;
