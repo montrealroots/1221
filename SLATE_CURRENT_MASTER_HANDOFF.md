@@ -13,8 +13,9 @@ without my instruction." No pull request is open for it. There is no stash and o
 
 - **Read first:** `docs/verification/ui-polish-2026-10-23/README.md` (the receipt) and `criteria.md` (the checks,
   written before any change).
-- **The tested commit:** `1a87be4c`, the last change to `src`. Everything measured after was measured on the app built
-  from it.
+- **The tested commit:** `23b8a77a`, the last change to `src`. The turn suite and the browser's final-run lanes ran on
+  it; the pictures, the audits, the checks and the walk on `1a87be4c`, whose `src` differs in `shell/turn.tsx`'s scroll
+  keeping alone, which acts only when a phone turns upright.
 - **Help lines up by where it stands** (one shared rule a place, its offset the button's own padding): a card's head
   ends its words on the content edge, on the heading's first line, and a wrapped row starts under the heading;
   `SectionHead` for a section's head; `.help-below` under what it explains. The help audit (1,530 helps before, 1,482
@@ -29,11 +30,14 @@ without my instruction." No pull request is open for it. There is no stash and o
   "What's Coming"; the guide and How This Works say how to reach both.
 - **Larger text:** the drawer's and the bar's widths are in em, so text at 125% or 150% gets the layout a narrower window
   does. At 150% in a 1280 window brief 23's bar ran out of itself and past the window.
-- **Defects found on the way and fixed:** 5, in the receipt.
+- **Defects found on the way and fixed:** 6, in the receipt. The last, found by the walk's turn suite: a phone turned
+  upright and back put four lives' Career Work 63 pixels up the page; `TurnFrame` keeps each scroll as it stood on its
+  side now, and the suite holds 14 checks for each of the eight lives.
+- **The walk** (brief 23's `capture.mjs`, eight lives, six sizes): 1,416 steps, none failing a measure, no page error.
 - **Emulated:** Playwright's Chromium with a phone's screen, touch and no hover. No physical phone and no screen reader.
-- **Under way:** brief 23's walk on the final build at the brief's six sizes and upright; brief 22's final runs (P=f24),
-  the engine's lanes on `cb8b19eb` (whose `src/engine` is the tested commit's) and the browser's lanes to follow on
-  `1a87be4c`; then the gate in a clean clone, the fold, and the gate again.
+- **Under way:** brief 22's final runs (P=f24), the engine's lanes on `cb8b19eb` (whose `src/engine` is the tested
+  commit's) and the browser's lanes to follow on `23b8a77a`; then the gate in a clean clone, the fold, and the gate
+  again.
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
 
 # Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23

@@ -16,14 +16,18 @@ reader was run.
 
 ## The Tested Commit
 
-`1a87be4c` on `claude/peaceful-hamilton-59zdbb`, the last change to `src`. The after pictures, the help audit, the checks,
-the walk and brief 22's browser lanes were made on the app built from it. The before pictures and the before audit were
-made on brief 23's build (`113765a6`, its `src` `a00f159a`'s).
+`23b8a77a` on `claude/peaceful-hamilton-59zdbb`, the last change to `src`. The turn suite and brief 22's browser lanes were
+made on the app built from it. The after pictures, the help audit, the checks, the keyboard and the walk were made on
+`1a87be4c`'s, whose `src` differs from it in `shell/turn.tsx` alone: a scroll kept while the phone is on its side, which
+acts only when a phone turns upright. The before pictures and the before audit were made on brief 23's build
+(`113765a6`, its `src` `a00f159a`'s).
 
 | Commit | What |
 |---|---|
 | `cb8b19eb` | The four changes, the guide's and the tutorial's words, the tests, the records; criteria and scripts |
 | `1a87be4c` | Larger text gets the drawer as a narrower window does; Home's headings keep their help beside them on a phone |
+| `08de921c` | The evidence on the final build, this receipt, the handoff |
+| `23b8a77a` | A phone turned upright keeps each scroll as it stood on its side (the walk's turn suite found it) |
 
 ## What Changed
 
@@ -92,6 +96,7 @@ card stretched to Up Next's height. How You Are moves up under it. Nothing in th
 | 3 | At 667×375 What Needs You's help took a row of its own, and the first thing waiting started cut at the window's foot | Home's heading basis 8rem on a short screen | the pictures, `home-offer-waiting-667x375m.png` |
 | 4 | Text at 150% in a 1280 window kept the desktop's bar: Look After Yourself ran to three lines out of it and Save & Exit 5 pixels past the window | The drawer's and the bar's widths in em (`DRAWER_QUERY` and the stylesheet) | `app/checks.mjs` |
 | 5 | The first version of 4 left Menu's own rule at 901px: with text at 150% the rail was a drawer with no Menu to open it | Menu's rule the drawer query's complement, in em | `app/checks.mjs` |
+| 6 | A phone turned upright and back put four of eight lives' Career Work 63 pixels up the page (300 to 237): at 390 wide the page was shorter once help sat beside its labels, the browser clamped the scroll as the window narrowed, and the turn read it after | `TurnFrame` keeps each scroll as it moves while the phone is on its side, and puts that back | the walk's turn suite, 8 of 8 |
 
 ## Measured
 
@@ -149,8 +154,28 @@ run's save:
 
 ### The Walk
 
-Brief 23's `../ui-2026-10-23/app/capture.mjs` on the final build, reaching Calendar and Updates from Home now: see The
-Walk below.
+Brief 23's `../ui-2026-10-23/app/capture.mjs`, reaching Calendar and Updates from Home now, walked every destination and
+every tab, Look After Yourself, Advance, the guide, the Sleep dialog and the drawer, for eight lives: a new student, a
+developed one, a graduate, a graduate with an offer standing, booked work, a released engagement, long names and large
+sums, and an older save (`measured/walk-summary.json`, its pictures in the scratchpad only):
+
+| Size | Steps | Page wider | Past its card | Cut, no way to read | Cut, titled | Squeezed | Clipped | Phone target under 44 | Tab half-shown, no cue | Dialog not fitting | Bar height |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1280×720 | 232 | 0 | 0 | 0 | 8 | 0 | 0 | not asked | 0 | 0 | 56 |
+| 1440×900 | 232 | 0 | 0 | 0 | 7 | 0 | 0 | not asked | 0 | 0 | 56 |
+| 1920×1080 | 232 | 0 | 0 | 0 | 7 | 0 | 0 | not asked | 0 | 0 | 56 |
+| 667×375 phone | 240 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 48 |
+| 844×390 phone | 240 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 48 |
+| 932×430 phone | 240 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 48 |
+
+1,416 steps, none failing a measure, no page error, no step it couldn't take. "Cut, titled" is a label shortened with its
+whole words on hover and to a screen reader, as on brief 23's walk.
+
+**The turn suite** at 390×844, every life (`measured/turn-checks.json`), on `23b8a77a`: the rotate screen shown, inert,
+with the focus on it; a running clock paused upright; the place, the tab and the scroll kept; an open menu, an open
+dialog and a typed search kept; still paused and said once on its side again; no jump on Play; no rotate screen for the
+keyboard; an already-paused clock left quiet; Save & Exit turned mid-save. 14 checks a life, 8 of 8 lives. On
+`1a87be4c` four lives lost 63 pixels of their scroll (defect 6).
 
 ## Tests And Mutations
 
