@@ -47,7 +47,7 @@ only the files `WATCH.judge` names, none of which the fix touched, so they stay 
 The matrix's 46 rows moved to the commits they ran on: 633 of 658 before the gate's own figure, as on the first runs.
 The gate on `576a0e88`, which holds the fold, in a clean clone, its exit read from its file: 0, 486 of 486 test files,
 5,598 of 5,598 tests, every check (`gate.txt`; brief 22's first gate, on `cf83e61d`, stood there until then and is in git
-at `16aa0b6d`). Folded, 634 of 658; run again on the commit that holds that (`gate-receipt.txt`).
+at `16aa0b6d`). Folded, 634 of 658; run again on `6f44b403`, which holds that: the same (`gate-receipt.txt`).
 
 ## Why They Were Made
 

@@ -77,8 +77,8 @@ is no stash and one worktree.
   - **"The producers answers soon."** on Opportunities' In Progress: its verb agrees now.
   - **The gate** in clean clones, its exit read from its file, 0 each time, 486 of 486 test files and 5,598 of 5,598
     tests, all 22 checks: on `5ccf054e`, the fix (`gate-after-merge.txt`); on `576a0e88`, the final runs' fold (`gate.txt`,
-    where brief 22's first gate, on `cf83e61d`, stood until then, kept in git at `16aa0b6d`); and again on the commit
-    that folds its figure (`gate-receipt.txt`).
+    where brief 22's first gate, on `cf83e61d`, stood until then, kept in git at `16aa0b6d`); and again on `6f44b403`,
+    which folds its figure, the same, the matrix at 634 (`gate-receipt.txt`). Only that figure was written after it.
   - **The final runs again,** at the owner's "Run the final runs then merge everything." (2026-10-22): every lane but
     the judge's, whose rows read nothing the fix touched. The one number that moved from the first runs, b20-4's save 45
     bytes longer at one transition, is the fix. `tools/advice.ts` counts a tree clean but for the runs' own outputs now,

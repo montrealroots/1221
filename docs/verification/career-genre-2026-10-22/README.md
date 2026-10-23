@@ -338,8 +338,8 @@ The pages captured on the built app after #54's merge (2026-10-22) showed two de
   brief 22's first runs: every figure the same; the one number that moved, b20-4's save 45 bytes longer at one
   transition, is the fix. The 46 rows moved to the commits they ran on, the gate's own last: the gate on `576a0e88`, which
   holds the fold, exit 0, 486 of 486 test files and 5,598 of 5,598 tests (`final-runs/runs/gate.txt`, in brief 22's
-  first gate's place), and the matrix back at 634 of 658. Run again on the commit that folds its figure
-  (`gate-receipt.txt`).
+  first gate's place), and the matrix back at 634 of 658. Run again on `6f44b403`, which folds its figure: the
+  same, the matrix at 634 (`gate-receipt.txt`). Only that figure was written after it.
 
 ## Not Done, And What Limits This
 
