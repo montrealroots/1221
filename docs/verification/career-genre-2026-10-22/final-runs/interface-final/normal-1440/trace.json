@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "97404e70",
+ "commit": "05060742",
  "uncommitted": 3,
- "startedAt": "2026-10-23T13:41:23.087Z",
+ "startedAt": "2026-10-23T18:53:36.258Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": "1-AlexRivera-mvl0qse6"
+  "seed": "1-AlexRivera-mvlbwh97"
  },
  "steps": [
   {
@@ -73,11 +73,15 @@
     "drill-down"
    ],
    "pressed": [
-    "Home"
+    "Home",
+    "Welcome To The Class Of 2029",
+    "Close Welcome To The Class Of 2029"
    ],
-   "said": [],
-   "ok": false,
-   "why": "no notice /^Welcome To The Class Of 2029$/ among Home's: none",
+   "said": [
+    "notice “Welcome To The Class Of 2029”: You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m. Orientation’s five sessions, from August 24, 2026, are on your calendar. If you miss one, press Catch Up beside it under Orientation, on the School’s Coursework tab.",
+    "look “Welcome To The Class Of 2029” (NOTICE): It came in just now, and it’s your only unread notice."
+   ],
+   "ok": true,
    "date": "August 24, 2026",
    "clock": "7:30 AM"
   },
@@ -133,10 +137,10 @@
     "Home"
    ],
    "said": [
-    "stopped: Registration And Your Account ✕ It’s 10:00 AM on August 24, 2026, and this needs you now. Going takes 2 hours, and the clock moves on to August 25, 2026 at 7:00 AM. Press Go, or Stand Here to wait with the clock paused. Registration And Your Account starts the next time the clock moves, and you’re t"
+    "stopped: Registration And Your Account ✕ It’s 10:00 AM on August 24, 2026, and this needs you now. Going takes 2 hours, and the clock moves on to August 25, 2026 at 7:00 AM. Press Go, or Stand Here to wait with the clock paused. Registration And Your Account starts the next time the clock moves, and you’re t",
+    "notice “Registration And Your Account”: Your tuition, $20,375.00 a term, is covered by the tuition scholarship. The aid office found no financial need, so you pay the Yale Health plan, $1,882.00 a term, yourself. Work-study is 150 assigned hours a year at $23.00 an hour: a shift each Saturday while classes run."
    ],
-   "ok": false,
-   "why": "no notice /^Registration And Your Account$/ among Home's: none",
+   "ok": true,
    "date": "August 25, 2026",
    "clock": "7:00 AM"
   },
@@ -177,11 +181,17 @@
     "navigation"
    ],
    "pressed": [
-    "Home"
+    "Home",
+    "View All Updates",
+    "Go There",
+    "Coursework (tab)"
    ],
-   "said": [],
-   "ok": false,
-   "why": "no notice /^The Courses And What They Ask$/ among Home's: none",
+   "said": [
+    "11 more unread. View All Updates",
+    "notice “The Courses And What They Ask”: Each course set out what it asks. Eight courses gave you their first piece now, so you can start before classes.",
+    "8 pieces: Acting I: Scene Study (Due September 8, 2026); Text And Context Across The Repertory: A Play In Its Context (Due September 8, 2026); The Body As Source I: A Movement Score (Due September 10, 2026); Voice I: A Voice Sequence (Due September 11, 2026); Speech And Accents I: Sound Changes And A Text (Due September 14, 2026); Alexander Technique I: Directions In Daily Life (Due September 14, 2026); Play: A Game Played Through (Due September 17, 2026); Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice (Due September 25, 2026)"
+   ],
+   "ok": true,
    "date": "August 29, 2026",
    "clock": "7:00 AM"
   },
@@ -191,22 +201,138 @@
    "exercises": [
     "unavailable"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no scene was found in the step before",
+   "pressed": [
+    "School",
+    "Coursework (tab)",
+    "Read The Scene",
+    "Rehearse Alone (grayed, forced)"
+   ],
+   "said": [
+    "Read The Scene: 7:00 AM → 7:40 AM; Knows The Scene 0% → 57%",
+    "refused: Rehearse Alone: Learn some of the lines first."
+   ],
+   "ok": true,
    "date": "August 29, 2026",
-   "clock": "7:00 AM"
+   "clock": "7:40 AM"
   },
   {
    "n": 11,
    "name": "to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work",
    "exercises": [],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no scene was found in the step before",
-   "date": "August 29, 2026",
+   "pressed": [
+    "School",
+    "Coursework (tab)",
+    "Table Work: A winter afternoon going dark in their Washington Square stu",
+    "Table Work: Husband and wife of a few years; she has been reading his ev",
+    "Table Work: Find out what the analysis said",
+    "Table Work: Her own creed: she has preached that the unconscious can’t b",
+    "Table Work: Cross-examine him: did the doctor know he was married to her",
+    "Read The Scene",
+    "Read The Scene",
+    "Read The Scene",
+    "Read The Scene",
+    "Learn Lines",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Say Yes",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Rehearsal With Isaiah: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Rehearse Alone",
+    "Rehearse Alone",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "School",
+    "Coursework (tab)"
+   ],
+   "said": [
+    "August 29, 2026 11:55 AM: 22.2 → 29.6 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 2:45 PM: 29.6 → 36.6 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
+    "August 31, 2026 8:00 AM: 36.6 → 39.2 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 39.2 → 41.1 (2 steps: answered yes, Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 46.9 → 48.2 (1 steps: Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 48.3 → 49.2 (1 steps: Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 49.2 → 49.9 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 49.9 → 50.5 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 11:00 AM: 50.5 → 55.4 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 55.4 → 59.2 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 59.2 → 61.8 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 22.2 → 61.8"
+   ],
+   "ok": true,
+   "date": "September 9, 2026",
    "clock": "7:00 AM"
   },
   {
@@ -217,12 +343,23 @@
     "navigation",
     "unavailable"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no scene was found before",
-   "date": "August 29, 2026",
-   "clock": "7:00 AM"
+   "pressed": [
+    "Home",
+    "Go There",
+    "Coursework (tab)",
+    "Read The Scene (grayed, forced)",
+    "Mark As Read",
+    "Work On The Note"
+   ],
+   "said": [
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Isaiah had rehearsed together once. You ran it with a reader 3 times. (With Your Partner: 76% prepared.) You played Henrietta in Suppressed Desires.",
+    "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
+    "feedback: FEEDBACK: WORKING, 62 OF 100 · A NEW NOTE",
+    "Shown: Scene Study, Working"
+   ],
+   "ok": true,
+   "date": "September 9, 2026",
+   "clock": "8:00 AM"
   },
   {
    "n": 13,
@@ -241,8 +378,8 @@
     "School at Casting, kept across Papers and Money"
    ],
    "ok": true,
-   "date": "August 29, 2026",
-   "clock": "7:00 AM"
+   "date": "September 9, 2026",
+   "clock": "8:00 AM"
   },
   {
    "n": 14,
@@ -263,12 +400,12 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Alex Rivera’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE August 29, 2026 LOCATION New Haven NET WORTH $504K PLAYED 0s Version 1.1.0 · Save Format 94 · 12 KB Backup from August 28, 2026 Continue Restore Back",
-    "August 29, 2026 7:00 AM; 0 notices as they were"
+    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE September 9, 2026 LOCATION New Haven NET WORTH $503K PLAYED 0s Version 1.1.0 · Save Format 94 · 25 KB Backup from September 6, 2026 Continue Restore",
+    "September 9, 2026 8:00 AM; 4 notices as they were"
    ],
    "ok": true,
-   "date": "August 29, 2026",
-   "clock": "7:00 AM"
+   "date": "September 9, 2026",
+   "clock": "8:00 AM"
   }
  ],
  "milestones": [
@@ -278,7 +415,22 @@
    "at": ""
   },
   {
-   "file": "02-confirm-deletion.jpg",
+   "file": "02-home-notice-look.jpg",
+   "step": 4,
+   "at": "August 24, 2026 7:30 AM"
+  },
+  {
+   "file": "03-first-preparation.jpg",
+   "step": 10,
+   "at": "August 29, 2026 7:40 AM"
+  },
+  {
+   "file": "04-showing-notice.jpg",
+   "step": 12,
+   "at": "September 9, 2026 7:00 AM"
+  },
+  {
+   "file": "05-confirm-deletion.jpg",
    "step": 14,
    "at": ""
   }
@@ -331,38 +483,143 @@
    "title": "The Courses And What They Ask",
    "pressed": "Go",
    "after": "August 29, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "August 31, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 1, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 1, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 1, 2026 7:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Rehearsal With Isaiah",
+   "pressed": "Go",
+   "after": "September 2, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 2, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 3, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 3, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 4, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 4, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 5, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 5, 2026 10:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 6, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 8, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 8, 2026 3:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 9, 2026 7:00 AM"
   }
  ],
  "errors": [],
  "overflows": [],
  "exercised": {
   "navigation": [
+   9,
+   12,
    13
   ],
   "drill-down": [
+   4,
    5
   ],
   "unavailable": [
-   2
+   2,
+   10,
+   12
   ],
   "confirmation": [
    6,
+   7,
    14
   ],
-  "notification": [],
+  "notification": [
+   4,
+   7,
+   9,
+   12
+  ],
   "save-continue": [
    14
   ]
  },
  "summary": {
   "steps": 14,
-  "passed": 8,
-  "failed": 6,
-  "sixMissing": [
-   "notification"
-  ],
+  "passed": 14,
+  "failed": 0,
+  "sixMissing": [],
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-23T13:42:45.156Z"
+ "finishedAt": "2026-10-23T18:57:00.089Z"
 }

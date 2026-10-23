@@ -63,5 +63,5 @@ How This Works
 May 11, 2029: The School passed on a request from his office to meet you, standing until June 10, 2029.
 May 11, 2029: You first heard of him through the School’s follow-up after the showcase.
 
------ 38 controls; Tab reached 32 of the 32 it can; 1 grayed
+----- 36 controls; Tab reached 30 of the 30 it can; 1 grayed
 Nothing found.

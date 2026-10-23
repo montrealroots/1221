@@ -1,9 +1,6 @@
 calendar-work-day (work-day.json, 1440 wide)
 
-Home
-›
-Calendar
-CALENDAR
+Back To Home
 Your Plans And Commitments
 
 Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
@@ -106,5 +103,5 @@ Card Statement
 December 20, 2029 · 9:00 AM
 Money
 
------ 71 controls; Tab reached 70 of the 70 it can; 0 grayed
+----- 69 controls; Tab reached 68 of the 68 it can; 0 grayed
 Nothing found.

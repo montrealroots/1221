@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 21,
+   "secs": 31,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 75,
+   "secs": 95,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 106,
+   "secs": 140,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 98,
+   "secs": 112,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 67,
+   "secs": 78,
    "reloads": 4,
    "done": true
   }
@@ -11507,7 +11507,7 @@
      "work": [],
      "transactions": 1167
     },
-    "secs": 18
+    "secs": 21
    },
    {
     "why": "an audition (in-person) set for 2029-09-10T15:00, Felix in Paper Moons",
@@ -11550,7 +11550,7 @@
      ],
      "transactions": 1283
     },
-    "secs": 16
+    "secs": 17
    },
    {
     "why": "an offer standing: An Offer For Felix",
@@ -11585,7 +11585,7 @@
      "work": [],
      "transactions": 1367
     },
-    "secs": 15
+    "secs": 19
    }
   ],
   "workDays": [],

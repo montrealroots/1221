@@ -74,5 +74,5 @@ Wren, Gull Season: Quillon Casting cast another actor as Wren.
 Why It Went This Way
 Sources And Estimates
 
------ 43 controls; Tab reached 38 of the 38 it can; 0 grayed
+----- 41 controls; Tab reached 36 of the 36 it can; 0 grayed
 Nothing found.

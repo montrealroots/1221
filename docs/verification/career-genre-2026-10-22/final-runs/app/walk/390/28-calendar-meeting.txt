@@ -1,9 +1,6 @@
 calendar-meeting (meeting.json, 390 wide)
 
-Home
-›
-Calendar
-CALENDAR
+Back To Home
 Your Plans And Commitments
 
 Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.

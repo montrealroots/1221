@@ -53,5 +53,5 @@ Not now: You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role:
 
 Sources And Estimates
 
------ 35 controls; Tab reached 29 of the 29 it can; 1 grayed
+----- 33 controls; Tab reached 27 of the 27 it can; 1 grayed
 Nothing found.

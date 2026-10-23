@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2028-03-12",
    "to": "2029-01-10",
-   "secs": 51,
+   "secs": 49,
    "reloads": 10
   },
   {
    "part": 2,
    "from": "2029-01-10",
    "to": "2029-11-10",
-   "secs": 74,
+   "secs": 73,
    "reloads": 10
   },
   {
    "part": 3,
    "from": "2029-11-10",
    "to": "2030-09-01",
-   "secs": 146,
+   "secs": 148,
    "reloads": 9,
    "done": true
   }
@@ -4655,7 +4655,7 @@
      "work": [],
      "transactions": 1524
     },
-    "secs": 18
+    "secs": 22
    },
    {
     "why": "an audition (self-tape) set for 2030-06-09T22:00, Ferris in Gull Season",
@@ -4708,7 +4708,7 @@
      ],
      "transactions": 1540
     },
-    "secs": 26
+    "secs": 24
    },
    {
     "why": "an offer standing: An Offer For Jess",
@@ -4767,7 +4767,7 @@
      ],
      "transactions": 1568
     },
-    "secs": 17
+    "secs": 19
    }
   ],
   "workDays": [

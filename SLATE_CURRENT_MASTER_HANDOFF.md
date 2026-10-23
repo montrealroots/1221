@@ -6,10 +6,11 @@ verbatim) on brief 23's line, before it was merged. It was worked on `claude/pea
 pushed and never force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy
 without my instruction." No pull request is open for it. There is no stash and one worktree.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
-  (634 at brief 22's close; brief 23 left the 46 rows its source change made stale, and brief 24 changed `src` again.
-  Brief 22's final runs on brief 24's tested commit are under way, to fold back in: below.)
+  (634 at brief 22's close, 588 through briefs 23 and 24, whose source changes left the 46 rows brief 22's final runs
+  measured behind what they read. Those runs, played again on brief 24's tested commits and folded, hold all 46 again;
+  the 634th, the gate's own row, folds in once the gate has run on the commit holding this.)
 
 - **Read first:** `docs/verification/ui-polish-2026-10-23/README.md` (the receipt) and `criteria.md` (the checks,
   written before any change).

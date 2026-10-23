@@ -662,5 +662,5 @@ Gregory Burke; first staged 2006, Edinburgh Festival Fringe (National Theatre of
  Not on record Not Yet
 Read It
 
------ 160 controls; Tab reached 132 of the 132 it can; 16 grayed
+----- 158 controls; Tab reached 130 of the 130 it can; 16 grayed
 Nothing found.

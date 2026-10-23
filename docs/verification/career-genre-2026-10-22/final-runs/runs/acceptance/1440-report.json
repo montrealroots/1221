@@ -19,7 +19,7 @@
   {
    "name": "home: what needs you on the first day: no decision waiting, in the panel’s own words",
    "ok": true,
-   "note": "No questions are waiting on you."
+   "note": "All Clear. You owe nobody anything past due."
   },
   {
    "name": "advance: One Hour moves the clock an hour",
@@ -54,12 +54,12 @@
   {
    "name": "coursework: table work answered from its select",
    "ok": true,
-   "note": "4 options, “dusk” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+   "note": "4 options, “quay” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
   },
   {
    "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
    "ok": true,
-   "note": "told to learn some of the lines first: Learn Lines: Answer chosen. | Learn Lines: 45 minutes, Lines up 24%.; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 17%.; then \"The Turn Into The Second Half\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 17%. | Work It Slowly: 20.7 to 24.3."
+   "note": "told to learn some of the lines first: Learn Lines: Answer chosen. | Learn Lines: 45 minutes, Lines up 24%.; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into Part 2\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slowly: 22.1 to 27.3."
   },
   {
    "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
@@ -104,12 +104,12 @@
   {
    "name": "practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained",
    "ok": true,
-   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.12. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
+   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.11. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
   },
   {
    "name": "profile: the development history shows the hour",
    "ok": true,
-   "note": "August 31, 2026: Emotional Depth +0.119, Sense Memory"
+   "note": "August 31, 2026: Emotional Depth +0.113, Sense Memory"
   },
   {
    "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
@@ -168,8 +168,8 @@
   },
   {
    "name": "[save: leave scenario] school: Your Classes, the first class’s productions, the evaluations",
-   "ok": false,
-   "why": "a row with no standing: Fall Term 2026\tGood Standing\t100%\t1.6\t1.3\t4 of 46 Unready or not shown | You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.6 points this term, and the middle student in"
+   "ok": true,
+   "note": "the first class’s 2 productions; 1 terms evaluated: Fall Term 2026 Good Standing"
   },
   {
    "name": "[save: leave scenario] casting: the rehearsal controls work, or say why not",
@@ -189,7 +189,7 @@
   {
    "name": "[save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call",
    "ok": true,
-   "note": "An hour on the part: lines at 76%. | Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
+   "note": "Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
   },
   {
    "name": "[save: decision scenario] home: Your 2026 Tax Return on its card, File It pressed, the card gone and the return filed",
@@ -383,11 +383,11 @@
   },
   {
    "name": "home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves money to it, and the pounds and dollars both show",
-   "ok": false,
-   "why": "Home's money line said: "
+   "ok": true,
+   "note": "Kept At HSBC UK: £326,303 In Flexible Saver / Chase sends $100.00 for a $5.00 fee. At 2.6% under the estimated exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £71.95 after its £5.00 fee for a payment from abroad, on Thursday, August 27, 2026 (an estimate: the bank publishes no time, so the game uses"
   }
  ],
  "errors": [],
  "overflows": [],
- "failed": 2
+ "failed": 0
 }

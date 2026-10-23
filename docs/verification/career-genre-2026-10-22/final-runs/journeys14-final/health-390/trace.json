@@ -2,9 +2,9 @@
  "playthrough": "health",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "933f1ae6",
- "uncommitted": 23,
- "startedAt": "2026-10-22T23:55:20.982Z",
+ "commit": "05060742",
+ "uncommitted": 72,
+ "startedAt": "2026-10-23T19:17:36.580Z",
  "startingPoint": {
   "kind": "save",
   "file": "health.json",
@@ -161,6 +161,7 @@
     "On The Way: Advance",
     "Work-Study Shift: Go",
     "Look After Yourself",
+    "Menu",
     "Save & Exit",
     "Continue",
     "Look After Yourself"
@@ -239,6 +240,7 @@
    "pressed": [
     "Menu",
     "Home",
+    "Menu",
     "Save & Exit",
     "Delete",
     "Keep It",
@@ -501,5 +503,5 @@
    }
   ]
  },
- "finishedAt": "2026-10-22T23:56:40.737Z"
+ "finishedAt": "2026-10-23T19:18:58.698Z"
 }

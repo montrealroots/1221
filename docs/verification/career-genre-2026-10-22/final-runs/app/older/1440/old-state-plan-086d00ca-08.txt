@@ -19,10 +19,6 @@ Home
 1
 YOU
 Player Profile
-YOUR DAY
-Calendar
-Updates
-99+
 YOUR TRAINING
 School
 YOUR WORK
@@ -33,100 +29,302 @@ Papers
 YOU
 Ada Cole
 Actor
+Home
+›
 Player Profile
-›
-Calendar
-›
-Updates
-›
-School
-›
-Career
-›
-Money
-YOUR BANK
-Chase
+PLAYER PROFILE
+Ada Cole
+ON THIS PAGE
+Identity And Background
+Readiness Today
+Attributes And Craft
+Techniques
+Genres
+School Journey
+Your Work So Far
+Development History
+Identity And Background
 
-$205 held here, in one account. Worth $205.
-
-Accounts
-Cards
-Payments And Cash
-Borrowing
-Statements
-Chase Total Checking
-
-Chase Routing 021000021 · Account 6657620146
+As you made your character
 
 How This Works
-BALANCE
-$205
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+25
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 2
+Class of 2029, good standing
+LIVING IN
+New Haven
 
-Pays no interest.
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
 
-$15.00 a month, waived in any month you have $500 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500 in it all month, or keep an average of $5,000 across your accounts at the bank. It isn’t waived this month so far. Unless one of those conditions is met, it’s due February 29, 2028.
+Money, $204.93
+Papers, Health Cover Held
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+64
+64 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+58, 0
+4 hours of sleep owed
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Work with your partner. Going in short on it cost your recent work about 6.2 points a piece off the whole.
+
+It held back 6 of your last 12 pieces and 50 in all, most recently A Scene From The Greeks, revised, on February 17, 2028.
+
+That’s preparation, not training: give it more time before you show or tape your next piece.
+
+Why This Recommendation
+ABILITY NOW FULL CLASSES REACH TODAY IT SHAPES LAST CHANGE PRACTICE
+Emotional Depth 68.8 100.0 83.0 
+Not held back today
+ 
+Believability, Connection
+ 
++0.04, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+ Sense Memory…
+Presence 70.3 100.0 — 
+Not held back today
+ 
+Connection
+ 
++0.04, Nerves before a performance
+ A Showing For Classmates…
+Listening And Responsiveness 56.3 100.0 74.0 
+Not held back today
+ 
+Connection, Responsiveness
+ 
++0.03, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+ The Repetition Exercise…
+Imagination 67.0 100.0 83.0 
+Not held back today
+ 
+Believability, Interpretation
+ 
++0.02, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+ The Given Circumstances…
+Focus 60.2 100.0 79.5 
+Not held back today
+ 
+Interpretation, Execution, Consistency
+ 
++0.00, Coursework: knowing the material
+ Circles Of Attention…
+Memory 60.2 100.0 77.9 
+Not held back today
+ 
+Execution
+ 
++0.00, Coursework: learning the lines
+ A Recall Drill…
+Adaptability 49.3 100.0 72.2 
+Not held back today
+ 
+Responsiveness
+ 
++0.04, Class: Clown (DRAM 263a/b)
+ Adjustments…
+Composure 49.9 100.0 — 
+Not held back today
+ 
+Consistency
+ 
++0.25, Nerves before a performance
+ Graded Exposure…
+Vocal Expression 64.1 100.0 80.8 
+Not held back today
+ 
+Execution, Consistency
+ 
++0.05, Class: Voice II (DRAM 213a/b)
+ Voice Work…
+Physical Expression 59.2 100.0 73.1 
+Not held back today
+ 
+Execution
+ 
++0.04, Class: Alexander Technique II Tutorials (DRAM 243a/b)
+ Movement Work…
+Discipline 59.0 100.0 — 
+Not held back today
+ 
+Consistency, Execution
+ 
+None yet
+ Grows with practice kept up, day after day
+Stamina 35.0 99.3 — 
+Not held back today
+ 
+Believability, Connection, Execution, Consistency, Responsiveness
+ 
+None yet
+ 
+Work Out, under Look After Yourself
+At an everyday life’s level
+
+Stamina is your fitness. Yours is 35.0, and full is the fittest a body your age can be, 99.3 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
 
 Sources And Estimates
-Chase Savings
+Techniques
 
-At Chase, not open yet
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE NOW CLASSES REACH MASTERED PRACTICE
+Accents And Dialects 61.1 80.4 28.9 To Go Dialect Drill…
+Audition Technique 55.5 81.5 34.5 To Go Audition Pieces…
+Character Work 70.7 84.4 19.3 To Go Character Work…
+Classical Text 53.7 73.2 36.3 To Go Verse Speaking…
+Clown And Mask 54.1 78.2 35.9 To Go Clown Practice…
+Cold Reading 51.6 77.4 38.4 To Go Cold Reading…
+Comedy 56.7 81.1 33.3 To Go Comic Timing…
+Dance 56.9 81.6 33.1 To Go A Dance Class…
+Improvisation 49.4 72.2 40.6 To Go An Improv Session…
+Intimacy 60.9 84.7 29.1 To Go Intimacy Practice…
+On Camera 51.4 77.4 38.6 To Go Self-Tape Practice…
+Scene Study 64.4 75.8 25.6 To Go Scene Work…
+Script Analysis 66.2 81.6 23.8 To Go Script Analysis…
+Singing 57.2 81.2 32.8 To Go Singing Practice…
+Speech 60.1 78.5 29.9 To Go Speech Drill…
+Stage Combat 52.2 73.8 37.8 To Go Combat Drill…
+Voice-Over 52.5 78.5 37.5 To Go Copy Reading…
+Genres
+
+0 loved; 5 of 149 studied or worked in
 
 How This Works
 
-Pays 0.01% APY (0.01% a year before compounding). Interest builds up daily and is paid on the last day of the month. It costs $5.00 a month, waived in any month you keep $300 in it all month.
+You love: none chosen. Domestic Drama is worth studying next: your next part asks for it, and of what the part asks, it’s where study would help most.
 
-Open A Chase Savings
-Your Banks
-
-One checking account
-
-How This Works
-
-Chase Total Checking at Chase, $205. This is your primary account.
-
-Your wages and other payments are paid into it. Your everyday card’s autopay pays from it.
-
-Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases, cash from a machine, bills you pay by hand and any new standing order or autopay. Making another account primary doesn’t move anything already set up.
-
-How This Works
-
-Have Wages Paid Here, on another account, moves your wages and other payments to it. Yale’s payroll starts paying the new account after 7 days, about one of its weekly pay cycles, as Yale says. Other payers take 14 days, which is estimated: employers say one to two pay cycles.
-
-How This Works
-Open An Account At Another Bank
-How This Works
-
-There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.
-
-Bank
-Bank of America
-Wells Fargo
-Citi
-Capital One
-
-Bank of America needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.
-
-It decides an application within 2 business days, the longest it says it takes. The debit card works from the day the account opens, as a digital card in the app.
-
-It asks for an opening deposit of $100, sent from another of your accounts as you apply.
-
-Its Advantage Plus Banking costs $12.00 a month, waived in any month you have $250.00 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500.00 in it all month.
-
-Money it sends to another bank takes 3 business days.
-
-Opening Deposit From
-Chase Total Checking ···0146 (Chase)
-Amount (USD)
-Apply
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE IT ASKS FOR FAMILIARITY WORK IN IT STUDY, OR ITS BRIEF
+Absurdist Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
+Action Fights And Stunts (Stage Combat 52.2 of 90) 0.0 0.0 Study It Open Its Brief
+Action Comedy Fights And Stunts (Stage Combat 52.2 of 90); Comic Timing (Comedy 56.7 of 90) 0.0 0.0 Study It Open Its Brief
+Adventure Fights And Stunts (Stage Combat 52.2 of 90) 0.0 0.0 Study It Open Its Brief
+Alternate History No more than any self-tape asks 0.0 0.0 Study It Open Its Brief
+Animated Voice-Led Performance (Voice-Over 52.5 of 90) 0.0 0.0 Study It Open Its Brief
+Anime Voice-Led Performance (Voice-Over 52.5 of 90) 0.0 0.0 Study It Open Its Brief
+Anthology No more than any self-tape asks 0.0 0.0 Study It Open Its Brief
+Apocalyptic No more than any self-tape asks 0.0 0.0 Study It Open Its Brief
+Art House Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
+Avant-Garde No more than any self-tape asks 0.0 0.0 Study It Open Its Brief
+Backstage Musical Singing (Singing 57.2 of 90); Dancing (Dance 56.9 of 90) 0.0 0.0 Study It Open Its Brief
+Biker Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
+Biographical Physical Transformation (Character Work 70.7 of 90) 0.0 0.0 Study It Open Its Brief
+Black Comedy Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
+Blaxploitation Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
+Show 16 More
 Sources And Estimates
-CD
+School Journey
 
-7 months at 3.5%
+Year 2 of 3, good standing
 
 How This Works
 
-Locked for 7 months at a fixed 3.5%. At its end it renews for the same term at the bank’s rate on the day, unless you choose another way the bank allows. Breaking it early costs 180 days’ interest on it, never more than it has earned, and at least 7 days’ interest in its first week. Once it’s open, Break It Early is under Your Accounts Over Time.
+On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Leonardo in Directors’ Thesis Production I, 2027. School
 
-Term Deposit Amount (USD)
-Put It Away
+HALF-YEAR A SCENE SHOWN A WRITTEN ANALYSIS MOVEMENT WORK VOICE WORK AN IMPROVISATION PARTNERED PHYSICAL WORK A NIGHT ON STAGE A CLOWN TURN A SONG
+2026 Fall 14 at 51.9 8 at 66.6 12 at 60.1 12 at 61.0 4 at 39.1 3 at 57.0 — — —
+2027 Spring 18 at 55.0 12 at 62.9 12 at 51.4 12 at 62.6 — 3 at 43.0 5 at 54.2 — —
+2027 Fall 16 at 48.0 4 at 47.4 9 at 59.5 12 at 60.2 4 at 45.4 3 at 45.7 9 at 52.5 3 at 63.8 3 at 45.7
+2028 Spring 12 at 38.7 — 2 at 61.5 5 at 54.3 — 1 at 51.7 7 at 57.2 1 at 64.0 1 at 59.0
+All Of It 60 at 49.2, best 64.1 24 at 61.5, best 72.5 35 at 57.0, best 66.9 41 at 60.4, best 69.9 8 at 42.3, best 54.8 10 at 48.9, best 59.3 21 at 54.5, best 58.7 4 at 63.9, best 66.7 4 at 49.0, best 66.0
+January 29, 2028: Eilert Løvborg, Hedda Gabler, the run averaged 57.2 (7 solid nights)
+October 16, 2027: Leonardo, Blood Wedding, the run averaged 52.8 (8 solid nights)
+May 12, 2027: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged 55.5 (4 solid nights)
+September 8, 2026: First strong work: A Play In Its Context, 69.1
+WORK WHAT WHOLE BAND WHEN
+A Voice Sequence Voice Work 69.4 Strong February 22, 2028
+A Scene From The Greeks, revised A Scene Shown 30.3 Unready February 17, 2028
+Heightened Text Scene, revised A Scene Shown 49.8 Unready February 15, 2028
+A Movement Score Movement Work 66.6 Strong February 14, 2028
+A Scene From The Greeks A Scene Shown 22.6 Unready February 14, 2028
+Heightened Text Scene A Scene Shown 47.6 Unready February 14, 2028
+A Song Worked Through A Song 59.0 Working February 11, 2028
+A Choreographed Sequence Partnered Physical Work 51.7 Working February 10, 2028
+Sound Changes And A Text Voice Work 60.3 Working February 10, 2028
+Directions In Daily Life Movement Work 56.5 Working February 8, 2028
+Show Older Work
 Sources And Estimates
+Your Work So Far
+
+From 207 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your believability runs ahead of the rest: 61.9 on average across 25 pieces, against 51.7 overall. From: A Song Worked Through: 75.9; A Game Played Through: 74.1; A Song Worked Through: 73.3.
+Your execution runs ahead of the rest: 56.5 on average across 39 pieces, against 51.7 overall. From: A Voice Sequence: 72.8; Sound Changes And A Text: 72.6; A Choreographed Sequence: 72.6.
+Your interpretation runs ahead of the rest: 65.6 on average across 37 pieces, against 51.7 overall. From: Table Work: 77.5; A Voice Sequence: 75.6; A Movement Score: 75.
+WHAT KEEPS HOLDING IT BACK
+Work with your partner has held back 50 pieces, about 12 points off the whole each. From: Preparation, 600.2 points in all.
+Imagination has held back 108 pieces, about 5.4 points off the whole each. From: An ability, 579.3 points in all.
+Listening And Responsiveness has held back 34 pieces, about 10 points off the whole each. From: An ability, 340.3 points in all.
+The same note has been given 44 times and is still open: Work With Your Partner. From: The class’s notes.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 68 times, best 64.1. From: Your experience record.
+Exact Timing: met or practiced 39 times, best 63.7. From: Your experience record.
+Mixed Tone: met or practiced 39 times, best 64.1. From: Your experience record.
+Heightened Prose: met or practiced 21 times, best 63.7. From: Your experience record.
+
+Not met yet: Improvised Freedom, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+9 kinds of work judged, 5 genres worked in, 8 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work, A Night On Stage, A Clown Turn and A Song.
+RELIABILITY
+19 of 19 calls answered; 21 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+February 22, 2028: Physical Expression +0.041, Class: Alexander Technique II Tutorials (DRAM 243a/b)
+February 22, 2028: Vocal Expression +0.052, Class: Voice II (DRAM 213a/b)
+February 22, 2028: Imagination +0.022, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+February 22, 2028: Listening And Responsiveness +0.030, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+February 22, 2028: Emotional Depth +0.035, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+February 22, 2028: Character Work +0.033, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+February 22, 2028: Scene Study +0.029, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+February 22, 2028: Classical Text +0.069, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+February 21, 2028: Imagination +0.000, Coursework: making your choices
+February 21, 2028: Imagination +0.001, Coursework: making your choices
+February 21, 2028: Imagination +0.002, Coursework: making your choices
+February 21, 2028: Speech +0.010, Coursework: Transcribe The Text
+February 21, 2028: Imagination +0.004, Coursework: making your choices
+February 21, 2028: Speech +0.011, Coursework: Transcribe The Text
+February 21, 2028: Imagination +0.008, Coursework: making your choices
+Show Earlier Changes

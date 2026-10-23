@@ -56,5 +56,5 @@ Graduating early isn’t a route the game offers. The Bulletin says that “on r
 
 Sources And Estimates
 
------ 40 controls; Tab reached 34 of the 34 it can; 0 grayed
+----- 38 controls; Tab reached 32 of the 32 it can; 0 grayed
 Nothing found.

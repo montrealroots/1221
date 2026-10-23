@@ -6,7 +6,7 @@
    "part": 1,
    "from": "2029-03-01",
    "to": "2029-09-01",
-   "secs": 118,
+   "secs": 120,
    "reloads": 5,
    "done": true
   }
@@ -2959,7 +2959,7 @@
      ],
      "transactions": 1172
     },
-    "secs": 17
+    "secs": 16
    },
    {
     "why": "an offer standing: An Offer For Ivy",
@@ -3020,7 +3020,7 @@
      ],
      "transactions": 1242
     },
-    "secs": 13
+    "secs": 14
    }
   ],
   "workDays": [],

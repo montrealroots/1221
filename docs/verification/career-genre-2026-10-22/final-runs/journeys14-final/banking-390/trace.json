@@ -2,9 +2,9 @@
  "playthrough": "banking",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "933f1ae6",
- "uncommitted": 19,
- "startedAt": "2026-10-22T23:47:20.263Z",
+ "commit": "05060742",
+ "uncommitted": 45,
+ "startedAt": "2026-10-23T19:08:27.242Z",
  "startingPoint": {
   "kind": "save",
   "file": "roundups.json",
@@ -128,6 +128,7 @@
     "save-continue"
    ],
    "pressed": [
+    "Menu",
     "Save & Exit",
     "Delete",
     "Keep It",
@@ -140,7 +141,7 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE August 28, 2026 LOCATION New Haven NET WORTH $504K PLAYED 20s Version 1.1.0 · Save Format 94 · 12 KB Backup from an unknown date Continue Restore Backup D",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE August 28, 2026 LOCATION New Haven NET WORTH $504K PLAYED 21s Version 1.1.0 · Save Format 94 · 12 KB Backup from an unknown date Continue Restore Backup D",
     "August 28, 2026 5:30 PM; 3 lines pending as they were"
    ],
    "ok": true,
@@ -189,12 +190,15 @@
     "Classes: Go",
     "Menu",
     "Home",
-    "Show All 18",
+    "View All Updates",
     "Menu",
     "Home",
+    "View All Updates",
     "Go There"
    ],
    "said": [
+    "14 more unread. View All Updates",
+    "14 more unread. View All Updates",
     "notice “Statement Ready: Citi Access Checking”: It ended the month with $89,919.00 in it. The statement is on Money, under Statements.",
     "5 mornings, to September 2, 2026 7:00 AM: “Statement Ready: Citi Access Checking”: It ended the month with $89,919.00 in it. The statement is on Money, under Statements."
    ],
@@ -317,5 +321,5 @@
   "fails": [],
   "recorded": []
  },
- "finishedAt": "2026-10-22T23:48:26.693Z"
+ "finishedAt": "2026-10-23T19:09:35.243Z"
 }

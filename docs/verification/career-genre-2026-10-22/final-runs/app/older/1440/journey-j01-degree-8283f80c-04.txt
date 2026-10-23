@@ -19,10 +19,6 @@ Home
 1
 YOU
 Player Profile
-YOUR DAY
-Calendar
-Updates
-99+
 YOUR TRAINING
 School
 YOUR WORK
@@ -37,81 +33,114 @@ Home
 ›
 Player Profile
 ›
-Calendar
-CALENDAR
-Your Plans And Commitments
-
-Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
-
-August 2029
-‹
-Today
-›
-SUN
-MON
-TUE
-WED
-THU
-FRI
-SAT
-29
-30
-31
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-Card Statement
-21
-22
-Bill Due: The Dentist, A Cleaning
-23
-24
-25
-26
-27
-28
-29
-30
-31
-1
-Personal
 School
-Career
-Money
-Holiday
-Today, August 4, 2029
+SCHOOL
+David Geffen School of Drama at Yale University
 
-Summer
+MFA in Acting, class of 2029. Graduated.
 
-Put Something On It
+You’re 1st of 16 in the class.
+
+Standing And Craft
+Classes
+Coursework
+Casting
+Shifts And Pay
+Terms And Award
+Your Standing
 How This Works
-No Plans
+STANDING
+Graduated
+ATTENDANCE LAST TERM
+100%
+90% was the minimum
+GROWTH LAST TERM
+1.0
+The middle student in your class grew 0.9. Allowing for how much room each of you had to grow, you were ahead of the class, and half its pace was the minimum
+COURSEWORK LAST TERM
+5 of 46
+How many of the pieces due were unready or not shown. Once 3 or more are due, half or more fell short of what’s asked
 
-You have nothing on that day. Press Put Something On It to add a plan.
+Attendance counts 68 of 68 class days, 18 of 18 calls and 12 of 12 assigned shifts.
 
-Next Thirty Days
+COURSES AND THE DEGREE
+How This Works
 
-Everything in the next thirty days, a run of the same call on one line.
+58 of 58 courses passed. Every course the degree needs was passed, and it was conferred on May 21, 2029.
 
-Card Statement
-August 20, 2029 · 9:00 AM
-Money
-Bill Due: The Dentist, A Cleaning
-August 22, 2029 · 9:00 AM
+Every Course
+Sources And Estimates
+What The School Asks (set out at orientation, August 26, 2026)
+Sources And Estimates
+Your Composure
+
+What nerves do to a performance
+
+COMPOSURE
+53
+Nerves add 2.8 stress before a performance
+
+Composure keeps your work consistent under pressure, in a scene, a song, a self-tape, an audition and a night on stage, and steadies you after a slip. It grows a little with every night in front of an audience and every solo showing. To train it, practice Graded Exposure under Attributes And Craft on your Player Profile.
+
+Sources And Estimates
+From Your Teachers
+
+On Spring Term 2029
+
+Walton Wilson, Voice III: Steady work, in step with the class. Keep at your vocal expression.
+Julie Foh, Speech And Accents III: Steady work, in step with the class. Keep at your speech, and accents and dialects.
+Eleanor Taylor, Alexander Technique III Tutorials: Steady work, in step with the class. Keep at your physical expression.
+Lonny Price, Acting Through Song: Steady work, in step with the class. Keep at your singing and emotional depth.
+Ellen Novack, On-Camera Acting Technique: Steady work, in step with the class. Keep at your on camera and scene study.
+Acting faculty, Character Analysis And Movement: Steady work, in step with the class. Keep at your character work and physical expression.
+Ellen Novack, Taming The Cyclops: Steady work, in step with the class. Keep at your on camera.
+Tamilla Woodard, Professional Preparation And Audition Workshop: Steady work, in step with the class. Keep at your audition technique and cold reading.
+Gregory Wallace, Actor Showcase: Steady work, in step with the class. Keep at your scene study and audition technique.
+These notes are simulated. The words are the game’s, not the teachers’.
+Your Faculty
+Evan Yionoulis: Dean And Artistic Director Of Yale Repertory Theatre, since July 1, 2026.
+Tamilla Woodard: Chair Of Acting, who casts every student and meets any whose standing falls.
+Sources And Estimates
+Your Craft Against The Class
+
+You and 15 classmates, 0 to 100
+
+SKILL YOU YOU CAN REACH CLASS BEST CLASS MEDIAN YOUR PLACE
+Accents And Dialects 65.1 80.6 65.1 58.4 1 of 16
+Audition Technique 62.7 83.7 58.2 53.8 1 of 16
+Character Work 70.4 78.6 69.7 64.3 1 of 16
+Classical Text 63.6 79.2 62.8 58.4 1 of 16
+Clown And Mask 56.7 77.7 59.7 52.5 3 of 16
+Cold Reading 56.9 80.5 56.0 51.2 1 of 16
+Comedy 57.1 78.3 61.1 51.6 3 of 16
+Dance 57.9 81.5 56.5 49.1 1 of 16
+Emotional Depth 70.4 81.3 68.0 61.3 1 of 16
+Improvisation 58.4 79.4 57.2 51.5 1 of 16
+Intimacy 58.8 82.5 57.7 49.3 1 of 16
+Memory 65.4 79.0 61.7 54.1 1 of 16
+On Camera 58.2 80.8 59.7 51.5 3 of 16
+Physical Expression 66.6 77.1 65.8 61.4 1 of 16
+Scene Study 70.4 77.7 71.0 65.8 2 of 16
+Script Analysis 68.1 81.3 64.8 60.9 1 of 16
+Singing 59.9 81.0 58.5 53.1 1 of 16
+Speech 61.8 75.6 64.8 57.6 5 of 16
+Stage Combat 57.0 78.0 58.0 52.4 3 of 16
+Vocal Expression 73.8 86.1 63.2 59.8 1 of 16
+Voice-Over 53.5 79.5 54.1 49.3 4 of 16
+Acting 70.4 78.8 68.3 64.0 1 of 16
+Overall 62.5 80.0 60.2 55.3 1 of 16
+Sources And Estimates
+Term Reviews
+TERM STANDING ATTENDANCE GROWTH CLASS GROWTH COURSEWORK
+Fall Term 2026 Good Standing 100% 1.7 1.3 2 of 47 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class.
+Spring Term 2027 Good Standing 100% 1.5 1.0 1 of 45 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 45 pieces were Strong or better.
+Fall Term 2027 Good Standing 100% 1.7 1.4 7 of 46 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.4. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 26 of 46 pieces were Strong or better.
+Spring Term 2028 Good Standing 100% 1.5 1.3 5 of 46 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 23 of 46 pieces were Strong or better.
+Fall Term 2028 Good Standing 100% 1.2 1.1 13 of 45 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.2 points, and the class’s middle student’s grew 1.1. Allowing for how much room each of you had to grow, that’s ahead of the class.
+Spring Term 2029 Good Standing 100% 1.0 0.9 5 of 46 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.0 points, and the class’s middle student’s grew 0.9. Allowing for how much room each of you had to grow, that’s ahead of the class.

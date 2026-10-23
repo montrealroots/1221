@@ -21,10 +21,6 @@ Save & Exit
 Home
 YOU
 Player Profile
-YOUR DAY
-Calendar
-Updates
-17
 YOUR TRAINING
 School
 YOUR WORK
@@ -66,9 +62,6 @@ Cloudy
 81° / 63°
 How The Weather Works
 What Needs You
-
-No questions are waiting on you.
-
 How This Works
 All Clear
 

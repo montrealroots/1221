@@ -32,5 +32,5 @@ What’s Next
 Read the notice at the top of his panel, then press I’ve Read This.
 Sources And Estimates
 
------ 28 controls; Tab reached 23 of the 23 it can; 0 grayed
+----- 26 controls; Tab reached 21 of the 21 it can; 0 grayed
 Nothing found.

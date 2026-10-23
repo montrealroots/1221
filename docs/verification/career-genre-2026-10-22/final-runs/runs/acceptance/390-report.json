@@ -19,7 +19,7 @@
   {
    "name": "home: what needs you on the first day: no decision waiting, in the panel’s own words",
    "ok": true,
-   "note": "No questions are waiting on you."
+   "note": "All Clear. You owe nobody anything past due."
   },
   {
    "name": "advance: One Hour moves the clock an hour",
@@ -44,22 +44,22 @@
   {
    "name": "coursework: a step of preparation done from its button, the clock moved and the step counted",
    "ok": true,
-   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 43%; Read The Scene: 40 minutes, Knows The Scene up 43%."
+   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 42%; Read The Scene: 40 minutes, Knows The Scene up 42%."
   },
   {
    "name": "coursework: a way of playing it chosen and rehearsed in",
    "ok": true,
-   "note": "Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
+   "note": "Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
   },
   {
    "name": "coursework: table work answered from its select",
    "ok": true,
-   "note": "4 options, “quay” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+   "note": "4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
   },
   {
    "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
    "ok": true,
-   "note": "told to learn some of the lines first: Learn Lines: Answer chosen. | Learn Lines: 45 minutes, Lines up 24%.; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into Part 2\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slowly: 21.8 to 26.7."
+   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into The Middle\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slow"
   },
   {
    "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
@@ -99,17 +99,17 @@
   {
    "name": "practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained",
    "ok": true,
-   "note": "5:50 PM → 6:50 PM: Sense Memory: +0.11. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
+   "note": "5:50 PM → 6:50 PM: Sense Memory: +0.13. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
   },
   {
    "name": "profile: the development history shows the hour",
    "ok": true,
-   "note": "August 31, 2026: Emotional Depth +0.114, Sense Memory"
+   "note": "August 31, 2026: Emotional Depth +0.127, Sense Memory"
   },
   {
    "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
    "ok": true,
-   "note": "Chase Total Checking has only $90,424.00 available, so nothing was moved. / Chase Total Checking has only $90,424.00 available, so nothing was moved. | Moved $1 to Chase Savings."
+   "note": "Chase Total Checking has only $90,434.00 available, so nothing was moved. / Chase Total Checking has only $90,434.00 available, so nothing was moved. | Moved $1 to Chase Savings."
   },
   {
    "name": "papers: its five tabs open",
@@ -118,18 +118,18 @@
   },
   {
    "name": "save and exit, then Continue: the same day and hour",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "August 31, 2026 6:50 PM"
   },
   {
    "name": "address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "#/workspace/school at Coursework; #/workspace/school?help=school.repeat, then #/workspace/school"
   },
   {
    "name": "address: Skip To Content, from the keyboard, moves the focus to the content and leaves School where it is",
-   "ok": false,
-   "why": "School isn’t open: #/workspace/papers"
+   "ok": true,
+   "note": "#/workspace/school, the focus on #main"
   },
   {
    "name": "interruption: an advance past a commitment stops at it and asks; Stand Here leaves the clock where it is",
@@ -148,8 +148,8 @@
   },
   {
    "name": "papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term said; saved and continued, it’s still on its way",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "You applied for the Non-Driver Identification Card and paid $28.00. The card comes October 2, 2026, and it’s good until June 14, 2034. After Continue: “One is already on its way.”"
   },
   {
    "name": "[save: tax-plan scenario] papers: who it’s owed to, a part paid to Connecticut, its plan asked for",
@@ -163,8 +163,8 @@
   },
   {
    "name": "[save: leave scenario] school: Your Classes, the first class’s productions, the evaluations",
-   "ok": false,
-   "why": "a row with no standing: Fall Term 2026"
+   "ok": true,
+   "note": "the first class’s 2 productions; 1 terms evaluated: Fall Term 2026\nGood Standing\n100%\n1.6\n1.3\n4 of 46 Unready or not shown"
   },
   {
    "name": "[save: leave scenario] casting: the rehearsal controls work, or say why not",
@@ -218,8 +218,8 @@
   },
   {
    "name": "[save: direction scenario] save and exit, Continue: the note’s outcome and the try kept",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "1 tries kept, the notes as they were"
   },
   {
    "name": "[save: direction scenario] left unanswered: at the next call the note is not taken, and comes again as still there or is shown so",
@@ -243,8 +243,8 @@
   },
   {
    "name": "[save: roundups scenario] save and exit, Continue: still on, its choices and its last transfer kept",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "kept"
   },
   {
    "name": "[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day",
@@ -263,8 +263,8 @@
   },
   {
    "name": "[save: workload scenario] save and exit, Continue: Shown Today and the warning as they were",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "kept at 27"
   },
   {
    "name": "[save: workload scenario] coursework: Table Work, written work, offers no way of playing it",
@@ -273,8 +273,8 @@
   },
   {
    "name": "[save: roundups scenario] coursework: a stage scene’s How You’ll Play It names its circumstances, not the house; the side that suits it chosen and kept",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "Scale Restrained Less shown than felt: the feeling held under the surface. Suits The Scene What’s Kept Hidden: for it A Private Exchange: for it Drama’s Played "
   },
   {
    "name": "[save: withdraw scenario] school: the class left goes on, and says so",
@@ -328,8 +328,8 @@
   },
   {
    "name": "[save: brief scenario] save and exit, Continue: the brief, its takes and its preparation kept",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "kept"
   },
   {
    "name": "[save: brief scenario] genres: the seven pairs that once read alike each say a different register on their briefs",
@@ -338,18 +338,18 @@
   },
   {
    "name": "[save: brief scenario] genres: Nordic Noir’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "Reading it as Closed And Exact. | Rehearse It On Your Feet: 45 minutes, 46% further. | Taped: 45.0, Unready.; Your composure holds back your consistency by 27 points out of 100: Nordic Noir’s Feeling Held In asks for it; after Continue: Rehearse It On Your Feet: 45 minutes, 12% further. | Taped: 47.2, Unready."
   },
   {
    "name": "[save: brief scenario] genres: Social Realism’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "Reading it as Too Tired To Fight. | Rehearse It On Your Feet: 45 minutes, 40% further. | Taped: 43.1, Unready.; (no concern behind the limit); after Continue: Rehearse It On Your Feet: 45 minutes, 27% further. | Taped: 47.8, Unready."
   },
   {
    "name": "[save: brief scenario] interpretation: Melodrama played the way its scene suits, the take saying what the way gave, the advice forecast, saved and continued",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "Expansive suits, Restrained either; This choice is complete once it’s rehearsed to 83%: it suits the scene, so it asks less; Rehearse It On Your Feet: 45 minutes, 38% further. | Rehearse It On Your Feet: 45 minutes, 11% further. | Taped: 40.1, Unready.; Played that way, it suited the scene (Expansive, Suits The Scene) and added 0.7 points. Your abilities and techniques cost it 19.9 points.; Estima"
   },
   {
    "name": "[save: lien scenario] papers: Connecticut’s lien filed, its release refused with why until it’s paid",
@@ -363,23 +363,23 @@
   },
   {
    "name": "[save: lien scenario] save and exit, Continue, and weeks on: released",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "Connecticut Tax Lien · Released. It was filed for $1,502.10 when collection reached that stage, and recorded in the town clerk’s land records and the Secretary of the State’s UCC filings on June 14, 2"
   },
   {
    "name": "[save: lien scenario] papers: the IRS plan says it covers federal tax only, a state’s being the state’s, and is applied for from its own panel",
    "ok": true,
-   "note": "Applied. The IRS answers by June 15, 2027, and the setup fee is $29.00."
+   "note": "Applied. The IRS answers by July 20, 2027, and the setup fee is $29.00."
   },
   {
    "name": "[save: missed-plan scenario] papers: the IRS plan in default, caught up, and back in force",
-   "ok": false,
-   "why": "locator.click: Timeout 30000ms exceeded."
+   "ok": true,
+   "note": "Caught up: $81.68 paid."
   },
   {
    "name": "home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves money to it, and the pounds and dollars both show",
-   "ok": false,
-   "why": "Home's money line said: "
+   "ok": true,
+   "note": "Kept At HSBC UK: £326,303 In Flexible Saver / Chase sends $100.00 for a $5.00 fee. At 2.6% under the estimated exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £71.95 after its £5.00 fee for a payment from abroad, on Thursday, August 27, 2026 (an estimate: the bank publishes no time, so the game uses"
   },
   {
    "name": "phone: the drawer opens and closes, and Home is reachable from it",
@@ -388,13 +388,6 @@
   }
  ],
  "errors": [],
- "overflows": [
-  {
-   "where": "papers Passport And ID",
-   "over": [
-    "PAGE scrolls sideways"
-   ]
-  }
- ],
- "failed": 16
+ "overflows": [],
+ "failed": 0
 }
