@@ -1,11 +1,29 @@
 """The README of a set of `pages.mjs`'s images, read from its `pages.json` (the files, each page's headings, its clock),
 never typed: each page under its moment, in the order taken, with the headings it showed.
 
-  python3 docs/verification/ui-2026-10-23/app/pages-readme.py DIR desktop|phone
+  python3 docs/verification/ui-2026-10-23/app/pages-readme.py DIR desktop|phone [BRIEF]
+
+BRIEF (from 2026-10-23, the owner's second ask, after brief 24) names whose set it is, 23 (the default) or 24: the
+title, the build it was captured on and where the script is from the set's folder. Brief 23's README comes out as it was.
 """
 import json, sys
 
 d, kind = sys.argv[1], sys.argv[2]
+brief = sys.argv[3] if len(sys.argv) > 3 else '23'
+# The desktop README's opening, each brief's as its lines fall.
+OPENING = {
+    '23': [
+        'Every page of the game, each captured whole, at the owner\'s word on 2026-10-23 ("Now let me get in chronological',
+        'order full captures of each full page from pc and mobile"). They were captured on the app built from `97404e70`, whose',
+        '`src` is brief 23\'s tested commit, `208dbf1f`. Each page is shown {size}, a desktop window, at twice the pixels.',
+    ],
+    '24': [
+        'Every page of the game, each captured whole, at the owner\'s word on 2026-10-23, after brief 24 ("In chronological order',
+        'can you send the full page capture of each page on both pc and mobile."). They were captured on the app built from',
+        '`e39bb609`, whose `src` is brief 24\'s tested commit, `05060742`. Each page is shown {size}, a desktop window, at twice',
+        'the pixels. Brief 23\'s, the same pages before brief 24, are in `../../../ui-2026-10-23/captures/pages/`.',
+    ],
+}[brief]
 rec = json.load(open(f'{d}/pages.json', encoding='utf-8'))
 pages = [p for p in rec['pages'] if p.get('files')]
 problems = [x for p in rec['pages'] for x in p.get('problems', [])]
@@ -14,7 +32,8 @@ rotate = [p for p in pages if p.get('rotate')]
 parts = [p for p in pages if len(p['files']) > 1]
 size = rec['size'].rstrip('m')
 other = 'mobile/README.md' if kind == 'desktop' else '../README.md'
-up = '../../' if kind == 'desktop' else '../../../'  # to docs/verification/ui-2026-10-23/
+up = '../../' if kind == 'desktop' else '../../../'  # to the brief's folder, docs/verification/ui-2026-10-23/ or ui-polish-2026-10-23/
+script = f'{up}app/pages.mjs' if brief == '23' else f'{up}../ui-2026-10-23/app/pages.mjs'
 # What a page's headings can't say, from the images themselves.
 SEEN = {
     'The Start': 'No save yet: three empty slots, each with New Save.',
@@ -28,15 +47,14 @@ SEEN = {
 out = []
 w = out.append
 if kind == 'desktop':
-    w("# Brief 23's Pages On The Built App, In The Order A Player Meets Them")
+    w(f"# Brief {brief}'s Pages On The Built App, In The Order A Player Meets Them")
     w('')
     w(f'The same pages on a phone held on its side: `{other}`.')
     w('')
-    w(f'Every page of the game, each captured whole, at the owner\'s word on 2026-10-23 ("Now let me get in chronological')
-    w('order full captures of each full page from pc and mobile"). They were captured on the app built from `97404e70`, whose')
-    w(f'`src` is brief 23\'s tested commit, `208dbf1f`. Each page is shown {size.replace("x", " by ")}, a desktop window, at twice the pixels.')
+    for line in OPENING:
+        w(line.format(size=size.replace('x', ' by ')))
 else:
-    w("# Brief 23's Pages On A Phone Held On Its Side, In The Order A Player Meets Them")
+    w(f"# Brief {brief}'s Pages On A Phone Held On Its Side, In The Order A Player Meets Them")
     w('')
     w(f'The same {len(pages)} pages as `{other}`, at the owner\'s word on 2026-10-23 ("full captures of each full page from pc and')
     w(f'mobile"), on the same build. They\'re seen as a phone shows them held on its side, {size.replace("x", " by ")}, a touch screen with no')
@@ -49,9 +67,10 @@ w('joined.' + (' The menu down the left doesn\'t scroll, so it stands beside the
 w('Toasts were hidden while a page was taken, since one would repeat down every window. A page taller than 12,000 of the')
 w('image\'s pixels is in parts, each overlapping the one before it by 300, so nothing falls between them.')
 w('')
-w(f'The script, `{up}app/pages.mjs`' + (' (the same one)' if kind == 'phone' else '') + ', is kept, with `pages-compose.py` and this README\'s')
+w(f'The script, `{script}`' + (' (the same one)' if kind == 'phone' else '') + ', is kept, with `pages-compose.py` and this README\'s')
 w('generator, `pages-readme.py`, beside it; brief 22\'s were scratch copies. It opens each save as a player opens one, from')
-w('the saves with Continue, and reaches each page from the menu and each tab by pressing it.')
+w('the saves with Continue, and reaches each page from the menu and each tab by pressing it' + ('.' if brief == '23' else ', Calendar and Updates from')
+  + ('' if brief == '23' else '\nHome\'s Open Calendar and View All Updates, since brief 24 took both from the menu.'))
 w(f'- **What it met:** {len(problems)} page errors, console errors or steps it couldn\'t take; {len(rotate)} pages showing the rotate screen;')
 w(f'  {len(wider)} pages wider than the window.')
 w(f'- **Its record:** `pages.json`, each page\'s files, its headings and the clock as the bar showed it.')
