@@ -644,18 +644,25 @@ describe('h-needs', () => {
     const { html, text } = drawn(sim, Home);
     expect(text).toContain('Mark 159 Read');
     const items = [...html.matchAll(/<div class="list-item list-static notice-row">([\s\S]*?)<div class="row gap-2 notice-row-actions">/g)].map((m) => words(m[1]!));
-    // The most important first, the newest first among equals, worked out here from the notices themselves.
+    // The most important first, the newest first among equals, worked out here from the notices themselves. From
+    // 2026-10-23 a run of one notice (its title, about the same thing) is one row, as Updates has it, ranked as its newest,
+    // which is shown, the rest said as earlier: until then each was a row, both terms' coursework words among the four.
     const order = sim.universe.notifications.filter((n) => !n.read).sort((x, y) => (y.importance ?? 0) - (x.importance ?? 0) || y.at - x.at);
-    const seenTitles = new Set<string>();
-    const top = order.filter((n) => { const k = `${n.title}|${n.body}`; if (seenTitles.has(k)) return false; seenTitles.add(k); return true; }).slice(0, 4);
+    const runs = new Map<string, typeof order>();
+    for (const n of [...order].sort((x, y) => y.at - x.at)) { const k = `${n.title}|${n.refType ?? ''}|${n.refId ?? ''}`; runs.set(k, [...(runs.get(k) ?? []), n]); }
+    const top = [...runs.values()].sort((x, y) => y[0]!.importance - x[0]!.importance || y[0]!.at - x[0]!.at).slice(0, 4);
     expect(items).toHaveLength(4);
-    expect(top.slice(0, 3).map((n) => n.title)).toEqual(['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029']);
-    expect(items).toEqual(top.map((n) => words(`${n.title} ${aboutLabel(n.category)} · ${ago(n.at, sim.now)} ${n.body}`)));
-    expect(text).toContain('155 more unread. View All Updates');
+    expect(top.slice(0, 3).map(([n]) => n!.title)).toEqual(['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029']);
+    const said = (k: number) => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][k] ?? String(k);
+    const earlier = (k: number) => (k === 0 ? '' : ` · ${said(k)} earlier on Updates`);
+    expect(items).toEqual(top.map(([n, ...rest]) => words(`${n!.title} ${aboutLabel(n!.category)} · ${ago(n!.at, sim.now)}${earlier(rest.length)} ${n!.body}`)));
+    const onRows = top.reduce((k, run) => k + run.length, 0);
+    const more = said(159 - onRows);
+    expect(text).toContain(`${more[0]!.toUpperCase()}${more.slice(1)} more unread. View All Updates`);
     // Each notice drawn with somewhere to go has its Go There, beside the return's.
-    expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(1 + top.filter((n) => n.route).length);
+    expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(1 + top.filter(([n]) => n!.route).length);
     press(button('Go There', 0));
-    expect(h.went).toEqual([top.find((n) => n.route)!.route]);
+    expect(h.went).toEqual([top.find(([n]) => n!.route)![0]!.route]);
     // The two words on the coursework, each term's: the spring's says it's the second, after the fall's (from
     // 2026-10-20, brief 16: until then each read as the first). Updates keeps them as one row, its count beside it.
     const warnings = order.filter((n) => n.title === 'A Word On Your Coursework').sort((x, y) => x.at - y.at);

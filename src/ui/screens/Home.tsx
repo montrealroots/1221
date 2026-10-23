@@ -42,7 +42,7 @@ import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { lookedAfter } from '@/ui/shell/TimeControls';
 import { UPDATES_ROUTE } from '@/ui/shell/destinations';
-import { aboutLabel } from './Updates';
+import { aboutLabel, groupNotices } from './Updates';
 import type { Simulation } from '@/engine/core/simulation';
 
 /** How many unread notices Recent Updates shows before View All Updates. */
@@ -88,6 +88,12 @@ export function Home() {
   const week = city ? forecastFor(sim, city.id, 6) : [];
   const unit = weather?.fahrenheit ? '°F' : '°C';
   const questions = allQuestions ? decisions : decisions.slice(0, QUESTIONS);
+  // The unread as Updates groups them, a run of the same notice about the same thing one row with its count, ranked as its
+  // newest, the most important first (from 2026-10-23, brief 23's walk: two terms' “A Word On Your Coursework” were two of
+  // the four rows). A run's notices share their importance, so ranking by its most important changed nothing (mutated).
+  const runs = groupNotices(unread).sort((a, b) => b.notes[0]!.importance - a.notes[0]!.importance || b.notes[0]!.at - a.notes[0]!.at);
+  const recent = runs.slice(0, RECENT);
+  const beyond = unread.length - recent.reduce((n, r) => n + r.notes.length, 0);
 
   return (
     <>
@@ -243,20 +249,23 @@ export function Home() {
             </p>
           ) : (
             <LookRegion className="list">
-              {unread.slice(0, RECENT).map((note) => (
-                <div key={note.id} className="list-item list-static notice-row">
+              {recent.map(({ key, notes: [note, ...earlier] }) => (
+                <div key={key} className="list-item list-static notice-row">
                   <div className="grow">
                     <div className="small strong">
-                      <Open subject={at('notification', note.id)}>{titleCaseLabel(note.title)}</Open>
+                      <Open subject={at('notification', note!.id)}>{titleCaseLabel(note!.title)}</Open>
                     </div>
-                    <div className="xs dim">{aboutLabel(note.category)} · {formatRelative(note.at, sim.now)}</div>
-                    <div className="xs muted clamp-2">{note.body}</div>
+                    <div className="xs dim">
+                      {aboutLabel(note!.category)} · {formatRelative(note!.at, sim.now)}
+                      {earlier.length > 0 && ` · ${earlier.length === 1 ? 'one earlier' : `${countWords(earlier.length)} earlier`} on Updates`}
+                    </div>
+                    <div className="xs muted clamp-2">{note!.body}</div>
                   </div>
                   <div className="row gap-2 notice-row-actions">
-                    {note.route && (
-                      <button className="btn btn-sm" onClick={() => navigate(note.route!, titleCaseLabel(note.title))}>Go There</button>
+                    {note!.route && (
+                      <button className="btn btn-sm" onClick={() => navigate(note!.route!, titleCaseLabel(note!.title))}>Go There</button>
                     )}
-                    <Gated feature="world.mark_read" className="btn btn-sm btn-ghost" onClick={() => run('world.mark_read', { notificationIds: [note.id] })}>
+                    <Gated feature="world.mark_read" className="btn btn-sm btn-ghost" onClick={() => run('world.mark_read', { notificationIds: [note!, ...earlier].map((n) => n.id) })}>
                       Mark Read
                     </Gated>
                   </div>
@@ -265,7 +274,7 @@ export function Home() {
             </LookRegion>
           )}
           <div className="row-between panel-foot">
-            <span className="xs dim">{unread.length > RECENT ? `${upFirst(countWords(unread.length - RECENT))} more unread.` : ''}</span>
+            <span className="xs dim">{beyond > 0 ? `${upFirst(countWords(beyond))} more unread.` : ''}</span>
             <button type="button" className="btn btn-sm" onClick={() => navigate(UPDATES_ROUTE, 'Updates')}>
               View All Updates
             </button>

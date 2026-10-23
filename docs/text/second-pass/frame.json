@@ -274,9 +274,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
   "status": "Rewritten",
-  "hash": "66198ff4224a",
+  "hash": "ca3f2fe2dc00",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a repeated notice into one line; tests/b23-pages.test.ts presses Mark Read on such a line and reads both notices read",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
@@ -3243,9 +3243,9 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten",
-  "hash": "cf9d10b7814b",
+  "hash": "edaa966160d8",
   "on": "2026-10-23",
-  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates' counts and Show All were reworded; drawn by tests/evidence-g32-ui.test.ts, tests/evidence2-b11.test.ts and tests/evidence3-home.test.ts on the rendered screen",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a notice that came more than once into one line saying how many earlier ones are on Updates; tests/b23-pages.test.ts and tests/evidence2-b11.test.ts read it on played saves",
   "first": "Pending"
  },
  "src/ui/screens/Home.tsx#HowYouAre": {

@@ -200,7 +200,8 @@ describe('school.company', () => {
     // How the chair would read the weaker one for a new play, on the craft and abilities they come to it with.
     const fit = () => castFit(sim, classmatePerformer(sim, sim.player, weak), NEW_PLAYS_READ, [], 'g22-fit');
     const fitBefore = fit();
-    const row = (i: number, last: string) => `<td>${school.classmates[i]!.name}</td><td>Yale Cabaret, Season 59</td><td>A Part In A Cabaret Show</td><td class="mono">${last}</td>`;
+    // The part in a box that keeps it at a width it reads at, from 2026-10-23 (brief 23's walk).
+    const row = (i: number, last: string) => `<td>${school.classmates[i]!.name}</td><td>Yale Cabaret, Season 59</td><td><div class="cell-min">A Part In A Cabaret Show</div></td><td class="mono">${last}</td>`;
     const pre = drawn(sim, SchoolWorkspace, 'casting');
     expect(pre.shown).toContain('Around The Class');
     for (const i of mates) expect(pre.html).toContain(row(i, ''));

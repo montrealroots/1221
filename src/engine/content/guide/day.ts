@@ -325,7 +325,8 @@ export const DAY: readonly GuideEntry[] = [
       'Press one of a question’s answers to act on it from What Needs You, without opening its screen. An answer does what the same action does on the question’s own screen: File It, on your tax return’s question, files the return just as File It on Papers does.',
       'Press Go There to open the screen a question or a notice is about, or Open Money, Open Papers, Open School or Open Calendar beside a thing to put right.',
       'Press Dismiss to take a question off the list without answering it.',
-      'Read Recent Updates: the most important unread notices, two lines of each. Press Mark Read beside one, or Mark N Read, at the top of the panel, to mark every unread notice read at once.',
+      // A notice that came more than once is one line here from 2026-10-23 (brief 23's walk), as on Updates: until then each was a line.
+      'Read Recent Updates: the most important unread notices, two lines of each. A notice that came more than once is one line, which says how many earlier ones are on Updates. Press Mark Read beside one, which reads its earlier ones too, or Mark N Read, at the top of the panel, to mark every unread notice read at once.',
       'Press View All Updates, or Updates on the menu, for every notice, the newest first: Unread or All, and About for one kind. Read It All shows a notice’s whole text, and a notice that came more than once says how many times. Mark Read marks one read, and Mark N Read every one shown.',
       'Press a question’s or a notice’s title to open it: how urgent or important it is, when it closes, and where it sits in the list.',
     ],

@@ -1,0 +1,18 @@
+# npx vite-node docs/verification/ui-2026-10-23/app/save-compat.ts, on 10a7e916 and its built engine
+tests/fixtures/journey-j01-degree-8283f80c.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/journey-j01-last-term-8283f80c.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/journey-j01-year-one-8283f80c.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/old-leave-ff837dfa.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/old-nonfiler-086d00ca.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/old-state-plan-086d00ca.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/old-tax-plan-ff837dfa.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/b22/b20-4-opt-2029-09-01.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/b22/b20-4-opt-2029-09-04.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/b22/b20-4-opt-ended-2029-10-01.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+tests/fixtures/b22/b20-4-released-2029-09-02.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+docs/verification/career-genre-2026-10-22/app/saves/before.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+docs/verification/career-genre-2026-10-22/app/saves/released.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+docs/verification/career-genre-2026-10-22/app/saves/roles.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+docs/verification/ui-2026-10-23/app/saves/long.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+docs/verification/ui-2026-10-23/app/saves/offer.json.gz: stored 94, now 94 (engine 94); a day on played, saved and loaded again
+exit=0

@@ -65,7 +65,7 @@ import { createElement, type FunctionComponent } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import type { Wellbeing } from '@/engine/domain/model';
+import type { Notification, Wellbeing } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
@@ -671,6 +671,19 @@ describe('h-needs: What Needs You on Home', () => {
   const APRIL_15 = at(2027, 4, 15, 23, 59);
   /** The rows Recent Updates draws, one a notice. */
   const rows = (html: string) => html.match(/<div class="list-item list-static notice-row">/g)?.length ?? 0;
+  /**
+   * The unread as Recent Updates draws them, worked out here: a run of one notice (its title, about the same thing) one
+   * row, ranked as its newest, the more important first and the newer among equals, its newest shown. From 2026-10-23
+   * (brief 23's walk): until then each notice was a row, two terms' coursework words two of the four.
+   */
+  const runsOf = (sim: Simulation) => {
+    const runs = new Map<string, Notification[]>();
+    for (const x of [...sim.universe.notifications].filter((y) => !y.read).sort((a, b) => b.at - a.at)) {
+      const k = `${x.title}|${x.refType ?? ''}|${x.refId ?? ''}`;
+      runs.set(k, [...(runs.get(k) ?? []), x]);
+    }
+    return [...runs.values()].sort((a, b) => b[0]!.importance - a[0]!.importance || b[0]!.at - a[0]!.at);
+  };
 
   it('PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting: its title and when it’s due, its detail, its stripe and its buttons; the notices under Recent Updates, Mark N Read counting them; Go There goes where each says', () => {
     const sim = fromAbroad('g32-needs');
@@ -688,10 +701,11 @@ describe('h-needs: What Needs You on Home', () => {
     // Urgency 70: past the 65 that's high, short of the 85 that's critical; and the standing's line, high as each is.
     expect(html.match(/data-urgency="\w+"/g)).toEqual(['data-urgency="high"', 'data-urgency="high"']);
     expect(recent(sim).startsWith(`Recent Updates ${n} unread, the most important first. Mark ${n} Read How This Works`)).toBe(true);
-    expect(recent(sim).endsWith(`${n - 4} more unread. View All Updates`)).toBe(true);
+    const shownRuns = runsOf(sim).slice(0, 4);
+    expect(recent(sim).endsWith(`${n - shownRuns.flat().length} more unread. View All Updates`)).toBe(true);
     expect(rows(html)).toBe(4);
-    // Each Go There pressed: the question's to Papers, and each notice's shown to where it says.
-    const shownNotes = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at).slice(0, 4);
+    // Each Go There pressed: the question's to Papers, and each run's shown to where its newest says.
+    const shownNotes = shownRuns.map((run) => run[0]!);
     expect(shownNotes[0]!.route).toBeDefined();
     drawn(sim, Home);
     for (const b of h.buttons.filter((x) => x.text === 'Go There')) press(b);
@@ -757,9 +771,10 @@ describe('h-needs: What Needs You on Home', () => {
     sim.advanceTo(at(2027, 2, 1, 12));
     const n = unread(sim);
     expect(n).toBeGreaterThan(4);
-    const fifth = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[4]!;
+    const runs = runsOf(sim);
+    const fifth = runs[4]![0]!;
     expect(rows(drawn(sim, Home).html)).toBe(4);
-    expect(recent(sim)).toContain(`${n - 4} more unread. View All Updates`);
+    expect(recent(sim)).toContain(`${n - runs.slice(0, 4).flat().length} more unread. View All Updates`);
     expect(recent(sim)).not.toContain(fifth.body);
     drawn(sim, Home);
     press(button('View All Updates'));

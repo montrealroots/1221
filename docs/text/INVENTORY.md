@@ -10,19 +10,19 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 1331 | 15919 | 7 | 59 | 268 | 0 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 544 | 15022 | 0 | 31 | 20 | 0 | 0 |
-| Home And Its Retained Actions | 27 | 252 | 1025 | 0 | 18 | 9 | 0 | 0 |
+| Home And Its Retained Actions | 27 | 254 | 1029 | 0 | 18 | 9 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3854 | 57301 | 174 | 189 | 445 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70462 | 7 | 191 | 475 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 766 | 6666 | 152588 | 13 | 281 | 485 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 477 | 4622 | 57239 | 3 | 112 | 365 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 302 | 1987 | 18226 | 0 | 285 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8302 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2573 | 15382 | 0 | 21 | 62 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2573 | 15407 | 0 | 21 | 62 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1180 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 60 | 231 | 960 | 0 | 26 | 34 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4595 | 39140 | 597803 | 314 | 1471 | 3124 | 0 | 0 |
+| **All** | 4595 | 39142 | 597832 | 314 | 1471 | 3124 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -33,7 +33,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-pay | 31 | 1266 | 31 | 0 | 0 | 0 |
 | career-showcase | 23 | 1781 | 23 | 0 | 0 | 0 |
 | career-work | 76 | 2164 | 76 | 0 | 0 | 0 |
-| frame | 528 | 34466 | 128 | 400 | 0 | 0 |
+| frame | 528 | 34495 | 128 | 400 | 0 | 0 |
 | health | 178 | 38799 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
@@ -472,7 +472,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/life.ts#napNow` | 2 | 0 | Rewritten | frame | tests/time-stops.test.ts and tests/evidence-g01-life.test.ts read the nap reasons in the Sleep dialog | Pending |
 | `src/engine/systems/life.ts#hoursSaid` | 11 | 0 | Rewritten | frame | Hours at the start of a sentence, Half an hour to Fourteen hours, in the nap's reasons; tests/time-stops.test.ts holds one and a half and seven and a half | Rewritten And Verified |
 | `src/engine/systems/life.ts#sleepReason` | 11 | 0 | Retained | frame | Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less. | Rewritten And Verified |
-| `src/ui/screens/Home.tsx#Home` | 37 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates' counts and Show All were reworded; drawn by tests/evidence-g32-ui.test.ts, tests/evidence2-b11.test.ts and tests/evidence3-home.test.ts on the rendered screen | Pending |
+| `src/ui/screens/Home.tsx#Home` | 39 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a notice that came more than once into one line saying how many earlier ones are on Updates; tests/b23-pages.test.ts and tests/evidence2-b11.test.ts read it on played saves | Pending |
 | `src/ui/screens/Home.tsx#needsLine` | 5 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
 | `src/ui/screens/Home.tsx#Question` | 5 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
 | `src/ui/screens/Home.tsx#UpNext` | 10 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
@@ -3481,7 +3481,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#DAY [day.clock]` | 55 | 0 | Rewritten | frame | The three dialogs that move the clock hold it, held beside the behavior by tests/time-controls.test.ts on the real provider | Pending |
 | `src/engine/content/guide/day.ts#DAY [day.advance]` | 54 | 0 | Rewritten | frame | Each line gives its day, Tomorrow Morning after midnight is that morning's, On The Way lists what isn't on the calendar yet; held by tests/time-controls.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [scheduled]` | 2 | 0 | Retained | frame | Lines under Changes Later: midnight’s groceries, and a plan stopping the clock, each said as what happens when. | Rewritten And Verified |
-| `src/engine/content/guide/day.ts#DAY [day.needs]` | 55 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.needs]` | 55 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a repeated notice into one line; tests/b23-pages.test.ts presses Mark Read on such a line and reads both notices read | Pending |
 | `src/engine/content/guide/day.ts#DAY [history]` | 2 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [day.plans]` | 62 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [day.weather]` | 42 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |

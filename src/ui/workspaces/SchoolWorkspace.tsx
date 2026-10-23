@@ -516,12 +516,16 @@ function CastingPane() {
       )}
       {school.around && school.around.term === school.termsBegun - 1 && enrolled && (
         <Panel title="Around The Class" subtitle="Who’s playing what this term">
-          <table className="table">
-            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">Last Run</th><th scope="col">To You</th></tr></thead>
-            <tbody>
-              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td><div className="cell-min">{a.part}</div></td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
-            </tbody>
-          </table>
+          {/* In its own scrolling box, as every wide table is (from 2026-10-23: its Part given a width it reads at, it ran
+              163 pixels past its card at 667). */}
+          <div className="table-scroll">
+            <table className="table">
+              <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">Last Run</th><th scope="col">To You</th></tr></thead>
+              <tbody>
+                {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td><div className="cell-min">{a.part}</div></td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
         </Panel>
       )}
       <Fine>

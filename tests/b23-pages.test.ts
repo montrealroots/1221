@@ -20,11 +20,21 @@ import { loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { deserialise } from '@/engine/persistence/adapter';
 import { GUIDE_BY_ID } from '@/engine/content/guide';
+import { openDecisions } from '@/engine/world/world';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
   tab: 'standing',
+  /** The Gated buttons drawn, in order, each with its words and its own onClick. */
+  gated: [] as { label: string; onClick?: () => void }[],
 }));
+
+// A Gated button drawn as it is, its words and onClick kept so a test can press it as the player would.
+vi.mock('@/ui/guide/Guide', async (orig) => {
+  const real = await orig<typeof import('@/ui/guide/Guide')>();
+  const words = (c: unknown): string => (Array.isArray(c) ? c.map(words).join('') : typeof c === 'string' || typeof c === 'number' ? String(c) : '');
+  return { ...real, Gated: (props: Parameters<typeof real.Gated>[0]) => { h.gated.push({ label: words(props.children).trim(), onClick: props.onClick as never }); return real.Gated(props); } };
+});
 
 // Without the original: it imports the looks, which import it back.
 vi.mock('@/app/game-context', () => {
@@ -45,6 +55,7 @@ vi.mock('@/ui/kept', async (orig) => {
   return { ...real, useKept: <T,>(key: string, initial: T) => [(key === 'tab:/workspace/school' ? h.tab : initial) as T, () => undefined] as const };
 });
 
+const { Home } = await import('@/ui/screens/Home');
 const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
 const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
 const { PageIndex } = await import('@/ui/components/primitives');
@@ -55,6 +66,7 @@ const words = (html: string) => html.replace(/<[^>]+>/g, ' ').replace(/&#x27;/g,
 function drawn(sim: Simulation, screen: FunctionComponent, tab = 'standing'): string {
   h.sim = sim;
   h.tab = tab;
+  h.gated = [];
   return renderToStaticMarkup(createElement(screen)).replace(/<!-- -->/g, '');
 }
 /** Every element a tree holds with the props given, in order. */
@@ -132,5 +144,54 @@ describe('School’s Term Reviews: the figures in a row, why under them', () => 
       expect(figures).toMatch(/data-label="Attendance"[\s\S]*data-label="Growth"[\s\S]*data-label="Class Growth"[\s\S]*data-label="Coursework"/);
       expect(why).toBe(`<tr class="review-why"><td colSpan="6" class="small">${history[i]!.reason.replace(/&/g, '&amp;').replace(/'/g, '&#x27;').replace(/"/g, '&quot;')}</td></tr>`);
     });
+  });
+});
+
+describe('Home around the day (brief 23, sections 4 and 5)', () => {
+  it('PLAYER JOURNEY: a played student’s Home reads Today, What Needs You, Up Next, How You Are and Recent Updates, in that order, with no Your Affairs; the time, the town and the weather each said once', () => {
+    const sim = played();
+    const html = drawn(sim, Home);
+    const text = words(html);
+    // Today is the page's head, then the four panels by their own headings.
+    expect(html.indexOf('class="page-head today"')).toBeGreaterThanOrEqual(0);
+    const headings = [...html.matchAll(/<h2>(?:<button[^>]*>)?([^<]+)/g)].map((m) => m[1]!.trim());
+    expect(headings).toEqual(['What Needs You', 'Up Next', 'How You Are', 'Recent Updates']);
+    expect(html.indexOf('class="page-head today"')).toBeLessThan(html.indexOf('<h2>'));
+    // Your Affairs went from Home with the brief: its name and its three lines' buttons are on no part of it.
+    expect(text).not.toContain('Your Affairs');
+    expect(text).not.toMatch(/Chase Total Checking|Worth \$|in the class\. Next:/);
+    // Said once: the hour, the town and the sky (the bar, which says the hour too, isn't Home's).
+    const zone = sim.zone;
+    const hour = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone: zone }).format(new Date(sim.now));
+    expect(text.split(hour).length - 1).toBe(1);
+    // The town once in Today (a question may name it in its own words, as the Rep's understudy call does), and no panel of
+    // its own: the headings above have no Where You Are and no Weather.
+    expect(words(html.slice(0, html.indexOf('<h2>'))).split('New Haven').length - 1).toBe(1);
+    expect((html.match(/class="today-weather[" ]/g) ?? []).length).toBe(1);
+  });
+
+  it('PLAYER JOURNEY: a notice is on Home once: Recent Updates’ rows are four runs with four titles, two terms’ “A Word On Your Coursework” one row that says the earlier one is on Updates, none of them a question', () => {
+    const sim = played();
+    const html = drawn(sim, Home);
+    const recent = html.slice(html.indexOf('Recent Updates'));
+    const titles = [...recent.matchAll(/<div class="list-item list-static notice-row">[\s\S]*?<button[^>]*>([^<]+)<\/button>/g)].map((m) => m[1]!);
+    expect(titles.length).toBeGreaterThan(0);
+    expect(titles.length).toBeLessThanOrEqual(4);
+    expect(new Set(titles).size).toBe(titles.length);
+    const asked = new Set(openDecisions(sim).map((d) => d.title));
+    for (const t of titles) expect(asked.has(t)).toBe(false);
+    // The run of two: one row, saying the other is on Updates, and Mark Read on it reads both.
+    const coursework = sim.universe.notifications.filter((n) => !n.read && n.title === 'A Word On Your Coursework');
+    expect(coursework.length).toBeGreaterThanOrEqual(2);
+    expect(titles.filter((t) => t === 'A Word On Your Coursework')).toHaveLength(1);
+    expect(words(recent)).toContain(`A Word On Your Coursework School · `);
+    expect(words(recent)).toMatch(/A Word On Your Coursework School · [^·]+ · (one|two|three|four|five|six|seven|eight|nine|ten|\d+) earlier on Updates /);
+    // Mark Read on that row reads the run, each of its notices, and no other.
+    const marks = h.gated.filter((g) => g.label === 'Mark Read');
+    expect(marks).toHaveLength(titles.length);
+    const before = sim.universe.notifications.filter((n) => !n.read).length;
+    marks[titles.indexOf('A Word On Your Coursework')]!.onClick!();
+    expect(coursework.every((n) => sim.universe.notifications.find((x) => x.id === n.id)!.read)).toBe(true);
+    expect(sim.universe.notifications.filter((n) => !n.read).length).toBe(before - coursework.length);
   });
 });

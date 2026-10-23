@@ -1478,6 +1478,8 @@ td, th { overflow-wrap: break-word; }
   input[type="range"] { min-height: var(--control); }
   /* A tick box's own label, beside it rather than around it, is what a finger presses (from 2026-10-23). */
   input[type="checkbox"] + label, input[type="radio"] + label { min-height: var(--control); display: inline-flex; align-items: center; }
+  /* And a label around its box, as the Playing chooser's are (brief 23's walk: 16-pixel radios in 38-pixel labels). */
+  label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) { min-height: var(--control); }
   .cal-day { cursor: pointer; }
   /* A button of one glyph (‹, ›, ✕) as wide as it is tall, and the skip link as tall as a control (from 2026-10-23, brief
      23's walk: the Calendar's month arrows were 31 pixels wide, the skip link 37 tall). */

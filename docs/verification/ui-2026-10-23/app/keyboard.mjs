@@ -54,7 +54,9 @@ const focused = (page) => page.evaluate(() => {
     name: (el.getAttribute('aria-label') || el.innerText || el.value || el.id || '').replace(/\s+/g, ' ').trim().slice(0, 48),
     ring,
     inView: r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth,
-    underBar: Boolean(bar && !el.closest('header.topbar') && r.top < bar.bottom - 1 && r.bottom > 0),
+    // Covered, by the bar or anything else: what's on top at the control's centre isn't it or inside it. The skip link
+    // sits over the bar, in front of it, which isn't covered.
+    underBar: (() => { const x = r.left + r.width / 2, y = r.top + r.height / 2; if (y < 0 || y > innerHeight) return false; const top = document.elementFromPoint(x, y); return Boolean(top && top !== el && !el.contains(top) && bar && top.closest('header.topbar')); })(),
     where: el.closest('[role=dialog]') ? 'dialog' : el.closest('header.topbar') ? 'bar' : el.closest('nav.rail') ? 'menu' : el.closest('main') ? 'page' : el.classList.contains('skip-link') ? 'skip' : 'other',
   };
 });

@@ -495,7 +495,7 @@
   ],
   "outcome": "Revised",
   "why": "Read on the first, guided Home (each panel Locked, naming its chapter) and a year in: the greeting follows the clock, What Needs You lists a question with its buttons and the unread notices most important first. Under six of 310, it said \"304 more unread.\" and nothing else, so a welcome eight months old above yesterday’s feedback had no reason given. How You Are said \"Rested, steady and ready for a real day.\" to a player with a back strain 11 days from mended (the health editor found it with a sprained ankle, and \"Holding up, with nothing out of the ordinary to worry about.\" with the flu): it read the measures only, never the body’s record.",
-  "changes": "\"304 more unread.\" became \"These six are the most important. 304 more are unread.\" How You Are (`wellbeingSummary`, on Home and your own look) says a hospital stay first, and the flu and an injury before the lines that say all’s well, each with its day: \"Mending a back strain until May 4, 2027.\", \"Down with the flu until …\", \"In hospital until …\".",
+  "changes": "\"304 more unread.\" became \"These six are the most important. 304 more are unread.\" How You Are (`wellbeingSummary`, on Home and your own look) says a hospital stay first, and the flu and an injury before the lines that say all’s well, each with its day: \"Mending a back strain until May 4, 2027.\", \"Down with the flu until …\", \"In hospital until …\". From 2026-10-23 (brief 23) Recent Updates draws the four most important, a notice that came more than once one line that says how many earlier ones are on Updates (“one earlier on Updates”), its Mark Read reading them all, and “N more unread.” counts the rest.",
   "evidence": [
    {
     "kind": "walk",
@@ -520,6 +520,10 @@
    {
     "kind": "test",
     "ref": "tests/language-dynamic.test.ts: 'says a hospital stay, the flu and an injury with the day each ends, before the lines that say all’s well, on Home and your own look'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b23-pages.test.ts: 'PLAYER JOURNEY: a notice is on Home once'"
    }
   ]
  },
