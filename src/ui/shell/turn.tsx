@@ -95,6 +95,21 @@ export function TurnFrame({ children }: { children: ReactNode }) {
   const upright = useDeviceUpright();
   const frame = useRef<HTMLDivElement>(null);
   const kept = useRef<{ focus: Element | null; scrolls: [Element, number, number][] } | null>(null);
+  // Each scroll as it last stood with the phone on its side, taken as it moves (from 2026-10-23, brief 24's walk). Turned
+  // upright, the window narrows before anything here hears of it, and the browser clamps a scroll the narrower page is too
+  // short for. Until then the turn read the scrolls when it heard, already clamped: a student's Career Work, 300 pixels
+  // down, came back at 237.
+  const sideways = useRef(new WeakMap<Element, [number, number]>());
+  useEffect(() => {
+    const keep = (event: Event) => {
+      const el = event.target;
+      const device = readDevice();
+      if (!(el instanceof Element) || !el.matches(SCROLLERS) || (device.phone && device.upright)) return;
+      sideways.current.set(el, [el.scrollTop, el.scrollLeft]);
+    };
+    document.addEventListener('scroll', keep, { capture: true, passive: true });
+    return () => document.removeEventListener('scroll', keep, { capture: true });
+  }, []);
 
   useLayoutEffect(() => {
     const node = frame.current;
@@ -102,7 +117,10 @@ export function TurnFrame({ children }: { children: ReactNode }) {
     if (upright) {
       kept.current = {
         focus: document.activeElement,
-        scrolls: [...node.querySelectorAll(SCROLLERS)].map((el) => [el, el.scrollTop, el.scrollLeft] as [Element, number, number]),
+        scrolls: [...node.querySelectorAll(SCROLLERS)].map((el) => {
+          const was = sideways.current.get(el);
+          return [el, was?.[0] ?? el.scrollTop, was?.[1] ?? el.scrollLeft] as [Element, number, number];
+        }),
       };
       node.inert = true;
       // A key or a tap while it shows reaches nothing behind it: not a dialog's Escape, not the game's shortcuts, and not
