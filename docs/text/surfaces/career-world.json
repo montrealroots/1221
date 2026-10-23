@@ -1,0 +1,135 @@
+[
+ {
+  "surface": "An offer of work abroad: what it says before Accept, and why Accept is refused",
+  "where": "Career, Opportunities, the offer; What Needs You, the offer's decision",
+  "sources": [
+   "src/engine/systems/projobs.ts#abroadWarning",
+   "src/engine/systems/projobs.ts#acceptRefusal",
+   "src/engine/systems/projobs.ts#KIND_WORDS",
+   "src/engine/systems/projobs.ts#FIELD_WORDS",
+   "src/engine/content/careerwork.ts#PROJECTS [harbor-line]",
+   "src/engine/content/careerwork.ts#PROJECTS [harbor-line-arden]"
+  ],
+  "states": [
+   "first use",
+   "warning",
+   "unavailable",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's work abroad: an offer in Sydney says where, the days away, who books the trip, the visa it needs and that accepting isn't permission.",
+  "changes": "Written new: the warning (“This work is in Sydney. You’d be away from … Accepting is the contract, not permission to work: without the visa in force at your first flight, you can’t go, and the production releases you.”), the refusal for a passport that runs out before you're home, and the studio feature's kind and field.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'T19: says how far each country is researched'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Work: The Trip To Sydney: permission, Apply For The Visa, the legs, the hotel, what the visa asks, and what isn't in the game",
+  "where": "Career, the Work tab, the engagement abroad, The Trip To Sydney",
+  "sources": [
+   "src/ui/career/WorkPane.tsx#TripView",
+   "src/ui/career/WorkPane.tsx#EngagementPay",
+   "src/engine/systems/worktrip.ts#abroadRead",
+   "src/engine/systems/worktrip.ts#visaRefusal",
+   "src/engine/systems/worktrip.ts#legWords",
+   "src/engine/systems/worktrip.ts#way",
+   "src/engine/systems/worktrip.ts#AIRPORTS",
+   "src/engine/systems/worktrip.ts#airportOf",
+   "src/engine/systems/worktrip.ts#SCHEDULE_WORDS",
+   "src/engine/systems/worktrip.ts#routeSourceWords",
+   "src/engine/content/jurisdictions.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's work abroad: the trip the production booked, the permission it needs, and where every rule and figure comes from.",
+  "changes": "Written new: the permission as it reads for the days (“Work in Australia needs a 408 visa …”), the visa pending or granted with its dates, each leg in its towns' own times, the hotel, the 408's conditions in the game's words with the page's date, the schedule's caveat, what isn't in the game for Australia, and, on the pay, that Australian tax on it isn't part of the game yet.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408'"
+   }
+  ]
+ },
+ {
+  "surface": "Notices and history of the visa and the trip: applied, granted, left, arrived, checked in and out, home, a missed flight, a release at the flight",
+  "where": "Home's notices; Career, Work, the engagement's What Happened",
+  "sources": [
+   "src/engine/systems/worktrip.ts#applyVisa",
+   "src/engine/systems/worktrip.ts#applyVisa [visa-applied]",
+   "src/engine/systems/worktrip.ts#grantVisa [visa-granted]",
+   "src/engine/systems/worktrip.ts#departureWords",
+   "src/engine/systems/worktrip.ts#callWords",
+   "src/engine/systems/worktrip.ts#legPhrase",
+   "src/engine/systems/worktrip.ts#registerWorkTrips",
+   "src/engine/systems/worktrip.ts#registerWorkTrips [missed-flight]",
+   "src/engine/systems/worktrip.ts#registerWorkTrips [checked-out]",
+   "src/engine/systems/worktrip.ts#registerWorkTrips [departed]",
+   "src/engine/systems/worktrip.ts#registerWorkTrips [arrived]",
+   "src/engine/systems/worktrip.ts#registerWorkTrips [checked-in]",
+   "src/engine/systems/worktrip.ts#registerWorkTrips [home]"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "failure",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's work abroad: each step of the trip is told once as it happens and kept with the work.",
+  "changes": "Written new: “Your 408 Visa Was Granted”, the arrival with the first call in Sydney's time and New Haven's, the way home, a missed flight out or home with the place names as written, and the release at the flight with its reason (“You didn’t apply for the 408 visa the work in Australia needs …”).",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'T12: with no visa at the first flight, the player doesn’t fly and the production releases them'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'asleep when the car to the airport comes, the player misses the flights out'"
+   }
+  ]
+ },
+ {
+  "surface": "Away on the calendar: the trip's span, where the player is, and what's missed at home",
+  "where": "Calendar; Career, Opportunities, an audition missed while away; another booking refused",
+  "sources": [
+   "src/engine/systems/projobs.ts#spansOf",
+   "src/engine/systems/projobs.ts#awayAt",
+   "src/engine/systems/projobs.ts#missRound",
+   "src/engine/systems/worktrip.ts#tripSpans",
+   "src/engine/systems/worktrip.ts#whereWords"
+  ],
+  "states": [
+   "ordinary",
+   "setback",
+   "unavailable",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's work abroad: while in Sydney the player isn't anywhere else, and what they miss says where they were.",
+  "changes": "Written new: “Your Trip To Sydney” and “Harbor Line: Away In Sydney” on the calendar, and a missed audition that says “You were in Sydney …”.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-world-sydney.test.ts: 'T28: a booking whose days fall in the trip is refused'"
+   }
+  ]
+ }
+]

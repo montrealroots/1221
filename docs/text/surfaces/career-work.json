@@ -75,7 +75,7 @@
    "src/engine/systems/projobs.ts#conditionsFor [calls]",
    "src/engine/systems/projobs.ts#conditionsFor [classes]",
    "src/engine/systems/projobs.ts#requestRefusal",
-   "src/engine/systems/projobs.ts#acceptWarning",
+   "src/engine/systems/projobs.ts#schoolWarning",
    "src/engine/systems/projobs.ts#registerProJobs [school]",
    "src/engine/systems/projobs.ts#registerProJobs [requested]",
    "src/engine/systems/projobs.ts#registerProJobs <pro.request_outside_work>",

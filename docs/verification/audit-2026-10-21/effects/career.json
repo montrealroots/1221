@@ -2004,6 +2004,170 @@
    "seeded": false,
    "readBy": "coordinator",
    "readAt": "1fb67173"
+  },
+  {
+   "id": "pro.apply_work_visa",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Work: Apply For The Visa on a booking abroad, grayed with visaRefusal's words.",
+   "prerequisites": "A booking abroad not over; a country whose route is applied for ahead (Australia's 408); not applied for or held already; a passport in force until the trip home (`visaRefusal`).",
+   "reads": "The booking, the country's route (`content/jurisdictions.ts`), the player's citizenships and passports.",
+   "changes": "A pending permit in Papers tied to the booking (`bookingId`), and the department's decision on the clock, the game's assumed ten days on. Nothing charged: the page holds no charge.",
+   "consumers": [
+    {
+     "what": "the permit read for each work day and at the first flight",
+     "at": "src/engine/systems/worktrip.ts:240"
+    },
+    {
+     "what": "the first departure checks it and releases the actor without it",
+     "at": "src/engine/systems/worktrip.ts:402"
+    }
+   ],
+   "experienced": "Papers lists it as pending under Permission To Work; the decision is a notice; at the first flight, without it, the production releases the actor in words.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "The visa's charge and processing time are the department's tools', not the page's: the charge is none and the time is assumed, each said. A refusal by the department isn't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.visa_decision",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, the game's assumed ten days after the application (`VISA_KIND`).",
+   "prerequisites": "The permit pending.",
+   "reads": "The booking's last work day and the route's days past it.",
+   "changes": "The permit valid, issued now, running to the last work day and the route's 28 days.",
+   "consumers": [
+    {
+     "what": "each work day reads it in force (`abroadRead`)",
+     "at": "src/engine/systems/worktrip.ts:241"
+    },
+    {
+     "what": "a work day without it releases the actor",
+     "at": "src/engine/systems/projobs.ts:1583"
+    }
+   ],
+   "experienced": "A notice that the visa was granted and to when; Papers shows it valid.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.trip_depart",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at each leg's departure (`DEPART_KIND`); the first leg of each way stops the clock for the player.",
+   "prerequisites": "The leg booked; the leg before it arrived; at the first departure out, permission to work for the booking and a passport in force to the trip's end.",
+   "reads": "The trip's legs, the permit, the passport, whether the player is awake and well.",
+   "changes": "The leg on its way, or missed (the rest of that way canceled; the way home booked a day later); at the first departure out without permission, the trip canceled and the booking released.",
+   "consumers": [
+    {
+     "what": "where the player is, for the School and the casting offices",
+     "at": "src/engine/systems/projobs.ts:582"
+    },
+    {
+     "what": "an audition at home while away is missed",
+     "at": "src/engine/systems/projobs.ts:1521"
+    },
+    {
+     "what": "a booking in the trip's days is refused",
+     "at": "src/engine/systems/projobs.ts:758"
+    }
+   ],
+   "experienced": "The stop at the car to the airport; Home, the School and the calendar read the player as away; a missed flight or a release is a notice.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "Flight delays and missed connections aren't modeled (T24, T25).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.trip_arrive",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at each leg's arrival (`ARRIVE_KIND`).",
+   "prerequisites": "The leg on its way.",
+   "reads": "The trip's legs and the booking's first call.",
+   "changes": "The leg done; out, the stay begun and the trip there; home, the trip over.",
+   "consumers": [
+    {
+     "what": "the stay checked in",
+     "at": "src/engine/systems/worktrip.ts:449"
+    },
+    {
+     "what": "a work day reads the player there",
+     "at": "src/engine/systems/projobs.ts:1583"
+    },
+    {
+     "what": "the trip over frees its days",
+     "at": "src/engine/systems/worktrip.ts:454"
+    }
+   ],
+   "experienced": "You've Arrived In Sydney, with the first call in both towns' times; You're Home From Sydney.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
   }
  ],
  "promises": [
@@ -2864,6 +3028,46 @@
    "seeded": false,
    "readBy": "career",
    "readAt": "e0b60f74"
+  },
+  {
+   "id": "promise.career.work-abroad>documents.work",
+   "kind": "immediate",
+   "claim": "The visa is a permission to work in Papers, pending until the department decides.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`applyVisa` writes a permit, pending and tied to the engagement (src/engine/systems/worktrip.ts:294), and Papers' Permission To Work lists permits (`DocumentList`, src/ui/papers/Documents.tsx:297); the journey draws it there after applying.",
+   "tests": [
+    "tests/career-world-sydney.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career-world",
+   "readAt": "f341b3b1"
+  },
+  {
+   "id": "promise.career.work-abroad>career.offers",
+   "kind": "prerequisite",
+   "claim": "You apply for it once you’ve accepted the work abroad.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`visaRefusal` refuses without an engagement abroad (src/engine/systems/worktrip.ts:267); the journey's Apply For The Visa before Accept is refused in those words.",
+   "tests": [
+    "tests/career-world-sydney.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career-world",
+   "readAt": "f341b3b1"
   }
  ]
 }

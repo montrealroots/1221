@@ -34,6 +34,8 @@ import { BAND_LABEL } from '../../systems/coursework';
 import { ESTIMATE } from '../../systems/school';
 import { PAY, sagJoinUsd } from '../../systems/propay';
 import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
+import { TRIP, routeSourceWords } from '../../systems/worktrip';
+import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
 import type { GuideEntry } from './types';
 
@@ -45,6 +47,10 @@ const on = (section: Section, label: string) => ({ route: CAREER, tab: section, 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
 /** The work loop's chapter (from 2026-10-21, brief 19's J1 to J5 and A3). */
 const WORK_CHAPTER = CHAPTER_FOR['pro.submit']!.title;
+/** Australia's 408, the route the Work Abroad entry teaches (`content/jurisdictions.ts`). */
+const AU = JURISDICTIONS.au!.routes.find((r) => r.id === 'au-408-entertainment')!;
+/** How long before the first call the flight out lands, at least: the trip's own rule (`TRIP`). */
+const AHEAD = TRIP.arriveBeforeHours % 24 === 12 ? `${TRIP.arriveBeforeHours === 36 ? 'a day and a half' : `${(TRIP.arriveBeforeHours - 12) / 24} and a half days`}` : `${TRIP.arriveBeforeHours} hours`;
 const STEPS = `${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}`;
 const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const word = (n: number): string => WORDS[n] ?? String(n);
@@ -820,6 +826,54 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'A first-year in good standing, and a two-day shoot in October posted five weeks ahead.',
       steps: ['Press Ask The School on the role.', 'A week later, read the dean’s answer.'],
       result: 'The chair recommends it and the dean approves it: two working days, asked well ahead, a paid professional role, no School call and at most two class days. Those class days are excused.',
+    },
+  },
+  // From 2026-10-23 (the owner's brief 25): work abroad, Sydney first, its visa and its trip (`systems/worktrip.ts`).
+  {
+    id: 'career.work-abroad',
+    title: 'Work Abroad',
+    goal: 'career',
+    covers: ['pro.apply_work_visa'],
+    synonyms: ['work abroad', 'work visa', '408 visa', 'filming overseas', 'flight to sydney', 'travel for work'],
+    questions: ['Can I take work in another country?', 'How do I get a visa to work in Australia?', 'What happens if my visa isn’t ready?'],
+    where: on('work', 'Career, Work, Your Engagements'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work in another country.`,
+    short: `Some roles are abroad: Harbor Line shoots in Sydney. Accepting one is the contract, not permission to work there. Work in Australia needs ${AU.name}, which the production supports and you apply for once you’ve accepted. Press Apply For The Visa on the engagement under Career, Work.\n\nThe production books your flights, the cars and a hotel. You land ${AHEAD} or more before your first call and home the day after your last.`,
+    steps: [
+      'Accept the offer, after reading what it says about the visa and the dates you’d be away.',
+      'Open Career, then Work, and press Apply For The Visa on the engagement.',
+      'When the clock stops for the car to the airport, press Go.',
+    ],
+    needs: [
+      'A booking in another country whose rules are in the game: so far, Australia.',
+      'A passport in force until you’re home. Papers shows yours.',
+      'Not an Australian or a New Zealand citizen: an Australian needs no visa, and a New Zealander is granted one on arrival.',
+    ],
+    costs: [{ label: 'Time', value: `${AU.decisionDays} days for the department’s decision`, estimate: true }, { label: 'Money', value: 'None. The visa’s charge isn’t in the department’s page, and the production pays for the trip.', estimate: true }],
+    reads: [
+      { label: 'The Contract', value: 'The booking you’ve accepted' },
+      { label: 'Your Supporter', value: 'The production’s company in Australia' },
+      { label: 'Your Passport', value: 'In force until you’re home' },
+    ],
+    now: ['The visa is pending in Papers, under Permission To Work, tied to this work.'],
+    later: [`${AU.decisionDays} days on, the department grants it, to ${AU.graceDays} days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.`],
+    interpret: [`The 408’s conditions come from the department’s page: ${routeSourceWords(AU).replace(/^From the department’s page as /, '').replace(/\.$/, '')}. Its ${word(AU.decisionDays ?? 0)} days and the hotel paid by the production are estimated, and so are the flight times, from the distances.`],
+    unavailable: [
+      'You’ve applied already.',
+      'You need a passport in force until you’re home.',
+      'The rules for working there aren’t in the game.',
+    ],
+    mistakes: [`Applying too late. The decision takes ${word(AU.decisionDays ?? 0)} days, and you land ${AHEAD} or more before the first call.`],
+    next: ['Prepare the part under Booked Work, and be awake for the car to the airport.'],
+    related: ['career.offers', 'documents.work'],
+    connections: [
+      { to: 'documents.work', kind: 'immediate', why: 'The visa is a permission to work in Papers, pending until the department decides.' },
+      { to: 'career.offers', kind: 'prerequisite', why: 'You apply for it once you’ve accepted the work abroad.' },
+    ],
+    example: {
+      setup: 'An American graduate accepts Dana Kell in Harbor Line, eight shoot days in Sydney.',
+      steps: ['Press Apply For The Visa on the engagement.', `Read the department’s answer when it comes, ${word(AU.decisionDays ?? 0)} days later, then press Go for the car to the airport.`],
+      result: 'The visa is granted, the flights go through Los Angeles, and two calendar days after leaving New York the car takes you to the hotel in Sydney. The eight shoot days are paid as wages earned in Australia, with no commission.',
     },
   },
 ];

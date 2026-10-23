@@ -1,0 +1,282 @@
+{
+ "src/engine/content/jurisdictions.ts#AU_408": {
+  "status": "Rewritten",
+  "hash": "00d6a69add1b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [category]": {
+  "status": "Rewritten",
+  "hash": "571245fd689b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [charge]": {
+  "status": "Rewritten",
+  "hash": "3218cb92d7f4",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [contract]": {
+  "status": "Rewritten",
+  "hash": "0132985d0fc1",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [decision]": {
+  "status": "Rewritten",
+  "hash": "92bd679c2093",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [funds]": {
+  "status": "Rewritten",
+  "hash": "a403ae73c4da",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [itinerary]": {
+  "status": "Rewritten",
+  "hash": "4f7cf2e733a8",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [passport]": {
+  "status": "Rewritten",
+  "hash": "fde8a012f66c",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [stops]": {
+  "status": "Rewritten",
+  "hash": "b267820fb932",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [supporter]": {
+  "status": "Rewritten",
+  "hash": "9874de322180",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [union-arts]": {
+  "status": "Rewritten",
+  "hash": "042d7f5ae66b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_444": {
+  "status": "Rewritten",
+  "hash": "5d56ab96d119",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_444 [passport]": {
+  "status": "Rewritten",
+  "hash": "fc7acbcbc851",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_444 [work]": {
+  "status": "Rewritten",
+  "hash": "d13e91df8a08",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#gapWords": {
+  "status": "Rewritten",
+  "hash": "b0c4bf6098ff",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#jurisdictionOf": {
+  "status": "Rewritten",
+  "hash": "535cebbadf46",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#JURISDICTIONS": {
+  "status": "Rewritten",
+  "hash": "5184aa18ad9b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#abroadRead": {
+  "status": "Rewritten",
+  "hash": "4dfd47ff7f3a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#airportOf": {
+  "status": "Rewritten",
+  "hash": "c5f0d48c124d",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#AIRPORTS": {
+  "status": "Rewritten",
+  "hash": "cb874c1a1d92",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#applyVisa": {
+  "status": "Rewritten",
+  "hash": "a8616274684d",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#applyVisa [visa-applied]": {
+  "status": "Rewritten",
+  "hash": "ccf58a6c699f",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#callWords": {
+  "status": "Rewritten",
+  "hash": "0b3107744b3b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#departureWords": {
+  "status": "Rewritten",
+  "hash": "9aad8b3991a5",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#grantVisa [visa-granted]": {
+  "status": "Rewritten",
+  "hash": "56de8d59f6d4",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#legPhrase": {
+  "status": "Rewritten",
+  "hash": "e3b2e1278d55",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#legWords": {
+  "status": "Rewritten",
+  "hash": "e1e7e7ed05b6",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips": {
+  "status": "Rewritten",
+  "hash": "42d537f4ea23",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [arrived]": {
+  "status": "Rewritten",
+  "hash": "e02199e87068",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [checked-in]": {
+  "status": "Rewritten",
+  "hash": "5e636e0e57b5",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [checked-out]": {
+  "status": "Rewritten",
+  "hash": "b0d77781eab9",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [departed]": {
+  "status": "Rewritten",
+  "hash": "c79556d8e682",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [home]": {
+  "status": "Rewritten",
+  "hash": "94bb6ed347a8",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [missed-flight]": {
+  "status": "Rewritten",
+  "hash": "5b5f653b63aa",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#routeSourceWords": {
+  "status": "Rewritten",
+  "hash": "09acd081e06a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#SCHEDULE_WORDS": {
+  "status": "Rewritten",
+  "hash": "e10d012029a2",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#tripSpans": {
+  "status": "Rewritten",
+  "hash": "4db523b6eb94",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#visaRefusal": {
+  "status": "Rewritten",
+  "hash": "6676407ad6ff",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#way": {
+  "status": "Rewritten",
+  "hash": "6a6b8d122f22",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#whereWords": {
+  "status": "Rewritten",
+  "hash": "3e1f01b0454a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ }
+}

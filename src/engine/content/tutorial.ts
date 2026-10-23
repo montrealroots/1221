@@ -525,6 +525,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Miss a shoot day, or a second day of a run, and the production replaces you.',
       `While you’re at the School, work in term needs its approval. Press Ask The School at least ${counted(PRO_OUTSIDE.aheadDays / 7, 'week')} before the first day, and the dean decides a week later. Short, professional work that takes no School call and ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most is approved. Work taken in term without approval brings an academic warning, and a second time dismissal.`,
       'On an F-1 you can’t accept work outside the School while you’re a student, and the School can’t authorize it. Summer and the winter break are yours, unless the School holds you for one of its calls.',
+      'Some roles are abroad. Accepting one is the contract, not permission to work there: for work in Australia, press Apply For The Visa on the engagement under Work, and be awake for the car to the airport when the clock stops for it.',
       'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
     ],
     more: [
@@ -532,8 +533,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `The School’s rule is its Bulletin’s. Asking ${PRO_OUTSIDE.aheadDays} days ahead, ${PRO_OUTSIDE.mostDays} working days at most, ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.`,
       'An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer.',
     ],
-    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School'],
-    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work'],
+    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School', 'Apply For The Visa'],
+    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work', 'pro.apply_work_visa'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

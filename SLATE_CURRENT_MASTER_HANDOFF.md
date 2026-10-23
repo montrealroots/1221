@@ -1,6 +1,43 @@
-# Read First: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
+# Read First: Brief 25, The Master Career Build, Module 1 (Work Abroad) Done, 2026-10-23
 
-**This section is the current status, and where a new session starts.** The owner gave brief 24
+**This section is the current status, and where a new session starts.** The owner gave brief 25, "SLATE — Master
+Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
+`docs/verification/briefs-2026-10-16/25-master-career-build-command-and-global-acting-career-research-dossier.txt`. It
+is worked on `claude/peaceful-hamilton-59zdbb` from `b46ee301`, pushed and never force-pushed. Nothing is merged to
+`main` or deployed for it. There is no stash and one worktree. The brief asks for one primary coding agent unless the
+owner says otherwise, no contact with real people, no purchased data, and none of housing, vehicles, shopping, other
+occupations or parental leave.
+
+**Completion, by the matrix:** 588 of 659 rows in scope Implemented And Verified (89.2%); 67 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at brief 24's close. The 46 rows brief 22's final runs measured fall behind whenever `src/engine` changes, as
+  they did through briefs 23 and 24, and are held again by playing those runs on the brief's last tested commit; the
+  659th row is work abroad's capability, Implemented, its verified layer Partial, as every row added after the review
+  of 2026-10-13 is.)
+
+- **Read first:** `docs/verification/career-world-2026-10-23/CHECKPOINT.md` (where the work is, module by module, and the
+  blockers met), `criteria.md` (each module's checks, written before its code), `REGISTER.md` (290 rows: the brief's
+  requirements and the dossier's T01 to T100, held to the code by `node tools/career-register.mjs --check`, the gate's
+  twenty-third check) and `sources.json` (S01 to S110 and what this build itself read or was refused).
+- **Module 0** (`f341b3b1`): the starting point, the audit, the register and its checker, the sources.
+- **Module 1, work abroad, Sydney first:** a country registry (Australia verified from the department's pages; six
+  countries partly researched; the other 244 unsupported, which never grant permission), `COUNTRIES.md` generated from
+  it; a fictional feature shooting in Sydney; the 408 visa applied for from the engagement, in Papers; the production's
+  flights, cars and hotel as legs in each town's own time; where the player is, from the legs; work days at 7 AM Sydney
+  time under Australia's rule; pay recorded as income earned in Australia, without commission; Australian tax shown as
+  not in the game (S28 refused); the trip's steps in the engagement's history; each stage saved and loaded.
+- **Defects found and fixed on the way:** Papers read the US rule for the work in Sydney; after a missed flight out the
+  legs home still ran and told the player they were back; a missed flight's history lowercased place names; and
+  SAG-AFTRA eligibility was announced at a first day never worked (since brief 19, local work too), now read from the
+  first day worked. Adding the project shifted life A's opportunity ids and so casting's keyed draws: the career
+  journey now has her paid for Jess in Static On Route 9 in August 2029, before The Calloway Files, and says why.
+- **Next:** Module 2, the real industry catalog with field-level provenance and roles drawn from it; then real agencies
+  and agents, contracts and residuals, production workflows, charts and awards, and the time loop, tutorials,
+  playthroughs and the final gate, each in the checkpoint's table.
+
+# Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
+
+**This section was the current status until brief 25 began.** The owner gave brief 24
 (`docs/verification/briefs-2026-10-16/24-finish-slates-ui-alignment-home-spacing-and-navigation-cleanup.txt`, kept
 verbatim) on brief 23's line, before it was merged. It was worked on `claude/peaceful-hamilton-59zdbb` from `113765a6`,
 pushed and never force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not

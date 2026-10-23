@@ -127,10 +127,10 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "91cd48fd0253",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects",
-  "first": "Rewritten And Verified"
+  "hash": "8f7971d9682c",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {
   "status": "Rewritten",

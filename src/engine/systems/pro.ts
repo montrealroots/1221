@@ -86,7 +86,10 @@ export type ProEventKind =
   | 'request-missed'
   // His office's request to meet, passed on by the School, gone by with no materials sent (from 2026-10-22, brief 20's
   // journeys, F10): until then it passed its date with nothing said and nothing kept.
-  | 'ask-lapsed';
+  | 'ask-lapsed'
+  // A trip for work abroad, step by step (from 2026-10-23, the owner's brief 25, `systems/worktrip.ts`), and its work
+  // visa applied for and decided.
+  | 'departed' | 'arrived' | 'checked-in' | 'checked-out' | 'home' | 'missed-flight' | 'visa-applied' | 'visa-granted';
 
 /** One event in a history: a stable id, when, what, its words as the player reads them, and what it's about. */
 export interface ProEvent {
@@ -318,7 +321,13 @@ export interface ProPayment {
 export interface EligibilityRead {
   at: Instant;
   authorized: boolean;
-  basis: 'citizen' | 'green-card' | 'opt' | 'student' | 'none';
+  /**
+   * The US's grounds, or, for work abroad (from 2026-10-23, the owner's brief 25), the country's: a citizen of it, a
+   * route held or one granted on arrival, one that has to be applied for, or a country whose rules aren't in the game.
+   */
+  basis: 'citizen' | 'green-card' | 'opt' | 'student' | 'none' | 'abroad-citizen' | 'abroad-route' | 'abroad-needed' | 'abroad-unsupported';
+  /** Work abroad: the country, by the gazetteer's id. */
+  country?: string;
   words: string;
   /** The first of its dates permission didn't cover, where one wasn't. */
   refusedFrom?: Instant;
@@ -358,6 +367,50 @@ export interface Engagement extends HasHistory {
   log?: { day: number; at: Instant; status: 'worked' | 'missed'; band?: Band; overall?: number }[];
   /** Work in term at the School: approved by the dean, taken without approval, or taken without it and found by the School. */
   school?: 'approved' | 'unapproved' | 'reported';
+  /** Work abroad: its trip (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25). */
+  tripId?: ProId;
+}
+
+/**
+ * One leg of a trip for work abroad (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25): by car or by air,
+ * from one town to the next, departing and arriving at instants (shown in each town's own zone), the game's schedule
+ * and not a real flight's. `booked` until it leaves, `en-route` on the way, `done` once it's arrived; `missed` where the
+ * player wasn't there to leave, and `canceled` where an earlier leg was missed or the work went.
+ */
+export interface TripLeg {
+  id: ProId;
+  mode: 'car' | 'flight';
+  /** The gazetteer's town ids. */
+  from: string;
+  to: string;
+  departs: Instant;
+  arrives: Instant;
+  label: string;
+  status: 'booked' | 'en-route' | 'done' | 'missed' | 'canceled';
+  /** Which way: out to the work, or back home from it. */
+  way: 'out' | 'back';
+}
+
+/** Where a production puts the actor up while the work is abroad: the town, the place, from and to, and who pays. */
+export interface WorkStay {
+  cityId: string;
+  place: string;
+  from: Instant;
+  to: Instant;
+  payer: 'production';
+  status: 'booked' | 'in' | 'out' | 'canceled';
+}
+
+/** A trip for work abroad: its legs out and back, the stay, and its history. Kept with the engagement it's for. */
+export interface WorkTrip extends HasHistory {
+  id: ProId;
+  engagementId: ProId;
+  /** The country of the work and its town, by the gazetteer's ids. */
+  country: string;
+  cityId: string;
+  legs: TripLeg[];
+  stay: WorkStay;
+  status: 'booked' | 'out' | 'there' | 'back' | 'home' | 'canceled';
 }
 
 /**
@@ -415,6 +468,8 @@ export interface ProRecord {
   opportunities: Opportunity[];
   /** Live, and the last `ENGAGEMENTS_KEPT` finished. Their credits stay. */
   engagements: Engagement[];
+  /** Trips for work abroad (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25), each its engagement's. */
+  trips?: WorkTrip[];
   showcase?: ShowcaseRecord;
   outsideWork?: OutsideWorkRequest[];
   /** In-session work done without the School's approval. */

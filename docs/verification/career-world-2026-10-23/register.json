@@ -270,22 +270,30 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts",
+    "src/engine/content/careerwork.ts"
+   ],
+   "entry": "Career, Work: The Trip To Sydney, booked when work abroad is accepted.",
+   "reads": "The engagement’s days and the project’s city; the gazetteer’s cities, zones and airports.",
+   "writes": "Person.pro.trips: the legs (car, flights, car) and the production’s hotel as a stay, with their statuses and history.",
+   "consumers": "whereAt (the School, auditions, work days), tripSpans (another booking refused), the Work tab, the calendar.",
+   "save": "The trip and its history saved with person.pro; tests reload at the visa and before the flight and end as the life played straight through.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
+    "tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney",
+    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [
@@ -693,22 +701,28 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/jurisdictions.ts",
+    "tools/countries.mjs"
+   ],
+   "entry": "What The 408 Visa Asks; COUNTRIES.md.",
+   "reads": "Each condition’s basis.",
+   "writes": "Nothing.",
+   "consumers": "The Work tab, the countries page, the provenance test.",
+   "save": "Content.",
+   "tests": [
+    "tests/career-world-countries.test.ts#gives each verified condition words its source recorded",
+    "tests/career-world-countries.test.ts#is what tools/countries.mjs writes"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "For the countries’ rules: each condition is verified with the source’s words or the game’s labeled assumption, and every gap is listed. The catalog’s creative details are Module 2.",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -2108,7 +2122,8 @@
    "consumers": "Money.",
    "save": "person.pro.engagements[].pay.",
    "tests": [
-    "tests/propay.test.ts#no payment twice"
+    "tests/propay.test.ts#no payment twice",
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
    ],
    "evidence": [],
    "status": "Implemented, Verification Incomplete",
@@ -3002,22 +3017,31 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
-   "evidence": [],
-   "status": "Not Implemented",
+   "implementation": [
+    "src/engine/content/jurisdictions.ts",
+    "src/engine/systems/worktrip.ts",
+    "tools/countries.mjs"
+   ],
+   "entry": "Every country of the gazetteer reads its state from the registry (jurisdictionOf); the trip runs on the same gazetteer.",
+   "reads": "COUNTRIES, CITIES and their zones (content/geography.ts).",
+   "writes": "Nothing: the registry is content.",
+   "consumers": "abroadRead, visaRefusal, the countries page, the trip planner.",
+   "save": "Content, not saved.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T19: says how far each country is researched",
+    "tests/career-world-countries.test.ts#is what tools/countries.mjs writes"
+   ],
+   "evidence": [
+    "docs/verification/career-world-2026-10-23/COUNTRIES.md"
+   ],
+   "status": "Partially Implemented",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3028,26 +3052,36 @@
    "area": "world",
    "kind": "requirement",
    "description": "For each enabled jurisdiction: nationality and immigration status, work permission, sponsor conditions, permit restrictions, employer and location, local time, agreement applicability, working conditions, withholding, required documents.",
-   "sources": [],
+   "sources": [
+    "S01",
+    "N02"
+   ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/jurisdictions.ts",
+    "src/engine/systems/worktrip.ts"
+   ],
+   "entry": "The offer’s warning, the Work tab’s Permission, Flights And Hotel, Papers’ Permission To Work.",
+   "reads": "Citizenship and passports (documents.ts), the route’s conditions, the engagement’s days.",
+   "writes": "A permit in Papers tied to the engagement.",
+   "consumers": "acceptRefusal, the first flight, each work day.",
+   "save": "The permit saved in Person.documents.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
+    "tests/career-world-sydney.test.ts#a New Zealand citizen works in Australia",
+    "tests/career-world-sydney.test.ts#T12: with no visa at the first flight"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "Australia only: nationality, work permission, the supporter, the permit and local time are in; agreement applicability, working conditions and withholding there are not (S13 unread; S28 refused, see GEO-19).",
    "tracks": {
-    "sourceLocated": "n/a",
-    "sourceVerified": "n/a",
-    "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
-    "externallyBlocked": "no"
+    "sourceLocated": "yes",
+    "sourceVerified": "partial",
+    "ruleExtracted": "partial",
+    "implemented": "partial",
+    "tested": "partial",
+    "externallyBlocked": "partial"
    },
    "covers": []
   },
@@ -3060,22 +3094,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
-   "evidence": [],
-   "status": "Not Implemented",
+   "implementation": [
+    "tools/countries.mjs",
+    "src/engine/content/jurisdictions.ts"
+   ],
+   "entry": "docs/verification/career-world-2026-10-23/COUNTRIES.md, generated.",
+   "reads": "The registry and the gazetteer.",
+   "writes": "COUNTRIES.md.",
+   "consumers": "The owner and the next session; the test holds it to the registry.",
+   "save": "A generated document.",
+   "tests": [
+    "tests/career-world-countries.test.ts#is what tools/countries.mjs writes"
+   ],
+   "evidence": [
+    "docs/verification/career-world-2026-10-23/COUNTRIES.md"
+   ],
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3167,27 +3208,36 @@
     "S13",
     "S25",
     "S26",
-    "S28"
+    "S28",
+    "N02"
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/jurisdictions.ts",
+    "src/engine/systems/worktrip.ts"
+   ],
+   "entry": "Career, Work: Apply For The Visa; What The 408 Visa Asks.",
+   "reads": "S01 as read on 2026-10-23.",
+   "writes": "The 408 permit, pending then valid, to 28 days past the last work day.",
+   "consumers": "abroadRead at acceptance, the first flight and each work day.",
+   "save": "The permit in Person.documents.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
+    "tests/career-world-sydney.test.ts#T12: with no visa at the first flight",
+    "tests/career-world-countries.test.ts#gives each verified condition words its source recorded",
+    "tests/career-world-countries.test.ts#reads every route from a page this build read"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "The 408 is in, from S01. MEAA’s agreements (S13) and safety (S25, S26) aren’t read; foreign-resident withholding (S28) refused three ways on 2026-10-23 (HTTP 403).",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
-    "externallyBlocked": "no"
+    "sourceVerified": "partial",
+    "ruleExtracted": "partial",
+    "implemented": "partial",
+    "tested": "partial",
+    "externallyBlocked": "partial"
    },
    "covers": []
   },
@@ -3361,22 +3411,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/jurisdictions.ts",
+    "src/engine/systems/worktrip.ts",
+    "src/ui/papers/Documents.tsx"
+   ],
+   "entry": "The offer, Accept, the Work tab and Papers’ Your Work And Your Permission.",
+   "reads": "The country’s research state.",
+   "writes": "Nothing for an unsupported or partly researched country: acceptance is refused with the reason.",
+   "consumers": "acceptRefusal, abroadRead, Papers.",
+   "save": "Nothing is written.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T19: says how far each country is researched",
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3392,22 +3449,28 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts"
+   ],
+   "entry": "The Trip To Sydney’s legs; the clock stops for the car to the airport.",
+   "reads": "Distances between cities, airports, hubs, zones.",
+   "writes": "Legs with local departure and arrival, the stay.",
+   "consumers": "whereAt, the work days, the School, auditions.",
+   "save": "The legs and their statuses.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney",
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
+    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "Time zones, arrival, local dates, commitments and the hotel are in; rest and work readiness after a long flight (jet lag) aren’t, and the flight times are the game’s estimate from the distances, not a schedule (S33 not read).",
    "tracks": {
     "sourceLocated": "yes",
     "sourceVerified": "no",
     "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3421,22 +3484,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/ui/papers/Documents.tsx"
+   ],
+   "entry": "Papers, Permission To Work.",
+   "reads": "Person.documents.",
+   "writes": "The work visa as a permit with its number, tied to the engagement.",
+   "consumers": "Papers’ DocumentList, abroadRead.",
+   "save": "Person.documents.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3450,22 +3518,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/propay.ts",
+    "src/engine/systems/earnings.ts"
+   ],
+   "entry": "Career, Work: the pay; Money’s statements.",
+   "reads": "The engagement’s pay.",
+   "writes": "Wages through the existing payroll, recorded as income earned in Australia (yearOf(...).foreign.au).",
+   "consumers": "The tax return’s foreign income; Money.",
+   "save": "Transactions and the year’s earnings.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "Income abroad is in; expenses abroad aren’t: the production pays the trip, and allowances and per diem aren’t modeled.",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3480,7 +3553,8 @@
    "edition": "",
    "applicability": "Every life.",
    "implementation": [
-    "src/engine/systems/projobs.ts"
+    "src/engine/systems/projobs.ts",
+    "src/engine/systems/worktrip.ts"
    ],
    "entry": "Career, Opportunities; the calendar.",
    "reads": "The School’s calendar, trips.",
@@ -3488,17 +3562,18 @@
    "consumers": "The School’s attendance.",
    "save": "person.pro.",
    "tests": [
-    "tests/pro-work.test.ts#clashes with classes"
+    "tests/pro-work.test.ts#clashes with classes",
+    "tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip"
    ],
    "evidence": [],
-   "status": "Partially Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "partial",
-    "tested": "partial",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3568,29 +3643,31 @@
    "kind": "requirement",
    "description": "Withholding is not final tax liability, and no worldwide tax is one generic percentage.",
    "sources": [
-    "S28",
-    "S29",
-    "S30"
+    "S28"
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "Career, Work: the pay says Australian tax on it isn’t part of the game yet.",
+   "reads": "The engagement’s trip.",
+   "writes": "Nothing: no Australian tax is computed, and no generic percentage stands in.",
+   "consumers": "The Work tab.",
+   "save": "Nothing.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Blocked Externally",
+   "blocker": "S28, the ATO’s foreign-resident withholding pages: HTTP 403 to curl with a browser’s user agent, WebFetch and the ATO’s content API, 2026-10-23. The game says the tax isn’t worked out rather than guess one.",
    "tracks": {
     "sourceLocated": "yes",
     "sourceVerified": "no",
     "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
-    "externallyBlocked": "no"
+    "implemented": "partial",
+    "tested": "partial",
+    "externallyBlocked": "yes"
    },
    "covers": []
   },
@@ -3632,22 +3709,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "The calendar, the School’s classes, auditions, work days.",
+   "reads": "The trip’s legs and stay (whereAt).",
+   "writes": "Missed classes and auditions, said with where the player was.",
+   "consumers": "The School’s present(), the audition handler, the work day.",
+   "save": "Derived from the saved legs.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
+    "tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip",
+    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3663,22 +3747,28 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/core/time.ts"
+   ],
+   "entry": "The Trip To Sydney’s times; the first call’s time in Sydney and New Haven.",
+   "reads": "IANA zones of each city.",
+   "writes": "Instants; nothing local is stored.",
+   "consumers": "The legs, the calls, the notices.",
+   "save": "Instants saved.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney",
+    "tests/career-world-sydney.test.ts#keeps 7 AM a Sydney call at 7 AM"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Implemented, Verification Incomplete",
+   "blocker": "The date line and a change of Sydney’s clocks between call days are tested; a call inside a skipped or repeated hour isn’t.",
    "tracks": {
     "sourceLocated": "yes",
     "sourceVerified": "no",
     "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "partial",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -4730,22 +4820,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/pro.ts"
+   ],
+   "entry": "Career, Work: What Happened.",
+   "reads": "person.pro.",
+   "writes": "The trip, the visa and the engagement’s history.",
+   "consumers": "The Work tab, Papers.",
+   "save": "Saved and loaded at each stage in the journey.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "Applications, auditions, contracts, roles, credits and earnings persist (brief 19, and the trip here); collaborators, scenes, footage, reception, nominations and awards are later modules.",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "partial",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -6079,22 +6174,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "Played through the commands and the clock.",
+   "reads": "See the test.",
+   "writes": "See the test.",
+   "consumers": "See the test.",
+   "save": "Saved and loaded where the test says.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [
@@ -6112,22 +6212,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "Played through the commands and the clock.",
+   "reads": "See the test.",
+   "writes": "See the test.",
+   "consumers": "See the test.",
+   "save": "Saved and loaded where the test says.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T12: with no visa at the first flight"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [
@@ -6343,22 +6448,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "Played through the commands and the clock.",
+   "reads": "See the test.",
+   "writes": "See the test.",
+   "consumers": "See the test.",
+   "save": "Saved and loaded where the test says.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T19: says how far each country is researched"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [
@@ -6407,22 +6517,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "Played through the commands and the clock.",
+   "reads": "See the test.",
+   "writes": "See the test.",
+   "consumers": "See the test.",
+   "save": "Saved and loaded where the test says.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [
@@ -6439,22 +6554,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "Played through the commands and the clock.",
+   "reads": "See the test.",
+   "writes": "See the test.",
+   "consumers": "See the test.",
+   "save": "Saved and loaded where the test says.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [
@@ -6635,22 +6755,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/systems/worktrip.ts",
+    "src/engine/systems/projobs.ts"
+   ],
+   "entry": "Played through the commands and the clock.",
+   "reads": "See the test.",
+   "writes": "See the test.",
+   "consumers": "See the test.",
+   "save": "Saved and loaded where the test says.",
+   "tests": [
+    "tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [

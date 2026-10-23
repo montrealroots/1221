@@ -1,16 +1,16 @@
 {
+ "src/engine/systems/projobs.ts#abroadWarning": {
+  "status": "Rewritten",
+  "hash": "88b8da0825cd",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#acceptRefusal": {
   "status": "Rewritten",
-  "hash": "52ec8763c4eb",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
- },
- "src/engine/systems/projobs.ts#acceptWarning": {
-  "status": "Rewritten",
-  "hash": "4ea5abca35eb",
-  "on": "2026-10-22",
-  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "hash": "1127a6e337c3",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#againWords": {
@@ -36,10 +36,10 @@
  },
  "src/engine/systems/projobs.ts#awayAt": {
   "status": "Rewritten",
-  "hash": "52de3160222a",
-  "on": "2026-10-21",
-  "evidence": "tests/pro-work.test.ts, V12's GUARD: a student at a meeting with an agent's office in term is away, labelled as the meeting's calendar entry is (Meeting At Stewart Talent), from nine to two, and the School counts the day's classes missed; read on 2026-10-21 by brief 19's playthroughs",
-  "first": "Rewritten And Verified"
+  "hash": "bf0c82c95501",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#chanceWords": {
   "status": "Rewritten",
@@ -127,10 +127,10 @@
  },
  "src/engine/systems/projobs.ts#FIELD_WORDS": {
   "status": "Rewritten",
-  "hash": "9bf1427ad4c7",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "a145601e1063",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#finish": {
   "status": "Rewritten",
@@ -176,10 +176,10 @@
  },
  "src/engine/systems/projobs.ts#KIND_WORDS": {
   "status": "Rewritten",
-  "hash": "66419602c475",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "8b9f5216b575",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#lastPostingOf": {
   "status": "Rewritten",
@@ -232,10 +232,10 @@
  },
  "src/engine/systems/projobs.ts#missRound": {
   "status": "Rewritten",
-  "hash": "61116adf4d94",
-  "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so a round or a meeting missed for another career commitment says where the actor was (the app's third walk), to docs/STYLE.md; read in tests/pro-work.test.ts ('two auditions in person whose trips meet…' and 'a meeting at the agent’s office and an audition…')",
-  "first": "Rewritten And Verified"
+  "hash": "bff0f0ca4f55",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#moveRefusal": {
   "status": "Rewritten",
@@ -412,12 +412,26 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#schoolWarning": {
+  "status": "Rewritten",
+  "hash": "4ea5abca35eb",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#setRound": {
   "status": "Rewritten",
   "hash": "3e8fb45d8d3d",
   "on": "2026-10-21",
   "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#spansOf": {
+  "status": "Rewritten",
+  "hash": "705aae9d0951",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#submit": {
   "status": "Rewritten",

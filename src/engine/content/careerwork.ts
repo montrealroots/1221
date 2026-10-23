@@ -94,6 +94,17 @@ export const SAG_DAY_BY_YEAR: readonly { from: string; amount: number }[] = [
 ];
 
 /**
+ * The SAG-AFTRA weekly performer's minimum by contract year, each from July 1: the rate sheet's theatrical row B 354
+ * and television's TV 5, the same figures (from 2026-10-23, the owner's brief 25: `N01` in
+ * `docs/verification/career-world-2026-10-23/sources.json`, read that day). Until then `RATES` held 2026–27's alone,
+ * which no project paid; the Sydney feature is the first that does, and its work from July 2027 on reads its own year.
+ */
+export const SAG_WEEK_BY_YEAR: readonly { from: string; amount: number }[] = [
+  { from: '2025-07-01', amount: 4_326_00 }, { from: '2026-07-01', amount: 4_456_00 }, { from: '2027-07-01', amount: 4_590_00 },
+  { from: '2028-07-01', amount: 4_728_00 }, { from: '2029-07-01', amount: 4_870_00 },
+];
+
+/**
  * The SAG-AFTRA day rates set as a share of the Basic Agreement's day performer minimum: Low Budget at 65% (S33) and
  * Ultra Low Budget at 20% (S32), each the year's, rounded to the dollar as the rate sheets print them. Both reproduce
  * `RATES`' 2026–27 figures, $834 and $257.
@@ -114,6 +125,7 @@ const SHARE_OF_SAG_DAY: Partial<Record<RateId, number>> = { 'sag-tv-day': 1, 'lo
  * figure `RATES` holds: no later LORT minimum was read (S36 quotes 29 June 2026's), and the other two are estimates.
  */
 export function minimumOn(rate: Rate, day: string): number | undefined {
+  if (rate.id === 'sag-tv-week') return [...SAG_WEEK_BY_YEAR].reverse().find((r) => r.from <= day)?.amount ?? rate.amount;
   const share = SHARE_OF_SAG_DAY[rate.id];
   const scale = [...SAG_DAY_BY_YEAR].reverse().find((r) => r.from <= day)?.amount;
   if (share === undefined || scale === undefined) return rate.amount;
@@ -152,7 +164,24 @@ export const UNIONS = {
 // ---------------------------------------------------------------------------------------------------------------------
 
 export type ProMedium = 'stage' | 'film' | 'television';
-export type ProjectKind = 'off-broadway' | 'lort' | 'network-drama' | 'low-budget' | 'ultra-low-budget' | 'student-film' | 'non-union-short';
+export type ProjectKind = 'off-broadway' | 'lort' | 'network-drama' | 'low-budget' | 'ultra-low-budget' | 'student-film' | 'non-union-short' | 'overseas-feature';
+
+/**
+ * How a project abroad gets its actor there and keeps them (from 2026-10-23, the owner's brief 25, Part 9 and the
+ * dossier's Section 10; `docs/verification/career-world-2026-10-23/criteria.md`, W3 to W6): the production's company in
+ * the country, which supports a work visa where one's needed, and the hotel it books. Every name is the game's, and that
+ * the production books and pays for the flights, the cars and the hotel is the game's assumption, said where a player
+ * reads it.
+ */
+export interface TripTerms {
+  /** The production's own company in the country of the work, which supports the visa. */
+  supporter: string;
+  /** Where the production puts the actor up, as a screen names it. */
+  hotel: string;
+  /** Who books and pays for the travel and the stay: the production, assumed. */
+  pays: 'production';
+  words: string;
+}
 /** A role's size as billing calls it: the stage's three, and screen's co-star and day player. */
 export type RoleSize = PartSize | 'co-star';
 
@@ -207,6 +236,10 @@ export interface ProjectTemplate {
   /** Who can put the actor up for it: an agent, and the actor's own submission where it's open. */
   access: { agent: boolean; open: false | 'anyone' | 'equity-members' };
   pay: RateId;
+  /** Work abroad: the production's company there, its hotel, and who pays (`TripTerms`). Absent, the work is a trip from home and back each day. */
+  trip?: TripTerms;
+  /** Days from the posting to the work's first day, where it isn't `WORK.leadDays`: work abroad needs time for its visa. */
+  leadDays?: number;
 }
 
 /**
@@ -356,6 +389,41 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'shoot', days: 2 },
     access: { agent: false, open: 'anyone' }, pay: 'non-union-day',
+  },
+  // A feature shooting in Sydney (from 2026-10-23, the owner's brief 25: the dossier's "start with a local engagement and
+  // an overseas engagement"). Fictional, as every project here is: the studio, its Australian company, the casting office
+  // and the hotel. ASSUMPTIONS: a US studio's feature engages an American actor it casts from the US under the SAG-AFTRA
+  // Basic Agreement, its weekly performer's minimum, though the game hasn't read the agreement's terms for work abroad;
+  // its casting office takes self-tapes for the part from anyone in the US; the shoot is eight weekdays, eight weeks after
+  // the posting, so a visa can be decided before the flight. An agent's agreement covers work in the United States
+  // (`AGREEMENT_TERMS`' territory), so this is outside it: no agent puts the actor up for it, and none is owed commission.
+  {
+    id: 'harbor-line', kind: 'overseas-feature', fictional: true,
+    project: 'Harbor Line', company: 'Larkspur Pictures', casting: 'Brandt Casting',
+    medium: 'film', genres: ['conspiracy_thriller', 'thriller'],
+    place: { city: 'Sydney', cityId: 'au-nsw-sydney', venue: 'a sound stage and the harbor’s wharves' },
+    role: { part: 'Dana Kell', size: 'supporting', for: 'actress', about: 'An American insurance investigator flown to Sydney when a container ship’s cargo vanishes between two ports, who finds the dockworkers know exactly where it went.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Theatrical)',
+    requirements: { ages: [24, 36], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 8 },
+    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-week',
+    trip: { supporter: 'Larkspur Pictures Australia', hotel: 'the production’s hotel near Circular Quay', pays: 'production', words: 'Larkspur Pictures books and pays for your flights, the cars and the hotel, as the game assumes for a studio feature shooting abroad.' },
+    leadDays: 56,
+  },
+  {
+    id: 'harbor-line-arden', kind: 'overseas-feature', fictional: true,
+    project: 'Harbor Line', company: 'Larkspur Pictures', casting: 'Brandt Casting',
+    medium: 'film', genres: ['conspiracy_thriller', 'thriller'],
+    place: { city: 'Sydney', cityId: 'au-nsw-sydney', venue: 'a sound stage and the harbor’s wharves' },
+    role: { part: 'Miles Arden', size: 'supporting', for: 'actor', about: 'The shipping line’s American lawyer, sent out to keep the loss quiet, who knows the cargo was never what the manifest said.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Theatrical)',
+    requirements: { ages: [24, 36], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 8 },
+    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-week',
+    trip: { supporter: 'Larkspur Pictures Australia', hotel: 'the production’s hotel near Circular Quay', pays: 'production', words: 'Larkspur Pictures books and pays for your flights, the cars and the hotel, as the game assumes for a studio feature shooting abroad.' },
+    leadDays: 56,
   },
 ];
 

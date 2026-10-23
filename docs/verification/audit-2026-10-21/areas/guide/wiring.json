@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1604"
+   "handler": "src/engine/systems/projobs.ts:1691"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1647"
+   "handler": "src/engine/systems/projobs.ts:1734"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1629"
+   "handler": "src/engine/systems/projobs.ts:1716"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1691"
+   "handler": "src/engine/systems/projobs.ts:1782"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1679"
+   "handler": "src/engine/systems/projobs.ts:1770"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1595"
+   "handler": "src/engine/systems/projobs.ts:1682"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1614"
+   "handler": "src/engine/systems/projobs.ts:1701"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -735,12 +735,23 @@
   {
    "file": "src/ui/career/WorkPane.tsx",
    "control": "<Gated onClick>",
+   "feature": "pro.apply_work_visa",
+   "label": "Apply For The Visa",
+   "kind": "pro.apply_work_visa",
+   "payload": "{ engagementId: e.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/worktrip.ts:478",
+   "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25."
+  },
+  {
+   "file": "src/ui/career/WorkPane.tsx",
+   "control": "<Gated onClick>",
    "feature": "pro.join_sag",
    "label": "Join SAG-AFTRA (${fee})",
    "kind": "pro.join_sag",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/propay.ts:782"
+   "handler": "src/engine/systems/propay.ts:798"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -1504,7 +1515,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1002"
+   "handler": "src/engine/systems/pro.ts:1057"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1514,7 +1525,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:985"
+   "handler": "src/engine/systems/pro.ts:1040"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1524,7 +1535,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1014"
+   "handler": "src/engine/systems/pro.ts:1069"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1534,7 +1545,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:973"
+   "handler": "src/engine/systems/pro.ts:1028"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2022,7 +2033,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1647"
+   "handler": "src/engine/systems/projobs.ts:1734"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2030,7 +2041,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1679"
+   "handler": "src/engine/systems/projobs.ts:1770"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

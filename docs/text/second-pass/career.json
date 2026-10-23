@@ -197,10 +197,10 @@
  },
  "src/engine/content/careerwork.ts#PROJECTS [camera]": {
   "status": "Rewritten",
-  "hash": "6e3f94b53b5e",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "4495c442e883",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [eastview]": {
   "status": "Rewritten",
@@ -221,6 +221,20 @@
   "hash": "ecd839d334f4",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [harbor-line-arden]": {
+  "status": "Rewritten",
+  "hash": "454387f7385d",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [harbor-line]": {
+  "status": "Rewritten",
+  "hash": "454387f7385d",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [paper-moons-ivy]": {
@@ -405,6 +419,13 @@
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#AHEAD": {
+  "status": "Rewritten",
+  "hash": "0e21652cc770",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent-answers]": {
   "status": "Rewritten",
   "hash": "e0d1d7ef8710",
@@ -517,6 +538,13 @@
   "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md: Equity joined by a first day under an Equity contract as by the degree, read against tests/b20-career-defects.test.ts, which plays it",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.work-abroad]": {
+  "status": "Rewritten",
+  "hash": "f45f42346d53",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
   "status": "Rewritten",
   "hash": "1cb2b1f9f7d1",
@@ -533,10 +561,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
   "status": "Rewritten",
-  "hash": "78328b01ef5f",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "fa5648cca220",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten",
@@ -547,10 +575,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Rewritten",
-  "hash": "b5621a820a2a",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "3cd9c1e2c888",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
   "status": "Rewritten",

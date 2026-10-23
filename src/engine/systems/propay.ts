@@ -117,6 +117,8 @@ export const RELEASE_KIND = 'pro.pay.release';
 export const DUES_KIND = 'pro.pay.dues';
 /** The first day of a first SAG-AFTRA principal job: eligible to join from it. */
 export const SAG_ELIGIBLE_KIND = 'pro.pay.sag_eligible';
+/** After a work day's own handler (`WORK_DAY_KIND`, 38) at the same instant: lower runs first. */
+const SAG_ELIGIBLE_PRIORITY = 39;
 /**
  * Said by the School when the degree makes the actor a member of Equity (`setStanding`), and by the work loop when an
  * Equity contract's first day does (`unionsFrom`, `systems/projobs.ts`, from 2026-10-21), so its fee is charged then.
@@ -143,7 +145,7 @@ export const BILLS_KEPT = 12;
  * The SAG-AFTRA work that makes an actor eligible: a principal role under the TV/Theatrical or the Low Budget agreement
  * (S22's Taft-Hartley reports). Ultra Low Budget and student films don't (S20, a search engine's copy).
  */
-export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'low-budget'];
+export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'low-budget', 'overseas-feature'];
 
 /** What an agreement's scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term), in the US. */
 export const COVERED_MEDIA: readonly ProMedium[] = ['stage', 'film', 'television'];
@@ -568,7 +570,7 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
   const pro = ensurePro(sim, person);
   const first = e.days[0]?.from;
   if (project && SAG_QUALIFIES.includes(project.kind) && first !== undefined && pro.sag?.eligibleSince === undefined && pro.sag?.memberSince === undefined && !scheduledFor(sim, SAG_ELIGIBLE_KIND, e.id)) {
-    sim.schedule({ at: Math.max(first, sim.now + 60_000), kind: SAG_ELIGIBLE_KIND, label: 'SAG-AFTRA Eligibility', category: 'system', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: e.id } });
+    sim.schedule({ at: Math.max(first, sim.now + 60_000), kind: SAG_ELIGIBLE_KIND, label: 'SAG-AFTRA Eligibility', category: 'system', priority: SAG_ELIGIBLE_PRIORITY, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: e.id } });
   }
   return { scheduled, deferred };
 }
@@ -761,16 +763,30 @@ export function registerProPay(sim: Simulation): void {
     if (person && bill) settle(s, person, bill);
   });
 
+  // Eligible from the first day worked, read after that day's own handler at the same instant (from 2026-10-23, brief 25,
+  // found by the missed-flight test): until then this ran first, at the first day's start, and told a player who slept
+  // through the car to the airport, and was replaced for it, that the job had begun and they could join. A first day
+  // missed waits for a later one worked; an item an older save holds, which still runs first, looks again a minute on.
   sim.onSchedule(SAG_ELIGIBLE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const e = person?.pro?.engagements.find((x) => x.id === item.payload.engagementId);
     const pro = person?.pro;
-    if (!person || !pro || !e || e.status === 'canceled' || pro.sag?.eligibleSince !== undefined || pro.sag?.memberSince !== undefined) return;
-    pro.sag = { ...pro.sag, eligibleSince: item.at };
+    if (!person || !pro || !e || e.status === 'canceled' || pro.sag?.memberSince !== undefined) return;
+    const began = e.log?.find((l) => l.status === 'worked');
+    if (!began) {
+      const today = e.days.findIndex((d) => d.from === item.at);
+      const next = today >= 0 && !e.log?.some((l) => l.day === today) ? item.at + 60_000 : e.days.find((d) => d.from > item.at)?.from;
+      if (next !== undefined && e.status !== 'finished') s.schedule({ at: next, kind: SAG_ELIGIBLE_KIND, label: item.label, category: 'system', priority: SAG_ELIGIBLE_PRIORITY, refType: 'engagement', refId: e.id, payload: item.payload });
+      return;
+    }
+    // Another job worked first made the actor eligible already; this one's day set it (`unionsFrom`) and is told here.
+    if (pro.sag?.eligibleSince !== undefined && pro.sag.eligibleSince < began.at) return;
+    if (e.history.some((h) => h.key === `sag-eligible:${e.id}`)) return;
+    pro.sag = { ...pro.sag, eligibleSince: began.at };
     const project = projectOf(e);
     const from = sagMembershipFrom(person)!;
     const cur = saveCurrency(s.universe);
-    noteEvent(s, e, { kind: 'success', key: `sag-eligible:${e.id}`, words: `With your first SAG-AFTRA principal job begun, you can join SAG-AFTRA from ${formatDate(item.at, s.zone)}.`, ref: e.id });
+    noteEvent(s, e, { kind: 'success', key: `sag-eligible:${e.id}`, words: `With your first SAG-AFTRA principal job begun, you can join SAG-AFTRA from ${formatDate(began.at, s.zone)}.`, ref: e.id });
     if (person.id === s.universe.playerId) s.notify({ category: 'career', title: 'You Can Join SAG-AFTRA', body: `Your part in ${project?.project ?? 'this work'} is a SAG-AFTRA principal role, so you can join SAG-AFTRA from today. A union contract can require you to be a member from the 30th day after your first job under it began, so SAG-AFTRA work from ${formatDate(from, s.zone)} needs you to join first. Joining costs about ${formatMoney(usdIn(s, sagJoinUsd()), cur)}: press Join SAG-AFTRA on the Career screen’s Work tab.`, importance: 65, route: '/workspace/career?tab=work' });
   });
 

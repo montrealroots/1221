@@ -5,12 +5,6 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
- "src/engine/systems/projobs.ts#acceptWarning": {
-  "status": "Rewritten And Verified",
-  "hash": "c785220a6e4c",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
- },
  "src/engine/systems/projobs.ts#againWords": {
   "status": "Rewritten And Verified",
   "hash": "e2b1fddeb11e",

@@ -2,26 +2,26 @@
 
 Written by `node tools/career-register.mjs --write` from `register.json`, never by hand; `--check` holds it to the code.
 
-290 rows: 190 requirements, process rows and constraints from the brief’s Parts 1 to 18, and 100 scenarios from the dossier (T01 to T100). 12 of the 190 and 0 of the 100 are Implemented And Verified.
+290 rows: 190 requirements, process rows and constraints from the brief’s Parts 1 to 18, and 100 scenarios from the dossier (T01 to T100). 18 of the 190 and 6 of the 100 are Implemented And Verified.
 
 | Status | Rows |
 |---|---|
-| Implemented And Verified | 12 |
-| Implemented, Verification Incomplete | 7 |
-| Partially Implemented | 7 |
-| Not Implemented | 264 |
-| Blocked Externally | 0 |
+| Implemented And Verified | 24 |
+| Implemented, Verification Incomplete | 8 |
+| Partially Implemented | 13 |
+| Not Implemented | 244 |
+| Blocked Externally | 1 |
 | Decision Required | 0 |
 | Explicitly Deferred | 0 |
 
 | Track | Yes | Partial | No | n/a |
 |---|---|---|---|---|
-| Source Located | 28 | 0 | 0 | 262 |
-| Source Verified | 0 | 0 | 28 | 262 |
-| Rule Extracted | 0 | 0 | 28 | 262 |
-| Implemented | 16 | 10 | 264 | 0 |
-| Tested | 6 | 13 | 264 | 7 |
-| Externally Blocked | 0 | 0 | 290 | 0 |
+| Source Located | 29 | 0 | 0 | 261 |
+| Source Verified | 0 | 2 | 27 | 261 |
+| Rule Extracted | 0 | 2 | 27 | 261 |
+| Implemented | 29 | 17 | 244 | 0 |
+| Tested | 22 | 17 | 244 | 7 |
+| Externally Blocked | 1 | 2 | 287 | 0 |
 
 ## Start (10)
 
@@ -35,7 +35,7 @@ Written by `node tools/career-register.mjs --write` from `register.json`, never 
 | BASE-06 | Implemented And Verified | Do not block all professional interactions until graduation: a student can be represented and can submit to open work. | `src/engine/systems/proagent.ts`, `src/engine/systems/projobs.ts` | `tests/pro-agent.test.ts#comes through the School` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | BASE-07 | Implemented And Verified | Do not assume every student can legally accept every paid engagement: an F-1 student is refused outside acting work in words. | `src/engine/systems/projobs.ts` | `tests/pro-work.test.ts#an F-1 student in term is refused at acceptance` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | BASE-08 | Implemented And Verified | Do not restore removed housing, vehicle ownership, general shopping, unrelated occupations or parental leave. | — | `docs/verification/career-world-2026-10-23/audit.md` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: n/a, EB: no | — |
-| BASE-09 | Not Implemented | Career travel and temporary accommodation where work requires them. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| BASE-09 | Implemented And Verified | Career travel and temporary accommodation where work requires them. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts`, `src/engine/content/careerwork.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY`, `tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney`, `tests/career-world-sydney.test.ts#asleep when the car to the airport comes` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | BASE-10 | Implemented, Verification Incomplete | Preserve desktop and landscape-phone navigation, Title Case and alignment, and reintroduce no redundant navigation. | `src/ui/shell/destinations.ts` | — | SL: n/a, SV: n/a, RE: n/a, I: yes, T: partial, EB: no | — |
 
 ## Register (3)
@@ -59,7 +59,7 @@ Written by `node tools/career-register.mjs --write` from `register.json`, never 
 | PROV-07 | Not Implemented | Keep the factual baseline apart from save history: a data update never erases accepted contracts, completed work, money, credits or awards. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | PROV-08 | Not Implemented | Never insert the player into completed filming as a current vacancy. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | PROV-09 | Not Implemented | Preserve attached real cast unless an alternate-history mode, clearly identified, allows replacement. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| PROV-10 | Not Implemented | Missing creative details are labeled simulation assumptions; unsupported material rules are recorded as gaps, never guessed as fact. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| PROV-10 | Partially Implemented | Missing creative details are labeled simulation assumptions; unsupported material rules are recorded as gaps, never guessed as fact. | `src/engine/content/jurisdictions.ts`, `tools/countries.mjs` | `tests/career-world-countries.test.ts#gives each verified condition words its source recorded`, `tests/career-world-countries.test.ts#is what tools/countries.mjs writes` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: yes, EB: no | For the countries’ rules: each condition is verified with the source’s words or the game’s labeled assumption, and every gap is listed. The catalog’s creative details are Module 2. |
 
 ## Representation (13)
 
@@ -125,7 +125,7 @@ Written by `node tools/career-register.mjs --write` from `register.json`, never 
 | CON-05 | Partially Implemented | Track estimated, earned, due, settled, overdue and disputed pay, reimbursements, commission, employer contributions, withholding, residuals and participation. | `src/engine/systems/propay.ts` | `tests/propay.test.ts` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: partial, EB: no | — |
 | CON-06 | Not Implemented | Employer contributions never become personal deductions. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | CON-07 | Implemented, Verification Incomplete | Money in integer minor units with explicit rounding, currency and conversion dates. | `src/engine/core/money.ts`, `src/engine/core/ledger.ts` | `tests/b20-money-defects.test.ts` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: partial, EB: no | — |
-| CON-08 | Implemented, Verification Incomplete | A retried event, an imported record or a notification never deposits twice. Held for US engagements since brief 19; to hold for every new payment kind. | `src/engine/systems/propay.ts` | `tests/propay.test.ts#no payment twice` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: partial, EB: no | — |
+| CON-08 | Implemented, Verification Incomplete | A retried event, an imported record or a notification never deposits twice. Held for US engagements since brief 19; to hold for every new payment kind. | `src/engine/systems/propay.ts` | `tests/propay.test.ts#no payment twice`, `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: partial, EB: no | — |
 | CON-09 | Not Implemented | Residuals have separate entitlement, exploitation, calculation and settlement records. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | CON-10 | Not Implemented | Box-office gross is not actor income; a weekly chart update is not a payday. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | CON-11 | Not Implemented | Invent no confidential participation terms. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
@@ -166,28 +166,28 @@ Written by `node tools/career-register.mjs --write` from `register.json`, never 
 
 | ID | Status | Requirement | Where | Tests | Tracks | Blocker |
 |---|---|---|---|---|---|---|
-| GEO-01 | Not Implemented | Extensible country and regional packages sharing one geography and travel system. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-02 | Not Implemented | For each enabled jurisdiction: nationality and immigration status, work permission, sponsor conditions, permit restrictions, employer and location, local time, agreement applicability, working conditions, withholding, required documents. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-03 | Not Implemented | A country coverage matrix. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| GEO-01 | Partially Implemented | Extensible country and regional packages sharing one geography and travel system. | `src/engine/content/jurisdictions.ts`, `src/engine/systems/worktrip.ts`, `tools/countries.mjs` | `tests/career-world-sydney.test.ts#T19: says how far each country is researched`, `tests/career-world-countries.test.ts#is what tools/countries.mjs writes` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: yes, EB: no | — |
+| GEO-02 | Partially Implemented | For each enabled jurisdiction: nationality and immigration status, work permission, sponsor conditions, permit restrictions, employer and location, local time, agreement applicability, working conditions, withholding, required documents. (S01, N02) | `src/engine/content/jurisdictions.ts`, `src/engine/systems/worktrip.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY`, `tests/career-world-sydney.test.ts#a New Zealand citizen works in Australia`, `tests/career-world-sydney.test.ts#T12: with no visa at the first flight` | SL: yes, SV: partial, RE: partial, I: partial, T: partial, EB: partial | Australia only: nationality, work permission, the supporter, the permit and local time are in; agreement applicability, working conditions and withholding there are not (S13 unread; S28 refused, see GEO-19). |
+| GEO-03 | Implemented And Verified | A country coverage matrix. | `tools/countries.mjs`, `src/engine/content/jurisdictions.ts` | `tests/career-world-countries.test.ts#is what tools/countries.mjs writes` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | GEO-04 | Partially Implemented | United States: O-1, F-1 with CPT and OPT, SAG-AFTRA’s agreements. F-1 and OPT since brief 19; O-1 not modeled. (S05, S06, S31, S32, S21) | `src/engine/systems/propay.ts`, `src/engine/systems/permission.ts` | `tests/propay.test.ts#OPT counts an engagement worked` | SL: yes, SV: no, RE: no, I: partial, T: partial, EB: no | — |
 | GEO-05 | Not Implemented | United Kingdom: Creative Worker route, Pact and Equity agreements, foreign-entertainer tax. (S02, S104, S17, S18, S19, S29) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
-| GEO-06 | Not Implemented | Australia: Temporary Activity 408 Entertainment Activities, MEAA agreements, permits, safety, foreign-resident withholding. (S01, S13, S25, S26, S28) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
+| GEO-06 | Partially Implemented | Australia: Temporary Activity 408 Entertainment Activities, MEAA agreements, permits, safety, foreign-resident withholding. (S01, S13, S25, S26, S28, N02) | `src/engine/content/jurisdictions.ts`, `src/engine/systems/worktrip.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY`, `tests/career-world-sydney.test.ts#T12: with no visa at the first flight`, `tests/career-world-countries.test.ts#gives each verified condition words its source recorded`, `tests/career-world-countries.test.ts#reads every route from a page this build read` | SL: yes, SV: partial, RE: partial, I: partial, T: partial, EB: partial | The 408 is in, from S01. MEAA’s agreements (S13) and safety (S25, S26) aren’t read; foreign-resident withholding (S28) refused three ways on 2026-10-23 (HTTP 403). |
 | GEO-07 | Not Implemented | Canada: work permits, ACTRA’s IPA and British Columbia’s separate agreement. (S07, S105, S15, S16) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
 | GEO-08 | Not Implemented | New Zealand: Entertainers Work Visa and employer support. (S03, S04) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
 | GEO-09 | Not Implemented | France: talent and salaried-employment routes and their exemptions. (S08, S09) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
 | GEO-10 | Not Implemented | Japan: the Entertainer working visa. (S10) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
 | GEO-11 | Not Implemented | India: film visa after shooting permission, and documentary filming. (S11, S12) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
-| GEO-12 | Not Implemented | Never silently apply US rules worldwide: a jurisdiction without researched rules is an explicit gap and never permission. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-13 | Not Implemented | Travel consumes real elapsed time and accounts for time zones, arrival location, local dates, rest, work readiness, existing commitments and temporary accommodation. (S33) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
-| GEO-14 | Not Implemented | Connect documents to Papers. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-15 | Not Implemented | Connect income and expenses to Money. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-16 | Partially Implemented | Connect conflicts to the School and the calendar. For New York State work since brief 19. | `src/engine/systems/projobs.ts` | `tests/pro-work.test.ts#clashes with classes` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: partial, EB: no | — |
+| GEO-12 | Implemented And Verified | Never silently apply US rules worldwide: a jurisdiction without researched rules is an explicit gap and never permission. | `src/engine/content/jurisdictions.ts`, `src/engine/systems/worktrip.ts`, `src/ui/papers/Documents.tsx` | `tests/career-world-sydney.test.ts#T19: says how far each country is researched`, `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
+| GEO-13 | Partially Implemented | Travel consumes real elapsed time and accounts for time zones, arrival location, local dates, rest, work readiness, existing commitments and temporary accommodation. (S33) | `src/engine/systems/worktrip.ts` | `tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney`, `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY`, `tests/career-world-sydney.test.ts#asleep when the car to the airport comes` | SL: yes, SV: no, RE: no, I: partial, T: yes, EB: no | Time zones, arrival, local dates, commitments and the hotel are in; rest and work readiness after a long flight (jet lag) aren’t, and the flight times are the game’s estimate from the distances, not a schedule (S33 not read). |
+| GEO-14 | Implemented And Verified | Connect documents to Papers. | `src/engine/systems/worktrip.ts`, `src/ui/papers/Documents.tsx` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
+| GEO-15 | Partially Implemented | Connect income and expenses to Money. | `src/engine/systems/propay.ts`, `src/engine/systems/earnings.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: yes, EB: no | Income abroad is in; expenses abroad aren’t: the production pays the trip, and allowances and per diem aren’t modeled. |
+| GEO-16 | Implemented And Verified | Connect conflicts to the School and the calendar. For New York State work since brief 19. | `src/engine/systems/projobs.ts`, `src/engine/systems/worktrip.ts` | `tests/pro-work.test.ts#clashes with classes`, `tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | GEO-17 | Not Implemented | Connect readiness to the existing condition systems. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | GEO-18 | Not Implemented | Connect experience and exposure to the profile and the career. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-19 | Not Implemented | Withholding is not final tax liability, and no worldwide tax is one generic percentage. (S28, S29, S30) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
+| GEO-19 | Blocked Externally | Withholding is not final tax liability, and no worldwide tax is one generic percentage. (S28) | `src/ui/career/WorkPane.tsx` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: yes, SV: no, RE: no, I: partial, T: partial, EB: yes | S28, the ATO’s foreign-resident withholding pages: HTTP 403 to curl with a browser’s user agent, WebFetch and the ATO’s content API, 2026-10-23. The game says the tax isn’t worked out rather than guess one. |
 | GEO-20 | Not Implemented | Invent no cancellation fees, clawbacks or termination rights: apply the actual agreement. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-21 | Not Implemented | No impossible simultaneous presence: transit is a state, and an in-person session needs physical presence. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| GEO-22 | Not Implemented | Daylight-saving changes, repeated and skipped local times, and the date line are handled. (S33) | — | — | SL: yes, SV: no, RE: no, I: no, T: no, EB: no | — |
+| GEO-21 | Implemented And Verified | No impossible simultaneous presence: transit is a state, and an in-person session needs physical presence. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY`, `tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip`, `tests/career-world-sydney.test.ts#asleep when the car to the airport comes` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
+| GEO-22 | Implemented, Verification Incomplete | Daylight-saving changes, repeated and skipped local times, and the date line are handled. (S33) | `src/engine/systems/worktrip.ts`, `src/engine/core/time.ts` | `tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney`, `tests/career-world-sydney.test.ts#keeps 7 AM a Sydney call at 7 AM` | SL: yes, SV: no, RE: no, I: yes, T: partial, EB: no | The date line and a change of Sydney’s clocks between call days are tested; a call inside a skipped or repeated hour isn’t. |
 
 ## Charts (11)
 
@@ -237,7 +237,7 @@ Written by `node tools/career-register.mjs --write` from `register.json`, never 
 
 | ID | Status | Requirement | Where | Tests | Tracks | Blocker |
 |---|---|---|---|---|---|---|
-| CONT-01 | Not Implemented | Persist applications, auditions, negotiations, contracts, roles, collaborators, scenes, footage, credits, earnings, reception, nominations, awards and relationships. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| CONT-01 | Partially Implemented | Persist applications, auditions, negotiations, contracts, roles, collaborators, scenes, footage, credits, earnings, reception, nominations, awards and relationships. | `src/engine/systems/worktrip.ts`, `src/engine/systems/pro.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: n/a, SV: n/a, RE: n/a, I: partial, T: partial, EB: no | Applications, auditions, contracts, roles, credits and earnings persist (brief 19, and the trip here); collaborators, scenes, footage, reception, nominations and awards are later modules. |
 | CONT-02 | Not Implemented | A show’s renewal is separate from the renewal of the player’s engagement. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | CONT-03 | Not Implemented | Options, expiration, new offers, conflicts, renegotiation, character exits, reduced orders, cancellation, suspension, delayed release, edited-out performances and revival. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | CONT-04 | Not Implemented | Preserve valid completed work and earned compensation through every disruption. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
@@ -307,24 +307,24 @@ Written by `node tools/career-register.mjs --write` from `register.json`, never 
 | T08 | Not Implemented | Audition followed by callback. Expected: correct materials, deadline and prior feedback. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T09 | Not Implemented | Response deadline expires. Expected: one deterministic expiration. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T10 | Not Implemented | Project cancelled before booking. Expected: thread closes; no nonexistent pay. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| T11 | Not Implemented | Australia offer with valid permission. Expected: planning proceeds under applicable rules. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| T12 | Not Implemented | Australia offer with unresolved permission. Expected: no unauthorized shoot completion. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| T11 | Implemented And Verified | Australia offer with valid permission. Expected: planning proceeds under applicable rules. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
+| T12 | Implemented And Verified | Australia offer with unresolved permission. Expected: no unauthorized shoot completion. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T12: with no visa at the first flight` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | T13 | Not Implemented | Permission expires during engagement. Expected: correct boundary behavior and valid next steps. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T14 | Not Implemented | UK creative work. Expected: correct route, not an Australian form reused. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T15 | Not Implemented | Missing New Zealand employer support. Expected: conditional/blocked status with explanation. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T16 | Not Implemented | Toronto versus Vancouver. Expected: correct agreement distinction. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T17 | Not Implemented | Short French engagement. Expected: exact exemption conditions, not blanket permission. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T18 | Not Implemented | India documentary versus scripted film. Expected: correct activity classification. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| T19 | Not Implemented | Unsupported destination. Expected: explicit research gap, no false verified badge. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| T19 | Implemented And Verified | Unsupported destination. Expected: explicit research gap, no false verified badge. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T19: says how far each country is researched` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | T20 | Not Implemented | Multiple nationalities or statuses. Expected: correct person-specific branch. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| T21 | Not Implemented | New Haven to Sydney. Expected: positive travel duration and physical-location changes. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| T22 | Not Implemented | Date-line crossing. Expected: correct displayed dates and elapsed time. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| T21 | Implemented And Verified | New Haven to Sydney. Expected: positive travel duration and physical-location changes. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
+| T22 | Implemented And Verified | Date-line crossing. Expected: correct displayed dates and elapsed time. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | T23 | Not Implemented | Daylight-saving transition. Expected: no duplicate or skipped scheduled event. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T24 | Not Implemented | Flight delay. Expected: dependent transfer and call reassessed. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T25 | Not Implemented | Missed connection. Expected: rebooking, payer and availability updated. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T26 | Not Implemented | Production extends stay. Expected: lodging, return, permissions and conflicts updated. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T27 | Not Implemented | Remote voice session. Expected: no fictional physical relocation. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
-| T28 | Not Implemented | Overlapping in-person calls. Expected: impossible attendance rejected. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
+| T28 | Implemented And Verified | Overlapping in-person calls. Expected: impossible attendance rejected. | `src/engine/systems/worktrip.ts`, `src/engine/systems/projobs.ts` | `tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip` | SL: n/a, SV: n/a, RE: n/a, I: yes, T: yes, EB: no | — |
 | T29 | Not Implemented | Revised call sheet. Expected: old version retained; current schedule authoritative. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T30 | Not Implemented | Local holiday. Expected: applicable calendar and contract consulted. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |
 | T31 | Not Implemented | Bad weather at outdoor shoot. Expected: relevant alternative or rescheduling. | — | — | SL: n/a, SV: n/a, RE: n/a, I: no, T: no, EB: no | — |

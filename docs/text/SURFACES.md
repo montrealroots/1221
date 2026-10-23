@@ -2,7 +2,7 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**315 surfaces; 4598 of 4598 sources claimed; 176 revised, 139 kept.**
+**319 surfaces; 4645 of 4645 sources claimed; 180 revised, 139 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
@@ -10,13 +10,14 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | career-agent | 57 | 57 |
 | career-pay | 31 | 31 |
 | career-showcase | 23 | 23 |
-| career-work | 76 | 76 |
+| career-work | 75 | 75 |
 | frame | 531 | 531 |
 | health | 178 | 178 |
 | material-a | 507 | 507 |
 | material-b | 492 | 492 |
 | money | 266 | 266 |
 | money-data | 522 | 522 |
+| new | 48 | 48 |
 | papers | 477 | 477 |
 | profile | 634 | 634 |
 | school | 638 | 638 |
@@ -89,6 +90,15 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | The agent’s part in the work: Through An Agent, and his notices on what he submitted, held or passed on | Career, the Opportunities tab, Through An Agent; the notices while an agreement is in force | ordinary, unavailable, notification, warning, history | Revised | New with brief 19: the agent’s lines in the work loop, procedural and neutral, each from a real event, each carrying the line that marks his words invented. **Changed:** Written new: “Jordan Parente didn’t submit you for Jess in Static On Route 9. You have no headshots…”, said once while what stands in the way is the same, “Jordan Parente submitted you for Jess…”, “Jordan Parente passed this on:…”, and a window closed before he could submit. | test: tests/pro-work.test.ts: 'PLAYER JOURNEY: his breakdown brings a role, he holds the submission while the headshots are missing and says why, submits once they’re made, passes on the answer and the offer at the rate’s scale, and the booking carries his id and the agreement’s' |
 | The guide: Finding Work, and the How This Works entries for finding work, auditions, offers and work in term | Guide, chapter Finding Work; How This Works on the Opportunities tab | first use, details, explanation, locked, unavailable | Revised | New with brief 19: what to do, why it matters and what it affects for each new command, in the screen’s labels, the figures the work loop’s own. **Changed:** Written new: the chapter in the brief 14 order (what it’s for, where, what to press, what’s needed, what happens, what it affects, what next) and four entries, each estimate said so. | test: tests/tutorial.test.ts: 'covers every command the engine registers'; test: tests/guide.test.ts: 'covers every feature id exactly once'; test: tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: in a guided life, the tab’s controls stay Locked until “Finding Work” is read' |
 | The deciders’ own descriptions of the work loop’s draws | Not shown to a player: read by tests/deciders.test.ts and tools/deciders.mjs | details | Kept | A decider says what its draw decides and what moves it, for the sweep that holds it to that; no player reads it, so it keeps the developer’s plain terms. | source: src/engine/decided.ts; test: tests/deciders.test.ts |
+
+## career-world
+
+| Surface | Where | States | Outcome | What reading it found, and what changed | Evidence |
+|---|---|---|---|---|---|
+| An offer of work abroad: what it says before Accept, and why Accept is refused | Career, Opportunities, the offer; What Needs You, the offer's decision | first use, warning, unavailable, explanation | Revised | New with brief 25's work abroad: an offer in Sydney says where, the days away, who books the trip, the visa it needs and that accepting isn't permission. **Changed:** Written new: the warning (“This work is in Sydney. You’d be away from … Accepting is the contract, not permission to work: without the visa in force at your first flight, you can’t go, and the production releases you.”), the refusal for a passport that runs out before you're home, and the studio feature's kind and field. | test: tests/career-world-sydney.test.ts: 'T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408'; test: tests/career-world-sydney.test.ts: 'T19: says how far each country is researched' |
+| Career, Work: The Trip To Sydney: permission, Apply For The Visa, the legs, the hotel, what the visa asks, and what isn't in the game | Career, the Work tab, the engagement abroad, The Trip To Sydney | ordinary, unavailable, confirmation, details, explanation | Revised | New with brief 25's work abroad: the trip the production booked, the permission it needs, and where every rule and figure comes from. **Changed:** Written new: the permission as it reads for the days (“Work in Australia needs a 408 visa …”), the visa pending or granted with its dates, each leg in its towns' own times, the hotel, the 408's conditions in the game's words with the page's date, the schedule's caveat, what isn't in the game for Australia, and, on the pay, that Australian tax on it isn't part of the game yet. | test: tests/career-world-sydney.test.ts: 'T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408' |
+| Notices and history of the visa and the trip: applied, granted, left, arrived, checked in and out, home, a missed flight, a release at the flight | Home's notices; Career, Work, the engagement's What Happened | notification, success, setback, failure, history | Revised | New with brief 25's work abroad: each step of the trip is told once as it happens and kept with the work. **Changed:** Written new: “Your 408 Visa Was Granted”, the arrival with the first call in Sydney's time and New Haven's, the way home, a missed flight out or home with the place names as written, and the release at the flight with its reason (“You didn’t apply for the 408 visa the work in Australia needs …”). | test: tests/career-world-sydney.test.ts: 'T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408'; test: tests/career-world-sydney.test.ts: 'T12: with no visa at the first flight, the player doesn’t fly and the production releases them'; test: tests/career-world-sydney.test.ts: 'asleep when the car to the airport comes, the player misses the flights out' |
+| Away on the calendar: the trip's span, where the player is, and what's missed at home | Calendar; Career, Opportunities, an audition missed while away; another booking refused | ordinary, setback, unavailable, explanation | Revised | New with brief 25's work abroad: while in Sydney the player isn't anywhere else, and what they miss says where they were. **Changed:** Written new: “Your Trip To Sydney” and “Harbor Line: Away In Sydney” on the calendar, and a missed audition that says “You were in Sydney …”. | test: tests/career-world-sydney.test.ts: 'T28: a booking whose days fall in the trip is refused' |
 
 ## career
 

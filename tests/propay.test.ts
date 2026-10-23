@@ -19,7 +19,7 @@ import { loadSave } from '@/engine';
 import { breaches } from '@/engine/core/invariants';
 import { PROJECTS, RATES, UNIONS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import {
-  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, commissionOn, coveredWork, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
+  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, commissionOn, coveredWork, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
   workEligibilityRefusal, withholdingOn,
 } from '@/engine/systems/propay';
 import { yearOf } from '@/engine/systems/earnings';
@@ -34,6 +34,8 @@ import { at as subject } from '@/ui/looks/subject';
 
 const checking = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
+/** TEST SETUP: the work loop's record of a day worked, as the work day's handler writes it (`systems/projobs.ts`); the fakes book no work days. */
+const worked = (e: { days: { from: number }[]; log?: { day: number; at: number; status: 'worked' | 'missed' }[] }, i: number) => (e.log ??= []).push({ day: i, at: e.days[i]!.from, status: 'worked' });
 const txn = (sim: Simulation, id: string) => sim.universe.transactions.find((t) => t.id === id)!;
 const nominal = (sim: Simulation, name: string) => Object.values(sim.universe.accounts).find((a) => a.nominal && a.name === name);
 const posted = (sim: Simulation, id: string, accountId: string) => txn(sim, id).postings.filter((p) => p.accountId === accountId).reduce((n, p) => n + p.amount, 0);
@@ -419,6 +421,7 @@ describe('the unions’ money', () => {
     const e = booked(sim, { project: 'calloway-files', days: [at(2026, 9, 21), at(2026, 9, 22)], amount: 1_283_00, per: 'day' });
     schedulePay(sim, sim.player, e);
     expect(sim.execute({ kind: 'pro.join_sag', payload: {} })).toMatchObject({ ok: false, error: 'You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role: a TV, theatrical or Low Budget film part. Ultra Low Budget and student films don’t count toward it.' });
+    worked(e, 0);
     tended(sim, at(2026, 9, 21, 12));
     expect(sim.player.pro!.sag).toEqual({ eligibleSince: at(2026, 9, 21, 10) });
     expect(titled(sim, 'You Can Join SAG-AFTRA')).toHaveLength(1);
@@ -445,10 +448,31 @@ describe('the unions’ money', () => {
     expect(pro.unionBills[0]!.key).toBe('equity:dues:2034-05');
   });
 
+  it('a job’s first day missed makes nobody eligible; the first day worked does, from that day, and a job never worked never does', () => {
+    const sim = graduate('union-sag-missed');
+    const e = booked(sim, { project: 'calloway-files', days: [at(2026, 9, 21), at(2026, 9, 22)], amount: 1_283_00, per: 'day' });
+    schedulePay(sim, sim.player, e);
+    (e.log ??= []).push({ day: 0, at: e.days[0]!.from, status: 'missed' }); // TEST SETUP: the work loop's record of the first day missed
+    tended(sim, at(2026, 9, 21, 18));
+    expect(sim.player.pro!.sag).toBeUndefined();
+    expect(titled(sim, 'You Can Join SAG-AFTRA')).toEqual([]);
+    worked(e, 1);
+    tended(sim, at(2026, 9, 22, 12));
+    expect(sim.player.pro!.sag).toEqual({ eligibleSince: at(2026, 9, 22, 10) });
+    expect(titled(sim, 'You Can Join SAG-AFTRA')).toHaveLength(1);
+    const never = graduate('union-sag-never');
+    const n = booked(never, { project: 'calloway-files', days: [at(2026, 9, 21), at(2026, 9, 22)], amount: 1_283_00, per: 'day' });
+    schedulePay(never, never.player, n);
+    tended(never, at(2026, 9, 24));
+    expect(never.player.pro!.sag).toBeUndefined();
+    expect(never.universe.scheduled.filter((i) => i.kind === SAG_ELIGIBLE_KIND && i.status === 'pending')).toEqual([]);
+  }, 90_000);
+
   it('refuses Join SAG-AFTRA where the bank can’t cover it, and nothing is charged', () => {
     const sim = graduate('union-sag-poor');
     const e = booked(sim, { project: 'calloway-files', days: [at(2026, 9, 21)], amount: 1_283_00, per: 'day' });
     schedulePay(sim, sim.player, e);
+    worked(e, 0);
     tended(sim, at(2026, 9, 21, 12));
     // TEST SETUP: the money taken out of every account the bank would pay from.
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'Taken out', category: 'transfer', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Other').id, amount: a.balance }] });

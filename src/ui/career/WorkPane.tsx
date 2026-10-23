@@ -11,7 +11,7 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
+import { Panel, Fine, SectionHead, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime } from '@/engine/core/time';
@@ -22,6 +22,9 @@ import { UNIONS } from '@/engine/content/careerwork';
 import { finished, type Engagement, type ProPayment, type UnionBill } from '@/engine/systems/pro';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { DEFERRED_WHY, counted } from '@/engine/systems/projobs';
+import { SCHEDULE_WORDS, abroadRead, countryIn, legWords, routeFor, routeSourceWords, tripOf, visaFor, visaRefusal } from '@/engine/systems/worktrip';
+import { gapWords, jurisdictionOf } from '@/engine/content/jurisdictions';
+import { CITIES } from '@/engine/content/geography';
 import {
   commissionOn, eligibilityRead, joinSagRefusal, owedAfterEnding, placeKnown, projectOf, sagJoinUsd, sagMembershipFrom, weekOf, weekWords, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, DUES_KIND,
 } from '@/engine/systems/propay';
@@ -85,6 +88,7 @@ function EngagementPay({ person, e }: { person: Person; e: Engagement }) {
   const rows = e.pay.map((p) => ({ key: p.key, ...paymentRow(sim, person, e, p) }));
   const whys = [...new Set(rows.map((r) => r.why).filter(Boolean))];
   const from = projectOf(e)?.company ?? 'the production';
+  const trip = tripOf(person, e);
   if (!rows.length) return <p className="small" style={{ margin: 0 }}>No pay was promised for this work.</p>;
   return (
     <div className="col gap-2">
@@ -108,7 +112,60 @@ function EngagementPay({ person, e }: { person: Person; e: Engagement }) {
         </table>
       </div>
       {whys.length === 1 && <p className="xs dim" style={{ margin: 0 }}>{`Commission: ${whys[0]}`}</p>}
+      {/* Work abroad (from 2026-10-23, the owner's brief 25): the country's own tax isn't worked out, said where the pay is. */}
+      {trip && <p className="xs dim" style={{ margin: 0 }}>{`Your tax return counts this pay as earned in ${countryIn(trip.country)}. Tax in ${countryIn(trip.country)} on it isn’t part of the game yet.`}</p>}
     </div>
+  );
+}
+
+/**
+ * Work abroad (from 2026-10-23, the owner's brief 25, `systems/worktrip.ts`): the permission it needs and the visa's
+ * state, with Apply For The Visa behind its guide chapter and its refusal said under it; the trip's legs, each in its
+ * towns' own times, and the hotel; and where the flight times come from.
+ */
+function TripView({ person, e }: { person: Person; e: Engagement }) {
+  const { sim, run, toast } = useGame();
+  const zone = sim.zone;
+  const trip = tripOf(person, e);
+  const project = projectOf(e);
+  if (!trip || !project) return null;
+  const visa = visaFor(person, e.id);
+  const no = visaRefusal(person, e, project, sim.now);
+  const route = routeFor(person, trip.country);
+  const read = abroadRead(person, trip.country, e.days, e.id, sim.now);
+  const city = CITIES.get(trip.cityId)?.name ?? 'abroad';
+  const needs = !finished(e) && read.basis !== 'abroad-citizen' && !(read.authorized && !visa);
+  return (
+    <details className="section-fold" open={!finished(e)}>
+      <summary>{`The Trip To ${city}`}</summary>
+      <div className="col gap-2">
+        <SectionHead title="Permission, Flights And Hotel" help="career.work-abroad" />
+        {!finished(e) && <p className={`small ${read.authorized ? '' : 'callout callout-warning'}`} style={{ margin: 0 }}>{read.words}</p>}
+        {visa && <p className="small" style={{ margin: 0 }}>{visa.status === 'pending' ? `Applied ${formatDate(visa.appliedAt ?? sim.now, zone)}. The department decides on ${formatDate(visa.readyAt ?? sim.now, zone)}.` : visa.status === 'valid' ? `Granted ${formatDate(visa.issuedAt ?? sim.now, zone)}, in force to ${formatDate(visa.expiresAt ?? sim.now, zone)}.` : `${visa.name}: ${visa.status}.`}</p>}
+        {needs && !visa && (
+          <>
+            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              <Gated feature="pro.apply_work_visa" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ readyAt: number }>('pro.apply_work_visa', { engagementId: e.id }); if (r.ok) toast(`You’ve applied. The department decides on ${formatDate(r.value!.readyAt, zone)}.`, 'positive'); }}>Apply For The Visa</Gated>
+            </div>
+            <WhyNot reasons={[['Apply For The Visa', no]]} />
+          </>
+        )}
+        <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+          {trip.legs.map((l) => <li key={l.id}>{`${l.label}${l.status === 'missed' ? ' (missed)' : l.status === 'canceled' ? ' (called off)' : l.status === 'done' ? ' (done)' : ''}. ${legWords(l)}`}</li>)}
+        </ul>
+        <p className="small" style={{ margin: 0 }}>{`${trip.stay.place[0]!.toUpperCase()}${trip.stay.place.slice(1)}, ${formatDate(trip.stay.from, zone)} to ${formatDate(trip.stay.to, zone)}, paid by the production.`}</p>
+        {route && read.basis !== 'abroad-citizen' && (
+          <details className="section-fold">
+            <summary>{`What The ${route.short.replace(/\bvisa\b/, 'Visa')} Asks`}</summary>
+            <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+              {route.conditions.map((c) => <li key={c.id}>{c.words}</li>)}
+            </ul>
+            <Fine>{routeSourceWords(route)}</Fine>
+          </details>
+        )}
+        <Fine>{`${project.trip?.words ?? ''} ${SCHEDULE_WORDS} ${gapWords(jurisdictionOf(trip.country))}`}</Fine>
+      </div>
+    </details>
   );
 }
 
@@ -149,8 +206,11 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
   const project = projectOf(e);
   const calls = callsOf(sim, e);
   const ahead = e.days.filter((d) => d.to > sim.now);
-  const now = !finished(e) && ahead.length ? eligibilityRead(person, ahead, sim.now) : undefined;
+  // Work abroad reads the country's permission (from 2026-10-23, the owner's brief 25), shown with its trip below.
+  const now = !finished(e) && ahead.length && !e.tripId ? eligibilityRead(person, ahead, sim.now) : undefined;
   const ended = e.status === 'canceled' ? [...e.history].reverse()[0] : undefined;
+  // The trip's steps among the work's (from 2026-10-23, brief 25, W11): left, arrived, checked in and out, home, in time.
+  const happened = [...e.history, ...(tripOf(person, e)?.history ?? [])].sort((a, b) => a.at - b.at);
   const runs = callRuns(sim, e);
   const name = `${e.role}, ${project?.project ?? 'Your Work'}`;
   return (
@@ -170,6 +230,7 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
           <strong>Permission To Work Now. </strong>{now.words}
         </p>
       )}
+      {e.tripId && <TripView person={person} e={e} />}
       <details className="section-fold">
         <summary>The Agreement</summary>
         <dl className="facts">
@@ -194,10 +255,10 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
           <p className="small" style={{ margin: 0 }}>{`Read ${formatDate(e.eligibility.at, zone)}: ${e.eligibility.words}`}</p>
         </details>
       )}
-      {e.history.length > 0 && (
+      {happened.length > 0 && (
         <details className="section-fold">
           <summary>What Happened</summary>
-          <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{e.history.map((h) => <li key={h.id}>{`${formatDate(h.at, zone)}: ${h.words}`}</li>)}</ul>
+          <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{happened.map((h) => <li key={h.id}>{`${formatDate(h.at, zone)}: ${h.words}`}</li>)}</ul>
         </details>
       )}
     </article>

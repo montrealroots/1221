@@ -462,9 +462,10 @@ describe('the agent and the work, as data', () => {
     expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent|Ashgrove|thomas-ashgrove|Halberd/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
-  it('writes each part for an actor, an actress or either, three for either and four for each, so an actor and an actress each have a part in all seven projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
+  it('writes each part for an actor, an actress or either, three for either and five for each, so an actor and an actress each have a part in all eight projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
     const forWhom = (title: 'actor' | 'actress') => PROJECTS.filter((p) => p.role.for === 'either' || p.role.for === title);
-    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(3).fill('either'), ...Array(4).fill('actor'), ...Array(4).fill('actress')].sort());
+    // Four for each until 2026-10-23, when brief 25's Sydney feature, Harbor Line, brought a part for each.
+    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(3).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
     const actor = forWhom('actor');
     const actress = forWhom('actress');
     // Each sees every project once, and the same kinds, sizes, ways in and pay: the counterpart is the same work for the other.
@@ -498,9 +499,10 @@ describe('the agent and the work, as data', () => {
   });
 
   it('gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
-    // Seven projects, one of each kind, some with a part for each (from 2026-10-21): the kinds read once a project.
-    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short']);
-    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(7);
+    // Eight projects, one of each kind, some with a part for each (from 2026-10-21): the kinds read once a project. Seven
+    // until 2026-10-23, when brief 25 added the Sydney feature.
+    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature']);
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(8);
     for (const p of PROJECTS) {
       expect(p.fictional).toBe(true);
       const rate = RATES[p.pay];
@@ -508,7 +510,8 @@ describe('the agent and the work, as data', () => {
       if (rate.basis === 'verified') expect(rate.source).toBeDefined();
       else expect(rate.words).toMatch(/estimated/);
     }
-    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short']);
+    // The Sydney feature takes self-tapes from anyone in the US (from 2026-10-23, brief 25): outside an agent's agreement.
+    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature']);
     for (const t of AGREEMENT_TERMS) expect(['verified', 'simulation']).toContain(t.basis);
     expect(AGREEMENT_TERMS.filter((t) => t.basis === 'verified').every((t) => (t.sources ?? []).length > 0)).toBe(true);
   });

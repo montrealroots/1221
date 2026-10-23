@@ -1529,6 +1529,76 @@
    "territory": null,
    "attempts": [],
    "facts": []
+  },
+  {
+   "id": "N01",
+   "title": "AMPTP: 2026–30 SAG-AFTRA Rates (v.4, 27 May 2026)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf",
+   "status": "read",
+   "dossier": "Not in the dossier; brief 19 read it as work.md S30 for the day rates.",
+   "retrieved": "2026-10-23",
+   "published": "2026-05-27",
+   "effective": "Each column from 1 July: 2025–26 to 2029–30.",
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl",
+     "result": "HTTP 200, 606,770 bytes, read with pdftotext"
+    }
+   ],
+   "facts": [
+    {
+     "field": "theatrical weekly performer (B 354)",
+     "value": "$4,326 from 2025-07-01; $4,456 from 2026-07-01; $4,590 from 2027-07-01; $4,728 from 2028-07-01; $4,870 from 2029-07-01",
+     "quote": "B   354        Performer                                                  $4,326       $4,456          $4,590          $4,728          $4,870"
+    },
+    {
+     "field": "theatrical day performer (A 299)",
+     "value": "$1,246; $1,283; $1,321; $1,361; $1,402",
+     "quote": "A     299     Performer                                                  $1,246       $1,283          $1,321          $1,361          $1,402"
+    },
+    {
+     "field": "television weekly performer (TV 5)",
+     "value": "$4,326; $4,456; $4,590; $4,728; $4,870",
+     "quote": "TV    5      Performer                                                    $4,326    $4,456          $4,590           $4,728          $4,870"
+    }
+   ]
+  },
+  {
+   "id": "N02",
+   "title": "Home Affairs: Special Category visa (subclass 444)",
+   "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/special-category-visa-subclass-444",
+   "status": "read",
+   "dossier": "Not in the dossier.",
+   "retrieved": "2026-10-23",
+   "published": "2026-09-08",
+   "effective": "The page as last updated 8/09/2026 9:59 AM.",
+   "territory": "AU",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, 1,330,653 bytes; content in the embedded JSON"
+    }
+   ],
+   "facts": [
+    {
+     "field": "work",
+     "value": "A New Zealand citizen may visit, work and study in Australia",
+     "quote": "visit, work and study in Australia"
+    },
+    {
+     "field": "passport",
+     "value": "Granted to a holder of a valid New Zealand passport, on arrival",
+     "quote": "You must have a valid New Zealand passport to be granted this visa."
+    },
+    {
+     "field": "stay",
+     "value": "For as long as they remain a New Zealand citizen",
+     "quote": "enter and stay in Australia for as long as you are and continue to remain a New Zealand citizen"
+    }
+   ]
   }
  ]
 }

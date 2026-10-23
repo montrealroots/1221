@@ -244,7 +244,7 @@ describe('J1: fictional roles, posted on a schedule', () => {
 
   it('GUARD: a role the actor has been booked for, or holds the credit for, isn’t posted to them again; without either it comes round (found by brief 19’s playthroughs, 2026-10-21, two Desk Clerks credited)', () => {
     const sim = graduate('work-repost');
-    const t = PROJECTS.find((x) => x.access.open === 'anyone')!;
+    const t = PROJECTS.find((x) => x.access.open === 'anyone' && !x.trip)!;
     const posted = () => postingTimes(sim.now, sim.now + 60 * 7 * MS_DAY).some((when) => postingsAt(sim, sim.player, when).some((p) => p.project.id === t.id));
     expect(posted()).toBe(true);
     // TEST SETUP: the role played, its engagement finished and its credit filed, as the work loop's `finish` leaves them.
@@ -279,7 +279,7 @@ describe('J1: fictional roles, posted on a schedule', () => {
 describe('F4 and J4: what a submission reads, and who can submit for what', () => {
   it('PLAYER JOURNEY: refuses a submission while the headshots or the résumé are missing, said in their practical words, and takes it once they’re made', () => {
     const sim = graduate('work-materials');
-    const o = waitFor(sim, (x) => projectById(x.projectId)!.access.open === 'anyone')!;
+    const o = waitFor(sim, (x) => projectById(x.projectId)!.access.open === 'anyone' && !projectById(x.projectId)!.trip)!;
     expect(submitRefusal(sim, sim.player, o)).toBe('You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.');
     const refused = sim.execute({ kind: 'pro.submit', payload: { opportunityId: o.id } });
     expect(refused.ok).toBe(false);
@@ -356,7 +356,7 @@ describe('J5: casting decided apart from quality', () => {
   it('PLAYER JOURNEY: over seeds, a skilled actor loses a role and a developing actor books one, each through the whole loop', () => {
     const outcomes = (make: (seed: string) => Simulation, seeds: readonly string[]) => seeds.map((seed) => {
       const sim = make(seed);
-      const o = waitFor(sim, (x) => projectById(x.projectId)!.access.open === 'anyone');
+      const o = waitFor(sim, (x) => projectById(x.projectId)!.access.open === 'anyone' && !projectById(x.projectId)!.trip);
       if (!o) return 'none';
       playToOffer(sim, o);
       return o.status;
@@ -759,7 +759,7 @@ describe('V12: a scheduling conflict, said and handled', () => {
     for (const seed of Array.from({ length: 20 }, (_, n) => `work-clash-${n}`)) {
       const sim = graduate(seed);
       portfolio(sim);
-      const o = waitFor(sim, (x) => projectOf(x).stages.audition === 'in-person' && projectOf(x).access.open === 'anyone', 20);
+      const o = waitFor(sim, (x) => projectOf(x).stages.audition === 'in-person' && projectOf(x).access.open === 'anyone' && !projectOf(x).trip, 20);
       if (!o) continue;
       // A plan of your own every weekday morning for three weeks, made on the calendar before the answer comes.
       for (let d = 1; d <= 21; d += 1) {
@@ -866,7 +866,7 @@ describe('V3 and A4: a player who left before the degree', () => {
       played(s, at(2026, 9, 9, 10));
       s.must({ kind: 'school.withdraw', payload: { confirm: true } });
       return s;
-    }, (x) => projectOf(x).access.open === 'anyone');
+    }, (x) => projectOf(x).access.open === 'anyone' && !projectOf(x).trip);
     expect(sim.player.school!.standing).toBe('withdrawn');
     expect(acceptWarning(sim, sim.player, o)).toBeUndefined();
     expect(requestRefusal(sim, sim.player, o)).toBe('The School’s rule on outside work is for its students.');
@@ -885,7 +885,7 @@ describe('what missing a step costs', () => {
   it('PLAYER JOURNEY: an audition slept through lapses the role, said; a self-tape not in by its time does too', () => {
     const sim = graduate('work-miss-audition');
     portfolio(sim);
-    const o = waitFor(sim, (x) => projectOf(x).access.open === 'anyone')!;
+    const o = waitFor(sim, (x) => projectOf(x).access.open === 'anyone' && !projectOf(x).trip)!;
     sim.must({ kind: 'pro.submit', payload: { opportunityId: o.id } });
     played(sim, sim.now + 3 * MS_DAY);
     const r = roundToCome(o)!;
@@ -945,7 +945,7 @@ describe('what missing a step costs', () => {
   });
 
   it('PLAYER JOURNEY: an offer not answered lapses, said; one declined is settled, and nothing is booked', () => {
-    const { sim, o } = offerIn(Array.from({ length: 30 }, (_, n) => `work-loop-${n}`), (seed) => { const s = graduate(seed); skilled(s); portfolio(s); return s; }, (x) => projectOf(x).access.open === 'anyone');
+    const { sim, o } = offerIn(Array.from({ length: 30 }, (_, n) => `work-loop-${n}`), (seed) => { const s = graduate(seed); skilled(s); portfolio(s); return s; }, (x) => projectOf(x).access.open === 'anyone' && !projectOf(x).trip);
     const twin = reload(sim);
     played(sim, o.offer!.until + MS_HOUR);
     expect(o.status).toBe('lapsed');
@@ -1115,7 +1115,7 @@ describe('availability and the School’s calls, checked and never drawn', () =>
 
   it('refuses a self-tape with less than its hour before it’s due, said with the time', () => {
     const sim = graduate('work-tape-late');
-    const t = PROJECTS.find((x) => x.stages.audition === 'self-tape' && x.access.open === 'anyone')!;
+    const t = PROJECTS.find((x) => x.stages.audition === 'self-tape' && x.access.open === 'anyone' && !x.trip)!;
     const due = sim.now + 30 * 60_000;
     // TEST SETUP: a self-tape asked for, due in half an hour.
     const o: Opportunity = { id: 'test-late', projectId: t.id, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {}, rounds: [{ round: 'audition', form: 'self-tape', at: due, status: 'set' }] };

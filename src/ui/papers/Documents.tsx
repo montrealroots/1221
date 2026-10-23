@@ -44,6 +44,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { f1Of, optRefusal, optRunsOut, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { eligibilityRead, projectOf } from '@/engine/systems/propay';
+import { abroadRead, tripOf } from '@/engine/systems/worktrip';
 import { leftWithout } from '@/engine/systems/school';
 import { SSN, hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -360,7 +361,10 @@ function WorkReadPanel() {
                 const when = first !== undefined && last !== undefined ? `${formatDate(first, sim.zone)} to ${formatDate(last, sim.zone)}` : 'No dates';
                 const ahead = e.days.filter((d) => d.to > sim.now);
                 const released = e.status === 'canceled' ? [...e.history].reverse()[0] : undefined;
-                const read = !released && ahead.length && e.status !== 'finished' ? eligibilityRead(person, ahead, sim.now) : undefined;
+                // Work abroad reads the country's permission, not the US's (from 2026-10-23, brief 25: until then a part in
+                // Sydney read “You’re a US citizen, so you can work for any employer in the US.” here, visa or none).
+                const trip = tripOf(person, e);
+                const read = !released && ahead.length && e.status !== 'finished' ? (trip ? abroadRead(person, trip.country, ahead, e.id, sim.now) : eligibilityRead(person, ahead, sim.now)) : undefined;
                 return (
                   <tr key={e.id}>
                     <td>{`${e.role}, ${projectOf(e)?.project ?? 'your work'}`}</td>
