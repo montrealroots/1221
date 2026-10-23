@@ -58,6 +58,18 @@ async function opened(file) {
 
 /** A control focused and pressed with Enter, as a keyboard presses it. */
 async function press(page, locator) { await locator.focus(); await page.keyboard.press('Enter'); await page.waitForTimeout(500); }
+/**
+ * A control of the bar's secondary side, the guide or Save & Exit, pressed: in the drawer's foot while the rail is a
+ * drawer (from brief 23, 2026-10-23), so there the menu is opened first. Until then it stood in the bar at every width,
+ * and on brief 23's commit this walk found it nowhere at 390 (brief 22's final runs played again, 2026-10-23).
+ */
+async function saveGroup(page, locator) {
+  if (!(await locator.isVisible().catch(() => false))) {
+    const menu = page.getByRole('button', { name: /^Menu$/ }).first();
+    if (await menu.count()) await press(page, menu);
+  }
+  await press(page, locator);
+}
 
 /** A rail destination, by the keyboard: on a phone the menu first. */
 async function rail(page, name) {
@@ -289,7 +301,7 @@ for (const file of ['meeting.json', 'work-day.json']) {
   const o = await opened('last-term.json');
   const { page } = o;
   for (const chapter of ['Drama School', 'Your Career', 'Representation', 'Finding Work']) {
-    await press(page, page.getByRole('button', { name: 'Guide' }));
+    await saveGroup(page, page.getByRole('button', { name: 'Guide' }));
     const g = page.locator('[role=dialog][aria-label=Guide]');
     await press(page, g.getByRole('button', { name: new RegExp(`^\\d+\\. ${chapter},`) }).first());
     // The Details, folded away under each chapter, opened by the keyboard.
