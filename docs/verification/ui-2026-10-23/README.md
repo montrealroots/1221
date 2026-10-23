@@ -30,6 +30,9 @@ walk was made on the app built from it. Later commits change tests and documents
 | `55543f7c` | Home around the day, Updates, landscape-only phones, the layout system, the dense pages summary first |
 | `10a7e916` | The records follow Home's new shape; the Profile summary first; the walk's narrow-window defects fixed |
 | `208dbf1f` | Recent Updates groups a repeated notice; the walk's last squeezed and loose controls fixed |
+| `f3ef939b` | The final walk's evidence, the before walk measured again, `coverage.md`, this receipt, the handoff |
+| `d625fca0` | `coverage.md`: where a menu is pinned across the window, said rightly |
+| `92f09a4b` | The wiring list reads Recent Updates' Mark Read as it is; the gate passed here |
 
 ## What Changed
 
@@ -162,7 +165,19 @@ measure found anything (`after/audit-summary.json`, `before/audit-summary-remeas
 
 ## The Gate
 
-«GATE»
+In a clean clone of `92f09a4b` (its `src` `208dbf1f`'s, nothing uncommitted), `node_modules` linked in, the exit read
+from its file and never from a pipe: **0**.
+- **Validate:** typecheck, lint, then 488 of 488 test files and 5,613 of 5,613 tests, none skipped.
+- **The checks:** all 22 after validate, the gate's `&&` running each only if the last held
+  (`after/gate.txt`, `after/gate-exit.txt`).
+
+The first run, in a clean clone of `f3ef939b`, exited 1 (`after/gate-first-run.txt`). One test of 5,613 failed:
+`tests/b20-guide-wiring.test.ts`. The list of every control that issues a command still read Home's Mark Read as sending
+one notice's id, where since `208dbf1f` it sends its run's. The line was read against `world.mark_read` again, found
+right, and written into the list (`92f09a4b`). My own runs before the gate had taken the tests that render Home, not
+that file, so the gate was the first to run it on the change.
+
+Brief 22's gate had 486 test files and 5,598 tests. Brief 23 added 2 test files (`b23-turn`, `b23-pages`) and 15 tests.
 
 ## The Completion Matrix
 

@@ -30,5 +30,12 @@
   on a played save found two terms' coursework words as two of Recent Updates' four rows. Both fixed (`208dbf1f`):
   Recent Updates groups runs as Updates does, and Around The Class has its own scroller. The older saves were loaded:
   sixteen, all at schema 94 (`after/save-compat.txt`).
-- **The final walk** on `208dbf1f`, the last change to `src`; the before walk measured again with the same script;
-  `coverage.md`; the gate in a clean clone. See `README.md`.
+- **The final walk** on `208dbf1f`, the last change to `src`: 1,912 steps, none failing a measure. The before walk was
+  measured again with the same script (63 screen-and-size pairs failing). `keyboard.mjs` gained a changing height. The
+  turn test gained a stop across a turn and no fullscreen. `coverage.md`, the receipt and the handoff were written
+  (`f3ef939b`).
+- **The gate:**
+  - On `f3ef939b` it exited 1: the wiring list read Recent Updates' Mark Read as before, so that line was read again
+    and written in (`92f09a4b`).
+  - On `92f09a4b` it exited 0: 488 test files, 5,613 tests, all 22 checks.
+- **Not merged, not deployed.**

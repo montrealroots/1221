@@ -19,7 +19,7 @@ instruction." No pull request is open for it. There is no stash and one worktree
   `criteria.md` (the checks, before any change), `inventory.md` (every screen before), `rotation.md` (the upright phone)
   and `CHECKPOINT.md`.
 - **The tested commit:** `208dbf1f`, the last change to `src`. The final walk was made on the app built from it. Later
-  commits change tests and documents only.
+  commits change tests and documents only, and the gate ran on `92f09a4b`.
 - **A phone upright** (`ui/shell/turn.tsx`):
   - **What it sees:** Rotate Your Phone To Play, over a game that is `inert`.
   - **The clock:** a live clock is paused through Pause's own command. On its side again the game stays paused until
@@ -53,7 +53,10 @@ instruction." No pull request is open for it. There is no stash and one worktree
 - **Saves:** the schema stays 94, no migration. The sixteen saves the walk and tests open all load, play a day on, and
   save and load again (`after/save-compat.txt`).
 - **Defects found on the way and fixed:** 15, in the receipt with what holds each.
-- **The gate:** in the receipt.
+- **The gate:** in a clean clone of `92f09a4b`, its exit read from its file: 0. That's 488 of 488 test files, 5,613 of
+  5,613 tests, none skipped, and all 22 checks (`docs/verification/ui-2026-10-23/after/gate.txt`). The first run, on
+  `f3ef939b`, failed one test: the wiring list still read Recent Updates' Mark Read as sending one notice. It was read
+  again and written in.
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). A deployment of
   brief 22's line accepts this line's saves.
 
