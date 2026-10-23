@@ -581,7 +581,7 @@
   "files": 102,
   "same": 0,
   "explained": {
-   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 199,
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 197,
    "a measure of words: the journeys’ continuity counts text": 33,
    "a count of notices: a rewrite changes which merge; the events are compared apart": 842
   },

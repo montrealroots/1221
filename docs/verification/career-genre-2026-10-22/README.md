@@ -297,6 +297,50 @@ Readings made on SLATE's judgment, each for the owner to keep or change:
   only abroad; ST6-R2.e's margins), the 20 rows they hold Verification Incomplete, and brief 21's question whether a US
   minimum payment due includes what's past due.
 
+## After The Merge
+
+The pages captured on the built app after #54's merge (2026-10-22) showed two defects, and the owner said to fix them
+("Yes"), on the branch and not merged:
+- **Paydays for work called off.** `callOff` dropped a week with nothing worked from what was owed and took the work's
+  calls off the calendar, but not the week's payday, which went on the clock under another reference. So on 2 September
+  2029, b20-4 released as Hester Vane at midnight with nothing owed, Home and the calendar still said "Payday: The Winter
+  Ledger" for 13, 20 and 27 September and 4 October. Each would have fired and paid nothing. Older than brief 22 (a
+  replacement calls work off the same way), made common by its release.
+  - **Fixed:** the dropped weeks' paydays come off the clock with them (`dropPaydays`, `systems/propay.ts`). A save made
+    before has its own taken off on opening (`loadSave`); with nothing to take off, a save made since opens to the same
+    bytes.
+  - **Tests:** A1, the nine paydays cancelled at that midnight; A7, weeks five to nine's cancelled at the release and the
+    four worked weeks' paid; "An older save's paydays", the save written by the build before this fix
+    (`tests/fixtures/b22/b20-4-released-2029-09-02.json.gz`), its nine stale paydays off the clock on opening and a
+    second opening the same to the byte.
+- **"The producers answers soon."** on Opportunities' In Progress, of a role the producers cast, where the submission's
+  own notice said "answer". It agrees now (`agrees`), tested in `tests/pro-opportunities-screen.test.ts`, whose earlier
+  test took either form.
+- **Deliberate faults** (`mutations/after-merge-mutations.json`, run by `mutations/run.py` in a clean clone of
+  `a2af3b46`, `mutations/after-merge-results.json`): four, each killed by the test written for it.
+  - the dropped weeks' paydays left on the clock: A1;
+  - nothing taken off on opening: "An older save's paydays";
+  - every payday of the engagement taken off, the worked weeks' too: A7;
+  - "answers" whoever answers: the screen test.
+- **On the built app** (`a2af3b46`, the capture's sixteen pages at 1440 again):
+  - **2 September 2029, from the save written before the fix:** "Payday: The Winter Ledger" 0 times on Home and 0 on the
+    calendar, where `main`'s build showed it 4 and 7 times.
+  - **1 September, the run booked:** its six paydays shown on the calendar, as on `main`.
+  - **16 August, Robin's self-tape:** "Submitted. The producers answer soon."
+- **The gate,** in a clean clone of `5ccf054e`, its exit read from its file: exit 0; 486 of 486 test files and 5,598 of
+  5,598 tests, none skipped; all 22 checks, the matrix at 588 (`final-runs/runs/gate-after-merge.txt`). Brief 22's own
+  gate record (`gate.txt`, `gate-receipt.txt`) stays as it was; only this figure was written after it.
+- **The matrix:** the fix changed `src/engine`, so the 46 rows measured on the engine's or the app's whole source read as
+  measured before what they read last changed, and it said 588 of 658 until the final runs measured them again.
+- **The final runs again** (the owner's "Run the final runs then merge everything.", `final-runs/runs/README.md`, Played
+  Again On The Paydays Fix): every lane but the judge's, whose rows read nothing the fix touched, on `933f1ae6`, and the
+  two advice lanes again on `54b4e96f` once `tools/advice.ts` counted a tree clean but for the runs' own outputs. Against
+  brief 22's first runs: every figure the same; the one number that moved, b20-4's save 45 bytes longer at one
+  transition, is the fix. The 46 rows moved to the commits they ran on, the gate's own last: the gate on `576a0e88`, which
+  holds the fold, exit 0, 486 of 486 test files and 5,598 of 5,598 tests (`final-runs/runs/gate.txt`, in brief 22's
+  first gate's place), and the matrix back at 634 of 658. Run again on `6f44b403`, which folds its figure: the
+  same, the matrix at 634 (`gate-receipt.txt`). Only that figure was written after it.
+
 ## Not Done, And What Limits This
 
 - **Nothing was merged or deployed** while the brief ran, as it said. At the owner's "lets just merge everything"

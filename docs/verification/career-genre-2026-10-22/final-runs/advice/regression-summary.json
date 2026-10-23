@@ -1,5 +1,5 @@
 {
- "commit": "16b50e077028c1c24b83707584b96d90d653ab78",
+ "commit": "54b4e96fce30c325b1826d595d94e5b5d60c9043",
  "clean": true,
  "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/career-genre-2026-10-22/final-runs/advice/f2a-adv-0-9.json docs/verification/career-genre-2026-10-22/final-runs/advice/f2a-adv-10-19.json docs/verification/career-genre-2026-10-22/final-runs/advice/f2a-adv-20-29.json docs/verification/career-genre-2026-10-22/final-runs/advice/f2a-adv-30-39.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-0-9.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-10-19.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-20-29.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-30-39.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-40-49.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-50-59.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-60-69.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-70-79.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-80-89.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-90-99.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-100-109.json docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-110-119.json --out docs/verification/career-genre-2026-10-22/final-runs/advice/regression-summary.json",
  "files": [
@@ -21,7 +21,7 @@
   "docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-110-119.json"
  ],
  "commits": [
-  "16b50e077028c1c24b83707584b96d90d653ab78"
+  "54b4e96fce30c325b1826d595d94e5b5d60c9043"
  ],
  "cases": 160,
  "roles": {

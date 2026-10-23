@@ -20,7 +20,7 @@ import { BAND_LABEL } from '@/engine/systems/coursework';
 import { BRIEF, type BriefStep } from '@/engine/systems/briefs';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, chanceWords, conditionsFor, counted, datesOf, decidesAt,
+  DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes, writtenFor, writtenForWords,
 } from '@/engine/systems/projobs';
@@ -120,7 +120,9 @@ function InProgress({ o }: { o: Opportunity }) {
   const agent = o.agentId ? agentById(o.agentId) : undefined;
   const tapeNo = tapeRefusal(sim, person, o);
   const moveNo = moveRefusal(sim, person, o);
-  const next = !r ? `Submitted. ${t.casting.charAt(0).toUpperCase()}${t.casting.slice(1)} answers soon.`
+  // Its verb agrees with who answers (`agrees`): until 2026-10-22 it read "The producers answers soon." of a self-tape the
+  // producers asked for, which the submission's own notice had already said right.
+  const next = !r ? `Submitted. ${castingAs(t)} ${agrees(t, 'answers', 'answer')} soon.`
     : r.form === 'self-tape' ? `${r.round === 'callback' ? 'A callback self-tape' : 'A self-tape'}, due ${formatWeekdayDate(r.at, NY)} at ${formatTime(r.at, NY)}.`
       : `${r.round === 'callback' ? 'A callback' : 'An audition'} in person at ${t.place.venue} in ${t.place.city}, ${formatWeekdayDate(r.at, NY)} at ${formatTime(r.at, NY)}.`;
   return (

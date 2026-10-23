@@ -10,6 +10,13 @@ is no stash and one worktree.
 
 **Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
+  (634 at #54's merge. The follow-up below changed `src/engine`, so the 46 rows brief 22's final runs measured on the
+  engine's or the app's whole source read as measured before what they read last changed, and this said 588, as after
+  brief 20's D2, until the final runs measured them again on the fix: the runs lanes on `933f1ae6`, the advice lanes on
+  `54b4e96f` (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`, Played Again On The Paydays Fix),
+  every figure the same as brief 22's first runs, and INT-gate on the gate run on `576a0e88`, which holds that fold
+  (633 until then).)
+
   (632 at brief 21's close. Brief 22's final runs measured every row again on its tested commit
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`):
   - **the Genre Audit as written:** superseded at the owner's word, so Explicitly Deferred, its figure and history kept;
@@ -61,7 +68,21 @@ is no stash and one worktree.
   (`final-runs/runs/gate-receipt.txt`). Only that figure was written after it.
 - **Merged, not deployed:** #54 (`9aed9ed4`). Base44 deployment waits on the gate and the owner's word (rule 14), and
   §10 of this file says what an older deployment refuses. The schema version is still 94, so a deployment of brief 20's
-  or 21's line accepts this line's saves. The next session starts from the owner's next brief.
+  or 21's line accepts this line's saves.
+- **A follow-up on `claude/peaceful-hamilton-59zdbb`, not merged** (the owner's "Yes", 2026-10-22, to fixing two defects
+  the pages captured after the merge showed; the receipt's After The Merge):
+  - **Paydays for work called off:** a week owed nothing kept its payday on the clock, so after b20-4's release Home and
+    the calendar still said "Payday: The Winter Ledger" four times. They come off with the week now (`dropPaydays`), and
+    an older save's come off on opening.
+  - **"The producers answers soon."** on Opportunities' In Progress: its verb agrees now.
+  - **The gate** in clean clones, its exit read from its file, 0 each time, 486 of 486 test files and 5,598 of 5,598
+    tests, all 22 checks: on `5ccf054e`, the fix (`gate-after-merge.txt`); on `576a0e88`, the final runs' fold (`gate.txt`,
+    where brief 22's first gate, on `cf83e61d`, stood until then, kept in git at `16aa0b6d`); and again on `6f44b403`,
+    which folds its figure, the same, the matrix at 634 (`gate-receipt.txt`). Only that figure was written after it.
+  - **The final runs again,** at the owner's "Run the final runs then merge everything." (2026-10-22): every lane but
+    the judge's, whose rows read nothing the fix touched. The one number that moved from the first runs, b20-4's save 45
+    bytes longer at one transition, is the fix. `tools/advice.ts` counts a tree clean but for the runs' own outputs now,
+    so a lane played again over its first run's committed outputs reads clean where the code is.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
   - enjoyment read from tags;

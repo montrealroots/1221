@@ -33,6 +33,7 @@ import { documentsOf, type PersonDocument } from '@/engine/systems/documents';
 import { PERMISSION_KIND, employedOn, employmentSpan, f1Of, optRunsOut, weeklyHours, workAuthorizedFor } from '@/engine/systems/permission';
 import { WORK_DAY_KIND, acceptWarning, datesOf, payTermsOf, projectOf } from '@/engine/systems/projobs';
 import { ensurePro, type Engagement, type Opportunity } from '@/engine/systems/pro';
+import { PAY_KIND } from '@/engine/systems/propay';
 import { PROJECTS } from '@/engine/content/careerwork';
 
 const NY = 'America/New_York';
@@ -47,6 +48,8 @@ const optOf = (sim: Simulation) => documentsOf(sim.player).find((d) => d.kind ==
 const engagementFor = (sim: Simulation, projectId: string) => sim.player.pro!.engagements.find((e) => e.projectId === projectId)!;
 const worked = (e: Engagement) => (e.log ?? []).filter((l) => l.status === 'worked');
 const workItems = (sim: Simulation, e: Engagement) => sim.universe.scheduled.filter((i) => i.kind === WORK_DAY_KIND && i.payload.engagementId === e.id);
+/** An engagement's paydays on the clock, by the week each pays (its payment's key ends in the week). */
+const paydays = (sim: Simulation, e: Engagement) => sim.universe.scheduled.filter((i) => i.kind === PAY_KIND && i.payload.engagementId === e.id).map((i) => ({ week: String(i.payload.key).split(':').at(-1), status: i.status, resolvedAt: i.resolvedAt, label: i.label }));
 
 /** TEST SETUP: rested, fed, steady and awake each time the clock moves, six hours at a time, Go pressed at every stop. */
 function played(sim: Simulation, until: number): void {
@@ -128,6 +131,7 @@ describe('A1: b20-4, the life that worked 47 days after its OPT ended, opened fr
     expect([opt.status, opt.idleDays, opt.workedDays, opt.countedTo]).toEqual(['valid', 88, 3, undefined]);
     const run = engagementFor(sim, 'winter-ledger-hester');
     expect([run.status, run.days.length, worked(run).length, run.pay.length]).toEqual(['booked', 50, 0, 9]);
+    expect(paydays(sim, run).map((d) => d.status)).toEqual(Array(9).fill('pending'));
     expect(formatDate(run.days[0]!.from, NY)).toBe('September 4, 2029');
     const practice = JSON.stringify(sim.player.engagement);
     const credits = sim.player.pro!.credits.length;
@@ -147,6 +151,9 @@ describe('A1: b20-4, the life that worked 47 days after its OPT ended, opened fr
     expect(run.history.map((h) => h.words)).toContain('Harrow Point Repertory Theater released you as Hester Vane on September 2, 2029: your OPT ended on September 1, 2029, after more than 90 days without work, and without it you can’t work in the United States.');
     expect(workItems(sim, run).every((i) => i.status === 'cancelled')).toBe(true);
     expect([run.log ?? [], run.pay, run.creditId]).toEqual([[], [], undefined]);
+    // Its nine paydays off the clock with it, at that midnight: until 2026-10-22 they stayed on it, so Home and the
+    // calendar said "Payday: The Winter Ledger" for weeks owed nothing, and each fired and paid nothing.
+    expect(paydays(sim, run).map((d) => [d.status, d.resolvedAt])).toEqual(Array(9).fill(['cancelled', midnight(2029, 9, 2)]));
     expect(sim.player.pro!.credits).toHaveLength(credits);
     // The defect's own measure: no engagement has a day worked after OPT ended.
     for (const e of sim.player.pro!.engagements) expect(worked(e).filter((l) => l.at >= opt.endedAt!)).toEqual([]);
@@ -177,6 +184,21 @@ describe('A12, an older save: b20-4 opened from its save of 4 September 2029 at 
   }, 120_000);
 });
 
+describe('An older save’s paydays: b20-4 opened from its save of 2 September 2029 at 9 AM, written by the build before 2026-10-22, the run released at midnight', () => {
+  it('PLAYER JOURNEY: the nine paydays that build left on the clock for The Winter Ledger, owed nothing, come off it on opening; nothing says "Payday: The Winter Ledger" any more, and a second opening changes nothing', () => {
+    const text = gunzipSync(readFileSync('tests/fixtures/b22/b20-4-released-2029-09-02.json.gz')).toString('utf8');
+    const kept = deserialise(text) as { scheduled: { kind: string; status: string; payload: Record<string, unknown> }[] };
+    expect(kept.scheduled.filter((i) => i.kind === PAY_KIND && i.status === 'pending')).toHaveLength(9);
+    const sim = loadSave(kept as never);
+    const run = engagementFor(sim, 'winter-ledger-hester');
+    expect([run.status, run.pay]).toEqual(['canceled', []]);
+    expect(paydays(sim, run).map((d) => [d.status, d.resolvedAt])).toEqual(Array(9).fill(['cancelled', sim.now]));
+    expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.label === 'Payday: The Winter Ledger')).toEqual([]);
+    const once = serialise(sim.universe);
+    expect(serialise(loadSave(deserialise(once) as never).universe)).toBe(once);
+  }, 120_000);
+});
+
 describe('A7, during: b20-4 opened from its save of 1 October 2029, The Winter Ledger in rehearsal after the old count had ended its OPT', () => {
   it('PLAYER JOURNEY: the next work day reads permission, finds none, and releases the run then; the twenty rehearsal days stand, their four weeks paid, the five weeks not worked dropped, and no performance or credit follows', () => {
     const sim = opened('b20-4-opt-ended-2029-10-01');
@@ -195,6 +217,11 @@ describe('A7, during: b20-4 opened from its save of 1 October 2029, The Winter L
     // Weeks one to four, each with days worked, still owed and the fourth paid on Thursday 4 October; five to nine gone.
     expect(run.pay.map((p) => p.key.split(':')[1])).toEqual(['1', '2', '3', '4']);
     expect(run.pay.every((p) => p.received)).toBe(true);
+    // The paydays of weeks five to nine off the clock at the release, the four worked weeks' fired as they came (until
+    // 2026-10-22 the five stayed on it and fired, paying nothing).
+    const dropped = paydays(sim, run).filter((d) => Number(d.week) > 4);
+    expect(dropped.map((d) => [d.week, d.status, d.resolvedAt])).toEqual(['5', '6', '7', '8', '9'].map((w) => [w, 'cancelled', firstNight.from]));
+    expect(paydays(sim, run).filter((d) => Number(d.week) <= 4).every((d) => d.status !== 'pending' && d.status !== 'cancelled')).toBe(true);
     expect(run.creditId).toBeUndefined();
     expect(titled(sim, 'Released As Hester Vane').map((n) => [n.at, n.body])).toEqual([[firstNight.from, 'Your OPT ended on September 6, 2029, after more than 90 days without work, and without it you can’t work in the United States. So Harrow Point Repertory Theater can’t keep you on as Hester Vane in The Winter Ledger, and has released you. The 20 days you worked are still paid on their paydays, and the rest are called off. There’s no credit for it.']]);
     // The night it was released at ran and did nothing; every one after it is off the calendar.

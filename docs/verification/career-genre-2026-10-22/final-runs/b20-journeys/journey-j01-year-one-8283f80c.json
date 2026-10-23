@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2027-06-01",
    "to": "2028-03-31",
-   "secs": 52,
+   "secs": 47,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2028-03-31",
    "to": "2029-01-29",
-   "secs": 61,
+   "secs": 52,
    "reloads": 11
   },
   {
    "part": 3,
    "from": "2029-01-29",
    "to": "2029-09-01",
-   "secs": 137,
+   "secs": 85,
    "reloads": 6,
    "done": true
   }
@@ -4213,7 +4213,7 @@
      "work": [],
      "transactions": 1148
     },
-    "secs": 24
+    "secs": 14
    },
    {
     "why": "an audition (self-tape) set for 2029-08-05T22:00, Robin in Last Bus To Eastview",
@@ -4268,7 +4268,7 @@
      ],
      "transactions": 1224
     },
-    "secs": 27
+    "secs": 13
    }
   ],
   "workDays": [],

@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "16b50e07",
- "uncommitted": 0,
- "startedAt": "2026-10-22T18:40:31.626Z",
+ "commit": "933f1ae6",
+ "uncommitted": 8,
+ "startedAt": "2026-10-22T23:36:17.671Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": "1-AlexRivera-mvjvzlun"
+  "seed": "1-AlexRivera-mvk6jypn"
  },
  "steps": [
   {
@@ -212,7 +212,7 @@
     "Rehearse Alone (grayed, forced)"
    ],
    "said": [
-    "Read The Scene: 7:00 AM → 7:40 AM; Knows The Scene 0% → 56%",
+    "Read The Scene: 7:00 AM → 7:40 AM; Knows The Scene 0% → 57%",
     "refused: Rehearse Alone: Learn some of the lines first."
    ],
    "ok": true,
@@ -227,11 +227,11 @@
     "Menu",
     "School",
     "Coursework (tab)",
-    "Table Work: Moonlight on a seaport quay at assize time, the reward notic",
-    "Table Work: Strangers, a policeman and the man he’s hunting, though the ",
-    "Table Work: Catch the man, and win the hundred pounds and promotion",
-    "Table Work: His own past: he sang the rebel songs once, and part of him ",
-    "Table Work: Use his authority: move the man on, then keep him there on h",
+    "Table Work: A cold winter morning in the dead man’s kitchen, the men ups",
+    "Table Work: Two farm women who barely know each other, coming to underst",
+    "Table Work: Do right, and find out what right is: the law, or Minnie",
+    "Table Work: She is married to the sheriff, and the law is the law",
+    "Table Work: Remember what it was to lose something and have no one",
     "Read The Scene",
     "Read The Scene",
     "Read The Scene",
@@ -251,17 +251,9 @@
     "Learn Lines",
     "Learn Lines",
     "Learn Lines",
-    "Rehearse Alone",
+    "Learn Lines",
     "Advance",
     "Tomorrow Morning",
-    "Menu",
-    "School",
-    "Coursework (tab)",
-    "Rehearse Alone",
-    "Advance",
-    "Tomorrow Morning",
-    "On The Way: Advance",
-    "Classes: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -278,6 +270,16 @@
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Say Yes",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Rehearsal With Maya: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -309,6 +311,7 @@
     "Rehearse Alone",
     "Rehearse Alone",
     "Rehearse Alone",
+    "Rehearse Alone",
     "Run It With A Reader",
     "Advance",
     "Tomorrow Morning",
@@ -332,18 +335,18 @@
     "Coursework (tab)"
    ],
    "said": [
-    "August 29, 2026 11:55 AM: 20.3 → 26.9 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
-    "August 30, 2026 2:45 PM: 26.8 → 33.3 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
-    "August 31, 2026 8:00 AM: 33.3 → 36.4 (1 steps: Rehearse Alone)",
-    "September 1, 2026 8:00 AM: 36.4 → 38.6 (1 steps: Rehearse Alone)",
-    "September 2, 2026 8:00 AM: 38.6 → 40.2 (1 steps: Rehearse Alone)",
-    "September 3, 2026 8:00 AM: 40.2 → 41.3 (1 steps: Rehearse Alone)",
-    "September 4, 2026 8:00 AM: 41.4 → 42.2 (1 steps: Rehearse Alone)",
-    "September 5, 2026 9:00 AM: 42.1 → 43 (2 steps: Rehearse Alone, Rehearse Alone)",
-    "September 6, 2026 11:00 AM: 43 → 48 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
-    "September 7, 2026 8:00 AM: 47.9 → 51.7 (1 steps: Run It With A Reader)",
-    "September 8, 2026 8:00 AM: 51.7 → 54.2 (1 steps: Run It With A Reader)",
-    "11 days; Shown Today 20.3 → 54.2"
+    "August 29, 2026 12:25 PM: 21.1 → 28.7 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 7:30 PM: 28.7 → 33.7 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines)",
+    "August 31, 2026 8:00 AM: 33.7 → 36.8 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 36.8 → 39.1 (1 steps: Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 39.1 → 40.7 (2 steps: answered yes, Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 40.7 → 41.9 (1 steps: Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 41.9 → 42.7 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 42.7 → 43.6 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 12:00 PM: 43.6 → 48.9 (5 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 48.9 → 53 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 53 → 55.9 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 21.1 → 55.9"
    ],
    "ok": true,
    "date": "September 9, 2026",
@@ -367,9 +370,9 @@
     "Work On The Note"
    ],
    "said": [
-    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Maya hadn’t rehearsed together. You ran it with a reader 3 times. (With Your Partner: 67% prepared.) You played The Sergeant in The Rising of the Moon.",
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Maya hadn’t rehearsed together. You ran it with a reader 3 times. (With Your Partner: 66% prepared.) You played Mrs. Peters in Trifles.",
     "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
-    "feedback: FEEDBACK: WORKING, 54 OF 100 · A NEW NOTE",
+    "feedback: FEEDBACK: WORKING, 56 OF 100 · A NEW NOTE",
     "Shown: Scene Study, Working"
    ],
    "ok": true,
@@ -541,6 +544,12 @@
    "step": 11,
    "title": "Classes",
    "pressed": "Go",
+   "after": "September 2, 2026 7:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Rehearsal With Maya",
+   "pressed": "Go",
    "after": "September 3, 2026 7:00 AM"
   },
   {
@@ -638,5 +647,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-22T18:43:53.744Z"
+ "finishedAt": "2026-10-22T23:39:40.815Z"
 }

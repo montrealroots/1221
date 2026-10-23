@@ -13,6 +13,42 @@ runner stated a rule brief 22 replaced, not because the game did anything wrong:
   read nothing, and J18's absurdist, a direct kind of the comedy it had worked in, read 1.06 under the transfer the owner
   approved. It takes the first genre neither met nor directly linked to one met now, which must read nothing.
 
+## Played Again On The Paydays Fix, 2026-10-22 And 23
+
+After #54's merge, the paydays fix (`a2af3b46`, the receipt's After The Merge) changed `src/engine`, and the 46 rows these
+runs measured on the engine's or the app's whole source read as measured before what they read last changed. The owner
+said to run the final runs again, then merge. Every lane here but the judge's was played again: the judge's rows read
+only the files `WATCH.judge` names, none of which the fix touched, so they stay as measured on `16b50e07`.
+- **The runs lanes, on `933f1ae6`** (its `src` the fix's), prefix `f22d`, four at a time from 22:08 UTC: JR1 to JR3, BJ1
+  to BJ3, B, C, D, J, A, ADVF, ADVR, UI and APP, then JRC, each clone starting with nothing tracked uncommitted. The
+  container restarted between 22:45 and 23:00 with seven lanes done or under way; the queue was started again with the rest, each
+  lane taking up its record where it stopped (A's preview started twice), and ended at 00:00. Every step exit 0 but
+  JRC's `b19-lives-diff`, which exits 1 as it did on the tested commit (Brief 19's Lives Again, below).
+- **The advice lanes again, on `54b4e96f`**, prefix `f22e`: on `933f1ae6` their batches said their tree unclean, since
+  each lane wrote over the outputs its first run had committed and `tools/advice.ts` counted any tracked change. It
+  counts every tracked change but the final runs' own outputs now (still unclean for a change to `src` or to code
+  anywhere else, checked in a lane's clone), and ADVF and ADVR were played again: every batch on `54b4e96f`, its tree
+  clean. The queue's JRC after them had no journeys of its own and was set aside, not gathered.
+- **Gathered** by `collect22.sh` with `P`, each lane's own outputs only (what its clone's git reads as changed or new).
+
+**Against brief 22's first runs** (the outputs at `16aa0b6d`, every number compared as `../numbers-same.py` compares):
+- **The same in every number, each run's own record aside:** the runs (17 of 17 files), the advice (31), brief 13's
+  journeys (102), the interface and brief 14's journeys.
+- **Brief 20's journeys:** the same but their seconds, and b20-4's save at its fourteenth transition 45 bytes longer
+  (1,810,488 to 1,810,533): the released run's nine paydays kept as cancelled at the release, which is the fix. 161 of
+  161 transitions and 52 of 52 forks the same to the byte, saved and opened; every check passed.
+- **The text outputs** (467 files): the same byte for byte but the build logs, the walks' timings, the release page
+  (`app/b22/*/released-01.txt`: no "Payday: The Winter Ledger", the fix), brief 19's lives' log (its folder's name), and
+  the acceptance walk: 77 of 77 at each width as before, its coursework figures (a scene's Knows The Scene 35% on the
+  first runs, 42% and 43% here, 43% on briefs 20's and 21's) varying as a walk in real time varies from run to run.
+- **Against brief 21's** (`../numbers-same.json`): every folder as on the first runs, the same files differing by the
+  same counts.
+
+The matrix's 46 rows moved to the commits they ran on: 633 of 658 before the gate's own figure, as on the first runs.
+The gate on `576a0e88`, which holds the fold, in a clean clone, its exit read from its file: 0, 486 of 486 test files,
+5,598 of 5,598 tests, every check (`gate.txt`; brief 22's first gate, on `cf83e61d`, stood there until then and is in git
+at `16aa0b6d`). Folded, 634 of 658; run again on `6f44b403`, which holds that: the same (`gate-receipt.txt`).
+
 ## Why They Were Made
 
 Brief 22 changed `src/engine` and `src/ui`, and what the judge reads (`content/genre-weights.ts`, `systems/engagement.ts`).

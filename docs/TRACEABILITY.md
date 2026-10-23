@@ -271,7 +271,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 3 |
 | `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 0 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
-| `pro.pay.payday` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
+| `pro.pay.payday` | `systems/propay.ts` | systems/propay.ts | — | — | — | 6 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 4 |
 | `pro.pay.sag_eligible` | `systems/propay.ts` | systems/propay.ts | — | Yes | success | 2 |
 | `pro.reply` | `systems/projobs.ts` | systems/proagent.ts; systems/projobs.ts | — | — | — | 4 |

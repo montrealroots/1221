@@ -40,7 +40,11 @@ For the next session or the other account, beside the handoff. The tree outranks
 - **The gate again** in a clean clone of `0014aff6`, the fold: exit 0, the same totals, the matrix at 634
   (`final-runs/runs/gate-receipt.txt`).
 
+- **After the merge** (#54, `9aed9ed4`): the paydays fix and "The producers answer soon." (`a2af3b46`), its faults and
+  built-app pages (`5ccf054e`); the final runs played again on it (`933f1ae6`, the advice on `54b4e96f`), every figure
+  the first runs'; the matrix at 633 before the gate's figure.
+
 ## Next
 
-Nothing in the brief is left. Until 2026-10-22 nothing was merged; at the owner's "lets just merge everything" it went to
-`main` in #54 (`9aed9ed4`). Nothing is deployed.
+1. The gate on the fold's commit and again after its figure, then the merge, at the owner's "Run the final runs then
+   merge everything."

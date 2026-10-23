@@ -44,22 +44,22 @@
   {
    "name": "coursework: a step of preparation done from its button, the clock moved and the step counted",
    "ok": true,
-   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 35%; Read The Scene: 40 minutes, Knows The Scene up 35%."
+   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 42%; Read The Scene: 40 minutes, Knows The Scene up 42%."
   },
   {
    "name": "coursework: a way of playing it chosen and rehearsed in",
    "ok": true,
-   "note": "Read The Scene: 40 minutes, Knows The Scene up 35%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
+   "note": "Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
   },
   {
    "name": "coursework: table work answered from its select",
    "ok": true,
-   "note": "4 options, “dusk” taken; Read The Scene: 40 minutes, Knows The Scene up 35%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+   "note": "4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
   },
   {
    "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
    "ok": true,
-   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 19%. | Learn Lines: 45 minutes, Lines up 15%.; then \"The Turn Into The Second Half\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 19%. | Learn Lines: 45 minutes, Lines up 15%. | Work It"
+   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into The Middle\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slow"
   },
   {
    "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
@@ -104,17 +104,17 @@
   {
    "name": "practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained",
    "ok": true,
-   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.09. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
+   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.12. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
   },
   {
    "name": "profile: the development history shows the hour",
    "ok": true,
-   "note": "August 31, 2026: Emotional Depth +0.094, Sense Memory"
+   "note": "August 31, 2026: Emotional Depth +0.122, Sense Memory"
   },
   {
    "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
    "ok": true,
-   "note": "Chase Total Checking has only $90,394.00 available, so nothing was moved. / Chase Total Checking has only $90,394.00 available, so nothing was moved. | Moved $1 to Chase Savings."
+   "note": "Chase Total Checking has only $90,424.00 available, so nothing was moved. / Chase Total Checking has only $90,424.00 available, so nothing was moved. | Moved $1 to Chase Savings."
   },
   {
    "name": "papers: its five tabs open",
@@ -149,7 +149,7 @@
   {
    "name": "stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s sleep gives the Energy back",
    "ok": true,
-   "note": "Work Out: done at 8:00 AM.; Energy 74 → 61, Stamina 48.4 → 49.0 (Today: Not held back today); slept to September 3, 2026 7:00 AM, Energy 74"
+   "note": "Work Out: done at 8:00 AM.; Energy 74 → 61, Stamina 48.4 → 49.1 (Today: Not held back today); slept to September 3, 2026 7:00 AM, Energy 74"
   },
   {
    "name": "papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term said; saved and continued, it’s still on its way",
@@ -189,7 +189,7 @@
   {
    "name": "[save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call",
    "ok": true,
-   "note": "Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
+   "note": "An hour on the part: lines at 76%. | Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
   },
   {
    "name": "[save: decision scenario] home: Your 2026 Tax Return on its card, File It pressed, the card gone and the return filed",

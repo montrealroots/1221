@@ -573,6 +573,23 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
   return { scheduled, deferred };
 }
 
+/**
+ * Takes off the clock every payday of an engagement for a payment it no longer owes, and returns how many. Called when
+ * work is called off (`callOff`, in the work system), whose weeks with nothing worked are owed nothing, and on opening a
+ * save (`loadSave`) for an engagement called off before 2026-10-22. Until then a dropped week kept its payday on the
+ * clock: Home and the calendar went on saying "Payday: …" for pay that would never come, and each fired and paid
+ * nothing, since `paymentOf` found no payment. b20-4, released as Hester Vane at the midnight ending 1 September 2029,
+ * still had four paydays for The Winter Ledger on its calendar the next morning.
+ */
+export function dropPaydays(sim: Simulation, e: Engagement): number {
+  const owed = new Set(e.pay.map((p) => p.key));
+  let n = 0;
+  for (const i of sim.universe.scheduled) {
+    if (i.status === 'pending' && i.kind === PAY_KIND && i.payload.engagementId === e.id && !owed.has(String(i.payload.key)) && sim.timeline.cancel(i.id, sim.now)) n += 1;
+  }
+  return n;
+}
+
 /** What's promised on an engagement and not yet received, deferred pay aside: the Work tab's owed. */
 export const stillPromised = (e: Engagement): ProPayment[] => e.pay.filter((p) => !p.deferred && !p.received);
 

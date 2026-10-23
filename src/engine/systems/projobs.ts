@@ -89,7 +89,7 @@ import {
 } from './school';
 import { OPT_ZONE, PERMISSION_ENDED, f1Of, optRunsOut, settleOpt, usWorkAuthorized, workAuthorizedFor } from './permission';
 import { documentsOf } from './documents';
-import { EQUITY_JOINED, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
+import { EQUITY_JOINED, dropPaydays, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
 import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -944,7 +944,7 @@ export const roleWords = (t: ProjectTemplate): string => `${t.role.part} in ${t.
 
 /** The casting office as a sentence's subject: capitalized to start one ("The producers"), and its verb agreeing with it. */
 export const castingAs = (t: ProjectTemplate): string => t.casting.charAt(0).toUpperCase() + t.casting.slice(1);
-const agrees = (t: ProjectTemplate, one: string, many: string): string => (/^the producers\b/i.test(t.casting) ? many : one);
+export const agrees = (t: ProjectTemplate, one: string, many: string): string => (/^the producers\b/i.test(t.casting) ? many : one);
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The loop's steps
@@ -1298,6 +1298,8 @@ function callOff(sim: Simulation, e: Engagement, t: ProjectTemplate): Set<number
     if (t.schedule.kind === 'shoot' && days.length) p.promised = Math.round((p.promised / days.length) * done);
     return true;
   });
+  // The paydays of the weeks dropped come off the clock with them (`dropPaydays`): until 2026-10-22 they stayed on it.
+  dropPaydays(sim, e);
   return worked;
 }
 
