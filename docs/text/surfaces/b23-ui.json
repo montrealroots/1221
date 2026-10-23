@@ -1,7 +1,7 @@
 [
  {
   "surface": "Updates",
-  "where": "The menu’s Updates, under Your Day, and View All Updates on Home: every notice, read and unread, newest first, a run about one thing as one row with its count",
+  "where": "View All Updates, at the foot of Recent Updates on Home: every notice, read and unread, newest first, a run about one thing as one row with its count. Until 2026-10-23’s brief 24 it was on the menu too, under Your Day",
   "sources": [
    "src/ui/screens/Updates.tsx#*"
   ],
@@ -110,7 +110,7 @@
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/navigation.test.ts: 'gives the calendar a section of Home, Up Next'"
+    "ref": "tests/navigation.test.ts: 'gives the calendar and Updates to Home, by Up Next and Recent Updates'"
    },
    {
     "kind": "test",

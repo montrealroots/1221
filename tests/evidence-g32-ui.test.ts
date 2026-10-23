@@ -135,6 +135,7 @@ vi.mock('@/app/game-context', () => {
 const { Home } = await import('@/ui/screens/Home');
 const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
 const { Updates } = await import('@/ui/screens/Updates');
+const { CalendarWorkspace } = await import('@/ui/workspaces/CalendarWorkspace');
 
 // ---------------------------------------------------------------------------
 // Lives, the screens over them, and the figures worked out by hand
@@ -620,7 +621,9 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(shown).not.toContain('you’re not in');
   });
 
-  it('Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section locked until “What’s Coming” is read, and the button until “Your Own Plans”', () => {
+  // From 2026-10-23 (brief 24, which took Calendar from the menu) Open Calendar opens with “What’s Coming”, the chapter
+  // that opens the calendar: until then it waited for “Your Own Plans”, and the menu's Calendar was the way in between.
+  it('Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section and its button locked until “What’s Coming” is read, and opens both with it', () => {
     const sim = ada('g32-calendar-open');
     drawn(sim, Home);
     press(button('Open Calendar'));
@@ -632,12 +635,8 @@ describe('h-calendar: the Calendar section of Home', () => {
     read('calendar');
     const { text } = drawn(guided, Home);
     expect(text).not.toContain('Up Next Locked');
-    expect(between(text, 'Up Next', 'How You Are')).toContain('Open Calendar Locked');
+    expect(between(text, 'Up Next', 'How You Are')).not.toContain('Open Calendar Locked');
     h.went = [];
-    press(button('Open CalendarLocked'));
-    expect(h.went).toEqual([]);
-    for (const id of ['clock', 'advance', 'needs', 'body', 'sleep', 'looking-after', 'plans']) read(id);
-    drawn(guided, Home);
     press(button('Open Calendar'));
     expect(h.went).toEqual(['/workspace/calendar']);
   });
@@ -788,6 +787,70 @@ describe('h-needs: What Needs You on Home', () => {
     expect(recent(sim)).not.toContain('more unread');
   });
 
+  // A phone held on its side (from 2026-10-23, the owner's brief 24): the first window holds the most pressing thing
+  // waiting and how many more, the sky in the greeting's line where the time was (the bar has the clock), and the days
+  // ahead a press away. The query is Home's own (`SHORT`); with no `matchMedia`, as everywhere else here, the desktop's
+  // Home is drawn.
+  it('PLAYER JOURNEY: on a phone on its side, What Needs You shows the most pressing of two with “One more waiting.” and Show All 2, which shows both; the greeting’s line has the sky and not the time, and Forecast And Daylight opens the days ahead', () => {
+    const sim = fromAbroad('g32-needs');
+    sim.advanceTo(at(2027, 2, 1, 12));
+    const items = (html: string) => html.match(/<div class="decision"/g)?.length ?? 0;
+    const line = (html: string) => words(html.match(/<p class="muted today-line">([\s\S]*?)<\/p>/)![1]!);
+    h.given = new Map();
+    const desk = drawn(sim, Home).html;
+    expect(items(desk)).toBe(2);
+    expect(line(desk)).toMatch(/^12:00 PM in New Haven, Connecticut · EST · Winter · Daylight /);
+    expect(line(desk)).not.toContain('°F');
+    expect(desk).not.toContain('Forecast And Daylight');
+    const g = globalThis as { window?: unknown };
+    g.window = { matchMedia: (q: string) => ({ matches: q === '(max-height: 500px)', addEventListener() {}, removeEventListener() {} }) };
+    try {
+      h.given = new Map();
+      let { html, text } = drawn(sim, Home);
+      expect(items(html)).toBe(1);
+      expect(between(text, 'What Needs You', 'Up Next')).toContain('Your 2026 Tax Return');
+      expect(between(text, 'What Needs You', 'Up Next')).toMatch(/One more waiting\. Show All 2$/);
+      expect(line(html)).toMatch(/^New Haven, Connecticut · EST · Winter · -?\d+°F \w/);
+      expect(line(html)).not.toMatch(/PM|AM|Daylight/);
+      expect(html).toMatch(/<div class="today-weather" id="today-weather" hidden="">/);
+      expect(html).toContain('aria-expanded="false" aria-controls="today-weather"');
+      press(button('Show All 2'));
+      ({ html, text } = drawn(sim, Home));
+      expect(items(html)).toBe(2);
+      expect(between(text, 'What Needs You', 'Up Next')).toMatch(/All 2, the most pressing first\. Show The Most Pressing$/);
+      press(button('Forecast And Daylight'));
+      ({ html } = drawn(sim, Home));
+      expect(html).toMatch(/<div class="today-weather" id="today-weather">/);
+      expect(html).toContain('aria-expanded="true" aria-controls="today-weather"');
+      const sky = words(html.slice(html.indexOf('id="today-weather"'), html.indexOf('class="home-grid"')));
+      expect(sky).toMatch(/High -?\d+°F · Low -?\d+°F/);
+      expect(sky).toMatch(/Daylight \d+:\d\d AM to \d+:\d\d PM/);
+      button('Hide The Forecast');
+    } finally {
+      delete g.window;
+    }
+  });
+
+  // Calendar and Updates left the menu on 2026-10-23 (the owner's brief 24, "Give both screens a clear route back to
+  // Home"), so each opens from Home and has its own way back, at its head.
+  it('PLAYER JOURNEY: Updates and the Calendar, opened from Home, each go back to Home by Back To Home at their head', () => {
+    const sim = fromAbroad('g32-needs');
+    sim.advanceTo(at(2027, 2, 1, 12));
+    h.given = new Map();
+    drawn(sim, Home);
+    press(button('View All Updates'));
+    press(button('Open Calendar'));
+    expect(h.went).toEqual(['/workspace/updates', '/workspace/calendar']);
+    for (const screen of [Updates, CalendarWorkspace]) {
+      h.went = [];
+      h.given = new Map();
+      const { text } = drawn(sim, screen);
+      expect(text.startsWith('Back To Home'), text.slice(0, 80)).toBe(true);
+      press(button('Back To Home'));
+      expect(h.went).toEqual(['/home']);
+    }
+  });
+
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {
     const sim = fromAbroad('g32-needs', { tutorial: true });
     const read = (id: string) => expect(sim.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
@@ -848,7 +911,9 @@ describe('h-needs: What Needs You on Home', () => {
     const weighs = (sim: Simulation) => needs(sim).replace(/^What Needs You /, '');
     /** What Needs You's words with these to put right, each with its way to its screen. */
     const things = (...items: [string, string][]) => `${['One thing', 'Two things'][items.length - 1]} to put right. How This Works ${items.map(([line, screen]) => `${line} Open ${screen} How This Works`).join(' ')}`;
-    const CLEAR = `No questions are waiting on you. How This Works ${ALL_CLEAR}`;
+    // With nothing waiting the panel's head has no subtitle from 2026-10-23 (brief 24): until then it said "No questions
+    // are waiting on you." over the All Clear that said the same.
+    const CLEAR = `How This Works ${ALL_CLEAR}`;
     /** TEST SETUP: an account set to a balance by a posting against a test equity line, as tests/defects-g18-1.test.ts sets one. */
     const setBalance = (sim: Simulation, id: string, to: number) => {
       const a = sim.universe.accounts[id]!;

@@ -125,7 +125,7 @@ export const START: readonly GuideEntry[] = [
     reads: [{ label: 'The Chapters Read', value: 'Which places the menu lists' }],
     now: ['Moving between screens changes nothing in the world. A screen keeps its tab while you’re elsewhere.'],
     later: [],
-    interpret: ['The number beside Home is the questions waiting in What Needs You, and the one beside Updates the notices you haven’t read.'],
+    interpret: ['The number beside Home is the questions waiting in What Needs You. Recent Updates, on Home, says how many notices you haven’t read.'],
     unavailable: ['A place isn’t on the menu until you’ve read its chapter.'],
     mistakes: ['Leaving a screen with a form half filled in loses what was typed in it; opening help over it doesn’t.'],
     next: ['Press ? anywhere for How This Works’ contents, grouped by what you want to do.'],

@@ -18,7 +18,7 @@ import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty, Stat, Fine, WhyNot } from '@/ui/components/primitives';
+import { Panel, Empty, Stat, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
@@ -632,7 +632,7 @@ function CoursesPanel() {
         : `The degree wasn’t recommended${notPassed}, and nothing more can be asked for it.`;
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">Courses And The Degree</div><HowItWorks help="school.repeat" /></div>
+      <SectionHead title="Courses And The Degree" help="school.repeat" />
       <p className="small" style={{ margin: 0 }}>
         {passed} of {all.length} courses passed{ended ? '' : ' so far'}.{' '}
         {ended ? endedWords : failed.length ? `The degree still needs ${spokenList(failed.map((r) => r.name))}. A course left on a leave is taken again on your return, and a year with a failed course can be repeated, under Finishing The Degree below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}

@@ -9,9 +9,8 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
+import { Panel, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatTime, formatWeekdayDate } from '@/engine/core/time';
 import { PROJECTS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
@@ -95,7 +94,7 @@ function SchoolRule({ o }: { o: Opportunity }) {
   const conditions = conditionsFor(sim, person, o, req?.at ?? sim.now);
   return (
     <div className="col gap-2">
-      <div className="row-between"><h4 className="eyebrow" style={{ margin: 0 }}>In Term At The School</h4><HowItWorks help="career.outside-work" /></div>
+      <SectionHead title="In Term At The School" help="career.outside-work" heading />
       <p className="small" style={{ margin: 0 }}>
         {req ? (req.status === 'pending' ? `You asked the School on ${formatDate(req.at, NY)}. The dean decides on ${formatDate(decidesAt(req), NY)}.` : `The dean ${req.status === 'approved' ? 'approved' : 'refused'} your request on ${formatDate(req.decidedAt ?? req.at, NY)}.`)
           : 'Its days fall in term, and the School approves outside work in term only rarely. The dean looks at each of these:'}

@@ -222,13 +222,16 @@ async function rail(ctx, name) {
   await drawer(ctx, true);
   const b = ctx.page.locator('nav.rail').getByRole('button', { name: new RegExp(`^${name}`) }).first();
   if (!(await b.count())) {
-    // The calendar was reached from Home's Open Calendar alone until brief 23.
+    // Calendar and Updates are reached from Home, by Up Next's Open Calendar and Recent Updates' View All Updates, from
+    // brief 24 (2026-10-23), which took both from the menu. The calendar was reached so until brief 23 too, which put
+    // both on the menu under Your Day; until brief 24 this said so as a problem.
     await drawer(ctx, false);
-    if (name !== 'Calendar' || !(await rail(ctx, 'Home'))) { ctx.problems.push(`no ${name} on the rail`); return false; }
-    const open = ctx.page.getByRole('button', { name: /^Open Calendar$/ }).first();
-    if (!(await open.count())) { ctx.problems.push('no Calendar on the rail or Home'); return false; }
+    const way = { Calendar: /^Open Calendar$/, Updates: /^View All Updates$/ }[name];
+    if (!way || !(await rail(ctx, 'Home'))) { ctx.problems.push(`no ${name} on the rail`); return false; }
+    const open = ctx.page.getByRole('button', { name: way }).first();
+    if (!(await open.count())) { ctx.problems.push(`no ${name} on the rail or Home`); return false; }
     await press(ctx, open); await wait(ctx.page, 800);
-    ctx.problems.push('Calendar reached from Home (not on the rail)');
+    await ctx.page.evaluate(() => document.querySelector('main.main')?.scrollTo(0, 0));
     return true;
   }
   await press(ctx, b);
@@ -275,7 +278,8 @@ async function open(life, file, size) {
   return { browserCtx: ctx, page, life, size, dir, n: 0, problems };
 }
 
-// Updates came with brief 23; on the app before it the walk records it as missing from the rail.
+// Updates came with brief 23; on the app before it the walk records it as missing from the rail. From brief 24 it and
+// the Calendar are opened from Home (`rail` above).
 const WORKSPACES = [['Player Profile', null], ['Calendar', null], ['Updates', null], ['School', 'School'], ['Career', 'Career'], ['Money', 'Money'], ['Papers', 'Papers']];
 
 /**

@@ -1,0 +1,59 @@
+[
+ {
+  "surface": "Back To Home, on Calendar and Updates",
+  "where": "At the head of the Calendar and of Updates, which Home opens by Open Calendar and View All Updates and the menu no longer lists",
+  "sources": [
+   "src/ui/components/BackToHome.tsx#*"
+  ],
+  "states": [
+   "ordinary",
+   "returning"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "New in brief 24 (2026-10-23): Calendar and Updates left the menu and the drawer, and each has Back To Home where its eyebrow was (Your Day on Updates, Calendar on the Calendar), at every size, whatever trail led there.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g32-ui.test.ts: 'Updates and the Calendar, opened from Home, each go back to Home by Back To Home at their head'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/ui-polish-2026-10-23/app/evidence.mjs"
+   }
+  ]
+ },
+ {
+  "surface": "Home on a phone held on its side",
+  "where": "Home at 667×375, 844×390 and 932×430: the greeting with the town and the sky in one line, Forecast And Daylight, and What Needs You’s most pressing item with how many more are waiting",
+  "sources": [
+   "src/ui/screens/Home.tsx#Home",
+   "src/ui/screens/Home.tsx#daylightWords",
+   "src/ui/screens/Home.tsx#SHORT"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "empty",
+   "details",
+   "forecast"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "Brief 24: the greeting’s line ends with the sky in a few words where the time was, which the bar has; the days ahead, the high and low and the daylight open in place by Forecast And Daylight; What Needs You shows the most pressing question or thing to put right, then “One more waiting.” with Show All 2; nothing waiting is one All Clear line, not a card its neighbour’s height.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g32-ui.test.ts: 'on a phone on its side, What Needs You shows the most pressing of two'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence3-home.test.ts: 'her twin who kept it is All Clear'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/ui-polish-2026-10-23/app/evidence.mjs"
+   }
+  ]
+ }
+]

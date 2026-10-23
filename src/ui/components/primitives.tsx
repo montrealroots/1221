@@ -91,6 +91,20 @@ export function Panel({
 }
 
 /**
+ * A section's head inside a panel: its label, and How This Works for it at the right on the label's baseline, or under
+ * the label where the two don't fit (from 2026-10-23, the owner's brief 24). Until then each such head was a
+ * `row-between` of its own, its help's words 13 pixels in from the edge and 3 above the label's line.
+ */
+export function SectionHead({ title, help, label, heading }: { title: ReactNode; help?: string; label?: string; heading?: boolean }) {
+  return (
+    <div className="section-head">
+      {heading ? <h4 className="eyebrow" style={{ margin: 0 }}>{title}</h4> : <div className="eyebrow">{title}</div>}
+      {help && <HowItWorks help={help} label={label} />}
+    </div>
+  );
+}
+
+/**
  * A long page's sections, each a press away (from 2026-10-23, the owner's brief 23: "summary to detail"): pressed, the
  * section scrolls to the top of the page and takes the focus, so the keyboard carries on from there. Nothing is folded
  * away to make the page shorter. The routes are in the address's hash, so these are buttons, not links to an anchor.
@@ -210,11 +224,16 @@ export function MoneyText({ amount, currency, compact, signed }: { amount: Money
   );
 }
 
-export function Empty({ title, body, action }: { title: string; body: string; action?: ReactNode }) {
+/**
+ * Nothing to show, said. `compact` (from 2026-10-23, the owner's brief 24) is a line under the panel's head rather than
+ * a block in the middle of the panel, for a state that leaves a panel short: What Needs You's All Clear, which until then
+ * took a card the height of Up Next beside it, mostly empty.
+ */
+export function Empty({ title, body, action, compact }: { title: string; body: string; action?: ReactNode; compact?: boolean }) {
   return (
-    <div className="empty">
+    <div className={compact ? 'empty empty-compact' : 'empty'}>
       <h3>{title}</h3>
-      <p className="small" style={{ maxWidth: 420, margin: '0 auto var(--s4)' }}>{body}</p>
+      <p className="small" style={compact ? undefined : { maxWidth: 420, margin: '0 auto var(--s4)' }}>{body}</p>
       {action}
     </div>
   );

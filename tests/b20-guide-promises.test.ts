@@ -192,19 +192,20 @@ describe('Finding Your Way', () => {
     const sim = guided('b20-promise-menu');
     // The rail's places, by their own buttons (`rail-item`), the Home it always has and You at its foot aside.
     const rail = () => [...drawn(sim, GameShell).html.matchAll(/<button class="rail-item"[^>]*><span class="grow truncate">([^<]+)<\/span>/g)].map((m) => m[1]).filter((x) => x !== 'Home');
-    // The Calendar joined the menu with “What’s Coming”, and Updates with “What Needs You”, from 2026-10-23 (brief 23).
+    // The Calendar joined the menu with “What’s Coming”, and Updates with “What Needs You”, for part of 2026-10-23 (brief
+    // 23); from brief 24 the same day both are Home's, by Open Calendar and View All Updates, and neither joins it.
     readTo(sim, 'welcome');
     expect(rail()).toEqual([]);
     readTo(sim, 'calendar');
-    expect(rail()).toEqual(['Calendar']);
+    expect(rail()).toEqual([]);
     readTo(sim, 'weather');
-    expect(rail()).toEqual(['Calendar', 'Updates']);
+    expect(rail()).toEqual([]);
     readTo(sim, 'school');
-    expect(rail()).toEqual(['Calendar', 'Updates', 'School']);
+    expect(rail()).toEqual(['School']);
     readTo(sim, 'career');
-    expect(rail()).toEqual(['Player Profile', 'Calendar', 'Updates', 'School', 'Career']);
+    expect(rail()).toEqual(['Player Profile', 'School', 'Career']);
     readTo(sim, 'bank');
-    expect(rail()).toEqual(['Player Profile', 'Calendar', 'Updates', 'School', 'Career', 'Money', 'Papers']);
+    expect(rail()).toEqual(['Player Profile', 'School', 'Career', 'Money', 'Papers']);
   });
 
   it(`start.find > day.needs: “${promise('start.find', 'day.needs')}”`, () => {

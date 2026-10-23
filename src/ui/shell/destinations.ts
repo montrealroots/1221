@@ -17,6 +17,10 @@
  * alone. The calendar stayed Home's until 2026-10-23 (brief 23), when it took
  * its place under Your Day beside Updates, every notice the save keeps: on
  * the calendar, until then, the rail marked no screen as the one you were on.
+ * Later that day the owner's brief 24 gave both back to Home ("a navigation
+ * cleanup, not removal"): Up Next's Open Calendar and Recent Updates' View All
+ * Updates are their ways in, each always offered, and each screen has its way
+ * back to Home. Your Day went from the menu with them.
  */
 
 /** Every notice the save keeps, read and unread (`ui/screens/Updates.tsx`, from 2026-10-23). */
@@ -30,8 +34,10 @@ export interface Destination {
   /** The guide’s id that opens it (`content/tutorial.ts`): the rail carries it once the chapter’s been read. */
   feature: string;
   /**
-   * Offered on Home and kept off the rail. The calendar was, until 2026-10-23,
-   * as the day you are standing in; no destination is now.
+   * Offered on Home and kept off the rail: the calendar, by Up Next's Open
+   * Calendar, and Updates, by Recent Updates' View All Updates (from 2026-10-23,
+   * brief 24). The calendar was until brief 23 earlier that day, as the day you
+   * are standing in, and then for a day neither was.
    */
   homeOnly?: boolean;
 }
@@ -51,9 +57,9 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
   {
     label: 'Your Day',
     items: [
-      { route: '/workspace/calendar', label: 'Calendar', detail: 'Your plans and commitments, month by month', feature: 'ui.calendar' },
+      { route: '/workspace/calendar', label: 'Calendar', detail: 'Your plans and commitments, month by month', feature: 'ui.calendar', homeOnly: true },
       // Opened with What Needs You, whose notices it keeps (`ui.needs`).
-      { route: '/workspace/updates', label: 'Updates', detail: 'Every notice you’ve had, read and unread, to filter and mark read', feature: 'ui.needs' },
+      { route: '/workspace/updates', label: 'Updates', detail: 'Every notice you’ve had, read and unread, to filter and mark read', feature: 'ui.needs', homeOnly: true },
       // Travel, Cars and Land were opened from their panels here until the scope reset of 2026-10-09.
     ],
   },

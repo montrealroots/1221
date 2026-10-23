@@ -8,21 +8,21 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
-| Startup, Save Selection, Character Creation And Onboarding | 327 | 1331 | 15919 | 7 | 59 | 268 | 0 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 544 | 15022 | 0 | 31 | 20 | 0 | 0 |
-| Home And Its Retained Actions | 27 | 254 | 1029 | 0 | 18 | 9 | 0 | 0 |
+| Startup, Save Selection, Character Creation And Onboarding | 327 | 1331 | 15920 | 7 | 59 | 268 | 0 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 543 | 15052 | 0 | 31 | 20 | 0 | 0 |
+| Home And Its Retained Actions | 29 | 263 | 1054 | 0 | 19 | 10 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3854 | 57301 | 174 | 189 | 445 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70462 | 7 | 191 | 475 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 766 | 6666 | 152588 | 13 | 281 | 485 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 477 | 4622 | 57239 | 3 | 112 | 365 | 0 | 0 |
 | The Professional Career: Profile, Portfolio, Representation And Work | 302 | 1987 | 18226 | 0 | 285 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8302 | 0 | 34 | 72 | 0 | 0 |
-| Calendar, Schedules, Time Advancement And Reminders | 83 | 2573 | 15407 | 0 | 21 | 62 | 0 | 0 |
+| Calendar, Schedules, Time Advancement And Reminders | 83 | 2572 | 15462 | 0 | 21 | 62 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1180 | 0 | 4 | 27 | 0 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 60 | 231 | 960 | 0 | 26 | 34 | 0 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 61 | 233 | 964 | 0 | 27 | 34 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4595 | 39142 | 597832 | 314 | 1471 | 3124 | 0 | 0 |
+| **All** | 4598 | 39151 | 597947 | 314 | 1473 | 3125 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -33,7 +33,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-pay | 31 | 1266 | 31 | 0 | 0 | 0 |
 | career-showcase | 23 | 1781 | 23 | 0 | 0 | 0 |
 | career-work | 76 | 2164 | 76 | 0 | 0 | 0 |
-| frame | 528 | 34495 | 128 | 400 | 0 | 0 |
+| frame | 531 | 34580 | 130 | 401 | 0 | 0 |
 | health | 178 | 38799 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
@@ -42,7 +42,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | papers | 477 | 57239 | 112 | 365 | 0 | 0 |
 | profile | 634 | 57301 | 189 | 445 | 0 | 0 |
 | school | 638 | 67444 | 187 | 451 | 0 | 0 |
-| tutorial | 51 | 15022 | 31 | 20 | 0 | 0 |
+| tutorial | 51 | 15052 | 31 | 20 | 0 | 0 |
 
 ## The First Pass, By Subsystem
 
@@ -50,7 +50,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 |---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 15 | 255 | 57 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 17 | 8 | 26 | 0 |
-| Home And Its Retained Actions | 27 | 3 | 8 | 16 | 0 |
+| Home And Its Retained Actions | 29 | 3 | 8 | 18 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 634 | 147 | 242 | 245 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 123 | 351 | 192 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 766 | 113 | 371 | 282 | 0 |
@@ -59,10 +59,10 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 30 | 40 | 36 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 28 | 37 | 18 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 18 | 12 | 1 | 0 |
-| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 60 | 11 | 27 | 22 | 0 |
+| Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 61 | 11 | 27 | 23 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4595 | 954 | 2408 | 1233 | 0 |
+| **All** | 4598 | 954 | 2408 | 1236 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -106,7 +106,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/start.ts#START [optional]` | 2 | 0 | Rewritten | frame | tests/b20-guide-promises.test.ts, start.find > day.needs: Go There goes to the route the notice names, its tab where it names one, and tests/b20-guide-screens.test.ts holds the provider keeping that tab; read against docs/STYLE.md | Pending |
 | `src/engine/content/guide/start.ts#START [immediate]` | 3 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs, under How It Connects, Changes Straight Away | Pending |
 | `src/engine/content/guide/start.ts#START [start.guide]` | 36 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs; its example held by tests/guide-examples-start-day-body.test.ts, 'start.guide: two chapters read…' | Pending |
-| `src/engine/content/guide/start.ts#START [start.find]` | 27 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
+| `src/engine/content/guide/start.ts#START [start.find]` | 27 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24: the menu's Updates and its count went, and Recent Updates says how many notices are unread; tests/b20-guide-promises.test.ts holds the menu it names | Pending |
 | `src/engine/content/identity.ts#ID_CARDS` | 6 | 0 | Retained | frame | Each state or country’s own name for its photo ID card, as the issuer spells it, which Papers shows beside the card. | Reviewed And Retained |
 | `src/engine/content/languages.ts#NAMES .aa` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
 | `src/engine/content/languages.ts#NAMES .ab` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
@@ -413,14 +413,14 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/index.ts#SEARCH_EXAMPLES` | 2 | 0 | Retained | tutorial | Two searches written the way a player would type them, lower case and plain, each of which tests/guide.test.ts holds to finding an entry. | Rewritten And Verified |
 | `src/engine/content/tutorial.ts#hoursOf` | 1 | 0 | Retained | tutorial | The Sleep chapter's shortest sleep said the way a person says it, half an hour, and any other count through plural (eight hours, one hour). | Reviewed And Retained |
 | `src/engine/content/tutorial.ts#CHAPTERS [welcome]` | 13 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [calendar]` | 13 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [calendar]` | 13 | 0 | Rewritten | tutorial | Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [clock]` | 7 | 0 | Rewritten | tutorial | The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [advance]` | 10 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [needs]` | 12 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [needs]` | 12 | 0 | Rewritten | tutorial | Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [body]` | 12 | 0 | Rewritten | tutorial | How You Are's three meters traced to src/ui/screens/Home.tsx; readiness from seven measures, all but fitness, traced to readinessParts in src/engine/systems/life.ts; tests/guide-chapter-facts.test.ts and tests/defects-g1-1.test.ts pass; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague "It happens" (brief 16, section 8). | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [sleep]` | 9 | 0 | Rewritten | tutorial | The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [looking-after]` | 13 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
-| `src/engine/content/tutorial.ts#CHAPTERS [plans]` | 10 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
+| `src/engine/content/tutorial.ts#CHAPTERS [plans]` | 9 | 0 | Rewritten | tutorial | Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [weather]` | 9 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [school]` | 55 | 0 | Rewritten | tutorial | Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens | Pending |
 | `src/engine/content/tutorial.ts#CHAPTERS [profile]` | 36 | 0 | Rewritten | tutorial | tests/journey-career.test.ts, life A's network co-star: each of its two shoot days added a day's work in the project's genres (police procedural and crime), none before them; the work day's call to practiceGenres read on 2026-10-21 by brief 19's playthroughs, which found a professional job's days had counted for nothing | Rewritten And Verified |
@@ -472,8 +472,10 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/life.ts#napNow` | 2 | 0 | Rewritten | frame | tests/time-stops.test.ts and tests/evidence-g01-life.test.ts read the nap reasons in the Sleep dialog | Pending |
 | `src/engine/systems/life.ts#hoursSaid` | 11 | 0 | Rewritten | frame | Hours at the start of a sentence, Half an hour to Fourteen hours, in the nap's reasons; tests/time-stops.test.ts holds one and a half and seven and a half | Rewritten And Verified |
 | `src/engine/systems/life.ts#sleepReason` | 11 | 0 | Retained | frame | Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less. | Rewritten And Verified |
-| `src/ui/screens/Home.tsx#Home` | 39 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a notice that came more than once into one line saying how many earlier ones are on Updates; tests/b23-pages.test.ts and tests/evidence2-b11.test.ts read it on played saves | Pending |
+| `src/ui/screens/Home.tsx#SHORT` | 1 | 0 | Retained | frame | A media query that decides when Home takes its phone-on-its-side shape, read by the browser and never shown | Pending |
+| `src/ui/screens/Home.tsx#Home` | 47 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after the phone's greeting took the weather into its line, the forecast folded behind Forecast And Daylight, and What Needs You showed the most pressing one with how many more are waiting; tests/evidence-g32-ui.test.ts and tests/evidence3-home.test.ts read it rendered | Pending |
 | `src/ui/screens/Home.tsx#needsLine` | 5 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
+| `src/ui/screens/Home.tsx#daylightWords` | 1 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 24: the day's light in one line, under the forecast a phone folds away; read on the built app by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at 667, 844 and 932 | Pending |
 | `src/ui/screens/Home.tsx#Question` | 5 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
 | `src/ui/screens/Home.tsx#UpNext` | 10 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
 | `src/ui/screens/Home.tsx#HowYouAre` | 6 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
@@ -482,7 +484,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/screens/Updates.tsx#ABOUT` | 31 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen | Pending |
 | `src/ui/screens/Updates.tsx#ORDER` | 8 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen | Pending |
 | `src/ui/screens/Updates.tsx#aboutLabel` | 1 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen | Pending |
-| `src/ui/screens/Updates.tsx#Updates` | 24 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 23, after its introduction, All Read and Show More were reworded; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen | Pending |
+| `src/ui/screens/Updates.tsx#Updates` | 23 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Back To Home took the place of its eyebrow; Updates rendered and Back To Home pressed in tests/evidence-g32-ui.test.ts | Pending |
 
 ## Player Profile, Attributes, Genres, Mastery And Progression
 
@@ -3473,7 +3475,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM` | 2 | 0 | Retained | frame | Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#RUN_COLD` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule. | Reviewed And Retained |
 | `src/engine/content/guide/day.ts#RUN_HOT` | 1 | 0 | Retained | frame | A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule. | Reviewed And Retained |
-| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 60 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.calendar]` | 60 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Calendar and Updates left the menu for Home's Open Calendar and View All Updates; tests/b20-guide-promises.test.ts and tests/guide-examples-start-day-body.test.ts hold it to the screens | Pending |
 | `src/engine/content/guide/day.ts#DAY [prerequisite]` | 1 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First | Pending |
 | `src/engine/content/guide/day.ts#DAY [immediate]` | 11 | 0 | Retained | frame | Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words. | Rewritten And Verified |
 | `src/engine/content/guide/day.ts#DAY [optional]` | 10 | 0 | Retained | frame | Lines under Worth Doing With It, each one plain sentence on why the two features go together. | Rewritten And Verified |
@@ -3481,9 +3483,9 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/day.ts#DAY [day.clock]` | 55 | 0 | Rewritten | frame | The three dialogs that move the clock hold it, held beside the behavior by tests/time-controls.test.ts on the real provider | Pending |
 | `src/engine/content/guide/day.ts#DAY [day.advance]` | 54 | 0 | Rewritten | frame | Each line gives its day, Tomorrow Morning after midnight is that morning's, On The Way lists what isn't on the calendar yet; held by tests/time-controls.test.ts | Pending |
 | `src/engine/content/guide/day.ts#DAY [scheduled]` | 2 | 0 | Retained | frame | Lines under Changes Later: midnight’s groceries, and a plan stopping the clock, each said as what happens when. | Rewritten And Verified |
-| `src/engine/content/guide/day.ts#DAY [day.needs]` | 55 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a repeated notice into one line; tests/b23-pages.test.ts presses Mark Read on such a line and reads both notices read | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.needs]` | 55 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Calendar and Updates left the menu for Home's Open Calendar and View All Updates; tests/b20-guide-promises.test.ts and tests/guide-examples-start-day-body.test.ts hold it to the screens | Pending |
 | `src/engine/content/guide/day.ts#DAY [history]` | 2 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
-| `src/engine/content/guide/day.ts#DAY [day.plans]` | 62 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
+| `src/engine/content/guide/day.ts#DAY [day.plans]` | 62 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Calendar and Updates left the menu for Home's Open Calendar and View All Updates; tests/b20-guide-promises.test.ts and tests/guide-examples-start-day-body.test.ts hold it to the screens | Pending |
 | `src/engine/content/guide/day.ts#DAY [day.weather]` | 42 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts | Pending |
 | `src/engine/content/holiday-data.ts#HOLIDAY_FILES` | 1 | 0 | Retained | frame | A table of each country’s holiday file size and count, read by the loader and never shown as words. | Reviewed And Retained |
 | `src/engine/content/holidays.ts#loadCountryHolidays` | 2 | 0 | Retained | frame | The holiday file’s path and a developer’s error if it can’t be fetched, neither of them words a player reads. | Reviewed And Retained |
@@ -3546,7 +3548,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/looks/weather.tsx#clockWord` | 2 | 0 | Retained | frame | The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast. | Reviewed And Retained |
 | `src/ui/looks/weather.tsx#spellSentence` | 4 | 0 | Retained | frame | The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast. | Rewritten And Verified |
 | `src/ui/workspaces/CalendarWorkspace.tsx#WEEKDAYS` | 7 | 0 | Retained | frame | The three-letter weekday heads of the month grid, the short form every calendar uses. | Reviewed And Retained |
-| `src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace` | 24 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the Calendar's day agenda and grouped runs rendered in tests/evidence-g01-life.test.ts and walked by docs/verification/ui-2026-10-23/app/capture.mjs | Pending |
+| `src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace` | 23 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Back To Home took the place of its eyebrow; rendered and Back To Home pressed in tests/evidence-g32-ui.test.ts, and reached from Home's Open Calendar and back by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at six sizes | Pending |
 | `src/ui/workspaces/CalendarWorkspace.tsx#PlanForm` | 11 | 0 | Rewritten | frame | Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Calendar, plan form): 'the calendar marks them Clash', as the screen's heading says | Pending |
 | `src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail` | 12 | 0 | Rewritten | frame | Rewritten 2026-10-21 so the entry says the trip the meeting's notice promises (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/calendar-entry-trip.test.ts | Rewritten And Verified |
 | `src/ui/workspaces/CalendarWorkspace.tsx#MONTHS` | 12 | 0 | Retained | frame | The months spelled out in full in the month picker, as the game writes every date. | Reviewed And Retained |
@@ -3593,6 +3595,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 
 | Source | Strings | Engine-Speak | Second Pass | Area | Reason Or Evidence | First Pass |
 |---|---|---|---|---|---|---|
+| `src/ui/components/BackToHome.tsx#BackToHome` | 2 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 24: the way back to Home at the head of Calendar and Updates, which left the menu; pressed on both in tests/evidence-g32-ui.test.ts, and on the built app by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at six sizes | Pending |
 | `src/ui/components/Glance.tsx#WorthWords` | 2 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts | Pending |
 | `src/ui/components/Glance.tsx#SchoolGlance` | 4 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts | Pending |
 | `src/ui/components/Glance.tsx#papersAlerts [cover]` | 1 | 0 | Rewritten | frame | Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts | Pending |

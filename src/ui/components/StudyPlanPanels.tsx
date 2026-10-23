@@ -7,7 +7,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Fine, Stat } from '@/ui/components/primitives';
+import { Fine, Stat, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -51,7 +51,7 @@ export function LeavePanel() {
 
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">A Leave Of Absence</div><HowItWorks help="school.leave" /></div>
+      <SectionHead title="A Leave Of Absence" help="school.leave" />
       {w && (
         <p className="small" style={{ margin: 0 }}>
           <strong>Yale Health’s assessment</strong>, {w.status === 'scheduled' ? `on ${formatDate(w.assessAt, sim.zone)}: be there, at Yale Health, or ask for a medical leave yourself first.` : w.status === 'assessed' ? `found: ${w.why} The dean decides by ${formatDate(w.decideAt ?? sim.now, sim.zone)}.` : w.why} <span className="xs dim">Started by {w.trigger}: how you’re managing, not a diagnosis.</span>
@@ -216,7 +216,7 @@ export function RepeatPanel() {
   const billed = Array.from({ length: Math.max(0, past) }, (_, k) => termAccount(cur, false, t + total - enrolled - k).tuition).reduce((a, b) => a + b, 0);
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">Finishing The Degree</div><HowItWorks help="school.repeat" /></div>
+      <SectionHead title="Finishing The Degree" help="school.repeat" />
       {r && <p className="small" style={{ margin: 0 }}>Year {r.year}, asked {formatDate(r.requestedAt, sim.zone)}: {r.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(r.decideAt, sim.zone)}` : r.status === 'granted' ? 'granted' : r.status === 'refused' ? `refused. ${r.why ?? ''}` : 'called off'}{r.courses.length ? `, for ${spokenList(r.courses)}` : ''}.</p>}
       {school.repeatBy !== undefined && <p className="small" style={{ margin: 0 }}>Your last year wasn’t passed. Ask by {formatDate(school.repeatBy, sim.zone)}, or the faculty won’t recommend the degree.</p>}
       {!no && (

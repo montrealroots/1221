@@ -99,9 +99,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
   "status": "Rewritten",
-  "hash": "0cf870314074",
+  "hash": "679ab4938f83",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
@@ -155,9 +155,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [needs]": {
   "status": "Rewritten",
-  "hash": "10fc50c48719",
+  "hash": "9a45a2ca9719",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [papers]": {
@@ -169,9 +169,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [plans]": {
   "status": "Rewritten",
-  "hash": "1c6cfacdfd0a",
+  "hash": "7007da183566",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {

@@ -112,7 +112,7 @@
    },
    {
     "kind": "test",
-    "ref": "tests/evidence-g32-ui.test.ts: 'a guided life keeps the section locked until “What’s Coming” is read, and the button until “Your Own Plans”'"
+    "ref": "tests/evidence-g32-ui.test.ts: 'a guided life keeps the section and its button locked until “What’s Coming” is read, and opens both with it'"
    },
    {
     "kind": "test",

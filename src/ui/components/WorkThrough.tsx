@@ -10,14 +10,13 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Fine, WhyNot } from '@/ui/components/primitives';
+import { Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { ADJUSTMENTS, WORKBOOK } from '@/engine/content/workbook';
 import { PIECE } from '@/engine/content/piece';
 import type { Evaluation } from '@/engine/systems/evaluation';
 import { discoveriesOf, identifyRefusal, optionsOf, problemsOf, tryRefusal, type Try } from '@/engine/systems/workbook';
 import { workPiece } from '@/engine/systems/workpieces';
-import { HowItWorks } from '@/ui/guide/HowItWorks';
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const TONE: Record<string, string> = { comic: 'Comic', grave: 'Grave', lyric: 'Lyric', grotesque: 'Grotesque' };
@@ -71,7 +70,7 @@ export function WorkThrough({ piece: key }: { piece: string }) {
   };
   return (
     <div className="col gap-2" data-workbook={key}>
-      <div className="row-between"><div className="eyebrow">Work It Through</div><HowItWorks help="work.try" /></div>
+      <SectionHead title="Work It Through" help="work.try" />
       {pending ? (
         <div className="callout small">
           <strong>{name(pending)}</strong>, tried on “{pending.label}”: {pending.before} before, {pending.after} after.{' '}

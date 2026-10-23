@@ -19,9 +19,9 @@
 import { useEffect, useState } from 'react';
 import { useGame, useWorld, labelForRoute } from '@/app/game-context';
 import { LifeEnded } from './LifeEnded';
-import { RAIL_DESTINATIONS, UPDATES_ROUTE } from './destinations';
+import { ALL_DESTINATIONS, RAIL_DESTINATIONS } from './destinations';
 import { isOpen } from '@/engine/world/tutorial';
-import { openDecisions, unreadNotifications } from '@/engine/world/world';
+import { openDecisions } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
 import { GuideButton, GuideProvider, GuideStrip } from '@/ui/guide/Guide';
 import { HelpProvider } from '@/ui/guide/Help';
@@ -38,6 +38,8 @@ import { useMedia } from '@/ui/components/media';
  * side kept the desktop's rail, a third of its width, beside a page 700 wide).
  */
 export const DRAWER_QUERY = '(max-width: 900px), (max-height: 500px)';
+/** The screens Home offers and the menu doesn't (`homeOnly`, from brief 24): on them the menu marks Home. */
+const HOME_ONLY = new Set(ALL_DESTINATIONS.filter((d) => d.homeOnly).map((d) => d.route));
 
 
 export function GameShell() {
@@ -45,7 +47,6 @@ export function GameShell() {
   const { sim, route, navigate, breadcrumbs, toasts } = game;
   const [railOpen, setRailOpen] = useState(false);
   const waiting = useWorld((s) => openDecisions(s).length);
-  const unread = useWorld((s) => unreadNotifications(s).length);
   // The destinations the guide has opened, by group, none left empty.
   const railGroups = useWorld((s) => RAIL_DESTINATIONS.map((g) => ({ ...g, items: g.items.filter((i) => isOpen(s, i.feature)) })).filter((g) => g.items.length > 0));
   const profileOpen = useWorld((s) => isOpen(s, 'ui.profile'));
@@ -133,14 +134,17 @@ export function GameShell() {
       <div className="shell-body">
         <nav className="rail" id="rail" data-open={railOpen} aria-label="Main Navigation">
           <div className="rail-group">
+            {/* On Calendar or Updates, Home's own screens from brief 24 (2026-10-23), Home is marked as where you are,
+                the screen you came by: until then each was on the menu and marked itself. */}
             <button
               className="rail-item"
-              aria-current={route === '/home' ? 'page' : undefined}
+              aria-current={route === '/home' ? 'page' : HOME_ONLY.has(route) ? 'true' : undefined}
               onClick={() => go('/home', 'Home')}
             >
               <span className="grow truncate">Home</span>
-              {/* The questions waiting, from 2026-10-23 (brief 23); the unread notices are counted beside Updates. Until
-                  then Home counted both, and a graduate's read 99+ for 500 notices and no question. */}
+              {/* The questions waiting, from 2026-10-23 (brief 23). Until then Home counted the unread notices too, and a
+                  graduate's read 99+ for 500 notices and no question; they were counted beside Updates until brief 24
+                  took Updates from the menu the same day, and Recent Updates on Home says how many. */}
               {waiting > 0 && (
                 <span className="rail-badge" aria-label={`${waiting} Waiting On You`}>
                   {waiting > 99 ? '99+' : waiting}
@@ -161,11 +165,6 @@ export function GameShell() {
                   onClick={() => go(item.route, item.label)}
                 >
                   <span className="grow truncate">{item.label}</span>
-                  {item.route === UPDATES_ROUTE && unread > 0 && (
-                    <span className="rail-badge rail-badge-quiet" aria-label={`${unread} Unread`}>
-                      {unread > 99 ? '99+' : unread}
-                    </span>
-                  )}
                 </button>
               ))}
             </div>
@@ -208,7 +207,9 @@ export function GameShell() {
         <main className="main" id="main" tabIndex={-1}>
           <div className="main-inner">
             <GuideStrip />
-            {breadcrumbs.length > 1 && (
+            {/* The trail, but not "Home › Calendar" or "Home › Updates" alone, whose way back is the page's own Back To
+                Home (from 2026-10-23, brief 24): it said Home twice there. A longer trail still shows. */}
+            {breadcrumbs.length > 1 && !(breadcrumbs.length === 2 && breadcrumbs[0]!.route === '/home' && HOME_ONLY.has(route)) && (
               <nav className="breadcrumbs" aria-label="Breadcrumb">
                 {breadcrumbs.map((crumb, index) => (
                   <span key={crumb.route + index} className="row gap-2">

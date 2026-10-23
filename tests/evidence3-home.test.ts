@@ -223,7 +223,8 @@ describe('h-needs', () => {
    * under it were marked read; the notices are Recent Updates since, and the lines are counted.
    */
   const waiting = (...items: [string, string][]) => `What Needs You ${['One thing', 'Two things', 'Three things'][items.length - 1]} to put right. How This Works ${items.map(([line, screen]) => `${line} Open ${screen} How This Works`).join(' ')}`;
-  const ALL_CLEAR = 'What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
+  // No subtitle over the All Clear from 2026-10-23 (brief 24): until then "No questions are waiting on you." said it first.
+  const ALL_CLEAR = 'What Needs You How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
 
   it('PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine: “You owe $1,882 that went unpaid.” at noon, across a reload, paid back out of savings at midnight; her twin who kept it is All Clear', () => {
     const played = (move: boolean) => {

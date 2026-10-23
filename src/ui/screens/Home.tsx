@@ -42,6 +42,7 @@ import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { lookedAfter } from '@/ui/shell/TimeControls';
 import { UPDATES_ROUTE } from '@/ui/shell/destinations';
+import { useMedia } from '@/ui/components/media';
 import { aboutLabel, groupNotices } from './Updates';
 import type { Simulation } from '@/engine/core/simulation';
 
@@ -49,6 +50,12 @@ import type { Simulation } from '@/engine/core/simulation';
 const RECENT = 4;
 /** How many questions What Needs You shows before the rest wait their turn. */
 const QUESTIONS = 6;
+/**
+ * A phone on its side, whose first window What Needs You shares with the head and Up Next: there it shows the most
+ * pressing thing waiting, a question or else a thing to put right, and how many more, with Show All (from 2026-10-23,
+ * the owner's brief 24: "show the highest-priority item and a clear route to the remainder").
+ */
+const SHORT = '(max-height: 500px)';
 /**
  * The guide's feature that opens each screen a line goes to: a line shows once its own chapter is read (`thingsToDo`'s
  * `feature`), and its button opens once the screen's is, as Your Affairs' Chase button waited for “Your Bank”.
@@ -78,6 +85,8 @@ export function Home() {
   };
   const needsDoing = useWorld(thingsToDo).filter((item) => opened[item.feature]);
   const [allQuestions, setAllQuestions] = useState(false);
+  // The forecast's fold on a phone on its side (from 2026-10-23, brief 24): shut as Home opens.
+  const [skyOpen, setSkyOpen] = useState(false);
 
   const player = snapshot.player;
   const city = snapshot.city ?? CITIES.get(player.currentLocationId);
@@ -87,7 +96,12 @@ export function Home() {
   const weather = city ? weatherAt(sim, city.id) : undefined;
   const week = city ? forecastFor(sim, city.id, 6) : [];
   const unit = weather?.fahrenheit ? '°F' : '°C';
-  const questions = allQuestions ? decisions : decisions.slice(0, QUESTIONS);
+  const short = useMedia(SHORT);
+  const limit = allQuestions ? Infinity : short ? 1 : QUESTIONS;
+  const questions = decisions.slice(0, limit);
+  const todos = short && !allQuestions ? needsDoing.slice(0, Math.max(0, limit - questions.length)) : needsDoing;
+  const waitingAll = decisions.length + needsDoing.length;
+  const hidden = waitingAll - questions.length - todos.length;
   // The unread as Updates groups them, a run of the same notice about the same thing one row with its count, ranked as its
   // newest, the most important first (from 2026-10-23, brief 23's walk: two terms' “A Word On Your Coursework” were two of
   // the four rows). A run's notices share their importance, so ranking by its most important changed nothing (mutated).
@@ -113,26 +127,34 @@ export function Home() {
             Good {partOfDay(sim.now, sim.zone)},{' '}
             <Open subject={at('person', player.id)}>{calledBy(player)}</Open>.
           </h1>
+          {/* On a phone on its side the line drops the time, which the bar has, and the daylight, which the forecast's
+              fold holds, and ends with the sky in a few words (from 2026-10-23, the owner's brief 24): until then the line,
+              the forecast and the five days took the whole first window at 667 by 375, with nothing under them showing. */}
           <p className="muted today-line">
-            <Open subject={at('day', today)}>{formatTime(sim.now, sim.zone)}</Open>
+            {!short && <><Open subject={at('day', today)}>{formatTime(sim.now, sim.zone)}</Open>{place ? ' in ' : ''}</>}
             {/* The town, its zone and the season always, as the head said them, words until “Your Life, Hour By Hour”
                 makes them links; the daylight, Where You Are's, once that chapter is read. */}
             {place ? (
               <>
-                {' in '}
                 <Open subject={at('place', place.city.id)}>{place.city.name}</Open>
                 {place.regionName && (<>{', '}<Open subject={at('region', place.city.parentId)}>{place.regionName}</Open></>)}
                 {' · '}
                 <Open subject={at('place', place.city.id)}>{zoneAbbreviation(sim.now, sim.zone)}</Open>
                 {' · '}
                 <Open subject={at('season', `${place.city.id}/${season}`)}>{season}</Open>
-                {shows.where && (
+                {shows.where && !short && (
                   <>
                     {' · '}
                     <Open subject={at('daylight', place.city.id)}>
                       {place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night'
-                        : `Daylight ${formatTime(place.sun.sunrise ?? sim.now, place.zone)} to ${formatTime(place.sun.sunset ?? sim.now, place.zone)}, ${formatDaylight(place.sun.daylightMinutes)}`}
+                        : daylightWords(place, sim.now)}
                     </Open>
+                  </>
+                )}
+                {weather && city && shows.weather && short && (
+                  <>
+                    {' · '}
+                    <Open subject={at('weather', city.id)}>{weather.temperature}{unit} {titleCaseLabel(weather.condition)}</Open>
                   </>
                 )}
               </>
@@ -140,13 +162,19 @@ export function Home() {
               <>{` ${zoneAbbreviation(sim.now, sim.zone)} · ${season}`}</>
             )}
           </p>
-          <div className="row gap-2 wrap">
+          <div className="help-below today-actions">
             {!shows.where && <Gated feature="ui.where" className="btn btn-sm">Where You Are</Gated>}
+            {/* The forecast's fold, a phone's only: on a desktop the days ahead are always shown. */}
+            {weather && city && shows.weather && short && (
+              <button type="button" className="btn btn-sm today-more" aria-expanded={skyOpen} aria-controls="today-weather" onClick={() => setSkyOpen(!skyOpen)}>
+                {skyOpen ? 'Hide The Forecast' : 'Forecast And Daylight'}
+              </button>
+            )}
             <HowItWorks help="start.home" label="How Home Works" />
           </div>
         </div>
         {weather && city && (shows.weather ? (
-          <div className="today-weather">
+          <div className="today-weather" id="today-weather" hidden={short && !skyOpen}>
             <div className="today-weather-now">
               <span aria-hidden="true" className="today-weather-icon">{WEATHER_EMOJI[weather.condition]}</span>
               <span>
@@ -170,10 +198,16 @@ export function Home() {
                 );
               })}
             </div>
-            <HowItWorks help="day.weather" label="How The Weather Works" />
+            {/* The daylight with the days ahead, where a phone's line leaves it out. */}
+            {place && shows.where && short && (
+              <p className="xs muted today-daylight-more">
+                <Open subject={at('daylight', place.city.id)}>{place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night' : daylightWords(place, sim.now)}</Open>
+              </p>
+            )}
+            <div className="help-below"><HowItWorks help="day.weather" label="How The Weather Works" /></div>
           </div>
         ) : (
-          <div className="today-weather row gap-2 wrap">
+          <div className="today-weather today-weather-locked row gap-2 wrap">
             <Gated feature="ui.weather" className="btn btn-sm">Weather</Gated>
             <HowItWorks help="day.weather" label="How The Weather Works" />
           </div>
@@ -182,14 +216,17 @@ export function Home() {
 
       <div className="home-grid">
         {!shows.needs ? <LockedPanel feature="ui.needs" title="What Needs You" /> : (
+        // With nothing waiting, its head and one All Clear line (from 2026-10-23, brief 24): until then the line was a block in
+        // the middle of a card stretched to Up Next's height, under a subtitle that said the same.
         <Panel
           title="What Needs You"
-          subtitle={needsLine(decisions.length, needsDoing.length)}
+          subtitle={waitingAll === 0 ? undefined : needsLine(decisions.length, needsDoing.length)}
           flush
           help="day.needs"
         >
-          {decisions.length === 0 && needsDoing.length === 0 ? (
+          {waitingAll === 0 ? (
             <Empty
+              compact
               title="All Clear"
               body="You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do."
             />
@@ -198,7 +235,7 @@ export function Home() {
               {questions.map((decision) => (
                 <Question key={decision.id} decision={decision} />
               ))}
-              {decisions.length > QUESTIONS && (
+              {!short && decisions.length > QUESTIONS && (
                 <div className="row-between xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
                   <span>{allQuestions ? `All ${decisions.length} questions, the most pressing first.` : `${upFirst(decisions.length - QUESTIONS === 1 ? 'one more question' : `${countWords(decisions.length - QUESTIONS)} more questions`)} waiting.`}</span>
                   <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAllQuestions(!allQuestions)}>
@@ -207,7 +244,7 @@ export function Home() {
                 </div>
               )}
               {/* What needs doing: a state to put right, with its screen. It goes when it's put right, never by a press here. */}
-              {needsDoing.map((item) => (
+              {todos.map((item) => (
                 <div key={item.text} className="decision" data-urgency="high">
                   <div className="decision-urgency" aria-hidden="true" />
                   <div className="grow row-between wrap">
@@ -221,6 +258,14 @@ export function Home() {
                   </div>
                 </div>
               ))}
+              {short && (hidden > 0 || allQuestions) && waitingAll > 1 && (
+                <div className="row-between xs dim needs-more">
+                  <span>{allQuestions ? `All ${waitingAll}, the most pressing first.` : `${upFirst(hidden === 1 ? 'one more' : `${countWords(hidden)} more`)} waiting.`}</span>
+                  <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAllQuestions(!allQuestions)}>
+                    {allQuestions ? 'Show The Most Pressing' : `Show All ${waitingAll}`}
+                  </button>
+                </div>
+              )}
             </LookRegion>
           )}
         </Panel>
@@ -302,6 +347,9 @@ function needsLine(questions: number, todo: number): string {
   return `${upFirst(q && t ? `${q}, and ${t}` : q || t)}.`;
 }
 const upFirst = (line: string) => `${line[0]!.toUpperCase()}${line.slice(1)}`;
+/** The town's daylight today, in the words the head's line says it. */
+const daylightWords = (place: NonNullable<ReturnType<typeof placeProfile>>, now: number) =>
+  `Daylight ${formatTime(place.sun.sunrise ?? now, place.zone)} to ${formatTime(place.sun.sunset ?? now, place.zone)}, ${formatDaylight(place.sun.daylightMinutes)}`;
 
 /**
  * A question: its title, when it's due, what it's about in two lines and the rest on demand, and its answers. Answering,
@@ -445,8 +493,9 @@ function UpNext() {
             </div>
           </>
         )}
-        <div className="row" style={{ justifyContent: 'flex-end', marginTop: 'var(--s2)' }}>
-          <HowItWorks help="ui.open-calendar" label="How Your Own Plans Work" />
+        {/* Under what it explains, on its left edge (from 2026-10-23, brief 24): until then it stood alone at the right. */}
+        <div className="help-below">
+          <HowItWorks help="day.plans" label="How Your Own Plans Work" />
         </div>
       </LookRegion>
     </Panel>
@@ -498,7 +547,7 @@ function HowYouAre() {
               ))}
             </div>
             {options[0] && <p className="xs dim" style={{ margin: 'var(--s1) 0 0' }}>{options[0].why}</p>}
-            <HowItWorks help="body.look-after" />
+            <div className="help-below"><HowItWorks help="body.look-after" /></div>
           </div>
         )}
       </LookRegion>

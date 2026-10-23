@@ -157,7 +157,16 @@ async function go(ctx, name) {
   const { page } = ctx;
   await drawer(page, true);
   const b = page.locator('nav.rail').getByRole('button', { name: new RegExp(`^${name}`) }).first();
-  if (!(await b.count())) { ctx.problems.push(`no ${name} on the menu`); await drawer(page, false); return false; }
+  if (!(await b.count())) {
+    // Calendar and Updates from Home's own buttons, from brief 24 (2026-10-23), which took both from the menu.
+    await drawer(page, false);
+    const way = { Calendar: /^Open Calendar$/, Updates: /^View All Updates$/ }[name];
+    if (!way || !(await go(ctx, 'Home'))) { ctx.problems.push(`no ${name} on the menu`); return false; }
+    const open = page.getByRole('button', { name: way }).first();
+    if (!(await open.count())) { ctx.problems.push(`no ${name} on the menu or Home`); return false; }
+    await press(page, open);
+    return true;
+  }
   await press(page, b);
   await drawer(page, false);
   return true;

@@ -260,9 +260,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "7a6dc179c361",
+  "hash": "aaa4be24d828",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Calendar and Updates left the menu for Home's Open Calendar and View All Updates; tests/b20-guide-promises.test.ts and tests/guide-examples-start-day-body.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
@@ -274,16 +274,16 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
   "status": "Rewritten",
-  "hash": "ca3f2fe2dc00",
+  "hash": "b98c3f7c085a",
   "on": "2026-10-23",
-  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a repeated notice into one line; tests/b23-pages.test.ts presses Mark Read on such a line and reads both notices read",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Calendar and Updates left the menu for Home's Open Calendar and View All Updates; tests/b20-guide-promises.test.ts and tests/guide-examples-start-day-body.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
   "status": "Rewritten",
-  "hash": "77ff8ee9faa0",
+  "hash": "4ece1552440f",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Calendar and Updates left the menu for Home's Open Calendar and View All Updates; tests/b20-guide-promises.test.ts and tests/guide-examples-start-day-body.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.weather]": {
@@ -379,9 +379,9 @@
  },
  "src/engine/content/guide/start.ts#START [start.find]": {
   "status": "Rewritten",
-  "hash": "e01dacbe93ca",
+  "hash": "c063fd4d6941",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: the menu's Updates and its count went, and Recent Updates says how many notices are unread; tests/b20-guide-promises.test.ts holds the menu it names",
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [start.guide]": {
@@ -2527,6 +2527,13 @@
   "reason": "A developer’s error for a page with no element to mount on; a working page never shows it, and it names the missing mount point exactly.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/components/BackToHome.tsx#BackToHome": {
+  "status": "Rewritten",
+  "hash": "8216073677fb",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 24: the way back to Home at the head of Calendar and Updates, which left the menu; pressed on both in tests/evidence-g32-ui.test.ts, and on the built app by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at six sizes",
+  "first": "Pending"
+ },
  "src/ui/components/Glance.tsx#papersAlerts [cover]": {
   "status": "Rewritten",
   "hash": "f3f098bff415",
@@ -3241,11 +3248,18 @@
   "evidence": "tests/language-frame-ui.test.ts: 'says what each slot holds: one empty, one a life saved by an older version, and the delete that keeps a backup or doesn’t', 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure', and 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'",
   "first": "Pending"
  },
+ "src/ui/screens/Home.tsx#daylightWords": {
+  "status": "Rewritten",
+  "hash": "e136313d3a01",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 24: the day's light in one line, under the forecast a phone folds away; read on the built app by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at 667, 844 and 932",
+  "first": "Pending"
+ },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten",
-  "hash": "edaa966160d8",
+  "hash": "8fa1a8a9c463",
   "on": "2026-10-23",
-  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates grouped a notice that came more than once into one line saying how many earlier ones are on Updates; tests/b23-pages.test.ts and tests/evidence2-b11.test.ts read it on played saves",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24, after the phone's greeting took the weather into its line, the forecast folded behind Forecast And Daylight, and What Needs You showed the most pressing one with how many more are waiting; tests/evidence-g32-ui.test.ts and tests/evidence3-home.test.ts read it rendered",
   "first": "Pending"
  },
  "src/ui/screens/Home.tsx#HowYouAre": {
@@ -3274,6 +3288,13 @@
   "hash": "f0a4a3d59cf3",
   "on": "2026-10-23",
   "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#SHORT": {
+  "status": "Retained",
+  "hash": "48c7574c25c2",
+  "on": "2026-10-23",
+  "reason": "A media query that decides when Home takes its phone-on-its-side shape, read by the browser and never shown",
   "first": "Pending"
  },
  "src/ui/screens/Home.tsx#thingsToDo": {
@@ -3313,9 +3334,9 @@
  },
  "src/ui/screens/Updates.tsx#Updates": {
   "status": "Rewritten",
-  "hash": "989f012d483c",
+  "hash": "162f96e1b8c0",
   "on": "2026-10-23",
-  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after its introduction, All Read and Show More were reworded; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Back To Home took the place of its eyebrow; Updates rendered and Back To Home pressed in tests/evidence-g32-ui.test.ts",
   "first": "Pending"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
@@ -3635,9 +3656,9 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace": {
   "status": "Rewritten",
-  "hash": "54ef3c480cdc",
+  "hash": "31ec04b74bc7",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the Calendar's day agenda and grouped runs rendered in tests/evidence-g01-life.test.ts and walked by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24, after Back To Home took the place of its eyebrow; rendered and Back To Home pressed in tests/evidence-g32-ui.test.ts, and reached from Home's Open Calendar and back by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at six sizes",
   "first": "Pending"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {

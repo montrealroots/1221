@@ -240,14 +240,14 @@ chapter or to two, or if a chapter opens nothing.
 | # | Chapter | Opens |
 | --- | --- | --- |
 | 1 | Your Life, Hour By Hour | `ui.where` `look.day` `look.place` `look.region` `look.country` `look.currency` `look.season` `look.daylight` |
-| 2 | What’s Coming | `ui.calendar` `ui.go` `calendar.skip` `look.entry` |
+| 2 | What’s Coming | `ui.calendar` `ui.open-calendar` `ui.go` `calendar.skip` `look.entry` |
 | 3 | The Clock | `ui.play` `world.set_preferences` |
 | 4 | Moving Time On | `ui.advance` `ui.skip` |
 | 5 | What Needs You | `ui.needs` `world.mark_read` `world.take_decision_action` `world.dismiss_decision` `look.notification` `look.decision` |
 | 6 | How You Are | `ui.how` `look.dial` `look.readiness` `look.trait` `look.condition` |
 | 7 | Sleep | `ui.sleep` `life.sleep` |
 | 8 | Looking After Yourself | `ui.look-after` `life.look_after` |
-| 9 | Your Own Plans | `ui.open-calendar` `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
+| 9 | Your Own Plans | `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
 | 10 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
 | 11 | Drama School | `ui.school` `school.call_in_sick` `school.withdraw` `school.request_leave` `school.cancel_leave` `school.return_notice` `school.buy_affiliate` `school.reregister` `school.request_repeat` `school.cancel_repeat` `school.appeal_leave` `school.request_extra_term` `school.request_aid_review` `school.pay_balance` `school.request_conversion` `school.make_up` `school.extend_incomplete` `school.take_shift` `school.cabaret` `school.summer_cabaret` `school.orientation` `school.prepare` `school.choose` `school.read_feedback` `school.ask_partner` `school.answer_partner` `school.respond` `school.make_amends` `school.buy_ppe` `school.approach` `school.choose_playing` `school.choose_part_playing` `school.cancel_rehearsal` `school.learn_part` `school.review_blocking` `school.work_note` `work.identify` `work.try` `work.settle` `plays.read` `plays.research` `school.choose_showcase` `look.school` `look.course` `look.skill` `look.assignment` `look.classmate` |
 | 12 | You As An Actor | `ui.profile` `practice.exercise` `genre.study` `brief.prepare` `brief.choose` `brief.reader` `practice.self_tape` `look.ability` `look.genre` `look.work` |

@@ -140,20 +140,22 @@ describe('what was taken out', () => {
     expect(read('ui/shell/destinations.ts')).not.toMatch(/locked\?:/);
   });
 
-  it('gives the calendar a section of Home, Up Next, as well as its place on the rail (from 2026-10-23)', () => {
+  it('gives the calendar and Updates to Home, by Up Next and Recent Updates, and keeps both off the rail (from brief 24)', () => {
     // The calendar describes the day you are standing in, so it is a section of the hub. It was kept off the rail until
-    // 2026-10-23 (the owner's brief 23), when it took its place under Your Day beside Updates: on the calendar, until
-    // then, the rail marked no screen as the one you were on.
+    // 2026-10-23 (the owner's brief 23), when it took its place under Your Day beside Updates; later that day brief 24
+    // gave both back to Home ("a navigation cleanup, not removal"), each still a destination, and Your Day went.
     const railRoutes = RAIL_DESTINATIONS.flatMap((g) => g.items).map((i) => i.route);
-    expect(railRoutes).toContain('/workspace/calendar');
-    expect(railRoutes).toContain('/workspace/updates');
-    expect(ALL_DESTINATIONS.map((d) => d.route)).toContain('/workspace/calendar');
+    expect(railRoutes).not.toContain('/workspace/calendar');
+    expect(railRoutes).not.toContain('/workspace/updates');
+    expect(RAIL_DESTINATIONS.map((g) => g.label)).not.toContain('Your Day');
+    expect(ALL_DESTINATIONS.filter((d) => d.homeOnly).map((d) => d.route)).toEqual(['/workspace/calendar', '/workspace/updates']);
     for (const group of RAIL_DESTINATIONS) expect(group.items.length).toBeGreaterThan(0);
 
     const home = read('ui/screens/Home.tsx');
     expect(home, 'Home has no Up Next section').toMatch(/title="Up Next"/);
     expect(home, 'Up Next does not open the calendar')
       .toMatch(/navigate\('\/workspace\/calendar'/);
+    expect(home, 'Recent Updates does not open Updates').toMatch(/navigate\(UPDATES_ROUTE, 'Updates'\)/);
     // Home stopped rendering the destination tiles when the rail came back;
     // two lists of the same places on one screen is one too many.
     expect(home, 'Home is rendering destination tiles again').not.toMatch(/DESTINATIONS/);

@@ -9,9 +9,8 @@
  */
 
 import { useId, useState } from 'react';
-import { Fine, WhyNot } from '@/ui/components/primitives';
+import { Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '@/engine/content/approaches';
 import type { Axis, AxisValue, MaterialProfile } from '@/engine/content/material';
 import { misfitOf, sidesOf, transitionsOf, type Playing } from '@/engine/systems/material';
@@ -94,7 +93,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
   const unchanged = current && sidesOf(current).length ? 'That’s how you play it now. Choose another way above to change it.' : 'Choose a way to play it above first.';
   return (
     <div className="col gap-2">
-      {help ? <div className="row-between"><div className="eyebrow">How You’ll Play It</div><HowItWorks help={help} /></div> : <div className="eyebrow">How You’ll Play It</div>}
+      {help ? <SectionHead title="How You’ll Play It" help={help} /> : <div className="eyebrow">How You’ll Play It</div>}
       {asked.length > 0 && <p className="small" style={{ margin: 0 }}>The director has asked for it {asked.map(([, v]) => APPROACH_EFFECT[v].label.toLowerCase()).join(' and ')}: {asked.map(([, v]) => APPROACH_EFFECT[v].words).join(' ')}</p>}
       <div className="table-scroll">
         <table>

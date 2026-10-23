@@ -309,8 +309,8 @@ function playNeeds() {
   sim.must({ kind: 'world.mark_read', payload: { notificationIds: unread.slice(2).map((n) => n.id) } });
   const decision = openDecisions(sim).find((d) => d.title === `Your ${year} Tax Return`)!;
   const waiting = { decisions: openDecisions(sim).length, unread: unreadNotifications(sim).length };
-  // The count beside Home is the questions, and beside Updates the unread, from 2026-10-23 (brief 23): until then Home's
-  // counted both.
+  // The count beside Home is the questions, and the unread are counted by Recent Updates on Home, from 2026-10-23: until
+  // brief 23 Home's counted both, and until brief 24 later that day the unread were counted beside Updates on the menu.
   const countBefore = { home: waiting.decisions, updates: waiting.unread };
   sim.must({ kind: 'world.dismiss_decision', payload: { decisionId: decision.id } });
   const marked = sim.must<{ read: number }>({ kind: 'world.mark_read', payload: {} });
@@ -586,7 +586,7 @@ describe('the day and the clock', () => {
     expect(dismissed).toBe(p.decision.title);
     const [marked] = read(steps[1]!, /^Press Mark (\d+) Read\.$/);
     expect(p.marked.read).toBe(Number(marked));
-    const [fell, fellUpdates] = read(result, /the count beside Home falls by (\w+), and the one beside Updates by (\w+)\./);
+    const [fell, fellUpdates] = read(result, /the count beside Home falls by (\w+), and Recent Updates’ count of unread notices by (\w+)\./);
     expect(p.stillOpen).toBe(false);
     expect(p.unreadAfter).toBe(0);
     expect(p.countBefore.home - p.countAfter.home).toBe(word(fell));

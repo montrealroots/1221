@@ -23,6 +23,7 @@ import { Empty } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { BackToHome } from '@/ui/components/BackToHome';
 
 /** What a notice is about, in the few words a filter can carry, by the category its sender gave it. */
 const ABOUT: Readonly<Record<string, string>> = {
@@ -78,8 +79,9 @@ export function Updates() {
 
   return (
     <>
+      {/* Back To Home where the menu's group was its eyebrow, until brief 24 took Updates from the menu (2026-10-23). */}
       <div className="page-head">
-        <div className="eyebrow">Your Day</div>
+        <BackToHome />
         <h1>Updates</h1>
         <p className="muted prose">
           Every notice you’ve had, newest first: what happened, what it’s about and when. Reading one answers nothing.

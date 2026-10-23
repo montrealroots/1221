@@ -13,6 +13,7 @@ import { CITIES } from '@/engine/content/geography';
 import { tripWords } from '@/engine/systems/proagent';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
 import { canPlan, dayLabel, firstFreeSlot, hiddenIn, holidayChips, openSlots, roomFor, standingIn, stillStands } from './cell';
+import { BackToHome } from '@/ui/components/BackToHome';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -74,8 +75,10 @@ export function CalendarWorkspace() {
 
   return (
     <>
+      {/* Back To Home where its eyebrow named it, from brief 24 (2026-10-23): it's Home's, by Open Calendar, and not on
+          the menu. */}
       <div className="page-head">
-        <div className="eyebrow">Calendar</div>
+        <BackToHome />
         <h1>Your Plans And Commitments</h1>
         <p className="muted">
           Everything on your calendar, and the public holidays where you are. When two things you need to be at

@@ -89,11 +89,11 @@ export const DAY: readonly GuideEntry[] = [
     id: 'day.calendar',
     title: 'The Calendar',
     goal: 'day',
-    covers: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
+    covers: ['ui.calendar', 'ui.open-calendar', 'ui.go', 'calendar.skip', 'look.entry'],
     synonyms: ['commitment', 'what’s coming', 'go button', 'skip it', 'stand here', 'clock stopped', 'wanted you', 'upcoming', 'due now'],
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
     where: { route: '/home', label: 'Home, Up Next, Open Calendar' },
-    available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. Play, which moves the clock to a commitment, opens with ${chapter('clock')}.`,
+    available: `From ${chapter('calendar')}: the panel, Open Calendar, Go, Skip It and the entries. Play, which moves the clock to a commitment, opens with ${chapter('clock')}.`,
     short: 'Up Next, on Home, shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it.\n\nWhen the clock reaches a commitment, it stops and asks what to do: press Go to be there, or Stand Here to wait. A plan of your own also offers Skip It, a rehearsal with a classmate Call It Off, and a meeting with an agent’s office Ask To Move, and after any of them the clock carries on to where it was headed.',
     steps: [
       'Read Up Next on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, such as a card statement or a birthday.',
@@ -319,7 +319,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['What is the number beside Home?', 'How do I clear my notices?', 'What happens if I dismiss a question?', 'Does a question go away on its own?', 'Why didn’t pressing an answer work?'],
     where: { route: '/home', label: 'Home, What Needs You And Recent Updates' },
     available: `From ${chapter('needs')}.`,
-    short: 'What Needs You, on Home, holds the questions you need to answer and what needs putting right. A question has its answers as buttons, such as File It or Keep The Account, and Dismiss. A thing to put right, such as an overdrawn account or a return that’s due, has the button to its screen, and goes once it’s put right. Recent Updates, also on Home, shows the latest notices of what happened: groceries you couldn’t pay for, a commitment you slept through, a welcome to the school. Updates, on the menu, keeps every notice, read and unread. The number beside Home on the menu counts the questions, and the one beside Updates the unread notices.',
+    short: 'What Needs You, on Home, holds the questions you need to answer and what needs putting right. A question has its answers as buttons, such as File It or Keep The Account, and Dismiss. A thing to put right, such as an overdrawn account or a return that’s due, has the button to its screen, and goes once it’s put right. Recent Updates, also on Home, shows the latest notices of what happened: groceries you couldn’t pay for, a commitment you slept through, a welcome to the school. It says how many you haven’t read, and View All Updates, at its foot, opens Updates, which keeps every notice, read and unread. The number beside Home on the menu counts the questions.',
     steps: [
       'Open Home and read What Needs You: the questions first, then what needs putting right.',
       'Press one of a question’s answers to act on it from What Needs You, without opening its screen. An answer does what the same action does on the question’s own screen: File It, on your tax return’s question, files the return just as File It on Papers does.',
@@ -327,7 +327,7 @@ export const DAY: readonly GuideEntry[] = [
       'Press Dismiss to take a question off the list without answering it.',
       // A notice that came more than once is one line here from 2026-10-23 (brief 23's walk), as on Updates: until then each was a line.
       'Read Recent Updates: the most important unread notices, two lines of each. A notice that came more than once is one line, which says how many earlier ones are on Updates. Press Mark Read beside one, which reads its earlier ones too, or Mark N Read, at the top of the panel, to mark every unread notice read at once.',
-      'Press View All Updates, or Updates on the menu, for every notice, the newest first: Unread or All, and About for one kind. Read It All shows a notice’s whole text, and a notice that came more than once says how many times. Mark Read marks one read, and Mark N Read every one shown.',
+      'Press View All Updates, at the foot of Recent Updates on Home, for every notice, the newest first: Unread or All, and About for one kind. Read It All shows a notice’s whole text, and a notice that came more than once says how many times. Mark Read marks one read, and Mark N Read every one shown.',
       'Press a question’s or a notice’s title to open it: how urgent or important it is, when it closes, and where it sits in the list.',
     ],
     needs: [
@@ -346,7 +346,7 @@ export const DAY: readonly GuideEntry[] = [
     now: [
       'An answer does what its button does on its own screen. Done, the question closes; if it can’t be done, the question stays open and the reason shows.',
       'Dismiss closes the question unanswered. What it was about stands: a return still falls due, and can still be filed from its screen.',
-      'Mark Read marks a notice read, and Mark N Read every unread one, and the count beside Updates falls by that many.',
+      'Mark Read marks a notice read, and Mark N Read every unread one, and Recent Updates’ count of unread notices falls by that many.',
     ],
     later: [
       'Every question has a date. If you don’t answer it, it closes by itself within two days after that date.',
@@ -360,11 +360,12 @@ export const DAY: readonly GuideEntry[] = [
       'All Clear means every question is answered, nothing is owed past due, the bank and the card are in order, and the calendar has no clash for a month. Otherwise what needs putting right is listed under the questions, each with the way to its screen: money owed, an overdrawn account, a card near its limit or behind, care or a debt owed, a return due or tax owed, no health cover, a standing that has dropped, or a clash.',
       // Until 2026-10-17 this said the notices past the sixth moved up as those above them cleared, where Mark N Read
       // cleared them all at once and a notice past the sixth was on no screen (found by brief 13's interface playthroughs).
-      // Until 2026-10-23 (brief 23) the notices were under the questions, six at a time with Show All N.
-      'Home shows six questions, with “N more questions waiting.” and Show All N for the rest, and the four most important unread notices, with “N more unread.” and View All Updates for the rest. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
+      // Until 2026-10-23 (brief 23) the notices were under the questions, six at a time with Show All N. Until later that
+      // day (brief 24) a phone on its side showed six questions too, and every thing to put right under them.
+      'Home shows six questions, with “N more questions waiting.” and Show All N for the rest, and the four most important unread notices, with “N more unread.” and View All Updates for the rest. On a phone it shows the most pressing question or thing to put right, then how many more are waiting, with Show All N. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
     ],
     unavailable: [
-      `Before ${chapter('needs')} is read, What Needs You shows Locked, with Read About It, and Updates is off the menu.`,
+      `Before ${chapter('needs')} is read, What Needs You shows Locked, with Read About It, and Recent Updates and its View All Updates aren’t on Home.`,
       `An answer whose own chapter hasn’t been read says which chapter to read first: File It waits for ${chapter('papers')}.`,
       '“That question is already settled: it was answered, or its date passed.” A question answered once can’t be answered again.',
       'An answer that can’t be done keeps the question open, with the reason on screen: a payment the bank can’t cover, say.',
@@ -389,21 +390,21 @@ export const DAY: readonly GuideEntry[] = [
     example: {
       setup: 'February, for a student from abroad, who files a US return every year: Your 2026 Tax Return waiting under File It and Dismiss, and two unread notices.',
       steps: ['Press Dismiss on Your 2026 Tax Return.', 'Press Mark 2 Read.'],
-      result: 'The question leaves What Needs You and both notices leave Recent Updates: the count beside Home falls by one, and the one beside Updates by two. The return is still due on its date, and Papers still files it.',
+      result: 'The question leaves What Needs You and both notices leave Recent Updates: the count beside Home falls by one, and Recent Updates’ count of unread notices by two. The return is still due on its date, and Papers still files it.',
     },
   },
   {
     id: 'day.plans',
     title: 'Your Own Plans',
     goal: 'day',
-    covers: ['ui.open-calendar', 'calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
+    covers: ['calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
     synonyms: ['make a plan', 'schedule something', 'put something on it', 'call it off', 'cancel a plan', 'month view', 'clash', 'open calendar', 'next thirty days'],
     questions: ['How do I put something on my calendar?', 'How do I cancel a plan?', 'What happens if two things clash?', 'Does keeping a plan do anything?', 'How far ahead can I plan?'],
     where: { route: '/workspace/calendar', label: 'The Calendar Screen, From Open Calendar On Home' },
-    available: `From ${chapter('plans')}. The Calendar screen itself opens with ${chapter('calendar')}.`,
+    available: `From ${chapter('plans')}. Open Calendar and the Calendar screen open with ${chapter('calendar')}.`,
     short: 'To put a plan of your own on the calendar, press Open Calendar on Home, pick a day and press Put Something On It. Give it a name, a start time on the half hour and a length from half an hour to all day. The clock stops at your plan like any commitment, and Call It Off takes it off before it starts. A plan costs no money and changes nothing in your wellbeing beyond the hours it takes.',
     steps: [
-      'Press Open Calendar under Up Next on Home, Calendar on the menu, or C anywhere.',
+      'Press Open Calendar, at the head of Up Next on Home, or C anywhere. Back To Home, at the top of the Calendar, brings you back.',
       'Page the months with ‹ and ›, or Today, and press a day to open it under the month.',
       'Press Put Something On It. Fill in What Is It, When It Starts and How Long It Takes, then press Put It On.',
       'To take a plan off, press it on its day or in Next Thirty Days, then Call It Off.',

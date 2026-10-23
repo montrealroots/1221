@@ -150,7 +150,7 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'What’s Coming',
     lead: 'What’s coming up, and what to do when the clock stops for it.',
     body: [
-      'Up Next, on Home, shows what’s coming up: the next thing you need to be at, how soon it is, and up to five more after it.',
+      'Up Next, on Home, shows what’s coming up: the next thing you need to be at, how soon it is, and up to five more after it. Open Calendar, at its head, opens your calendar: the whole month, with everything on it.',
       'Press an entry’s name or its time to see when it starts, how long it lasts, where it is and what missing it would cost.',
       'Anything you need to be at is a commitment: a class, a rehearsal call, a work-study shift, an appointment, a plan of your own. When the clock reaches one, it stops, and a dialog with the commitment’s name asks what you want to do.',
       'Press Go to be there. Going takes as long as the commitment lasts, and the clock runs on through it. Stand Here closes the dialog and keeps the clock paused at the commitment.',
@@ -158,8 +158,10 @@ export const CHAPTERS: readonly Chapter[] = [
       'You miss a commitment if you’re asleep or in hospital when it starts. An injury that lays you up also keeps you from classes, calls, performances, work-study shifts and an office appointment for your papers, though not from your doctor, your therapist, orientation or a plan of your own.',
       'The clock hasn’t moved yet, so nothing has come due. Read “The Clock” next: it opens Play, which starts the clock.',
     ],
-    names: ['Calendar', 'Go', 'Skip It', 'The entries on it, when you press them'],
-    opens: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
+    // Open Calendar opens here, with the calendar, from 2026-10-23 (brief 24, which took Calendar from the menu): until
+    // then it waited for “Your Own Plans”, and the menu's Calendar was the way in between.
+    names: ['Up Next, and Open Calendar at its head', 'Go', 'Skip It', 'The entries on it, when you press them'],
+    opens: ['ui.calendar', 'ui.open-calendar', 'ui.go', 'calendar.skip', 'look.entry'],
   },
   {
     id: 'clock',
@@ -202,13 +204,13 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'What Needs You',
     lead: 'What happened while you weren’t looking, and what’s waiting on you.',
     body: [
-      'What Needs You, on Home, holds the questions waiting for you and anything that needs putting right, such as a card payment that’s late. Recent Updates, also on Home, has the latest notices of what’s happened: groceries you couldn’t pay for, a teacher’s note on your work, a birthday. Updates, in the menu, keeps every notice. The number beside Home in the menu counts the questions waiting, and the one beside Updates the notices you haven’t read.',
+      'What Needs You, on Home, holds the questions waiting for you and anything that needs putting right, such as a card payment that’s late. Recent Updates, also on Home, has the latest notices of what’s happened, such as groceries you couldn’t pay for, a teacher’s note on your work or a birthday, and says how many you haven’t read. View All Updates, at its foot, opens Updates, which keeps every notice, read and unread. The number beside Home in the menu counts the questions waiting.',
       'Press a notice’s title to read it in full. If it has a Go There button, that takes you to the screen it’s about. Once you’ve seen them, press the button that counts them, such as Mark 3 Read, to clear them from the panel.',
       'Some notices are questions, with their answers on buttons. Pressing an answer does it straight away and closes the question; if it can’t be done, a message says why and the question stays. Dismiss takes a question off the list without answering it, but what it was about still stands: a tax return is still due, and you can still deal with it on its own screen.',
       'When nothing is waiting, the panel tells you about anything that still needs your attention, such as money you owe or two commitments at the same time.',
       'Read “How You Are” next, about your energy, stress and readiness.',
     ],
-    names: ['What Needs You', 'Recent Updates, and Updates in the menu', 'Mark Read, which counts the notices it clears', 'A question’s answers, and Dismiss', 'A notice or a question, when you press it'],
+    names: ['What Needs You', 'Recent Updates, and View All Updates at its foot', 'Mark Read, which counts the notices it clears', 'A question’s answers, and Dismiss', 'A notice or a question, when you press it'],
     opens: ['ui.needs', 'world.mark_read', 'world.take_decision_action', 'world.dismiss_decision', 'look.notification', 'look.decision'],
   },
   // Until 2026-10-12 this chapter called the other dials “one press away” and sent the player to “your own page” for the
@@ -293,8 +295,8 @@ export const CHAPTERS: readonly Chapter[] = [
       'A plan happens in the town where you make it, and nothing in the game takes you away from that town.',
       'Read “Weather” next to see the weather in your town.',
     ],
-    names: ['Open Calendar', 'Put Something On It and Call It Off', 'Your plans and the stretches between them, when you press them'],
-    opens: ['ui.open-calendar', 'calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
+    names: ['Put Something On It and Call It Off', 'Your plans and the stretches between them, when you press them'],
+    opens: ['calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
   },
   // Until 2026-10-21 (the owner's brief 20, C3) it said the weather affected two things, a workout run outdoors and the
   // weeks the flu goes around, though the flu's weeks are read from the town's climate, its usual coldest or wettest
