@@ -87,7 +87,9 @@ pull request was open. Nothing is deployed. There is no stash and one worktree.
     so a lane played again over its first run's committed outputs reads clean where the code is.
 - **Pages on the built app:** brief 22's sixteen pages, each whole, in the order a player meets them, captured on
   `main` at `58231c69` at the owner's word (2026-10-23), merged in #58 (`384a5451`):
-  `docs/verification/career-genre-2026-10-22/captures/README.md`.
+  `docs/verification/career-genre-2026-10-22/captures/README.md`. The same at 390 on a phone, at the owner's word the
+  same day: `captures/mobile/README.md`. They found, outside brief 22, Home's Your Affairs rows breaking a word or an
+  amount across lines at 390 ("Checkin / g"), for the owner to send to a brief.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
   - enjoyment read from tags;

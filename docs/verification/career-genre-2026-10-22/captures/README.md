@@ -1,5 +1,7 @@
 # Brief 22's Pages On The Built App, In The Order A Player Meets Them
 
+The same pages on a phone, 390 wide: `mobile/README.md`.
+
 Sixteen pages, each captured whole, at the owner's word on 2026-10-23 ("send full page captures of each full page in
 chronological order while also pushing said captures to github"). They were captured on the app built from `main` at
 `58231c69`, which holds brief 22 (#54) and its follow-up (#56). Each page is shown 1440 wide at twice the pixels, the
