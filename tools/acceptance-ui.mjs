@@ -88,7 +88,11 @@ async function overflow(where) {
 }
 const toast = async () => (await page.locator('[role="status"], .toast').allInnerTexts().catch(() => [])).join(' | ');
 const clock = async () => (await page.getByRole('group', { name: 'Time Controls' }).locator('xpath=..').innerText().catch(() => '')).match(/\d{1,2}:\d{2}\s?[AP]M/)?.[0] ?? '';
-const dateText = async () => (await page.locator('header, .topbar, body').first().innerText()).match(/[A-Z][a-z]+ \d{1,2}, \d{4}/)?.[0] ?? '';
+// The game's date as the bar holds it (`.topbar-clock-date`), shown or not: from 2026-10-23 (brief 24) the bar shows it
+// only wider than 1024, and in a window 390 wide the first date this read in the header's words was a birth date in a
+// card, the same through every step, so a step that moved the day read "still June 14, 2002". Until then the bar showed
+// a shortened date there too.
+const dateText = async () => ((await page.locator('header.topbar .topbar-clock-date').first().textContent({ timeout: 2000 }).catch(() => '')) ?? '').match(/[A-Z][a-z]+ \d{1,2}, \d{4}/)?.[0] ?? '';
 async function rail(name) {
   const b = page.locator('#rail').getByRole('button', { name: new RegExp(`^${name}`) }).first();
   // The menu opened only where it's shut (from 2026-10-23: a press in its foot can leave it open, and Menu then shut it).
