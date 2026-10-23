@@ -3271,9 +3271,9 @@
  },
  "src/ui/screens/Home.tsx#needsLine": {
   "status": "Rewritten",
-  "hash": "406040f59f13",
+  "hash": "0a1c409d8e60",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: its zero branch went, never shown once All Clear stood alone; drawn with questions and things to put right by tests/evidence-g32-ui.test.ts and tests/evidence3-home.test.ts on the rendered screen",
   "first": "Pending"
  },
  "src/ui/screens/Home.tsx#partOfDay": {

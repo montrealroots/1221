@@ -339,9 +339,13 @@ function ToDoHelp({ feature }: { feature: string }) {
   return <HowItWorks help="day.calendar" />;
 }
 
-/** The line under What Needs You's title: how many questions wait, and how many things to put right. */
+/**
+ * The line under What Needs You's title: how many questions wait, and how many things to put right. Drawn only with
+ * something waiting (from 2026-10-23, brief 24): with nothing, the panel is its head and All Clear. Until then it said "No
+ * questions are waiting on you." over All Clear; when brief 24 took that line away the words stayed here, written and never
+ * shown, until its final runs found them later that day.
+ */
 function needsLine(questions: number, todo: number): string {
-  if (questions === 0 && todo === 0) return 'No questions are waiting on you.';
   const q = questions === 0 ? '' : questions === 1 ? 'a question waiting on you' : `${countWords(questions)} questions waiting on you`;
   const t = todo === 0 ? '' : todo === 1 ? 'one thing to put right' : `${countWords(todo)} things to put right`;
   return `${upFirst(q && t ? `${q}, and ${t}` : q || t)}.`;

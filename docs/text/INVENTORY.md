@@ -10,7 +10,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 1331 | 15920 | 7 | 59 | 268 | 0 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 543 | 15052 | 0 | 31 | 20 | 0 | 0 |
-| Home And Its Retained Actions | 29 | 263 | 1054 | 0 | 19 | 10 | 0 | 0 |
+| Home And Its Retained Actions | 29 | 262 | 1048 | 0 | 19 | 10 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3854 | 57301 | 174 | 189 | 445 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70462 | 7 | 191 | 475 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 766 | 6666 | 152588 | 13 | 281 | 485 | 0 | 0 |
@@ -22,7 +22,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 61 | 233 | 964 | 0 | 27 | 34 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4598 | 39151 | 597947 | 314 | 1473 | 3125 | 0 | 0 |
+| **All** | 4598 | 39150 | 597941 | 314 | 1473 | 3125 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -33,7 +33,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-pay | 31 | 1266 | 31 | 0 | 0 | 0 |
 | career-showcase | 23 | 1781 | 23 | 0 | 0 | 0 |
 | career-work | 76 | 2164 | 76 | 0 | 0 | 0 |
-| frame | 531 | 34580 | 130 | 401 | 0 | 0 |
+| frame | 531 | 34574 | 130 | 401 | 0 | 0 |
 | health | 178 | 38799 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
@@ -474,7 +474,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/life.ts#sleepReason` | 11 | 0 | Retained | frame | Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less. | Rewritten And Verified |
 | `src/ui/screens/Home.tsx#SHORT` | 1 | 0 | Retained | frame | A media query that decides when Home takes its phone-on-its-side shape, read by the browser and never shown | Pending |
 | `src/ui/screens/Home.tsx#Home` | 47 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24, after the phone's greeting took the weather into its line, the forecast folded behind Forecast And Daylight, and What Needs You showed the most pressing one with how many more are waiting; tests/evidence-g32-ui.test.ts and tests/evidence3-home.test.ts read it rendered | Pending |
-| `src/ui/screens/Home.tsx#needsLine` | 5 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
+| `src/ui/screens/Home.tsx#needsLine` | 4 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24: its zero branch went, never shown once All Clear stood alone; drawn with questions and things to put right by tests/evidence-g32-ui.test.ts and tests/evidence3-home.test.ts on the rendered screen | Pending |
 | `src/ui/screens/Home.tsx#daylightWords` | 1 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 24: the day's light in one line, under the forecast a phone folds away; read on the built app by docs/verification/ui-polish-2026-10-23/app/evidence.mjs at 667, 844 and 932 | Pending |
 | `src/ui/screens/Home.tsx#Question` | 5 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |
 | `src/ui/screens/Home.tsx#UpNext` | 10 | 0 | Rewritten | frame | Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen | Pending |

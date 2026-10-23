@@ -214,8 +214,11 @@ await step('home: what needs you on the first day: no decision waiting, in the p
   must(n === 0, `${n} decision cards on the first day`);
   const panel = page.locator('section.card', { has: page.getByRole('heading', { name: 'What Needs You', exact: true }) }).first();
   must(await panel.count(), 'no What Needs You on Home');
-  must(await panel.getByText('No questions are waiting on you.', { exact: true }).count(), `What Needs You says “${(await panel.innerText()).replace(/\s+/g, ' ').slice(0, 160)}”`);
-  return 'No questions are waiting on you.';
+  // All Clear, one line under the panel's head, from 2026-10-23 (the owner's brief 24): until then a subtitle over it said
+  // "No questions are waiting on you.", and this read that.
+  const said = (await panel.innerText()).replace(/\s+/g, ' ');
+  must(await panel.getByRole('heading', { name: 'All Clear', exact: true }).count() && said.includes('You owe nobody anything past due'), `What Needs You says “${said.slice(0, 160)}”`);
+  return 'All Clear. You owe nobody anything past due.';
 });
 await step('advance: One Hour moves the clock an hour', async () => {
   const before = await clock();
