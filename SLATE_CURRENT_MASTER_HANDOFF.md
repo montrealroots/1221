@@ -7,8 +7,8 @@ force-pushed. Until the owner's word it was kept out of `main` ("Keep the change
 without my instruction."); it went to `main` at "lets just merge everything" (2026-10-22), in #54, merged as
 `9aed9ed4`, and this record of the merge followed it there (#55). Its follow-up went to `main` at "Run the final runs
 then merge everything." (2026-10-22), in #56, merged as `6e5dc42e`, and this record of that merge followed it there (#57).
-Brief 22's pages captured on `main` went there in #58, merged as `384a5451`, and this record of it followed. No other
-pull request was open. Nothing is deployed. There is no stash and one worktree.
+Brief 22's pages captured on `main` went there in #58, merged as `384a5451`, and this record of it followed (#59); the
+same pages on a phone in #60, merged as `a3c55630`, and this record of it followed. No other pull request was open. Nothing is deployed. There is no stash and one worktree.
 
 **Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
@@ -88,7 +88,7 @@ pull request was open. Nothing is deployed. There is no stash and one worktree.
 - **Pages on the built app:** brief 22's sixteen pages, each whole, in the order a player meets them, captured on
   `main` at `58231c69` at the owner's word (2026-10-23), merged in #58 (`384a5451`):
   `docs/verification/career-genre-2026-10-22/captures/README.md`. The same at 390 on a phone, at the owner's word the
-  same day: `captures/mobile/README.md`. They found, outside brief 22, Home's Your Affairs rows breaking a word or an
+  same day, merged in #60 (`a3c55630`): `captures/mobile/README.md`. They found, outside brief 22, Home's Your Affairs rows breaking a word or an
   amount across lines at 390 ("Checkin / g"), for the owner to send to a brief.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
