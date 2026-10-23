@@ -57,6 +57,15 @@ instruction." No pull request is open for it. There is no stash and one worktree
   5,613 tests, none skipped, and all 22 checks (`docs/verification/ui-2026-10-23/after/gate.txt`). The first run, on
   `f3ef939b`, failed one test: the wiring list still read Recent Updates' Mark Read as sending one notice. It was read
   again and written in.
+- **Every page, whole, in the order a player meets them** (the owner's word, 2026-10-23):
+  - **Where:** `docs/verification/ui-2026-10-23/captures/pages/README.md` at 1440, and `pages/mobile/README.md` on a
+    phone on its side, 844 by 390.
+  - **What:** 67 pages each, from the start and creation through four moments of a career, on the app built from
+    `97404e70` (its `src` the tested commit's).
+  - **The script:** `app/pages.mjs`, kept. It met no error and no step it couldn't take, and no page was wider than its
+    window.
+- **The final runs again** (the owner's word, 2026-10-23, "So we can get it back to 634"): brief 22's lanes, played on
+  `97404e70`, every lane but the judge's, whose watched files brief 23 didn't touch (P=f23, `queue22.sh`). Under way.
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). A deployment of
   brief 22's line accepts this line's saves.
 
