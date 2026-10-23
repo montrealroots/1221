@@ -31,6 +31,11 @@ occupations or parental leave.
   SAG-AFTRA eligibility was announced at a first day never worked (since brief 19, local work too), now read from the
   first day worked. Adding the project shifted life A's opportunity ids and so casting's keyed draws: the career
   journey now has her paid for Jess in Static On Route 9 in August 2029, before The Calloway Files, and says why.
+- **Measured:** the full suite on `6261883e`: 488 of 490 test files, 5,629 of 5,632 tests. The three failures were the
+  new project's: Harbor Line had no stated genre weights (brief 22's rule that every project states its own), and a test's
+  premise said every project is in New York, where what it needs is that none is in Oregon. Both are fixed in the commit
+  after it, whose changed tests and the gate's 23 checks pass. The whole gate runs again in a clean clone at the next
+  module's end.
 - **Next:** Module 2, the real industry catalog with field-level provenance and roles drawn from it; then real agencies
   and agents, contracts and residuals, production workflows, charts and awards, and the time loop, tutorials,
   playthroughs and the final gate, each in the checkpoint's table.

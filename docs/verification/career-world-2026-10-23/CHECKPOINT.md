@@ -56,6 +56,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 - **What adding a project changed**: life A's career (tests/journey-career.test.ts), whose opportunity ids shifted, so
   casting's keyed draws fell otherwise: she was offered and paid for Jess in Static On Route 9 in the summer of 2029.
   The test says so; the rest of her journey is as it was.
+- **Measured**: the full suite on `6261883e`, 488 of 490 files and 5,629 of 5,632 tests; its three failures (Harbor
+  Line's genre weights unstated, a test's premise that every project is in New York) are fixed in the next commit.
 - **Left for later, each a register row**: flight delays and missed connections (T24, T25), a stay extended (T26),
   weather (T31), allowances and per diem, Australian tax (GEO-19, blocked on S28), jet lag (GEO-13), the five partly
   researched countries' rules.

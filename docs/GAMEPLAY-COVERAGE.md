@@ -395,7 +395,7 @@ The rows with each kind of evidence, a row counted under every kind it has, and,
 
 ### The Capabilities, Reviewed
 
-The 50 live capabilities of `docs/capabilities.json`, read the same day against the same standard (`docs/verification/review-2026-10-13/capabilities.json`), but career-portfolio, read on 2026-10-21 by a reader who wrote none of it, school-showcase, read on 2026-10-21 by a reader who wrote none of it, career-representation, read on 2026-10-21 by a reader who wrote none of it, career-pay, read on 2026-10-21 by a reader who wrote none of it, career-work, read on 2026-10-21 by a reader who wrote none of it. The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, 361 of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. 180 commands are named by both; a command only a capability names is traced in `docs/verification/connected-journey/TRACE.md`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.
+The 51 live capabilities of `docs/capabilities.json`, read the same day against the same standard (`docs/verification/review-2026-10-13/capabilities.json`), but career-portfolio, read on 2026-10-21 by a reader who wrote none of it, school-showcase, read on 2026-10-21 by a reader who wrote none of it, career-representation, read on 2026-10-21 by a reader who wrote none of it, career-pay, read on 2026-10-21 by a reader who wrote none of it, career-work, read on 2026-10-21 by a reader who wrote none of it, career-world, read on 2026-10-23 by its builder. The units differ: a row here is one command, scheduled kind, system, knob, trait or panel, 361 of them; a capability is a player’s goal, naming the commands it runs, so one capability spans several rows, and its verified layer can say Verified only where every row of its commands is verified here. 180 commands are named by both; a command only a capability names is traced in `docs/verification/connected-journey/TRACE.md`. A capability’s verdict here is the review’s, of the goal as a whole, and moves with its rows, not apart from them.
 
 | Capability | Status In The Registry | The Review Found | Disposition | Gaps |
 |---|---|---|---|---|
@@ -449,6 +449,7 @@ The 50 live capabilities of `docs/capabilities.json`, read the same day against 
 | career-representation | Implemented | verified | — | 4 |
 | career-pay | Implemented | verified | — | 4 |
 | career-work | Implemented | verified | — | 3 |
+| career-world | Implemented | partial | missing-evidence | 2 |
 
 ## Read By Eye On 2026-10-12
 

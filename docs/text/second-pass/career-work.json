@@ -127,9 +127,9 @@
  },
  "src/engine/systems/projobs.ts#FIELD_WORDS": {
   "status": "Rewritten",
-  "hash": "a145601e1063",
+  "hash": "d04600e0bef5",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts and tests/b22-genre-weights.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#finish": {

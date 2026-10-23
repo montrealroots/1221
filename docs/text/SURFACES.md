@@ -6,18 +6,18 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 
 | Area | Sources | Claimed |
 |---|---|---|
-| career | 115 | 115 |
+| career | 119 | 119 |
 | career-agent | 57 | 57 |
-| career-pay | 31 | 31 |
+| career-pay | 32 | 32 |
 | career-showcase | 23 | 23 |
-| career-work | 75 | 75 |
+| career-work | 78 | 78 |
+| career-world | 40 | 40 |
 | frame | 531 | 531 |
 | health | 178 | 178 |
 | material-a | 507 | 507 |
 | material-b | 492 | 492 |
 | money | 266 | 266 |
 | money-data | 522 | 522 |
-| new | 48 | 48 |
 | papers | 477 | 477 |
 | profile | 634 | 634 |
 | school | 638 | 638 |

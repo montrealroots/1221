@@ -4764,5 +4764,46 @@
    "weakTests": [],
    "todo": "An independent reading at integration, against the integrated commit."
   }
+ },
+ {
+  "on": "2026-10-23",
+  "against": "6261883e",
+  "by": "its builder",
+  "id": "career-world",
+  "claim": "Brief 25’s work abroad: a country registry (Australia verified, six partly researched, the rest unsupported and never permission); a feature in Sydney; the 408 applied for from the engagement (pro.apply_work_visa), a permit in Papers decided ten days on; the production’s trip, its legs in each town’s zone and where the player is from them; the first flight refused without the visa and the production’s release; work days under Australia’s rule; pay as income earned in Australia without commission; the trip’s steps in the engagement’s history.",
+  "implementation": "src/engine/content/jurisdictions.ts; src/engine/systems/worktrip.ts (registerWorkTrips: pro.apply_work_visa, the visa’s decision, each leg’s departure and arrival); src/engine/systems/projobs.ts (acceptRefusal, acceptWarning, spansOf, the work day’s permission and presence); src/ui/career/WorkPane.tsx (TripView); src/ui/papers/Documents.tsx.",
+  "consumers": "The School’s present() and auditions (awayAt, whereAt); another booking (bookedClash through tripSpans); the work day; Papers’ Permission To Work and Your Work And Your Permission; the year’s foreign income; the Work tab.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/career-world-sydney.test.ts draws the Work tab at each stage of a played journey (the trip, Apply For The Visa pressable then gone, the visa’s state, each leg, the hotel, what the 408 asks, the gaps, the tax line, the trip’s steps once each) and Papers’ Permission To Work with the visa."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/career-world-sydney.test.ts ‘T11, T21, T22, PLAYER JOURNEY: posted, taped, offered; accepted as a contract that says it needs the 408...’",
+    "asserts": "pro.apply_work_visa refused before acceptance and a second time, a pending permit with nothing charged, granted ten days on; the trip flown, eight days worked in Sydney, paid without commission as income earned in Australia; twins reloaded at the visa and before the flight end the same.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads; the graduate is made through the School’s own Commencement handler, and the seed is the first of a list whose posting and casting go the way the journey needs."
+   },
+   {
+    "kind": "command",
+    "where": "tests/career-world-sydney.test.ts ‘T12: with no visa at the first flight, the player doesn’t fly and the production releases them...’",
+    "asserts": "No flight, the release in its words, nothing owed, the trip’s items off the clock.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard: this entry is the builder’s own reading, made on 2026-10-23.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
+  ],
+  "rows": "pro.apply_work_visa is traced in docs/verification/connected-journey/TRACE.md (the guide’s career.work-abroad), not a row of the audit.",
+  "weakTests": []
  }
 ]

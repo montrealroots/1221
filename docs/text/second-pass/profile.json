@@ -2464,10 +2464,10 @@
   "first": "Pending"
  },
  "src/engine/content/genre-weights.ts#PROJECT_GENRES": {
-  "status": "Retained",
-  "hash": "e1946fd36e70",
-  "on": "2026-10-22",
-  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (PROJECT_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these",
+  "status": "Rewritten",
+  "hash": "85e876cdabf7",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts and tests/b22-genre-weights.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/content/genre-weights.ts#SCENE_GENRES": {

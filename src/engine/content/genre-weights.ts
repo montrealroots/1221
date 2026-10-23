@@ -63,6 +63,8 @@ export const PROJECT_GENRES: Readonly<Record<string, Stated>> = {
   'Static On Route 9': { weights: { psychological_horror: 1 }, why: 'Two hosts hearing their own voices call in: a psychological horror, horror being its broad genre.' },
   'Paper Moons': { weights: { coming_of_age: 1 }, why: 'A brother not going back, a sister deciding whether to say so, one summer: a coming of age.' },
   'Last Bus To Eastview': { weights: { romantic_comedy: 1 }, why: 'Two strangers arguing through the night over a job abroad: a romantic comedy.' },
+  // Brief 25's feature in Sydney (from 2026-10-23); until then nothing stated it, and its parts read their genres evenly.
+  'Harbor Line': { weights: { conspiracy_thriller: 1 }, why: 'A cargo that vanished between two ports, and the people paid to keep it quiet: a conspiracy thriller, thriller being its broad genre.' },
 };
 
 /**

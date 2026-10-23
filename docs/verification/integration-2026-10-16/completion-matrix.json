@@ -8002,21 +8002,21 @@
    "id": "pro.apply_work_visa",
    "group": "Commands Traced Outside The Audit",
    "kind": "command",
-   "source": "docs/TRACEABILITY.md",
-   "goal": "Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the production's flights, cars and hotel; the work there, paid as wages earned in Australia; and the trip home",
-   "entry": "guide: Finding Work | WorkPane.tsx",
-   "preconditions": "An engagement abroad accepted, not already applied for or granted, the visa's route the one the player's citizenship gives (none for an Australian, on arrival for a New Zealander), and a passport in force until home (visaRefusal); at the first flight out, permission for every work day and the passport, or no flight and a release | refused where: — (also visaRefusal)",
+   "source": "docs/verification/connected-journey/TRACE.md (Work Abroad (`career.work-abroad`))",
+   "goal": "Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the production's flights, cars and hotel; the work there, paid as wages earned in Australia; and the trip home | Work Abroad (`career.work-abroad`)",
+   "entry": "`pro.apply_work_visa`, at Career, Work, Your Engagements (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work in another country. | guide: Finding Work | WorkPane.tsx",
+   "preconditions": "A booking in another country whose rules are in the game: so far, Australia.; A passport in force until you’re home. Papers shows yours.; Not an Australian or a New Zealand citizen: an Australian needs no visa, and a New Zealander is granted one on arrival.; Offers And Booked Work first: You apply for it once you’ve accepted the work abroad. | An engagement abroad accepted, not already applied for or granted, the visa's route the one the player's citizenship gives (none for an Australian, on arrival for a New Zealander), and a passport in force until home (visaRefusal); at the first flight out, permission for every work day and the passport, or no flight and a release | refused where: — (also visaRefusal)",
    "reads": "src/engine/systems/worktrip.ts",
    "decisions": "chooses: engagementId, readyAt",
-   "validation": "refusals: — (also visaRefusal) | costs: Accepting books the trip (bookTrip): a car to the airport, the flights by the hub, the car to the hotel and the same home, each a scheduled leg, the hotel a stay; applying writes a pending permit in Papers tied to the engagement and the department's decision ten days on (pro.visa_decision); at the first leg out the permission and the passport are read, and without them the production releases the actor (pro.trip_depart); each leg moves where the player is (whereAt), the arrival checks in, the last leg home ends the stay (pro.trip_arrive); each work day reads Australia's permission and the player's presence in Sydney; pay is the existing payroll's, recorded as foreign income with no commission. Every flight time, the decision's ten days, the charge of nothing and the hotel paid by the production are the game's assumptions, said so",
-   "changes": "Not recorded",
-   "later": "Not recorded",
-   "systems": "abroadRead: the offer's warning, acceptance, the first flight and each work day; whereAt and awayOn: the School's present(), an audition in person, a work day's presence; tripSpans: bookedClash, so another booking in the trip is refused; recordWages: the pay as income earned in Australia",
-   "sees": "Not recorded",
-   "saveLoad": "Person.pro.trips (legs and their statuses, the stay, the history), the engagement's tripId, the permit in Person.documents with its bookingId, and the year's foreign income",
+   "validation": "refusals: — (also visaRefusal) | Time: 10 days for the department’s decision (an estimate); Money: None. The visa’s charge isn’t in the department’s page, and the production pays for the trip. (an estimate) | costs: Accepting books the trip (bookTrip): a car to the airport, the flights by the hub, the car to the hotel and the same home, each a scheduled leg, the hotel a stay; applying writes a pending permit in Papers tied to the engagement and the department's decision ten days on (pro.visa_decision); at the first leg out the permission and the passport are read, and without them the production releases the actor (pro.trip_depart); each leg moves where the player is (whereAt), the arrival checks in, the last leg home ends the stay (pro.trip_arrive); each work day reads Australia's permission and the player's presence in Sydney; pay is the existing payroll's, recorded as foreign income with no commission. Every flight time, the decision's ten days, the charge of nothing and the hotel paid by the production are the game's assumptions, said so",
+   "changes": "The visa is pending in Papers, under Permission To Work, tied to this work.",
+   "later": "10 days on, the department grants it, to 28 days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.",
+   "systems": "Permission To Work, immediate: The visa is a permission to work in Papers, pending until the department decides. | abroadRead: the offer's warning, acceptance, the first flight and each work day; whereAt and awayOn: the School's present(), an audition in person, a work day's presence; tripSpans: bookedClash, so another booking in the trip is refused; recordWages: the pay as income earned in Australia",
+   "sees": "The 408’s conditions come from the department’s page: the game read it on October 23, 2026, last updated September 24, 2026. Its 10 days and the hotel paid by the production are estimated, and so are the flight times, from the distances.",
+   "saveLoad": "(none) | Person.pro.trips (legs and their statuses, the stay, the history), the engagement's tripId, the permit in Person.documents with its bookingId, and the year's foreign income",
    "failure": "refusals said in the player's words: — (also visaRefusal) | Built on 2026-10-23 for brief 25's first module. pro.apply_work_visa is played through its command and the clock (tests/career-world-sydney.test.ts): the visa applied for from the engagement, refused a second time, granted ten days on, the trip flown, the work done in Sydney and paid, the trip home, each stage saved and loaded; and without it, the release at the flight. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Flight delays, missed connections, a stay extended, weather on the day, allowances, Australian tax and jet lag aren’t in the game",
    "implementation": "`systems/worktrip.ts` | WorkPane.tsx",
-   "evidence": "1 test files",
+   "evidence": "`pro.apply_work_visa`: `tests/career-world-sydney.test.ts` | 1 test files",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
@@ -11637,7 +11637,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11712,7 +11712,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11764,7 +11764,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11840,7 +11840,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -14223,7 +14223,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14642,7 +14642,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14944,7 +14944,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14971,7 +14971,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14998,7 +14998,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15025,7 +15025,7 @@
     "commit": "859bacdb",
     "watch": "app"
    },
-   "missing": "It was measured on 859bacdb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 859bacdb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15308,7 +15308,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15335,7 +15335,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15362,7 +15362,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15389,7 +15389,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15416,7 +15416,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15443,7 +15443,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15470,7 +15470,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15497,7 +15497,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15524,7 +15524,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15551,7 +15551,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15578,7 +15578,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15605,7 +15605,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15632,7 +15632,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15659,7 +15659,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15686,7 +15686,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15713,7 +15713,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15740,7 +15740,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15767,7 +15767,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15794,7 +15794,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15821,7 +15821,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15848,7 +15848,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15875,7 +15875,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15902,7 +15902,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15929,7 +15929,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15956,7 +15956,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15983,7 +15983,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16010,7 +16010,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16037,7 +16037,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16086,7 +16086,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16113,7 +16113,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16140,7 +16140,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16167,7 +16167,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16194,7 +16194,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16221,7 +16221,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16248,7 +16248,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16275,7 +16275,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/guide/career.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/careerwork.ts, src/engine/content/genre-weights.ts, src/engine/content/guide/career.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

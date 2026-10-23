@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 44 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 45 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -16,7 +16,7 @@ Home, how the guide and this help work, and finding your way around.
 
 ### Home And Where You Are (`start.home`)
 
-- **Action:** `ui.where`, `look.day`, `look.place`, `look.region`, `look.country`, `look.currency`, `look.season`, `look.daylight`, at Home, The Where You Are Panel (`/home`). Opens: From the guide’s first chapter, “Your Life, Hour By Hour”.
+- **Action:** `ui.where`, `look.day`, `look.place`, `look.region`, `look.country`, `look.currency`, `look.season`, `look.daylight`, at Home, The Line Under The Greeting (`/home`). Opens: From the guide’s first chapter, “Your Life, Hour By Hour”.
 - **Preconditions:**
   - Home is there from your first moment in the game.
   - The Guide And This Help first: A word becomes a link once you’ve read the guide chapter that covers it.
@@ -28,7 +28,7 @@ Home, how the guide and this help work, and finding your way around.
 - **Consumer (what reads it):**
   - The Clock: Play And Pause, immediate: The local time is the game’s clock, so it moves when the clock does.
 - **Feedback (how to read what comes back):**
-  - The line under your town says it’s your home, and how many people live there.
+  - Your town, pressed, says it’s your home, and how many people live there.
   - Daylight gives today’s sunrise and sunset, and how many hours of daylight that makes.
 - **History (kept in the record):**
   - (none)
@@ -74,7 +74,7 @@ Home, how the guide and this help work, and finding your way around.
 - **Consumer (what reads it):**
   - (none)
 - **Feedback (how to read what comes back):**
-  - The number beside Home is the notices and questions waiting in What Needs You.
+  - The number beside Home is the questions waiting in What Needs You. Recent Updates, on Home, says how many notices you haven’t read.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
@@ -440,7 +440,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
 - **Feedback (how to read what comes back):**
   - The read decides it: a higher fit can lose a lead to a balance of 4 points between a lead last time and a featured part.
   - Delivered at 100% means every night came fully prepared, on a good enough day: tiredness, the flu, an injury or a concussion that day count as less delivered. Tiring late in the play, and a slip carried into the next movement, don’t, since the fit and the night’s luck already count them. A night missed without an excuse (not in hospital, laid up or called in sick) counts as nothing delivered.
-  - Fit uses the same abilities a night does, so the work that grows them raises it. Who you are as an actor plays no part in it.
+  - Fit uses the same abilities a night does, so the work that grows them raises it, and so does knowing the play’s genres. Who you are as an actor plays no part in it.
   - A part called In The Company means no part written for you was left when your read came up.
   - Why This Cast shows the production you’re in; Around The Class shows the whole class, the Rep’s company included.
 - **History (kept in the record):**
@@ -629,7 +629,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
   - Learning A Part, immediate: Each show has its own rehearsal process, lines, blocking and notes, under its panel.
   - The Nights, evaluation: Each show is a night judged like any other, kept on the run and in your work.
   - Casting, evaluation: A Cabaret or Summer run counts 50% of a School production’s in what the chair reads you delivered.
-  - Your Affairs And What You’re Worth, scheduled: The summer stipend lands in your account each Friday at five, $375 a week before tax.
+  - What You’re Worth, scheduled: The summer stipend lands in your account each Friday at five, $375 a week before tax.
   - Your Tax Return, history: The summer stipend is wages on the year’s tax return, with its tax already withheld.
 - **Feedback (how to read what comes back):**
   - Performed counts the Cabaret shows played out of 5, with the calls still ahead beside it.
@@ -762,12 +762,13 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Consumer (what reads it):**
   - Taping A Brief, evaluation: Knowing the genre is part of a take’s preparation: it counts toward the take’s interpretation, and is complete at 90%.
   - Preparing Coursework, immediate: A scene from a play of a kind you know is prepared faster, by the better of Familiarity and Work In It.
+  - Auditions And Callbacks, evaluation: Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at 90%, and half of how well casting thinks you suit the role.
   - Learning A Part, immediate: A part in a play of a kind you know is learned faster.
   - Your Work So Far, history: The genres you’ve worked in are counted in Range.
 - **Feedback (how to read what comes back):**
   - It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research holds it with low confidence”, or “No more than any self-tape asks”.
   - A genre’s look gives Familiarity, Work In It and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps speed up with material you’ve met before instead. It gives what the research found the genre asks, and how sure it is.
-  - Knowing The Genre, inside a brief, is the better of the first two against the 90% that completes it.
+  - Knowing The Genre, inside a brief, is the better of the first two against the 90% that completes it. Every brief is in one genre.
   - The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what a self-tape in it is judged more on and calls on, and which part of preparation answers it. A tape held back most by an ability one of those concerns asks for says so: “Your … held back … by … points: …’s … asks for it.”, as when your Composure held back Consistency by 4.2 points and Nordic Noir’s Feeling Held In asks for it.
   - “You love it” on a genre’s look means a day of its work is a better day: loving it doesn’t make the work faster or limit it.
 - **History (kept in the record):**
@@ -838,7 +839,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - The next take uses the reading, and the way as far as you’ve rehearsed it by then.
   - Work It Through can play one beat its own way, on an axis the whole leaves open.
-- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/briefs.test.ts`, `tests/career-world-sydney.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### Who Reads With You (`craft.brief-reader`)
 
@@ -908,7 +909,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - A callback stays until a take plays it the way its note asks; that take ends the round, and only a take that isn’t a callback earns the next.
   - What held the take back is counted by Your Work So Far; What To Work On Next forecasts every ability and technique the take called on, so what held it back most and what pays most to train can be two things, and the pane says which. The next suggestions in Where It Would Show Next follow from what it names.
-- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/briefs.test.ts`, `tests/career-world-sydney.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### A Piece Of Work, Explained (`craft.work`)
 
@@ -1050,7 +1051,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two years on, they read as out of date, and What’s Missing says so.
-- **Tested by:** `pro.headshots`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.headshots`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-world-sydney.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Résumé (`career.resume`)
 
@@ -1074,7 +1075,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-world-sydney.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1099,7 +1100,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - New recorded work after it shows under What’s Missing as worth adding.
-- **Tested by:** `pro.cut_reel`: `tests/b20-career-effects.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.cut_reel`: `tests/b20-career-effects.test.ts`, `tests/career-world-sydney.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### The Agent And How To Reach Him (`career.agent`)
 
@@ -1218,7 +1219,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Feedback (how to read what comes back):**
   - Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.
   - Deferred pay is shown and never paid: a student film pays its actors only if it earns money later, and no film in the game does.
-  - On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.
+  - On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work. If your permission to work ends with work still booked, the company releases you: the days you worked are still paid, and the rest are called off.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
@@ -1300,7 +1301,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.
-- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Auditions And Callbacks (`career.auditions`)
 
@@ -1317,6 +1318,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Consumer (what reads it):**
   - Offers And Booked Work, evaluation: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.
   - The Calendar, scheduled: An audition in person goes on your calendar with its trip, and stops the clock when it comes.
+  - Genres reads it, evaluation: Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at 90%, and half of how well casting thinks you suit the role.
 - **Feedback (how to read what comes back):**
   - The band says how good the audition was. Casting’s chance reads the band, the fit and the field together, and even the best audition doesn’t make it certain.
   - Why It Went This Way, under a settled role, shows each part of it.
@@ -1324,7 +1326,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
-- **Tested by:** `pro.prepare`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.prepare`: `tests/career-world-sydney.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/career-world-sydney.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
 
 ### Offers And Booked Work (`career.offers`)
 
@@ -1350,7 +1352,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1374,3 +1376,26 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A week on, the dean approves or refuses it, and the notice says each condition. Approved, the class days it takes are excused.
 - **Tested by:** `pro.request_outside_work`: `tests/pro-work.test.ts`
+
+### Work Abroad (`career.work-abroad`)
+
+- **Action:** `pro.apply_work_visa`, at Career, Work, Your Engagements (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work in another country.
+- **Preconditions:**
+  - A booking in another country whose rules are in the game: so far, Australia.
+  - A passport in force until you’re home. Papers shows yours.
+  - Not an Australian or a New Zealand citizen: an Australian needs no visa, and a New Zealander is granted one on arrival.
+  - Offers And Booked Work first: You apply for it once you’ve accepted the work abroad.
+- **Costs:**
+  - Time: 10 days for the department’s decision (an estimate)
+  - Money: None. The visa’s charge isn’t in the department’s page, and the production pays for the trip. (an estimate)
+- **State (what changes at once):**
+  - The visa is pending in Papers, under Permission To Work, tied to this work.
+- **Consumer (what reads it):**
+  - Permission To Work, immediate: The visa is a permission to work in Papers, pending until the department decides.
+- **Feedback (how to read what comes back):**
+  - The 408’s conditions come from the department’s page: the game read it on October 23, 2026, last updated September 24, 2026. Its 10 days and the hotel paid by the production are estimated, and so are the flight times, from the distances.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - 10 days on, the department grants it, to 28 days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.
+- **Tested by:** `pro.apply_work_visa`: `tests/career-world-sydney.test.ts`

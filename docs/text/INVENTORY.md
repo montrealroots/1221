@@ -11,18 +11,18 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 1331 | 15920 | 7 | 59 | 268 | 0 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 545 | 15099 | 0 | 31 | 20 | 0 | 0 |
 | Home And Its Retained Actions | 29 | 262 | 1048 | 0 | 19 | 10 | 0 | 0 |
-| Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3854 | 57301 | 174 | 189 | 445 | 0 | 0 |
+| Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3855 | 57324 | 174 | 190 | 444 | 0 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 6720 | 70462 | 7 | 191 | 475 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 766 | 6666 | 152588 | 13 | 281 | 485 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 477 | 4622 | 57239 | 3 | 112 | 365 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 349 | 2180 | 19947 | 0 | 332 | 17 | 0 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 349 | 2180 | 19951 | 0 | 332 | 17 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8302 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2572 | 15462 | 0 | 21 | 62 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 198 | 1180 | 0 | 4 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 61 | 233 | 964 | 0 | 27 | 34 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4645 | 39345 | 599709 | 314 | 1520 | 3125 | 0 | 0 |
+| **All** | 4645 | 39346 | 599736 | 314 | 1521 | 3124 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -32,7 +32,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | career-agent | 57 | 2782 | 57 | 0 | 0 | 0 |
 | career-pay | 32 | 1326 | 32 | 0 | 0 | 0 |
 | career-showcase | 23 | 1781 | 23 | 0 | 0 | 0 |
-| career-work | 78 | 2235 | 78 | 0 | 0 | 0 |
+| career-work | 78 | 2239 | 78 | 0 | 0 | 0 |
 | career-world | 40 | 945 | 40 | 0 | 0 | 0 |
 | frame | 531 | 34574 | 130 | 401 | 0 | 0 |
 | health | 178 | 38799 | 38 | 140 | 0 | 0 |
@@ -41,7 +41,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | money | 266 | 55460 | 113 | 153 | 0 | 0 |
 | money-data | 522 | 99604 | 172 | 350 | 0 | 0 |
 | papers | 477 | 57239 | 112 | 365 | 0 | 0 |
-| profile | 634 | 57301 | 189 | 445 | 0 | 0 |
+| profile | 634 | 57324 | 190 | 444 | 0 | 0 |
 | school | 638 | 67444 | 187 | 451 | 0 | 0 |
 | tutorial | 51 | 15099 | 31 | 20 | 0 | 0 |
 
@@ -52,7 +52,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Startup, Save Selection, Character Creation And Onboarding | 327 | 15 | 255 | 57 | 0 |
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 16 | 8 | 27 | 0 |
 | Home And Its Retained Actions | 29 | 3 | 8 | 18 | 0 |
-| Player Profile, Attributes, Genres, Mastery And Progression | 634 | 147 | 242 | 245 | 0 |
+| Player Profile, Attributes, Genres, Mastery And Progression | 634 | 147 | 241 | 246 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 666 | 123 | 351 | 192 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 766 | 113 | 371 | 282 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 477 | 147 | 227 | 103 | 0 |
@@ -63,7 +63,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 61 | 11 | 27 | 23 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4645 | 945 | 2408 | 1292 | 0 |
+| **All** | 4645 | 945 | 2407 | 1293 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -693,7 +693,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/genre-register.ts#GENRE_REGISTER .wuxia` | 1 | 0 | Retained | profile | Wuxia's line under How its scenes are played names what its scenes turn on (“Wire- and trampoline-assisted acrobatics and sword action…”), drawn from its research, which the next sentence says | Reviewed And Retained |
 | `src/engine/content/genre-register.ts#GENRE_REGISTER .yakuza` | 1 | 0 | Retained | profile | Yakuza's line under How its scenes are played names what its scenes turn on (“The ninkyo film’s chivalric hero against a…”), drawn from its research, which the next sentence says | Reviewed And Retained |
 | `src/engine/content/genre-register.ts#GENRE_REGISTER .zombie` | 1 | 0 | Retained | profile | Zombie's line under How its scenes are played names what its scenes turn on (“Performers trained to move consistently as the…”), drawn from its research, which the next sentence says | Reviewed And Retained |
-| `src/engine/content/genre-weights.ts#PROJECT_GENRES` | 7 | 0 | Retained | profile | Not shown to the player: SLATE's reason for each stated genre weight (PROJECT_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these | Reviewed And Retained |
+| `src/engine/content/genre-weights.ts#PROJECT_GENRES` | 8 | 0 | Rewritten | profile | Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts and tests/b22-genre-weights.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/plural-check.mjs passing | Pending |
 | `src/engine/content/genre-weights.ts#PLAY_GENRES` | 66 | 0 | Retained | profile | Not shown to the player: SLATE's reason for each stated genre weight (PLAY_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these | Reviewed And Retained |
 | `src/engine/content/genre-weights.ts#SCENE_GENRES` | 5 | 0 | Retained | profile | Not shown to the player: SLATE's reason for each stated genre weight (SCENE_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these | Reviewed And Retained |
 | `src/engine/content/genres.ts#GENRE_DEFS .absurdist` | 3 | 0 | Rewritten | profile | Absurdist's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md) | Pending |
@@ -3240,7 +3240,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/proagent.ts#registerProAgent` | 34 | 0 | Rewritten | career-agent | Rewritten 2026-10-22 for brief 20's F10, so the School's request to meet lapses on its day with a notice and a line in History With His Office, to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-agent-ask-lapse.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/proagent.ts#endAgreement` | 3 | 0 | Rewritten | career-agent | Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#NY` | 1 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
-| `src/engine/systems/projobs.ts#FIELD_WORDS` | 8 | 0 | Rewritten | career-work | Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing | Pending |
+| `src/engine/systems/projobs.ts#FIELD_WORDS` | 8 | 0 | Rewritten | career-work | Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts and tests/b22-genre-weights.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/plural-check.mjs passing | Pending |
 | `src/engine/systems/projobs.ts#KIND_WORDS` | 5 | 0 | Rewritten | career-work | Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing | Pending |
 | `src/engine/systems/projobs.ts#datesOf [shoot]` | 1 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
 | `src/engine/systems/projobs.ts#DEFERRED_WHY` | 1 | 0 | Rewritten | career-work | Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing | Rewritten And Verified |

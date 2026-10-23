@@ -170,7 +170,7 @@ export const FIELD_WORDS: Readonly<Record<ProjectKind, string>> = {
   'ultra-low-budget': 'a middling field',
   'student-film': 'a small field: a student film sees fewer actors',
   'non-union-short': 'a small field',
-  'overseas-feature': 'a large field: a studio feature sees actors’ tapes from across the country',
+  'overseas-feature': 'a large field: a studio feature shooting abroad sees tapes from actors in more than one country',
 };
 
 /** Missed work days a project allows before replacing the actor: the stage's understudy covers one, a shoot can't wait. ASSUMPTION. */
@@ -905,11 +905,11 @@ export function acceptRefusal(sim: Simulation, person: Person, o: Opportunity | 
     if (read.basis === 'abroad-unsupported') return read.words;
     if (!passportOf(person, tripWindow(planTrip(person.currentLocationId, t.place.cityId, days)?.legs ?? [])?.to ?? days[days.length - 1]!.to)) return `Work in ${t.place.city} needs a passport in force until you’re home. Papers shows yours.`;
   } else {
-  // Permission to work for every one of its days (`usWorkAuthorized`, brief 19's D8): read, never worked out here. Each
-  // day whole, its start and its end, as the work day reads it when it comes (`workAuthorizedFor`, from 2026-10-22, the
-  // owner's brief 22): until then its start alone.
-  const bad = days.find((d) => !workAuthorizedFor(person, d));
-  if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
+    // Permission to work for every one of its days (`usWorkAuthorized`, brief 19's D8): read, never worked out here. Each
+    // day whole, its start and its end, as the work day reads it when it comes (`workAuthorizedFor`, from 2026-10-22, the
+    // owner's brief 22): until then its start alone.
+    const bad = days.find((d) => !workAuthorizedFor(person, d));
+    if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
   }
   // And SAG-AFTRA's membership from the 30th day after a first job of its (the pay's `sagWorkRefusal`, wired at the merge,
   // 2026-10-21). The pay's `workEligibilityRefusal` was wired here too and came out the same day: it refuses where a date
