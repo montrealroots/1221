@@ -5,6 +5,7 @@ SLATE
 ·
 September 1, 2026
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,7 +16,6 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-15
 YOU
 Player Profile
 YOUR TRAINING
@@ -27,7 +27,7 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 15 Unread
+Actress
 Home
 ›
 Papers
@@ -35,6 +35,8 @@ YOUR AFFAIRS
 Papers
 
 Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.
+
+Cover: Yale Health.
 
 Tax Returns
 Health Cover

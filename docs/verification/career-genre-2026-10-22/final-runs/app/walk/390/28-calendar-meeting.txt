@@ -1,9 +1,6 @@
 calendar-meeting (meeting.json, 390 wide)
 
-Home
-›
-Calendar
-CALENDAR
+Back To Home
 Your Plans And Commitments
 
 Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
@@ -69,7 +66,18 @@ School
 Career
 Money
 Holiday
+Today, May 25, 2029
+
+Spring
+
+Put Something On It
+How This Works
+Meeting At Halberd Talent
+11:00 AM · 1 hour · New York
 Next Thirty Days
+
+Everything in the next thirty days, a run of the same call on one line.
+
 Meeting At Halberd Talent
 May 25, 2029 · 11:00 AM
 You
@@ -79,6 +87,7 @@ Your Birthday
 June 14, 2029 · 9:00 AM
 Card Statement
 June 20, 2029 · 9:00 AM
+Money
 
 ----- 53 controls; Tab reached 52 of the 52 it can; 0 grayed
 Nothing found.

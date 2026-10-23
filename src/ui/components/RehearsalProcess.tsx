@@ -18,7 +18,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Stat, Fine, WhyNot } from '@/ui/components/primitives';
+import { Stat, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatDate } from '@/engine/core/time';
@@ -69,7 +69,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
   };
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">The Rehearsal Process</div><HowItWorks help="school.learn_part" /></div>
+      <SectionHead title="The Rehearsal Process" help="school.learn_part" />
       <div className="grid grid-3">
         <Stat label="Lines" value={pct(p?.lines ?? 0)} note={`You’re asked to be off book ${pct(PROCESS.blockingShare)} of the way through`} />
         <Stat label="Blocking" value={pct(p?.blocking ?? 0)} note={p?.blockingMissed ? `${p.blockingMissed} Missed To Catch Up` : 'Set at the blocking calls'} />

@@ -248,7 +248,7 @@ defineLook<Sky>('weather', {
           body: (
             <>
               <p className="small">
-                {spokenName(city.name)} has a {now.climateName.toLowerCase()} climate: {BAND[now.climate]}.
+                {spokenName(city.name)} has {aClimate(now.climateName)}: {BAND[now.climate]}.
               </p>
               <p className="small">
                 On {dateWords(now.dateKey)} it usually reaches about {normalHigh(sim, city, now)}{unit} here,
@@ -256,7 +256,7 @@ defineLook<Sky>('weather', {
               </p>
               {/* Where the thunder’s count comes from: until 2026-09-27 its source was kept and not shown. */}
               <p className="xs dim">
-                About {thunderDaysFor(city.id, now.climate)} days of thunder a year here{THUNDER_DAYS[city.id] ? `, as published: ${THUNDER_DAYS[city.id]!.source}` : `, estimated for a ${now.climateName.toLowerCase()} climate`}.
+                About {thunderDaysFor(city.id, now.climate)} days of thunder a year here{THUNDER_DAYS[city.id] ? `, as published: ${THUNDER_DAYS[city.id]!.source}` : `, estimated for ${aClimate(now.climateName)}`}.
               </p>
             </>
           ),
@@ -389,6 +389,12 @@ function stretchOf(hour: number): string {
 }
 
 /** "3 PM", "Midnight", "Noon" — never "15:00". A name, so Title Case. */
+
+/**
+ * A climate with its article: “an oceanic climate”, “an equatorial climate”. Until 2026-10-23 every one took “a”, and
+ * London’s look read “London has a oceanic climate” (found by brief 23’s walk of Home’s looks).
+ */
+const aClimate = (name: string) => `${/^[aeiou]/i.test(name) ? 'an' : 'a'} ${name.toLowerCase()} climate`;
 export function clockWord(hour: number): string {
   if (hour === 0) return 'Midnight';
   if (hour === 12) return 'Noon';

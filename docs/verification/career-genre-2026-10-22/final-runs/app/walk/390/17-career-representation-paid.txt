@@ -13,6 +13,7 @@ Portfolio
 Representation
 Opportunities
 Work
+›
 Thomas Ashgrove
 
 Agent, Legit Department, Halberd Talent, New York
@@ -180,5 +181,5 @@ May 11, 2029: You checked your materials for an approach: headshots and a résum
 May 11, 2029: The School passed on a request from his office to meet you, standing until June 10, 2029.
 May 11, 2029: You first heard of him through the School’s follow-up after the showcase.
 
------ 37 controls; Tab reached 27 of the 27 it can; 5 grayed
+----- 35 controls; Tab reached 24 of the 24 it can; 5 grayed
 Nothing found.

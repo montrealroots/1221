@@ -243,7 +243,9 @@ defineLook<DecisionItem>('decision', {
     const offered = stage !== 'open'
       ? 'It’s no longer on Home, so there’s nothing to press.'
       : !onPanel
-        ? `Home shows the first ${countWord(PANEL_ROWS)} questions, and this one is further down. Its buttons appear there once one of the questions above it closes.`
+        // Show All under the first six lists the rest with their buttons, from 2026-10-23 (brief 23): until then they
+        // waited for a question above to close, and this said so.
+        ? `Home shows the first ${countWord(PANEL_ROWS)} questions, and this one is further down: Show All, under them, lists it with its buttons.`
         : `On Home, its buttons are ${spokenList([...labels, ...(decision.route ? ['Go There'] : []), 'Dismiss'])}. Reading it here changes nothing.`;
 
     return {
@@ -331,11 +333,12 @@ defineLook<Notice>('notification', {
       });
     }
 
-    // Mark Read on Home sends no ids, so it marks every unread notice read (`world.mark_read`). Go There is on Home’s row
-    // for an unread notice with a route, and Home lists only the unread: until 2026-10-20 (brief 17) a notice already
-    // read was told "On Home, Go There opens the screen it’s about" too, where it’s on no list with one.
-    const marking = unread.length === 1 ? 'Mark 1 Read marks it read' : `Mark ${unread.length} Read marks all ${unread.length} unread notices read at once`;
-    const onHome = note.route ? `On Home, Go There opens the screen it’s about, and ${marking}.` : `On Home, ${marking}.`;
+    // Mark N Read on Home sends no ids, so it marks every unread notice read (`world.mark_read`); Mark Read beside a
+    // notice, on Home or on Updates, sends its own. Until 2026-10-20 (brief 17) a notice already read was told "On Home,
+    // Go There opens the screen it’s about" too, where it was on no list with one; from 2026-10-23 (brief 23) every notice
+    // is on Updates, read or not, with Go There where it has a screen.
+    const marking = note.read ? '' : unread.length === 1 ? ' Mark Read marks it read.' : ` Mark Read marks it read, and Mark ${unread.length} Read on Home marks all ${countWord(unread.length)} unread notices read at once.`;
+    const onHome = `${note.route ? 'On Updates, Go There opens the screen it’s about.' : 'Updates keeps it with every other notice.'}${marking}`;
 
     return {
       name: nameOf(note.title, 'A Notice With No Title'),
@@ -353,7 +356,7 @@ defineLook<Notice>('notification', {
           {note.body && <p className="small muted">{note.body}</p>}
           <p className="small muted">
             {note.read
-              ? `SLATE keeps your latest ${NOTICES_KEPT} notices, so this one stays until ${NOTICES_KEPT} newer ones have come in.`
+              ? `SLATE keeps your latest ${NOTICES_KEPT} notices, so this one stays until ${NOTICES_KEPT} newer ones have come in. ${onHome}`
               : `Opening it here doesn’t mark it read. ${onHome}`}
           </p>
           <p className="small muted">

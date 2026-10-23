@@ -5,6 +5,7 @@ SLATE
 ·
 May 24, 2028
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,7 +16,6 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
 YOU
 Player Profile
 YOUR TRAINING
@@ -27,7 +27,7 @@ Money
 Papers
 YOU
 Ada Cole
-Actor · 500 Unread
+Actor
 Home
 ›
 Player Profile
@@ -43,6 +43,10 @@ YOUR AFFAIRS
 Papers
 
 Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.
+
+Cover: Yale Health.
+
+The 2026 return was due April 15, 2027, $7,869 to pay, a late penalty in it.
 
 Tax Returns
 Health Cover

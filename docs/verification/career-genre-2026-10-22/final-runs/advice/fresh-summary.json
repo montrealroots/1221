@@ -1,5 +1,5 @@
 {
- "commit": "54b4e96fce30c325b1826d595d94e5b5d60c9043",
+ "commit": "cb8b19eb329c2db435edce8b71439405fa4f447c",
  "clean": true,
  "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-0-9.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-10-19.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-20-29.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-30-39.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-40-49.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-50-59.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-60-69.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-70-79.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-80-89.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-90-99.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-100-109.json docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-110-119.json --out docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-summary.json",
  "files": [
@@ -17,7 +17,7 @@
   "docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-110-119.json"
  ],
  "commits": [
-  "54b4e96fce30c325b1826d595d94e5b5d60c9043"
+  "cb8b19eb329c2db435edce8b71439405fa4f447c"
  ],
  "cases": 120,
  "roles": {

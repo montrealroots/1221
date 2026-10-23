@@ -7,7 +7,7 @@
 
 import { useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Fine, Stat, WhyNot } from '@/ui/components/primitives';
+import { Fine, Stat, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
 import { formatDate } from '@/engine/core/time';
@@ -52,7 +52,7 @@ function ReaderChoice({ b }: { b: import('@/engine/content/briefs').Brief }) {
   const no = readerRefusal(person, b, draft === 'alone' ? 'alone' : Number(draft));
   return (
     <div className="col gap-1">
-      <div className="row-between"><div className="eyebrow">Read With</div><HowItWorks help="brief.reader" /></div>
+      <SectionHead title="Read With" help="brief.reader" />
       <div className="row gap-2 wrap">
         <select aria-label="Who Reads Opposite You" value={draft} onChange={(e) => setDraft(e.target.value)}>
           <option value="alone">A Recording Of The Other Lines</option>
@@ -195,7 +195,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       </div>
 
       <div className="col gap-1">
-        <div className="row-between"><div className="eyebrow">Preparation</div><HowItWorks help="brief.prepare" /></div>
+        <SectionHead title="Preparation" help="brief.prepare" />
         <div className="grid grid-3">
           <Stat label="The Breakdown" value={`${pct(prep.interpretation)} of ${pct(req.interpretation!)}`} />
           <Stat label="The Lines" value={`${pct(prep.memorization)} of ${pct(req.memorization!)}`} />
@@ -214,7 +214,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       </div>
 
       <div className="col gap-1">
-        <div className="row-between"><div className="eyebrow">Your Reading</div><HowItWorks help="brief.choose" /></div>
+        <SectionHead title="Your Reading" help="brief.choose" />
         {b.readings.map((r) => {
           const full = preview(sim, person, b, r.id, { ...(rec?.playing?.pace ? { pace: rec.playing.pace } : {}), ...(rec?.playing?.scale ? { scale: rec.playing.scale } : {}), ...(rec?.playing?.structure ? { structure: rec.playing.structure } : {}) }).overall;
           return (
@@ -238,7 +238,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       {b.medium !== 'voice' && <ReaderChoice b={b} />}
 
       <div className="col gap-1">
-        <div className="row-between"><div className="eyebrow">The Take</div><HowItWorks help="practice.self_tape" /></div>
+        <SectionHead title="The Take" help="practice.self_tape" />
         <p className="small" style={{ margin: 0 }}>
           {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now, 'now') ? withConcern(chiefLimit(now, 'now'), nowConcern) : 'There’s nothing holding it back.'} {grainWords(grainRead(now))} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
         </p>

@@ -1,0 +1,1676 @@
+{
+ "base": "http://localhost:4296",
+ "shots": [
+  {
+   "file": "home-new-student-1280x720.jpg",
+   "life": "new-student",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-new-student-1280x720-full.jpg"
+  },
+  {
+   "file": "home-all-read-1280x720.jpg",
+   "life": "new-student",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "updates-from-home-1280x720.jpg",
+   "life": "new-student",
+   "size": "1280x720",
+   "inView": [],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-updates-1280x720.jpg",
+   "life": "new-student",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "calendar-from-home-1280x720.jpg",
+   "life": "new-student",
+   "size": "1280x720",
+   "inView": [
+    "Your Plans And Commitments",
+    "September 2026"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-calendar-1280x720.jpg",
+   "life": "new-student",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-offer-waiting-1280x720.jpg",
+   "life": "offer-waiting",
+   "size": "1280x720",
+   "inView": [
+    "Good Afternoon, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-offer-waiting-1280x720-full.jpg"
+  },
+  {
+   "file": "home-after-midnight-1280x720.jpg",
+   "life": "after-midnight",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-after-midnight-1280x720-full.jpg"
+  },
+  {
+   "file": "home-developed-1280x720.jpg",
+   "life": "developed",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-developed-1280x720-full.jpg"
+  },
+  {
+   "file": "home-nothing-planned-1280x720.jpg",
+   "life": "nothing-planned",
+   "size": "1280x720",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-new-student-1440x900.jpg",
+   "life": "new-student",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-new-student-1440x900-full.jpg"
+  },
+  {
+   "file": "home-all-read-1440x900.jpg",
+   "life": "new-student",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "updates-from-home-1440x900.jpg",
+   "life": "new-student",
+   "size": "1440x900",
+   "inView": [
+    "Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-updates-1440x900.jpg",
+   "life": "new-student",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "calendar-from-home-1440x900.jpg",
+   "life": "new-student",
+   "size": "1440x900",
+   "inView": [
+    "Your Plans And Commitments",
+    "September 2026"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-calendar-1440x900.jpg",
+   "life": "new-student",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-offer-waiting-1440x900.jpg",
+   "life": "offer-waiting",
+   "size": "1440x900",
+   "inView": [
+    "Good Afternoon, Ada.",
+    "What Needs You",
+    "Up Next",
+    "How You Are"
+   ],
+   "menu": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-offer-waiting-1440x900-full.jpg"
+  },
+  {
+   "file": "home-after-midnight-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-after-midnight-1440x900-full.jpg"
+  },
+  {
+   "file": "home-developed-1440x900.jpg",
+   "life": "developed",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-developed-1440x900-full.jpg"
+  },
+  {
+   "file": "home-nothing-planned-1440x900.jpg",
+   "life": "nothing-planned",
+   "size": "1440x900",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-new-student-1920x1080.jpg",
+   "life": "new-student",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-new-student-1920x1080-full.jpg"
+  },
+  {
+   "file": "home-all-read-1920x1080.jpg",
+   "life": "new-student",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "updates-from-home-1920x1080.jpg",
+   "life": "new-student",
+   "size": "1920x1080",
+   "inView": [
+    "Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-updates-1920x1080.jpg",
+   "life": "new-student",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "calendar-from-home-1920x1080.jpg",
+   "life": "new-student",
+   "size": "1920x1080",
+   "inView": [
+    "Your Plans And Commitments",
+    "September 2026",
+    "Today, September 1, 2026",
+    "Next Thirty Days"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-calendar-1920x1080.jpg",
+   "life": "new-student",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-offer-waiting-1920x1080.jpg",
+   "life": "offer-waiting",
+   "size": "1920x1080",
+   "inView": [
+    "Good Afternoon, Ada.",
+    "What Needs You",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-offer-waiting-1920x1080-full.jpg"
+  },
+  {
+   "file": "home-after-midnight-1920x1080.jpg",
+   "life": "after-midnight",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-after-midnight-1920x1080-full.jpg"
+  },
+  {
+   "file": "home-developed-1920x1080.jpg",
+   "life": "developed",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0,
+   "full": "home-developed-1920x1080-full.jpg"
+  },
+  {
+   "file": "home-nothing-planned-1920x1080.jpg",
+   "life": "nothing-planned",
+   "size": "1920x1080",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-new-student-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-all-read-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "updates-from-home-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-updates-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "calendar-from-home-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Your Plans And Commitments",
+    "September 2026"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-calendar-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-weather-open-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada."
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "menu-open-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada."
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "menu-open-foot-667x375m.jpg",
+   "life": "new-student",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada."
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-offer-waiting-667x375m.jpg",
+   "life": "offer-waiting",
+   "size": "667x375m",
+   "inView": [
+    "Good Afternoon, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-after-midnight-667x375m.jpg",
+   "life": "after-midnight",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-developed-667x375m.jpg",
+   "life": "developed",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-nothing-planned-667x375m.jpg",
+   "life": "nothing-planned",
+   "size": "667x375m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-new-student-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-all-read-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "updates-from-home-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-updates-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "calendar-from-home-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Your Plans And Commitments",
+    "September 2026"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-calendar-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-weather-open-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada."
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "menu-open-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada."
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "menu-open-foot-844x390m.jpg",
+   "life": "new-student",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada."
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-offer-waiting-844x390m.jpg",
+   "life": "offer-waiting",
+   "size": "844x390m",
+   "inView": [
+    "Good Afternoon, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-after-midnight-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-developed-844x390m.jpg",
+   "life": "developed",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-nothing-planned-844x390m.jpg",
+   "life": "nothing-planned",
+   "size": "844x390m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-new-student-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-all-read-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "How You Are",
+    "Recent Updates"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "updates-from-home-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-updates-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "calendar-from-home-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Your Plans And Commitments",
+    "September 2026"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-back-from-calendar-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-weather-open-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "menu-open-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "menu-open-foot-932x430m.jpg",
+   "life": "new-student",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-offer-waiting-932x430m.jpg",
+   "life": "offer-waiting",
+   "size": "932x430m",
+   "inView": [
+    "Good Afternoon, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-after-midnight-932x430m.jpg",
+   "life": "after-midnight",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-developed-932x430m.jpg",
+   "life": "developed",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "home-nothing-planned-932x430m.jpg",
+   "life": "nothing-planned",
+   "size": "932x430m",
+   "inView": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-career-overview-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "Career",
+    "Where You Stand",
+    "The Way You’re On",
+    "What’s Missing"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-career-representation-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "Career",
+    "Thomas Ashgrove",
+    "How To Reach Him",
+    "People You’ve Worked With"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-money-accounts-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "Chase",
+    "Chase Total Checking",
+    "Chase Savings",
+    "Your Banks"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-papers-health-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "Papers",
+    "Your Doctor",
+    "Your Cover",
+    "The Marketplace"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-school-standing-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "David Geffen School of Drama at Yale University",
+    "Your Standing",
+    "Your Composure"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-profile-1440x900.jpg",
+   "life": "after-midnight",
+   "size": "1440x900",
+   "inView": [
+    "Ada Cole",
+    "Identity And Background",
+    "Readiness Today"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-career-overview-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "Career",
+    "Where You Stand"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-career-representation-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "Career",
+    "Thomas Ashgrove"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-money-accounts-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "Chase",
+    "Chase Total Checking",
+    "Chase Savings"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-papers-health-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "Papers",
+    "Your Doctor"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-school-standing-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "David Geffen School of Drama at Yale University",
+    "Your Standing"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  },
+  {
+   "file": "help-profile-844x390m.jpg",
+   "life": "after-midnight",
+   "size": "844x390m",
+   "inView": [
+    "Ada Cole",
+    "Identity And Background"
+   ],
+   "menu": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress"
+   ],
+   "wider": 0
+  }
+ ],
+ "problems": []
+}

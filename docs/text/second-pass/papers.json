@@ -182,11 +182,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
-  "status": "Retained",
-  "hash": "6cdc73d92262",
-  "on": "2026-10-19",
-  "reason": "Papers' entry says what the screen holds, its five tabs by name, the three ways to reach it, and that moving between tabs changes nothing.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "746393c11e12",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Papers' head and Your Work And Your Permission rendered in tests/defects-g8-4.test.ts and tests/propay-screen.test.ts, the entries in tests/defects3-50-70.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
   "status": "Retained",
@@ -204,9 +204,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [scheduled]": {
   "status": "Rewritten",
-  "hash": "ba488acc93d2",
-  "on": "2026-10-22",
-  "evidence": "tests/b20-papers-defects.test.ts (P3: Connecticut bars reporting medical debt, Public Act 24-6; never reported, still owed)",
+  "hash": "fe2bf5137972",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Papers' head and Your Work And Your Permission rendered in tests/defects-g8-4.test.ts and tests/propay-screen.test.ts, the entries in tests/defects3-50-70.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PRACTICE": {
@@ -260,9 +260,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [immediate]": {
   "status": "Rewritten",
-  "hash": "e09150ad9595",
-  "on": "2026-10-19",
-  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (checking account first, then savings)",
+  "hash": "481d096950a9",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Papers' head and Your Work And Your Permission rendered in tests/defects-g8-4.test.ts and tests/propay-screen.test.ts, the entries in tests/defects3-50-70.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/taxes.ts#TAXES [optional]": {
@@ -3165,10 +3165,10 @@
  },
  "src/ui/papers/Documents.tsx#WorkReadPanel": {
   "status": "Rewritten",
-  "hash": "d58a8568ec14",
-  "on": "2026-10-21",
-  "evidence": "tests/propay-screen.test.ts draws Papers' Permission To Work over an OPT holder with work booked; the built app's docs/verification/career-2026-10-20/pay/screens/papers-paid-1440.txt",
-  "first": "Rewritten And Verified"
+  "hash": "ae49a107be5b",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Papers' head and Your Work And Your Permission rendered in tests/defects-g8-4.test.ts and tests/propay-screen.test.ts, the entries in tests/defects3-50-70.test.ts",
+  "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {
   "status": "Retained",
@@ -3255,11 +3255,11 @@
   "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace": {
-  "status": "Retained",
-  "hash": "3a1625091e6c",
-  "on": "2026-10-19",
-  "reason": "The screen's one-line subtitle names its five tabs' subjects in the tabs' order, so a player knows what Papers holds before choosing.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "6ad75f531aab",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Papers' head and Your Work And Your Permission rendered in tests/defects-g8-4.test.ts and tests/propay-screen.test.ts, the entries in tests/defects3-50-70.test.ts",
+  "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#PensionsPanel": {
   "status": "Retained",

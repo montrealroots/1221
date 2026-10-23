@@ -18,7 +18,7 @@
     },
     {
      "what": "Home’s full name",
-     "at": "src/ui/screens/Home.tsx:620"
+     "at": "src/ui/screens/Home.tsx:564"
     },
     {
      "what": "the save slot’s name, first and last until refreshMeta writes the name the game calls them",
@@ -66,7 +66,7 @@
     },
     {
      "what": "Home’s full name",
-     "at": "src/ui/screens/Home.tsx:620"
+     "at": "src/ui/screens/Home.tsx:564"
     },
     {
      "what": "the save slot’s name, first and last until refreshMeta writes the name the game calls them",
@@ -114,7 +114,7 @@
     },
     {
      "what": "Home’s full name",
-     "at": "src/ui/screens/Home.tsx:620"
+     "at": "src/ui/screens/Home.tsx:564"
     },
     {
      "what": "the save slot’s name, first and last until refreshMeta writes the name the game calls them",
@@ -166,7 +166,7 @@
     },
     {
      "what": "Home’s greeting, by calledBy",
-     "at": "src/ui/screens/Home.tsx:135"
+     "at": "src/ui/screens/Home.tsx:141"
     }
    ],
    "experienced": "The greeting on Home, the slot on the save screen and the player’s own look. Nothing decides on it (the names’ twins: the same save to the byte with the names taken out).",

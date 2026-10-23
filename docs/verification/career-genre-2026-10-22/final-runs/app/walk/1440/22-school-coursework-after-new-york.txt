@@ -8,6 +8,8 @@ David Geffen School of Drama at Yale University
 
 MFA in Acting, class of 2029. Year 3 of 3, good standing.
 
+You’re 1st of 16 in the class. Next: The Actor Showcase In Los Angeles, May 8, 2029 at 9:00 AM.
+
 Standing And Craft
 Classes
 Coursework
@@ -86,38 +88,44 @@ How This Works
 ASPECT CHOICE THE SCENE ABILITIES IT USES FULLY PREPARED
 Pace 
 Measured Taking the time each thought needs: the choices specific, the pauses earned.
- Suits The Scene
+ 
+Suits The Scene
 Its Grave Beats: for it
 Its 2 Turns: for it
 Drama’s Played Straight: played with complete earnestness, never winked at: for it
  Focus 62.7
  
 Driven Picking up cues and pressing on: the scene played at the speed of what the characters want.
- Suits The Scene
+ 
+Suits The Scene
 Its Timing: for it
  Adaptability 61.9
 Scale 
 Restrained Less shown than felt: the feeling held under the surface.
- Suits The Scene
+ 
+Suits The Scene
 What’s Kept Hidden: for it
 A Private Exchange: for it
 Drama’s Played Straight: played with complete earnestness, never winked at: for it
  Emotional Depth, Composure, Focus 64.6
  
 Expansive Sized to the room: voice, body and feeling played out to the audience.
- Works Against The Scene
+ 
+Works Against The Scene
 What’s Kept Hidden: against it
 A Private Exchange: against it
 Drama’s Played Straight: played with complete earnestness, never winked at: against it
  Presence, Vocal Expression, Physical Expression 60.8
 Structure 
 Set Fixed and repeatable: every beat placed, the same each time.
- Suits The Scene
+ 
+Suits The Scene
 Its Timing: for it
  Discipline, Memory 62.8
  
 Open Live each time: taking the next moment from what the partner gives.
- Suits The Scene
+ 
+Suits The Scene
 Its Partner: for it
  Listening And Responsiveness 62.5
 
@@ -247,36 +255,42 @@ How This Works
 ASPECT CHOICE THE SCENE ABILITIES IT USES FULLY PREPARED
 Pace 
 Measured Taking the time each thought needs: the choices specific, the pauses earned.
- Suits The Scene
+ 
+Suits The Scene
 Its 3 Turns: for it
 Drama’s Played Straight: played with complete earnestness, never winked at: for it
 Its Grave Beats: for it
  Focus 62.6
  
 Driven Picking up cues and pressing on: the scene played at the speed of what the characters want.
- Either Way
+ 
+Either Way
 Its Timing: for it
  Adaptability 61.4
 Scale 
 Restrained Less shown than felt: the feeling held under the surface.
- Suits The Scene
+ 
+Suits The Scene
 A Private Exchange: for it
 Drama’s Played Straight: played with complete earnestness, never winked at: for it
  Emotional Depth, Composure, Focus 62.7
  
 Expansive Sized to the room: voice, body and feeling played out to the audience.
- Works Against The Scene
+ 
+Works Against The Scene
 A Private Exchange: against it
 Drama’s Played Straight: played with complete earnestness, never winked at: against it
  Presence, Vocal Expression, Physical Expression 60.9
 Structure 
 Set Fixed and repeatable: every beat placed, the same each time.
- Either Way
+ 
+Either Way
 Its Timing: for it
  Discipline, Memory 61.6
  
 Open Live each time: taking the next moment from what the partner gives.
- Suits The Scene
+ 
+Suits The Scene
 Its Partner: for it
  Listening And Responsiveness 62.1
 

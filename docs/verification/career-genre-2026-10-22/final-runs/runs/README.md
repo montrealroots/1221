@@ -13,6 +13,46 @@ runner stated a rule brief 22 replaced, not because the game did anything wrong:
   read nothing, and J18's absurdist, a direct kind of the comedy it had worked in, read 1.06 under the transfer the owner
   approved. It takes the first genre neither met nor directly linked to one met now, which must read nothing.
 
+## Played Again On Brief 24's Commits, 2026-10-23
+
+Briefs 23 and 24 changed `src` (the interface, and the guide's and tutorial's words), and the 46 rows these runs measure
+on the engine's or the app's whole source read as measured before what they read last changed. The owner asked for the
+final runs again ("So we can get it back to 634"). Brief 23's own replay (prefix `f23`, on `97404e70`) had every engine
+lane the same in every number and was stopped in its browser lanes for brief 24; these replace it. Every lane but the
+judge's, whose watched files neither brief touched, prefix `f24`, each in a clean clone:
+- **The engine's lanes, on `cb8b19eb`**, whose `src/engine` is the tested commit's (`git diff cb8b19eb 05060742 --
+  src/engine` is empty), four at a time from 16:04 to 18:13 UTC: JR1 to JR3, BJ1 to BJ3, B, C, D, J, ADVF, ADVR, then JRC.
+  Every step exit 0 but JRC's `b19-lives-diff`, which exits 1 as on every commit since brief 19 (948 lines, as before).
+- **The browser's lanes, A, UI and APP, on `05060742`**, from 18:52 to 19:22, every step exit 0. Four earlier starts
+  were stopped and their clones set aside, so no lane's record holds a step it ran twice:
+  - on `23b8a77a` at 17:35, A's scenario saves and UI's second save stopped at the system's limit on file watchers
+    (`ENOSPC`), five lanes' vite-node processes watching their whole clones at once;
+  - on `23b8a77a` again from 17:42, once fewer ran, UI's specialist playthrough at 390 read the date from the header's
+    words, which brief 24 left without the date below 1024, and found a birth date in a card instead. Both tools read
+    the bar's own date since (`8ad20c4d`);
+  - on `8ad20c4d`, A's first-day check looked for "No questions are waiting on you.", the line brief 24 took from over
+    All Clear; it reads All Clear since, and the line went from `needsLine`, where nothing showed it (`4bfb3f33`);
+  - on `4bfb3f33`, brief 14's health journey at 390 found Home's cards in a squeezed second column under 600 wide,
+    brief 24's defect, fixed in `05060742`.
+  APP passed on `23b8a77a` and on `4bfb3f33` too; its record here is `05060742`'s.
+- **Gathered** by `collect22.sh` with `P=f24`.
+
+**Against brief 22's close** (`a00f159a`, by `../../../ui-polish-2026-10-23/final-runs/compare.py`):
+- **The same in every number:** the judge's outputs (35 files), the runs (17), the interface (1); the advice (31),
+  brief 13's journeys (102), brief 20's journeys (74) and the walks of briefs 21 and 22 but their own records (commit,
+  clean tree, seconds); the older-save walk but six save-opening times in milliseconds, which vary from run to run.
+- **The text outputs:** 211 the same byte for byte, 667 different: the walks' screens and pictures, where briefs 23 and
+  24 changed what the screens say, the records' commits and seconds, and the acceptance walk, 77 of 77 at each width as
+  before, its figures varying as a walk in real time does and two lines in its new words: the first day's What Needs You
+  says All Clear, and a new guided player starts with 9 controls locked, not 12. Measured on a new guided life, brief
+  23's build and brief 24's both show 9: the three went with brief 23's Home.
+
+Folded by `../verify.py`, `../advice/close.py` and `../../../integration-2026-10-16/criteria.py`: the 46 rows hold again
+on the commits they ran on, 633 of 658 before the gate's own figure. The gate on `859bacdb`, which holds the fold, in a
+clean clone, its exit read from its file: 0, 488 of 488 test files, 5,616 of 5,616 tests, every check (`gate.txt`; brief
+22's, on `576a0e88`, stood there until then and is in git). Folded, 634 of 658; run again on `1ba6ac00`, which holds
+that: the same (`gate-receipt.txt`, brief 22's in git as gate.txt's is).
+
 ## Played Again On The Paydays Fix, 2026-10-22 And 23
 
 After #54's merge, the paydays fix (`a2af3b46`, the receipt's After The Merge) changed `src/engine`, and the 46 rows these

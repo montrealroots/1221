@@ -71,9 +71,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.accounts]": {
   "status": "Rewritten",
-  "hash": "39070d251512",
-  "on": "2026-10-19",
-  "evidence": "Checking account throughout, Savings Covers The Checking Account named as the button reads; tests/guide-examples-money.test.ts plays the example",
+  "hash": "54d372ed94fe",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.borrowing]": {
@@ -92,16 +92,16 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
   "status": "Rewritten",
-  "hash": "aa842cba2344",
-  "on": "2026-10-19",
-  "evidence": "Checking account in the new number line and the refusal; tests/guide-examples-money.test.ts plays the stranger's charge example",
+  "hash": "1a460047f070",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten",
-  "hash": "6e4e7ffb578b",
-  "on": "2026-10-22",
-  "evidence": "tests/guide-examples-money.test.ts plays the card example's due day and tests/guide-chapter-facts.test.ts the 60, 150 and 180 days the entry says",
+  "hash": "532533bb3dd3",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
@@ -127,9 +127,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.payments]": {
   "status": "Rewritten",
-  "hash": "fb44e30cf717",
-  "on": "2026-10-22",
-  "evidence": "tests/guide-chapter-facts.test.ts and tests/payments.test.ts play the standing order's next working day the guide says; read against docs/STYLE.md",
+  "hash": "444777f37d76",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
@@ -141,23 +141,23 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.term]": {
   "status": "Rewritten",
-  "hash": "043c046258b0",
-  "on": "2026-10-19",
-  "evidence": "The short gives the first action, Put It Away, and checking account throughout; tests/guide-examples-money.test.ts plays the CD broken early",
+  "hash": "570c7e5116f7",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.transfer]": {
   "status": "Rewritten",
-  "hash": "703f5a0126e4",
-  "on": "2026-10-19",
-  "evidence": "The short leads with the action, the Moved message names the account; tests/guide-examples-money.test.ts reads the quote and plays it",
+  "hash": "d074fc7b99c7",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
   "status": "Rewritten",
-  "hash": "1f9d26ffbe7a",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: Cancel It's refusals sent to Another Bank's list",
+  "hash": "d382ab53ee4d",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [evaluation]": {
@@ -176,24 +176,24 @@
  },
  "src/engine/content/guide/money.ts#MONEY [immediate]": {
   "status": "Rewritten",
-  "hash": "8c4a6474f6a8",
-  "on": "2026-10-21",
-  "evidence": "The round-ups connection rewritten to say Citi, BBVA México and Santander México count their own credit card too, held by tests/b20-money-promises.test.ts (round-ups and how the day is paid); the rest read again against docs/STYLE.md and kept",
+  "hash": "1a964d4092cb",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [money.affairs]": {
   "status": "Rewritten",
-  "hash": "f3b05c9f3545",
-  "on": "2026-10-19",
-  "evidence": "Checking account in what In The Bank counts; tests/guide-examples-money.test.ts plays the example and reads Credit Used's points",
+  "hash": "203dedf06be9",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [optional]": {
-  "status": "Retained",
-  "hash": "d9404acc24c2",
-  "on": "2026-10-19",
-  "reason": "Why an optional entry is worth reading with this one, a sentence each, naming the control and the tab",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "40579664f59a",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
+  "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [prerequisite]": {
   "status": "Rewritten",
@@ -204,9 +204,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [scheduled]": {
   "status": "Rewritten",
-  "hash": "16bf4b736f6d",
-  "on": "2026-10-19",
-  "evidence": "Checking account in the round-ups and accounts connections; tests/guide.test.ts reads every connection's target",
+  "hash": "058ad99c1942",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the money entries' examples played by tests/guide-examples-money.test.ts, Net Worth opened from Money's head",
   "first": "Pending"
  },
  "src/engine/core/ledger.ts#Ledger": {
@@ -1611,9 +1611,9 @@
  },
  "src/ui/bank/BankStatements.tsx#AlertsView": {
   "status": "Rewritten",
-  "hash": "eade7c575a2b",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-money-screens.test.ts, it('labels the low balance alert in a checking account’s words') renders the Alerts panel",
+  "hash": "07ad112f9247",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Money's head and Alerts rendered in tests/evidence-g33-ui.test.ts, tests/scope-money.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/ui/bank/BankStatements.tsx#BankStatements": {
@@ -1800,16 +1800,16 @@
  },
  "src/ui/workspaces/BankWorkspace.tsx#BankTabs": {
   "status": "Retained",
-  "hash": "3f6b6f5b8bbe",
-  "on": "2026-10-19",
-  "reason": "The tab list's accessible name, Your Bank, and an element id the player never reads",
-  "first": "Reviewed And Retained"
+  "hash": "4bb98170a9c7",
+  "on": "2026-10-23",
+  "reason": "The tab list’s name for a screen reader, Your Bank, as the heading above it names the screen",
+  "first": "Pending"
  },
  "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace": {
   "status": "Rewritten",
-  "hash": "2968b4fde346",
-  "on": "2026-10-20",
-  "evidence": "tests/editorial17-money.test.ts 'Chase to Capital One: out now' renders the arrival line before Move It; the subtitle read on the built app, walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json and 390",
+  "hash": "8290c2467fa0",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Money's head and Alerts rendered in tests/evidence-g33-ui.test.ts, tests/scope-money.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt": {

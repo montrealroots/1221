@@ -775,7 +775,7 @@
    "kind": "prerequisite",
    "claim": "The profile opens with the guide’s chapter “${CHAPTER}”.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "The profile chapter opens `ui.profile` (src/engine/content/tutorial.ts:441), which the shell reads (src/ui/shell/GameShell.tsx:42).",
+   "holds": "The profile chapter opens `ui.profile` (src/engine/content/tutorial.ts:441), which the shell reads (src/ui/shell/GameShell.tsx:51).",
    "tests": [
     "tests/b20-craft-promises.test.ts",
     "tests/guide-examples-craft.test.ts"

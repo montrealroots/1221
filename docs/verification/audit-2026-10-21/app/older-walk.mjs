@@ -38,6 +38,18 @@ const clean = (s) => String(s ?? '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, 
 const git = (cmd) => { try { return execSync(`git ${cmd}`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } };
 
 async function press(page, locator) { await locator.focus(); await page.keyboard.press('Enter'); await page.waitForTimeout(500); }
+/**
+ * A control of the bar's secondary side, the guide or Save & Exit, pressed: in the drawer's foot while the rail is a
+ * drawer (from brief 23, 2026-10-23), so there the menu is opened first. Until then it stood in the bar at every width,
+ * and on brief 23's commit this walk found it nowhere at 390 (brief 22's final runs played again, 2026-10-23).
+ */
+async function saveGroup(page, locator) {
+  if (!(await locator.isVisible().catch(() => false))) {
+    const menu = page.getByRole('button', { name: /^Menu$/ }).first();
+    if (await menu.count()) await press(page, menu);
+  }
+  await press(page, locator);
+}
 const clock = async (page) => String(await page.locator('.topbar-clock').first().innerText().catch(() => '')).replace(/\s+/g, ' ').trim();
 async function sideways(page, found, where) {
   const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -126,7 +138,7 @@ for (const file of saves) {
     // Save & Exit, then Continue: the same clock.
     await page.waitForTimeout(800);
     const before = await clock(page);
-    await press(page, page.getByRole('button', { name: /^Save & Exit$/ }).first());
+    await saveGroup(page, page.getByRole('button', { name: /^Save & Exit$/ }).first());
     await page.getByRole('button', { name: /^Continue$/ }).first().waitFor({ timeout: 30000 });
     await press(page, page.getByRole('button', { name: /^Continue$/ }).first());
     await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 60000 });

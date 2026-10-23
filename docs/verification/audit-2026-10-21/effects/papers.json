@@ -3165,7 +3165,7 @@
   {
    "id": "promise.papers.doctor>day.needs",
    "kind": "scheduled",
-   "claim": "Booking sends “A Doctor’s Appointment” to What Needs You, a missed one “Missed The Doctor”, and a referral “A Referral”.",
+   "claim": "Booking sends the notice “A Doctor’s Appointment”, a missed one “Missed The Doctor”, and a referral “A Referral”, each in Updates.",
    "entryFile": "src/engine/content/guide/papers.ts",
    "holds": "bookIn's notice (systems/appointments.ts:202), the appointment's 'Missed The Doctor' (appointments.ts:250), a referral's 'A Referral'.",
    "tests": [
@@ -3183,8 +3183,8 @@
      "tests/evidence2-b02.test.ts"
     ]
    },
-   "readBy": "papers",
-   "readAt": "58577aea"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.papers.conditions>body.how",

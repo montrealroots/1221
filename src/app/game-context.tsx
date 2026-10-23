@@ -487,6 +487,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/papers': 'Papers',
   '/workspace/profile': 'Player Profile',
   '/workspace/career': 'Career',
+  '/workspace/updates': 'Updates',
 };
 
 export function labelForRoute(route: string): string {

@@ -1330,6 +1330,17 @@
   {
    "file": "src/ui/screens/Home.tsx",
    "control": "<Gated onClick>",
+   "feature": "life.look_after",
+   "label": "{o.label} {o.minutes} Min{o.cost > 0 ? `, ${formatMoney(o.cost, cur)}` : ''}",
+   "kind": "life.look_after",
+   "payload": "{ action: o.action }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/life.ts:458",
+   "note": "From 2026-10-23 (brief 23): How You Are's first two of `lookAfterOptions` that aren't refused, each sending its own action (`o.action`), locked by life.look_after as the bar's menu is; its label is the option's, with its minutes and cost, as the menu says them."
+  },
+  {
+   "file": "src/ui/screens/Home.tsx",
+   "control": "<Gated onClick>",
    "feature": "world.dismiss_decision",
    "label": "Dismiss",
    "kind": "world.dismiss_decision",
@@ -1348,6 +1359,39 @@
    "verdict": "Right",
    "handler": "src/engine/world/world.ts:101",
    "note": "Sends no ids, so every unread notice is marked read, the ones past the panel's six too: the count on the button is every unread notice (`unread.length`), and the notification look says so."
+  },
+  {
+   "file": "src/ui/screens/Home.tsx",
+   "control": "<Gated onClick>",
+   "feature": "world.mark_read",
+   "label": "Mark Read",
+   "kind": "world.mark_read",
+   "payload": "{ notificationIds: [note!, ...earlier].map((n) => n.id) }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:101",
+   "note": "From 2026-10-23 (brief 23): sends the ids of the line's notices, the newest and the earlier ones of its run (a notice that came more than once is one line), so only they are marked read; until the after walk's finding that day it sent the one notice's id. Mark N Read over Recent Updates sends none and marks every unread notice."
+  },
+  {
+   "file": "src/ui/screens/Updates.tsx",
+   "control": "<Gated onClick>",
+   "feature": "world.mark_read",
+   "label": "Mark {listedUnread.length} Read",
+   "kind": "world.mark_read",
+   "payload": "{ notificationIds: listedUnread.filter((n) => !n.read).map((n) => n.id) }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:101",
+   "note": "From 2026-10-23 (brief 23): sends the ids of the unread notices the filter shows, so Unread or All and About choose which, and the count on the button is theirs (`listedUnread.length`)."
+  },
+  {
+   "file": "src/ui/screens/Updates.tsx",
+   "control": "<Gated onClick>",
+   "feature": "world.mark_read",
+   "label": "Mark Read",
+   "kind": "world.mark_read",
+   "payload": "{ notificationIds: unreadHere.filter((n) => !n.read).map((n) => n.id) }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:101",
+   "note": "From 2026-10-23 (brief 23): sends the unread ids of the row's notices (`unreadHere`), so a row of several notices about the same thing is marked read together, as its count says."
   },
   {
    "file": "src/ui/shell/TimeControls.tsx",
@@ -1391,6 +1435,16 @@
    "verdict": "Right",
    "handler": "src/engine/systems/life.ts:375",
    "note": "The hours on the button are the slider's, and the same `hours` is sent."
+  },
+  {
+   "file": "src/ui/shell/turn.tsx",
+   "control": "(none)",
+   "label": "(none)",
+   "kind": "world.set_preferences",
+   "payload": "{ timeSpeed: 'paused' }",
+   "verdict": "Right",
+   "handler": "src/engine/world/world.ts:86",
+   "note": "No control, by design (brief 23): an effect pauses a live clock while a phone is upright (`usePauseWhileUpright`), with the same command as Pause, so it stays paused until Play and the minutes upright are never added on."
   },
   {
    "file": "src/ui/workspaces/BankWorkspace.tsx",

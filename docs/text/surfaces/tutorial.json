@@ -108,15 +108,15 @@
    },
    {
     "kind": "test",
-    "ref": "tests/evidence-g32-ui.test.ts: 'Where You Are and the Weather, locked, say what each shows'"
+    "ref": "tests/evidence-g32-ui.test.ts: 'Where You Are and the Weather, locked, are buttons whose reason names the chapter that opens each'"
    },
    {
     "kind": "test",
-    "ref": "tests/evidence-g33-ui.test.ts: 'Money is its LockedPanel until “Money” is read'"
+    "ref": "tests/evidence-g32-ui.test.ts: 'a guided life keeps the section and its button locked until “What’s Coming” is read, and opens both with it'"
    },
    {
     "kind": "test",
-    "ref": "tests/evidence-g33-ui.test.ts: 'School is its LockedPanel until “Drama School” is read'"
+    "ref": "tests/b20-guide-chapters.test.ts: 'a panel not yet open says Locked and names its chapter'"
    }
   ]
  },

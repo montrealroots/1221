@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 17,
+   "secs": 25,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 51,
+   "secs": 69,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 75,
+   "secs": 111,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 67,
+   "secs": 95,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 29,
+   "secs": 44,
    "reloads": 3,
    "done": true
   }
@@ -11439,7 +11439,7 @@
      ],
      "transactions": 1216
     },
-    "secs": 12
+    "secs": 16
    },
    {
     "why": "an audition (self-tape) set for 2029-07-08T22:00, Robin in Last Bus To Eastview",
@@ -11490,7 +11490,7 @@
      ],
      "transactions": 1265
     },
-    "secs": 12
+    "secs": 15
    },
    {
     "why": "an offer standing: An Offer For Ivy",
@@ -11529,7 +11529,7 @@
      "work": [],
      "transactions": 1313
     },
-    "secs": 12
+    "secs": 16
    }
   ],
   "workDays": [

@@ -631,7 +631,7 @@ function AdvanceMenu({
         Advance <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
-        <div className="menu" role="menu" aria-label="Advance Time">
+        <div className="menu" role="menu" aria-label="Advance Time" ref={place}>
           {items.map((item) => (
             <button
               key={item.label}
@@ -693,6 +693,17 @@ function useDropdown() {
 }
 
 /**
+ * A menu that would run past the window's right edge hangs from its button's right edge instead, measured as it's put on
+ * the page, before it's drawn (a ref, which a server render never calls). From 2026-10-23, brief 23's walk: in a
+ * 760-pixel window Advance's menu ran 167 pixels past it, and the page with it.
+ */
+function place(menu: HTMLDivElement | null): void {
+  if (!menu) return;
+  menu.removeAttribute('data-align');
+  if (menu.getBoundingClientRect().right > window.innerWidth - 8) menu.setAttribute('data-align', 'end');
+}
+
+/**
  * Look after yourself: the things besides sleep a player does for their body.
  *
  * Each item says how long it takes, what it costs, why it stands where it
@@ -713,10 +724,8 @@ function LookAfterMenu() {
 
   const act = (action: LookAfter) => {
     setOpen(false);
-    const result = run<{ doneAt: number }>('life.look_after', { action });
-    if (result.ok && result.value) {
-      toast(`${labelFor(sim, action)}: done at ${formatTime(result.value.doneAt, sim.zone)}.`, 'positive');
-    }
+    const said = lookedAfter(sim, action, run<{ doneAt: number }>('life.look_after', { action }));
+    if (said) toast(said, 'positive');
   };
 
   return (
@@ -732,7 +741,7 @@ function LookAfterMenu() {
         Look After Yourself <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
-        <div className="menu" role="menu" aria-label="Look After Yourself">
+        <div className="menu" role="menu" aria-label="Look After Yourself" ref={place}>
           {options.map((o, i) => {
             const { action, refused } = o;
             const first = i === 0 && !refused && (o.urgent || o.gain >= 0.5);
@@ -769,4 +778,12 @@ function LookAfterMenu() {
       )}
     </div>
   );
+}
+
+/**
+ * What a look-after done says, as the menu and Home's How You Are say it (from 2026-10-23, brief 23, when How You Are
+ * took the first two too): when it was done, or nothing where it was refused, whose words the command's toast says.
+ */
+export function lookedAfter(sim: { zone: string } & Parameters<typeof labelFor>[0], action: LookAfter, result: { ok: boolean; value?: { doneAt: number } }): string | undefined {
+  return result.ok && result.value ? `${labelFor(sim, action)}: done at ${formatTime(result.value.doneAt, sim.zone)}.` : undefined;
 }

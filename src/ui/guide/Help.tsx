@@ -268,12 +268,10 @@ function Contents({ onOpen }: { onOpen: (id: string) => void }) {
     : read === 0
       ? `You haven’t read any of its ${CHAPTERS.length} chapters yet. Each one you read opens a part of the game.`
       : `You’ve read ${read} of its ${CHAPTERS.length} chapters. Each one you read opens a part of the game.`;
+  // The screen's own entries first, then the guide (from 2026-10-23, brief 23: "Help should open the relevant topic
+  // first"); until then the guide's line came first and the screen's entries under it.
   return (
     <div className="col gap-4">
-      <div className="callout small">
-        <strong>The Guide.</strong>{' '}{said}{' '}
-        <button type="button" className="btn btn-sm" onClick={() => guide.show()}>Open The Guide</button>
-      </div>
       {onScreen.entries.length > 0 && (
         <section aria-labelledby="goal-here">
           <h3 id="goal-here" style={{ margin: '0 0 var(--s1)' }}>On This Screen</h3>
@@ -283,6 +281,10 @@ function Contents({ onOpen }: { onOpen: (id: string) => void }) {
           </ul>
         </section>
       )}
+      <div className="callout small">
+        <strong>The Guide.</strong>{' '}{said}{' '}
+        <button type="button" className="btn btn-sm" onClick={() => guide.show()}>Open The Guide</button>
+      </div>
       {GOALS.map((g) => {
         const entries = entriesOf(g.id);
         if (!entries.length) return null;

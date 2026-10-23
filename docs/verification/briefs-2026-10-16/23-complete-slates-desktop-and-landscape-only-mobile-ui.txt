@@ -1,0 +1,247 @@
+Complete SLATE’s Desktop And Landscape-Only Mobile UI
+
+Redesign and polish the existing interface so it is aligned, organized, readable, and usable throughout the game.
+
+Preserve SLATE’s dark palette, gold accents, established typography direction, and desktop sidebar. Keep all existing gameplay functionality and downstream effects. This is a presentation and interaction pass, not a career expansion or engine rewrite.
+
+Work primarily in one agent/session. Avoid redundant research, repeated full-file reads, and unnecessary full-suite runs. Preserve detailed findings and screenshots in the repository.
+
+1. Establish The Visual Baseline
+
+Start from the latest main branch. Read the handoff and repository instructions.
+
+Inspect every PC and mobile capture under:
+docs/verification/career-genre-2026-10-22/captures/
+
+Open the actual images, including the larger Profile and help captures. Then inspect the current built application. Screenshots show an earlier build and must not override newer behavior.
+
+Inventory every current screen, tab, drawer, dialog, dropdown, tooltip, notification, and drill-down panel. Record layout issues and the acceptance checks for each.
+
+2. Mobile Gameplay Must Be Landscape-Only
+
+This is my explicit design decision: do not build a portrait gameplay layout.
+
+When a phone is upright:
+
+* Display “Rotate Your Phone To Play.”
+* Explain briefly that SLATE is designed for landscape play.
+* Keep gameplay controls behind the orientation screen inaccessible.
+* Pause simulation time while the orientation screen is displayed.
+* Preserve the current destination, open details, scroll position where practical, unsaved form input, and game progress.
+* On returning to landscape, restore the interface and leave the game paused until the player explicitly resumes.
+* Do not apply elapsed wall-clock time as a catch-up jump.
+
+Use orientation locking only where supported. Do not require it to work, repeatedly request fullscreen, or assume a browser can force rotation.
+
+Distinguish phones from desktop windows carefully. A narrow desktop window must not automatically become an unusable “rotate your phone” screen. Document the detection approach and provide a usable fallback where device detection is uncertain.
+
+Test rotation during a dialog, a form, an open menu, saving, and paused/running gameplay. Opening the keyboard must not incorrectly trigger the rotation screen.
+
+3. Preserve Desktop, Adapt Mobile Landscape
+
+Desktop:
+
+* Keep the full sidebar and the overall visual character I already like.
+* Use consistent page margins, content widths, card alignment, spacing, and section hierarchy.
+* Use multiple columns where they improve scanning.
+* Constrain long prose to readable widths.
+
+Phone landscape:
+
+* Design for limited vertical space.
+* Use a compact, collapsible navigation rail or drawer.
+* Let content use the available width when navigation is closed.
+* Use two columns where both remain readable; use one within a section when necessary.
+* Do not shrink the desktop page, reduce text to fit, or require pinch-zoom.
+* Keep essential controls reachable without a tall header consuming the screen.
+* Account for notches, safe areas, browser chrome, and changing viewport height.
+
+4. Remove “Your Affairs” From Home
+
+Remove the duplicated “Your Affairs” section from Home on desktop and mobile.
+
+Keep its destinations available through navigation. Preserve actionable notices on Home that lead directly to Money, School, Papers, or another relevant destination.
+
+Do not delete the underlying systems or their information.
+
+5. Organize Home Around The Current Day
+
+Use this information hierarchy:
+
+* Today: greeting, date, time, location, and compact weather.
+* Needs Your Decision: genuine decisions, deadlines, and urgent actions.
+* Up Next: the next commitment, followed by a concise schedule preview.
+* How You Are: condition and access to Look After Yourself.
+* Recent Updates: concise summaries with access to the complete history.
+
+Desktop may arrange these in aligned columns. Phone landscape should use its width deliberately.
+
+Avoid repeating the same date, time, location, weather, and destinations across several large cards unless there is a clear purpose.
+
+Keep self-care actions accessible and prioritize relevant needs using existing game state. Do not invent new health logic for the UI.
+
+6. Make Notices Manageable Without Losing History
+
+The captures show long notices and hundreds of unread items dominating Home.
+
+Create a clear distinction between:
+
+* Items requiring a decision or action.
+* Informational updates.
+* Historical records.
+
+Use concise summaries with sender/context, date, status, and an appropriate action. Open complete messages on demand.
+
+Keep all existing history accessible through a clearly named inbox or updates view. Support suitable filtering and read/unread management.
+
+Do not silently delete notices, mark decisions completed, or dismiss obligations merely to clean up the screen. “Read” and “Resolved” must remain distinct.
+
+Group related messages when their existing data supports it. Avoid repeating the same information in several Home cards.
+
+7. Refine Navigation And Time Controls
+
+Create a deliberate header layout with:
+
+* Navigation and current context.
+* Date/time and running/paused status.
+* Primary time and self-care controls.
+* Secondary actions such as help and saving in suitable locations.
+
+Do not allow controls to wrap into arbitrary crowded rows.
+
+Make the current destination obvious. Keep navigation labels consistent between desktop and mobile.
+
+For tabs:
+
+* Keep the active tab visible.
+* Do not leave labels half-cut without an indication that more tabs exist.
+* Use clearly scrollable tabs with overflow cues or an accessible section selector where necessary.
+* Preserve keyboard and touch access.
+
+If any controls are sticky or fixed, reserve space for them so they never cover content, actions, or focused fields.
+
+8. Make Dense Pages Easy To Explore
+
+Career offers and engagements:
+
+* Lead with project/role, current status, dates, compensation summary, deadline, and next action.
+* Use expandable sections for requirements, agreement details, schedule, payment records, and history.
+* Keep critical warnings visible before acceptance.
+* Show payment schedules as structured records rather than repeated paragraphs where possible.
+* Preserve access to every existing detail.
+
+Eligibility:
+
+* Clearly distinguish current permission from historical assessments.
+* Label an older assessment “Eligibility When Accepted” or equivalent.
+* Put a current restriction or release reason ahead of an earlier approval.
+
+Calendar:
+
+* Preserve individual events and their actions.
+* Let selecting a date reveal its agenda.
+* Group recurring rehearsals or calls into expandable schedules.
+* Keep paydays, conflicts, and important deadlines easy to identify.
+* Avoid forcing the player through a long repeated list to find one event.
+
+Profile, Money, Papers, School, and help:
+
+* Apply the same summary-to-detail approach where appropriate.
+* Do not hide essential actions inside unclear nested sections.
+* Help should open the relevant topic first; full reference content remains available.
+* Preserve meaningful drill-down links and clear return navigation.
+
+9. Apply A Consistent Layout System
+
+Standardize:
+
+* Page gutters and maximum widths.
+* Spacing between and within sections.
+* Heading hierarchy and text sizes.
+* Label/value alignment.
+* Button heights, padding, and action grouping.
+* Card borders, corners, and backgrounds.
+* Icon size and alignment.
+* Form layout and validation messages.
+* Empty, loading, disabled, error, and expanded states.
+
+No:
+
+* Text or controls bleeding outside containers.
+* Names and balances squeezed into vertical stacks.
+* Accidental horizontal page scrolling.
+* Distorted icons or stretched controls.
+* Overlapping sticky elements.
+* Clipped dialogs or unreachable action buttons.
+* Arbitrary fixed heights that cut off content.
+
+Use component-specific overflow handling for genuinely wide tables. Do not hide defects with global overflow clipping.
+
+Preserve visible keyboard focus indicators. Do not mistake a focus outline for a malformed border.
+
+10. Accessibility And Content Integrity
+
+Keep body text readable and controls comfortably usable by touch. Aim for at least 44-by-44 CSS-pixel touch targets for primary interactive controls.
+
+Verify keyboard navigation, focus order, dialog focus management, accessible names, selected states, and contrast.
+
+Support browser zoom and larger text without losing actions or information. Do not disable zoom.
+
+Use natural, concise wording and established Title Case conventions. Do not rewrite accurate gameplay rules merely to shorten a card.
+
+11. Verify The Actual Interface
+
+Test representative sizes, including:
+
+* Desktop: 1280×720, 1440×900, and 1920×1080.
+* Phone landscape: 667×375, 844×390, and 932×430.
+* Phone portrait: confirm the rotation screen and paused simulation.
+* Intermediate widths and changing browser viewport height.
+
+Walk every destination and representative drill-down path.
+
+Include:
+
+* A new student.
+* A developed student.
+* A graduate.
+* An active offer.
+* Booked work.
+* A released engagement.
+* Long names, large money values, long notices, and large history counts.
+* Expanded help and Profile sections.
+* Empty and error states.
+* Older saves.
+
+Test desktop keyboard use and mobile touch behavior. Where real-device verification is unavailable, say so explicitly; do not present emulation as a physical-device test.
+
+Capture both normal viewport screenshots and full-page screenshots. A full-page capture alone cannot prove that fixed headers, dialogs, and controls fit an ordinary screen.
+
+Verify that orientation changes preserve state, halt time correctly, and never create duplicate actions or simulation jumps.
+
+12. Completion And Evidence
+
+Maintain a screen-by-screen coverage matrix showing:
+
+* The issue found.
+* The change made.
+* Desktop and landscape-mobile verification.
+* Relevant screenshot paths.
+* Any remaining limitation.
+
+Run targeted tests during development, then the required full regression gate after integration. Fix failures introduced by this work.
+
+Provide:
+
+* The exact tested commit.
+* Before/after captures of Home, navigation, Career, Calendar, Profile, Money, Papers, School, help, and representative dialogs.
+* Portrait rotation-screen evidence.
+* Functional and visual verification results.
+* Save compatibility results.
+* Honest remaining limitations.
+
+Continue implementing and correcting until every acceptance criterion in this brief is verified or a concrete blocker prevents completion. Do not stop at a CSS patch, screenshots of only Home, or a passing “no horizontal scroll” check.
+
+The result should preserve SLATE’s identity while making every current screen consistently organized and usable on PC and landscape phones.
+
+Keep the changes reviewable. Do not merge or deploy without my instruction.

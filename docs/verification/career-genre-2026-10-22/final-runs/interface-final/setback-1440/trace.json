@@ -2,9 +2,9 @@
  "playthrough": "setback",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "933f1ae6",
- "uncommitted": 12,
- "startedAt": "2026-10-22T23:39:41.434Z",
+ "commit": "05060742",
+ "uncommitted": 15,
+ "startedAt": "2026-10-23T19:00:36.177Z",
  "startingPoint": {
   "kind": "save",
   "file": "workload.json",
@@ -240,12 +240,12 @@
     "School",
     "Coursework (tab)",
     "Home",
-    "Show All 352"
+    "View All Updates"
    ],
    "said": [
-    "These six are the most important. 346 more are unread. Show All 352",
+    "348 more unread. View All Updates",
     "notice “Shown: A Choreographed Sequence, Strong”: You took the earlier note on Drilled With Your Partner. Simulated note from Advanced Principles Of Acting Stage Combat: Strong, and all of it prepared. Good. Next time: Move from your partner: take your next move from what their body gives you, not from the count you planned.",
-    "other pieces shown on the way: Shown: A Movement Score, Working You took the earlier note on Rehearsed In The B | Shown: Sound Changes And A Text, Unready Simulated note from Speech And Accents | Shown: A Movement Score, Strong Simulated note from Movement Invention II: Stron | Shown: A Clown Turn, Working Simulated note from Clown: The preparation was ther | Shown: Table Work, Strong Simulated note from Text Analysis II: Strong, with not | Shown: A Voice Sequence, Strong Simulated note from Voice II: Strong, and every | Shown: Sound Changes And A Text, Strong Simulated note from Speech And Accents I | Shown: A Voice Sequence, Strong You took the earlier note on Daily Practice. Sim | Shown: ",
+    "other pieces shown on the way: Shown: A Movement Score, Working 8 Notices Unread School · 22 hours ago · Septem | Shown: Sound Changes And A Text, Unready Unread School · 2d 22h ago · September | Shown: A Movement Score, Strong 4 Notices Unread School · 2d 22h ago · September | Shown: A Clown Turn, Working Unread School · 3d 22h ago · September 27, 2027 Sim | Shown: Table Work, Strong 5 Notices Unread School · 8d 22h ago · September 22, 2 | Shown: A Voice Sequence, Strong 7 Notices Unread School · 2 weeks ago · Septembe | Shown: Sound Changes And A Text, Strong 9 Notices Unread School · 2 weeks ago ·",
     "Shown: A Choreographed Sequence, Strong: You took the earlier note on Drilled With Your Partner. Simulated note from Advanced Principles Of Acting Stage Combat: Strong, and all of it prepared. Good. Next time: Move from your partner: take yo"
    ],
    "ok": true,
@@ -260,7 +260,6 @@
    ],
    "pressed": [
     "Home",
-    "Show The Six Most Important",
     "Home",
     "School",
     "Coursework (tab)",
@@ -469,5 +468,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-22T23:41:39.553Z"
+ "finishedAt": "2026-10-23T19:02:35.305Z"
 }

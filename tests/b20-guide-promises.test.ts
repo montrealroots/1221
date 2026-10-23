@@ -123,8 +123,9 @@ describe('Home And Where You Are', () => {
     const place = placeProfile(sim, sim.player.currentLocationId)!;
     const weather = weatherAt(sim, place.city.id)!;
     const home = drawn(sim, Home);
-    // The panel beside it is the same town's weather, at this hour: its figure now, and the day's high and low.
-    expect(home.text).toMatch(new RegExp(`Weather How This Works \\S+ ${weather.temperature}°F ${weather.condition} · High ${weather.high}°F · Low ${weather.low}°F`));
+    // The weather beside it is the same town's, at this hour: its figure now, and the day's high and low. A panel of its
+    // own until 2026-10-23 (brief 23), beside Today's line since.
+    expect(home.text).toMatch(new RegExp(`How Home Works \\S+ ${weather.temperature}°F ${weather.condition} High ${weather.high}°F · Low ${weather.low}°F`));
     // And it opens hour by hour: the weather's look has the hours of its day.
     const look = resolveLook(sim, subject('weather', place.city.id));
     const ways = look && !('gone' in look) ? look.ways ?? [] : [];
@@ -134,7 +135,8 @@ describe('Home And Where You Are', () => {
   it(`start.home > day.clock: “${promise('start.home', 'day.clock')}”`, () => {
     const sim = guided('b20-promise-local-time');
     readTo(sim, 'advance');
-    const localTime = () => /Local Time (\d+:\d\d [AP]M)/.exec(drawn(sim, Home).text)?.[1];
+    // The time in Today's line, from 2026-10-23 (brief 23): until then Where You Are's Local Time.
+    const localTime = () => /Good \w+, [^.]+\. (\d+:\d\d [AP]M) in /.exec(drawn(sim, Home).text)?.[1];
     expect(localTime()).toBe(formatTime(sim.now, sim.zone));
     sim.advanceTo(sim.now + MS_HOUR);
     expect(localTime()).toBe(formatTime(sim.now, sim.zone));
@@ -161,10 +163,11 @@ describe('The Guide And This Help', () => {
     // TEST SETUP: the clock stopped at the first commitment of the first morning, as the top bar would leave it.
     const r = sim.advanceTo(at(2026, 8, 24, 12), { stopOnPlayerRequired: true });
     h.standing = { item: r.interruptedBy!, wanted: at(2026, 8, 24, 12), sentFrom: r.sentFrom };
-    expect(drawn(sim, Home).text).toContain('Calendar Locked What’s coming up, and when.');
+    // Home's Calendar was retitled Up Next on 2026-10-23 (brief 23).
+    expect(drawn(sim, Home).text).toContain('Up Next Locked What’s coming up, and when.');
     expect(drawn(sim, TimeControls).all('GoLocked')).toHaveLength(1);
     readTo(sim, 'calendar');
-    expect(drawn(sim, Home).text).not.toContain('Calendar Locked What’s coming up, and when.');
+    expect(drawn(sim, Home).text).not.toContain('Up Next Locked What’s coming up, and when.');
     expect(drawn(sim, TimeControls).all('Go')).toHaveLength(1);
     h.standing = null;
   });
@@ -189,6 +192,12 @@ describe('Finding Your Way', () => {
     const sim = guided('b20-promise-menu');
     // The rail's places, by their own buttons (`rail-item`), the Home it always has and You at its foot aside.
     const rail = () => [...drawn(sim, GameShell).html.matchAll(/<button class="rail-item"[^>]*><span class="grow truncate">([^<]+)<\/span>/g)].map((m) => m[1]).filter((x) => x !== 'Home');
+    // The Calendar joined the menu with “What’s Coming”, and Updates with “What Needs You”, for part of 2026-10-23 (brief
+    // 23); from brief 24 the same day both are Home's, by Open Calendar and View All Updates, and neither joins it.
+    readTo(sim, 'welcome');
+    expect(rail()).toEqual([]);
+    readTo(sim, 'calendar');
+    expect(rail()).toEqual([]);
     readTo(sim, 'weather');
     expect(rail()).toEqual([]);
     readTo(sim, 'school');

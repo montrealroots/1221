@@ -44,8 +44,7 @@ import { LONGEST_NIGHT, SHORTEST_SLEEP, lookAfterOptions, readiness, trainingAt 
 import { fluByWeek } from '@/engine/systems/seasons';
 import { weatherAt, forecastFor } from '@/engine/systems/weather';
 import { PLAN_KIND } from '@/engine/world/plans';
-import { YALE_DRAMA } from '@/engine/content/school';
-import { CLASSES_KIND, ESTIMATE } from '@/engine/systems/school';
+import { CLASSES_KIND, ESTIMATE, setStanding } from '@/engine/systems/school';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 import { AGENTS } from '@/engine/content/agents';
@@ -115,7 +114,13 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
+vi.mock('@/ui/kept', async (orig) => {
+  const real = await orig<typeof import('@/ui/kept')>();
+  return { ...real, useKept: <T,>(_key: string, initial: T) => [initial, () => undefined] as const };
+});
 const { Home } = await import('@/ui/screens/Home');
+const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
+const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 const { TimeControls, SkipDialog } = await import('@/ui/shell/TimeControls');
 const { GuideProvider } = await import('@/ui/guide/Guide');
 await import('@/ui/looks/all');
@@ -182,7 +187,9 @@ const statusOf = (sim: Simulation, id: string) => sim.universe.scheduled.find((i
 // ---------------------------------------------------------------------------------------------------------------------
 
 describe('1. Your Life, Hour By Hour', () => {
-  it('PLAYER JOURNEY: a new life starts paused on Home; the line under the greeting shows the time, the town, its zone, the season and the weather; a panel not yet open says Locked and names its chapter', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “… the time, the town, its zone, the season and the weather; …”, the
+  // weather in the line. Today says the daylight in it, and the weather is beside it, Locked until “Weather” is read.
+  it('PLAYER JOURNEY: a new life starts paused on Home; the line under the greeting shows the time, the town, its zone, the season and the daylight, and the weather is beside it; a panel not yet open says Locked and names its chapter', () => {
     const sim = guided('b20-ch-welcome');
     expect(body('welcome')).toContain('A new life starts with the clock paused');
     expect(sim.universe.preferences.timeSpeed).toBe('paused');
@@ -190,10 +197,12 @@ describe('1. Your Life, Hour By Hour', () => {
     const home = drawn(sim, Home);
     const city = 'New Haven';
     const weather = weatherAt(sim, sim.player.currentLocationId)!;
-    const line = /Good \w+, [^.]+\. (.+?) Calendar/.exec(home.text)?.[1] ?? '';
-    for (const part of [formatTime(sim.now, sim.zone), city, zoneAbbreviation(sim.now, sim.zone), seasonOf(sim.now, sim.zone, 41.3), `${weather.temperature}°F`]) expect(line, part).toContain(part);
+    const line = /Good \w+, [^.]+\. (.+?) How Home Works/.exec(home.text)?.[1] ?? '';
+    for (const part of [formatTime(sim.now, sim.zone), city, zoneAbbreviation(sim.now, sim.zone), seasonOf(sim.now, sim.zone, 41.3), 'Daylight ']) expect(line, part).toContain(part);
+    expect(home.text).toContain('How Home Works Weather Locked How The Weather Works');
+    expect(home.text).not.toContain(`${weather.temperature}°F`);
     // The Calendar panel is still shut: Locked, its chapter named, and Read About It to go there.
-    expect(home.text).toContain('Calendar Locked What’s coming up, and when. It opens when you read “What’s Coming” in the guide.');
+    expect(home.text).toContain('Up Next Locked What’s coming up, and when. It opens when you read “What’s Coming” in the guide.');
     expect(home.all('Read About It').length).toBeGreaterThan(0);
   });
 
@@ -242,7 +251,7 @@ describe('2. What’s Coming', () => {
     jump(sim, at(2026, 8, 31, 8));
     const home = drawn(sim, Home);
     // The next thing, how soon and when, then the five after it.
-    expect(home.text).toContain('Calendar What’s coming up, and when.');
+    expect(home.text).toContain('Up Next What’s coming up, and when.');
     expect(home.text).toContain('in 1 hour Classes August 31, 2026 at 9:00 AM');
     const rows = (home.html.match(/<span class="small clamp-2"/g) ?? []).length;
     expect(rows).toBe(5);
@@ -396,7 +405,7 @@ describe('5. What Needs You', () => {
     expect(sim.universe.notifications.filter((n) => !n.read)).toEqual([]);
     // Two plans at one hour: nothing is waiting, and the panel says the clash.
     for (const title of ['Dinner With Sam', 'Call Home']) sim.must({ kind: 'calendar.schedule', payload: { title, at: at(2026, 8, 30, 19), durationMinutes: 60 } });
-    expect(drawn(sim, Home).text).toContain('No Questions Waiting Two things on your calendar in the next month are at the same time.');
+    expect(drawn(sim, Home).text).toContain('What Needs You One thing to put right. How This Works Two things on your calendar in the next month are at the same time. Open Calendar');
   });
 });
 
@@ -623,11 +632,16 @@ describe('10. Weather', () => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 describe('11. Drama School', () => {
-  it('PLAYER JOURNEY: the School line’s button opens the School; classes run nine to three; Call In Sick is refused when well with the reason and excuses the day when ill', () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's School line went: until then “… the School line’s button opens the School; …”.
+  it('PLAYER JOURNEY: with the standing in trouble, Open School under What Needs You opens the School; classes run nine to three; Call In Sick is refused when well with the reason and excuses the day when ill', () => {
     const sim = guided('b20-ch-school');
     readTo(sim, 'school');
     jump(sim, at(2026, 8, 31, 7));
-    expect(drawn(sim, Home).press(YALE_DRAMA.short).went).toEqual(['/workspace/school']);
+    expect(drawn(sim, Home).all('Open School')).toEqual([]);
+    // TEST SETUP: the faculty's concern set by the School's own setStanding, as a term short of what's asked leaves it.
+    setStanding(sim, sim.player, 'concern', 'TEST SETUP: a concern, by hand.');
+    expect(drawn(sim, Home).press('Open School').went).toEqual(['/workspace/school']);
+    setStanding(sim, sim.player, 'good', 'TEST SETUP: back in good standing, by hand.');
     const classes = sim.universe.scheduled.find((i) => i.kind === CLASSES_KIND && i.status === 'pending' && i.at === at(2026, 8, 31, 9))!;
     expect(classes.durationMinutes).toBe(6 * 60);
     expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go. Staying away would count as an unexcused absence.');
@@ -772,13 +786,14 @@ describe('15. Finding Work', () => {
 });
 
 describe('16. Cover, Benefits And Returns', () => {
-  it('PLAYER JOURNEY: Papers opens from its line; while you’re at school Yale Health covers you, which the line says', () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's Papers line went to the head of Papers: until then “Papers opens from
+  // its line; … which the line says”.
+  it('PLAYER JOURNEY: while you’re at school Yale Health covers you, which the head of Papers says, and Home has nothing of Papers to put right', () => {
     const sim = guided('b20-ch-papers');
     readTo(sim, 'papers');
     jump(sim, at(2026, 8, 29, 10));
-    const home = drawn(sim, Home);
-    expect(home.text).toContain('Cover: Yale Health');
-    expect(home.press('Papers').went).toEqual(['/workspace/papers']);
+    expect(drawn(sim, PapersWorkspace).text).toContain('Cover: Yale Health.');
+    expect(drawn(sim, Home).all('Open Papers')).toEqual([]);
   });
 });
 
@@ -802,7 +817,9 @@ describe('17. Passports And ID', () => {
 });
 
 describe('18. Money', () => {
-  it('PLAYER JOURNEY: the Money line shows the primary checking account and what you’re worth, what you have less what you owe', () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's Money line went to the head of Money: until then “the Money line shows
+  // the primary checking account and what you’re worth, …”.
+  it('PLAYER JOURNEY: Worth, at the top of Money, is what you have less what you owe, and says what’s owed', () => {
     const sim = guided('b20-ch-money');
     readTo(sim, 'money');
     jump(sim, at(2026, 8, 29, 10));
@@ -815,8 +832,9 @@ describe('18. Money', () => {
     // What you have, less what you owe.
     expect(worth.total).toBe(worth.cash + worth.held + worth.pension - 400_00);
     const cur = saveCurrency(sim.universe);
-    const text = drawn(sim, Home).text;
-    expect(text).toContain(`Money ${primary.name}:`);
+    // The worth is a link, so its words run up to the comma after it.
+    const text = drawn(sim, BankWorkspace).text.replace(/ ([.,])/g, '$1');
+    expect(text).toContain(primary.name);
     expect(text).toContain(`Worth ${formatMoney(worth.total, cur, { cents: false })}, after ${formatMoney(400_00, cur, { cents: false })} owed.`);
   });
 });

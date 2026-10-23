@@ -153,11 +153,16 @@ input[type="checkbox"], input[type="radio"] {
   cursor: pointer;
 }
 
-/* Nothing pushes the page itself sideways. */
-html, body { overflow-x: hidden; }
+/* Nothing pushes the page itself sideways. Until 2026-10-23 that was said here by `html, body { overflow-x: hidden; }`,
+   which hid what pushed it rather than stopping it: at 667 by 375 the bar ran 34 pixels past the window, cut off unseen
+   (brief 23's walk measured it with the rule set aside). What is genuinely wide scrolls in its own box below. */
 
-/* Wide content scrolls inside its own container rather than widening the page. */
-.table-wrap, .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* Wide content scrolls inside its own container rather than widening the page. Each box that scrolls is the one its
+   hidden labels are placed by (`position: relative`), so a label positioned out of the flow is clipped with the rest.
+   Until 2026-10-23 none was, and with the page no longer clipped a table's Action label, `sr-only` in its last
+   heading, ran out of its box: in a 390-wide window Papers' Passport And ID and Permission To Work scrolled 178 to 319
+   pixels sideways (brief 22's walk in its final runs played again on brief 23's commit). */
+.table-wrap, .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; }
 table { width: 100%; border-collapse: collapse; table-layout: auto; }
 
 /* Anything genuinely unbreakable gets its own scroller instead of overflowing. */
@@ -191,7 +196,7 @@ pre, code, .mono-block {
 /* Numbers line up and never wrap mid-figure. */
 .tabular, .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-html, body, #root { height: 100%; }
+html, body, #root, .turn-frame { height: 100%; }
 
 body {
   margin: 0;
@@ -314,6 +319,10 @@ a:hover { text-decoration: underline; }
    than pushing the card open and bleeding out of its right edge. */
 .panel-head > .row { flex-wrap: wrap; justify-content: flex-end; }
 .panel-head h2, .panel-head h3 { margin: 0; }
+/* A heading's words that open its look line up with its actions on their first line, as words alone do (from 2026-10-23,
+   the owner's brief 24). A button is an inline block, whose baseline is its last line's: until then a heading that ran to
+   two lines on a phone had its How This Works beside the second (School's Coursework, 30 pixels down). */
+.panel-head :is(h2, h3) > button.link { display: inline-flex; flex-wrap: wrap; }
 
 .eyebrow {
   font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
@@ -476,8 +485,10 @@ input[type="range"] {
 /* A button among the fields sits level with their boxes, not their labels. */
 .field-row > .btn { align-self: end; justify-self: start; margin-bottom: var(--s4); }
 /* A field and the button that acts on it, side by side, level at the bottom. */
-.field-act { display: flex; gap: var(--s2); align-items: flex-end; }
-.field-act > .field { flex: 1; min-width: 0; margin-bottom: 0; }
+/* A field and what acts on it, the button wrapping under the field rather than squeezing it: from 2026-10-23 (brief 23's
+   walk) the field keeps 12rem, where until then a card's New Limit box was 26 pixels wide on a phone on its side. */
+.field-act { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: flex-end; }
+.field-act > .field { flex: 1 1 12rem; min-width: 0; margin-bottom: 0; }
 /* And as tall as the box beside it: a field and a full-size button share their
    padding, type and line, so a small one takes the full size here. */
 .field-act > .btn, .field-row > .btn { padding: var(--s2) var(--s4); font-size: var(--size-sm); }
@@ -517,12 +528,16 @@ th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.table-scroll { overflow-x: auto; }
+.table-scroll { overflow-x: auto; position: relative; }
 
 .empty {
   padding: var(--s7) var(--s5); text-align: center; color: var(--text-dim);
 }
 .empty h3 { color: var(--text-muted); margin-bottom: var(--s2); }
+/* A line under the panel's head, not a block in its middle (`Empty`'s `compact`, from 2026-10-23, brief 24). */
+.empty-compact { padding: 0 var(--s4) var(--s4); text-align: left; }
+.empty-compact h3 { font-size: var(--size-sm); color: var(--text); margin: 0 0 var(--s1); }
+.empty-compact p { margin: 0; max-width: var(--measure); }
 
 .callout {
   padding: var(--s3) var(--s4); border-radius: var(--radius-sm);
@@ -697,6 +712,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 /* ---------- App shell ---------- */
 
 .shell { display: flex; flex-direction: column; height: 100%; }
+/* The height the browser shows now (from 2026-10-23, brief 23): a phone's address bar comes and goes, and 100% was the
+   height with it gone, so the foot of the page sat under it. */
+@supports (height: 100dvh) { .shell { height: 100dvh; } }
 
 .topbar {
   display: flex; align-items: center; gap: var(--s4);
@@ -735,8 +753,11 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 /* Below a laptop the bar has no room to spare, so the clock is just the time.
    It is the part anyone actually reads at a glance. Buttons keep their words
    whole everywhere, so the room is found in the gaps and the padding, not by
-   crushing a label into "Unlo / ck". */
-@media (max-width: 1024px) {
+   crushing a label into "Unlo / ck". The bar's widths, and the drawer's, are in em from 2026-10-23 (brief 24), 16 pixels
+   to one at the browser's own text size, so a player who sets larger text gets the layout a narrower window does: until
+   then, in px, text at 150% in a window 1280 wide kept the desktop's bar, Look After Yourself ran to three lines out of
+   it and Save & Exit 5 pixels past the window (app/checks.mjs). */
+@media (max-width: 64em) {
   .topbar-clock-sep, .topbar-clock-date, .topbar-clock-zone { display: none; }
   .topbar { gap: var(--s2); }
   .topbar .btn { padding-inline: var(--s2); }
@@ -750,40 +771,34 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 @media (max-width: 620px) {
   header.topbar {
     display: grid; height: auto; min-height: var(--nav-h);
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
-    grid-template-areas: "menu brand clock save" "time time time time";
+    grid-template-columns: auto auto minmax(0, 1fr);
+    grid-template-areas: "menu here clock" "time time time";
     column-gap: var(--s2); row-gap: var(--s1); padding: var(--s1) var(--s3) var(--s2);
   }
   .topbar > .rail-toggle { grid-area: menu; }
-  .topbar > .topbar-brand { grid-area: brand; padding-inline: var(--s1); }
-  .topbar > .topbar-clock { grid-area: clock; min-width: 0; }
-  .topbar > .topbar-group { grid-area: save; gap: var(--s1); }
+  /* The name of the screen stands where the brand did: the drawer has Home (from 2026-10-23). */
+  .topbar > .topbar-brand { display: none; }
+  .topbar > .topbar-here { grid-area: here; }
+  .topbar > .topbar-clock { grid-area: clock; min-width: 0; justify-content: flex-end; }
   .topbar > .topbar-time { grid-area: time; display: flex; gap: var(--s1); }
   .topbar > .topbar-why { grid-column: 1 / -1; order: 0; padding-bottom: 0; }
   .topbar-time > * { flex: 1 1 auto; justify-content: center; }
   .topbar > .grow, .topbar-divider { display: none; }
-  /* The date comes back, shortened by the room, never pushing a button off. */
-  .topbar-clock-sep, .topbar-clock-date { display: inline; }
-  .topbar-clock-date { min-width: 0; font-size: var(--size-xs); }
+  /* The date stays off the bar here as at 1024 or narrower: Home's head says it. Until 2026-10-23 (brief 24, at the
+     owner's "might as well") it came back here shortened by the room, from when a phone played upright, and in a window
+     390 wide "September 2, 2029" was cut short on every page with no way to read it there. */
   /* A locked time control says Locked under its name (from 2026-10-19, brief 15's coordinator, at the tutorial area's
      report): beside it, in a quarter of a phone's width, the word wrapped one letter to a line and the buttons stood
      114 pixels tall (docs/verification/editorial-2026-10-19/tutorial/phone/first-screen-390.png). */
   .topbar-time .btn.is-locked { flex-direction: column; gap: 0; }
   .topbar-time .btn.is-locked .lock-word { margin-left: 0; white-space: nowrap; }
 }
-/* On a narrow phone (from 2026-10-19, the same report) the guide and Save & Exit take a row of their own: the menu, the
-   name, the clock, the guide, the save's state and Save & Exit came to more than 390 pixels, and the clock ran over the
-   guide's button. */
-@media (max-width: 480px) {
-  header.topbar {
-    grid-template-columns: auto auto minmax(0, 1fr);
-    grid-template-areas: "menu brand clock" "save save save" "time time time";
-  }
-  .topbar > .topbar-group { justify-content: flex-end; }
-}
+/* On a narrow phone the guide and Save & Exit took a row of their own from 2026-10-19 to 2026-10-23, when they went to
+   the drawer's foot with the rail (brief 23). */
 
-/* Below a laptop the rail folds away and comes back as a drawer. */
-@media (max-width: 900px) {
+/* Below a laptop the rail folds away and comes back as a drawer, and on a screen too short for it beside the page, as a
+   phone's on its side is (from 2026-10-23, brief 23: until then a phone 932 wide kept the desktop's rail). */
+@media (max-width: 56.25em), (max-height: 500px) {
   /* Closed, the drawer is off the left edge and hidden outright, so nothing
      in it can take focus or be read as spilling out of the page. */
   .rail {
@@ -794,8 +809,16 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   }
   .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
   .rail-shade { display: block; }
+  /* With the drawer, the screen's name stands where the brand did, as on a phone, and the bar's buttons keep to one line
+     (from 2026-10-23, brief 23's walk: in a 760-pixel window "Player Profile" was cut to "Player Pro…" beside the brand,
+     and Look After Yourself took two lines). */
+  .topbar > .topbar-brand { display: none; }
+  .topbar .btn { white-space: nowrap; }
 }
-@media (min-width: 901px) {
+/* Menu only where the rail is a drawer: the complement of the drawer's query, its width in em with it (from brief 24,
+   2026-10-23; 56.3125em is 901 pixels at the browser's own text size). A first version left this at 901px, and with text
+   at 150% in a window 1280 wide the rail was a drawer with no Menu to open it (app/checks.mjs found it). */
+@media (min-width: 56.3125em) and (min-height: 501px) {
   .rail-toggle { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -828,7 +851,8 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
 }
 .rail-item:hover { background: var(--surface-2); color: var(--text); }
-.rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
+/* The screen you're on, and Home on its own screens, Calendar and Updates (from 2026-10-23, brief 24). */
+.rail-item[aria-current="page"], .rail-item[aria-current="true"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;
   background: var(--negative); color: #fff; border-radius: 100px;
@@ -867,6 +891,14 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 
 .page-head { margin-bottom: var(--s5); }
 .page-head h1 { margin-bottom: var(--s1); }
+/* The way back from Home's own screens (`BackToHome`, from 2026-10-23, brief 24), where an eyebrow stands on the rest:
+   its words on the heading's left edge, its button's padding outside it. */
+.back-home { margin: 0 0 var(--s1) calc(-1 * var(--s3)); }
+.back-home::before { content: "‹ " / ""; }
+/* Where a screen stands, under its name (`components/Glance.tsx`, from 2026-10-23): Money's worth, the School's place
+   and what's next, Papers' cover and what the returns ask. */
+.page-head .glance { margin: var(--s2) 0 0; font-size: var(--size-sm); color: var(--text); }
+.page-head .glance-alert { color: var(--warning); }
 
 .tabs {
   display: flex; gap: var(--s1); border-bottom: 1px solid var(--line);
@@ -956,7 +988,7 @@ kbd {
 .modal {
   width: min(640px, 100%); background: var(--surface);
   border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg); max-height: 84vh;
+  box-shadow: var(--shadow-lg); max-height: 84vh; max-height: 84dvh;
   display: flex; flex-direction: column;
 }
 .modal-head { padding: var(--s5); border-bottom: 1px solid var(--line); }
@@ -1042,7 +1074,7 @@ kbd {
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 900px) {
+@media (max-width: 56.25em) {
   .main { padding: var(--s4) var(--s3); }
   .slot-grid { grid-template-columns: 1fr; }
   .cal-day { min-height: 62px; }
@@ -1269,6 +1301,8 @@ kbd {
   box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column;
 }
+/* Hung from its button's right edge where its left would take it past the window (`useDropdown`); a phone's is pinned. */
+@media (min-width: 621px) { .menu[data-align="end"] { left: auto; right: 0; } }
 .menu-item {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   width: 100%; padding: var(--s2) var(--s3); border: 0; border-radius: var(--radius-sm);
@@ -1366,35 +1400,18 @@ td, th { overflow-wrap: break-word; }
    column the desktop shows, scrolling in its panel, with a shadow on the side that has more (the scrolling-shadows
    technique: covers that move with the content, shadows that stay with the box). */
 @media (max-width: 640px) {
-  .tabs {
-    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
-  }
-  .tabs::-webkit-scrollbar { display: none; }
+  /* The fade at the edge with more is the tab bar's own at every width from 2026-10-23 (`.tabs-wrap`, below): until
+     then it was here, at 640 or narrower, and always at the right, so a bar scrolled to its end faded its last tab. */
   .tab { padding-inline: var(--s3); }
   table {
-    display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative;
     background:
       linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
       linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
       radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
       radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
   }
-  /* A wide table in its scrolling region keeps the desktop's layout at a width its columns can be read at, by how
-     many it has, rather than squeezed to the phone's width with every cell wrapped to a sliver (a cell's own
-     min-width is ignored by table layout, so it's the table's). The region scrolls and carries the shadows. */
   .table-scroll > table { display: table; background: none; }
-  .table-scroll > table:has(th:nth-child(4)) { min-width: 520px; }
-  .table-scroll > table:has(th:nth-child(5)) { min-width: 680px; }
-  .table-scroll > table:has(th:nth-child(7)) { min-width: 880px; }
-  .table-scroll {
-    -webkit-overflow-scrolling: touch;
-    background:
-      linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
-      linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
-      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
-      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
-  }
   /* The portrait above the facts, not a column beside them taking a third of the width. */
   .identity-row { flex-direction: column; }
   .identity-row > .grow { width: 100%; }
@@ -1406,6 +1423,24 @@ td, th { overflow-wrap: break-word; }
 /* --- The guide's reference (ui/guide/Help.tsx, from 2026-10-12) ---------- */
 .panel-actions { flex-wrap: wrap; justify-content: flex-end; }
 .how-it-works { white-space: nowrap; }
+/* Contextual help placed by where it stands (from 2026-10-23, the owner's brief 24). How This Works is a small ghost
+   button whose padding keeps its focus ring whole and, on a phone, its 44 pixels; a margin as wide as that padding, on
+   the side it lines up with, puts its words on the edge rather than its box. Until then its words stood 13 pixels in from
+   each edge they lined up with, and on a narrow head's second row up to 131 pixels from the heading, with 6 to 22
+   pixels above it beneath content (`docs/verification/ui-polish-2026-10-23/app/help-audit.mjs`, brief 23's build). */
+:root { --ghost-pad: var(--s3); }
+/* In a card's head its words end at the content's edge, as the heading's start at the other, on the heading's baseline;
+   wrapped onto a second row, the row starts under the heading (the head's space-between puts a line's one item at its
+   start). The margin is the actions' own, on the side a ghost action ends them: on the action itself, the first version
+   of this, a head whose one action was its help took both margins, and its words ran 11 pixels past the edge. */
+.panel-actions:has(> .btn-ghost:last-child) { margin-right: calc(-1 * var(--ghost-pad)); }
+.panel-actions:has(> .btn-ghost:first-child) { margin-left: calc(-1 * var(--ghost-pad)); }
+/* A section's head (`SectionHead`): its label, and its help at the right on the label's baseline, or under it. */
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s1) var(--s3); }
+.section-head > .how-it-works { margin-inline: calc(-1 * var(--ghost-pad)); }
+/* Beneath what it explains: a row of its own, one step under it, its first words on that content's left edge. */
+.help-below { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); }
+.help-below > .btn-ghost:first-child { margin-left: calc(-1 * var(--ghost-pad)); }
 .help { display: flex; flex-direction: column; gap: var(--s3); }
 .help-trail { margin: 0; flex-wrap: wrap; }
 .help-search { display: flex; flex-direction: column; gap: var(--s1); }
@@ -1446,3 +1481,333 @@ td, th { overflow-wrap: break-word; }
      in (docs/verification/editorial-2026-10-19/tutorial/phone/guide-school-details-390.png). */
   .guide-page { max-height: none; overflow-y: visible; }
 }
+
+/* ==========================================================================
+   Brief 23 (2026-10-23): desktop and landscape phones
+   ========================================================================== */
+
+:root {
+  /* The page's gutter, one for every screen: the main column's padding, and what a drawer and the bar keep from a
+     notch. */
+  --gutter: var(--s5);
+  /* A readable line of running text, held at about 75 characters. */
+  --measure: 78ch;
+  /* The smallest a control is: a pointer's, and a finger's (WCAG 2.5.5's 44 pixels) on a touch screen. */
+  --control: 32px;
+  --control-sm: 28px;
+}
+@media (max-width: 56.25em) { :root { --gutter: var(--s4); } }
+@media (max-height: 500px) { :root { --gutter: var(--s3); --nav-h: 48px; } }
+@media (pointer: coarse) { :root { --control: 44px; --control-sm: 44px; } }
+
+/* Controls, one height each. A link inside a sentence keeps the sentence's line (WCAG 2.5.8 excepts it). */
+.btn { min-height: var(--control); }
+.btn-sm { min-height: var(--control-sm); }
+.tab, .rail-item, .menu-item, .guide-toc-item, .picker-option { min-height: var(--control); }
+.btn, .tab, .rail-item, .menu-item { justify-content: center; }
+.rail-item, .menu-item { justify-content: flex-start; }
+@media (pointer: coarse) {
+  .btn-sm { padding-inline: var(--s3); }
+  select, input:not([type]), input[type="text"], input[type="number"], input[type="date"], input[type="search"] { min-height: 44px; }
+  summary { min-height: 44px; display: flex; align-items: center; gap: var(--s1); }
+  details > summary { list-style-position: inside; }
+  .breadcrumbs button { min-height: 44px; padding: 0 var(--s1); }
+  .link.strong { min-height: 32px; }
+  /* Help's topics are its controls, a list to press, as tall as any (until 2026-10-23, 32 pixels). */
+  .help-link { min-height: var(--control); min-width: var(--control); }
+  /* A slider's track as tall as a control, so a finger finds it (Sleep's hours, 16 pixels until 2026-10-23). */
+  input[type="range"] { min-height: var(--control); }
+  /* A tick box's own label, beside it rather than around it, is what a finger presses (from 2026-10-23). */
+  input[type="checkbox"] + label, input[type="radio"] + label { min-height: var(--control); display: inline-flex; align-items: center; }
+  /* And a label around its box, as the Playing chooser's are (brief 23's walk: 16-pixel radios in 38-pixel labels). */
+  label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) { min-height: var(--control); }
+  .cal-day { cursor: pointer; }
+  /* A button of one glyph (‹, ›, ✕) as wide as it is tall, and the skip link as tall as a control (from 2026-10-23, brief
+     23's walk: the Calendar's month arrows were 31 pixels wide, the skip link 37 tall). */
+  .btn { min-width: var(--control); }
+  .skip-link { min-height: var(--control); display: inline-flex; align-items: center; }
+}
+
+/* The page's gutter and the notch. The bar, the drawer and the column keep clear of a phone's notch and its home bar
+   (`viewport-fit=cover`, `env(safe-area-inset-*)`). */
+.topbar { padding-left: max(var(--s4), env(safe-area-inset-left)); padding-right: max(var(--s4), env(safe-area-inset-right)); }
+.main {
+  padding: var(--gutter);
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+  padding-bottom: max(var(--gutter), env(safe-area-inset-bottom));
+}
+@media (max-width: 56.25em), (max-height: 500px) {
+  .rail { padding-left: max(var(--s2), env(safe-area-inset-left)); padding-bottom: max(var(--s3), env(safe-area-inset-bottom)); top: var(--nav-h); }
+  .rail-shade { inset: var(--nav-h) 0 0 0; }
+}
+.toasts { bottom: max(var(--s5), env(safe-area-inset-bottom)); }
+
+/* Running text held to a readable line, in a card and at a page's head. */
+.card p, .page-head p, .prose { max-width: var(--measure); }
+
+/* ---------- The bar ---------- */
+
+.topbar-here {
+  font-weight: 650; font-size: var(--size-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  min-width: 0; max-width: 11rem; flex: 0 1 auto;
+}
+.clock-state {
+  display: inline-flex; align-items: center; gap: 6px; align-self: center;
+  font-size: var(--size-xs); font-weight: 650; color: var(--text-muted);
+  border: 1px solid var(--line); border-radius: 100px; padding: 1px 8px; line-height: 1.5;
+}
+.clock-state::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); }
+.clock-state[data-running="true"] { color: var(--positive); border-color: transparent; background: var(--positive-dim); }
+.clock-state[data-running="true"]::before { background: var(--positive); }
+/* The bar on a phone on its side: one row, every control a finger's size, the clock's date stepping aside first. */
+@media (max-height: 500px) {
+  .topbar { gap: var(--s2); padding-top: 0; padding-bottom: 0; }
+  .topbar > .topbar-brand { display: none; }
+  .topbar .btn { padding-inline: var(--s2); }
+  .topbar-time { gap: var(--s1); }
+  .page-head { margin-bottom: var(--s4); }
+  .breadcrumbs { margin-bottom: var(--s2); }
+}
+@media (max-height: 500px) and (max-width: 760px) {
+  .clock-state { padding: 1px 6px; }
+  .topbar-here { max-width: 7rem; }
+}
+
+/* ---------- The rail ---------- */
+
+.rail-badge-quiet { background: var(--surface-3); color: var(--text-muted); }
+.rail-foot { border-top: 1px solid var(--line); padding-top: var(--s3); margin-top: var(--s3); }
+.rail-foot .topbar-group { flex-wrap: wrap; padding: 0 var(--s2); }
+
+/* ---------- Tabs ---------- */
+
+/* A tab bar wider than its page scrolls sideways, and fades on the side that has more, with a button there that scrolls
+   it on (from 2026-10-23, brief 23): until then a phone's bar cut "Opportunities" in half at its right edge. */
+.tabs-wrap { position: relative; margin-bottom: var(--s5); }
+.tabs-wrap > .tabs { margin-bottom: 0; flex-wrap: nowrap; scrollbar-width: none; overscroll-behavior-x: contain; }
+.tabs-wrap > .tabs::-webkit-scrollbar { display: none; }
+.tabs-wrap[data-overflow="end"] > .tabs { mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
+.tabs-wrap[data-overflow="start"] > .tabs { mask-image: linear-gradient(to left, #000 calc(100% - 56px), transparent); }
+.tabs-wrap[data-overflow="both"] > .tabs { mask-image: linear-gradient(to right, transparent, #000 56px, #000 calc(100% - 56px), transparent); }
+.tabs-more {
+  position: absolute; top: 0; bottom: 1px; display: none; align-items: center; justify-content: center;
+  width: 36px; border: 0; background: transparent; color: var(--accent-strong); cursor: pointer; font-size: var(--size-md);
+}
+.tabs-more[data-side="end"] { right: 0; }
+.tabs-more[data-side="start"] { left: 0; }
+.tabs-wrap[data-overflow="end"] > .tabs-more[data-side="end"],
+.tabs-wrap[data-overflow="start"] > .tabs-more[data-side="start"],
+.tabs-wrap[data-overflow="both"] > .tabs-more { display: flex; }
+
+/* ---------- Home ---------- */
+
+.today { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--s4) var(--s6); }
+.today-main { flex: 1 1 24rem; min-width: 0; }
+.today-line { margin: var(--s1) 0 0; }
+.today-weather { flex: 0 1 22rem; min-width: min(16rem, 100%); }
+.today-weather-now { display: flex; align-items: center; gap: var(--s2); font-size: var(--size-sm); }
+.today-weather-now > span:last-child { display: flex; flex-wrap: wrap; gap: 0 var(--s2); align-items: baseline; }
+.today-weather-icon { font-size: var(--size-lg); }
+.today-week { margin-top: var(--s2); padding-top: var(--s2); }
+
+.home-grid {
+  display: grid; gap: var(--s4); margin-bottom: var(--s5);
+  grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start;
+}
+.home-grid > .card { margin: 0; }
+/* Two columns that each stack, What Needs You over How You Are and Up Next over Recent Updates, each card as tall as what
+   it holds, in Home's own order on one column (from 2026-10-23, the owner's brief 24). Until then each row stretched its
+   cards to the taller one's height, so an All Clear stood in a card as tall as Up Next, mostly empty, and How You Are
+   waited under both. Two columns from 600 wide, as on a phone's side at 667, so What Needs You and Up Next both start in
+   the first window. Until then 700 was the line: a column at 667 had no room for a head's title and its actions on one
+   line, and in one column Up Next started below the first window. Its actions go on a second row under the title now. */
+.home-grid > :nth-child(1) { grid-column: 1; grid-row: 1; }
+.home-grid > :nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
+.home-grid > :nth-child(3) { grid-column: 1; grid-row: 2 / span 2; }
+.home-grid > :nth-child(4) { grid-column: 2; grid-row: 3; }
+@media (max-width: 599px) {
+  .home-grid { grid-template-columns: minmax(0, 1fr); }
+  /* As specific as the placements above, so it wins: as `.home-grid > *` (until later the same day, brief 22's final runs
+     on brief 24's commit) it lost to them, the cards kept their second column, and in a window 390 wide How You Are's
+     labels broke mid-word in a squeezed column with its help cut off by the card. */
+  .home-grid > :nth-child(n) { grid-column: auto; grid-row: auto; }
+}
+/* On a phone on its side a heading of Home's keeps its help beside it, its line under it wrapping instead: at 12rem, the
+   head's own, What Needs You's help took a row of its own in a column at 667, and the first thing waiting started at the
+   window's foot, cut (brief 24's pictures, 2026-10-23). Up Next's two actions still go under its title. */
+@media (max-height: 500px) { .home-grid .panel-head > :first-child { flex-basis: 8rem; } }
+.needs-more { padding: var(--s3) var(--s4); }
+.panel-foot { padding: var(--s3) var(--s4); border-top: 1px solid var(--line); gap: var(--s2); flex-wrap: wrap; }
+.notice-row { align-items: flex-start; flex-wrap: wrap; }
+/* Its words keep a width they read at; in a narrow column its buttons go under them (from 2026-10-23, brief 24). */
+.notice-row > .grow { flex: 1 1 13rem; min-width: 0; }
+.notice-row-actions { flex: none; }
+.look-after-now { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); }
+.look-after-now .eyebrow { margin-bottom: var(--s2); }
+.btn-detail { font-weight: 500; opacity: .75; }
+
+/* ---------- Updates ---------- */
+
+.updates-bar {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s3);
+  padding: var(--s4) var(--s5); border-bottom: 1px solid var(--line);
+}
+.updates-about { margin: 0; }
+.updates-about select { width: auto; min-width: 11rem; }
+.segmented { display: inline-flex; }
+.segmented > .btn { border-radius: 0; }
+.segmented > .btn:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.segmented > .btn:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-left: -1px; }
+.segmented > .btn[aria-pressed="true"] { background: var(--accent-dim); border-color: var(--accent-line); color: var(--accent-strong); }
+.notice-list { list-style: none; margin: 0; padding: 0; }
+.notice {
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: flex-start;
+  padding: var(--s4) var(--s5); border-bottom: 1px solid var(--line); border-left: 3px solid transparent;
+}
+.notice[data-unread="true"] { border-left-color: var(--accent); }
+.notice:last-child { border-bottom: 0; }
+.notice-main { flex: 1 1 26rem; min-width: 0; }
+.notice-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.notice-meta { font-size: var(--size-xs); color: var(--text-dim); margin-top: 2px; }
+.notice-body { font-size: var(--size-sm); color: var(--text-muted); margin: var(--s1) 0 0; max-width: var(--measure); }
+.notice-earlier { list-style: none; margin: var(--s3) 0 0; padding: 0 0 0 var(--s3); border-left: 2px solid var(--line); display: flex; flex-direction: column; gap: var(--s3); }
+.notice-actions { display: flex; flex-wrap: wrap; gap: var(--s2); flex: none; }
+.updates-foot { padding: var(--s3) var(--s5); border-top: 1px solid var(--line); }
+
+/* ---------- Dialogs and menus on a short screen ---------- */
+
+.menu { max-height: calc(100dvh - var(--nav-h) - var(--s4)); overflow-y: auto; }
+@media (max-height: 500px) {
+  .overlay { padding: var(--s2) max(var(--s3), env(safe-area-inset-right)) var(--s2) max(var(--s3), env(safe-area-inset-left)); align-items: center; }
+  .modal { max-height: calc(100dvh - 2 * var(--s2)); }
+  .modal-head { padding: var(--s3) var(--s4); }
+  .modal-body { padding: var(--s4); }
+  .modal-foot { padding: var(--s2) var(--s4); }
+}
+
+/* ---------- Rotate Your Phone To Play (`ui/shell/turn.tsx`) ---------- */
+
+.turn-frame[inert] { pointer-events: none; user-select: none; }
+.rotate-screen {
+  position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--s3); text-align: center; background: var(--bg); color: var(--text);
+  padding: max(var(--s5), env(safe-area-inset-top)) max(var(--s5), env(safe-area-inset-right)) max(var(--s5), env(safe-area-inset-bottom)) max(var(--s5), env(safe-area-inset-left));
+}
+.rotate-screen:focus { outline: none; }
+.rotate-screen h1 { font-size: var(--size-xl); }
+.rotate-screen p { max-width: 30ch; color: var(--text-muted); margin: 0; }
+.rotate-glyph {
+  width: 72px; height: 72px; fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+  animation: rotate-hint 2.4s ease-in-out infinite;
+}
+@keyframes rotate-hint { 0%, 35% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+@media (prefers-reduced-motion: reduce) { .rotate-glyph { animation: none; transform: rotate(-90deg); } }
+
+/* ---------- Summary, then the detail that opens (brief 23, section 8) ---------- */
+
+/* A record's head: its name and where it stands, then its facts in label and value pairs, in columns where there's room. */
+.engagement { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); }
+.engagement-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); }
+.engagement-head h3 { margin: 0; font-size: var(--size-md); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: var(--s2) var(--s5); margin: 0; font-size: var(--size-sm); }
+.facts > div { min-width: 0; }
+.facts dt { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 650; }
+.facts dd { margin: 0; }
+/* A section that opens: its name a control a finger can press, its body under a hairline. */
+details.section-fold { border-top: 1px solid var(--line); padding-top: var(--s2); }
+details.section-fold > summary { cursor: pointer; font-weight: 600; font-size: var(--size-sm); min-height: var(--control); display: flex; align-items: center; gap: var(--s2); }
+details.section-fold > summary::-webkit-details-marker { display: none; }
+details.section-fold > summary::before { content: "›"; display: inline-block; width: 1em; color: var(--accent); transition: transform .12s; }
+details.section-fold[open] > summary::before { transform: rotate(90deg); }
+details.section-fold[open] > summary { margin-bottom: var(--s2); }
+.pay-table td { vertical-align: top; }
+.pay-table td:nth-child(4) { min-width: 16rem; }
+.cal-run-each { border-top: 1px solid var(--line); }
+.cal-run-each .list-item { padding-left: var(--s7); }
+
+/* A wide table in its scrolling region keeps a width its columns can be read at, by how many it has, rather than being
+   squeezed with every cell wrapped to a sliver, and the region scrolls with a shadow on the side that has more. Until
+   2026-10-23 this held at 640 or narrower only, so at a phone's 844 on its side the Player Profile's Today column took
+   "Not held back today" in five lines (brief 23's walk). */
+.table-scroll > table:has(th:nth-child(4)) { min-width: 520px; }
+.table-scroll > table:has(th:nth-child(5)) { min-width: 680px; }
+.table-scroll > table:has(th:nth-child(7)) { min-width: 880px; }
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
+}
+/* A thing to put right under What Needs You keeps its words at a width they read at, its buttons wrapping under them
+   (from 2026-10-23, brief 23's walk: at 1024 a late return's line was set in 82 pixels, six lines of it). */
+.todo-text { flex: 1 1 14rem; min-width: 0; }
+
+/* A long page's index under its heading (`PageIndex`, from 2026-10-23): its sections as quiet buttons, in rows on a
+   desktop and in one row that scrolls sideways, with a shadow on the side that has more, on a phone on its side. A
+   section it takes you to keeps its focus ring off: the focus is there for the keyboard, not as a frame. */
+.page-index { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); margin-top: var(--s3); }
+.page-index-list { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); min-width: 0; }
+section.card[tabindex="-1"]:focus { outline: none; }
+@media (max-height: 500px) {
+  .page-index { flex-wrap: nowrap; }
+  .page-index-list {
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    background:
+      linear-gradient(to right, var(--bg) 30%, transparent) left center / 24px 100% no-repeat local,
+      linear-gradient(to left, var(--bg) 30%, transparent) right center / 24px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
+  }
+  .page-index-list > .btn { flex: none; }
+}
+
+/* A row's figures and, across the table under them, the sentence that says why (School's Term Reviews, from 2026-10-23). */
+.review-table tbody tr:first-child td { border-bottom: 0; padding-bottom: var(--s1); }
+.review-why td { color: var(--text-muted); padding-top: 0; max-width: 75ch; }
+/* A table that stacks on a phone on its side and in a narrow window instead of scrolling sideways (from 2026-10-23, brief
+   23): each row a block, its short cells in a line and its prose across the width, each named by its column. The names
+   are drawn (`data-label`), not written, so what a row says reads the same at every width. Until then such a table kept
+   a width its columns could be read at and scrolled, and a paragraph in it was read by scrolling a line at a time. */
+@media (max-width: 56.25em), (max-height: 500px) {
+  .table-scroll > table.stack-table { min-width: 0; }
+  .stack-table thead { display: none; }
+  .stack-table tbody { display: block; }
+  .stack-table tr { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s4); padding: var(--s2) 0; border-bottom: 1px solid var(--line); }
+  .stack-table td { display: block; min-width: 0; padding: 0; border: 0; text-align: left; }
+  .stack-table tr > td:first-child { font-weight: 600; }
+  .stack-table td.stack-wide { flex-basis: 100%; }
+  .stack-table td[data-label]::before { content: attr(data-label) " "; font-size: var(--size-xs); font-weight: 650; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
+  .stack-table td.stack-wide[data-label]::before { display: block; }
+  .review-table tbody tr:first-child { border-bottom: 0; padding-bottom: 0; }
+  .stack-table .review-why > td:first-child { font-weight: 400; }
+}
+/* A cell's own words at a width they read at: a table cell's min-width isn't one table layout keeps, a box inside it is. */
+.cell-min { min-width: 9rem; }
+.cell-wide { min-width: 14rem; }
+
+/* A page's head on a phone on its side (from 2026-10-23, brief 23): the trail is the screen you came from, as a way back,
+   and the heading's group, which the drawer shows, steps aside, so the page's own content starts nearer the top. The
+   heading is a step smaller; running text isn't. */
+@media (max-height: 500px) {
+  .breadcrumbs > span { display: none; }
+  .breadcrumbs > span:nth-last-child(2) { display: flex; }
+  .breadcrumbs > span:nth-last-child(2) > [aria-hidden="true"] { display: none; }
+  .breadcrumbs > span:nth-last-child(2) button::before { content: "‹ "; }
+  .page-head > .eyebrow:first-child { display: none; }
+  .page-head h1 { font-size: var(--size-lg); }
+  .tabs-wrap { margin-bottom: var(--s3); }
+  .main-inner > .card, .home-grid { margin-bottom: var(--s4); }
+  /* Home's head (from 2026-10-23, the owner's brief 24): the day, the greeting and one line of the town, the season and
+     the sky in a few words, the clock being the bar's; the days ahead, the high and low and the daylight under Forecast
+     And Daylight, opened in place across the width (which of them Home draws is its own, by the same query). The space
+     between them is what went, not their size. Until then the line, the forecast and the five days took the whole of
+     the first window at 667 by 375. */
+  .page-head.today { margin-bottom: var(--s3); gap: var(--s2) var(--s4); }
+  .today-weather { flex-basis: 100%; }
+  .today-weather[hidden] { display: none; }
+  .today-daylight-more { margin: var(--s2) 0 0; }
+}
+.decision .row-between > span:last-child { white-space: nowrap; }

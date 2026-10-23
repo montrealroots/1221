@@ -399,7 +399,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Accounts, the savings account’s Close Savings (src/ui/workspaces/BankWorkspace.tsx:185)",
+   "where": "Your Bank, Accounts, the savings account’s Close Savings (src/ui/workspaces/BankWorkspace.tsx:187)",
    "prerequisites": "An open savings account of the player’s and a checking account to receive it; refused for notice already given; past Germany’s monthly allowance it gives the law’s three months’ notice.",
    "reads": "The account, its interest, its fees and `savingsLeftThisMonth`.",
    "changes": "Pays its interest, settles its fees, moves what it holds into checking at its bank (or sends it to the primary in the bank’s days), closes it and calls off the standing orders and payments set for a date into it; or schedules bank.savings_notice.",
@@ -561,7 +561,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Accounts, Open Savings (src/ui/workspaces/BankWorkspace.tsx:202)",
+   "where": "Your Bank, Accounts, Open Savings (src/ui/workspaces/BankWorkspace.tsx:204)",
    "prerequisites": "A checking account at the bank, none of its savings already, not a bank in another country. Refused: “You can only open savings at a bank where you have a checking account.”, “You already have a savings account at ….”, and the abroad refusal.",
    "reads": "The player’s accounts at the bank.",
    "changes": "Opens an easy-access savings account at nothing.",
@@ -1277,7 +1277,7 @@
    "kind": "command",
    "area": "money",
    "mechanic": true,
-   "where": "Your Bank, Accounts, Move Money (src/ui/workspaces/BankWorkspace.tsx:117)",
+   "where": "Your Bank, Accounts, Move Money (src/ui/workspaces/BankWorkspace.tsx:119)",
    "prerequisites": "Two different open checking or easy-access savings accounts of the player’s, an amount within what the sending account holds; refused for a dormant, closing or switch-blocked account, past Germany’s monthly allowance, past a withdrawal fee, in the wrong currency, and past the sending bank’s limits to another bank, each in its words.",
    "reads": "Both accounts, their bank, balance, dormancy and closing; `savingsDebit`, `savingsLeftThisMonth`, the sending bank’s days (`arrivalOf`).",
    "changes": "At one bank, both balances at once; to another bank, out now into Money In Transit and in on the sending bank’s day (bank.transfer_arrives); abroad, as a payment abroad.",
@@ -3771,9 +3771,9 @@
   {
    "id": "promise.money.affairs>bank.accounts",
    "kind": "optional",
-   "claim": "The button at the end of the Money line opens Money, where you manage each account.",
+   "claim": "Your worth is at the top of Money, where you manage each account.",
    "entryFile": "src/engine/content/guide/money.ts",
-   "holds": "Home’s Money line ends in a button to the bank’s screen (src/ui/screens/Home.tsx:490)",
+   "holds": "Money’s head says the worth, its look a press away (`WorthWords`, src/ui/components/Glance.tsx:33), above the accounts (src/ui/workspaces/BankWorkspace.tsx:281). Until 2026-10-23 (brief 23) Home’s Money line ended in a button to the bank’s screen.",
    "tests": [
     "tests/evidence2-b12.test.ts"
    ],
@@ -3785,8 +3785,8 @@
      "tests/evidence2-b12.test.ts"
     ]
    },
-   "readBy": "money",
-   "readAt": "bf632759"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.money.affairs>bank.card",
@@ -3857,9 +3857,9 @@
   {
    "id": "promise.bank.accounts>money.affairs",
    "kind": "immediate",
-   "claim": "Every balance here counts in your net worth, and your primary account’s balance is the first figure on Home’s Money line.",
+   "claim": "Every balance here counts in your net worth, which Worth, at the top of Money, opens.",
    "entryFile": "src/engine/content/guide/money.ts",
-   "holds": "Net worth sums every account; the Money line opens on the primary account (src/engine/systems/finance.ts:64)",
+   "holds": "Net worth sums every account (src/engine/systems/finance.ts:64), and Worth at the head of Money opens it (src/ui/components/Glance.tsx:33).",
    "tests": [
     "tests/b20-money-looks.test.ts",
     "tests/evidence2-b12.test.ts"
@@ -3873,8 +3873,8 @@
      "tests/evidence2-b12.test.ts"
     ]
    },
-   "readBy": "money",
-   "readAt": "bf632759"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.bank.accounts>bank.payments",
@@ -3905,7 +3905,7 @@
    "kind": "optional",
    "claim": "Move Money appears on this tab once you have two accounts.",
    "entryFile": "src/engine/content/guide/money.ts",
-   "holds": "Move Money is drawn once there are two accounts (src/ui/workspaces/BankWorkspace.tsx:210)",
+   "holds": "Move Money is drawn once there are two accounts (src/ui/workspaces/BankWorkspace.tsx:212)",
    "tests": [
     "tests/language-money.test.ts"
    ],
@@ -3993,7 +3993,7 @@
    "kind": "prerequisite",
    "claim": "Move Money appears only once you have two accounts.",
    "entryFile": "src/engine/content/guide/money.ts",
-   "holds": "Move Money is drawn once there are two accounts (src/ui/workspaces/BankWorkspace.tsx:210)",
+   "holds": "Move Money is drawn once there are two accounts (src/ui/workspaces/BankWorkspace.tsx:212)",
    "tests": [
     "tests/language-money.test.ts"
    ],
@@ -4121,7 +4121,7 @@
   {
    "id": "promise.bank.term>day.needs",
    "kind": "scheduled",
-   "claim": "The bank’s notice before the end, and the renewal or payout on the day, come to What Needs You.",
+   "claim": "The bank’s notice before the end, and the renewal or payout on the day, come as notices, in Updates.",
    "entryFile": "src/engine/content/guide/money.ts",
    "holds": "The bank’s notice before the end, and the renewal or payout, are notices (src/engine/systems/accountlife.ts:545; src/engine/systems/lending.ts:1310)",
    "tests": [
@@ -4139,8 +4139,8 @@
      "tests/evidence3-lifepapers.test.ts"
     ]
    },
-   "readBy": "money",
-   "readAt": "bf632759"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.bank.term>bank.upkeep",
@@ -4229,9 +4229,9 @@
   {
    "id": "promise.bank.upkeep>day.needs",
    "kind": "scheduled",
-   "claim": "Alerts, the dormancy notice and the bank’s letter before it hands money over come to What Needs You.",
+   "claim": "Alerts and the dormancy notice come as notices, in Updates, and the bank’s letter before it hands money over as a question in What Needs You.",
    "entryFile": "src/engine/content/guide/money.ts",
-   "holds": "Alerts and the dormancy notice are notices; the letter before the state is a decision with Keep The Account; What Needs You shows both (src/engine/systems/accountlife.ts:742; src/ui/screens/Home.tsx:233)",
+   "holds": "Alerts and the dormancy notice are notices; the letter before the state is a decision with Keep The Account (src/engine/systems/accountlife.ts:742). Updates lists the notices (src/ui/screens/Updates.tsx:65), and What Needs You on Home the question (src/ui/screens/Home.tsx:301).",
    "tests": [
     "tests/b20-money-clock.test.ts",
     "tests/evidence2-b11.test.ts"
@@ -4245,8 +4245,8 @@
      "tests/evidence2-b11.test.ts"
     ]
    },
-   "readBy": "money",
-   "readAt": "bf632759"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.bank.upkeep>bank.term",
@@ -4679,7 +4679,7 @@
   {
    "id": "promise.bank.card>day.needs",
    "kind": "scheduled",
-   "claim": "A statement with a payment due, a late payment, a failed autopay and a raised limit all come to What Needs You.",
+   "claim": "A statement with a payment due, a late payment, a failed autopay and a raised limit all come as notices, in Updates.",
    "entryFile": "src/engine/content/guide/money.ts",
    "holds": "A statement with a payment due, a late payment, a bounced autopay and a raised limit are notices (src/engine/systems/statements.ts:478; src/engine/systems/credit.ts:958)",
    "tests": [
@@ -4697,8 +4697,8 @@
      "tests/evidence-g13-money.test.ts"
     ]
    },
-   "readBy": "money",
-   "readAt": "bf632759"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.bank.card-offers>bank.card",

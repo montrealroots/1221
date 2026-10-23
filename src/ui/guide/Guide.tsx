@@ -112,15 +112,12 @@ export function LockedPanel({ feature, title }: { feature: string; title: string
   const { open, ask } = useFeature(feature);
   const chapter = chapterFor(feature);
   if (open || !chapter) return null;
+  // Where You Are, the Weather and Your Affairs' three lines were panels here until 2026-10-23 (brief 23); the town and
+  // the weather are a line of Today now, each a locked button until its chapter is read, and Your Affairs went.
   const shows: Readonly<Record<string, string>> = {
     'ui.calendar': 'What’s coming up, and when.',
-    'ui.needs': 'What happened while you weren’t looking, and the questions waiting on you.',
+    'ui.needs': 'The questions waiting on you, what needs putting right, and the notices that say what happened.',
     'ui.how': 'Your energy, stress and readiness, and a line on how you are.',
-    'ui.where': 'The town you live in, its local time and its daylight.',
-    'ui.weather': 'The weather in your town, today and the days ahead.',
-    'ui.money': 'What your main account holds, and what you’re worth after what you owe.',
-    'ui.school': 'Your year at the School, your standing, your place in the class and what’s next.',
-    'ui.papers': 'Your health cover, and any tax return due, tax owed or unemployment you’re paid.',
   };
   return (
     <section className="card card-tight panel-locked" aria-label={`${title}, Locked`}>

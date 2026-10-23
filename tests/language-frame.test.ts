@@ -62,7 +62,9 @@ describe('a question in What Needs You, opened', () => {
     seen = look(sim, 'decision', low.id);
     expect(words(seen.body)).toContain('Its urgency is low, at 20/100.');
     expect(words(seen.body)).toContain('It’s seventh of the seven questions waiting on you.');
-    expect(words(seen.body)).toContain('Home shows the first six questions, and this one is further down. Its buttons appear there once one of the questions above it closes.');
+    // Show All lists it with its buttons from 2026-10-23 (brief 23): until then “… Its buttons appear there once one of
+    // the questions above it closes.”
+    expect(words(seen.body)).toContain('Home shows the first six questions, and this one is further down: Show All, under them, lists it with its buttons.');
     expect(words(seen.body)).toContain('Answers None It can only be dismissed');
     expect(words(look(sim, 'decision', ask(sim, 3).id).body)).toContain('Its urgency is high, at 70/100.');
     expect(words(look(sim, 'decision', ask(sim, 2, { urgency: 50 }).id).body)).toContain('Its urgency is ordinary, at 50/100.');
@@ -119,7 +121,9 @@ describe('a notice, opened', () => {
     let note = sim.universe.notifications.at(-1)!;
     let seen = look(sim, 'notification', note.id);
     expect([seen.kind, seen.name, seen.summary]).toEqual(['Notice', 'A Word On Your Coursework', 'It came in just now, and it’s your only unread notice.']);
-    expect(words(seen.body)).toContain('Two pieces are unready. Opening it here doesn’t mark it read. On Home, Go There opens the screen it’s about, and Mark 1 Read marks it read. It’s about your school, and its importance is 70/100. Unread notices are listed most important first, and the newer first when two are equal.');
+    // On Updates from 2026-10-23 (brief 23), where every notice is: until then “On Home, Go There opens the screen it’s
+    // about, and Mark 1 Read marks it read.”
+    expect(words(seen.body)).toContain('Two pieces are unready. Opening it here doesn’t mark it read. On Updates, Go There opens the screen it’s about. Mark Read marks it read. It’s about your school, and its importance is 70/100. Unread notices are listed most important first, and the newer first when two are equal.');
     expect(seen.provenance).toBeUndefined();
 
     sim.advanceTo(sim.now + 2 * MS_HOUR);
@@ -127,7 +131,7 @@ describe('a notice, opened', () => {
     sim.notify({ category: 'mystery_side', title: 'Quiet', body: 'A quiet one.', importance: 10 });
     seen = look(sim, 'notification', note.id);
     expect(seen.summary).toBe('It came in 2 hours ago. It’s second of your three unread notices.');
-    expect(words(seen.body)).toContain('On Home, Go There opens the screen it’s about, and Mark 3 Read marks all 3 unread notices read at once.');
+    expect(words(seen.body)).toContain('On Updates, Go There opens the screen it’s about. Mark Read marks it read, and Mark 3 Read on Home marks all three unread notices read at once.');
     expect(words(seen.body)).toContain('Status Unread 2 of 3 unread');
     const quiet = sim.universe.notifications.at(-1)!;
     expect(words(look(sim, 'notification', quiet.id).body)).toContain('It’s about something in your life, and its importance is 10/100.');
@@ -139,10 +143,12 @@ describe('a notice, opened', () => {
     expect(seen.summary).toBe('You’ve read this notice. It came in 2 hours ago.');
     expect(words(seen.body)).toContain('SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in.');
     expect(words(seen.body)).toContain('Status Read No longer listed on Home');
-    // Home lists only the unread, so a notice read has no Go There to press (from 2026-10-20, brief 17: until then its
-    // route still said "On Home, Go There opens the screen it’s about").
+    // Home lists only the unread, so a notice read had no Go There to press (from 2026-10-20, brief 17: until then its
+    // route still said "On Home, Go There opens the screen it’s about"). From 2026-10-23 (brief 23) Updates lists it,
+    // read, with its Go There, and the look says so; nothing says to mark it read.
     expect(note.route).toBe('/workspace/school');
-    expect(words(seen.body)).not.toContain('Go There');
+    expect(words(seen.body)).toContain('SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in. On Updates, Go There opens the screen it’s about.');
+    expect(words(seen.body)).not.toContain('Mark Read');
   });
 });
 

@@ -17,7 +17,7 @@
  * Verified claim by claim against the code on 2026-10-12, and corrected where it said more than the code does: the late
  * penalty's five months were read as coming before the late-payment share, not beside it; refusals the screen never
  * shows (a button the code hides once it would be refused shows no reason) were listed as shown; the Papers line on
- * Home was linked to the Money entry; the accounts a payment reaches were "all your accounts", where the code reaches
+ * Home (the head of Papers from 2026-10-23) was linked to the Money entry; the accounts a payment reaches were "all your accounts", where the code reaches
  * the current account and its bank's savings.
  *
  * Corrected again later on 2026-10-12, after that day's fixes to the IRS's collection. Until then it said an amendment
@@ -245,7 +245,7 @@ export const TAXES: readonly GuideEntry[] = [
       { to: 'day.needs', kind: 'immediate', why: 'Filing answers the year’s item in What Needs You.' },
       { to: 'taxes.pay', kind: 'scheduled', why: `A balance your bank couldn’t pay at filing stays owed: the IRS’s bill comes at once, and its first reminder ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later.` },
       { to: 'bank.accounts', kind: 'scheduled', why: `A refund is paid into your checking account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number.` },
-      { to: 'papers.overview', kind: 'immediate', why: 'The Papers line on Home says when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.' },
+      { to: 'papers.overview', kind: 'immediate', why: 'The head of Papers, and What Needs You on Home, say when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.' },
       { to: 'documents.work', kind: 'optional', why: `On a 1040-NR, having a Social Security number before you file saves the ${said(SSN.itinWeeks)} weeks an ITIN application holds up the refund.` },
     ],
     example: {

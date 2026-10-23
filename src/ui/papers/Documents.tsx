@@ -43,7 +43,7 @@ import { NONCITIZEN_ID, idCardFee, idCardHere, idCardOnItsWay, idCardRefusal, id
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { f1Of, optRefusal, optRunsOut, programEnd, usStatusEnds } from '@/engine/systems/permission';
-import { projectOf } from '@/engine/systems/propay';
+import { eligibilityRead, projectOf } from '@/engine/systems/propay';
 import { leftWithout } from '@/engine/systems/school';
 import { SSN, hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -334,6 +334,11 @@ export function WorkPane() {
  * What permission to work said for each engagement's dates when it was booked (`Engagement.eligibility`,
  * `systems/propay.ts`, from 2026-10-21, brief 19's D8): kept, so it says what was read then. On OPT it's the list of
  * gigs and their dates SEVP's guidance asks the student to keep. Shown once there's work booked.
+ *
+ * From 2026-10-23 (the owner's brief 23) each is a row that says first where the work stands now: a release with its
+ * reason, or permission as it reads today for the days still to come, and only then the reading when it was accepted,
+ * under that name. Until then a line said "Read <date>: …" alone, so a run released when OPT ended still read as
+ * permitted.
  */
 function WorkReadPanel() {
   const { sim } = useGame();
@@ -341,17 +346,37 @@ function WorkReadPanel() {
   const work = [...(person.pro?.engagements ?? [])].filter((e) => e.eligibility).sort((a, b) => (b.days[0]?.from ?? 0) - (a.days[0]?.from ?? 0));
   if (!work.length) return null;
   const onOpt = documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.name.includes('OPT') && d.status === 'valid');
+  const status = { booked: 'Booked', preparing: 'Preparing', working: 'Working', finished: 'Finished', canceled: 'Called Off' } as const;
   return (
-    <Panel title="Your Work And Your Permission" subtitle="What your permission to work said for each engagement’s dates" help="career.pay">
+    <Panel title="Your Work And Your Permission" subtitle="Where each engagement stands now, and what your permission to work said when you accepted it" help="career.pay">
       <div className="col gap-2">
-        <ul className="small col gap-2" style={{ margin: 0, paddingLeft: '1.1rem' }}>
-          {work.map((e) => {
-            const first = e.days[0]?.from;
-            const last = e.days[e.days.length - 1]?.to;
-            const when = first !== undefined && last !== undefined ? `${formatDate(first, sim.zone)} to ${formatDate(last, sim.zone)}` : 'no dates';
-            return <li key={e.id}>{`${e.role}, ${projectOf(e)?.project ?? 'your work'}, ${when}. Read ${formatDate(e.eligibility!.at, sim.zone)}: ${e.eligibility!.words}`}</li>;
-          })}
-        </ul>
+        <div className="table-scroll">
+          <table className="stack-table">
+            <thead><tr><th>Engagement</th><th>Dates</th><th>Now</th><th>Eligibility When Accepted</th></tr></thead>
+            <tbody>
+              {work.map((e) => {
+                const first = e.days[0]?.from;
+                const last = e.days[e.days.length - 1]?.to;
+                const when = first !== undefined && last !== undefined ? `${formatDate(first, sim.zone)} to ${formatDate(last, sim.zone)}` : 'No dates';
+                const ahead = e.days.filter((d) => d.to > sim.now);
+                const released = e.status === 'canceled' ? [...e.history].reverse()[0] : undefined;
+                const read = !released && ahead.length && e.status !== 'finished' ? eligibilityRead(person, ahead, sim.now) : undefined;
+                return (
+                  <tr key={e.id}>
+                    <td>{`${e.role}, ${projectOf(e)?.project ?? 'your work'}`}</td>
+                    {/* The dates at a width they read at (from 2026-10-23: at 1024 they were four lines in 116 pixels). */}
+                    <td><div className="cell-min">{when}</div></td>
+                    <td className={`stack-wide${released || (read && !read.authorized) ? ' warning' : ''}`} data-label="Now">
+                      <strong>{status[e.status]}.</strong>{' '}
+                      {released ? released.words : read ? read.words : e.status === 'finished' ? 'Every day of it is behind you.' : ''}
+                    </td>
+                    <td className="stack-wide" data-label="Eligibility When Accepted">{`Read ${formatDate(e.eligibility!.at, sim.zone)}: ${e.eligibility!.words}`}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         {onOpt && <p className="xs dim" style={{ margin: 0 }}>On OPT, this is the list of your work and its dates that SEVP’s guidance asks you to keep.</p>}
       </div>
     </Panel>

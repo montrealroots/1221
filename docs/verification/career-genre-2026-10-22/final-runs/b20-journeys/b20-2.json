@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 17,
+   "secs": 37,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 52,
+   "secs": 87,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 87,
+   "secs": 141,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 68,
+   "secs": 106,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 22,
+   "secs": 42,
    "reloads": 4,
    "done": true
   }
@@ -11140,7 +11140,7 @@
      ],
      "transactions": 26
     },
-    "secs": 1
+    "secs": 2
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -11191,7 +11191,7 @@
      ],
      "transactions": 1127
     },
-    "secs": 17
+    "secs": 24
    },
    {
     "why": "an audition (self-tape) set for 2029-06-17T22:00, Robin in Last Bus To Eastview",
@@ -11236,7 +11236,7 @@
      ],
      "transactions": 1153
     },
-    "secs": 13
+    "secs": 16
    },
    {
     "why": "an offer standing: An Offer For Felix",
@@ -11289,7 +11289,7 @@
      ],
      "transactions": 1219
     },
-    "secs": 11
+    "secs": 16
    }
   ],
   "workDays": [

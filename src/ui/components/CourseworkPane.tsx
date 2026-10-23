@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Fine, WhyNot } from '@/ui/components/primitives';
+import { Panel, Stat, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatDate, formatDateTime, formatTime, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -199,7 +199,7 @@ function TableWork({ a }: { a: Assignment }) {
   const unread = choose.open ? tableWorkRefusal(a) : undefined;
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">Table Work</div><HowItWorks help="school.choose" /></div>
+      <SectionHead title="Table Work" help="school.choose" />
       {unread && <WhyNot reasons={[['Table Work', unread]]} />}
       {questionsFor(a).map(({ q, options }) => (
         <div key={q.id} className="field" style={{ margin: 0 }}>
@@ -239,7 +239,7 @@ function Rehearsals({ a }: { a: Assignment }) {
   const m = mateRecord(mate);
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">Rehearsing With {first}</div><HowItWorks help="school.ask_partner" /></div>
+      <SectionHead title={<>Rehearsing With {first}</>} help="school.ask_partner" />
       <div className="xs dim">{`Trust ${Math.round(trustOf(mate))} of 100 · ${(m.kept ?? 0) + (m.stoodUp ?? 0) ? `Came to ${m.kept ?? 0} of ${(m.kept ?? 0) + (m.stoodUp ?? 0)} rehearsals agreed` : 'No rehearsals agreed yet'}${m.missedByYou ? ` · You missed ${m.missedByYou}` : ''}${m.reliability !== undefined ? ` · Reliability ${pct(m.reliability)}` : ''}`}</div>
       {days.length > 0 ? (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -292,7 +292,7 @@ function FeedbackBlock({ a }: { a: Assignment }) {
   const f = a.feedback!;
   return (
     <div className="col gap-1">
-      <div className="row-between"><div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${kindLabel(f)}` : ''}</div><HowItWorks help="school.read_feedback" /></div>
+      <SectionHead title={<>Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${kindLabel(f)}` : ''}</>} help="school.read_feedback" />
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
       {a.shown?.together && <div className="small"><strong>The Scene Together.</strong> {a.shown.together.words} The band is for your own work.</div>}

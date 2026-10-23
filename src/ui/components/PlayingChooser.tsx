@@ -9,9 +9,8 @@
  */
 
 import { useId, useState } from 'react';
-import { Fine, WhyNot } from '@/ui/components/primitives';
+import { Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '@/engine/content/approaches';
 import type { Axis, AxisValue, MaterialProfile } from '@/engine/content/material';
 import { misfitOf, sidesOf, transitionsOf, type Playing } from '@/engine/systems/material';
@@ -94,7 +93,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
   const unchanged = current && sidesOf(current).length ? 'That’s how you play it now. Choose another way above to change it.' : 'Choose a way to play it above first.';
   return (
     <div className="col gap-2">
-      {help ? <div className="row-between"><div className="eyebrow">How You’ll Play It</div><HowItWorks help={help} /></div> : <div className="eyebrow">How You’ll Play It</div>}
+      {help ? <SectionHead title="How You’ll Play It" help={help} /> : <div className="eyebrow">How You’ll Play It</div>}
       {asked.length > 0 && <p className="small" style={{ margin: 0 }}>The director has asked for it {asked.map(([, v]) => APPROACH_EFFECT[v].label.toLowerCase()).join(' and ')}: {asked.map(([, v]) => APPROACH_EFFECT[v].words).join(' ')}</p>}
       <div className="table-scroll">
         <table>
@@ -112,13 +111,16 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
               return (
                 <tr key={side}>
                   <td className="nowrap">{i === 0 ? AXES[axis].label : ''}</td>
+                  {/* The choice and what the scene says of it at a width they read at, the table scrolling in its box where
+                      the page is narrower (from 2026-10-23, brief 23's walk: at 1024 the choice's words were five lines in
+                      107 pixels). */}
                   <td>
-                    <label className="row gap-1" style={{ alignItems: 'flex-start' }}>
+                    <label className="row gap-1 cell-wide" style={{ alignItems: 'flex-start' }}>
                       <input type="radio" name={`${group}axis-${axis}`} checked={chosen} onChange={() => setDraft({ ...draft, [axis]: side })} />
                       <span><strong>{e.label}</strong> <span className="xs">{e.words}</span>{why && <span className="xs" style={{ display: 'block', color: 'var(--warning, inherit)' }}>Doesn’t fit: {why}</span>}</span>
                     </label>
                   </td>
-                  <td className="xs" data-suit={suit.band}><strong>{GRAIN_LABEL[suit.band]}</strong>{rests.length ? <ul style={{ margin: 0, paddingLeft: '1.1em' }}>{rests.map((g) => <li key={g.source}>{g.source}: {g.v > 0 ? 'for it' : 'against it'}</li>)}</ul> : <span style={{ display: 'block' }}>Nothing in the scene leans either way.</span>}</td>
+                  <td className="xs" data-suit={suit.band}><div className="cell-min"><strong>{GRAIN_LABEL[suit.band]}</strong>{rests.length ? <ul style={{ margin: 0, paddingLeft: '1.1em' }}>{rests.map((g) => <li key={g.source}>{g.source}: {g.v > 0 ? 'for it' : 'against it'}</li>)}</ul> : <span style={{ display: 'block' }}>Nothing in the scene leans either way.</span>}</div></td>
                   <td className="xs">{draws}</td>
                   <td className="num mono">{result.toFixed(1)}</td>
                 </tr>

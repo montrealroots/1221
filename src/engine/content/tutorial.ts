@@ -48,7 +48,7 @@ import { ROUND_UPS } from './roundups';
 import { PRACTICE } from './practice';
 import { EVALUATION } from './tasks';
 import { ENROLLMENT, PUBLIC_COVER, RETURN } from './safetynet';
-import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET, YALE_DRAMA } from './school';
+import { EXTENDED_STUDY, SKILL_WORDS, SUMMER_CABARET, YALE_CABARET } from './school';
 import { EARLY_DEGREE } from '../systems/proshowcase';
 import { AGENTS, agencyOf } from './agents';
 import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND, TEN as PRO_TEN } from '../systems/proagent';
@@ -121,14 +121,14 @@ export const CHAPTERS: readonly Chapter[] = [
     lead: 'How SLATE works, and how to read Home.',
     body: [
       'In SLATE you live one life, hour by hour, in a real town with its own time, seasons, weather, prices, money and laws. This guide shows you how, one part at a time, and each chapter you read opens the part of the game it explains.',
-      'You start on Home. The line under the greeting shows the time, the town, its time zone, the season and the weather. Where You Are, further down, tells you more about the town.',
+      'You start on Home. The line under the greeting shows the time, the town, its time zone, the season and the daylight, and the weather is beside it. Press any of them to see more.',
       'Underlined words are links: press one to see more. Press the town’s name and its details open just below, with more links inside for its region, its country and its money. The date, the season and the daylight work the same way.',
       'Some words only become links once you’ve read the guide chapter that covers them. A panel you can’t use yet says Locked and names the chapter to read. Press its Read About It button to go straight there.',
       'When you’ve read a chapter, press I’ve Read It at its foot to open what it covers, listed under What It Opens. Then press Next, which names the chapter after it, to read on, or Try It to close the guide and use what just opened. Later closes the guide without opening anything, and the line at the top of the screen keeps a Read button for the next chapter.',
       'Once you’ve read its chapter, you can open each part of your life from Home and from the menu down the left. On a small screen, press Menu to see the menu.',
       'Each panel has a How This Works button that explains what the panel does and how it connects to the rest of the game. Press the ? key anywhere for the help’s contents, or the / key to search it. The clock waits while you read the help or this guide.',
       'Save & Exit, in the top bar, saves your life and takes you back to the save slots. Press Continue there to pick up at the same moment.',
-      'A new life starts with the clock paused, so nothing happens until you’re ready. Read “What’s Coming” next to open the Calendar panel.',
+      'A new life starts with the clock paused, so nothing happens until you’re ready. Read “What’s Coming” next to open Up Next.',
     ],
     names: ['Where You Are', 'The date, the town, its region and country, its money, the season and the daylight, when you press them'],
     opens: ['ui.where', 'look.day', 'look.place', 'look.region', 'look.country', 'look.currency', 'look.season', 'look.daylight'],
@@ -150,7 +150,7 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'What’s Coming',
     lead: 'What’s coming up, and what to do when the clock stops for it.',
     body: [
-      'The Calendar panel at the top of Home shows what’s coming up: the next thing you need to be at, how soon it is, and up to five more after it.',
+      'Up Next, on Home, shows what’s coming up: the next thing you need to be at, how soon it is, and up to five more after it. Open Calendar, at its head, opens your calendar: the whole month, with everything on it.',
       'Press an entry’s name or its time to see when it starts, how long it lasts, where it is and what missing it would cost.',
       'Anything you need to be at is a commitment: a class, a rehearsal call, a work-study shift, an appointment, a plan of your own. When the clock reaches one, it stops, and a dialog with the commitment’s name asks what you want to do.',
       'Press Go to be there. Going takes as long as the commitment lasts, and the clock runs on through it. Stand Here closes the dialog and keeps the clock paused at the commitment.',
@@ -158,8 +158,10 @@ export const CHAPTERS: readonly Chapter[] = [
       'You miss a commitment if you’re asleep or in hospital when it starts. An injury that lays you up also keeps you from classes, calls, performances, work-study shifts and an office appointment for your papers, though not from your doctor, your therapist, orientation or a plan of your own.',
       'The clock hasn’t moved yet, so nothing has come due. Read “The Clock” next: it opens Play, which starts the clock.',
     ],
-    names: ['Calendar', 'Go', 'Skip It', 'The entries on it, when you press them'],
-    opens: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
+    // Open Calendar opens here, with the calendar, from 2026-10-23 (brief 24, which took Calendar from the menu): until
+    // then it waited for “Your Own Plans”, and the menu's Calendar was the way in between.
+    names: ['Up Next, and Open Calendar at its head', 'Go', 'Skip It', 'The entries on it, when you press them'],
+    opens: ['ui.calendar', 'ui.open-calendar', 'ui.go', 'calendar.skip', 'look.entry'],
   },
   {
     id: 'clock',
@@ -189,7 +191,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many: press Advance there to go on, or Cancel to stay where you are. The clock still stops at each commitment to ask what you want to do: Go takes you to it and carries the jump on afterwards, and Stand Here ends the jump there, with the clock paused.',
       'Skip It, on a plan of your own, and Call It Off, on a rehearsal with a partner, carry the jump on too. On The Way also lists what isn’t on your calendar yet but will be by then, such as next week’s classes.',
       'Time only moves forward, so you can’t undo a jump.',
-      'Read “What Needs You” next: it’s where you find out what happened.',
+      'Read “What Needs You” next: it’s where you find out what’s waiting for you and what happened.',
     ],
     more: [
       `If you jump more than an hour through the night, your character goes to bed by themselves from midnight. That’s a poorer night than one you choose with Sleep, and it never brings your energy above ${COASTING_ENERGY_CEILING}. If you let the clock run, or jump an hour at a time, they stay up with you.`,
@@ -202,13 +204,13 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'What Needs You',
     lead: 'What happened while you weren’t looking, and what’s waiting on you.',
     body: [
-      'What Needs You, on Home, is where you find out what’s happened and what’s waiting for you: groceries you couldn’t pay for, a late card payment, a teacher’s note on your work, a birthday. The number beside Home in the menu counts the notices and questions waiting.',
+      'What Needs You, on Home, holds the questions waiting for you and anything that needs putting right, such as a card payment that’s late. Recent Updates, also on Home, has the latest notices of what’s happened, such as groceries you couldn’t pay for, a teacher’s note on your work or a birthday, and says how many you haven’t read. View All Updates, at its foot, opens Updates, which keeps every notice, read and unread. The number beside Home in the menu counts the questions waiting.',
       'Press a notice’s title to read it in full. If it has a Go There button, that takes you to the screen it’s about. Once you’ve seen them, press the button that counts them, such as Mark 3 Read, to clear them from the panel.',
       'Some notices are questions, with their answers on buttons. Pressing an answer does it straight away and closes the question; if it can’t be done, a message says why and the question stays. Dismiss takes a question off the list without answering it, but what it was about still stands: a tax return is still due, and you can still deal with it on its own screen.',
       'When nothing is waiting, the panel tells you about anything that still needs your attention, such as money you owe or two commitments at the same time.',
       'Read “How You Are” next, about your energy, stress and readiness.',
     ],
-    names: ['What Needs You', 'Mark Read, which counts the notices it clears', 'A question’s answers, and Dismiss', 'A notice or a question, when you press it'],
+    names: ['What Needs You', 'Recent Updates, and View All Updates at its foot', 'Mark Read, which counts the notices it clears', 'A question’s answers, and Dismiss', 'A notice or a question, when you press it'],
     opens: ['ui.needs', 'world.mark_read', 'world.take_decision_action', 'world.dismiss_decision', 'look.notification', 'look.decision'],
   },
   // Until 2026-10-12 this chapter called the other dials “one press away” and sent the player to “your own page” for the
@@ -263,7 +265,7 @@ export const CHAPTERS: readonly Chapter[] = [
     body: [
       'Press Look After Yourself, in the top bar, for everything a day needs besides sleep: Eat A Meal, Order In, Shower, Work Out and Unwind. Each line shows, before you press it, how long it takes, what it costs and what it would change. Pressing one moves the clock on by that long, and a message says when it was done.',
       'What matters most right now is at the top. Anything that costs you more every hour you leave it comes first (hunger, going unwashed, stress past its limit), then whatever would do most for your readiness. The top line is marked Needed Now or Most Worth It.',
-      'Your groceries are bought for you at the start of each day, at your town’s prices, and you eat through them during the day. If there’s no money for them, a notice in What Needs You says so, and you don’t eat enough that day.',
+      'Your groceries are bought for you at the start of each day, at your town’s prices, and you eat through them during the day. If there’s no money for them, a notice says so, and you don’t eat enough that day.',
       'Eat A Meal feeds you and lifts your morale, more the hungrier you were. Order In does the same without the cooking, at the price of a delivery.',
       'Shower gets you clean and eases stress. Unwind eases stress and lifts your morale.',
       'Work Out builds fitness (your Stamina) and eases stress. It costs energy, uses up some of what you’ve eaten and leaves you needing a shower. On a dry, mild day it’s a run, which builds a little more than a workout indoors.',
@@ -287,14 +289,14 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Your Own Plans',
     lead: 'Putting something of your own on the calendar.',
     body: [
-      `Press Open Calendar, on Home’s Calendar panel, to see the whole month. Press a day, then Put Something On It. Fill in What Is It, When It Starts and How Long It Takes, from ${PLAN_LENGTHS[0]!.label.toLowerCase()} to ${PLAN_LENGTHS[PLAN_LENGTHS.length - 1]!.label.toLowerCase()}, and press Put It On: the plan goes on your calendar, or the form says why it can’t.`,
+      `Press Open Calendar, under Up Next on Home, to see the whole month. Press a day, then Put Something On It. Fill in What Is It, When It Starts and How Long It Takes, from ${PLAN_LENGTHS[0]!.label.toLowerCase()} to ${PLAN_LENGTHS[PLAN_LENGTHS.length - 1]!.label.toLowerCase()}, and press Put It On: the plan goes on your calendar, or the form says why it can’t.`,
       'A plan of your own works like any other commitment: the clock stops at it, and you choose Go or Skip It. You can have two commitments at the same time, and the calendar marks them Clash.',
       'To take a plan off before it starts, press it on the Calendar screen, then Call It Off. If you sleep through a plan, or it comes while you’re in hospital, you miss it.',
       'A plan happens in the town where you make it, and nothing in the game takes you away from that town.',
       'Read “Weather” next to see the weather in your town.',
     ],
-    names: ['Open Calendar', 'Put Something On It and Call It Off', 'Your plans and the stretches between them, when you press them'],
-    opens: ['ui.open-calendar', 'calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
+    names: ['Put Something On It and Call It Off', 'Your plans and the stretches between them, when you press them'],
+    opens: ['calendar.schedule', 'calendar.cancel', 'look.plans', 'look.stretch'],
   },
   // Until 2026-10-21 (the owner's brief 20, C3) it said the weather affected two things, a workout run outdoors and the
   // weeks the flu goes around, though the flu's weeks are read from the town's climate, its usual coldest or wettest
@@ -305,7 +307,7 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Weather',
     lead: 'The weather in your town, today and the days ahead.',
     body: [
-      'The Weather panel on Home shows the weather now and for the next few days. Press today’s weather, or any day, to see more: the week, each day and each hour.',
+      'The weather on Home, beside the greeting, shows the weather now and for the next few days. Press today’s weather, or any day, to see more: the week, each day and each hour.',
       'The weather comes from your town’s climate and the season, with some day-to-day luck, and it stays the same however often you look.',
       'The day’s weather decides whether a workout is a run outdoors. The weeks when the flu goes around follow your town’s climate, not the day’s weather.',
       'Read “Drama School” next: it’s where your life as an actor begins.',
@@ -343,8 +345,8 @@ export const CHAPTERS: readonly Chapter[] = [
     lead: 'Classes, coursework, casting and your degree at Yale.',
     body: [
       'You start as a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, in New Haven: one of the sixteen actors admitted this year, among the strongest of them but not ahead of everyone. You arrive on the first day of the fall term for registration and orientation, and classes start a week later.',
-      `The school is where you train, get cast and earn your degree. To open it, press the ${YALE_DRAMA.short} button on the School line in Your Affairs on Home, or choose School in the menu.`,
-      'The School line shows your year, your standing, your place in the class and what’s next. The School screen’s tabs are Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, and Terms And Award.',
+      `The school is where you train, get cast and earn your degree. To open it, choose School in the menu.`,
+      'The School screen’s tabs are Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, and Terms And Award. When your standing is in trouble, What Needs You, on Home, says so, with Open School.',
       'Classes run from nine to three on class days. Go to them, awake and in New Haven, and your craft grows, more if you arrive rested. Your fifteen classmates improve too, each at their own pace, and you’re cast alongside them and against them.',
       `If you’re unwell, press Call In Sick, on Classes, before the day’s first commitment starts (on a class day, at the latest when the clock stops at nine for your classes). You count as unwell with the flu, an injury that limits your work, or condition under ${ESTIMATE.sickBelow}. If you’re well, the button is grayed out and says why.`,
       'Calling in sick excuses the day’s classes, labs, rehearsal calls and work-study shift, and a partner rehearsal you miss while you’re ill isn’t held against you. A day in hospital is excused without asking. Staying away when you’re well counts as an absence.',
@@ -388,7 +390,7 @@ export const CHAPTERS: readonly Chapter[] = [
       `Each showcase scene is shown at its first showcase day with the faculty’s note, played again the next, and shown again with the note taken in Los Angeles. A showcase day missed counts as a missed call and an absence from Actor Showcase. The course is settled after Los Angeles, not at the term review, and a scene played at no showcase day counts as a piece not shown.`,
       EARLY_DEGREE.words,
     ],
-    names: ['School', 'Your school, from its line on Home', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Coursework: preparing, the table, how you’ll play it, asking your partner, and Run It With A Reader', 'Work It Through: name a problem, try a way, keep it or put it back', 'Learn The Part, Catch Up The Blocking and Work On The Note', 'Plays To Read: Read It and Research It', 'The Actor Showcase: Choose These Scenes'],
+    names: ['School', 'Your school, from the head of School', 'Call In Sick', 'Take An Elective Shift', 'Join A Cabaret Show', 'Join The Summer Company', 'Coursework: preparing, the table, how you’ll play it, asking your partner, and Run It With A Reader', 'Work It Through: name a problem, try a way, keep it or put it back', 'Learn The Part, Catch Up The Blocking and Work On The Note', 'Plays To Read: Read It and Research It', 'The Actor Showcase: Choose These Scenes'],
     opens: ['ui.school', 'school.call_in_sick', 'school.withdraw', 'school.request_leave', 'school.cancel_leave', 'school.return_notice', 'school.buy_affiliate', 'school.reregister', 'school.request_repeat', 'school.cancel_repeat', 'school.appeal_leave', 'school.request_extra_term', 'school.request_aid_review', 'school.pay_balance', 'school.request_conversion', 'school.make_up', 'school.extend_incomplete', 'school.take_shift', 'school.cabaret', 'school.summer_cabaret', 'school.orientation', 'school.prepare', 'school.choose', 'school.read_feedback', 'school.ask_partner', 'school.answer_partner', 'school.respond', 'school.make_amends', 'school.buy_ppe', 'school.approach', 'school.choose_playing', 'school.choose_part_playing', 'school.cancel_rehearsal', 'school.learn_part', 'school.review_blocking', 'school.work_note', 'work.identify', 'work.try', 'work.settle', 'plays.read', 'plays.research', 'school.choose_showcase', 'look.school', 'look.course', 'look.skill', 'look.assignment', 'look.classmate'],
   },
   // From 2026-10-16 it says the same day's halving and discipline's lift reach every growth (`grown`), the hour's gain is
@@ -561,8 +563,8 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Cover, Benefits And Returns',
     lead: 'Health cover, benefits, pensions and tax returns.',
     body: [
-      'Papers holds your health cover, your benefits and pension, your tax returns and your documents. To open it, press the Papers button on the Papers line in Your Affairs on Home, or choose Papers in the menu.',
-      'The Papers line shows what covers you, any unemployment pay, and anything that needs doing, such as a tax return that’s due. The Papers screen’s tabs are Tax Returns, Health Cover, Unemployment, Passport And ID, and Permission To Work.',
+      'Papers holds your health cover, your benefits and pension, your tax returns and your documents. To open it, choose Papers in the menu.',
+      'When something there needs doing, such as a tax return that’s due or no health cover, What Needs You on Home says so, with Open Papers. The Papers screen’s tabs are Tax Returns, Health Cover, Unemployment, Passport And ID, and Permission To Work.',
       'While you’re at school, the Yale Health plan covers you. It’s billed each term, and it pays for a doctor’s visit only at Yale Health Center. Your Cover, on Health Cover, shows what covers you and what it costs.',
       'You don’t book a doctor whenever you like. When you’re ill enough to need one, or a long-term condition is due for its review, you get an appointment at your practice after its usual wait, and it goes on your calendar. Where more than one practice would see you, choose yours under Your Doctor, on Health Cover.',
       'In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. When the clock stops at the appointment, press Go to be seen. If you miss it or press Call It Off beside it, you aren’t seen, and Book An Appointment, beside the visit you’re owed, books it again.',
@@ -630,14 +632,16 @@ export const CHAPTERS: readonly Chapter[] = [
   // Until 2026-10-12 this chapter said Money showed your card and your credit record, and that the record showed as a
   // number or a word: Home's card-and-record panel (`CardSummary`) went when Home's affairs became a line each
   // (986ac341, committed 2026-10-09), and the record's own figure shows only when a life is made
-  // (`ui/creation/CharacterCreation.tsx`).
+  // (`ui/creation/CharacterCreation.tsx`). Until 2026-10-23 (brief 23) it sent the player to the Money line in Your
+  // Affairs on Home, and Your Affairs' heading opened the net worth; Your Affairs went from Home that day, the net worth
+  // opening from the Money screen's head, and what the line flagged is in What Needs You.
   {
     id: 'money',
     title: 'Money',
     lead: 'Everything you have and owe, at a glance.',
     body: [
-      'The Money line in Your Affairs on Home shows your primary checking account and your net worth (what you have, less what you owe), and, if you owe anything, how much. Your money is kept in the currency of the country you started in.',
-      'Press Your Affairs, the panel’s title, to see what you’re worth, and from there each account and each debt.',
+      'Money, in the menu, opens with “Your Bank”, the next chapter. At its top, Worth opens your net worth: what you have, less what you owe, and, if you owe anything, how much. Your money is kept in the currency of the country you started in.',
+      'From your net worth, each account and each debt opens. When your money needs putting right, such as an account overdrawn or a card payment missed, What Needs You, on Home, says so, with Open Money.',
       'Your credit score decides whether a bank gives you a card, an overdraft or a loan, at what rate where the bank prices by it, and how high a card’s limit is and whether it’s raised.',
       'Your score rises with each card payment made on time, and slowly with no card at all while nothing is late or in collections. It falls when you use a card past 30% of its limit, pay late, miss a loan payment, apply for a card, leave a medical debt unpaid for a year, or have a debt charged off to collections.',
       'You see the score only when a life is made, as a number in the United States and Canada and as a word elsewhere. After that, you can tell it from what banks will do for you.',
@@ -646,7 +650,7 @@ export const CHAPTERS: readonly Chapter[] = [
     more: [
       'Your net worth is what you have in the bank, in cash and in a pension from before, less what you owe on cards and loans, in unpaid bills, medical bills and collections.',
     ],
-    names: ['Money', 'Your accounts, net worth and debts, when you press them'],
+    names: ['Money, under What Needs You, when your money needs putting right', 'Your accounts, net worth and debts, when you press them'],
     opens: ['ui.money', 'look.account', 'look.networth', 'look.debt'],
   },
   // Until 2026-10-12 this chapter put Statements “under the accounts”, though they had had a tab of their own since the
@@ -675,7 +679,7 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Your Bank',
     lead: 'Your accounts, cards, payments and borrowing, at a real bank where you live.',
     body: [
-      'Your money is at a real bank in the country you live in, in accounts with that bank’s own names and with numbers written the way that country writes them. To open the bank, press the button with its name on the Money line in Your Affairs on Home, or choose Money in the menu. Its tabs are Accounts, Cards, Payments And Cash, Borrowing, and Statements.',
+      'Your money is at a real bank in the country you live in, in accounts with that bank’s own names and with numbers written the way that country writes them. To open the bank, choose Money in the menu. Its tabs are Accounts, Cards, Payments And Cash, Borrowing, and Statements.',
       'With two accounts or more, Move Money, on Accounts, moves money between them: choose From, To and the Amount, and press Move It. Between two accounts at the same bank, it moves at once.',
       'To another bank, Move Money takes the sending bank’s time, or its country’s where the bank doesn’t set one, unless the country’s banks pay instantly. A message says the day it arrives, and until then On Its Way, on Accounts, lists it. That money is pending: it has left one account and isn’t in the other yet, so you can’t spend it.',
       'An account that earns interest builds it each day, and the bank pays it at the end of the month, or in the months it pays interest. A checking account with a monthly fee takes the fee at the month’s end, unless that month met one of the bank’s conditions for waiving it, such as enough paid in, enough kept in the account, enough card purchases, or your age. Each account’s panel, on Accounts, says whether this month’s fee is waived so far.',
@@ -685,7 +689,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'If your checking accounts and savings together can’t clear the card, press Ask For Help With Payments, on Cards: the bank freezes the interest, sets a payment that clears the balance in four years, and suspends the card until the first statement or due date after it’s paid off.',
       'To apply for a card at any bank in the country that issues one, yours or another, choose the Bank under Credit Card, on Cards (Another Card once you hold one), and press Apply For This Card. The bank looks at your credit score and what you have to repay it from. If it says yes, the card comes in about a week.',
       'You can hold one card from each bank. The day’s spending goes on your everyday card, and Make It The Everyday Card moves it to another.',
-      'Statements, on their own tab, show every entry on each account you’ve held, month by month, with the balance after each. The Year adds up the interest, the tax taken off it and every fee. Alerts tell you, in What Needs You, when a checking account ends a day below an amount you set, when a payment is over an amount you set, when a statement is ready, and, unless you turn it off, when an account can’t cover a payment due in the next few days.',
+      'Statements, on their own tab, show every entry on each account you’ve held, month by month, with the balance after each. The Year adds up the interest, the tax taken off it and every fee. Alerts tell you, in a notice, when a checking account ends a day below an amount you set, when a payment is over an amount you set, when a statement is ready, and, unless you turn it off, when an account can’t cover a payment due in the next few days.',
       'How You Pay, on Payments And Cash, sets how the day’s spending is paid: by debit card, by credit card or in cash. If that way can’t cover a purchase, it isn’t made, and you owe nothing for it. Under Cash, on the same tab, Take It Out takes money out at a machine or the counter, for the bank’s fee, and Pay It In pays cash back in.',
       'Under Your Cards, on Cards, Lock It stops anything new going on a card, and Unlock It undoes that. To stop a card lost, stolen or damaged, choose which and press Report It: it stops working at once, and a new card with a new number follows. If a charge isn’t yours, press Report It As Not Mine beside it in time: the law decides how much of it you pay and how soon the rest comes back.',
       'If your bank offers one, Overdraft, on Borrowing, lets your account go below zero, with interest and any fee. Personal Loan, on Borrowing, lends you money repaid in equal monthly payments.',
@@ -717,7 +721,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'In the US the bank reports a closing like that to ChexSystems for five years, and the next bank may turn you away (most do while the debt is unpaid, about half once it’s paid), which leaves a second-chance account with a monthly fee and no overdraft. Pay It, under In Collections, pays the debt down. A French bank writes to you after a month past your overdraft, and after three offers a loan to cover it: Take The Loan accepts it, and once the account is back within its limit, the sixty days start again.',
       'If the account can’t cover a personal loan payment in full, the bank takes what’s there, the payment goes on your credit record as missed, with the bank’s fee where it charges one, and the rest stays owed. When you switch to another bank, your card stays with the bank that issued it, as loans and term deposits do. The bank’s name, each account’s name and every line on a statement are links: the bank opens onto the accounts it holds for you and the latest money through them, and a statement line onto the accounts it moved between and the day it went through.',
     ],
-    names: ['Your bank, from the Money line on Home', 'Your credit card, Pay Card In Full and Autopay', 'Apply, several cards and the everyday one, close, the statement day, the limit, going over it, and help with payments', 'Statements, The Year and Alerts', 'Cash: taking it out and paying it in', 'The card’s offers: its introductory rate, a balance or money transfer, a plan, and rewards', 'Your cards: locking one, reporting it lost or stolen, and payments that weren’t yours', 'Term deposits, round-ups, dormant and unclaimed accounts, and canceling something new', 'How You Pay, standing orders and payments set for a date', 'Move Money', 'Open and close a savings account', 'Arrange an overdraft', 'Put money in a term deposit', 'Borrow, and pay a loan off', 'Opt in or out of debit card overdrafts', 'Pay a debt in collections', 'Switch bank'],
+    names: ['Your bank, from Money in the menu', 'Your credit card, Pay Card In Full and Autopay', 'Apply, several cards and the everyday one, close, the statement day, the limit, going over it, and help with payments', 'Statements, The Year and Alerts', 'Cash: taking it out and paying it in', 'The card’s offers: its introductory rate, a balance or money transfer, a plan, and rewards', 'Your cards: locking one, reporting it lost or stolen, and payments that weren’t yours', 'Term deposits, round-ups, dormant and unclaimed accounts, and canceling something new', 'How You Pay, standing orders and payments set for a date', 'Move Money', 'Open and close a savings account', 'Arrange an overdraft', 'Put money in a term deposit', 'Borrow, and pay a loan off', 'Opt in or out of debit card overdrafts', 'Pay a debt in collections', 'Switch bank'],
     opens: ['ui.bank', 'finance.pay_card', 'finance.set_autopay', 'card.apply', 'card.money_transfer', 'card.plan', 'card.redeem_rewards', 'card.lock', 'card.report', 'card.dispute', 'bank.new_number', 'card.close', 'card.refund_credit', 'card.set_statement_day', 'card.request_limit', 'card.set_auto_raise', 'card.set_over_limit', 'card.set_everyday', 'card.request_hardship', 'bank.set_alerts', 'cash.withdraw', 'cash.deposit', 'bank.set_term_end', 'bank.break_term', 'bank.take_term_interest', 'bank.set_round_ups', 'bank.reactivate', 'bank.cancel_new', 'bank.claim_unclaimed', 'bank.set_payments', 'bank.add_standing_order', 'bank.cancel_standing_order', 'bank.schedule_payment', 'bank.cancel_scheduled', 'bank.transfer', 'bank.open_savings', 'bank.close_savings', 'bank.arrange_overdraft', 'bank.open_term', 'bank.borrow', 'bank.repay_loan', 'bank.debit_overdraft', 'bank.pay_collections', 'bank.take_overrun_loan', 'bank.switch', 'bank.open_current', 'bank.set_primary', 'bank.redirect_deposits', 'bank.set_order_source', 'card.set_autopay_from', 'bank.close_current', 'bank.cancel_switch', 'bank.stop_balance_transfer', 'bank.set_loan_repayment', 'look.bank', 'look.transaction'],
   },
   {

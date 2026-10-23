@@ -166,7 +166,9 @@ function fresh(): void { h.given = new Map(); h.sets = []; h.toasts = []; h.navi
 /** The Player Profile over a save, as markup, with every state a press set applied. */
 function profile(sim: Simulation): string {
   h.sim = sim; h.calls = 0; h.inits = []; h.sets = []; h.elements = [];
-  return renderToStaticMarkup(createElement(ProfileWorkspace));
+  // The page's index (`PageIndex`, from 2026-10-23) set aside: it names the panels this file reads from heading to heading,
+  // and tests/b23-pages.test.ts reads it.
+  return renderToStaticMarkup(createElement(ProfileWorkspace)).replace(/<nav class="page-index"[\s\S]*?<\/nav>/, '');
 }
 /** A screen by its route, as the shell's router opens it: the screen, or Locked where its chapter isn't read. */
 function screenAt(sim: Simulation, route: string): string {

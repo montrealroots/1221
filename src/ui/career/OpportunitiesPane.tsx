@@ -9,9 +9,8 @@
  */
 
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
+import { Panel, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, formatTime, formatWeekdayDate } from '@/engine/core/time';
 import { PROJECTS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
@@ -95,7 +94,7 @@ function SchoolRule({ o }: { o: Opportunity }) {
   const conditions = conditionsFor(sim, person, o, req?.at ?? sim.now);
   return (
     <div className="col gap-2">
-      <div className="row-between"><h4 className="eyebrow" style={{ margin: 0 }}>In Term At The School</h4><HowItWorks help="career.outside-work" /></div>
+      <SectionHead title="In Term At The School" help="career.outside-work" heading />
       <p className="small" style={{ margin: 0 }}>
         {req ? (req.status === 'pending' ? `You asked the School on ${formatDate(req.at, NY)}. The dean decides on ${formatDate(decidesAt(req), NY)}.` : `The dean ${req.status === 'approved' ? 'approved' : 'refused'} your request on ${formatDate(req.decidedAt ?? req.at, NY)}.`)
           : 'Its days fall in term, and the School approves outside work in term only rarely. The dean looks at each of these:'}
@@ -181,7 +180,12 @@ function History({ o }: { o: Opportunity }) {
   );
 }
 
-/** An offer: its terms, what accepting brings with the School, and the two answers. */
+/**
+ * An offer, its summary first (from 2026-10-23, the owner's brief 23): the part and the project, its dates, its pay, how
+ * long it stands, what accepting would bring that matters before it's accepted (OPT, the School), and the two answers.
+ * The role in full, the notice's own lines, opens below. Until then the notice's six paragraphs came first and the
+ * answers last, under them.
+ */
 function OfferCard({ o }: { o: Opportunity }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -189,19 +193,30 @@ function OfferCard({ o }: { o: Opportunity }) {
   const no = acceptRefusal(sim, person, o);
   const warning = acceptWarning(sim, person, o);
   const agent = o.agentId ? agentById(o.agentId) : undefined;
+  const days = datesOf(o);
   return (
-    <article className="card card-tight col gap-3">
-      <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
-      <RoleFacts t={t} o={o} />
-      <p className="small" style={{ margin: 0 }}>{`The offer stands until ${formatWeekdayDate(o.offer!.until, NY)} at ${formatTime(o.offer!.until, NY)}.`}</p>
+    <article className="engagement" aria-label={`${t.role.part}, ${t.project}`}>
+      <div className="engagement-head">
+        <h3>{`${t.role.part}, ${t.project}`}</h3>
+        <span className="chip chip-accent">Offer</span>
+      </div>
+      <dl className="facts">
+        <div><dt>Dates</dt><dd>{`${cap(spanWords(days))}, in ${t.place.city}.`}</dd></div>
+        <div><dt>Pay</dt><dd>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
+        <div><dt>Deadline</dt><dd>{`The offer stands until ${formatWeekdayDate(o.offer!.until, NY)} at ${formatTime(o.offer!.until, NY)}.`}</dd></div>
+      </dl>
       {agent && <p className="xs dim" style={{ margin: 0 }}>{`${agent.name} passed it on.`}</p>}
-      {warning && <p className="small" style={{ margin: 0 }}>{warning}</p>}
+      {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-        <Gated feature="pro.accept_offer" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(`Booked: ${t.role.part}.`, 'positive'); }}>Accept The Offer</Gated>
+        <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(`Booked: ${t.role.part}.`, 'positive'); }}>Accept The Offer</Gated>
         <Gated feature="pro.decline_offer" className="btn btn-sm" onClick={() => { const r = run('pro.decline_offer', { opportunityId: o.id }); if (r.ok) toast(`Declined: ${t.role.part}.`, 'neutral'); }}>Decline The Offer</Gated>
       </div>
       <WhyNot reasons={[['Accept The Offer', no]]} />
+      <details className="section-fold">
+        <summary>The Role In Full</summary>
+        <RoleFacts t={t} o={o} />
+      </details>
     </article>
   );
 }
@@ -268,6 +283,14 @@ export function OpportunitiesPane() {
   return (
     <div className="col gap-5">
       <p className="small" style={{ margin: 0 }}>Every project, company and casting office here is invented for the game: no real production is casting. New roles go up each Monday morning.</p>
+      {/* An offer waiting on an answer first, its deadline the nearest thing on the tab (from 2026-10-23, brief 23): until
+          then it was fourth, under Open Calls, Through An Agent and In Progress, and below the fold at 1440 by 900. With
+          none, the tab says so where it always did, after In Progress. */}
+      {offers.length > 0 && (
+        <Panel title="Offers" help="career.offers">
+          <div className="col gap-4">{offers.map((o) => <OfferCard key={o.id} o={o} />)}</div>
+        </Panel>
+      )}
       <Panel title="Open Calls" help="career.opportunities">
         <div className="col gap-4">
           {open.length ? open.map((o) => <OpenRole key={o.id} o={o} />) : <p className="small" style={{ margin: 0 }}>No open role takes submissions now. New ones go up on Monday morning.</p>}
@@ -296,11 +319,11 @@ export function OpportunitiesPane() {
           {going.length ? going.map((o) => <InProgress key={o.id} o={o} />) : <p className="small" style={{ margin: 0 }}>No role is in progress. A role you submit for moves here, with its audition once casting answers.</p>}
         </div>
       </Panel>
-      <Panel title="Offers" help="career.offers">
-        <div className="col gap-4">
-          {offers.length ? offers.map((o) => <OfferCard key={o.id} o={o} />) : <p className="small" style={{ margin: 0 }}>No offer stands now.</p>}
-        </div>
-      </Panel>
+      {offers.length === 0 && (
+        <Panel title="Offers" help="career.offers">
+          <p className="small" style={{ margin: 0 }}>No offer stands now.</p>
+        </Panel>
+      )}
       <Panel title="Booked Work" help="career.offers">
         <div className="col gap-4">
           {booked.length ? booked.map((e) => <BookedCard key={e.id} e={e} />) : <p className="small" style={{ margin: 0 }}>No work booked.</p>}

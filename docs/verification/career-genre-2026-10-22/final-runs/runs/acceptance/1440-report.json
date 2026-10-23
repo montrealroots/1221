@@ -14,12 +14,12 @@
   {
    "name": "guide: a new player’s controls are locked until its chapters are read; read, they open",
    "ok": true,
-   "note": "12 locked at the start; 20 chapters read; none locked now"
+   "note": "9 locked at the start; 20 chapters read; none locked now"
   },
   {
    "name": "home: what needs you on the first day: no decision waiting, in the panel’s own words",
    "ok": true,
-   "note": "No questions are waiting on you."
+   "note": "All Clear. You owe nobody anything past due."
   },
   {
    "name": "advance: One Hour moves the clock an hour",
@@ -44,22 +44,22 @@
   {
    "name": "coursework: a step of preparation done from its button, the clock moved and the step counted",
    "ok": true,
-   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 42%; Read The Scene: 40 minutes, Knows The Scene up 42%."
+   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 43%; Read The Scene: 40 minutes, Knows The Scene up 43%."
   },
   {
    "name": "coursework: a way of playing it chosen and rehearsed in",
    "ok": true,
-   "note": "Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
+   "note": "Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
   },
   {
    "name": "coursework: table work answered from its select",
    "ok": true,
-   "note": "4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+   "note": "4 options, “quay” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
   },
   {
    "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
    "ok": true,
-   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into The Middle\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slow"
+   "note": "told to learn some of the lines first: Learn Lines: Answer chosen. | Learn Lines: 45 minutes, Lines up 24%.; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into Part 2\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slowly: 22.1 to 27.3."
   },
   {
    "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
@@ -104,17 +104,17 @@
   {
    "name": "practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained",
    "ok": true,
-   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.12. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
+   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.11. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
   },
   {
    "name": "profile: the development history shows the hour",
    "ok": true,
-   "note": "August 31, 2026: Emotional Depth +0.122, Sense Memory"
+   "note": "August 31, 2026: Emotional Depth +0.113, Sense Memory"
   },
   {
    "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
    "ok": true,
-   "note": "Chase Total Checking has only $90,424.00 available, so nothing was moved. / Chase Total Checking has only $90,424.00 available, so nothing was moved. | Moved $1 to Chase Savings."
+   "note": "Chase Total Checking has only $90,434.00 available, so nothing was moved. / Chase Total Checking has only $90,434.00 available, so nothing was moved. | Moved $1 to Chase Savings."
   },
   {
    "name": "papers: its five tabs open",
@@ -189,7 +189,7 @@
   {
    "name": "[save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call",
    "ok": true,
-   "note": "An hour on the part: lines at 76%. | Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
+   "note": "Worked on: the next call will show it. | Chosen. You’ve rehearsed this way of playing it to 0% so far.; then at the call: 0% → 27%"
   },
   {
    "name": "[save: decision scenario] home: Your 2026 Tax Return on its card, File It pressed, the card gone and the return filed",
@@ -254,7 +254,7 @@
   {
    "name": "[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day",
    "ok": true,
-   "note": "A Word On Your Coursework So far this term, 3 of the 6 pieces you’ve shown were Unready. This is a warning. The term review is on December 10, 2027. If half or more of the term’s pieces are Unready or not shown by then, "
+   "note": "A Word On Your Coursework School · 30 minutes ago So far this term, 3 of the 6 pieces you’ve shown were Unready. This is a warning. The term review is on December 10, 2027. If half or more of the term’s pieces are Unread"
   },
   {
    "name": "[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy",

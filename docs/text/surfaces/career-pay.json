@@ -5,7 +5,9 @@
   "sources": [
    "src/ui/career/WorkPane.tsx#STATUS",
    "src/ui/career/WorkPane.tsx#datesWords",
-   "src/ui/career/WorkPane.tsx#PaymentLine",
+   "src/ui/career/WorkPane.tsx#paymentRow",
+   "src/ui/career/WorkPane.tsx#EngagementPay",
+   "src/ui/career/WorkPane.tsx#payLine",
    "src/ui/career/WorkPane.tsx#EngagementView",
    "src/ui/career/WorkPane.tsx#WorkPane",
    "src/engine/systems/propay.ts#commissionOn",

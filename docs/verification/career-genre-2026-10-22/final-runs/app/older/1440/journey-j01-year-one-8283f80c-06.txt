@@ -5,6 +5,7 @@ SLATE
 ·
 June 1, 2027
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,7 +16,6 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
 YOU
 Player Profile
 YOUR TRAINING
@@ -27,7 +27,7 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 298 Unread
+Actress
 Home
 ›
 Player Profile
@@ -40,7 +40,7 @@ Money
 YOUR BANK
 Chase
 
-$501,999 held here, in 2 accounts.
+$501,999 held here, in 2 accounts. Worth $501,999.
 
 Accounts
 Cards

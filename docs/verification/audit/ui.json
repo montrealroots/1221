@@ -5973,7 +5973,7 @@
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "the graduate, played > p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says “Graduated”, once, as Home’s School line has since 2026-10-13",
+            "title": "the graduate, played > p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says “Graduated”, once, as the School’s head does",
             "kind": "render",
             "closes": "Shows defect 1 below; fails until it's fixed"
           },
@@ -6069,12 +6069,12 @@
     {
       "id": "h-head",
       "kind": "home",
-      "entry": "Home page head: date, title, name, city, zone, season, weather (Home.tsx:109-139; partOfDay at :556, calledBy at :579-583)",
+      "entry": "Home’s head, Today: the date and her calling, the greeting and her name, the time, the town, its region, zone and season, its daylight once Where You Are is open, and the sky beside it (Home.tsx:99-175; partOfDay at :548, calledBy at :564). Until 2026-10-23 (brief 23) the head said the date, the name, the town, the zone, the season and the weather, and Where You Are and the Weather were panels of their own.",
       "reads": "sim.now, player.performerTitle, displayName, city, weatherAt",
       "changes": "none",
       "downstream": "Opens day/person/place/season/weather looks - all registered",
       "explanation": "",
-      "tests": "tests/evidence-g32-ui.test.ts h-head: 'PLAYER JOURNEY: on the first morning it reads Monday, August 24, 2026 · Actress, Good Morning, Ada., and 7:30 AM in New Haven · EDT · Summer with the sky as it is; each opens its look, and none of it changes the save', 'PLAYER JOURNEY: the greeting follows the clock: Morning to 11:59, Afternoon from noon to 5:59, Evening from six, Night from midnight to 4:59…', 'greets her by the name she goes by where it’s neither her full name nor her first and last, and by her first name otherwise; the noun is the pronouns’', 'in January in New Haven… Monday, January 5, 2026 · EST · Winter'; tests/looks.test.ts ‘names a kind that something has declared’ (Home.tsx’s source) and ‘reaches every declared kind from a seed’. The weather’s figures are expected from weatherAt(). Until 2026-10-13 no test rendered the head.",
+      "tests": "tests/evidence-g32-ui.test.ts h-head: 'PLAYER JOURNEY: on the first morning it reads Monday, August 24, 2026 · Actress, Good Morning, Ada., and 7:30 AM in New Haven, Connecticut · EDT · Summer · its daylight, with the sky as it is beside it; each opens its look, and none of it changes the save', 'PLAYER JOURNEY: the greeting follows the clock: Morning to 11:59, Afternoon from noon to 5:59, Evening from six, Night from midnight to 4:59…', 'greets her by the name she goes by where it’s neither her full name nor her first and last, and by her first name otherwise; the noun is the pronouns’', 'in January in New Haven… Monday, January 5, 2026 · EST · Winter'; tests/looks.test.ts ‘names a kind that something has declared’ (Home.tsx’s source) and ‘reaches every declared kind from a seed’. The weather’s figures are expected from weatherAt(). Until 2026-10-13 no test rendered the head.",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -6132,7 +6132,7 @@
         "tests": [
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: on the first morning it reads Monday, August 24, 2026 · Actress, Good Morning, Ada., and 7:30 AM in New Haven · EDT · Summer with the sky as it is; each opens its look, and none of it changes the save",
+            "title": "PLAYER JOURNEY: on the first morning it reads Monday, August 24, 2026 · Actress, Good Morning, Ada., and 7:30 AM in New Haven, Connecticut · EDT · Summer · its daylight, with the sky as it is beside it; each opens its look, and none of it changes the save",
             "kind": "render",
             "closes": "The date, noun, greeting, called-by name, time, city, zone, season and weather read on the head; each word pressed opens its day/person/place/season/weather look (downstream); the save byte-identical"
           },
@@ -6191,7 +6191,7 @@
       "changes": "navigate calendar",
       "downstream": "A plan missed in another city is told on that city’s clock with its zone, as the panel gives it (world/plans.ts:140-147); until 2026-10-13 the missed notice gave the home clock with no zone.",
       "explanation": "",
-      "tests": "tests/evidence-g32-ui.test.ts h-calendar: 'PLAYER JOURNEY: a plan made two days out is the next commitment with its time to go, its title and its date…; called off, the day is hers; a time gone by is refused in its own words', 'PLAYER JOURNEY: a call wanting her in Los Angeles is told on its own clock, 4:30 AM PDT, and that she’s not in Los Angeles; missed when it comes…', 'Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section locked until “What’s Coming” is read…', 'PLAYER JOURNEY: a plan holds across a save and a reload, on the calendar once'; tests/plans.test.ts ‘puts it on the calendar, where everything else can see it’; tests/defects-g4-2.test.ts ‘is the next commitment on Home, as the list under it says’ (functions, not the screen). Until 2026-10-13 no test rendered the panel.",
+      "tests": "tests/evidence-g32-ui.test.ts h-calendar: 'PLAYER JOURNEY: a plan made two days out is the next commitment with its time to go, its title and its date…; called off, the day is hers; a time gone by is refused in its own words', 'PLAYER JOURNEY: a call wanting her in Los Angeles is told on its own clock, 4:30 AM PDT, and that she’s not in Los Angeles; missed when it comes…', 'Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section and its button locked until “What’s Coming” is read…', 'PLAYER JOURNEY: a plan holds across a save and a reload, on the calendar once'; tests/plans.test.ts ‘puts it on the calendar, where everything else can see it’; tests/defects-g4-2.test.ts ‘is the next commitment on Home, as the list under it says’ (functions, not the screen). Until 2026-10-23 (brief 24) Open Calendar opened with “Your Own Plans”, and the menu’s Calendar was the way in before it; until 2026-10-13 no test rendered the panel.",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -6263,7 +6263,7 @@
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section locked until “What’s Coming” is read, and the button until “Your Own Plans”",
+            "title": "Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section and its button locked until “What’s Coming” is read, and opens both with it",
             "kind": "render",
             "closes": "Open Calendar's navigation pressed on the rendered button; the section's and the button's locks by chapter, a locked press going nowhere"
           },
@@ -6313,12 +6313,12 @@
     {
       "id": "h-needs",
       "kind": "home",
-      "entry": "What Needs You: decisions, Mark Read, Dismiss, Go There, All Clear (Home.tsx:213-317; the weighing sentences at :49-75)",
+      "entry": "What Needs You: the questions, the first six and Show All past them, Dismiss and Go There, and the things to put right with Open and their screen’s How This Works, or All Clear (Home.tsx:178-221; thingsToDo at :506-546, needsLine at :289). Recent Updates: the four most important unread notices, Mark Read, Mark N Read, Go There and View All Updates (Home.tsx:228-274); Updates keeps every notice (Updates.tsx). Until 2026-10-23 (brief 23) every unread notice was under the questions, with Mark Read and Mark N Read there, and the weighing sentences were at Home.tsx:49-75.",
       "reads": "openDecisions, unreadNotifications, troubles(), entriesBetween conflicts",
       "changes": "world.take_decision_action, world.dismiss_decision, world.mark_read",
       "downstream": "world.ts:32-42 (world.dismiss_decision), 44-76 (world.take_decision_action), 94-104 (world.mark_read), and expireDecisions at 124-138, which closes a dated row at the world’s look after its day; what weighs is troubles() in systems/spending.ts:454-486. Until 2026-10-13 this said world.ts:33-97, which stopped short of world.mark_read’s end and left the expiry out.",
-      "explanation": "All Clear reads troubles() + calendar clashes. Until 2026-10-13 a card’s line could say 'N payments behind' for two or more; no played life reaches that once a card paid off resets its count (defect 68, fixed), and the sentence went: an unsuspended card is a payment behind (Home.tsx:65-68).",
-      "tests": "tests/evidence3-home.test.ts h-needs (round three, 2026-10-14), every money sentence played: ‘PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine…’ (“You owe $1,882 that went unpaid.”), ‘PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date…’ (“nearly at its limit”, then “$1,999 is with collections.”), ‘PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run…’ (“You owe $50 for medical care.”, and at Chase $50 overdrawn instead); tests/evidence-g32-ui.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting…; Go There goes where each says’, ‘PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel…; a reload keeps it so, and the return still files’, ‘PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused…’, ‘PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…’, the calendar clash and the six-row cap, and the money sentences (‘something gone unpaid…’, ‘the current account overdrawn…’, ‘the card at nine-tenths of its limit…’, ‘the card behind: a payment, and suspended’, ‘medical care owed, and a debt with collections’, ‘income tax owed on a return filed…’), which rest on TEST SETUP and stay beside the played ones; tests/evidence2-b11.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 159…’, ‘PLAYER JOURNEY: her everyday spending put on the card… a payment behind owing $530, then suspended owing $880…, across a reload’, ‘PLAYER JOURNEY: File It pressed with nothing in the bank… You owe $166 of income tax…’; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tools/acceptance-ui.mjs:196 “home: what needs you on the first day: no decision waiting, in the panel’s own words”, on the built app, outside the gate; until 2026-10-13 it was “home: what needs you, and a decision taken from its card”, which passed with no card and asserted nothing after a press. Until 2026-10-14 unpaid, near-limit, medical and collections rested only on TEST SETUP debts; until 2026-10-13 no test rendered the panel or All Clear.",
+      "explanation": "All Clear reads troubles() + calendar clashes. Until 2026-10-13 a card’s line could say 'N payments behind' for two or more; no played life reaches that once a card paid off resets its count (defect 68, fixed), and the sentence went: an unsuspended card is a payment behind (Home.tsx:518-526 from 2026-10-23, in thingsToDo, which says too what Your Affairs’ lines said needed doing until that day).",
+      "tests": "tests/evidence3-home.test.ts h-needs (round three, 2026-10-14), every money sentence played: ‘PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine…’ (“You owe $1,882 that went unpaid.”), ‘PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date…’ (“nearly at its limit”, then “$1,999 is with collections.”), ‘PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run…’ (“You owe $50 for medical care.”, and at Chase $50 overdrawn instead); tests/evidence-g32-ui.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting…; Go There goes where each says’, ‘PLAYER JOURNEY: Dismiss, pressed on the panel, takes the row away…; a reload keeps it so, and the return still files’, \"PLAYER JOURNEY: more unread than Recent Updates’ four: it says how many more and View All Updates goes to Updates…\", ‘PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused…’, ‘PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…’, the calendar clash and the six-row cap, and the money sentences (‘something gone unpaid…’, ‘the current account overdrawn…’, ‘the card at nine-tenths of its limit…’, ‘the card behind: a payment, and suspended’, ‘medical care owed, and a debt with collections’, ‘income tax owed on a return filed…’), which rest on TEST SETUP and stay beside the played ones; tests/evidence2-b11.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 Recent Updates draws the four most pressing of 159 notices…’, ‘PLAYER JOURNEY: her everyday spending put on the card… a payment behind owing $530, then suspended owing $880…, across a reload’, ‘PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and What Needs You says $166 of tax owed…’; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tools/acceptance-ui.mjs:198 “home: what needs you on the first day: no decision waiting, in the panel’s own words”, on the built app, outside the gate; until 2026-10-13 it was “home: what needs you, and a decision taken from its card”, which passed with no card and asserted nothing after a press. Until 2026-10-23 (brief 23) every unread notice was under the questions, where Recent Updates has the four most important and Updates every one. Until 2026-10-14 unpaid, near-limit, medical and collections rested only on TEST SETUP debts; until 2026-10-13 no test rendered the panel or All Clear.",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -6402,13 +6402,13 @@
         "tests": [
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting: its title and when it’s due, its detail, its stripe and its buttons, the notices under it, and Mark N Read counting them; Go There goes where each says",
+            "title": "PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting: its title and when it’s due, its detail, its stripe and its buttons; the notices under Recent Updates, Mark N Read counting them; Go There goes where each says",
             "kind": "command",
             "closes": "Decision row (title, 'in 2 months', detail, urgency stripe high at 70), File It/Go There/Dismiss, the unread list (six), 'Mark N Read' with N counted from the save, both Go There buttons pressed"
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel: the row goes, then the notices, and with nothing weighing it’s All Clear; a reload keeps it so, and the return still files",
+            "title": "PLAYER JOURNEY: Dismiss, pressed on the panel, takes the row away, and what the return still asks is put right from Papers; the notices hold nothing open, and Mark N Read reads them; a reload keeps it so, and the return still files",
             "kind": "render",
             "closes": "Buttons pressed on the rendered panel and the panel read again; All Clear; persistence across reload"
           },
@@ -6420,7 +6420,7 @@
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight, gone at the world’s look two days on, and then No Decisions Waiting says it’s past its day: what it owed and 5% for a month or part of one late (IRC §6651), across a reload",
+            "title": "PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight, gone at the world’s look two days on, and then What Needs You says it was due: what it owed and 5% for a month or part of one late (IRC §6651), across a reload",
             "kind": "command",
             "closes": "Overdue on screen (played), the dated row's expiry at the world tick, the late-return weighing sentence by IRC §6651's 5%, persistence"
           },
@@ -6462,7 +6462,7 @@
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "income tax owed on a return filed: You owe $1,234 of income tax.",
+            "title": "income tax owed on a return filed: $1,234 of tax owed.",
             "kind": "fixture",
             "closes": "Weighing sentence: tax"
           },
@@ -6474,13 +6474,13 @@
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "more than six questions: six rows and 1 more waiting, an overdue one first, the stripes at 85 and 65, and Go There only where a row has somewhere to go (TEST SETUP: raised through requireDecision, as a raiser raises one; a life reaches three kinds, never seven at once)",
+            "title": "more than six questions: six rows and one more waiting, an overdue one first, the stripes at 85 and 65, and Go There only where a row has somewhere to go (TEST SETUP: raised through requireDecision, as a raiser raises one; a life reaches three kinds, never seven at once)",
             "kind": "fixture",
             "closes": "Ordering (overdue first), urgency stripes at the 85 and 65 lines, the six-row cap with 'N more waiting', Go There only with a route"
           },
           {
             "file": "evidence2-b11.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 159, each with its words and how long ago it came, a word on each term’s coursework among them",
+            "title": "h-needs > PLAYER JOURNEY: on 1 February 2027 Recent Updates draws the four most pressing of 159 notices, each with what it’s about, how long ago it came and its words, and Updates keeps a word on each term’s coursework as one row of two",
             "kind": "render",
             "closes": "The unread list had been counted only by CSS class. The six drawn notices are now read: titles in importance-then-newest order, each body, and each time worked by hand from the clock's rule (days and hours to a fortnight, weeks to 60 days, months of 30.44). 'Mark 157 Read', seven Go There buttons, and a notice's Go There pressed to /workspace/school."
           },
@@ -6492,7 +6492,7 @@
           },
           {
             "file": "evidence2-b11.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and once its notices are read What Needs You says You owe $166 of income tax, 10% of her $1,656; her twin who could pay is All Clear (TEST SETUP: the bank emptied)",
+            "title": "h-needs > PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and What Needs You says $166 of tax owed, 10% of her $1,656, beside her standing; her twin who could pay owes nothing (TEST SETUP: the bank emptied)",
             "kind": "render",
             "closes": "The income-tax sentence had rested on a TaxReturn written whole. Now the clock's own 2026 return is filed by pressing File It on the panel. Only the bank is emptied (TEST SETUP), so payFromBank fails and the return is owed 16560. 'You owe $166 of income tax' = $165.60 = 10% × $1,656, to the dollar. The twin who files with money reads All Clear."
           },
@@ -6504,7 +6504,7 @@
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,443, then at its $1,630 limit “nearly at its limit”, then charged off 180 days past the first due date missed: “$2,038 is with collections.”, the checking still named on the Money line, and gone once Pay is sent",
+            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,443, then at its $1,630 limit “nearly at its limit”, then charged off 180 days past the first due date missed: “$2,038 is with collections.”, the checking still listed on Money, and gone once Pay is sent",
             "kind": "command",
             "closes": "'nearly at its limit' and '… is with collections' reached by play: a family creation offers (withFamily 'scraping'), bank.set_payments credit, bank.transfer before six due dates; $1,423 = 913 + 48×10 + 30 under 90% of $1,630 (not near), $1,630 at the limit (near); collections = the card's balance the hour before + the $40 fee, $1,999; across a reload; bank.pay_collections takes the sentence away"
           },
@@ -6614,12 +6614,12 @@
     {
       "id": "h-how",
       "kind": "home",
-      "entry": "How You Are: Energy, Stress, Readiness meters (Home.tsx:320-339)",
+      "entry": "How You Are: the line that sums her up, Energy, Stress and Readiness, and the first two things Look After Yourself offers, done as the bar’s menu does them (Home.tsx:452-498). Until 2026-10-23 (brief 23) it had the three meters alone (Home.tsx:320-339 that day), and Look After Yourself was in the bar alone.",
       "reads": "player.wellbeing, readiness()",
       "changes": "none",
       "downstream": "dial/readiness looks",
       "explanation": "",
-      "tests": "tests/evidence-g32-ui.test.ts h-how: 'PLAYER JOURNEY: on the first morning it reads Rested, steady and ready for a real day. and three meters at the dials’ own figures: Energy 82, Stress 18, Readiness 79 worked out by hand', 'PLAYER JOURNEY: a meal, eaten through Look After Yourself, fills her and the meters move…', 'Energy is red under 15 and amber the fifteen above it; Stress red over 75…' (TEST SETUP), 'PLAYER JOURNEY: each meter opens its look at the same figure…; looking changes nothing'; tests/looks.test.ts (the dial and readiness looks; ‘ranks the dials by what each takes off readiness, and multiplies to it’). Until 2026-10-13 no test rendered the panel.",
+      "tests": "tests/evidence-g32-ui.test.ts h-how: 'PLAYER JOURNEY: on the first morning it reads Rested, steady and ready for a real day. and three meters at the dials’ own figures: Energy 82, Stress 18, Readiness 79 worked out by hand', 'PLAYER JOURNEY: a meal, eaten through Look After Yourself on How You Are, fills her and the meters move…', 'Energy is red under 15 and amber the fifteen above it; Stress red over 75…' (TEST SETUP), 'PLAYER JOURNEY: each meter opens its look at the same figure…; looking changes nothing'; tests/looks.test.ts (the dial and readiness looks; ‘ranks the dials by what each takes off readiness, and multiplies to it’). Until 2026-10-13 no test rendered the panel.",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -6683,7 +6683,7 @@
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: a meal, eaten through Look After Yourself, fills her and the meters move: Readiness to what the dials then make it, and up",
+            "title": "PLAYER JOURNEY: a meal, eaten through Look After Yourself on How You Are, fills her and the meters move: Readiness to what the dials then make it, and up",
             "kind": "command",
             "closes": "A played change (life.look_after eat) moves the meters on screen"
           },
@@ -6730,12 +6730,12 @@
     {
       "id": "h-where-weather",
       "kind": "home",
-      "entry": "Where You Are, Weather (Home.tsx:341-388, 390-441). Until 2026-10-13 this cited 338-436.",
+      "entry": "Today’s town, region, zone, season and daylight, and the sky beside it with the five days ahead, at the head of Home (Home.tsx:114-136, 142-174). Until 2026-10-23 (brief 23) they were panels of their own, Where You Are and the Weather (Home.tsx:341-388, 390-441 that day); until 2026-10-13 this cited 338-436.",
       "reads": "placeProfile, weatherAt, forecastFor",
       "changes": "none",
       "downstream": "",
-      "explanation": "Where You Are says Home. of the city she lives in, which homeCityOf (world/place.ts) returns since nothing has moved a player since the scope reset of 2026-10-09. Until 2026-10-13 the panel kept an away line, the distance and hours from home, and a Local Time note of hours from home, which nothing reached; both went that day (Home.tsx:356-362).",
-      "tests": "tests/evidence-g32-ui.test.ts h-where-weather: 'PLAYER JOURNEY: on the first morning Where You Are names New Haven, Connecticut · United States, says Home. 130K people., Local Time 7:30 AM EDT, and Daylight within two minutes of the sunrise equation’s at each end', 'PLAYER JOURNEY: the Weather is the sky now in °F with its high and low, humidity, the wind in miles an hour, the climate, and the five days ahead…', 'PLAYER JOURNEY: a day in the strip opens its forecast…', 'Home profiles where she is: a life in London (quickSave…)… the sky in °C with the wind in km/h'; tests/evidence2-b11.test.ts h-where-weather 'PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does, with no distance or hours from home…'; tests/looks.test.ts (the looks they open). Until 2026-10-13 no test rendered the panels.",
+      "explanation": "The town opens on where she lives (“This is where you live.”), the city homeCityOf (world/place.ts) returns, since nothing has moved a player since the scope reset of 2026-10-09; until 2026-10-23 (brief 23) the Where You Are panel said Home. of it. Until 2026-10-13 the panel kept an away line, the distance and hours from home, and a Local Time note of hours from home, which nothing reached; both went that day (Home.tsx:356-362 then).",
+      "tests": "tests/evidence-g32-ui.test.ts h-where-weather: 'PLAYER JOURNEY, guided: Where You Are and the Weather, locked, are buttons whose reason names the chapter that opens each…', 'PLAYER JOURNEY: on the first morning Today names New Haven, Connecticut, its local time 7:30 AM EDT and its daylight within two minutes of the sunrise equation’s at each end…', 'PLAYER JOURNEY: the Weather is the sky now in °F with its high and low and the five days ahead, its look the humidity, the wind in miles an hour and the climate…', 'PLAYER JOURNEY: a day in the strip opens its forecast…', 'Home profiles where she is: a life in London (quickSave…)… the sky in °C with the wind in km/h'; tests/evidence2-b11.test.ts h-where-weather 'PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does, with no distance or hours from home…'; tests/looks.test.ts (the looks they open). Until 2026-10-23 (brief 23) they were panels of their own, Where You Are and the Weather; until 2026-10-13 no test rendered the panels.",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -6794,13 +6794,13 @@
         "tests": [
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: on the first morning Where You Are names New Haven, Connecticut · United States, says Home. 130K people., Local Time 7:30 AM EDT, and Daylight within two minutes of the sunrise equation’s at each end",
+            "title": "PLAYER JOURNEY: on the first morning Today names New Haven, Connecticut, its local time 7:30 AM EDT and its daylight within two minutes of the sunrise equation’s at each end; the town opens on Your home., 130K people and the same day; Connecticut opens on the United States",
             "kind": "render",
             "closes": "Where You Are rendered: names, 'Home.', placeLine's kind-and-size branch (130,322 to 130K), Local Time and zone, Daylight against an independent sunrise equation; the region and country names pressed open their looks"
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "PLAYER JOURNEY: the Weather is the sky now in °F with its high and low, humidity, the wind in miles an hour, the climate, and the five days ahead; the next morning, Tuesday is what the strip said, and the strip begins on Wednesday",
+            "title": "PLAYER JOURNEY: the Weather is the sky now in °F with its high and low and the five days ahead, its look the humidity, the wind in miles an hour and the climate; the next morning, Tuesday is what the strip said, and the strip begins on Wednesday",
             "kind": "command",
             "closes": "Weather rendered (°F, high/low, humidity, wind by 0.621371 mi/km, climate) and the strip's five days with hand-written weekdays; the clock shows the strip's Tuesday is Tuesday's weather and the strip moves on"
           },
@@ -6812,7 +6812,7 @@
           },
           {
             "file": "evidence-g32-ui.test.ts",
-            "title": "Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England · United Kingdom, Home. with the city’s own tags, 7:30 AM GMT, its short January daylight by the sunrise equation, and the sky in °C with the wind in km/h",
+            "title": "Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England, 7:30 AM GMT and its short January daylight by the sunrise equation, the town’s look its own tags, and the sky in °C with the wind in km/h",
             "kind": "render",
             "closes": "placeLine's tags branch, another zone, the °C and km/h branch, January daylight by the sunrise equation"
           },
@@ -6876,7 +6876,7 @@
     {
       "id": "h-money",
       "kind": "home",
-      "entry": "Your Affairs: Money line (Home.tsx:449-457, in Your Affairs at :447)",
+      "entry": "The head of Money: the bank’s sum, then Worth, what she has less what she owes and, if she owes anything, how much (WorthWords, Glance.tsx:33-43, mounted at BankWorkspace.tsx:297), and “Your account is overdrawn.” (BankWorkspace.tsx:299); what needs putting right is under What Needs You on Home (thingsToDo, Home.tsx:514-534). Until 2026-10-23 (brief 23) it was Your Affairs’ Money line on Home (Home.tsx:449-457, in Your Affairs at :447).",
       "reads": "ledger.accountsOf, primaryAccountId, netWorth",
       "changes": "navigate bank",
       "downstream": "",
@@ -6941,37 +6941,37 @@
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY: a new student’s Money line is Chase Total Checking at $92,391.00 and a worth of $505,434, with no alert, and its Chase button opens the bank screen",
+            "title": "PLAYER JOURNEY: a new student’s Money says a worth of $505,434 at its head, with no alert, her Chase Total Checking holding $92,391; Home says nothing of money",
             "kind": "render",
             "closes": "The bank button (Gated ui.bank) is pressed through its own onClick and navigates to ('/workspace/bank', 'Money'); its label 'Chase' is read. The line is checked against the wealthy profile's 85,000 € and 380,000 € at 0.92 € to the dollar."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "overdrawn by $25.00 it reads -$25.00 and “Your account is overdrawn.”; a Move Money of $1,000.00 from savings takes the alert away with the worth unmoved, and a reload keeps it so",
+            "title": "overdrawn by $25.00 Money says “Your account is overdrawn.” and Home “Your account is $25 overdrawn.”; a Move Money of $1,000.00 from savings takes both away with the worth unmoved, and a reload keeps it so",
             "kind": "render",
             "closes": "The overdrawn alert is rendered with the negative balance. It is cleared by a played bank.transfer and stays cleared after a save and reload."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "with the day’s spending put on the card, the worth counts what the card owes and the line says “, $X of it owed”",
+            "title": "with the day’s spending put on the card, the worth counts what the card owes and Money says “, after $X owed”",
             "kind": "render",
             "closes": "The liabilities clause of the line, after the day's spending is played onto the card with bank.set_payments."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY, guided: Money is its LockedPanel until “Money” is read; then Chase is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Chase opens the bank screen",
+            "title": "PLAYER JOURNEY, guided: overdrawn, Home says nothing of it until “Money” is read; then Open Money is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Open Money opens the bank screen",
             "kind": "render",
             "closes": "Money shows as its LockedPanel before ui.money's chapter, and the Gated button shows as locked before ui.bank's. Chapters are read through tutorial.read, and the engine's own refusal of bank.transfer is checked."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "“No account” can’t be reached: the bank refuses to close a life’s only current account, in its words, and the line still names it",
+            "title": "“No account” can’t be reached: the bank refuses to close a life’s only current account, in its words, and Money still lists it",
             "kind": "command",
             "closes": "Shows why the 'No account' fallback can't be reached in play: the engine's refusal, in its own words."
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "PLAYER JOURNEY: debit card coverage opted into and the checking moved to savings, the first midnight’s $10.00 of groceries overdraw it: “-$10.00” and “Your account is overdrawn.”, across a reload; its Chase button opens the bank screen",
+            "title": "PLAYER JOURNEY: debit card coverage opted into and the checking moved to savings, the first midnight’s $10.00 of groceries overdraw it: “−$10.00” and “Your account is overdrawn.” on Money, “Your account is $10 overdrawn.” on Home, across a reload",
             "kind": "render",
             "closes": "The overdrawn alert reached by play instead of TEST SETUP. bank.debit_overdraft is turned on, Move Money takes the whole $92,391.00, and the midnight's groceries are the only posting to the checking: -$10.00, with no Chase fee at $50 or less. The line reads '-$10.00. Worth $505,424.' ($92,391 + $413,043 - $10) with the alert. It holds across a reload, and Chase navigates to ('/workspace/bank','Money')."
           },
@@ -6983,31 +6983,31 @@
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "“No account” is a fixture’s: the savings closed into the checking and the card closed, the bank refuses the checking, and the line names it; every account closed by hand, the line reads “No account: $0.00. Worth $0.” and “Your Bank” opens the bank screen",
+            "title": "“No account” is a fixture’s: the savings closed into the checking and the card closed, the bank refuses the checking, and Money lists it alone; every account closed by hand, Money says “Worth $0.”",
             "kind": "fixture",
             "closes": "Every account a command can close is closed (bank.close_savings, card.close). The bank refuses the last current account in its own words, and the line still names it at $505,434. Then the fallback's words and its 'Your Bank' label are rendered, and pressing it navigates to the bank, over TEST SETUP: the checking closed by hand."
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "h-money > PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: the line names it, and “No account” is reached by no life",
+            "title": "h-money > PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: Money names it, and “No account” is reached by no life",
             "kind": "command",
             "closes": "Strengthens the unreachability argument from the life with the fewest accounts creation can make: one checking, bank.close_current refused in its words, the line 'Chase Total Checking: $43.00. Worth $43.'"
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off 180 days past the first due date missed … the checking still named on the Money line …",
+            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off 180 days past the first due date missed … the checking still listed on Money …",
             "kind": "command",
             "closes": "A charge-off to collections, the one path that closes an account by the bank's hand in a played life, leaves the checking open and named: 'Money Chase Total Checking: $0.00.'"
           },
           {
             "file": "scope-money.test.ts",
-            "title": "h-money > GUARD: a save whose primary account is gone, which no played life reaches, draws “No account: $0.00.” and a “Your Bank” button that still opens the bank",
+            "title": "h-money > GUARD: a save whose primary account is gone, which no played life reaches, draws Money’s empty state, and Home with nothing of money to put right",
             "kind": "fixture",
             "closes": "The fallback's words and its button's navigation, over a FIXTURE no command makes."
           },
           {
             "file": "scope-money.test.ts",
-            "title": "h-money > PLAYER JOURNEY: a Comfortable student played to 2 October 2026, reloaded a minute either side of each month’s end, keeps the same postings as her twin played straight: the savings’ interest posted once a month, the year’s interest income their sum, the month’s income that and her work-study pay, and the Money line and the worth the ledger’s own",
+            "title": "h-money > PLAYER JOURNEY: a Comfortable student played to 2 October 2026, reloaded a minute either side of each month’s end, keeps the same postings as her twin played straight: the savings’ interest posted once a month, the year’s interest income their sum, the month’s income that and her work-study pay, and Money’s worth the ledger’s own",
             "kind": "render",
             "closes": "Identical postings to a twin played straight; interest posted at 23:00 on 31 August and 30 September only; the year's interest and each month's unearned income equal to those postings; September's income their sum with her work-study pay; the worth and the Money line equal to the accounts added up."
           }
@@ -7053,14 +7053,14 @@
     {
       "id": "h-school",
       "kind": "home",
-      "entry": "Your Affairs: School line (SchoolLine, Home.tsx:484-516, mounted at :458)",
+      "entry": "The head of School: the year and the standing, then her place in the class and what’s next (SchoolGlance, Glance.tsx:51-70, mounted at SchoolWorkspace.tsx:89); a standing of concern, warning or dismissal is put right from What Needs You on Home (thingsToDo, Home.tsx:537-539). Until 2026-10-23 (brief 23) it was Your Affairs’ School line on Home (SchoolLine, Home.tsx:484-516, mounted at :458).",
       "reads": "person.school, scheduled school items, nextClasses, rankIn",
       "changes": "navigate school",
       "downstream": "",
       "explanation": "",
-      "tests": "tests/evidence-g33-ui.test.ts h-school: 'PLAYER JOURNEY: a new student is “Arriving, good standing”…; its Yale button opens the School screen', 'a day in, “Year 1, good standing”…', 'PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern…', 'PLAYER JOURNEY: a personal leave asked on 13 January 2027… is “On Leave”, with no Next', 'PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the school, withdrawn”…', 'a graduate’s line says Graduated once, not “Graduated, graduated”, with no Next' (the degree set by setStanding: no played life reaches one in a test’s time), 'PLAYER JOURNEY, guided: School is its LockedPanel until “Drama School” is read…'; tests/evidence2-b12.test.ts h-school: the fall recess’s and the winter’s Next from nextClasses, 'On Leave, academic concern', 'Year 2, academic warning', 'Left the school, dismissed', and the place in the class as a worked literal. Until 2026-10-13 this said no test rendered Home, though defects-g8-4, guide-examples-money and guide-examples-papers did, and none of them read this line.",
+      "tests": "tests/evidence-g33-ui.test.ts h-school: ‘PLAYER JOURNEY: a new student is “Arriving for the fall term”, her place counted from the class’s skills…’, ‘a day in, “Year 1 of 3, good standing”…’, ‘PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern…’, ‘PLAYER JOURNEY: a personal leave asked on 13 January 2027 and begun on its decision is “On leave until …”, with no Next’, ‘PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the School.”, with no Next and no alert, across a reload’, ‘a graduate’s head says Graduated once, not “Graduated, graduated”, with no Next’ (the degree set by setStanding: no played life reaches one in a test’s time), ‘PLAYER JOURNEY, guided: a standing of concern is put right from Home once “Drama School” is read, and not before’; tests/evidence2-b12.test.ts h-school: the fall recess’s and the winter’s Next from nextClasses, ‘PLAYER JOURNEY: a personal leave begun on its decision after a fall left to the clock is “On leave”, with the concern put right from Home and no Next’, ‘PLAYER JOURNEY: a first year left to the clock, its concern unremedied in the spring, is “Year 2 of 3, academic warning” in its second fall…’, ‘PLAYER JOURNEY: left to the clock, the warning unmet, the second fall’s evaluation dismisses her: “Left the School”, the dismissal on Home and no Next, across a reload’, and the place in the class as a worked literal; tests/evidence3-home.test.ts ‘h-school: PLAYER JOURNEY: the degree played, the School says “Graduated. You’re N of 16 in the class.”…’. Until 2026-10-23 (brief 23) these read Your Affairs’ School line on Home, “Arriving, good standing”, “On Leave, academic concern” and “Left the school, dismissed” among its words, and its Yale button to the School screen. Until 2026-10-13 this said no test rendered Home, though defects-g8-4, guide-examples-money and guide-examples-papers did, and none of them read this line.",
       "status": "verified",
-      "issue": "None. Until 2026-10-13 a graduate’s line read 'Graduated, graduated, N of 16 in the class.'; it says Graduated once since (evidence-g33-ui holds it).",
+      "issue": "None. Until 2026-10-13 a graduate’s line read ‘Graduated, graduated, N of 16 in the class.’; it says Graduated once since (evidence-g33-ui holds it, at the head of School from 2026-10-23).",
       "corrected": {
         "on": "2026-10-12",
         "status": "verified",
@@ -7125,43 +7125,43 @@
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY: a new student is “Arriving, good standing”, her place counted from the class’s skills, “Next: Registration And Your Account, August 24, 2026 at 10:00 AM.”; its Yale button opens the School screen",
+            "title": "PLAYER JOURNEY: a new student is “Arriving for the fall term”, her place counted from the class’s skills, “Next: Registration And Your Account, August 24, 2026 at 10:00 AM.”",
             "kind": "render",
             "closes": "The Arriving branch, the rank (counted independently as 1 + the classmates whose mean over the 21 SKILLS is higher), Next from a booked item, and the Yale button navigating to ('/workspace/school','Your School')."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "a day in, “Year 1, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”",
+            "title": "a day in, “Year 1 of 3, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”",
             "kind": "render",
             "closes": "The Year N branch, with Next as the first pending school item that wants the player."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern, and the line says so with its alert; Next is the next class day at nine, Tuesday 2 February at noon on the Monday; a reload keeps it",
+            "title": "PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern, which the School’s head says and Home puts right; Next is the next class day at nine, Tuesday 2 February at noon on the Monday; a reload keeps it",
             "kind": "command",
             "closes": "A troubled standing reached by play (the clock's term evaluation, 'A Notice Of Academic Concern') and its alert. Next comes from nextClasses. Holds across a save and reload."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY: a personal leave asked on 13 January 2027 and begun on its decision is “On Leave”, with no Next",
+            "title": "PLAYER JOURNEY: a personal leave asked on 13 January 2027 and begun on its decision is “On leave until …”, with no Next",
             "kind": "command",
             "closes": "The On Leave branch, played through school.request_leave and its decision on the clock, with no Next on a leave."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the school, withdrawn”, with no Next and no alert, across a reload",
+            "title": "PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the School.”, with no Next and no alert, across a reload",
             "kind": "command",
             "closes": "The Left the school branch (school.withdraw {confirm:true}), with no Next once the school has ended, across a reload."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "a graduate’s line says Graduated once, not “Graduated, graduated”, with no Next",
+            "title": "a graduate’s head says Graduated once, not “Graduated, graduated”, with no Next",
             "kind": "fixture",
             "closes": "The review's defect (the standing repeated for a graduate), held against the fix now in Home.tsx:497-499. Uses TEST SETUP: the degree conferred through the School's own setStanding."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY, guided: School is its LockedPanel until “Drama School” is read, and the line once it is",
+            "title": "PLAYER JOURNEY, guided: a standing of concern is put right from Home once “Drama School” is read, and not before",
             "kind": "render",
             "closes": "The School LockedPanel before ui.school's chapter, and the line after it is read."
           },
@@ -7179,19 +7179,19 @@
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "PLAYER JOURNEY: a personal leave begun on its decision after a fall left to the clock is “On Leave, academic concern”, with the concern’s alert and no Next",
+            "title": "PLAYER JOURNEY: a personal leave begun on its decision after a fall left to the clock is “On leave”, with the concern put right from Home and no Next",
             "kind": "command",
             "closes": "The check's weak On Leave test: the standing and the alert are now pinned word for word, with no Next."
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "PLAYER JOURNEY: a first year left to the clock, its concern unremedied in the spring, is “Year 2, academic warning” in its second fall, Next the class day after, and the warning’s alert",
+            "title": "PLAYER JOURNEY: a first year left to the clock, its concern unremedied in the spring, is “Year 2 of 3, academic warning” in its second fall, Next the class day after, and the warning put right from Home",
             "kind": "command",
             "closes": "The Year N branch beyond Year 1, and the alert for a warning, both reached by the clock."
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "PLAYER JOURNEY: left to the clock, the warning unmet, the second fall’s evaluation dismisses her: “Left the school, dismissed”, with the dismissal’s alert and no Next, across a reload",
+            "title": "PLAYER JOURNEY: left to the clock, the warning unmet, the second fall’s evaluation dismisses her: “Left the School”, the dismissal on Home and no Next, across a reload",
             "kind": "command",
             "closes": "The third troubled standing, dismissed, and its alert ('Your standing is dismissed: the School screen says why.'), played, with no Next once the school has ended."
           },
@@ -7209,7 +7209,7 @@
           },
           {
             "file": "evidence3-home.test.ts",
-            "title": "the graduate, played > h-school: PLAYER JOURNEY: the degree played, Home says “Graduated, N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload",
+            "title": "the graduate, played > h-school: PLAYER JOURNEY: the degree played, the School says “Graduated. You’re N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload",
             "kind": "render",
             "closes": "The Graduated branch on a played degree, not setStanding by hand: 'Graduated' once, the place counted here from the craft records, no Next, no alert, after a reload"
           }
@@ -7261,12 +7261,12 @@
     {
       "id": "h-papers",
       "kind": "home",
-      "entry": "Your Affairs: Papers line (PapersLine, Home.tsx:518-552, mounted at :459)",
+      "entry": "The head of Papers: what covers her, a claim’s weekly pay, and what the returns and taxes ask (PapersGlance and papersAlerts, Glance.tsx:79-129, mounted at PapersWorkspace.tsx:450); what of it needs doing is under What Needs You on Home (thingsToDo, Home.tsx:542-544), the return’s line held back while its own question is open. Until 2026-10-23 (brief 23) it was Your Affairs’ Papers line on Home (PapersLine, Home.tsx:518-552, mounted at :459).",
       "reads": "coverOn, person.returns, latePenalty, unemployment.claim",
       "changes": "navigate papers",
       "downstream": "",
-      "explanation": "Tax owed is owedEverywhere’s (taxreturn.ts:523: the IRS’s and the states’, each with its interest and penalty to today, as the Papers screen’s; Home.tsx:527). Until 2026-10-10 it summed the figure stored at the last accrual and its words left the interest out. Until 2026-10-13 it said the tax was 'growing each month' from the day an early return was filed unpaid; it says so only once something owed is past its due date since (Home.tsx:536).",
-      "tests": "tests/evidence-g33-ui.test.ts h-papers: ‘PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”…; the Papers button opens Papers’, ‘three days past its day unfiled: “$174 to pay, a late penalty in it”…’, ‘filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date…’, ‘PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health is gone: “Cover: none.”…’, ‘a claim for unemployment is refused at school and after leaving it…’; tests/evidence2-b12.test.ts h-papers: ‘PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January… “Unemployment, $93 a week.”, across a reload…’, ‘filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed…’, ‘Connecticut’s half…’ (its TEST SETUP family the Scraping one creation offers since 2026-10-14; on 2026’s table it owes the IRS nothing, so it reads Connecticut’s alone), ‘filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date…’; tests/evidence3-home.test.ts h-papers (round three, 2026-10-14): ‘PLAYER JOURNEY: a student with need owes the IRS $1,700.39 and Connecticut $585.33 on 2027…’ (both parts played, filed unpaid from Home with her money in a CD: “$2,286 of tax owed”, and the day past the due date “$2,359”), ‘PLAYER JOURNEY: on 1 February 2028, her 2026 return unfiled…’, ‘PLAYER JOURNEY: her 2027 return left open, it “is due April 18, 2028” on 1 February…’; tests/defects-g8-4.test.ts (its cover clause). Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line.",
+      "explanation": "Tax owed is owedEverywhere’s (taxreturn.ts:523: the IRS’s and the states’, each with its interest and penalty to today, as the Papers screen’s; Glance.tsx:92 from 2026-10-23, Home.tsx:527 until then). Until 2026-10-10 it summed the figure stored at the last accrual and its words left the interest out. Until 2026-10-13 it said the tax was 'growing each month' from the day an early return was filed unpaid; it says so only once something owed is past its due date since (Glance.tsx:100-101 from 2026-10-23, Home.tsx:536 until then).",
+      "tests": "tests/evidence-g33-ui.test.ts h-papers: ‘PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”…’, ‘three days past its day unfiled: “$174 to pay, a late penalty in it”…’, ‘filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date…’, ‘PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health is gone: “Cover: none.”…’, ‘a claim for unemployment is refused at school and after leaving it…’; tests/evidence2-b12.test.ts h-papers: ‘PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January… “Unemployment, $93 a week.”, across a reload…’, ‘filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed…’, ‘Connecticut’s half…’ (its TEST SETUP family the Scraping one creation offers since 2026-10-14; on 2026’s table it owes the IRS nothing, so it reads Connecticut’s alone), ‘filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date…’; tests/evidence3-home.test.ts h-papers (round three, 2026-10-14): ‘PLAYER JOURNEY: a student with need owes the IRS $1,700.39 and Connecticut $585.33 on 2027…’ (both parts played, filed unpaid from Home with her money in a CD: “$2,286 of tax owed”, and the day past the due date “$2,359”), ‘PLAYER JOURNEY: on 1 February 2028, her 2026 return unfiled…’, ‘PLAYER JOURNEY: her 2027 return left open, it “is due April 18, 2028” on 1 February…’; tests/defects-g8-4.test.ts (its cover clause). Until 2026-10-23 (brief 23) these read Your Affairs’ Papers line on Home, and its button to Papers; Papers’ head says it from then, and What Needs You on Home what of it needs doing. Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line.",
       "status": "verified",
       "issue": "None. The understated, stale figure was fixed on 2026-10-10 (owedEverywhere, held since 2026-10-13 by evidence-g33-ui and evidence2-b12), and the ‘growing each month’ said before the due date was fixed on 2026-10-13 (defect 42). Until 2026-10-14 Connecticut’s half was shown only on a family creation couldn’t offer; since then it is played on a student whose family the screen offers (evidence3-home).",
       "auditStatus": "partial",
@@ -7336,13 +7336,13 @@
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”: 10% of the $1,656.00 of work-study, 72 hours at $23; the Papers button opens Papers",
+            "title": "PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”: 10% of the $1,656.00 of work-study, 72 hours at $23",
             "kind": "command",
             "closes": "The return alert's date and amount to pay, worked independently as 10% of the wage postings (72 hours at $23, a 1040-NR with no standard deduction), and the Papers button's navigation."
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "three days past its day unfiled: “$174 to pay, a late penalty in it”, $165.60 and 5% for a month or part, $8.28",
+            "title": "three days past its day unfiled: “$174 to pay, a late penalty in it”, $165.60 and 5% for a month or part, $8.28, on Papers and on Home",
             "kind": "command",
             "closes": "The late-penalty clause of the return alert, and What Needs You's own wording of the same figure once its 'Mark N Read' button is pressed."
           },
@@ -7360,13 +7360,13 @@
           },
           {
             "file": "evidence-g33-ui.test.ts",
-            "title": "a claim for unemployment is refused at school and after leaving it, in its own words, so the line has no Unemployment clause",
+            "title": "a claim for unemployment is refused at school and after leaving it, in its own words, so Papers’ head has no Unemployment clause",
             "kind": "command",
             "closes": "Shows in the engine's words why the Unemployment clause can't be reached on a student's life."
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January and paid $375 for thirteen Fridays, withdrawn on 1 September 2027 and claiming on 1 October: “Unemployment, $93 a week.”, across a reload; the Papers button opens Papers",
+            "title": "PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January and paid $375 for thirteen Fridays, withdrawn on 1 September 2027 and claiming on 1 October: “Unemployment, $93 a week.”, across a reload",
             "kind": "command",
             "closes": "The Unemployment clause, rendered from a played claim. The stipend is $375 on thirteen Fridays: $1,500 in the second quarter and $3,375 in the third. On 2 September the claim is refused in Connecticut's own words, as the base period holds nothing. On 1 October the alternate base period pays 1/26 of the two best quarters' average, $93, for 26 weeks. The line reads 'Cover: none. Unemployment, $93 a week.', it holds across a reload, and the Papers button navigates."
           },

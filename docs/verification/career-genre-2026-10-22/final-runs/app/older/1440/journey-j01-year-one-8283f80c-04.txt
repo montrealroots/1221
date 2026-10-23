@@ -5,6 +5,7 @@ SLATE
 ·
 June 1, 2027
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,7 +16,6 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
 YOU
 Player Profile
 YOUR TRAINING
@@ -27,7 +27,7 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 298 Unread
+Actress
 Home
 ›
 Player Profile
@@ -37,6 +37,8 @@ SCHOOL
 David Geffen School of Drama at Yale University
 
 MFA in Acting, class of 2029. Year 1 of 3, good standing.
+
+You’re 1st of 16 in the class. Next: Classes, August 30, 2027 at 9:00 AM.
 
 Standing And Craft
 Classes
@@ -157,6 +159,8 @@ Acting 61.7 78.8 59.9 55.7 1 of 16
 Overall 57.2 80.0 56.3 49.9 1 of 16
 Sources And Estimates
 Term Reviews
-TERM STANDING ATTENDANCE GROWTH CLASS GROWTH COURSEWORK WHY
-Fall Term 2026 Good Standing 100% 1.7 1.3 2 of 47 Unready or not shown You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class.
-Spring Term 2027 Good Standing 100% 1.5 1.0 1 of 45 Unready or not shown You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 45 pieces were Strong or better.
+TERM STANDING ATTENDANCE GROWTH CLASS GROWTH COURSEWORK
+Fall Term 2026 Good Standing 100% 1.7 1.3 2 of 47 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class.
+Spring Term 2027 Good Standing 100% 1.5 1.0 1 of 45 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 45 pieces were Strong or better.

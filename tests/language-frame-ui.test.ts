@@ -570,7 +570,8 @@ describe('the Calendar screen', () => {
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at, durationMinutes: 60 } });
 
     const first = drawn(sim, CalendarWorkspace);
-    expect(first.text).toContain('Calendar Your Plans And Commitments Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.');
+    // Back To Home where the eyebrow said Calendar, from 2026-10-23 (brief 24, which took the Calendar from the menu).
+    expect(first.text).toContain('Back To Home Your Plans And Commitments Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.');
     expect(first.text).toContain('A clash in the next month.');
     // The legend's kinds, each with what it holds on hover; the World row, whose items are never drawn, isn't shown.
     expect(first.html).toContain('title="Your own plans, and your birthday, appointments and tax dates."');

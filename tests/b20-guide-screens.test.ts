@@ -101,7 +101,14 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => h.live ?? game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
+// A screen's kept tab, drawn on the server: the store's own functions stay, for the provider's test above.
+vi.mock('@/ui/kept', async (orig) => {
+  const real = await orig<typeof import('@/ui/kept')>();
+  return { ...real, useKept: <T,>(_key: string, initial: T) => [initial, () => undefined] as const };
+});
 const { Home } = await import('@/ui/screens/Home');
+const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
+const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 await import('@/ui/looks/all');
 const { resolveLook } = await import('@/ui/looks/registry');
 const { at: subject } = await import('@/ui/looks/subject');
@@ -363,29 +370,32 @@ describe('the provider’s way to a screen and its tab', () => {
 });
 
 describe('Home’s panels and the ways off them', () => {
-  it('PLAYER JOURNEY: How You Are shows the energy, stress and readiness the life holds; Where You Are the town, its local time and daylight; the lines in Your Affairs what the save holds', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “…; Where You Are the town, its local time and daylight; the lines in
+  // Your Affairs what the save holds”. Where You Are is Today's line since, and Your Affairs' lines the heads of School
+  // and Papers.
+  it('PLAYER JOURNEY: How You Are shows the energy, stress and readiness the life holds; Today the town, its local time and daylight; the heads of School and Papers what the save holds', () => {
     const sim = student('b20-guide-panels');
     tended(sim, at(2026, 9, 2, 16, 20));
     sim.player.wellbeing.energy = 47.4;
     sim.player.wellbeing.stress = 22.6;
     const { text } = drawn(sim, Home);
     expect(text).toContain(`Energy ${Math.round(47.4)} Stress ${Math.round(22.6)} Readiness ${Math.round(readiness(sim.player))}`);
-    expect(text).toContain(`Local Time ${formatTime(sim.now, sim.zone)} EDT`);
-    expect(text).toMatch(/Where You Are How This Works New Haven , Connecticut · United States/);
+    expect(text).toMatch(new RegExp(`Good Afternoon, [^.]+\\. ${formatTime(sim.now, sim.zone)} in New Haven ?, Connecticut · EDT · Autumn · Daylight \\d+:\\d\\d AM to \\d+:\\d\\d PM, \\d+h \\d+m `));
     const school = sim.player.school!;
-    expect(text).toContain(`School Year 1, ${STANDING_LABEL[school.standing].toLowerCase()}, ${ordinal(rankIn(sim.player))} of 16 in the class.`);
-    expect(text).toContain(`Cover: ${coverLabel(sim.player, sim.now)}.`);
+    expect(drawn(sim, SchoolWorkspace).text).toContain(`Year 1 of 3, ${STANDING_LABEL[school.standing].toLowerCase()}. You’re ${ordinal(rankIn(sim.player))} of 16 in the class.`);
+    expect(drawn(sim, PapersWorkspace).text).toContain(`Cover: ${coverLabel(sim.player, sim.now)}.`);
   });
 
-  it('PLAYER JOURNEY: Open Calendar goes to the calendar, the bank’s own name to Money, Yale to the School and Papers to Papers', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “… the bank’s own name to Money, Yale to the School and Papers to
+  // Papers”, Your Affairs' buttons. Those screens are on the menu since, and What Needs You opens each when something
+  // there needs putting right (tests/evidence-g32-ui.test.ts, h-needs).
+  it('PLAYER JOURNEY: Open Calendar goes to the calendar and View All Updates to Updates; with nothing to put right, Home has no Open Money, Open School or Open Papers', () => {
     const sim = student('b20-guide-ways');
     tended(sim, at(2026, 8, 26, 12));
     const home = drawn(sim, Home);
-    const bank = sim.universe.accounts[sim.player.primaryAccountId!]!.institution!;
     expect(home.press('Open Calendar').went).toEqual(['/workspace/calendar']);
-    expect(home.press(bank).went).toEqual(['/workspace/bank']);
-    expect(home.press('Yale').went).toEqual(['/workspace/school']);
-    expect(home.press('Papers').went).toEqual(['/workspace/papers']);
+    expect(home.press('View All Updates').went).toEqual(['/workspace/updates']);
+    for (const way of ['Open Money', 'Open School', 'Open Papers']) expect(home.text).not.toContain(way);
   });
 });
 

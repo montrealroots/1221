@@ -512,10 +512,15 @@ describe('health.enroll: a renewal kept by a month at the School, played', () =>
    * leave began on the 20th, so January was a month at the School (`enrolledIn`), and it meets the rules. Change the input,
    * the day she enrolls: her twin who waits to 1 February is given HUSKY D from February, renewed on 1 August, reading
    * February to July, all on the leave, with under $580 of income in each, no SNAP and no stay: a notice of noncompliance.
-   * Each is said on Home, as What Needs You draws it once the player has read what was there.
+   * Each is said on Home, as Recent Updates draws it once the player has read what was there (What Needs You did until
+   * 2026-10-23, brief 23).
    */
   const RENEWED = 'HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and you met its work rules in January 2027, with time at the School.';
   const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from February to July 2027.';
+  /** A notice as Recent Updates on Home draws it (from 2026-10-23, brief 23): its title, what it's about and when, then its
+   * words. What Needs You drew the title and the words together until then. */
+  const notice = (title: string, body: string) => new RegExp(`${esc(title)} [A-Z][a-z]+(?: [A-Z][a-z]+)? · [^·]+? ${esc(body)}`);
+  const esc = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
   it('PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January; its renewal on 1 July is kept, Home saying January 2027 met its work rules at the School, said once across a reload; her twin who enrolls on 1 February is renewed on 1 August with no month at the School, and Home draws the notice of noncompliance', async () => {
     const { Home } = await import('@/ui/screens/Home');
@@ -541,7 +546,7 @@ describe('health.enroll: a renewal kept by a month at the School, played', () =>
     expect(titled(kept, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 7, 1, 0, 30), RENEWED]]);
     expect(titled(kept, 'A Notice Of Noncompliance')).toEqual([]);
     const keptHome = home(kept);
-    expect(keptHome).toContain(`Your Public Cover Is Renewed ${RENEWED}`);
+    expect(keptHome).toMatch(notice('Your Public Cover Is Renewed', RENEWED));
     expect(keptHome).not.toMatch(/hours’ work|half-time/);
 
     const late = thaw(snap);
@@ -557,7 +562,7 @@ describe('health.enroll: a renewal kept by a month at the School, played', () =>
     expect(titled(late, 'Your Public Cover Is Renewed')).toEqual([]);
     expect(coverOn(late.player, late.now)).toBe('medicaid');
     const lateHome = home(late);
-    expect(lateHome).toContain(`A Notice Of Noncompliance ${NOTICE}`);
+    expect(lateHome).toMatch(notice('A Notice Of Noncompliance', NOTICE));
     expect(lateHome).not.toMatch(/hours’ work|half-time/);
   }, 900_000);
 });

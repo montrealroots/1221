@@ -235,7 +235,7 @@ export const BODY: readonly GuideEntry[] = [
     ],
     next: [
       'In the morning, check Energy and Readiness on How You Are.',
-      'If the morning’s notice says you slept through something, it names what was missed. Open it from What Needs You on Home.',
+      'If the morning’s notice says you slept through something, it names what was missed. Open it from Recent Updates on Home, or from Updates.',
       'Still owing sleep? A large sleep debt can take more than one night to clear, so go to bed earlier the next night too.',
     ],
     related: ['body.how', 'day.advance', 'day.calendar', 'day.clock'],

@@ -18,7 +18,7 @@ import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { SECTIONS, tabKey } from '@/ui/shell/sections';
 import { useKept } from '@/ui/kept';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty, Stat, Fine, WhyNot } from '@/ui/components/primitives';
+import { Panel, Empty, Stat, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
@@ -44,6 +44,8 @@ import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
 import { ClassesPanel, LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
 import { enrolledTerms, yaleAccount } from '@/engine/systems/leave';
 import { hasProcess, holderFor } from '@/engine/systems/production';
+import { TabBar } from '@/ui/components/TabBar';
+import { SchoolGlance } from '@/ui/components/Glance';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
@@ -84,6 +86,7 @@ export function SchoolWorkspace() {
         <div className="eyebrow">School</div>
         <h1><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.name}</Open></h1>
         <p className="muted"><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.degree} in {YALE_DRAMA.program}</Open>, class of {school.classOf}. {where}</p>
+        <SchoolGlance />
       </LookRegion>
       <SchoolTabs tab={tab} onTab={setTab} />
       <div role="tabpanel" id={`school-pane-${tab}`} aria-labelledby={`school-tab-${tab}`} tabIndex={0}>
@@ -93,38 +96,9 @@ export function SchoolWorkspace() {
   );
 }
 
-/** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
+/** The tabs, as a tab list: the shared bar from 2026-10-23 (`components/TabBar.tsx`), its own copy until then. */
 function SchoolTabs({ tab, onTab }: { tab: SchoolTab; onTab: (tab: SchoolTab) => void }) {
-  const go = (index: number) => {
-    const next = SCHOOL_TABS[(index + SCHOOL_TABS.length) % SCHOOL_TABS.length]!;
-    onTab(next.id);
-    document.getElementById(`school-tab-${next.id}`)?.focus();
-  };
-  return (
-    <div className="tabs" role="tablist" aria-label="School">
-      {SCHOOL_TABS.map((one, i) => (
-        <button
-          key={one.id}
-          id={`school-tab-${one.id}`}
-          type="button"
-          role="tab"
-          className="tab"
-          aria-selected={one.id === tab}
-          aria-controls={`school-pane-${one.id}`}
-          tabIndex={one.id === tab ? 0 : -1}
-          onClick={() => onTab(one.id)}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
-            else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
-            else if (e.key === 'Home') { e.preventDefault(); go(0); }
-            else if (e.key === 'End') { e.preventDefault(); go(SCHOOL_TABS.length - 1); }
-          }}
-        >
-          {one.label}
-        </button>
-      ))}
-    </div>
-  );
+  return <TabBar tabs={SCHOOL_TABS} tab={tab} onTab={onTab} label="School" idPrefix="school" />;
 }
 
 /** Standing, this term's tally against the floors, the craft against the class, and the evaluations. */
@@ -249,25 +223,29 @@ function StandingPane() {
       <Panel title="Term Reviews">
         {school.history.length ? (
           <div className="table-scroll">
-            <table>
+            {/* Each review's figures in a row, and why under them across the table (from 2026-10-23, brief 23): until then
+                why was a seventh column, a paragraph set in 55 pixels on a phone on its side, 77 lines of it. */}
+            <table className="review-table stack-table">
               <thead>
-                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Coursework</th><th scope="col">Why</th></tr>
+                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Coursework</th></tr>
               </thead>
-              <tbody>
-                {school.history.map((r, i) => (
-                  <tr key={i}>
+              {school.history.map((r, i) => (
+                <tbody key={i}>
+                  <tr>
                     <td>{termLabel(r.term)}</td>
                     <td>{STANDING_LABEL[r.standing]}</td>
-                    <td className="num mono">{pct(r.attendance)}</td>
-                    <td className="num mono">{r.growth.toFixed(1)}</td>
-                    <td className="num mono">{r.classGrowth.toFixed(1)}</td>
+                    <td className="num mono" data-label="Attendance">{pct(r.attendance)}</td>
+                    <td className="num mono" data-label="Growth">{r.growth.toFixed(1)}</td>
+                    <td className="num mono" data-label="Class Growth">{r.classGrowth.toFixed(1)}</td>
                     {/* The review's own count of the term's coursework (`TermReview.coursework`), from 2026-10-16: until then it
                         was kept at every evaluation and shown nowhere, and its words named it only where the mark was reached. */}
-                    <td className="small">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} Unready or not shown` : 'None counted'}</td>
-                    <td className="small">{r.reason}</td>
+                    <td className="small" data-label="Coursework">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} Unready or not shown` : 'None counted'}</td>
                   </tr>
-                ))}
-              </tbody>
+                  <tr className="review-why">
+                    <td colSpan={6} className="small">{r.reason}</td>
+                  </tr>
+                </tbody>
+              ))}
             </table>
           </div>
         ) : (
@@ -344,7 +322,8 @@ function ClassesPane() {
                 {week.map((day, i) => (
                   <tr key={WEEKDAYS[i]}>
                     <td>{WEEKDAYS[i]}</td>
-                    {SLOTS.map((s, j) => <td key={s}>{day[j] ? <Open subject={at('course', day[j]!.code)}>{day[j]!.name}</Open> : ''}</td>)}
+                    {/* A course's name at a width it reads at (from 2026-10-23: at 1024, four lines in 105 pixels). */}
+                    {SLOTS.map((s, j) => <td key={s}>{day[j] ? <div className="cell-min"><Open subject={at('course', day[j]!.code)}>{day[j]!.name}</Open></div> : ''}</td>)}
                   </tr>
                 ))}
               </tbody>
@@ -374,7 +353,7 @@ function ClassesPane() {
               {courses.map((c) => (
                 <tr key={c.code}>
                   <td className="mono"><Open subject={at('course', c.code)}>{c.code}</Open></td>
-                  <td><Open subject={at('course', c.code)}>{c.name}</Open></td>
+                  <td><div className="cell-min"><Open subject={at('course', c.code)}>{c.name}</Open></div></td>
                   <td>{c.teachers}</td>
                   <td>{c.skills.map((one, k) => <span key={one}>{k > 0 ? ', ' : ''}<Open subject={at('skill', one)}>{skillLabel(one)}</Open></span>)}</td>
                   <td className="num mono">{c.perWeek}</td>
@@ -451,7 +430,7 @@ function CastReadPanel() {
                   <td className="num mono">{Math.round(r.delivery * 100)}%</td>
                   <td className="num mono">{r.balance > 0 ? `+${r.balance}` : r.balance}</td>
                   <td className="num mono">{r.score.toFixed(1)}</td>
-                  <td>{r.part}</td>
+                  <td><div className="cell-min">{r.part}</div></td>
                 </tr>
               ))}
             </tbody>
@@ -537,12 +516,16 @@ function CastingPane() {
       )}
       {school.around && school.around.term === school.termsBegun - 1 && enrolled && (
         <Panel title="Around The Class" subtitle="Who’s playing what this term">
-          <table className="table">
-            <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">Last Run</th><th scope="col">To You</th></tr></thead>
-            <tbody>
-              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
-            </tbody>
-          </table>
+          {/* In its own scrolling box, as every wide table is (from 2026-10-23: its Part given a width it reads at, it ran
+              163 pixels past its card at 667). */}
+          <div className="table-scroll">
+            <table className="table">
+              <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">Last Run</th><th scope="col">To You</th></tr></thead>
+              <tbody>
+                {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td><div className="cell-min">{a.part}</div></td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
         </Panel>
       )}
       <Fine>
@@ -649,7 +632,7 @@ function CoursesPanel() {
         : `The degree wasn’t recommended${notPassed}, and nothing more can be asked for it.`;
   return (
     <div className="col gap-2">
-      <div className="row-between"><div className="eyebrow">Courses And The Degree</div><HowItWorks help="school.repeat" /></div>
+      <SectionHead title="Courses And The Degree" help="school.repeat" />
       <p className="small" style={{ margin: 0 }}>
         {passed} of {all.length} courses passed{ended ? '' : ' so far'}.{' '}
         {ended ? endedWords : failed.length ? `The degree still needs ${spokenList(failed.map((r) => r.name))}. A course left on a leave is taken again on your return, and a year with a failed course can be repeated, under Finishing The Degree below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}

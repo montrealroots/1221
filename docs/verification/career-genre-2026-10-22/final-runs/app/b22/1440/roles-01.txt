@@ -5,6 +5,7 @@ SLATE
 ·
 September 1, 2026
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,7 +16,6 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-15
 YOU
 Player Profile
 YOUR TRAINING
@@ -27,93 +27,16 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 15 Unread
+Actress
 Tuesday, September 1, 2026 · Actress
 Good Morning, Ada.
 
-7:30 AM in New Haven · EDT · Autumn · ☁️ 66°F Overcast
+7:30 AM in New Haven, Connecticut · EDT · Autumn · Daylight 6:17 AM to 7:27 PM, 13h 10m
 
-Calendar
-
-What’s coming up, and when.
-
-Open Calendar
-How This Works
-in 1h 30m
-Classes
-September 1, 2026 at 9:00 AM
-Classes
-in 1d 1h
-Classes
-in 2d 1h
-Classes
-in 3d 1h
-Work-Study Shift
-in 4d 2h
-Drama 50: The Theatrical Event
-in 7d 7h
-How Your Own Plans Work
-What Needs You
-
-No questions are waiting on you.
-
-Mark 15 Read
-How This Works
-Welcome To The Class Of 2029
-You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m. Orientation’s five sessions, from August 24, 2026, are on your calendar. If you miss one, press Catch Up beside it under Orientation, on the School’s Coursework tab.
-8 days ago
-Go There
-Acting I: Scene Study
-Your scene is from Trifles, the one act, the Wright kitchen. You play Mrs. Hale, and Caleb Nguyen plays Mrs. Peters. It’s due in class on September 8, 2026. Start with Knows The Scene: this piece puts it first, so it counts for more when you show it.
-3d 22h ago
-Go There
-Voice I: A Voice Sequence
-The breath and resonance sequence shown, then a short text spoken on it. It’s due in class on September 11, 2026. Start with The Sequence Learned: this piece puts it first, so it counts for more when you show it.
-3d 22h ago
-Go There
-Speech And Accents I: Sound Changes And A Text
-A text transcribed and spoken with the term’s sound changes. It’s due in class on September 14, 2026. Start with The Text: this piece puts it first, so it counts for more when you show it.
-3d 22h ago
-Go There
-The Body As Source I: A Movement Score
-A short movement score of your own, shown. It’s due in class on September 10, 2026. Start with The Score Made: this piece puts it first, so it counts for more when you show it.
-3d 22h ago
-Go There
-Alexander Technique I: Directions In Daily Life
-The lesson’s directions shown in a simple action, in the tutorial. It’s due in class on September 14, 2026. Start with The Directions Understood: this piece puts it first, so it counts for more when you show it.
-3d 22h ago
-Go There
-These six are the most important. 9 more are unread.
-Show All 15
-How You Are
-How This Works
-
-Rested, steady and ready for a real day.
-
-Energy
-90
-Stress
-10
-Readiness
-92
-Where You Are
-How This Works
-New Haven, Connecticut · United States
-Your home. 130K people.
-LOCAL TIME
-7:30 AM
-EDT
-DAYLIGHT
-6:17 AM – 7:27 PM
-13h 10m of daylight
-
-Its money, costs, taxes and languages
-
-Weather
-How This Works
-☁️66°F
-Overcast · High 73°F · Low 63°F
-Humidity 73% · Wind 17 mph · Continental
+How Home Works
+☁️
+66°F Overcast
+High 73°F · Low 63°F
 Wed
 ⛈️
 Storm
@@ -134,17 +57,78 @@ Sun
 ⛅
 Cloudy
 84° / 66°
-Your Affairs
+How The Weather Works
+What Needs You
 How This Works
-Money
-Chase Total Checking: $90,429.00. Worth $503,473.
-Chase
+All Clear
+
+You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.
+
+Up Next
+
+What’s coming up, and when.
+
+Open Calendar
 How This Works
-School
-Year 1, good standing, 2nd of 16 in the class. Next: Classes, September 1, 2026 at 9:00 AM.
-Yale
+in 1h 30m
+Classes
+September 1, 2026 at 9:00 AM
+Classes
+in 1d 1h
+Classes
+in 2d 1h
+Classes
+in 3d 1h
+Work-Study Shift
+in 4d 2h
+Drama 50: The Theatrical Event
+in 7d 7h
+How Your Own Plans Work
+How You Are
 How This Works
-Papers
-Cover: Yale Health.
-Papers
+
+Rested, steady and ready for a real day.
+
+Energy
+90
+Stress
+10
+Readiness
+92
+LOOK AFTER YOURSELF
+Eat A Meal
+40 Min, $5.00
+Order In
+50 Min, $34.65
+
+Nourishment at 80 is costing readiness.
+
 How This Works
+Recent Updates
+
+15 unread, the most important first.
+
+Mark 15 Read
+How This Works
+Welcome To The Class Of 2029
+School · 8 days ago
+You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m. Orientation’s five sessions, from August 24, 2026, are on your calendar. If you miss one, press Catch Up beside it under Orientation, on the School’s Coursework tab.
+Go There
+Mark Read
+Acting I: Scene Study
+School · 3d 22h ago
+Your scene is from Trifles, the one act, the Wright kitchen. You play Mrs. Hale, and Caleb Nguyen plays Mrs. Peters. It’s due in class on September 8, 2026. Start with Knows The Scene: this piece puts it first, so it counts for more when you show it.
+Go There
+Mark Read
+Voice I: A Voice Sequence
+School · 3d 22h ago
+The breath and resonance sequence shown, then a short text spoken on it. It’s due in class on September 11, 2026. Start with The Sequence Learned: this piece puts it first, so it counts for more when you show it.
+Go There
+Mark Read
+Speech And Accents I: Sound Changes And A Text
+School · 3d 22h ago
+A text transcribed and spoken with the term’s sound changes. It’s due in class on September 14, 2026. Start with The Text: this piece puts it first, so it counts for more when you show it.
+Go There
+Mark Read
+11 more unread.
+View All Updates

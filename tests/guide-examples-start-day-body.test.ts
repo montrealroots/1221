@@ -166,13 +166,14 @@ const dials = (sim: Simulation) => ({ ...sim.player.wellbeing, readiness: readin
 function playHome() {
   const { setup, steps } = example('start.home');
   const [town, month] = read(setup, /in (.+), on an? (\w+) evening\./);
-  const [pressed] = read(steps[1]!, /^Press (.+) in Where You Are\.$/);
+  // In the line under the greeting from 2026-10-23 (brief 23): until then “Press New Haven in Where You Are.”, its panel.
+  const [pressed] = read(steps[1]!, /^Press (.+), in the line under the greeting\.$/);
   const [regionName, countryName] = read(steps[2]!, /press (.+), then (.+)\.$/);
   const sim = life();
   // This Evening, from the first morning: Registration on the way, gone to.
   const stops = jump(sim, todayAt(sim, 18));
   const before = serialise(sim.universe);
-  // What Where You Are prints, as Home builds it: the snapshot's town, profiled (`ui/screens/Home.tsx`).
+  // What Today's line prints, as Home builds it: the snapshot's town, profiled (`ui/screens/Home.tsx`).
   const where = placeProfile(sim, lifeSnapshot(sim).city!.id)!;
   const place = look(sim, at('place', sim.player.currentLocationId));
   const region = look(sim, place.ways!.find((w) => w.label === regionName)!.to);
@@ -308,10 +309,12 @@ function playNeeds() {
   sim.must({ kind: 'world.mark_read', payload: { notificationIds: unread.slice(2).map((n) => n.id) } });
   const decision = openDecisions(sim).find((d) => d.title === `Your ${year} Tax Return`)!;
   const waiting = { decisions: openDecisions(sim).length, unread: unreadNotifications(sim).length };
-  const countBefore = waiting.decisions + waiting.unread;
+  // The count beside Home is the questions, and the unread are counted by Recent Updates on Home, from 2026-10-23: until
+  // brief 23 Home's counted both, and until brief 24 later that day the unread were counted beside Updates on the menu.
+  const countBefore = { home: waiting.decisions, updates: waiting.unread };
   sim.must({ kind: 'world.dismiss_decision', payload: { decisionId: decision.id } });
   const marked = sim.must<{ read: number }>({ kind: 'world.mark_read', payload: {} });
-  const countAfter = openDecisions(sim).length + unreadNotifications(sim).length;
+  const countAfter = { home: openDecisions(sim).length, updates: unreadNotifications(sim).length };
   const stillOpen = openDecisions(sim).some((d) => d.id === decision.id);
   const unreadAfter = unreadNotifications(sim).length;
   const owed = { ...returnsOf(sim.player)[String(year)]! };
@@ -569,7 +572,7 @@ describe('the day and the clock', () => {
     expect(p.sleptEnergy).toBeGreaterThan(p.sim.player.wellbeing.energy);
   });
 
-  it('day.needs: Dismiss and Mark 2 Read take the return’s question and both notices off, three off the count, and the return still files', () => {
+  it('day.needs: Dismiss and Mark 2 Read take the return’s question and both notices off, one off the count beside Home and two off the one beside Updates, and the return still files', () => {
     const p = playNeeds();
     const { setup, steps, result } = example('day.needs');
     const [, title, answer, unread] = read(setup, /^(\w+), for a student from abroad, who files a US return every year: (.+?) waiting under (.+?) and Dismiss, and (\w+) unread notices\.$/);
@@ -583,10 +586,11 @@ describe('the day and the clock', () => {
     expect(dismissed).toBe(p.decision.title);
     const [marked] = read(steps[1]!, /^Press Mark (\d+) Read\.$/);
     expect(p.marked.read).toBe(Number(marked));
-    const [fell] = read(result, /the count beside Home falls by (\w+)\./);
+    const [fell, fellUpdates] = read(result, /the count beside Home falls by (\w+), and Recent Updates’ count of unread notices by (\w+)\./);
     expect(p.stillOpen).toBe(false);
     expect(p.unreadAfter).toBe(0);
-    expect(p.countBefore - p.countAfter).toBe(word(fell));
+    expect(p.countBefore.home - p.countAfter.home).toBe(word(fell));
+    expect(p.countBefore.updates - p.countAfter.updates).toBe(word(fellUpdates!));
     // Still due on its date, and Papers still files it.
     expect(result).toMatch(/The return is still due on its date, and Papers still files it\.$/);
     expect(p.owed.due).toBe(p.decision.dueAt);

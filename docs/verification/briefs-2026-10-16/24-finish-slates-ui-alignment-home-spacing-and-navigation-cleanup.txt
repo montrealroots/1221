@@ -1,0 +1,140 @@
+Finish SLATE’s UI Alignment, Home Spacing, And Navigation Cleanup
+
+Continue from the current UI working branch. Read the handoff and preserve uncommitted work. Complete the following four changes while keeping the existing desktop style and landscape-only mobile design.
+
+Use one primary agent by default. Avoid duplicated research, repeated broad audits, and unnecessary full-suite runs. Preserve complete verification and detailed results.
+
+1. Standardize Contextual Help Alignment
+
+Audit every “How This Works,” “How Home Works,” “How The Weather Works,” and equivalent help action across the interface.
+
+Apply shared placement rules:
+
+* In card headers, align the help action with the heading’s text baseline and use consistent padding from the card’s right edge.
+* When help appears beneath a heading or summary, align its visible text with that content’s left edge and use consistent vertical spacing.
+* Keep each help link visually grouped with the content it explains.
+* Remove arbitrary offsets, accidental indentation, and links floating far from their associated headings.
+* When a header cannot fit comfortably, place help on a deliberate second row aligned with the heading’s left edge.
+* Preserve comfortable touch targets and visible keyboard focus without letting button padding misalign the visible text.
+
+Use shared components or styles where appropriate. Apply the rules across Home, Career, School, Money, Papers, Profile, Calendar, Updates, dialogs, and contextual panels.
+
+Do not force every help link into the same screen coordinate. Its placement should be consistent within its component type.
+
+2. Compact Mobile Home’s Greeting And Weather
+
+At 667×375, the greeting, location, daylight information, and forecast occupy almost the entire initial view.
+
+Improve the use of limited landscape height:
+
+* Keep the greeting and essential current-day information compact.
+* Show current weather as a concise summary.
+* Make the extended forecast and additional weather/daylight details expandable.
+* Avoid unnecessary repetition of time and location.
+* Reduce excess spacing instead of shrinking text or touch controls.
+* Bring the next commitment and urgent action information into the initial view under representative conditions.
+* When urgent content exceeds the available space, show the highest-priority item and a clear route to the remainder.
+
+Verify at 667×375, 844×390, and 932×430. Preserve the desktop layout’s useful spacing and readability.
+
+3. Compact The Empty “What Needs You” State
+
+When nothing requires attention, show a concise “All Clear” state instead of a large mostly empty card.
+
+* Remove unnecessary minimum heights or grid stretching.
+* Allow the remaining Home content to move upward naturally.
+* Keep a coherent arrangement beside Up Next.
+* Let the section expand appropriately when actionable items exist.
+* Preserve all decisions, deadlines, warnings, and their actions.
+
+Do not change gameplay state, dismiss obligations, or mark items resolved to simplify the display.
+
+4. Remove Calendar And Updates From Sidebar Navigation
+
+Remove Calendar and Updates from both the desktop sidebar and the mobile navigation drawer.
+
+Keep their complete functionality accessible from Home:
+
+* Up Next must always offer “Open Calendar,” even with no upcoming commitments.
+* Recent Updates must always offer “View All Updates,” even with no unread messages.
+
+Recent Updates is the concise Home summary. The full Updates screen remains the complete notification history, including older messages, filtering, and read/unread controls.
+
+Preserve:
+
+* Calendar events and actions.
+* All notification history.
+* Contextual links from other screens.
+* Unread counts where useful on Home.
+* The distinction between reading a message and resolving a decision.
+
+Give both screens a clear route back to Home.
+
+Update navigation references, contextual help, and tutorials so they accurately describe access through Home. Preserve applicable tutorial progression without leaving either destination inaccessible once introduced.
+
+This is a navigation cleanup, not removal of Calendar or Updates.
+
+5. Preserve Existing Behavior
+
+Keep:
+
+* The dark palette, gold accents, and desktop sidebar style.
+* Landscape-only phone gameplay.
+* The portrait rotation screen and correct pause/resume behavior.
+* Existing gameplay actions, save compatibility, and downstream effects.
+* Meaningful drill-down links and contextual help.
+* Accessible keyboard navigation and focus indicators.
+
+Do not restore “Your Affairs” on Home. Its destinations remain in navigation.
+
+6. Verify The Built Interface
+
+Inspect the actual application visually and interactively. CSS inspection and “no horizontal scroll” checks alone are insufficient.
+
+Cover:
+
+* Short and long headings beside help actions.
+* Empty and populated Home states.
+* New students, developed students, graduates, and active career situations.
+* Desktop at 1280×720, 1440×900, and 1920×1080.
+* Landscape phones at 667×375, 844×390, and 932×430.
+* Larger text and 200% zoom.
+* Expanded weather, menus, dialogs, and help.
+* The mobile drawer scrolling to every remaining destination and secondary control.
+* Calendar and Updates access from Home, including empty states.
+* Return navigation and applicable tutorial progression.
+* Portrait rotation preserving state and pausing correctly.
+
+Ensure:
+
+* No overlaps, clipped labels, distorted controls, or unintended sideways page scrolling.
+* No essential action covered by a sticky element.
+* No inaccessible controls at the bottom of a drawer or dialog.
+* Primary touch targets remain comfortably usable, targeting at least 44×44 CSS pixels.
+* Complete information remains available through expansion or drill-down.
+
+7. Final Evidence And Completion
+
+Capture before/after screenshots showing:
+
+* Contextual help alignment.
+* Compact landscape Home at all three phone sizes.
+* Desktop Home with an empty and populated What Needs You section.
+* Expanded weather.
+* Sidebar/drawer without Calendar and Updates.
+* Home access to both destinations and their return navigation.
+
+Include normal viewport captures. Full-page images may supplement them but must not replace proof of what fits on an actual screen.
+
+Run targeted tests during development. After integration:
+
+* Run the required full regression gate.
+* Run the outstanding final verification identified in the UI handoff against the finished build.
+* Resolve failures introduced by these changes and rerun affected checks.
+* Update the coverage matrix and handoff with accurate evidence.
+
+Report the exact tested commit, changes, screenshot paths, test results, and remaining limitations. Distinguish emulated-device verification from physical-device testing.
+
+Complete all four changes and their verification. Do not stop at recommendations or claim perfection solely because automated checks pass.
+
+Keep the changes reviewable. Do not merge or deploy without my instruction.

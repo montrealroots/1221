@@ -8,11 +8,13 @@ Career
 
 Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.
 
+‹
 Overview
 Portfolio
 Representation
 Opportunities
 Work
+›
 
 Every project, company and casting office here is invented for the game: no real production is casting. New roles go up each Monday morning.
 
@@ -43,5 +45,5 @@ No work booked.
 
 Sources And Estimates
 
------ 23 controls; Tab reached 18 of the 18 it can; 0 grayed
+----- 22 controls; Tab reached 15 of the 15 it can; 0 grayed
 Nothing found.

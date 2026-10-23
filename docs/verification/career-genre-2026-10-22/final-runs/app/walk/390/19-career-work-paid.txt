@@ -8,6 +8,7 @@ Career
 
 Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.
 
+‹
 Overview
 Portfolio
 Representation
@@ -21,39 +22,31 @@ No work booked. Work you accept appears here with its dates, its calls, its pay 
 Sources And Estimates
 Finished Engagements
 How This Works
-DESK CLERK, THE CALLOWAY FILES
-Who
-Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.
-Where
-A studio in Queens, New York.
-Status
+Desk Clerk, The Calloway Files
 Finished
-Dates
+DATES
 January 7, 2030 to January 8, 2030, two days of work.
-On Your Calendar
+PAY
+$3,084.40 a week for one week, $3,084.40 in all, 1 of 1 paid
+NEXT CALL
 Its calls are over.
-Permission To Work
-Read December 12, 2029: You’re a US citizen, so you can work for any employer in the US.
-Pay
-The week of January 7, 2030: $3,084.40 promised by Bright Harbor Television. Received January 15, 2030, passed on from Halberd Talent’s client trust account.
-Gross $3,084.40, withheld for tax $235.95, to you $2,568.05.
-Commission: $280.40, taken before it reached you.
+The Agreement
+On Your Calendar
+Pay (1)
+Eligibility When Accepted
 What Happened
-IVY, PAPER MOONS
-Who
-a graduate film program’s thesis production, SAG-AFTRA Student Film. Fictional, as every project in the game is.
-Where
-An apartment in Brooklyn, New York.
-Status
+Ivy, Paper Moons
 Finished
-Dates
+DATES
 December 3, 2029 to December 5, 2029, three days of work.
-On Your Calendar
+PAY
+Deferred pay
+NEXT CALL
 Its calls are over.
-Permission To Work
-Read November 8, 2029: You’re a US citizen, so you can work for any employer in the US.
-Pay
-The week of December 3, 2029: deferred by a graduate film program’s thesis production. SAG-AFTRA’s Student Film Agreement defers the pay: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for it.
+The Agreement
+On Your Calendar
+Pay (1)
+Eligibility When Accepted
 What Happened
 Your Unions
 How This Works
@@ -73,5 +66,5 @@ You’ve been able to join SAG-AFTRA since January 7, 2030. SAG-AFTRA work from 
 Join SAG-AFTRA ($3,244.07)
 Sources And Estimates
 
------ 25 controls; Tab reached 20 of the 20 it can; 0 grayed
+----- 31 controls; Tab reached 25 of the 25 it can; 0 grayed
 Nothing found.

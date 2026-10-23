@@ -23,7 +23,7 @@ import { finished, type Engagement, type ProPayment, type UnionBill } from '@/en
 import { inSaveMoney } from '@/engine/systems/banking';
 import { DEFERRED_WHY, counted } from '@/engine/systems/projobs';
 import {
-  commissionOn, joinSagRefusal, owedAfterEnding, placeKnown, projectOf, sagJoinUsd, sagMembershipFrom, weekWords, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, DUES_KIND,
+  commissionOn, eligibilityRead, joinSagRefusal, owedAfterEnding, placeKnown, projectOf, sagJoinUsd, sagMembershipFrom, weekOf, weekWords, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, DUES_KIND,
 } from '@/engine/systems/propay';
 
 const STATUS: Readonly<Record<Engagement['status'], string>> = { booked: 'Booked', preparing: 'Preparing', working: 'Working', finished: 'Finished', canceled: 'Called Off' };
@@ -45,82 +45,159 @@ function datesWords(e: Engagement, zone: string): string {
   return `${formatDate(first, zone)} to ${formatDate(last, zone)}, ${counted(e.days.length, 'day')} of work.`;
 }
 
-/** A payment, said as the Work tab lists it: what's promised and when, where it stands, and its commission. */
-function PaymentLine({ person, e, p }: { person: Person; e: Engagement; p: ProPayment }) {
-  const { sim } = useGame();
+/**
+ * A payment as a row of the Work tab's pay table (from 2026-10-23, the owner's brief 23): its week, what's promised,
+ * when it's due, where it stands, and its commission. Until then each was a paragraph, the same sentence for every week of
+ * a run (nine times "The week of …: $1,114.00 promised by Harrow Point Repertory Theater, due …"), and the commission's
+ * reason under each; what's the same for every week is said once under the table now (`EngagementPay`).
+ */
+function paymentRow(sim: Simulation, person: Person, e: Engagement, p: ProPayment): { week: string; promised: string; due: string; stands: string; commission: string; why?: string } {
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
   const zone = sim.zone;
-  const project = projectOf(e);
-  const from = project?.company ?? 'the production';
-  const promised = `${weekWords(p, zone)[0]!.toUpperCase()}${weekWords(p, zone).slice(1)}: ${formatMoney(p.promised, p.currency)} promised by ${from}`;
-  // One sentence for deferred pay wherever it's said (`DEFERRED_WHY`, from 2026-10-21): until then this said "$0.00
-  // promised by" and "never paid" where the offer said it pays only if the film earns money later.
-  if (p.deferred) return <li>{`${weekWords(p, zone)[0]!.toUpperCase()}${weekWords(p, zone).slice(1)}: deferred by ${from}. SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it.`}</li>;
+  const week = formatDate(weekOf(p, zone).from, zone);
+  const promised = formatMoney(p.promised, p.currency);
+  // One sentence for deferred pay wherever it's said (`DEFERRED_WHY`, from 2026-10-21).
+  if (p.deferred) return { week, promised: 'Deferred', due: 'Never', stands: `SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it.`, commission: 'None' };
   const r = p.received;
   if (r) {
-    return (
-      <li>
-        <div>{`${promised}. Received ${formatDate(r.at, zone)}${r.via === 'trust' && p.inTrust ? `, passed on from ${p.inTrust.agency}’s client trust account` : ', paid straight to you'}.`}</div>
-        <div className="xs">{`Gross ${money(r.gross)}, withheld for tax ${money(r.withheld)}${r.dues ? `, working dues ${money(r.dues)}` : ''}, to you ${money(r.net)}.`}</div>
-        <div className="xs">{r.commission ? `Commission: ${money(r.commission)}, taken before it reached you.` : 'Commission: none.'}</div>
-      </li>
-    );
+    return {
+      week, promised, due: formatDate(p.due, zone),
+      stands: `Received ${formatDate(r.at, zone)}${r.via === 'trust' && p.inTrust ? `, passed on from ${p.inTrust.agency}’s client trust account` : ', paid straight to you'}. Gross ${money(r.gross)}, withheld for tax ${money(r.withheld)}${r.dues ? `, working dues ${money(r.dues)}` : ''}, to you ${money(r.net)}.`,
+      commission: r.commission ? `${money(r.commission)}, taken before it reached you` : 'None',
+    };
+  }
+  if (p.inTrust) {
+    return {
+      week, promised, due: formatDate(p.due, zone),
+      stands: `Paid into ${p.inTrust.agency}’s client trust account on ${formatDate(p.inTrust.at, zone)}, and passed on to you by ${formatDate(p.inTrust.releaseAt, zone)}. Gross ${money(p.inTrust.gross)}, withheld for tax ${money(p.inTrust.withheld)}${p.inTrust.dues ? `, working dues ${money(p.inTrust.dues)}` : ''}, held for you ${money(p.inTrust.held)}.`,
+      commission: `${money(p.inTrust.commission)}, taken when it’s passed on`,
+    };
   }
   const gross = inSaveMoney(sim, p.promised, p.currency);
-  if (p.inTrust) {
-    return (
-      <li>
-        <div>{`${promised}. Paid into ${p.inTrust.agency}’s client trust account on ${formatDate(p.inTrust.at, zone)}, and passed on to you by ${formatDate(p.inTrust.releaseAt, zone)}.`}</div>
-        <div className="xs">{`Gross ${money(p.inTrust.gross)}, withheld for tax ${money(p.inTrust.withheld)}${p.inTrust.dues ? `, working dues ${money(p.inTrust.dues)}` : ''}, held for you ${money(p.inTrust.held)}.`}</div>
-        <div className="xs">{`Commission: ${money(p.inTrust.commission)}, taken when it’s passed on.`}</div>
-      </li>
-    );
-  }
   const c = commissionOn(sim, person, e, p, gross, Math.max(p.due, sim.now));
+  return { week, promised, due: formatDate(p.due, zone), stands: 'Promised. It comes into your accounts on the day it’s due.', commission: c.amount ? `${money(c.amount)} expected` : 'None expected', why: c.words };
+}
+
+/** An engagement's pay: a table, a row a week, what's the same for every row said once under it. */
+function EngagementPay({ person, e }: { person: Person; e: Engagement }) {
+  const { sim } = useGame();
+  const rows = e.pay.map((p) => ({ key: p.key, ...paymentRow(sim, person, e, p) }));
+  const whys = [...new Set(rows.map((r) => r.why).filter(Boolean))];
+  const from = projectOf(e)?.company ?? 'the production';
+  if (!rows.length) return <p className="small" style={{ margin: 0 }}>No pay was promised for this work.</p>;
   return (
-    <li>
-      <div>{`${promised}, due ${formatDate(p.due, zone)}. It isn’t paid until then, so it isn’t in your accounts yet.`}</div>
-      <div className="xs">{c.amount ? `Commission expected: ${money(c.amount)}. ${c.words}` : `Commission expected: none. ${c.words}`}</div>
-    </li>
+    <div className="col gap-2">
+      {/* Deferred pay is paid by nobody: until this was caught on 2026-10-23 (brief 23's tests) a student film's read
+          “Paid by …, a payment for each week.” over a row that said nothing is paid. */}
+      <p className="xs dim" style={{ margin: 0 }}>{e.pay.every((p) => p.deferred) ? `Deferred by ${from}: nothing is paid for this work.` : `Paid by ${from}, a payment for each week.`}</p>
+      <div className="table-scroll">
+        <table className="pay-table">
+          <thead><tr><th>Week Of</th><th className="num">Promised</th><th>Due</th><th>Where It Stands</th><th>Commission</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.key}>
+                <td className="nowrap">{r.week}</td>
+                <td className="num">{r.promised}</td>
+                <td className="nowrap">{r.due}</td>
+                <td>{r.stands}</td>
+                <td>{whys.length > 1 && r.why ? `${r.commission}. ${r.why}` : r.commission}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {whys.length === 1 && <p className="xs dim" style={{ margin: 0 }}>{`Commission: ${whys[0]}`}</p>}
+    </div>
   );
 }
 
-/** One engagement: what and where, its dates and calls, what permission to work read, and its pay. */
+/** The pay in a line: each week's figure, how many weeks, and what's been paid. */
+function payLine(e: Engagement): string {
+  if (!e.pay.length) return 'No pay';
+  if (e.pay.every((p) => p.deferred)) return 'Deferred pay';
+  const first = e.pay[0]!;
+  const same = e.pay.every((p) => p.promised === first.promised && p.currency === first.currency);
+  const total = e.pay.reduce((t, p) => t + p.promised, 0);
+  const paid = e.pay.filter((p) => p.received).length;
+  const each = same ? `${formatMoney(first.promised, first.currency)} a week for ${counted(e.pay.length, 'week')}, ` : '';
+  return `${each}${formatMoney(total, first.currency)} in all${paid ? `, ${paid} of ${e.pay.length} paid` : ''}`;
+}
+
+/** An engagement's calls on the calendar, a run of the same call in one line: its name, how many, from when to when. */
+function callRuns(sim: Simulation, e: Engagement): string[] {
+  const zone = sim.zone;
+  const runs = new Map<string, { n: number; first: number; last: number }>();
+  for (const i of callsOf(sim, e)) {
+    const r = runs.get(i.label) ?? { n: 0, first: i.at, last: i.at };
+    r.n += 1; r.last = i.at;
+    runs.set(i.label, r);
+  }
+  return [...runs].map(([label, r]) => (r.n === 1 ? `${label}, ${formatDateTime(r.first, zone)}` : `${label}: ${plural(r.n, 'call')}, ${formatDate(r.first, zone)} to ${formatDate(r.last, zone)}`));
+}
+
+/**
+ * One engagement, its summary first (from 2026-10-23, brief 23): the part and the project, where it stands, its dates,
+ * the pay in a line and the next call. Then what holds now: a release says why, above everything else, and permission to
+ * work as it reads today for the days still to come. The agreement, the calendar, the pay, what permission read when it
+ * was accepted ("Eligibility When Accepted") and what happened open below. Until then it was one column of labeled facts,
+ * the reading at acceptance among them as "Permission To Work", which after a release still said the work was permitted.
+ */
 function EngagementView({ person, e }: { person: Person; e: Engagement }) {
   const { sim } = useGame();
   const zone = sim.zone;
   const project = projectOf(e);
   const calls = callsOf(sim, e);
+  const ahead = e.days.filter((d) => d.to > sim.now);
+  const now = !finished(e) && ahead.length ? eligibilityRead(person, ahead, sim.now) : undefined;
+  const ended = e.status === 'canceled' ? [...e.history].reverse()[0] : undefined;
+  const runs = callRuns(sim, e);
+  const name = `${e.role}, ${project?.project ?? 'Your Work'}`;
   return (
-    <article className="col gap-2" aria-label={`${e.role}, ${project?.project ?? 'Your Work'}`}>
-      <h3 className="eyebrow" style={{ margin: 0 }}>{`${e.role}, ${project?.project ?? 'Your Work'}`}</h3>
-      <dl className="col gap-2 small" style={{ margin: 0 }}>
-        <div><dt className="strong">Who</dt><dd style={{ margin: 0 }}>{project ? `${project.company}, ${project.contract}. Fictional, as every project in the game is.` : 'The production.'}</dd></div>
-        {project && <div><dt className="strong">Where</dt><dd style={{ margin: 0 }}>{`${project.place.venue[0]!.toUpperCase()}${project.place.venue.slice(1)}, ${project.place.city}.`}</dd></div>}
-        <div><dt className="strong">Status</dt><dd style={{ margin: 0 }}>{STATUS[e.status]}</dd></div>
-        <div><dt className="strong">Dates</dt><dd style={{ margin: 0 }}>{datesWords(e, zone)}</dd></div>
-        <div>
-          <dt className="strong">On Your Calendar</dt>
-          <dd style={{ margin: 0 }}>
-            {calls.length
-              ? <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>{calls.slice(0, 6).map((i) => <li key={i.id}>{`${i.label}, ${formatDateTime(i.at, zone)}`}</li>)}{calls.length > 6 && <li>{`And ${plural(calls.length - 6, 'more call')}, on the Calendar.`}</li>}</ul>
-              : finished(e) ? 'Its calls are over.' : 'No calls on your calendar for it yet.'}
-          </dd>
-        </div>
-        {e.eligibility && <div><dt className="strong">Permission To Work</dt><dd style={{ margin: 0 }}>{`Read ${formatDate(e.eligibility.at, zone)}: ${e.eligibility.words}`}</dd></div>}
-      </dl>
-      <div className="col gap-1">
-        <h4 className="small strong" style={{ margin: 0 }}>Pay</h4>
-        {e.pay.length
-          ? <ul className="small col gap-2" style={{ margin: 0, paddingLeft: '1.1rem' }}>{e.pay.map((p) => <PaymentLine key={p.key} person={person} e={e} p={p} />)}</ul>
-          : <p className="small" style={{ margin: 0 }}>No pay was promised for this work.</p>}
-        {!placeKnown(e) && project && <p className="xs dim" style={{ margin: 0 }}>{`${project.place.city} isn’t among the game’s towns, so its pay counts on your tax return as earned where you live, and the tax where the work is done isn’t worked out.`}</p>}
+    <article className="engagement" aria-label={name}>
+      <div className="engagement-head">
+        <h3>{name}</h3>
+        <span className={`chip ${e.status === 'canceled' ? 'chip-warning' : finished(e) ? '' : 'chip-accent'}`}>{STATUS[e.status]}</span>
       </div>
+      <dl className="facts">
+        <div><dt>Dates</dt><dd>{datesWords(e, zone)}</dd></div>
+        <div><dt>Pay</dt><dd>{payLine(e)}</dd></div>
+        <div><dt>Next Call</dt><dd>{calls[0] ? `${calls[0].label}, ${formatDateTime(calls[0].at, zone)}` : finished(e) ? 'Its calls are over.' : 'No calls on your calendar for it yet.'}</dd></div>
+      </dl>
+      {ended && <p className="callout callout-warning small" style={{ margin: 0 }}>{`${formatDate(ended.at, zone)}: ${ended.words}`}</p>}
+      {now && (
+        <p className={`callout small ${now.authorized ? '' : 'callout-warning'}`} style={{ margin: 0 }}>
+          <strong>Permission To Work Now. </strong>{now.words}
+        </p>
+      )}
+      <details className="section-fold">
+        <summary>The Agreement</summary>
+        <dl className="facts">
+          <div><dt>Who</dt><dd>{project ? `${project.company}, ${project.contract}. Fictional, as every project in the game is.` : 'The production.'}</dd></div>
+          {project && <div><dt>Where</dt><dd>{`${project.place.venue[0]!.toUpperCase()}${project.place.venue.slice(1)}, ${project.place.city}.`}</dd></div>}
+        </dl>
+        {!placeKnown(e) && project && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{`${project.place.city} isn’t among the game’s towns, so its pay counts on your tax return as earned where you live, and the tax where the work is done isn’t worked out.`}</p>}
+      </details>
+      <details className="section-fold">
+        <summary>{calls.length ? `On Your Calendar (${calls.length})` : 'On Your Calendar'}</summary>
+        {runs.length
+          ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{runs.map((r) => <li key={r}>{r}</li>)}</ul>
+          : <p className="small" style={{ margin: 0 }}>{finished(e) ? 'Its calls are over.' : 'No calls on your calendar for it yet.'}</p>}
+      </details>
+      <details className="section-fold">
+        <summary>{e.pay.length ? `Pay (${e.pay.length})` : 'Pay'}</summary>
+        <EngagementPay person={person} e={e} />
+      </details>
+      {e.eligibility && (
+        <details className="section-fold">
+          <summary>Eligibility When Accepted</summary>
+          <p className="small" style={{ margin: 0 }}>{`Read ${formatDate(e.eligibility.at, zone)}: ${e.eligibility.words}`}</p>
+        </details>
+      )}
       {e.history.length > 0 && (
-        <details className="small">
+        <details className="section-fold">
           <summary>What Happened</summary>
-          <ul style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{e.history.map((h) => <li key={h.id}>{`${formatDate(h.at, zone)}: ${h.words}`}</li>)}</ul>
+          <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{e.history.map((h) => <li key={h.id}>{`${formatDate(h.at, zone)}: ${h.words}`}</li>)}</ul>
         </details>
       )}
     </article>

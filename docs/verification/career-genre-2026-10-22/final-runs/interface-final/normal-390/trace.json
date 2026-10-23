@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "933f1ae6",
- "uncommitted": 8,
- "startedAt": "2026-10-22T23:36:17.671Z",
+ "commit": "05060742",
+ "uncommitted": 9,
+ "startedAt": "2026-10-23T18:57:00.699Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": "1-AlexRivera-mvk6jypn"
+  "seed": "1-AlexRivera-mvlc0txr"
  },
  "steps": [
   {
@@ -59,7 +59,7 @@
     "I’ve Read It ×20"
    ],
    "said": [
-    "12 locked at the start; 20 chapters read; none locked now"
+    "9 locked at the start; 20 chapters read; none locked now"
    ],
    "ok": true,
    "date": "August 24, 2026",
@@ -185,12 +185,12 @@
    "pressed": [
     "Menu",
     "Home",
-    "Show All 15",
+    "View All Updates",
     "Go There",
     "Coursework (tab)"
    ],
    "said": [
-    "These six are the most important. 9 more are unread. Show All 15",
+    "11 more unread. View All Updates",
     "notice “The Courses And What They Ask”: Each course set out what it asks. Eight courses gave you their first piece now, so you can start before classes.",
     "8 pieces: Acting I: Scene Study (Due September 8, 2026); Text And Context Across The Repertory: A Play In Its Context (Due September 8, 2026); The Body As Source I: A Movement Score (Due September 10, 2026); Voice I: A Voice Sequence (Due September 11, 2026); Speech And Accents I: Sound Changes And A Text (Due September 14, 2026); Alexander Technique I: Directions In Daily Life (Due September 14, 2026); Play: A Game Played Through (Due September 17, 2026); Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice (Due September 25, 2026)"
    ],
@@ -227,11 +227,11 @@
     "Menu",
     "School",
     "Coursework (tab)",
-    "Table Work: A cold winter morning in the dead man’s kitchen, the men ups",
-    "Table Work: Two farm women who barely know each other, coming to underst",
-    "Table Work: Do right, and find out what right is: the law, or Minnie",
-    "Table Work: She is married to the sheriff, and the law is the law",
-    "Table Work: Remember what it was to lose something and have no one",
+    "Table Work: A winter afternoon going dark in their Washington Square stu",
+    "Table Work: Husband and wife of a few years; she has been reading his ev",
+    "Table Work: Turn her own theory back on her until she lets it go",
+    "Table Work: She believes in psychoanalysis, and by its lights a denial i",
+    "Table Work: Draw it out, and make her beg for each word of the diagnosis",
     "Read The Scene",
     "Read The Scene",
     "Read The Scene",
@@ -251,17 +251,9 @@
     "Learn Lines",
     "Learn Lines",
     "Learn Lines",
-    "Learn Lines",
-    "Advance",
-    "Tomorrow Morning",
-    "Menu",
-    "School",
-    "Coursework (tab)",
     "Rehearse Alone",
     "Advance",
     "Tomorrow Morning",
-    "On The Way: Advance",
-    "Classes: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -279,7 +271,7 @@
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
-    "Rehearsal With Maya: Go",
+    "Rehearsal With Aaliyah: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -288,6 +280,16 @@
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Say Yes",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Rehearsal With Aaliyah: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -308,7 +310,6 @@
     "Menu",
     "School",
     "Coursework (tab)",
-    "Rehearse Alone",
     "Rehearse Alone",
     "Rehearse Alone",
     "Rehearse Alone",
@@ -335,18 +336,18 @@
     "Coursework (tab)"
    ],
    "said": [
-    "August 29, 2026 12:25 PM: 21.1 → 28.7 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
-    "August 30, 2026 7:30 PM: 28.7 → 33.7 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines)",
-    "August 31, 2026 8:00 AM: 33.7 → 36.8 (1 steps: Rehearse Alone)",
-    "September 1, 2026 8:00 AM: 36.8 → 39.1 (1 steps: Rehearse Alone)",
-    "September 2, 2026 8:00 AM: 39.1 → 40.7 (2 steps: answered yes, Rehearse Alone)",
-    "September 3, 2026 8:00 AM: 40.7 → 41.9 (1 steps: Rehearse Alone)",
-    "September 4, 2026 8:00 AM: 41.9 → 42.7 (1 steps: Rehearse Alone)",
-    "September 5, 2026 9:00 AM: 42.7 → 43.6 (2 steps: Rehearse Alone, Rehearse Alone)",
-    "September 6, 2026 12:00 PM: 43.6 → 48.9 (5 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
-    "September 7, 2026 8:00 AM: 48.9 → 53 (1 steps: Run It With A Reader)",
-    "September 8, 2026 8:00 AM: 53 → 55.9 (1 steps: Run It With A Reader)",
-    "11 days; Shown Today 21.1 → 55.9"
+    "August 29, 2026 11:55 AM: 22.1 → 29.5 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 2:45 PM: 29.5 → 36.1 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
+    "August 31, 2026 8:00 AM: 36.1 → 38.7 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 38.7 → 40.6 (2 steps: answered yes, Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 46.2 → 47.5 (1 steps: Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 47.5 → 48.5 (2 steps: answered yes, Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 52.6 → 53.3 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 53.3 → 53.9 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 11:00 AM: 53.9 → 57.4 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 57.4 → 60.1 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 60.1 → 61.9 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 22.1 → 61.9"
    ],
    "ok": true,
    "date": "September 9, 2026",
@@ -370,9 +371,9 @@
     "Work On The Note"
    ],
    "said": [
-    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Maya hadn’t rehearsed together. You ran it with a reader 3 times. (With Your Partner: 66% prepared.) You played Mrs. Peters in Trifles.",
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Working, and not for lack of preparation: your focus held back your execution by 21 points out of 100. Classes build it, and so does Circles Of Attention, in the Practice column on your Player Profile.",
     "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
-    "feedback: FEEDBACK: WORKING, 56 OF 100 · A NEW NOTE",
+    "feedback: FEEDBACK: WORKING, 62 OF 100 · WHAT HELD IT BACK",
     "Shown: Scene Study, Working"
    ],
    "ok": true,
@@ -415,6 +416,7 @@
     "Home",
     "Menu",
     "Home",
+    "Menu",
     "Save & Exit",
     "Delete",
     "Keep It",
@@ -426,8 +428,8 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Alex Rivera’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE September 9, 2026 LOCATION New Haven NET WORTH $503K PLAYED 0s Version 1.1.0 · Save Format 94 · 24 KB Backup from September 6, 2026 Continue Restore",
-    "September 9, 2026 8:00 AM; 6 notices as they were"
+    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE September 9, 2026 LOCATION New Haven NET WORTH $503K PLAYED 0s Version 1.1.0 · Save Format 94 · 24 KB Backup from September 5, 2026 Continue Restore",
+    "September 9, 2026 8:00 AM; 4 notices as they were"
    ],
    "ok": true,
    "date": "September 9, 2026",
@@ -532,6 +534,12 @@
    "step": 11,
    "title": "Classes",
    "pressed": "Go",
+   "after": "September 1, 2026 7:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Rehearsal With Aaliyah",
+   "pressed": "Go",
    "after": "September 2, 2026 7:00 AM"
   },
   {
@@ -544,12 +552,6 @@
    "step": 11,
    "title": "Classes",
    "pressed": "Go",
-   "after": "September 2, 2026 7:00 PM"
-  },
-  {
-   "step": 11,
-   "title": "Rehearsal With Maya",
-   "pressed": "Go",
    "after": "September 3, 2026 7:00 AM"
   },
   {
@@ -561,6 +563,12 @@
   {
    "step": 11,
    "title": "Classes",
+   "pressed": "Go",
+   "after": "September 3, 2026 7:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Rehearsal With Aaliyah",
    "pressed": "Go",
    "after": "September 4, 2026 7:00 AM"
   },
@@ -647,5 +655,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-22T23:39:40.815Z"
+ "finishedAt": "2026-10-23T19:00:35.576Z"
 }

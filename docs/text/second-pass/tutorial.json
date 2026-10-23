@@ -78,16 +78,16 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [advance]": {
   "status": "Rewritten",
-  "hash": "749bdcd509c5",
-  "on": "2026-10-20",
-  "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
+  "hash": "5a536a869985",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
   "status": "Rewritten",
-  "hash": "4682ea60b387",
-  "on": "2026-10-22",
-  "evidence": "read again on 2026-10-22 (brief 21): Your Bank's late-payment sentence says the US days the game counts (a notice past 60 days, the penalty rate 45 days on, the charge-off at 180) and six missed due dates only elsewhere; tests/b21-banking-proof.test.ts ('the tutorial and the guide say the days the game counts') holds it to US_LATE and the played timeline",
+  "hash": "20c238cc58e9",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {
@@ -99,9 +99,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
   "status": "Rewritten",
-  "hash": "3d1f286ba2a9",
-  "on": "2026-10-20",
-  "evidence": "The chapter says what the stop, the dialogs, the Advance lines and the suggestion do now; held by tests/time-controls.test.ts and tests/time-stops.test.ts",
+  "hash": "679ab4938f83",
+  "on": "2026-10-23",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
@@ -141,37 +141,37 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [looking-after]": {
   "status": "Rewritten",
-  "hash": "e3ae109d124c",
-  "on": "2026-10-20",
-  "evidence": "the menu's lines, Needed Now and Most Worth It and the done-at message traced to LookAfterMenu in src/ui/shell/TimeControls.tsx; groceries bought each day and No Money For Food Today traced to buyTheDaysFood in src/engine/systems/spending.ts; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "hash": "ecea151295e3",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [money]": {
   "status": "Rewritten",
-  "hash": "2e16e40a390c",
-  "on": "2026-10-20",
-  "evidence": "split where one paragraph held what the score decides and how it moves; tests/defects-g12-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "hash": "7d7835a2e951",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [needs]": {
   "status": "Rewritten",
-  "hash": "aad683fb88ea",
-  "on": "2026-10-20",
-  "evidence": "Mark {n} Read, Go There, an answer's button and Dismiss traced to src/ui/screens/Home.tsx; an answer closing the question or saying why traced to world.take_decision_action in src/engine/world/world.ts; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "hash": "9a45a2ca9719",
+  "on": "2026-10-23",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [papers]": {
   "status": "Rewritten",
-  "hash": "0dfadf7a9b2d",
-  "on": "2026-10-20",
-  "evidence": "Your Doctor, Call It Off, Book An Appointment beside a visit owed, The Marketplace's Enroll and File It traced to src/ui/workspaces/PapersWorkspace.tsx; tests/guide-chapter-facts.test.ts holds the Book An Appointment sentence and passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "hash": "dee0855042e6",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [plans]": {
   "status": "Rewritten",
-  "hash": "3db9d2df9e3a",
-  "on": "2026-10-20",
-  "evidence": "What Is It, When It Starts, How Long It Takes, Put It On, the Clash chip and Call It Off traced to PlanForm and EntryDetail in src/ui/workspaces/CalendarWorkspace.tsx; tests/defects-g2-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "hash": "7007da183566",
+  "on": "2026-10-23",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 24: Calendar and Updates left the menu, so What's Coming opens Open Calendar at the head of Up Next, What Needs You names View All Updates at the foot of Recent Updates, and Your Own Plans no longer opens Open Calendar; tests/b20-guide-promises.test.ts and tests/evidence-g32-ui.test.ts hold it to the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
@@ -190,10 +190,10 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten",
-  "hash": "1885e64d7f7f",
-  "on": "2026-10-21",
-  "evidence": "tests/tutorial.test.ts and tests/guide.test.ts hold the chapter's opens and words; the Actor Showcase paragraph names the controls tests/pro-showcase.test.ts renders",
-  "first": "Rewritten And Verified"
+  "hash": "d39ab6c9c961",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
+  "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
   "status": "Rewritten",
@@ -204,16 +204,16 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [weather]": {
   "status": "Rewritten",
-  "hash": "8c0a4e022423",
-  "on": "2026-10-21",
-  "evidence": "tests/b20-guide-chapters.test.ts, '10. Weather': the day's weather decides the run (trainingAt) and the flu's weeks are the town's (fluByWeek), the same in two worlds whose skies differ; the chapter's new sentence read against docs/STYLE.md",
+  "hash": "3e0039efa18e",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [welcome]": {
   "status": "Rewritten",
-  "hash": "731dc4421776",
-  "on": "2026-10-20",
-  "evidence": "Read against docs/STYLE.md; the new paragraph's I’ve Read It, What It Opens, Next, Try It, Later and the strip's Read traced to src/ui/guide/Guide.tsx (GuideDialog, GuideStrip); tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "hash": "f434a543acc1",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#hoursOf": {
@@ -267,9 +267,9 @@
  },
  "src/ui/guide/Guide.tsx#LockedPanel": {
   "status": "Rewritten",
-  "hash": "b96ba1867bc5",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area, the frame editor's finding: each locked Home panel says what it shows, read from Home.tsx's panels, then the chapter that opens it; tests/evidence-g32-ui.test.ts ('Where You Are and the Weather, locked, say what each shows') and tests/evidence-g33-ui.test.ts; all eight read on a new life on the built app (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt)",
+  "hash": "a878b2aab173",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/ui/guide/Help.tsx#CONNECTION_HEADING": {
@@ -281,9 +281,9 @@
  },
  "src/ui/guide/Help.tsx#Contents": {
   "status": "Rewritten",
-  "hash": "9e577a38d8f3",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g02-life.test.ts, 'on a finished guide missing chapters, the guide’s list calls them Open, over what they cover, and the help’s contents counts none unread' asserts “Everything is already open. You can read the chapters in any order.”; tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the rest; read on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "hash": "8a0f4863b52c",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; each chapter's claims played by tests/b20-guide-chapters.test.ts and tests/tutorial.test.ts on the rendered screens",
   "first": "Pending"
  },
  "src/ui/guide/Help.tsx#Entry": {

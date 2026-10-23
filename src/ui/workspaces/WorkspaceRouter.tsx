@@ -4,6 +4,7 @@ import { SchoolWorkspace } from './SchoolWorkspace';
 import { PapersWorkspace } from './PapersWorkspace';
 import { ProfileWorkspace } from './ProfileWorkspace';
 import { CareerWorkspace } from './CareerWorkspace';
+import { Updates } from '@/ui/screens/Updates';
 import { useGame, useWorld } from '@/app/game-context';
 import { ALL_DESTINATIONS } from '@/ui/shell/destinations';
 import { chapterFor, isOpen } from '@/engine/world/tutorial';
@@ -18,6 +19,8 @@ const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/papers': PapersWorkspace,
   '/workspace/profile': ProfileWorkspace,
   '/workspace/career': CareerWorkspace,
+  // Every notice the save keeps (from 2026-10-23, brief 23).
+  '/workspace/updates': Updates,
 };
 
 /**

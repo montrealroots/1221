@@ -115,12 +115,17 @@ function papers(sim: Simulation): string {
   return onScreen(renderToStaticMarkup(createElement(PapersWorkspace as FunctionComponent)));
 }
 const drawnFor = (feature: string) => h.clicks.filter((c) => c.feature === feature);
-/** Home as the player has it: What Needs You draws the six unread notices, the most important and latest first. */
+/** Home as the player has it: Recent Updates draws the four unread notices, the most important and latest first (What
+ * Needs You drew six until 2026-10-23, brief 23). */
 function home(sim: Simulation): string {
   h.sim = sim;
   h.clicks = [];
   return onScreen(renderToStaticMarkup(createElement(Home as FunctionComponent)));
 }
+/** A notice as Recent Updates on Home draws it (from 2026-10-23, brief 23): its title, what it's about and when, then its
+ * words. What Needs You drew the title and the words together until then. */
+const notice = (title: string, body: string) => new RegExp(`${esc(title)} [A-Z][a-z]+(?: [A-Z][a-z]+)? · [^·]+? ${esc(body)}`);
+const esc = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** A Gated button pressed by its own onClick: what it toasted. */
 function press(feature: string, label?: string): string[] {
   const b = drawnFor(feature).filter((c) => label === undefined || c.label === label);
@@ -192,7 +197,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     jump.advanceTo(at(2027, 10, 1, 9));
     expect(titled(jump, 'A Notice Of Noncompliance').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), NOTICE]]);
     // Home draws it in the words she can act on (brief 12, 2026-10-17): income, the School or an exception, no hours.
-    expect(home(jump)).toContain(`A Notice Of Noncompliance ${NOTICE}`);
+    expect(home(jump)).toMatch(notice('A Notice Of Noncompliance', NOTICE));
     expect(home(jump)).not.toMatch(/hours’ work|half-time/);
     expect(healthOf(jump.player).pending).toMatchObject({ kind: 'renewal', months: ['2027-09', '2027-08', '2027-07', '2027-06', '2027-05', '2027-04'], renewAt: at(2028, 4, 1, 0) });
     expect(coverOn(jump.player, jump.now)).toBe('medicaid');
@@ -208,7 +213,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
 
     // Renewed as it would have been at its date: six months on from the renewal of 1 October, no gap, said once.
     expect(titled(jump, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 10, 9), RENEWED]]);
-    expect(home(jump)).toContain(`Your Public Cover Is Renewed ${RENEWED}`);
+    expect(home(jump)).toMatch(notice('Your Public Cover Is Renewed', RENEWED));
     expect(healthOf(jump.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 10, 1, 0), band: 'low', renewAt: at(2028, 4, 1, 0) });
     expect(healthOf(jump.player).pending).toBeUndefined();
     // Asked again: nothing waits; Papers draws neither the notice's line nor the button.
@@ -250,7 +255,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     unasked.advanceTo(at(2027, 12, 2, 9));
     expect(titled(unasked, 'Your Public Cover Is Renewed')).toEqual([]);
     expect(titled(unasked, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 11, 5, 0)]);
-    expect(home(unasked)).toContain('Your Public Cover Ends HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027, and nothing was shown by November 4, 2027, so HUSKY D ends on November 30, 2027.');
+    expect(home(unasked)).toMatch(notice('Your Public Cover Ends', 'HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027, and nothing was shown by November 4, 2027, so HUSKY D ends on November 30, 2027.'));
     expect(healthOf(unasked.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(unasked.player, at(2027, 12, 1, 9))).toBeUndefined();
   }, 900_000);

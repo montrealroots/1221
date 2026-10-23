@@ -946,9 +946,9 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.standing]": {
   "status": "Rewritten",
-  "hash": "d34e480f9165",
-  "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the class day moved to Later with its nine-o-clock check; Standing And Craft holds the tables named (StandingPane); tests/guide-examples-school passes",
+  "hash": "ebc02fdab504",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the School's head and how it's reached rendered in tests/b20-guide-chapters.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#season": {
@@ -4397,10 +4397,10 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SchoolTabs": {
   "status": "Retained",
-  "hash": "5c2be6d1ac0e",
-  "on": "2026-10-19",
-  "reason": "The tab list's accessible name, School, and each pane's test id, which a screen reader names and a player never reads as words.",
-  "first": "Rewritten And Verified"
+  "hash": "f2f3d66a7978",
+  "on": "2026-10-23",
+  "reason": "The tab list’s name for a screen reader, School, the same word the menu and the page heading use",
+  "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace": {
   "status": "Retained",
@@ -4425,9 +4425,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane": {
   "status": "Rewritten",
-  "hash": "b628866cd86b",
-  "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: the six-sentence paragraph now five, at most three sentences each (tools/screen-text.mjs on the built app, a save of 2027-09-22): attendance, the casting pool, the grave breach, the review, the degree; tests/whynot-school passes",
+  "hash": "3281fab1d347",
+  "on": "2026-10-23",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Term Reviews' Why column became the line under each review; tests/b23-pages.test.ts reads each review's figures and why on a played save",
   "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel": {

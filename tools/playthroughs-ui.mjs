@@ -135,13 +135,27 @@ const toast = async () => (await page.locator('[role="status"], .toast').allInne
 /** The newest toast alone: they stack oldest first, and one from a press before can still be showing. */
 const newestToast = async () => (await page.locator('.toasts > *').allInnerTexts().catch(() => [])).map(clean).at(-1) ?? '';
 const clock = async () => (await page.getByRole('group', { name: 'Time Controls' }).locator('xpath=..').innerText({ timeout: 2000 }).catch(() => '')).match(/\d{1,2}:\d{2}\s?[AP]M/)?.[0] ?? '';
-const dateText = async () => (await page.locator('header, .topbar, body').first().innerText({ timeout: 2000 })).match(/[A-Z][a-z]+ \d{1,2}, \d{4}/)?.[0] ?? '';
+// The game's date as the bar holds it (`.topbar-clock-date`), shown or not: from 2026-10-23 (brief 24) the bar shows it
+// only wider than 1024, and in a window 390 wide the first date this read in the header's words was a birth date in a
+// card, the same through every step, so a step that moved the day read "still June 14, 2002". Until then the bar showed
+// a shortened date there too.
+const dateText = async () => ((await page.locator('header.topbar .topbar-clock-date').first().textContent({ timeout: 2000 }).catch(() => '')) ?? '').match(/[A-Z][a-z]+ \d{1,2}, \d{4}/)?.[0] ?? '';
 const when = async () => `${await dateText()} ${await clock()}`;
 async function rail(name) {
-  if (PHONE) { await press(page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first(), 'Menu'); await wait(400); }
   const b = page.locator('#rail').getByRole('button', { name: new RegExp(`^${name}`) }).first();
+  // The menu opened only where it's shut (from 2026-10-23: a press in its foot can leave it open, and Menu then shut it).
+  if (PHONE && !(await b.isVisible().catch(() => false))) { await press(page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first(), 'Menu'); await wait(400); }
   must(await b.count(), `no rail entry ${name}`);
   await press(b, name); await wait(900);
+}
+/**
+ * A control of the bar's secondary side, the guide or Save & Exit, pressed: in the drawer's foot while the rail is a
+ * drawer (from brief 23, 2026-10-23), so there the menu is opened first. Until then it stood in the bar at every width,
+ * and on brief 23's commit Save & Exit timed out at 390 (brief 22's final runs played again, 2026-10-23).
+ */
+async function inBar(loc, words) {
+  if (!(await loc.isVisible().catch(() => false))) { await press(page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first(), 'Menu'); await wait(400); }
+  await press(loc, words);
 }
 async function tab(name) {
   const t = page.getByRole('tab', { name: new RegExp(`^${name}`) }).first();
@@ -208,29 +222,42 @@ async function savedSeed() {
 
 // --- Home.
 
-const needsPanel = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'What Needs You', exact: true }) }).first();
-const notices = async () => (await needsPanel().locator('.list-item').allInnerTexts().catch(() => [])).map(clean);
-/** Home's notices as a fresh Home draws them, the six heaviest: Show All is the panel's own, and a screen opened again starts without it. */
+// From brief 23 (2026-10-23) Home's notices are Recent Updates, the four most important unread with a run of one notice on
+// one line, and every notice is on Updates, reached by View All Updates; What Needs You keeps the questions and what to put
+// right. Until then they were What Needs You's rows, six with Show All past them, and this read them there: on brief 23's
+// commit it found none, and every step that reads a notice failed (the final runs played again, 2026-10-23).
+const recentPanel = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'Recent Updates', exact: true }) }).first();
+/** A notice's line on the screen it's read on: Recent Updates' on Home, the list's on Updates. */
+const noticeRows = () => recentPanel().locator('.list-item').or(page.locator('ul.notice-list > li.notice'));
+const notices = async () => (await noticeRows().allInnerTexts().catch(() => [])).map(clean);
+/** Home's notices as a fresh Home draws them, the four most important unread. */
 async function homeAsOpened() {
-  const back = needsPanel().getByRole('button', { name: /^Show The Six Most Important$/ });
-  if (await back.count()) await press(back);
   await rail('Home');
   return notices();
 }
-const noticeRow = (re) => needsPanel().locator('.list-item').filter({ has: page.locator('.strong', { hasText: re }) }).first();
-/** A notice read on Home by its title: its title and its words, or why it isn't there. */
+const noticeRow = (re) => noticeRows().filter({ has: page.locator('.strong', { hasText: re }) }).first();
+/** A notice read by its title, on Home or else on Updates: its title and its words, or why it isn't there. */
 async function readNotice(re) {
   await rail('Home');
   const row = noticeRow(re);
-  // Past the six heaviest, by Show All, as a player looking for it does (the panel offers it from 2026-10-17: until then
-  // a notice past the sixth was on no screen, found by this playthrough's first run).
-  const all = needsPanel().getByRole('button', { name: /^Show All \d+$/ });
-  if (!(await row.count()) && await all.count()) { said(clean(await all.locator('xpath=..').innerText())); await press(all); await wait(500); }
-  must(await row.count(), `no notice ${re} among Home's: ${(await notices()).map((n) => n.slice(0, 60)).join(' | ') || 'none'}`);
+  // Past Recent Updates' four, by View All Updates, as a player looking for it does; on Updates, among the unread first
+  // and then all of them, a notice already read being there too.
+  if (!(await row.count())) await toUpdates(re);
+  must(await row.count(), `no notice ${re} on Home or Updates: ${(await notices()).map((n) => n.slice(0, 60)).join(' | ') || 'none'}`);
   const title = clean(await row.locator('.strong').first().innerText());
-  const body = clean(await row.locator('.xs.muted').first().innerText().catch(() => ''));
+  const body = clean(await row.locator('.xs.muted, .notice-body').first().innerText().catch(() => ''));
   said(`notice “${title}”: ${body}`);
   return { row, title, body };
+}
+/** View All Updates pressed from Home, and All pressed there where the unread don't hold the notice. */
+async function toUpdates(re) {
+  const view = recentPanel().getByRole('button', { name: /^View All Updates$/ });
+  if (!(await view.count())) return;
+  said(clean(await recentPanel().locator('.panel-foot').innerText().catch(() => '')) || 'View All Updates');
+  await press(view, 'View All Updates'); await wait(600);
+  if (await noticeRow(re).count()) return;
+  const all = page.getByRole('group', { name: 'Show' }).getByRole('button', { name: /^All \(\d+\)$/ });
+  if (await all.count()) { await press(all, 'All'); await wait(400); }
 }
 
 // --- A look, opened in place.
@@ -353,7 +380,7 @@ async function onTheWayCancelled(item) {
 /** Save & Exit, then Continue: the same moment comes back. */
 async function saveAndContinue() {
   const before = await when();
-  await press(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
+  await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
   await press(page.getByRole('button', { name: /^Continue$/ }).first(), 'Continue'); await wait(4000);
   await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 });
   const after = await when();
@@ -363,7 +390,7 @@ async function saveAndContinue() {
 /** Save & Exit, Delete on the slot, Confirm Deletion read and Keep It, the slot still there, then Continue. */
 async function deleteKeptThenContinue() {
   const before = await when();
-  await press(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
+  await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
   const del = page.getByRole('button', { name: /^Delete$/ }).first();
   must(await del.count(), 'no Delete on the slot');
   await press(del, 'Delete'); await wait(500);
@@ -433,7 +460,7 @@ async function normal() {
       if (!(await b.count()) || !(await b.isVisible().catch(() => false))) {
         const g = page.getByRole('button', { name: /^Guide \(\d+ Left\)/ }).first();
         if (!(await g.count())) break;
-        await g.click({ timeout: 5000 }); await wait(500);
+        await inBar(g); await wait(500);
         b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
         if (!(await b.count())) break;
       }
@@ -1122,12 +1149,11 @@ async function newestToastWithTone() {
   if (!(await t.count())) return { text: '', tone: '' };
   return { text: clean(await t.innerText().catch(() => '')), tone: (await t.getAttribute('data-tone').catch(() => '')) ?? '' };
 }
-/** A notice on Home by its title, or nothing: Show All pressed where it's past the six heaviest. */
+/** A notice by its title, on Home or else on Updates, or nothing (until brief 23, on Home with Show All). */
 async function findNotice(re) {
   await rail('Home');
   if (await noticeRow(re).count()) return noticeRow(re);
-  const all = needsPanel().getByRole('button', { name: /^Show All \d+$/ });
-  if (await all.count()) { await press(all); await wait(500); }
+  await toUpdates(re);
   return (await noticeRow(re).count()) ? noticeRow(re) : undefined;
 }
 /** Look After Yourself opened: the menu, for a step to read and press in. */

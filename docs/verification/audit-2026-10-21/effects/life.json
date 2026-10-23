@@ -514,7 +514,7 @@
     },
     {
      "what": "the save opens onto A Life, Ended",
-     "at": "src/ui/shell/GameShell.tsx:55"
+     "at": "src/ui/shell/GameShell.tsx:68"
     }
    ],
    "experienced": "The game shows A Life, Ended with the life’s dates and what it came to; the save’s slot says how it ended.",
@@ -2337,7 +2337,7 @@
    "kind": "optional",
    "claim": "Go There takes you to the screen a notice or a question is about.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "Each notice and question with a route has Go There, which goes to it (src/ui/screens/Home.tsx:300; src/ui/looks/attention.tsx:239).",
+   "holds": "Each notice and question with a route has Go There, which goes to it (src/ui/screens/Home.tsx:257 and :337, src/ui/screens/Updates.tsx:158; src/ui/looks/attention.tsx:239).",
    "tests": [
     "tests/evidence-g32-ui.test.ts",
     "tests/interface.test.ts"
@@ -2345,8 +2345,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "life",
-   "readAt": "12c04ee1, with this branch’s changes",
+   "readBy": "brief-23",
+   "readAt": "55543f7c",
    "evidence": {
     "tests": [
      "tests/evidence-g32-ui.test.ts",
@@ -2443,9 +2443,9 @@
   {
    "id": "promise.day.plans>day.needs",
    "kind": "history",
-   "claim": "Skipping a plan, or sleeping through one, leaves a notice in What Needs You.",
+   "claim": "Skipping a plan, or sleeping through one, leaves a notice in Updates.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "Skip It sends “You Didn’t Go To …” (src/engine/world/plans.ts:214); a Sleep over it names it (src/engine/systems/life.ts:439).",
+   "holds": "Skip It sends “You Didn’t Go To …” (src/engine/world/plans.ts:214); a Sleep over it names it (src/engine/systems/life.ts:439); Updates lists every notice, read or not (src/ui/screens/Updates.tsx:65), and Recent Updates on Home the unread (src/ui/screens/Home.tsx:235).",
    "tests": [
     "tests/coverage-gaps-life.test.ts",
     "tests/evidence-g01-life.test.ts"
@@ -2453,8 +2453,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "life",
-   "readAt": "12c04ee1, with this branch’s changes",
+   "readBy": "brief-23",
+   "readAt": "55543f7c",
    "evidence": {
     "tests": [
      "tests/coverage-gaps-life.test.ts",
@@ -2509,7 +2509,7 @@
    "kind": "optional",
    "claim": "The weather is the same town’s, beside its time, season and daylight on Home.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "Home’s first line is the town’s weather now, beside its time, zone and season (src/ui/screens/Home.tsx:108).",
+   "holds": "Home’s Today has the town’s weather now beside its time, zone, season and daylight (src/ui/screens/Home.tsx:144).",
    "tests": [
     "tests/b20-life-looks.test.ts",
     "tests/evidence3-home.test.ts"
@@ -2517,8 +2517,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "life",
-   "readAt": "12c04ee1, with this branch’s changes",
+   "readBy": "brief-23",
+   "readAt": "55543f7c",
    "evidence": {
     "tests": [
      "tests/b20-life-looks.test.ts",

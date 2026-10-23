@@ -5,6 +5,7 @@ SLATE
 ·
 February 22, 2028
 EST
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,7 +16,7 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
+1
 YOU
 Player Profile
 YOUR TRAINING
@@ -27,7 +28,7 @@ Money
 Papers
 YOU
 Ada Cole
-Actor · 486 Unread
+Actor
 Home
 ›
 Player Profile
@@ -40,7 +41,7 @@ Money
 YOUR BANK
 Chase
 
-$205 held here, in one account.
+$205 held here, in one account. Worth $205.
 
 Accounts
 Cards

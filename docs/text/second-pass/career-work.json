@@ -477,10 +477,10 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#OfferCard": {
   "status": "Rewritten",
-  "hash": "9c011fcb2d06",
-  "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "d2227897dc5a",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the offer card rendered on the walk's offer save by docs/verification/ui-2026-10-23/app/capture.mjs and tests/navigation.test.ts",
+  "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#OpenRole": {
   "status": "Rewritten",
@@ -491,10 +491,10 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane": {
   "status": "Rewritten",
-  "hash": "cbb42e64a493",
-  "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "c8aa043a1efc",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the offer card rendered on the walk's offer save by docs/verification/ui-2026-10-23/app/capture.mjs and tests/navigation.test.ts",
+  "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#Prepare": {
   "status": "Rewritten",

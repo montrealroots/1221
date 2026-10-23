@@ -16,12 +16,12 @@ export const START: readonly GuideEntry[] = [
     covers: ['ui.where', 'look.day', 'look.place', 'look.region', 'look.country', 'look.currency', 'look.season', 'look.daylight'],
     synonyms: ['home screen', 'location', 'town', 'city', 'time zone', 'local time', 'season', 'sunrise', 'sunset', 'currency', 'country'],
     questions: ['Where am I?', 'What time is it here?', 'What do the underlined words do?', 'What currency do I use?'],
-    where: { route: '/home', label: 'Home, The Where You Are Panel' },
+    where: { route: '/home', label: 'Home, The Line Under The Greeting' },
     available: `From the guide’s first chapter, “${CHAPTERS[0]!.title}”.`,
-    short: 'Home is your day at a glance. The line under the greeting shows the time, your town, its time zone, the season and the weather. Where You Are names your town, its region and its country, with the local time and the daylight. Press any underlined word to see more about it.',
+    short: 'Home is your day at a glance. The line under the greeting shows the time, your town and its region, its time zone, the season and the daylight, and the weather is beside it. Press any underlined word to see more about it: your town opens into its country, its money and its people.',
     steps: [
       'Open Home: press the SLATE mark at the top left, Home on the menu, or the H key.',
-      'Read Where You Are: the town, the region and the country, then Local Time and Daylight. The season is in the line under the greeting.',
+      'Read the line under the greeting: the time, the town and its region, the time zone, the season, and Daylight, today’s sunrise and sunset. Press the town for its country, its money and how many people live there.',
       'Press an underlined word to open it under its line, and a word inside it to go deeper. Press Close, or the word again, to fold it away.',
     ],
     needs: ['Home is there from your first moment in the game.'],
@@ -36,13 +36,13 @@ export const START: readonly GuideEntry[] = [
     interpret: [
       // Until 2026-10-13 this said the line told home from away, and how far from home time: nothing has put a player
       // away from home since the scope of 2026-10-09, and Home’s away line went that day (`homeCityOf`).
-      'The line under your town says it’s your home, and how many people live there.',
+      'Your town, pressed, says it’s your home, and how many people live there.',
       'Daylight gives today’s sunrise and sunset, and how many hours of daylight that makes.',
     ],
     unavailable: ['Some words only become links once you’ve read the guide chapter that covers them.'],
     mistakes: ['Pressing a word opens it in place: nothing on the screen behind it is lost, so there’s nothing to undo.'],
     next: [
-      'Read the Calendar panel on Home for what’s coming, and the Weather panel for the sky.',
+      'Read Up Next on Home for what’s coming, and the weather beside the greeting for the sky.',
       'If a word or a panel is still Locked, read the next chapter in the guide.',
     ],
     related: ['start.guide', 'start.find', 'day.calendar', 'body.how'],
@@ -53,7 +53,7 @@ export const START: readonly GuideEntry[] = [
     ],
     example: {
       setup: 'A student new at Yale, in New Haven, on an August evening.',
-      steps: ['Open Home.', 'Press New Haven in Where You Are.', 'Inside it, press Connecticut, then United States.'],
+      steps: ['Open Home.', 'Press New Haven, in the line under the greeting.', 'Inside it, press Connecticut, then United States.'],
       result: 'New Haven opens under its line with its facts, Connecticut opens inside it, and United States inside that, each with more to press. Your save is just as it was.',
     },
   },
@@ -125,7 +125,7 @@ export const START: readonly GuideEntry[] = [
     reads: [{ label: 'The Chapters Read', value: 'Which places the menu lists' }],
     now: ['Moving between screens changes nothing in the world. A screen keeps its tab while you’re elsewhere.'],
     later: [],
-    interpret: ['The number beside Home is the notices and questions waiting in What Needs You.'],
+    interpret: ['The number beside Home is the questions waiting in What Needs You. Recent Updates, on Home, says how many notices you haven’t read.'],
     unavailable: ['A place isn’t on the menu until you’ve read its chapter.'],
     mistakes: ['Leaving a screen with a form half filled in loses what was typed in it; opening help over it doesn’t.'],
     next: ['Press ? anywhere for How This Works’ contents, grouped by what you want to do.'],

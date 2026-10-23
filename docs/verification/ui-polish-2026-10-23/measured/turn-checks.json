@@ -1,0 +1,978 @@
+{
+ "new": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:30 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "7:30 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "7:30 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:30 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:30 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "developed": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:05 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "7:05 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "7:05 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:05 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:05 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "graduate": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "10:15 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "10:15 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "10:15 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "10:15 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "10:15 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "offer": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "5:00 PM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "5:00 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "5:00 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "5:00 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "5:00 PM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "booked": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:00 PM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:00 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:00 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:00 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:00 PM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "released": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "9:00 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "9:00 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "9:00 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "9:00 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "9:00 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "long": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:30 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "7:30 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "7:30 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:30 AM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "7:30 AM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ },
+ "older": {
+  "running": {
+   "before": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:25 PM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "upright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "2:25 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "stillUpright": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 237,
+    "clock": "2:25 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": true,
+    "inert": true,
+    "focusOnRotate": true,
+    "toast": [],
+    "find": null,
+    "saved": "Saved"
+   },
+   "back": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:25 PM",
+    "running": "Paused",
+    "button": "Play",
+    "menu": true,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [
+     "Paused while your phone was upright. Press Play to carry on."
+    ],
+    "find": null,
+    "saved": "Saved"
+   },
+   "rotateShown": true,
+   "pausedUpright": true,
+   "keptPlace": true,
+   "menuKept": true,
+   "stillPaused": true,
+   "saidWhy": true,
+   "savedWhileUpright": "Saved",
+   "resumed": {
+    "here": "Career",
+    "tab": "Work",
+    "scroll": 300,
+    "clock": "2:25 PM",
+    "running": "Running",
+    "button": "Pause",
+    "menu": false,
+    "dialog": [],
+    "rotate": false,
+    "inert": false,
+    "focusOnRotate": false,
+    "toast": [],
+    "find": null,
+    "saved": "Not Saved Yet"
+   },
+   "noJump": true
+  },
+  "dialog": {
+   "before": [
+    "Sleep"
+   ],
+   "after": [
+    "Sleep"
+   ],
+   "kept": true
+  },
+  "form": {
+   "keyboardUp": {
+    "rotate": false
+   },
+   "before": "drama",
+   "after": "drama",
+   "kept": true,
+   "noRotateForKeyboard": true
+  },
+  "paused": {
+   "before": "Paused",
+   "after": "Paused",
+   "quiet": true,
+   "kept": true
+  },
+  "saving": {
+   "rotateDuringSave": true,
+   "reachedTheSaves": true
+  }
+ }
+}

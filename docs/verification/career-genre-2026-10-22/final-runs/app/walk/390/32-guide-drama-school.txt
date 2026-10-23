@@ -7,9 +7,9 @@ Classes, coursework, casting and your degree at Yale.
 
 You start as a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, in New Haven: one of the sixteen actors admitted this year, among the strongest of them but not ahead of everyone. You arrive on the first day of the fall term for registration and orientation, and classes start a week later.
 
-The school is where you train, get cast and earn your degree. To open it, press the Yale button on the School line in Your Affairs on Home, or choose School in the menu.
+The school is where you train, get cast and earn your degree. To open it, choose School in the menu.
 
-The School line shows your year, your standing, your place in the class and what’s next. The School screen’s tabs are Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, and Terms And Award.
+The School screen’s tabs are Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, and Terms And Award. When your standing is in trouble, What Needs You, on Home, says so, with Open School.
 
 Classes run from nine to three on class days. Go to them, awake and in New Haven, and your craft grows, more if you arrive rested. Your fifteen classmates improve too, each at their own pace, and you’re cast alongside them and against them.
 
@@ -95,7 +95,7 @@ Graduating early isn’t a route the game offers. The Bulletin says that “on r
 
 WHAT IT OPENED
 School
-Your school, from its line on Home
+Your school, from the head of School
 Call In Sick
 Take An Elective Shift
 Join A Cabaret Show
