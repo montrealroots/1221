@@ -16,10 +16,12 @@ reader was run.
 
 ## The Tested Commit
 
-`23b8a77a` on `claude/peaceful-hamilton-59zdbb`, the last change to `src`. The turn suite and brief 22's browser lanes were
-made on the app built from it. The after pictures, the help audit, the checks, the keyboard and the walk were made on
-`1a87be4c`'s, whose `src` differs from it in `shell/turn.tsx` alone: a scroll kept while the phone is on its side, which
-acts only when a phone turns upright. The before pictures and the before audit were made on brief 23's build
+`4bfb3f33` on `claude/peaceful-hamilton-59zdbb`, the last change to `src`. Brief 22's browser lanes were played on it.
+The turn suite was made on `23b8a77a`'s build, and the after pictures, the help audit, the checks, the keyboard and the
+walk on `1a87be4c`'s. `src` differs from the tested commit's in two places, and neither changes what a screen draws:
+- `shell/turn.tsx`, a scroll kept while the phone is on its side, which acts only when a phone turns upright (the turn
+  suite was made with it);
+- `screens/Home.tsx`, What Needs You's line for nothing waiting, which no screen drew once All Clear stood alone. The before pictures and the before audit were made on brief 23's build
 (`113765a6`, its `src` `a00f159a`'s).
 
 | Commit | What |
@@ -28,6 +30,8 @@ acts only when a phone turns upright. The before pictures and the before audit w
 | `1a87be4c` | Larger text gets the drawer as a narrower window does; Home's headings keep their help beside them on a phone |
 | `08de921c` | The evidence on the final build, this receipt, the handoff |
 | `23b8a77a` | A phone turned upright keeps each scroll as it stood on its side (the walk's turn suite found it) |
+| `8ad20c4d` | The playthroughs and the acceptance walk read the game's date from the bar's own date (no `src` change) |
+| `4bfb3f33` | What Needs You's line loses words it no longer showed; the acceptance walk reads All Clear as the panel says it |
 
 ## What Changed
 
