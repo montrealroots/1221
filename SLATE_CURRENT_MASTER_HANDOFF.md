@@ -8,13 +8,14 @@ without my instruction."); it went to `main` at "lets just merge everything" (20
 `9aed9ed4`, and this record of the merge followed it there. No other pull request was open. Nothing is deployed. There
 is no stash and one worktree.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at #54's merge. The follow-up below changed `src/engine`, so the 46 rows brief 22's final runs measured on the
   engine's or the app's whole source read as measured before what they read last changed, and this said 588, as after
   brief 20's D2, until the final runs measured them again on the fix: the runs lanes on `933f1ae6`, the advice lanes on
   `54b4e96f` (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`, Played Again On The Paydays Fix),
-  every figure the same as brief 22's first runs. INT-gate waits on the gate run on the commit that holds this fold.)
+  every figure the same as brief 22's first runs, and INT-gate on the gate run on `576a0e88`, which holds that fold
+  (633 until then).)
 
   (632 at brief 21's close. Brief 22's final runs measured every row again on its tested commit
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`):
@@ -74,8 +75,10 @@ is no stash and one worktree.
     the calendar still said "Payday: The Winter Ledger" four times. They come off with the week now (`dropPaydays`), and
     an older save's come off on opening.
   - **"The producers answers soon."** on Opportunities' In Progress: its verb agrees now.
-  - **The gate** on `5ccf054e` in a clean clone, its exit read from its file: 0; 486 of 486 test files, 5,598 of 5,598
-    tests, all 22 checks (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate-after-merge.txt`).
+  - **The gate** in clean clones, its exit read from its file, 0 each time, 486 of 486 test files and 5,598 of 5,598
+    tests, all 22 checks: on `5ccf054e`, the fix (`gate-after-merge.txt`); on `576a0e88`, the final runs' fold (`gate.txt`,
+    where brief 22's first gate, on `cf83e61d`, stood until then, kept in git at `16aa0b6d`); and again on the commit
+    that folds its figure (`gate-receipt.txt`).
   - **The final runs again,** at the owner's "Run the final runs then merge everything." (2026-10-22): every lane but
     the judge's, whose rows read nothing the fix touched. The one number that moved from the first runs, b20-4's save 45
     bytes longer at one transition, is the fix. `tools/advice.ts` counts a tree clean but for the runs' own outputs now,

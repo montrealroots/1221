@@ -336,7 +336,10 @@ The pages captured on the built app after #54's merge (2026-10-22) showed two de
   Again On The Paydays Fix): every lane but the judge's, whose rows read nothing the fix touched, on `933f1ae6`, and the
   two advice lanes again on `54b4e96f` once `tools/advice.ts` counted a tree clean but for the runs' own outputs. Against
   brief 22's first runs: every figure the same; the one number that moved, b20-4's save 45 bytes longer at one
-  transition, is the fix. The 46 rows moved to the commits they ran on, the gate's own last.
+  transition, is the fix. The 46 rows moved to the commits they ran on, the gate's own last: the gate on `576a0e88`, which
+  holds the fold, exit 0, 486 of 486 test files and 5,598 of 5,598 tests (`final-runs/runs/gate.txt`, in brief 22's
+  first gate's place), and the matrix back at 634 of 658. Run again on the commit that folds its figure
+  (`gate-receipt.txt`).
 
 ## Not Done, And What Limits This
 
