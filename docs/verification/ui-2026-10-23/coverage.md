@@ -280,8 +280,8 @@ Each image is under `captures/before/` and `captures/after/` at the same path, s
 
 - **Before:** at 667 the Advance menu ran 56 pixels past the window, and neither menu had a height limit.
 - **Change:** each is held to the window's height and scrolls. Where it would cross the window's right edge, it hangs
-  from its button's right edge, and on a narrow phone it's pinned across the window. The keyboard check opened Advance
-  on Enter (`aria-expanded`, eight items) and closed it on Escape, with the focus back on Advance.
+  from its button's right edge, and in a window 620 wide or narrower it's pinned across the window. The keyboard check
+  opened Advance on Enter (`aria-expanded`, eight items) and closed it on Escape, with the focus back on Advance.
 - **Images:** `released/667x375m/advance-menu.jpg`, `released/667x375m/look-after-yourself-menu.jpg`, `released/1440x900/advance-menu.jpg`.
 - **Remains:** nothing measured.
 
