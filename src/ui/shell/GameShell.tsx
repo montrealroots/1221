@@ -35,9 +35,11 @@ import { useMedia } from '@/ui/components/media';
 /**
  * When the rail is a drawer behind Menu: a window narrower than a laptop's, and any window too short for a column of
  * destinations beside the page, as a phone on its side is (from 2026-10-23, brief 23: until then a phone 932 wide on its
- * side kept the desktop's rail, a third of its width, beside a page 700 wide).
+ * side kept the desktop's rail, a third of its width, beside a page 700 wide). Its width is in em from brief 24, 900
+ * pixels at the browser's own text size, so larger text gets the drawer as a narrower window does (the stylesheet's
+ * matches it); until then it was 900px, and text at 150% in a 1280 window pushed the bar past the window.
  */
-export const DRAWER_QUERY = '(max-width: 900px), (max-height: 500px)';
+export const DRAWER_QUERY = '(max-width: 56.25em), (max-height: 500px)';
 /** The screens Home offers and the menu doesn't (`homeOnly`, from brief 24): on them the menu marks Home. */
 const HOME_ONLY = new Set(ALL_DESTINATIONS.filter((d) => d.homeOnly).map((d) => d.route));
 

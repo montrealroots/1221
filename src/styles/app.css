@@ -753,8 +753,11 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 /* Below a laptop the bar has no room to spare, so the clock is just the time.
    It is the part anyone actually reads at a glance. Buttons keep their words
    whole everywhere, so the room is found in the gaps and the padding, not by
-   crushing a label into "Unlo / ck". */
-@media (max-width: 1024px) {
+   crushing a label into "Unlo / ck". The bar's widths, and the drawer's, are in em from 2026-10-23 (brief 24), 16 pixels
+   to one at the browser's own text size, so a player who sets larger text gets the layout a narrower window does: until
+   then, in px, text at 150% in a window 1280 wide kept the desktop's bar, Look After Yourself ran to three lines out of
+   it and Save & Exit 5 pixels past the window (app/checks.mjs). */
+@media (max-width: 64em) {
   .topbar-clock-sep, .topbar-clock-date, .topbar-clock-zone { display: none; }
   .topbar { gap: var(--s2); }
   .topbar .btn { padding-inline: var(--s2); }
@@ -795,7 +798,7 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 
 /* Below a laptop the rail folds away and comes back as a drawer, and on a screen too short for it beside the page, as a
    phone's on its side is (from 2026-10-23, brief 23: until then a phone 932 wide kept the desktop's rail). */
-@media (max-width: 900px), (max-height: 500px) {
+@media (max-width: 56.25em), (max-height: 500px) {
   /* Closed, the drawer is off the left edge and hidden outright, so nothing
      in it can take focus or be read as spilling out of the page. */
   .rail {
@@ -812,7 +815,10 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   .topbar > .topbar-brand { display: none; }
   .topbar .btn { white-space: nowrap; }
 }
-@media (min-width: 901px) and (min-height: 501px) {
+/* Menu only where the rail is a drawer: the complement of the drawer's query, its width in em with it (from brief 24,
+   2026-10-23; 56.3125em is 901 pixels at the browser's own text size). A first version left this at 901px, and with text
+   at 150% in a window 1280 wide the rail was a drawer with no Menu to open it (app/checks.mjs found it). */
+@media (min-width: 56.3125em) and (min-height: 501px) {
   .rail-toggle { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1068,7 +1074,7 @@ kbd {
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 900px) {
+@media (max-width: 56.25em) {
   .main { padding: var(--s4) var(--s3); }
   .slot-grid { grid-template-columns: 1fr; }
   .cal-day { min-height: 62px; }
@@ -1490,7 +1496,7 @@ td, th { overflow-wrap: break-word; }
   --control: 32px;
   --control-sm: 28px;
 }
-@media (max-width: 900px) { :root { --gutter: var(--s4); } }
+@media (max-width: 56.25em) { :root { --gutter: var(--s4); } }
 @media (max-height: 500px) { :root { --gutter: var(--s3); --nav-h: 48px; } }
 @media (pointer: coarse) { :root { --control: 44px; --control-sm: 44px; } }
 
@@ -1531,7 +1537,7 @@ td, th { overflow-wrap: break-word; }
   padding-right: max(var(--gutter), env(safe-area-inset-right));
   padding-bottom: max(var(--gutter), env(safe-area-inset-bottom));
 }
-@media (max-width: 900px), (max-height: 500px) {
+@media (max-width: 56.25em), (max-height: 500px) {
   .rail { padding-left: max(var(--s2), env(safe-area-inset-left)); padding-bottom: max(var(--s3), env(safe-area-inset-bottom)); top: var(--nav-h); }
   .rail-shade { inset: var(--nav-h) 0 0 0; }
 }
@@ -1624,6 +1630,10 @@ td, th { overflow-wrap: break-word; }
   .home-grid { grid-template-columns: minmax(0, 1fr); }
   .home-grid > * { grid-column: auto; grid-row: auto; }
 }
+/* On a phone on its side a heading of Home's keeps its help beside it, its line under it wrapping instead: at 12rem, the
+   head's own, What Needs You's help took a row of its own in a column at 667, and the first thing waiting started at the
+   window's foot, cut (brief 24's pictures, 2026-10-23). Up Next's two actions still go under its title. */
+@media (max-height: 500px) { .home-grid .panel-head > :first-child { flex-basis: 8rem; } }
 .needs-more { padding: var(--s3) var(--s4); }
 .panel-foot { padding: var(--s3) var(--s4); border-top: 1px solid var(--line); gap: var(--s2); flex-wrap: wrap; }
 .notice-row { align-items: flex-start; flex-wrap: wrap; }
@@ -1758,7 +1768,7 @@ section.card[tabindex="-1"]:focus { outline: none; }
    23): each row a block, its short cells in a line and its prose across the width, each named by its column. The names
    are drawn (`data-label`), not written, so what a row says reads the same at every width. Until then such a table kept
    a width its columns could be read at and scrolled, and a paragraph in it was read by scrolling a line at a time. */
-@media (max-width: 900px), (max-height: 500px) {
+@media (max-width: 56.25em), (max-height: 500px) {
   .table-scroll > table.stack-table { min-width: 0; }
   .stack-table thead { display: none; }
   .stack-table tbody { display: block; }

@@ -14,8 +14,9 @@
 // 6. At 200% (a 1280×720 window read at 640×360, as the browser lays it out): the bar's controls, the menu's places (six
 //    from brief 24, which took Calendar and Updates to Home; eight until then), Home's four panels and every control Home
 //    has at 100% are there, the guide and the save (in the drawer's foot), and the page is no wider than the window. At
-//    360 high Home takes a phone's shape (brief 24), its forecast folded under Forecast And Daylight, which is pressed
-//    first, so its days are counted where a press puts them.
+//    360 high Home takes a phone's shape (brief 24), its forecast folded under Forecast And Daylight and What Needs You
+//    showing its most pressing one with Show All N; both are pressed first, so what they hold is counted where a press
+//    puts it.
 // 7. A changing height: the address bar shown and hidden on a phone on its side and on a desktop (D6).
 import { chromium } from 'playwright';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -148,6 +149,9 @@ async function homeAt(width, height, scale) {
   const fold = page.getByRole('button', { name: /^Forecast And Daylight$/ }).first();
   const folded = Boolean(await fold.count() && await fold.isVisible());
   if (folded) { await fold.click(); await wait(page, 300); }
+  const all = page.locator('.needs-more').getByRole('button', { name: /^Show All \d+$/ }).first();
+  const shortened = Boolean(await all.count() && await all.isVisible());
+  if (shortened) { await all.click(); await wait(page, 300); }
   if (drawer) { await menuButton.click(); await wait(page, 400); }
   const seen = await page.evaluate(() => {
     const visible = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; };
@@ -165,14 +169,14 @@ async function homeAt(width, height, scale) {
     };
   });
   await ctx.close();
-  return { drawer: Boolean(drawer), folded, ...seen };
+  return { drawer: Boolean(drawer), folded, shortened, ...seen };
 }
 const at100 = await homeAt(1280, 720, 1);
 const at200 = await homeAt(640, 360, 2);
 const missing = (a, b) => [...new Set(a)].filter((x) => !b.includes(x));
 out.checks.zoom = {
   at100: { sections: at100.sections, menu: at100.menu.length, controls: at100.controls.length, pageWider: at100.pageWider },
-  at200: { drawer: at200.drawer, folded: at200.folded, bar: at200.bar, sections: at200.sections, menu: at200.menu, controls: at200.controls.length, pageWider: at200.pageWider, mainBelowBar: at200.mainTop >= at200.barBottom },
+  at200: { drawer: at200.drawer, folded: at200.folded, shortened: at200.shortened, bar: at200.bar, sections: at200.sections, menu: at200.menu, controls: at200.controls.length, pageWider: at200.pageWider, mainBelowBar: at200.mainTop >= at200.barBottom },
   sectionsLost: missing(at100.sections, at200.sections),
   menuLost: missing(at100.menu, at200.menu),
   controlsLost: missing(at100.controls, at200.controls),

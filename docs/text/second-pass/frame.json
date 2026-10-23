@@ -3348,9 +3348,9 @@
  },
  "src/ui/shell/GameShell.tsx#DRAWER_QUERY": {
   "status": "Retained",
-  "hash": "5f3a1d4c9ae0",
+  "hash": "cc695d592e88",
   "on": "2026-10-23",
-  "reason": "A media query that decides when the menu becomes a drawer, read by the browser and never shown",
+  "reason": "A media query that decides when the menu becomes a drawer, its width in em from brief 24 so larger text gets the drawer as a narrower window does; read by the browser and never shown",
   "first": "Pending"
  },
  "src/ui/shell/GameShell.tsx#GameShell": {
