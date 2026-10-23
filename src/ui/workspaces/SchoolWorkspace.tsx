@@ -223,25 +223,29 @@ function StandingPane() {
       <Panel title="Term Reviews">
         {school.history.length ? (
           <div className="table-scroll">
-            <table>
+            {/* Each review's figures in a row, and why under them across the table (from 2026-10-23, brief 23): until then
+                why was a seventh column, a paragraph set in 55 pixels on a phone on its side, 77 lines of it. */}
+            <table className="review-table stack-table">
               <thead>
-                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Coursework</th><th scope="col">Why</th></tr>
+                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Coursework</th></tr>
               </thead>
-              <tbody>
-                {school.history.map((r, i) => (
-                  <tr key={i}>
+              {school.history.map((r, i) => (
+                <tbody key={i}>
+                  <tr>
                     <td>{termLabel(r.term)}</td>
                     <td>{STANDING_LABEL[r.standing]}</td>
-                    <td className="num mono">{pct(r.attendance)}</td>
-                    <td className="num mono">{r.growth.toFixed(1)}</td>
-                    <td className="num mono">{r.classGrowth.toFixed(1)}</td>
+                    <td className="num mono" data-label="Attendance">{pct(r.attendance)}</td>
+                    <td className="num mono" data-label="Growth">{r.growth.toFixed(1)}</td>
+                    <td className="num mono" data-label="Class Growth">{r.classGrowth.toFixed(1)}</td>
                     {/* The review's own count of the term's coursework (`TermReview.coursework`), from 2026-10-16: until then it
                         was kept at every evaluation and shown nowhere, and its words named it only where the mark was reached. */}
-                    <td className="small">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} Unready or not shown` : 'None counted'}</td>
-                    <td className="small">{r.reason}</td>
+                    <td className="small" data-label="Coursework">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} Unready or not shown` : 'None counted'}</td>
                   </tr>
-                ))}
-              </tbody>
+                  <tr className="review-why">
+                    <td colSpan={6} className="small">{r.reason}</td>
+                  </tr>
+                </tbody>
+              ))}
             </table>
           </div>
         ) : (
@@ -318,7 +322,8 @@ function ClassesPane() {
                 {week.map((day, i) => (
                   <tr key={WEEKDAYS[i]}>
                     <td>{WEEKDAYS[i]}</td>
-                    {SLOTS.map((s, j) => <td key={s}>{day[j] ? <Open subject={at('course', day[j]!.code)}>{day[j]!.name}</Open> : ''}</td>)}
+                    {/* A course's name at a width it reads at (from 2026-10-23: at 1024, four lines in 105 pixels). */}
+                    {SLOTS.map((s, j) => <td key={s}>{day[j] ? <div className="cell-min"><Open subject={at('course', day[j]!.code)}>{day[j]!.name}</Open></div> : ''}</td>)}
                   </tr>
                 ))}
               </tbody>
@@ -348,7 +353,7 @@ function ClassesPane() {
               {courses.map((c) => (
                 <tr key={c.code}>
                   <td className="mono"><Open subject={at('course', c.code)}>{c.code}</Open></td>
-                  <td><Open subject={at('course', c.code)}>{c.name}</Open></td>
+                  <td><div className="cell-min"><Open subject={at('course', c.code)}>{c.name}</Open></div></td>
                   <td>{c.teachers}</td>
                   <td>{c.skills.map((one, k) => <span key={one}>{k > 0 ? ', ' : ''}<Open subject={at('skill', one)}>{skillLabel(one)}</Open></span>)}</td>
                   <td className="num mono">{c.perWeek}</td>
@@ -425,7 +430,7 @@ function CastReadPanel() {
                   <td className="num mono">{Math.round(r.delivery * 100)}%</td>
                   <td className="num mono">{r.balance > 0 ? `+${r.balance}` : r.balance}</td>
                   <td className="num mono">{r.score.toFixed(1)}</td>
-                  <td>{r.part}</td>
+                  <td><div className="cell-min">{r.part}</div></td>
                 </tr>
               ))}
             </tbody>
@@ -514,7 +519,7 @@ function CastingPane() {
           <table className="table">
             <thead><tr><th scope="col">Student</th><th scope="col">Production</th><th scope="col">Part</th><th scope="col">Last Run</th><th scope="col">To You</th></tr></thead>
             <tbody>
-              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td>{a.part}</td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
+              {school.around.list.map((a) => <tr key={`${a.name}-${a.production}`}><td>{a.name}</td><td>{a.production}</td><td><div className="cell-min">{a.part}</div></td><td className="mono">{(() => { const m = school.classmates.find((x) => x.name === a.name); return m?.shown ? `${Math.round(m.shown.quality)} in ${m.shown.production}` : ''; })()}</td><td>{bondWord(school.classmates.find((m) => m.name === a.name)?.bond) ?? ''}</td></tr>)}
             </tbody>
           </table>
         </Panel>

@@ -36,9 +36,9 @@
  },
  "src/app/game-context.tsx#ROUTE_LABELS": {
   "status": "Rewritten",
-  "hash": "bfdc10dcafcc",
-  "on": "2026-10-21",
-  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "hash": "bc6ff4884835",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the bar, rail and drawer rendered by tests/navigation.test.ts and tests/evidence2-b10.test.ts, and walked at nine sizes by docs/verification/ui-2026-10-23/app/capture.mjs",
   "first": "Pending"
  },
  "src/app/game-context.tsx#useGame": {
@@ -260,10 +260,10 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "17e6d0d467be",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/calendar-text.ts (its .txt beside it) at the playthroughs' merge, 2026-10-21, against docs/STYLE.md: the built-app walk's and the playthroughs' words for the career on the calendar, joined, one Career row kept",
-  "first": "Rewritten And Verified"
+  "hash": "7a6dc179c361",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten",
@@ -274,23 +274,23 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
   "status": "Rewritten",
-  "hash": "55908603ee1d",
-  "on": "2026-10-20",
-  "evidence": "the life editor traced world.take_decision_action: an answer runs the same command, its label not always the same (Reactivate on Money); tests/guide-examples-start-day-body.test.ts",
+  "hash": "66198ff4224a",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
   "status": "Rewritten",
-  "hash": "b93edc8e4249",
-  "on": "2026-10-21",
-  "evidence": "read against docs/STYLE.md; tests/b20-life-time.test.ts holds the clash the new line says",
+  "hash": "77ff8ee9faa0",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.weather]": {
   "status": "Rewritten",
-  "hash": "1f9dd966fc36",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Weather",
+  "hash": "67092d4c88df",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [evaluation]": {
@@ -301,11 +301,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [history]": {
-  "status": "Retained",
-  "hash": "0cd47ebc9dda",
-  "on": "2026-10-19",
-  "reason": "Lines under Kept In Your Record: a notice for a plan skipped or slept through, said where it appears.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "d47dfb66a122",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [immediate]": {
   "status": "Retained",
@@ -379,9 +379,9 @@
  },
  "src/engine/content/guide/start.ts#START [start.find]": {
   "status": "Rewritten",
-  "hash": "83ba1b0a23c4",
-  "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs, which also pressed its old worked example and found no School breadcrumb on Home (docs/verification/continuity-2026-10-20/tutorial/before/help-follow-1440/log.txt); the new example is played by tests/help-mechanics.test.ts",
+  "hash": "e01dacbe93ca",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [start.guide]": {
@@ -393,9 +393,9 @@
  },
  "src/engine/content/guide/start.ts#START [start.home]": {
   "status": "Rewritten",
-  "hash": "3f0a5360bd98",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs; its example's result held by tests/guide-examples-start-day-body.test.ts, 'start.home: New Haven opens under its line…'",
+  "hash": "69b6fda649b3",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the guide's words played by tests/guide-examples-start-day-body.test.ts, tests/b20-guide-promises.test.ts and tests/guide.test.ts",
   "first": "Pending"
  },
  "src/engine/content/holiday-data.ts#HOLIDAY_FILES": {
@@ -2527,6 +2527,48 @@
   "reason": "A developer’s error for a page with no element to mount on; a working page never shows it, and it names the missing mount point exactly.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/components/Glance.tsx#papersAlerts [cover]": {
+  "status": "Rewritten",
+  "hash": "f3f098bff415",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/components/Glance.tsx#papersAlerts [owed]": {
+  "status": "Rewritten",
+  "hash": "2a9b2f7b38a7",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/components/Glance.tsx#papersAlerts [return]": {
+  "status": "Rewritten",
+  "hash": "b2f62cac62d1",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/components/Glance.tsx#PapersGlance": {
+  "status": "Rewritten",
+  "hash": "2ff078683ac9",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/components/Glance.tsx#SchoolGlance": {
+  "status": "Rewritten",
+  "hash": "e5f219487766",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/components/Glance.tsx#WorthWords": {
+  "status": "Rewritten",
+  "hash": "e52326b7af8a",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the heads of Money, School and Papers rendered in tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/scope-money.test.ts",
+  "first": "Pending"
+ },
  "src/ui/components/primitives.tsx#Empty": {
   "status": "Retained",
   "hash": "5a603280a77f",
@@ -2555,12 +2597,26 @@
   "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/components/primitives.tsx#PageIndex": {
+  "status": "Rewritten",
+  "hash": "a44f0e59da9f",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23: On This Page, a long page's sections a press away; drawn and pressed in tests/b23-pages.test.ts",
+  "first": "Pending"
+ },
  "src/ui/components/primitives.tsx#WhyNot": {
   "status": "Retained",
   "hash": "db15620b9e5e",
   "on": "2026-10-19",
   "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/components/TabBar.tsx#TabBar": {
+  "status": "Retained",
+  "hash": "8878f6cccfda",
+  "on": "2026-10-23",
+  "reason": "The selector the tab bar queries to scroll the chosen tab into view, which no player ever sees or reads",
+  "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#BankChoice": {
   "status": "Rewritten",
@@ -2851,9 +2907,9 @@
  },
  "src/ui/looks/attention.tsx#top": {
   "status": "Rewritten",
-  "hash": "47f1fa1d17d9",
-  "on": "2026-10-20",
-  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (notification and decision looks, six lives); held by tests/language-frame.test.ts, the question's and the notice's tests, with the order and a read notice's missing Go There",
+  "hash": "f42dc341cd55",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the looks rendered in tests/language-frame.test.ts and tests/evidence-g32-ui.test.ts, London's climate sentence among them",
   "first": "Pending"
  },
  "src/ui/looks/attention.tsx#weightOf": {
@@ -3137,11 +3193,11 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/looks/weather.tsx#top [band]": {
-  "status": "Retained",
-  "hash": "8c4849b53707",
-  "on": "2026-10-19",
-  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "db3ec54f0ba9",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the looks rendered in tests/language-frame.test.ts and tests/evidence-g32-ui.test.ts, London's climate sentence among them",
+  "first": "Pending"
  },
  "src/ui/looks/weather.tsx#weekdayAt": {
   "status": "Retained",
@@ -3187,17 +3243,24 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten",
-  "hash": "ec23c03433d6",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (What Needs You, six of 310); held by tests/evidence-g32-ui.test.ts and tests/language-dynamic.test.ts word for word",
+  "hash": "cf9d10b7814b",
+  "on": "2026-10-23",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after Recent Updates' counts and Show All were reworded; drawn by tests/evidence-g32-ui.test.ts, tests/evidence2-b11.test.ts and tests/evidence3-home.test.ts on the rendered screen",
   "first": "Pending"
  },
- "src/ui/screens/Home.tsx#PapersLine": {
-  "status": "Retained",
-  "hash": "a20cd8938d32",
-  "on": "2026-10-19",
-  "reason": "Says the one thing that matters on Papers in a line: no health cover, a return due with what it will cost, tax owed and growing, or unemployment paid.",
-  "first": "Reviewed And Retained"
+ "src/ui/screens/Home.tsx#HowYouAre": {
+  "status": "Rewritten",
+  "hash": "2b7cfe60bab2",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#needsLine": {
+  "status": "Rewritten",
+  "hash": "406040f59f13",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "first": "Pending"
  },
  "src/ui/screens/Home.tsx#partOfDay": {
   "status": "Retained",
@@ -3206,26 +3269,82 @@
   "reason": "The four words the greeting uses, Good Morning, Afternoon, Evening or Night, by the hour where you are.",
   "first": "Reviewed And Retained"
  },
- "src/ui/screens/Home.tsx#SchoolLine": {
-  "status": "Retained",
-  "hash": "d59e534f85bf",
-  "on": "2026-10-19",
-  "reason": "The year, the standing and the place in the class, then the next class with its date, and a pointer to the School screen when the standing needs explaining.",
-  "first": "Rewritten And Verified"
+ "src/ui/screens/Home.tsx#Question": {
+  "status": "Rewritten",
+  "hash": "f0a4a3d59cf3",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#thingsToDo": {
+  "status": "Rewritten",
+  "hash": "7a5226daa02a",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#UpNext": {
+  "status": "Rewritten",
+  "hash": "25bab6b6995f",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md on 2026-10-23 for brief 23; drawn by tests/evidence-g32-ui.test.ts, tests/evidence3-home.test.ts and tests/b20-guide-chapters.test.ts on the rendered screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Updates.tsx#ABOUT": {
+  "status": "Rewritten",
+  "hash": "45bdd3d5d232",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Updates.tsx#aboutLabel": {
+  "status": "Rewritten",
+  "hash": "6e6a6f2086bb",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Updates.tsx#ORDER": {
+  "status": "Rewritten",
+  "hash": "5d5aa497238c",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen",
+  "first": "Pending"
+ },
+ "src/ui/screens/Updates.tsx#Updates": {
+  "status": "Rewritten",
+  "hash": "989f012d483c",
+  "on": "2026-10-23",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after its introduction, All Read and Show More were reworded; Updates rendered in tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts, its grouping and counts read on the screen",
+  "first": "Pending"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
   "status": "Rewritten",
-  "hash": "2f0b36414251",
-  "on": "2026-10-21",
-  "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
+  "hash": "3c5319b50f06",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the bar, rail and drawer rendered by tests/navigation.test.ts and tests/evidence2-b10.test.ts, and walked at nine sizes by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
+ },
+ "src/ui/shell/GameShell.tsx#DRAWER_QUERY": {
+  "status": "Retained",
+  "hash": "5f3a1d4c9ae0",
+  "on": "2026-10-23",
+  "reason": "A media query that decides when the menu becomes a drawer, read by the browser and never shown",
   "first": "Pending"
  },
  "src/ui/shell/GameShell.tsx#GameShell": {
-  "status": "Retained",
-  "hash": "f734191fe185",
-  "on": "2026-10-19",
-  "reason": "The top bar and rail’s labels, each the plain name of where it goes or what it does: Save & Exit, Menu, Skip To Content, All Read.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "853cd288ae01",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the bar, rail and drawer rendered by tests/navigation.test.ts and tests/evidence2-b10.test.ts, and walked at nine sizes by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
+ },
+ "src/ui/shell/GameShell.tsx#SaveGroup": {
+  "status": "Rewritten",
+  "hash": "898e5f45a6cc",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the bar, rail and drawer rendered by tests/navigation.test.ts and tests/evidence2-b10.test.ts, and walked at nine sizes by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
  },
  "src/ui/shell/GameShell.tsx#SaveIndicator": {
   "status": "Retained",
@@ -3404,10 +3523,17 @@
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
   "status": "Rewritten",
-  "hash": "8ac8efdf6a2d",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu); Readiness held by tests/evidence-g30-ui.test.ts, 'PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower…'",
-  "first": "Rewritten And Verified"
+  "hash": "2629f4fa43d9",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the bar, rail and drawer rendered by tests/navigation.test.ts and tests/evidence2-b10.test.ts, and walked at nine sizes by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
+ },
+ "src/ui/shell/TimeControls.tsx#lookedAfter": {
+  "status": "Rewritten",
+  "hash": "9ad9c75816ef",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the toast's words, the menu's own until then, held by tests/evidence-g32-ui.test.ts pressing Eat A Meal on Home",
+  "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#MENU_FOOT": {
   "status": "Retained",
@@ -3436,6 +3562,34 @@
   "on": "2026-10-21",
   "evidence": "Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/turn.tsx#PAUSED_WHILE_UPRIGHT": {
+  "status": "Rewritten",
+  "hash": "834ce36fd716",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the rotate screen and its toast held by tests/b23-turn.test.ts and the walk in docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
+ },
+ "src/ui/shell/turn.tsx#readDevice": {
+  "status": "Retained",
+  "hash": "c5c1bc611776",
+  "on": "2026-10-23",
+  "reason": "The media queries that tell a phone from a desktop window, read by the browser and never shown to a player",
+  "first": "Pending"
+ },
+ "src/ui/shell/turn.tsx#RotateScreen": {
+  "status": "Rewritten",
+  "hash": "3d6c8a9dc5a8",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the rotate screen and its toast held by tests/b23-turn.test.ts and the walk in docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
+ },
+ "src/ui/shell/turn.tsx#useDeviceUpright": {
+  "status": "Retained",
+  "hash": "f729039d7fd5",
+  "on": "2026-10-23",
+  "reason": "The media queries the rotate screen listens to as a phone turns, read by the browser and never shown",
+  "first": "Pending"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Retained",
@@ -3481,9 +3635,9 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace": {
   "status": "Rewritten",
-  "hash": "2557eef85ee3",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'says what the calendar holds, a clash in the next month, the legend’s kinds, and a day with nothing on it, still to come or gone'",
+  "hash": "54ef3c480cdc",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the Calendar's day agenda and grouped runs rendered in tests/evidence-g01-life.test.ts and walked by docs/verification/ui-2026-10-23/app/capture.mjs",
   "first": "Pending"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {

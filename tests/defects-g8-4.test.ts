@@ -214,8 +214,7 @@ describe('a program is called by its own name', () => {
     expect(coverLabel(sim.player, sim.now)).toBeUndefined();
   });
 
-  /** FIXTURE: the degree conferred in May 2026, so Yale Health ended on 1 August. Home showed Papers' line to a student's
-   * life only, which this was for too, until the line went to the head of Papers on 2026-10-23. */
+  /** FIXTURE: the degree conferred in May 2026, so Yale Health ended on 1 August (until 2026-10-23 Home showed Papers' line to a student's life only). */
   const graduate = (seed: string) => {
     const sim = student(seed);
     Object.assign(sim.player.school!, { standing: 'graduated', endedAt: at(2026, 5, 18) });
@@ -232,8 +231,7 @@ describe('a program is called by its own name', () => {
     expect(papers).toMatch(/^\s*Your Affairs Papers .*? Cover: HUSKY D\. /);
     const covered = holding(graduate('g84-label-covered'), 'ct', 'essential');
     const coveredPapers = drawn(covered, PapersWorkspace, healthTab).text;
-    expect(coveredPapers).toMatch(/This Month Covered Connecticut .*Care And Its Bills Covered Connecticut: /);
-    expect(coveredPapers).toMatch(/^\s*Your Affairs Papers .*? Cover: Covered Connecticut\. /);
+    expect(coveredPapers).toMatch(/This Month Covered Connecticut .*Care And Its Bills Covered Connecticut: /); expect(coveredPapers).toMatch(/^\s*Your Affairs Papers .*? Cover: Covered Connecticut\. /);
   });
 });
 

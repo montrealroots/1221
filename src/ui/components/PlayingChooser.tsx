@@ -112,13 +112,16 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
               return (
                 <tr key={side}>
                   <td className="nowrap">{i === 0 ? AXES[axis].label : ''}</td>
+                  {/* The choice and what the scene says of it at a width they read at, the table scrolling in its box where
+                      the page is narrower (from 2026-10-23, brief 23's walk: at 1024 the choice's words were five lines in
+                      107 pixels). */}
                   <td>
-                    <label className="row gap-1" style={{ alignItems: 'flex-start' }}>
+                    <label className="row gap-1 cell-wide" style={{ alignItems: 'flex-start' }}>
                       <input type="radio" name={`${group}axis-${axis}`} checked={chosen} onChange={() => setDraft({ ...draft, [axis]: side })} />
                       <span><strong>{e.label}</strong> <span className="xs">{e.words}</span>{why && <span className="xs" style={{ display: 'block', color: 'var(--warning, inherit)' }}>Doesn’t fit: {why}</span>}</span>
                     </label>
                   </td>
-                  <td className="xs" data-suit={suit.band}><strong>{GRAIN_LABEL[suit.band]}</strong>{rests.length ? <ul style={{ margin: 0, paddingLeft: '1.1em' }}>{rests.map((g) => <li key={g.source}>{g.source}: {g.v > 0 ? 'for it' : 'against it'}</li>)}</ul> : <span style={{ display: 'block' }}>Nothing in the scene leans either way.</span>}</td>
+                  <td className="xs" data-suit={suit.band}><div className="cell-min"><strong>{GRAIN_LABEL[suit.band]}</strong>{rests.length ? <ul style={{ margin: 0, paddingLeft: '1.1em' }}>{rests.map((g) => <li key={g.source}>{g.source}: {g.v > 0 ? 'for it' : 'against it'}</li>)}</ul> : <span style={{ display: 'block' }}>Nothing in the scene leans either way.</span>}</div></td>
                   <td className="xs">{draws}</td>
                   <td className="num mono">{result.toFixed(1)}</td>
                 </tr>

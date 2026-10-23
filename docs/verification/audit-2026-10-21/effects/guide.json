@@ -26,7 +26,7 @@
     },
     {
      "what": "the rail lists a place once its chapter is read",
-     "at": "src/ui/shell/GameShell.tsx:41"
+     "at": "src/ui/shell/GameShell.tsx:50"
     },
     {
      "what": "an underlined word opens once its look’s chapter is read",
@@ -34,11 +34,11 @@
     },
     {
      "what": "a screen opened by address is locked until its chapter is read",
-     "at": "src/ui/workspaces/WorkspaceRouter.tsx:31"
+     "at": "src/ui/workspaces/WorkspaceRouter.tsx:34"
     },
     {
      "what": "the strip under the bar and Guide (N Left) count what’s left",
-     "at": "src/ui/guide/Guide.tsx:143"
+     "at": "src/ui/guide/Guide.tsx:140"
     }
    ],
    "experienced": "At once: the dialog says Opened and lists what the chapter opened, with Try It and Next; Home’s panels fill in, the rail gains its places, the underlined words open and the strip moves to the next chapter. From then on the engine takes the commands the chapter opens. A finished guide stays open whatever chapters are added after it.",
@@ -76,7 +76,7 @@
    "area": "guide",
    "mechanic": true,
    "seeded": false,
-   "where": "Home, What Needs You: Dismiss on each question the panel draws (src/ui/screens/Home.tsx, the six at the top).",
+   "where": "Home, What Needs You: Dismiss on each question the panel draws (src/ui/screens/Home.tsx, the six at the top, every one with Show All).",
    "prerequisites": "A question the save holds that isn’t dismissed already; “What Needs You” read. Refused: “That question isn’t in What Needs You any more.” (none, or forgotten 180 days after it closed); “You’ve already dismissed that question.”",
    "reads": "universe.decisions[decisionId] (its dismissedAt).",
    "changes": "Sets dismissedAt to now. Nothing else: what the question was about still stands.",
@@ -99,7 +99,7 @@
     },
     {
      "what": "the rail’s count of what’s waiting",
-     "at": "src/ui/shell/GameShell.tsx:38"
+     "at": "src/ui/shell/GameShell.tsx:47"
     }
    ],
    "experienced": "At once the row leaves Home and the count beside Home falls by one; its page says it was dismissed and its date. Its answers are refused after, in the game’s words. What it was about goes on: an offer stays open on the Career screen, a return still falls due, a status still ends on its date.",
@@ -123,8 +123,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": "world.dismiss_decision",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "world.mark_read",
@@ -132,8 +132,8 @@
    "area": "guide",
    "mechanic": true,
    "seeded": false,
-   "where": "Home, What Needs You: Mark N Read in the panel’s head, drawn while anything is unread (src/ui/screens/Home.tsx).",
-   "prerequisites": "“What Needs You” read. Nothing else: with nothing unread it reads none. It sends no ids, so every unread notice is marked, the ones past the six the panel shows too; N on the button is every unread notice.",
+   "where": "Home, Recent Updates: Mark N Read in its head, and Mark Read beside each notice (src/ui/screens/Home.tsx); Updates: Mark N Read for the notices the filter shows, and Mark Read on each row (src/ui/screens/Updates.tsx).",
+   "prerequisites": "“What Needs You” read. Nothing else: with nothing unread it reads none. Home’s Mark N Read sends no ids, so every unread notice is marked; Mark Read and Updates’ buttons send their notices’ ids.",
    "reads": "universe.notifications (each notice’s read).",
    "changes": "Sets read on every unread notice (or on the ids given, which no control sends); answers how many.",
    "consumers": [
@@ -143,7 +143,7 @@
     },
     {
      "what": "the rail’s count and the You line’s N Unread",
-     "at": "src/ui/shell/GameShell.tsx:39"
+     "at": "src/ui/shell/GameShell.tsx:48"
     },
     {
      "what": "notify brings a notice said again up to now only while it’s unread; read, the same words are a new notice",
@@ -155,7 +155,7 @@
     },
     {
      "what": "the notice’s own look says it has been read",
-     "at": "src/ui/looks/attention.tsx:344"
+     "at": "src/ui/looks/attention.tsx:347"
     }
    ],
    "experienced": "At once the notices leave Home and the counts fall; each notice’s page says “You’ve read this notice.” Later, the same words said again come as a new notice.",
@@ -179,8 +179,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": "world.mark_read",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "world.set_preferences",
@@ -393,8 +393,8 @@
    "why": "",
    "prior": null,
    "purpose": "Says what a question asks, what to press for it on Home, when it closes and where it stands, true at the moment it’s opened.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "look.notification",
@@ -402,12 +402,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, What Needs You: a notice’s title or its time, pressed (src/ui/screens/Home.tsx); the look is src/ui/looks/attention.tsx.",
+   "where": "Home, Recent Updates, and Updates: a notice’s title, pressed (src/ui/screens/Home.tsx, src/ui/screens/Updates.tsx); the look is src/ui/looks/attention.tsx.",
    "prerequisites": "“What Needs You” read (look.notification); a notice the save keeps, or what it says once it’s gone, past the latest 500.",
    "reads": "The notice (body, read, importance, at, route, refType) and unreadNotifications’ order.",
    "changes": "Nothing: opening it doesn’t mark it read, as it says.",
    "consumers": [],
-   "experienced": "Under the notice on Home: its words, whether it’s read, what Mark N Read would mark, and its place among the unread.",
+   "experienced": "Under the notice: its words, whether it’s read, where Updates keeps it and what Mark Read would mark, and its place among the unread.",
    "saveLoad": "Nothing of its own: it reads the notice as saved, read or not.",
    "evidence": {
     "tests": [
@@ -426,8 +426,8 @@
    "why": "",
    "prior": null,
    "purpose": "Says what a notice says, whether it has been read, its place among the unread and what Mark N Read and Go There do.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.how",
@@ -440,7 +440,7 @@
    "reads": "The player’s wellbeing (energy, stress) and readiness(), and wellbeingSummary.",
    "changes": "Nothing: it reads.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: the three figures as they stand, rounded; pressing one opens its dial or readiness.",
+   "experienced": "Each time Home is drawn: the three figures as they stand, rounded; pressing one opens its dial or readiness; under them the two looks-after it would do first, from 2026-10-23 (brief 23).",
    "saveLoad": "Nothing of its own: the dials are saved with the person.",
    "evidence": {
     "tests": [
@@ -459,8 +459,8 @@
    "why": "",
    "prior": null,
    "purpose": "Shows the energy, stress and readiness the life holds now, each a way to its dial, under a line on how you are.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.sleep",
@@ -628,12 +628,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Calendar (src/ui/screens/Home.tsx).",
+   "where": "Home, Up Next (src/ui/screens/Home.tsx:362); the Calendar on the menu.",
    "prerequisites": "“What’s Coming” read; Locked before it.",
    "reads": "nextCommitment and upcoming(6) from the calendar.",
    "changes": "Nothing: it reads.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: “in 1 hour Classes August 31, 2026 at 9:00 AM” and the five after it; an entry pressed says when, how long, where and what missing it would cost. Of a next commitment in another town that needs you there already, it says “you’re not in …”.",
+   "experienced": "Each time Home is drawn: “in 1 hour Classes August 31, 2026 at 9:00 AM” and the five after it; an entry pressed says when, how long, where and what missing it would cost. Of a next commitment in another town that needs you there already, it says “you’re not in …”. Called the Calendar until 2026-10-23 (brief 23).",
    "saveLoad": "Nothing of its own: the calendar is the save’s scheduled items.",
    "evidence": {
     "tests": [
@@ -652,8 +652,8 @@
    "why": "",
    "prior": null,
    "purpose": "Shows the next commitment, how soon and when, and up to five more after it, each opening to its entry.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.go",
@@ -830,12 +830,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, What Needs You (src/ui/screens/Home.tsx).",
+   "where": "Home, What Needs You and Recent Updates (src/ui/screens/Home.tsx); Updates on the menu (src/ui/screens/Updates.tsx).",
    "prerequisites": "“What Needs You” read; Locked before it.",
-   "reads": "openDecisions, unreadNotifications, troubles and the calendar’s clashes in the next month.",
+   "reads": "openDecisions, unreadNotifications, thingsToDo (troubles, papersAlerts, the standing, the calendar’s clashes in the next month).",
    "changes": "Nothing itself: its buttons send world.take_decision_action, world.dismiss_decision and world.mark_read, and Go There goes to a route.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: six questions at most, the rest coming up as those above close; six notices, or all of them with Show All; All Clear or No Questions Waiting with what still weighs.",
+   "experienced": "Each time Home is drawn: six questions, the rest with Show All, and what needs putting right, each with the way to its screen, or All Clear; under Recent Updates the four most important unread notices; on Updates every notice, read and unread, with filters. Until 2026-10-23 (brief 23) the unread notices were under the questions.",
    "saveLoad": "Nothing of its own: the questions and notices are the save’s.",
    "evidence": {
     "tests": [
@@ -857,8 +857,8 @@
    "why": "",
    "prior": null,
    "purpose": "Lists the open questions, overdue first and then by urgency, with their answers, and every unread notice, the most important first; with nothing waiting, it says what still weighs: money owed, a card behind, two commitments at once.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.open-calendar",
@@ -866,7 +866,7 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, the Calendar panel’s head: Open Calendar (src/ui/screens/Home.tsx); C from anywhere but a text box.",
+   "where": "Home, Up Next’s head: Open Calendar (src/ui/screens/Home.tsx); the Calendar on the menu; C from anywhere but a text box.",
    "prerequisites": "“Your Own Plans” read; Locked before it, opening the guide there.",
    "reads": "Nothing.",
    "changes": "Nothing: it goes to /workspace/calendar.",
@@ -887,8 +887,8 @@
    "why": "",
    "prior": null,
    "purpose": "Opens the Calendar screen, the month, where a plan of your own is put on and called off.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.weather",
@@ -896,12 +896,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Weather (src/ui/screens/Home.tsx).",
+   "where": "Home, Today: the weather beside the line under the greeting (src/ui/screens/Home.tsx:144); Weather, a locked button there until its chapter.",
    "prerequisites": "“Weather” read; Locked before it. The line under the greeting shows the weather from the first chapter.",
    "reads": "weatherAt and forecastFor for the town Where You Are names.",
    "changes": "Nothing: it reads, and the weather is the same however often it’s read.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: the figure now, the condition, the high and low, humidity and wind, the climate, and five days ahead.",
+   "experienced": "Each time Home is drawn: the figure now, the condition, the high and low, and five days ahead; the look says the humidity, the wind and the climate. Until 2026-10-23 (brief 23) a panel of its own.",
    "saveLoad": "Nothing of its own: the weather is drawn from the save’s seed, the same after a load.",
    "evidence": {
     "tests": [
@@ -917,8 +917,8 @@
    "why": "",
    "prior": null,
    "purpose": "Shows the town’s weather now, the day’s high and low, and the days ahead, each opening to the week, the day and its hours.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.money",
@@ -926,12 +926,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Your Affairs: the Money line (src/ui/screens/Home.tsx).",
+   "where": "Money’s head: Worth (src/ui/components/Glance.tsx:33), and What Needs You on Home for what money needs putting right (src/ui/screens/Home.tsx).",
    "prerequisites": "“Money” read; Locked before it.",
    "reads": "The ledger’s accounts, the primary account, netWorth.",
    "changes": "Nothing: it reads.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: “<account>: $…. Worth $…, after $… owed.”; an overdrawn account says so.",
+   "experienced": "On Money: “Worth $…, after $… owed.”, and “Your account is overdrawn.” while it is; on Home, a line for what needs putting right, with Open Money. Until 2026-10-23 (brief 23) Home’s Money line in Your Affairs.",
    "saveLoad": "Nothing of its own.",
    "evidence": {
     "tests": [
@@ -947,9 +947,9 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,
-   "purpose": "Says the primary checking account’s balance, accounts kept at home, and what you’re worth after what you owe.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "purpose": "Says what you’re worth after what you owe, at the head of Money, and puts what money needs right from Home.",
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.bank",
@@ -957,7 +957,7 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, the Money line’s button, the bank’s name (src/ui/screens/Home.tsx); the rail’s Money, under Your Affairs (src/ui/shell/destinations.ts).",
+   "where": "The menu’s Money, under Your Affairs (src/ui/shell/destinations.ts); Open Money beside a money line under What Needs You (src/ui/screens/Home.tsx).",
    "prerequisites": "“Your Bank” read: Locked before it, and not on the rail.",
    "reads": "isOpen(ui.bank).",
    "changes": "Nothing: it goes to /workspace/bank.",
@@ -977,9 +977,9 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,
-   "purpose": "Opens the Money screen, from the bank’s own name on the Money line and from the rail.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "purpose": "Opens the Money screen, from the menu and from what needs putting right on Home.",
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.papers",
@@ -987,12 +987,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Your Affairs: the Papers line and its button (src/ui/screens/Home.tsx); the rail’s Papers.",
+   "where": "Papers’ head (src/ui/components/Glance.tsx:114), and What Needs You on Home with Open Papers (src/ui/screens/Home.tsx); the menu’s Papers.",
    "prerequisites": "“Cover, Benefits And Returns” read; Locked before it. Drawn for a life at the School.",
    "reads": "coverOn and coverLabel, the open returns, what’s owed, an unemployment claim.",
    "changes": "Nothing: the button goes to /workspace/papers.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: “Cover: Yale Health.” and an alert for what needs doing; pressed, Papers.",
+   "experienced": "On Papers: “Cover: Yale Health.”, a claim’s weekly pay, and what needs doing; on Home, a line for each with Open Papers. Until 2026-10-23 (brief 23) Home’s Papers line in Your Affairs.",
    "saveLoad": "Nothing of its own.",
    "evidence": {
     "tests": [
@@ -1009,8 +1009,8 @@
    "why": "",
    "prior": null,
    "purpose": "Says what covers you and what needs doing in your papers (a return due, tax owed, a claim), and opens Papers.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.school",
@@ -1018,12 +1018,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Your Affairs: the School line and its button, Yale (src/ui/screens/Home.tsx); the rail’s School.",
+   "where": "The School’s head (src/ui/components/Glance.tsx:51), and What Needs You on Home with Open School when the standing drops (src/ui/screens/Home.tsx); the menu’s School.",
    "prerequisites": "“Drama School” read; Locked before it. Drawn for a life at the School.",
    "reads": "The school record: standing, terms, rank, the next school commitment.",
    "changes": "Nothing: the button goes to /workspace/school.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: “Year 1, good standing, 1st of 16 in the class. Next: …”; a concern or worse is an alert; pressed, the School.",
+   "experienced": "On School: “Year 1 of 3, good standing. You’re 1st of 16 in the class. Next: …”; on Home, a concern or worse with Open School. Until 2026-10-23 (brief 23) Home’s School line in Your Affairs.",
    "saveLoad": "Nothing of its own.",
    "evidence": {
     "tests": [
@@ -1040,8 +1040,8 @@
    "why": "",
    "prior": null,
    "purpose": "Says the year, the standing, the place in the class and what’s next at the School, and opens the School.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "ui.where",
@@ -1049,12 +1049,12 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Where You Are (src/ui/screens/Home.tsx).",
+   "where": "Home, Today: the line under the greeting (src/ui/screens/Home.tsx:99); Where You Are, a locked button there until its chapter.",
    "prerequisites": "“Your Life, Hour By Hour” read; Locked before it.",
    "reads": "placeProfile for the town: its zone, its people, its sun.",
    "changes": "Nothing: it reads.",
    "consumers": [],
-   "experienced": "Each time Home is drawn: the town, region and country, “Your home.” and its size, Local Time (the game’s clock in the town’s zone) and Daylight; each opens.",
+   "experienced": "Each time Home is drawn: the time, the town and its region, the zone and the season always, the daylight once its chapter is read; each opens, the town into its country, “Your home.”, its size and Local Time. Until 2026-10-23 (brief 23) a panel of its own.",
    "saveLoad": "Nothing of its own.",
    "evidence": {
     "tests": [
@@ -1073,8 +1073,8 @@
    "why": "",
    "prior": null,
    "purpose": "Says the town, its region and country, its local time and daylight, each a way to its look.",
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "chapter.welcome",
@@ -1752,7 +1752,7 @@
    "kind": "optional",
    "claim": "The weather beside it shows the same town, hour by hour.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "Home draws Where You Are and Weather from the one town (`place` and `weather`, both of `city`, src/ui/screens/Home.tsx:102 and :105); the weather’s look opens that town’s day hour by hour (src/ui/looks/weather.tsx:188).",
+   "holds": "Home’s Today draws the town and the weather beside it from the one town (`place` and `weather`, both of `city`, src/ui/screens/Home.tsx:84 and :87); the weather’s look opens that town’s day hour by hour (src/ui/looks/weather.tsx:188).",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/b20-guide-chapters.test.ts"
@@ -1760,15 +1760,15 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.start.home>day.clock",
    "kind": "immediate",
    "claim": "The local time is the game’s clock, so it moves when the clock does.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "Local Time is the game’s clock in the town’s zone (`localTime: formatTime(sim.now, city.timeZone)`, src/engine/world/place.ts:156), drawn by Home (src/ui/screens/Home.tsx:397).",
+   "holds": "Local Time is the game’s clock in the town’s zone (`localTime: formatTime(sim.now, city.timeZone)`, src/engine/world/place.ts:156), in the town’s look; Today’s line says the same clock (src/ui/screens/Home.tsx:111).",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/b20-guide-screens.test.ts"
@@ -1776,15 +1776,15 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.start.guide>start.home",
    "kind": "immediate",
    "claim": "Reading a chapter opens Home’s panels and the underlined words it names.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "Each of Home’s panels is drawn once its chapter is read, and Locked before (`shows`, src/ui/screens/Home.tsx:112, `LockedPanel`, src/ui/guide/Guide.tsx:111), and its words open by the same rule (src/ui/looks/Look.tsx:87).",
+   "holds": "Each of Home’s panels is drawn once its chapter is read, and Locked before (`shows`, src/ui/screens/Home.tsx:65, `LockedPanel`, src/ui/guide/Guide.tsx:111), and its words open by the same rule (src/ui/looks/Look.tsx:87).",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/b20-guide-chapters.test.ts"
@@ -1792,15 +1792,15 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.start.guide>day.calendar",
    "kind": "immediate",
    "claim": "“What’s Coming” opens the calendar, and the dialog that asks what to do when a commitment comes up.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "“What’s Coming” opens ui.calendar and ui.go (src/engine/content/tutorial.ts:162): the Calendar panel (src/ui/screens/Home.tsx:166) and Go in the stop’s dialog (src/ui/shell/TimeControls.tsx:408), Locked before it.",
+   "holds": "“What’s Coming” opens ui.calendar and ui.go (src/engine/content/tutorial.ts:162): Up Next on Home (src/ui/screens/Home.tsx:362) and Go in the stop’s dialog (src/ui/shell/TimeControls.tsx:408), Locked before it.",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/b20-guide-chapters.test.ts"
@@ -1808,8 +1808,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.start.guide>day.clock",
@@ -1832,7 +1832,7 @@
    "kind": "prerequisite",
    "claim": "A place joins the menu once you’ve read its chapter.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "The rail lists a place only once its chapter is read (`railGroups`, src/ui/shell/GameShell.tsx:41).",
+   "holds": "The rail lists a place only once its chapter is read (`railGroups`, src/ui/shell/GameShell.tsx:50).",
    "tests": [
     "tests/b20-guide-promises.test.ts"
    ],
@@ -1847,7 +1847,7 @@
    "kind": "optional",
    "claim": "Go There on a notice takes you to its screen, and to its tab where the notice names one.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "Go There goes to the notice’s own route (src/ui/screens/Home.tsx:327), and the provider opens the screen at the tab a route names (`?tab=`, src/app/game-context.tsx:262), else where it was left. Until 2026-10-21 the promise said “its screen and tab”, though most notices name only their screen.",
+   "holds": "Go There goes to the notice’s own route (src/ui/screens/Home.tsx:257, src/ui/screens/Updates.tsx:158), and the provider opens the screen at the tab a route names (`?tab=`, src/app/game-context.tsx:262), else where it was left. Until 2026-10-21 the promise said “its screen and tab”, though most notices name only their screen.",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/b20-guide-screens.test.ts"
@@ -1855,8 +1855,8 @@
    "status": "Implemented And Verified",
    "why": "",
    "seeded": false,
-   "readBy": "guide",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   }
  ]
 }

@@ -76,7 +76,7 @@ function paymentRow(sim: Simulation, person: Person, e: Engagement, p: ProPaymen
   }
   const gross = inSaveMoney(sim, p.promised, p.currency);
   const c = commissionOn(sim, person, e, p, gross, Math.max(p.due, sim.now));
-  return { week, promised, due: formatDate(p.due, zone), stands: 'Promised. It isn’t paid until it’s due, so it isn’t in your accounts yet.', commission: c.amount ? `${money(c.amount)} expected` : 'None expected', why: c.words };
+  return { week, promised, due: formatDate(p.due, zone), stands: 'Promised. It comes into your accounts on the day it’s due.', commission: c.amount ? `${money(c.amount)} expected` : 'None expected', why: c.words };
 }
 
 /** An engagement's pay: a table, a row a week, what's the same for every row said once under it. */

@@ -2675,23 +2675,11 @@
   "on": "2026-10-18",
   "evidence": "Editorial review, batch 4: Worth is assets less what’s owed (`netWorth`), so “Worth $503,542, $10 of it owed.” said part of the worth was owed; now “Worth $503,542, after $10 owed.” tests/evidence2-b12.test.ts “the twin never opted in: …”, tests/evidence-g33-ui.test.ts “with the day’s spending put on the card, …” and tests/scope-money.test.ts assert it exactly; the School line’s place, “1st of 16 in the class”, is asserted by tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts and tests/evidence-g33-ui.test.ts. Batch 6: Where You Are’s “Home.”, the screen’s own name, reads “Your home. 130K people.”: tests/evidence2-b11.test.ts and tests/evidence-g32-ui.test.ts h-where-weather, exact, in New Haven and London. The final walk of the built app (docs/verification/language-2026-10-17/editorial/after-1440, after-390) shows all three on every save’s Home (the worth with a debt on lien.json); names.json reads them in the browser"
  },
- "src/ui/screens/Home.tsx#PapersLine": {
-  "status": "Reviewed And Retained",
-  "hash": "a20cd8938d32",
-  "on": "2026-10-17",
-  "reason": "Cover, the return due or past due with what's to pay and its penalty, tax owed and whether it's growing, and a claim's weekly sum: plain, each figure the Papers screen's. Held in tests/evidence-g32-ui.test.ts and tests/evidence-g33-ui.test.ts."
- },
  "src/ui/screens/Home.tsx#partOfDay": {
   "status": "Reviewed And Retained",
   "hash": "eede2a706b4a",
   "on": "2026-10-17",
   "reason": "Night, Morning, Afternoon and Evening, the greeting's word by the hour: held at every boundary in tests/evidence-g32-ui.test.ts ('Good Night, Ada.' from midnight to 4:59)."
- },
- "src/ui/screens/Home.tsx#SchoolLine": {
-  "status": "Rewritten And Verified",
-  "hash": "d59e534f85bf",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g33-ui.test.ts and tests/evidence2-b12.test.ts (Home's School line: Left the School, withdrawn and dismissed), tests/language-dynamic.test.ts; one form with the School screen"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
   "status": "Rewritten And Verified",

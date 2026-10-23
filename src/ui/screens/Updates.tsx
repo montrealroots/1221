@@ -82,7 +82,7 @@ export function Updates() {
         <div className="eyebrow">Your Day</div>
         <h1>Updates</h1>
         <p className="muted prose">
-          Every notice you’ve had, newest first: what happened, and who or what it’s from. Reading one answers nothing.
+          Every notice you’ve had, newest first: what happened, what it’s about and when. Reading one answers nothing.
           The questions waiting on you stay under What Needs You on Home until they’re answered.
         </p>
       </div>
@@ -115,7 +115,7 @@ export function Updates() {
 
         {groups.length === 0 ? (
           <Empty
-            title={show === 'unread' ? 'Nothing Unread' : 'No Notices Yet'}
+            title={show === 'unread' ? 'All Read' : 'No Notices Yet'}
             body={show === 'unread'
               ? `You’ve read every notice${about ? ` about ${about.toLowerCase()}` : ''}. All shows the ones you’ve read.`
               : 'What happens in your life is told to you here: a teacher’s note, a payment that came in, a letter.'}
@@ -169,7 +169,7 @@ export function Updates() {
         {groups.length > shown && (
           <div className="row-between updates-foot">
             <span className="xs dim">{`${shown} of ${groups.length} shown.`}</span>
-            <button type="button" className="btn btn-sm" onClick={() => setShown(shown + PAGE)}>Show {Math.min(PAGE, groups.length - shown)} More</button>
+            <button type="button" className="btn btn-sm" onClick={() => setShown(shown + PAGE)}>{`Show ${Math.min(PAGE, groups.length - shown)} More`}</button>
           </div>
         )}
       </div>

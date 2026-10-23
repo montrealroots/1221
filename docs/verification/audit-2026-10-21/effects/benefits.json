@@ -22,7 +22,7 @@
     },
     {
      "what": "the Benefits panel’s claim, its months paid",
-     "at": "src/ui/workspaces/PapersWorkspace.tsx:926"
+     "at": "src/ui/workspaces/PapersWorkspace.tsx:913"
     }
    ],
    "experienced": "At once the toast with the first month’s day. A week on, and each 30 days, SNAP Paid and the EBT card’s balance, which the day’s groceries spend first; nothing where last month’s income was over the gross limit; SNAP Time Limit Reached or Your SNAP Case Closed where they apply.",
@@ -78,7 +78,7 @@
     },
     {
      "what": "the claim panel’s paid to date",
-     "at": "src/ui/workspaces/PapersWorkspace.tsx:992"
+     "at": "src/ui/workspaces/PapersWorkspace.tsx:979"
     }
    ],
    "experienced": "At once the toast with the weekly benefit; the waiting week’s notice the first Sunday (New York’s); each Sunday after, the week’s benefit in checking; Your Unemployment Claim Ended at its most or its year; the next February, the return’s unemployment line.",
@@ -1565,8 +1565,8 @@
      "at": "src/engine/systems/taxreturn.ts:1368"
     },
     {
-     "what": "Home’s Papers line",
-     "at": "src/ui/screens/Home.tsx:570"
+     "what": "Papers’ head and What Needs You on Home, by papersAlerts",
+     "at": "src/ui/components/Glance.tsx:105"
     }
    ],
    "experienced": "The return on Papers with its lines; Your 2026 Tax Return in What Needs You.",
@@ -1593,8 +1593,8 @@
    "status": "Implemented And Verified",
    "prior": "tax.season",
    "why": "",
-   "readBy": "benefits",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "tax.state_lien",
@@ -2255,9 +2255,9 @@
   {
    "id": "promise.taxes.return>papers.overview",
    "kind": "immediate",
-   "claim": "The Papers line on Home says when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.",
+   "claim": "The head of Papers, and What Needs You on Home, say when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.",
    "entryFile": "src/engine/content/guide/taxes.ts",
-   "holds": "Home’s Papers line reads the open return’s due date, what filing would pay with its late penalty, and the tax owed (src/ui/screens/Home.tsx:564).",
+   "holds": "Papers’ head and What Needs You on Home read the open return’s due date, what filing would pay with its late penalty, and the tax owed (`papersAlerts`, src/ui/components/Glance.tsx:79). Home’s Papers line did until 2026-10-23 (brief 23).",
    "tests": [
     "tests/evidence-g33-ui.test.ts"
    ],
@@ -2269,8 +2269,8 @@
     ]
    },
    "why": "",
-   "readBy": "benefits",
-   "readAt": "c4832549"
+   "readBy": "brief-23",
+   "readAt": "55543f7c"
   },
   {
    "id": "promise.taxes.return>documents.work",

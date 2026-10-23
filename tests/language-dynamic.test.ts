@@ -319,7 +319,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     sim.must({ kind: 'world.mark_read', payload: {} });
     let home = drawn(sim, Home);
     expect(home).not.toMatch(/Mark \d+ Read/);
-    expect(home).toContain('Recent Updates\nNothing unread.');
+    expect(home).toContain('Recent Updates\nAll read.');
     sim.notify({ category: 'school', title: 'A First Notice', body: 'One thing happened.', importance: 60 });
     const first = sim.universe.notifications.at(-1)!;
     home = drawn(sim, Home);

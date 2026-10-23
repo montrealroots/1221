@@ -305,7 +305,7 @@ function Toasts() {
 describe('A phone upright pauses the game, and it stays paused until Play', () => {
   afterEach(() => { turned.upright = false; });
 
-  it('PLAYER JOURNEY: live, turned upright: paused through the command and held, a minute upright moves nothing; turned back: still paused, said once; Play goes on from then, the minutes upright never added', () => {
+  it('PLAYER JOURNEY: live, turned upright: paused through the command, a minute upright moves nothing; turned back: still paused, said once; Play goes on from then, the minutes upright never added', () => {
     const sim = student('b23-turn-live');
     expect(sim.universe.preferences.timeSpeed).toBe('live');
     const p = bar(sim);

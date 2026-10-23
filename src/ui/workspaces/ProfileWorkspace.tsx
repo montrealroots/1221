@@ -14,7 +14,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Fine, Empty, WhyNot } from '@/ui/components/primitives';
+import { Panel, Stat, Fine, Empty, WhyNot, PageIndex } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '@/ui/looks/actor';
@@ -157,13 +157,14 @@ export function ProfileWorkspace() {
       <LookRegion className="page-head">
         <div className="eyebrow">Player Profile</div>
         <h1>{person.displayName}</h1>
+        <PageIndex sections={SECTIONS} />
       </LookRegion>
       <div className="col gap-5">
         <IdentityPanel />
+        <ConditionPanel />
         <AbilitiesPanel />
         <TechniquesPanel />
         <GenresPanel />
-        <ConditionPanel />
         <JourneyPanel />
         <WorkSoFarPanel />
         <HistoryPanel />
@@ -171,6 +172,22 @@ export function ProfileWorkspace() {
     </>
   );
 }
+
+/**
+ * The Profile's sections, in the order the page has them, each a press away from its head (from 2026-10-23, brief 23).
+ * Readiness Today came up from fifth to second that day, under who you are: whether anything holds your work back today
+ * is the summary, and the tables of abilities, techniques and genres are the detail. Until then it sat under the 54 genres.
+ */
+const SECTIONS = [
+  { id: 'profile-identity', label: 'Identity And Background' },
+  { id: 'profile-readiness', label: 'Readiness Today' },
+  { id: 'profile-abilities', label: 'Attributes And Craft' },
+  { id: 'profile-techniques', label: 'Techniques' },
+  { id: 'profile-genres', label: 'Genres' },
+  { id: 'profile-journey', label: 'School Journey' },
+  { id: 'profile-work', label: 'Your Work So Far' },
+  { id: 'profile-history', label: 'Development History' },
+] as const;
 
 function IdentityPanel() {
   const { sim, navigate } = useGame();
@@ -184,7 +201,7 @@ function IdentityPanel() {
   const said = [...(person.raceEthnicity ?? []).map((id) => ETHNICITIES.find((e) => e.id === id)?.label ?? id), ...(person.raceEthnicityOwn ? [person.raceEthnicityOwn] : [])];
   const school = person.school;
   return (
-    <Panel title="Identity And Background" subtitle="As you made your character" help="ui.profile">
+    <Panel id="profile-identity" title="Identity And Background" subtitle="As you made your character" help="ui.profile">
       <div className="row gap-4 wrap identity-row" style={{ alignItems: 'flex-start' }}>
         {person.portrait
           ? <img src={person.portrait} alt={`${person.displayName}’s portrait`} width={128} height={160} style={{ borderRadius: 8, objectFit: 'cover' }} />
@@ -319,7 +336,7 @@ function WorkSoFarPanel() {
   );
   const one = (x?: { label: string; line: string; evidence: string[] }) => (x ? [x] : []);
   return (
-    <Panel title="Your Work So Far" subtitle={id.early ? `Early days: ${id.pieces} ${id.pieces === 1 ? 'piece' : 'pieces'} judged. Patterns are named once ${ARTISTRY.least} are.` : `From ${id.pieces} pieces judged, the material you’ve met and the choices you’ve made`} help="craft.identity">
+    <Panel id="profile-work" title="Your Work So Far" subtitle={id.early ? `Early days: ${id.pieces} ${id.pieces === 1 ? 'piece' : 'pieces'} judged. Patterns are named once ${ARTISTRY.least} are.` : `From ${id.pieces} pieces judged, the material you’ve met and the choices you’ve made`} help="craft.identity">
       <div className="col gap-3">
         {lines('What Your Work Shows Most', id.strengths)}
         {lines('What Keeps Holding It Back', id.weaknesses)}
@@ -343,7 +360,7 @@ function AbilitiesPanel() {
   const last = (id: string) => [...recent].reverse().find((h) => h.id === id);
   const staminaFull = abilityFull(sim, person, 'stamina');
   return (
-    <Panel title="Attributes And Craft" subtitle={`Twelve abilities, 0 to 100. Practice today: ${practicedToday(sim, person)} of ${PRACTICE.dailyHours} hours`} help="practice.exercise">
+    <Panel id="profile-abilities" title="Attributes And Craft" subtitle={`Twelve abilities, 0 to 100. Practice today: ${practicedToday(sim, person)} of ${PRACTICE.dailyHours} hours`} help="practice.exercise">
       <div className="col gap-3">
         <NextWork />
         <LookRegion className="table-scroll">
@@ -365,8 +382,10 @@ function AbilitiesPanel() {
                     <td className="num mono">{one(full)}</td>
                     <td className="num mono" title={classesGrow(d.id) ? undefined : 'Classes don’t build it'}>{classesGrow(d.id) ? one(Math.min(full, reachOf(person, d.id))) : '—'}</td>
                     <td className="xs"><div className="cell-min">{today.length ? today.join('; ') : 'Not held back today'}</div></td>
-                    <td className="xs">{[...new Set(readersOf(d.id).flatMap((r) => r.dims))].map((x) => DIMENSION_LABEL[x]).join(', ') || '—'}</td>
-                    <td className="xs nowrap">{h ? `+${h.delta.toFixed(2)}, ${sourceWords(h.source)}` : 'None yet'}</td>
+                    {/* Both at a width they read at (from 2026-10-23, brief 23's walk): until then the last change kept to one line and
+                        what the ability shapes took what was left, five lines of names in 112 pixels at 1440. */}
+                    <td className="xs"><div className="cell-min">{[...new Set(readersOf(d.id).flatMap((r) => r.dims))].map((x) => DIMENSION_LABEL[x]).join(', ') || '—'}</div></td>
+                    <td className="xs"><div className="cell-min">{h ? `+${h.delta.toFixed(2)}, ${sourceWords(h.source)}` : 'None yet'}</div></td>
                     <td className="nowrap"><PracticeButton id={d.id} /></td>
                   </tr>
                 );
@@ -392,7 +411,7 @@ function TechniquesPanel() {
   const person = useWorld((s) => s.player);
   const craft = person.craft!;
   return (
-    <Panel title="Techniques" subtitle={`Seventeen techniques, each mastered at ${MASTERED}`} help="practice.exercise">
+    <Panel id="profile-techniques" title="Techniques" subtitle={`Seventeen techniques, each mastered at ${MASTERED}`} help="practice.exercise">
       <LookRegion className="table-scroll">
         <table>
           <thead><tr><th scope="col">Technique</th><th scope="col" className="num">Now</th><th scope="col" className="num">Classes Reach</th><th scope="col">Mastered</th><th scope="col">Practice</th></tr></thead>
@@ -450,7 +469,7 @@ function GenresPanel() {
   const refusals = list.slice(0, limit).map((g) => studyRefusal(sim, person, g.id));
   const oneRefusal = refusals.length > 0 && refusals.every((r) => r === refusals[0]) ? refusals[0] : undefined;
   return (
-    <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or worked in`} help="genre.study">
+    <Panel id="profile-genres" title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or worked in`} help="genre.study">
       <div className="col gap-3">
         {/* In a region of its own, so a genre named here opens under it once the chapter that opens a genre is read (from
             2026-10-12: until then it stood outside any region and Open drew the loved genres and the one suggested as
@@ -510,7 +529,7 @@ function ConditionPanel() {
   const w = person.wellbeing;
   const sufficient = c.readiness >= EVALUATION.sufficientReadiness;
   return (
-    <Panel title="Readiness Today" subtitle="Whether anything holds your work back today">
+    <Panel id="profile-readiness" title="Readiness Today" subtitle="Whether anything holds your work back today">
       <div className="col gap-3">
         <div className="grid grid-3">
           <Stat label="Readiness" value={String(Math.round(readiness(person)))} note={`${Math.round(c.readiness)} at this hour`} />
@@ -545,7 +564,7 @@ function JourneyPanel() {
   // until 2026-10-14 a graduate’s read “Graduated, graduated” (found by that day’s third round of evidence).
   const standing = school && school.standing !== 'graduated' ? `, ${STANDING_LABEL[school.standing].toLowerCase()}` : '';
   return (
-    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the School' : `Year ${yearOfStudy(person)} of 3`}${standing}` : 'No school'} help="look.work">
+    <Panel id="profile-journey" title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the School' : `Year ${yearOfStudy(person)} of 3`}${standing}` : 'No school'} help="look.work">
       <div className="col gap-3">
         {school && <p className="small" style={{ margin: 0 }}>{credits.length ? `On stage: ${credits.map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'School')}>School</button></p>}
         {terms.length > 0 && (
@@ -597,7 +616,7 @@ function HistoryPanel() {
   const [limit, setLimit] = useState(15);
   const history = [...developmentOf(person).history].reverse();
   return (
-    <Panel title="Development History" subtitle={`Your last ${DEVELOPMENT.historyKept} changes, newest first`}>
+    <Panel id="profile-history" title="Development History" subtitle={`Your last ${DEVELOPMENT.historyKept} changes, newest first`}>
       {history.length ? (
         <LookRegion>
           <ul className="small" style={{ margin: 0 }}>

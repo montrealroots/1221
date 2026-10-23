@@ -479,7 +479,7 @@
  },
  {
   "surface": "Home",
-  "where": "The first screen of a life: the greeting and its line, Calendar, What Needs You, How You Are, Where You Are, Weather, Your Affairs",
+  "where": "The first screen of a life: Today (the greeting, its line and the weather beside it), What Needs You, Up Next, How You Are and Recent Updates. Until 2026-10-23 (brief 23): the greeting and its line, Calendar, What Needs You, How You Are, Where You Are, Weather, Your Affairs",
   "sources": [
    "src/ui/screens/Home.tsx#*",
    "src/engine/systems/life.ts#wellbeingSummary"
@@ -511,7 +511,7 @@
    },
    {
     "kind": "test",
-    "ref": "tests/evidence-g32-ui.test.ts: 'PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one'"
+    "ref": "tests/evidence-g32-ui.test.ts: 'PLAYER JOURNEY: more unread than Recent Updates’ four: it says how many more and View All Updates goes to Updates, where the fifth most important is, with every unread counted; Mark N Read there marks every one'"
    },
    {
     "kind": "test",

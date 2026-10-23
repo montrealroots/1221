@@ -19984,19 +19984,9 @@
   "hash": "35bf7bc060f7",
   "on": "2026-10-17"
  },
- "src/ui/screens/Home.tsx#PapersLine": {
-  "status": "Pending",
-  "hash": "a20cd8938d32",
-  "on": "2026-10-17"
- },
  "src/ui/screens/Home.tsx#partOfDay": {
   "status": "Pending",
   "hash": "eede2a706b4a",
-  "on": "2026-10-17"
- },
- "src/ui/screens/Home.tsx#SchoolLine": {
-  "status": "Pending",
-  "hash": "9fe0c083aabb",
   "on": "2026-10-17"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {

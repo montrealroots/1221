@@ -205,7 +205,7 @@ export function Home() {
                 <div key={item.text} className="decision" data-urgency="high">
                   <div className="decision-urgency" aria-hidden="true" />
                   <div className="grow row-between wrap">
-                    <span className="small grow">{item.text}</span>
+                    <span className="small grow todo-text">{item.text}</span>
                     <span className="row gap-2">
                       <Gated feature={SCREEN_FEATURE[item.route.split('?')[0]!] ?? item.feature} className="btn btn-sm" onClick={() => navigate(item.route, item.label)}>
                         Open {item.label}
@@ -228,7 +228,7 @@ export function Home() {
         {shows.needs && (
         <Panel
           title="Recent Updates"
-          subtitle={unread.length === 0 ? 'Nothing unread.' : unread.length === 1 ? 'One unread notice.' : `${upFirst(countWords(unread.length))} unread, the most important first.`}
+          subtitle={unread.length === 0 ? 'All read.' : unread.length === 1 ? 'One unread notice.' : `${upFirst(countWords(unread.length))} unread, the most important first.`}
           flush
           actions={unread.length > 0 ? (
             <Gated feature="world.mark_read" className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
@@ -285,7 +285,7 @@ function ToDoHelp({ feature }: { feature: string }) {
   return <HowItWorks help="day.calendar" />;
 }
 
-/** What What Needs You holds, in a line. */
+/** The line under What Needs You's title: how many questions wait, and how many things to put right. */
 function needsLine(questions: number, todo: number): string {
   if (questions === 0 && todo === 0) return 'No questions are waiting on you.';
   const q = questions === 0 ? '' : questions === 1 ? 'a question waiting on you' : `${countWords(questions)} questions waiting on you`;

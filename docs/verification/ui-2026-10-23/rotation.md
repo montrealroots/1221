@@ -67,8 +67,8 @@ exactly this, not built as a portrait game.
   - an already-paused clock gets no command and no word;
   - a second turn says nothing new;
   - the device table above, and the lock asked for once.
-- **Mutations:** each line of the pause and the read was mutated. Every one failed a test but the hover check, which
-  went.
+- **Mutations:** each line of the pause and the read was mutated. Every one failed a test but two, which both went: the
+  hover check, and a hold on the clock kept beside the pause, which the paused clock already settled.
 - **The walk** (`app/capture.mjs`, its turn suite), at 390×844 upright, from 844×390 on its side, in Playwright's
   Chromium with touch emulation. The turns are made:
   - with the clock running and the Advance menu open;

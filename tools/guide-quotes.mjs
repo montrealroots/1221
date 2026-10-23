@@ -42,6 +42,9 @@ const HELD = [
   { file: 'src/engine/content/guide/papers.ts', opens: 'A doctor’s visit: booked at ${YALE_PRACTICE}', test: 'tests/guide-examples-papers.test.ts', holds: 'expect(notice.body.replace(day(booked.at), \'…\')).toBe(grab(ex.steps[0]!, /A notice: “([^”]+)”/));' },
   { file: 'src/engine/content/guide/papers.ts', opens: 'A doctor’s visit: not yet seen', test: 'tests/guide-examples-papers.test.ts', holds: 'expect(ex.steps[2]).toContain(`beside “${owed}: not yet seen”`);' },
   { file: 'src/engine/content/guide/productions.ts', opens: 'You’re spent by the second half: find where the play lets you breathe.', test: 'tests/guide-examples-productions.test.ts', holds: 'expect(note.text).toContain(said);' },
+  // Net Worth's sentence, its parts joined in money.tsx (from 2026-10-23, brief 23, when the example read it in place of
+  // Home's Money line, which went from Home).
+  { file: 'src/engine/content/guide/money.ts', opens: 'You’re worth ${formatMoney(WORTH', test: 'tests/guide-examples-money.test.ts', holds: "expect(worth.summary).toContain(grab(result, 'Net Worth says “', '(.+?)', '”'));" },
 ];
 const heldBy = (f, q) => HELD.find((h) => h.file === f && q.startsWith(h.opens) && readFileSync(h.test, 'utf8').includes(h.holds));
 const COMMENT = /^\s*(?:\/\/|\/\*|\*)/;

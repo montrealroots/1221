@@ -160,7 +160,9 @@ function drawn(sim: Simulation, screen: FunctionComponent): { html: string; text
   h.calls = 0;
   h.sets = [];
   h.buttons = [];
-  const html = renderToStaticMarkup(createElement(screen)).replace(/<!-- -->/g, '');
+  // The page's index (`PageIndex`, from 2026-10-23) set aside: it names the panels this file reads from heading to heading,
+  // and tests/b23-pages.test.ts reads it.
+  const html = renderToStaticMarkup(createElement(screen)).replace(/<!-- -->/g, '').replace(/<nav class="page-index"[\s\S]*?<\/nav>/, '');
   return { html, text: words(html) };
 }
 /** A button just drawn, by its words (the nth of them); fails if it isn't there. */
@@ -714,7 +716,7 @@ describe('h-needs: What Needs You on Home', () => {
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     expect(needs(sim)).toBe(shown);
     shown = recent(sim);
-    expect(shown).toBe('Recent Updates Nothing unread. How This Works You’ve read every notice. Updates keeps them all. View All Updates');
+    expect(shown).toBe('Recent Updates All read. How This Works You’ve read every notice. Updates keeps them all. View All Updates');
     const back = reload(sim);
     expect(recent(back)).toBe(shown);
     expect(openDecisions(back)).toHaveLength(0);

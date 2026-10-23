@@ -82,7 +82,7 @@ function measure() {
   [document.documentElement.style.overflowX, document.body.style.overflowX] = keep;
 
   const all = [...document.querySelectorAll('body *')].filter((el) => !['SCRIPT', 'STYLE', 'svg', 'path', 'BR'].includes(el.tagName) && visible(el));
-  const bleed = [], cut = [], squeezed = [], clipped = [];
+  const bleed = [], cut = [], cutTitled = [], squeezed = [], clipped = [];
   for (const el of all) {
     const r = el.getBoundingClientRect();
     const box = xContained(el);
@@ -92,7 +92,10 @@ function measure() {
       if (card && (!box || card.contains(box) === false) && r.right > card.getBoundingClientRect().right + 1) bleed.push(`${what(el)} ${Math.round(r.right - card.getBoundingClientRect().right)}px past its card`);
     }
     const s = getComputedStyle(el);
-    if (s.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 1) cut.push(what(el));
+    // A label cut short whose whole words are its own title is kept apart (`cutTitled`): the month grid's events, each
+    // titled, and each day pressed opening its agenda with every entry in full. Until the after walk of 2026-10-23 every
+    // ellipsis counted as cut, which the brief's check ("no label cut off with no way to read it") doesn't ask.
+    if (s.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 1) (el.title && el.title.trim() === (el.textContent ?? '').trim() ? cutTitled : cut).push(what(el));
     if (/hidden|clip/.test(s.overflowY) && el.scrollHeight > el.clientHeight + 2 && !/clamp-|truncate/.test(String(el.className))
       && el !== document.body && el !== document.documentElement && !el.matches('.rail, .shell, .shell-body')) clipped.push(`${what(el)} ${el.scrollHeight - el.clientHeight}px cut`);
     // A column too narrow for its words: the element's own text set in four or more lines in under 120 pixels, counted
@@ -106,22 +109,26 @@ function measure() {
     }
   }
   out.bleed = bleed.slice(0, 12); out.bleedCount = bleed.length;
-  out.cut = cut.slice(0, 12); out.cutCount = cut.length;
+  out.cut = cut.slice(0, 12); out.cutCount = cut.length; out.cutTitledCount = cutTitled.length;
   out.squeezed = squeezed.slice(0, 12); out.squeezedCount = squeezed.length;
   out.clipped = clipped.slice(0, 12); out.clippedCount = clipped.length;
 
   // Touch targets: every visible control, a link in running text set apart (WCAG 2.5.8 excepts it).
   const controls = [...document.querySelectorAll('button, a[href], [role=tab], [role=button], [role=menuitem], summary, input:not([type=hidden]), select, textarea')].filter(visible);
-  const small = [];
+  const small = [], textLinks = [];
   let inline = 0;
   for (const el of controls) {
     const r = el.getBoundingClientRect();
     if (el.matches('button.link, a') && el.parentElement?.closest('p, li, dd, td, .prose')) { inline += 1; continue; }
-    if (el.matches('input[type=checkbox], input[type=radio]')) { const l = el.closest('label'); if (l) { const lr = l.getBoundingClientRect(); if (lr.height >= 44) continue; } }
+    // A word that opens its look (a date, a name, a heading) outside a sentence: a text link, not one of the primary
+    // controls the brief's 44 pixels are for. Kept apart from 2026-10-23's after walk; until then it counted as small.
+    if (el.matches('button.link, a:not(.btn):not(.skip-link)')) { if (r.height < 43.5 || r.width < 43.5) textLinks.push(`${what(el)} ${Math.round(r.width)}×${Math.round(r.height)}`); continue; }
+    // A tick box is pressed through its label too, around it or beside it (`for`): the label's height is the target's.
+    if (el.matches('input[type=checkbox], input[type=radio]')) { const l = el.closest('label') ?? (el.id ? document.querySelector(`label[for="${CSS.escape(el.id)}"]`) : null); if (l) { const lr = l.getBoundingClientRect(); if (lr.height >= 43.5) continue; } }
     if (r.height < 43.5 || r.width < 43.5) small.push(`${what(el)} ${Math.round(r.width)}×${Math.round(r.height)}`);
   }
   out.controls = controls.length; out.inlineLinks = inline;
-  out.small = small.slice(0, 16); out.smallCount = small.length;
+  out.small = small.slice(0, 16); out.smallCount = small.length; out.textLinkCount = textLinks.length;
 
   out.tabs = [...document.querySelectorAll('[role=tablist]')].filter(visible).map((list) => {
     const lr = list.getBoundingClientRect();

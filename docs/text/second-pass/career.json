@@ -764,10 +764,10 @@
  },
  "src/ui/workspaces/CareerWorkspace.tsx#CareerWorkspace": {
   "status": "Rewritten",
-  "hash": "eed254ba3436",
-  "on": "2026-10-21",
-  "evidence": "Read on the built app's Career screen at 1440 and 390, docs/verification/career-2026-10-20/pay/screens/work-paid-1440.png and work-paid-390.png",
-  "first": "Rewritten And Verified"
+  "hash": "ec14e795fc68",
+  "on": "2026-10-23",
+  "evidence": "Read against docs/STYLE.md for brief 23; the engagement and its pay table rendered by tests/propay-screen.test.ts, and walked by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#HeadshotsPanel": {
   "status": "Rewritten",

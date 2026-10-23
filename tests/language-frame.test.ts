@@ -62,7 +62,9 @@ describe('a question in What Needs You, opened', () => {
     seen = look(sim, 'decision', low.id);
     expect(words(seen.body)).toContain('Its urgency is low, at 20/100.');
     expect(words(seen.body)).toContain('It’s seventh of the seven questions waiting on you.');
-    expect(words(seen.body)).toContain('Home shows the first six questions, and this one is further down. Its buttons appear there once one of the questions above it closes.');
+    // Show All lists it with its buttons from 2026-10-23 (brief 23): until then “… Its buttons appear there once one of
+    // the questions above it closes.”
+    expect(words(seen.body)).toContain('Home shows the first six questions, and this one is further down: Show All, under them, lists it with its buttons.');
     expect(words(seen.body)).toContain('Answers None It can only be dismissed');
     expect(words(look(sim, 'decision', ask(sim, 3).id).body)).toContain('Its urgency is high, at 70/100.');
     expect(words(look(sim, 'decision', ask(sim, 2, { urgency: 50 }).id).body)).toContain('Its urgency is ordinary, at 50/100.');

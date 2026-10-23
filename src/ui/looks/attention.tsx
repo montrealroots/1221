@@ -243,7 +243,9 @@ defineLook<DecisionItem>('decision', {
     const offered = stage !== 'open'
       ? 'It’s no longer on Home, so there’s nothing to press.'
       : !onPanel
-        ? `Home shows the first ${countWord(PANEL_ROWS)} questions, and this one is further down. Its buttons appear there once one of the questions above it closes.`
+        // Show All under the first six lists the rest with their buttons, from 2026-10-23 (brief 23): until then they
+        // waited for a question above to close, and this said so.
+        ? `Home shows the first ${countWord(PANEL_ROWS)} questions, and this one is further down: Show All, under them, lists it with its buttons.`
         : `On Home, its buttons are ${spokenList([...labels, ...(decision.route ? ['Go There'] : []), 'Dismiss'])}. Reading it here changes nothing.`;
 
     return {

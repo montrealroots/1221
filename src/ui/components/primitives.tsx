@@ -49,7 +49,7 @@ export function Fine({ children }: { children: ReactNode }) {
 }
 
 export function Panel({
-  title, subtitle, actions, children, flush, tight, look, help,
+  title, subtitle, actions, children, flush, tight, look, help, id,
 }: {
   title?: ReactNode;
   subtitle?: ReactNode;
@@ -69,6 +69,8 @@ export function Panel({
    * How This Works in the panel's head opens it over the screen.
    */
   help?: string;
+  /** Where a page's index (`PageIndex`) takes you: the panel scrolls to the top and takes the focus. */
+  id?: string;
 }) {
   const head = (title || actions || help) && (
     <div className="panel-head" style={flush ? { padding: 'var(--s4) var(--s4) 0' } : undefined}>
@@ -80,11 +82,33 @@ export function Panel({
     </div>
   );
   return (
-    <section className={`card${flush ? ' card-flush' : ''}${tight ? ' card-tight' : ''}`}>
+    <section id={id} tabIndex={id ? -1 : undefined} className={`card${flush ? ' card-flush' : ''}${tight ? ' card-tight' : ''}`}>
       {look
         ? <LookRegion className="panel-body">{head}{children}</LookRegion>
         : <>{head}{children}</>}
     </section>
+  );
+}
+
+/**
+ * A long page's sections, each a press away (from 2026-10-23, the owner's brief 23: "summary to detail"): pressed, the
+ * section scrolls to the top of the page and takes the focus, so the keyboard carries on from there. Nothing is folded
+ * away to make the page shorter. The routes are in the address's hash, so these are buttons, not links to an anchor.
+ */
+export function PageIndex({ sections }: { sections: readonly { id: string; label: string }[] }) {
+  const go = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ block: 'start' });
+    el.focus({ preventScroll: true });
+  };
+  return (
+    <nav className="page-index" aria-label="On This Page">
+      <span className="eyebrow">On This Page</span>
+      <div className="page-index-list">
+        {sections.map((s) => <button key={s.id} type="button" className="btn btn-sm btn-ghost" onClick={() => go(s.id)}>{s.label}</button>)}
+      </div>
+    </nav>
   );
 }
 

@@ -156,7 +156,9 @@ function drawn(sim: Simulation, screen: FunctionComponent): { html: string; text
   h.calls = 0;
   h.sets = [];
   h.buttons = [];
-  const html = renderToStaticMarkup(createElement(screen)).replace(/<!-- -->/g, '');
+  // The page's index (`PageIndex`, from 2026-10-23) set aside: it names the panels this file reads from heading to heading,
+  // and tests/b23-pages.test.ts reads it.
+  const html = renderToStaticMarkup(createElement(screen)).replace(/<!-- -->/g, '').replace(/<nav class="page-index"[\s\S]*?<\/nav>/, '');
   return { html, text: words(html) };
 }
 /** A button just drawn, by its words (the nth of them); fails if it isn't there. */

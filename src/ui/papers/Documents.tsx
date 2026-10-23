@@ -351,7 +351,7 @@ function WorkReadPanel() {
     <Panel title="Your Work And Your Permission" subtitle="Where each engagement stands now, and what your permission to work said when you accepted it" help="career.pay">
       <div className="col gap-2">
         <div className="table-scroll">
-          <table>
+          <table className="stack-table">
             <thead><tr><th>Engagement</th><th>Dates</th><th>Now</th><th>Eligibility When Accepted</th></tr></thead>
             <tbody>
               {work.map((e) => {
@@ -364,12 +364,13 @@ function WorkReadPanel() {
                 return (
                   <tr key={e.id}>
                     <td>{`${e.role}, ${projectOf(e)?.project ?? 'your work'}`}</td>
-                    <td>{when}</td>
-                    <td className={released || (read && !read.authorized) ? 'warning' : undefined}>
+                    {/* The dates at a width they read at (from 2026-10-23: at 1024 they were four lines in 116 pixels). */}
+                    <td><div className="cell-min">{when}</div></td>
+                    <td className={`stack-wide${released || (read && !read.authorized) ? ' warning' : ''}`} data-label="Now">
                       <strong>{status[e.status]}.</strong>{' '}
                       {released ? released.words : read ? read.words : e.status === 'finished' ? 'Every day of it is behind you.' : ''}
                     </td>
-                    <td>{`Read ${formatDate(e.eligibility!.at, sim.zone)}: ${e.eligibility!.words}`}</td>
+                    <td className="stack-wide" data-label="Eligibility When Accepted">{`Read ${formatDate(e.eligibility!.at, sim.zone)}: ${e.eligibility!.words}`}</td>
                   </tr>
                 );
               })}

@@ -631,7 +631,7 @@ function AdvanceMenu({
         Advance <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
-        <div className="menu" role="menu" aria-label="Advance Time">
+        <div className="menu" role="menu" aria-label="Advance Time" ref={place}>
           {items.map((item) => (
             <button
               key={item.label}
@@ -693,6 +693,17 @@ function useDropdown() {
 }
 
 /**
+ * A menu that would run past the window's right edge hangs from its button's right edge instead, measured as it's put on
+ * the page, before it's drawn (a ref, which a server render never calls). From 2026-10-23, brief 23's walk: in a
+ * 760-pixel window Advance's menu ran 167 pixels past it, and the page with it.
+ */
+function place(menu: HTMLDivElement | null): void {
+  if (!menu) return;
+  menu.removeAttribute('data-align');
+  if (menu.getBoundingClientRect().right > window.innerWidth - 8) menu.setAttribute('data-align', 'end');
+}
+
+/**
  * Look after yourself: the things besides sleep a player does for their body.
  *
  * Each item says how long it takes, what it costs, why it stands where it
@@ -730,7 +741,7 @@ function LookAfterMenu() {
         Look After Yourself <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
-        <div className="menu" role="menu" aria-label="Look After Yourself">
+        <div className="menu" role="menu" aria-label="Look After Yourself" ref={place}>
           {options.map((o, i) => {
             const { action, refused } = o;
             const first = i === 0 && !refused && (o.urgent || o.gain >= 0.5);

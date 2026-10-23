@@ -477,8 +477,10 @@ input[type="range"] {
 /* A button among the fields sits level with their boxes, not their labels. */
 .field-row > .btn { align-self: end; justify-self: start; margin-bottom: var(--s4); }
 /* A field and the button that acts on it, side by side, level at the bottom. */
-.field-act { display: flex; gap: var(--s2); align-items: flex-end; }
-.field-act > .field { flex: 1; min-width: 0; margin-bottom: 0; }
+/* A field and what acts on it, the button wrapping under the field rather than squeezing it: from 2026-10-23 (brief 23's
+   walk) the field keeps 12rem, where until then a card's New Limit box was 26 pixels wide on a phone on its side. */
+.field-act { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: flex-end; }
+.field-act > .field { flex: 1 1 12rem; min-width: 0; margin-bottom: 0; }
 /* And as tall as the box beside it: a field and a full-size button share their
    padding, type and line, so a small one takes the full size here. */
 .field-act > .btn, .field-row > .btn { padding: var(--s2) var(--s4); font-size: var(--size-sm); }
@@ -792,6 +794,11 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   }
   .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
   .rail-shade { display: block; }
+  /* With the drawer, the screen's name stands where the brand did, as on a phone, and the bar's buttons keep to one line
+     (from 2026-10-23, brief 23's walk: in a 760-pixel window "Player Profile" was cut to "Player Pro…" beside the brand,
+     and Look After Yourself took two lines). */
+  .topbar > .topbar-brand { display: none; }
+  .topbar .btn { white-space: nowrap; }
 }
 @media (min-width: 901px) and (min-height: 501px) {
   .rail-toggle { display: none; }
@@ -1271,6 +1278,8 @@ kbd {
   box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column;
 }
+/* Hung from its button's right edge where its left would take it past the window (`useDropdown`); a phone's is pinned. */
+@media (min-width: 621px) { .menu[data-align="end"] { left: auto; right: 0; } }
 .menu-item {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   width: 100%; padding: var(--s2) var(--s3); border: 0; border-radius: var(--radius-sm);
@@ -1462,8 +1471,18 @@ td, th { overflow-wrap: break-word; }
   summary { min-height: 44px; display: flex; align-items: center; gap: var(--s1); }
   details > summary { list-style-position: inside; }
   .breadcrumbs button { min-height: 44px; padding: 0 var(--s1); }
-  .link.strong, .help-link { min-height: 32px; }
+  .link.strong { min-height: 32px; }
+  /* Help's topics are its controls, a list to press, as tall as any (until 2026-10-23, 32 pixels). */
+  .help-link { min-height: var(--control); min-width: var(--control); }
+  /* A slider's track as tall as a control, so a finger finds it (Sleep's hours, 16 pixels until 2026-10-23). */
+  input[type="range"] { min-height: var(--control); }
+  /* A tick box's own label, beside it rather than around it, is what a finger presses (from 2026-10-23). */
+  input[type="checkbox"] + label, input[type="radio"] + label { min-height: var(--control); display: inline-flex; align-items: center; }
   .cal-day { cursor: pointer; }
+  /* A button of one glyph (‹, ›, ✕) as wide as it is tall, and the skip link as tall as a control (from 2026-10-23, brief
+     23's walk: the Calendar's month arrows were 31 pixels wide, the skip link 37 tall). */
+  .btn { min-width: var(--control); }
+  .skip-link { min-height: var(--control); display: inline-flex; align-items: center; }
 }
 
 /* The page's gutter and the notch. The bar, the drawer and the column keep clear of a phone's notch and its home bar
@@ -1657,8 +1676,52 @@ details.section-fold[open] > summary { margin-bottom: var(--s2); }
     radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
     radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
 }
+/* A thing to put right under What Needs You keeps its words at a width they read at, its buttons wrapping under them
+   (from 2026-10-23, brief 23's walk: at 1024 a late return's line was set in 82 pixels, six lines of it). */
+.todo-text { flex: 1 1 14rem; min-width: 0; }
+
+/* A long page's index under its heading (`PageIndex`, from 2026-10-23): its sections as quiet buttons, in rows on a
+   desktop and in one row that scrolls sideways, with a shadow on the side that has more, on a phone on its side. A
+   section it takes you to keeps its focus ring off: the focus is there for the keyboard, not as a frame. */
+.page-index { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); margin-top: var(--s3); }
+.page-index-list { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); min-width: 0; }
+section.card[tabindex="-1"]:focus { outline: none; }
+@media (max-height: 500px) {
+  .page-index { flex-wrap: nowrap; }
+  .page-index-list {
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    background:
+      linear-gradient(to right, var(--bg) 30%, transparent) left center / 24px 100% no-repeat local,
+      linear-gradient(to left, var(--bg) 30%, transparent) right center / 24px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
+  }
+  .page-index-list > .btn { flex: none; }
+}
+
+/* A row's figures and, across the table under them, the sentence that says why (School's Term Reviews, from 2026-10-23). */
+.review-table tbody tr:first-child td { border-bottom: 0; padding-bottom: var(--s1); }
+.review-why td { color: var(--text-muted); padding-top: 0; max-width: 75ch; }
+/* A table that stacks on a phone on its side and in a narrow window instead of scrolling sideways (from 2026-10-23, brief
+   23): each row a block, its short cells in a line and its prose across the width, each named by its column. The names
+   are drawn (`data-label`), not written, so what a row says reads the same at every width. Until then such a table kept
+   a width its columns could be read at and scrolled, and a paragraph in it was read by scrolling a line at a time. */
+@media (max-width: 900px), (max-height: 500px) {
+  .table-scroll > table.stack-table { min-width: 0; }
+  .stack-table thead { display: none; }
+  .stack-table tbody { display: block; }
+  .stack-table tr { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s4); padding: var(--s2) 0; border-bottom: 1px solid var(--line); }
+  .stack-table td { display: block; min-width: 0; padding: 0; border: 0; text-align: left; }
+  .stack-table tr > td:first-child { font-weight: 600; }
+  .stack-table td.stack-wide { flex-basis: 100%; }
+  .stack-table td[data-label]::before { content: attr(data-label) " "; font-size: var(--size-xs); font-weight: 650; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
+  .stack-table td.stack-wide[data-label]::before { display: block; }
+  .review-table tbody tr:first-child { border-bottom: 0; padding-bottom: 0; }
+  .stack-table .review-why > td:first-child { font-weight: 400; }
+}
 /* A cell's own words at a width they read at: a table cell's min-width isn't one table layout keeps, a box inside it is. */
 .cell-min { min-width: 9rem; }
+.cell-wide { min-width: 14rem; }
 
 /* A page's head on a phone on its side (from 2026-10-23, brief 23): the trail is the screen you came from, as a way back,
    and the heading's group, which the drawer shows, steps aside, so the page's own content starts nearer the top. The

@@ -91,7 +91,7 @@ describe('the Work tab', () => {
     expect(promised).toContain('Dates September 21, 2026 to September 22, 2026, two days of work.');
     // A row a week, from 2026-10-23 (brief 23): until then a paragraph each, “The week of September 20, 2026: $2,822.60
     // promised by Bright Harbor Television, due October 1, 2026. …” and “Commission expected: $256.60. …”.
-    expect(promised).toContain('Paid by Bright Harbor Television, a payment for each week. Week Of Promised Due Where It Stands Commission September 20, 2026 $2,822.60 October 1, 2026 Promised. It isn’t paid until it’s due, so it isn’t in your accounts yet. $256.60 expected');
+    expect(promised).toContain('Paid by Bright Harbor Television, a payment for each week. Week Of Promised Due Where It Stands Commission September 20, 2026 $2,822.60 October 1, 2026 Promised. It comes into your accounts on the day it’s due. $256.60 expected');
     // The amount said once (from 2026-10-21: until then "$256.60. $256.60, what’s paid over scale"), and the why once
     // under the table.
     expect(promised).toContain('Commission: What’s paid over scale ($2,566.00), so you keep scale.');
@@ -145,8 +145,15 @@ describe('the Work tab', () => {
     h.sim = sim;
     expect(words(renderToStaticMarkup(createElement(PapersWork)))).not.toContain('Your Work And Your Permission');
     schedulePay(sim, sim.player, e);
-    const shown = words(renderToStaticMarkup(createElement(PapersWork)));
+    const html = renderToStaticMarkup(createElement(PapersWork));
+    const shown = words(html);
     expect(shown).toContain('Your Work And Your Permission');
+    // On a phone on its side the table stacks (from 2026-10-23, brief 23): each row a block, its two readings across the
+    // width under their columns' names, drawn from these labels (`.stack-table`, app.css). At 844 the dates were set in
+    // four lines in 116 pixels until then.
+    expect(html).toContain('<table class="stack-table">');
+    expect(html.match(/<td class="stack-wide[^"]*" data-label="Now">/g)).toHaveLength(1);
+    expect(html.match(/<td class="stack-wide" data-label="Eligibility When Accepted">Read September 3, 2026: /g)).toHaveLength(1);
     // A table from 2026-10-23 (brief 23), where it stands now beside what was read when it was accepted: until then a line,
     // “Robin, Last Bus To Eastview, September 14, 2026 to September 15, 2026. Read September 3, 2026: …”.
     expect(shown).toContain('Engagement Dates Now Eligibility When Accepted Robin, Last Bus To Eastview September 14, 2026 to September 15, 2026 Booked. You’re a US citizen, so you can work for any employer in the US. Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');

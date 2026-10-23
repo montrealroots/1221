@@ -1,0 +1,154 @@
+[
+ {
+  "surface": "Updates",
+  "where": "The menu’s Updates, under Your Day, and View All Updates on Home: every notice, read and unread, newest first, a run about one thing as one row with its count",
+  "sources": [
+   "src/ui/screens/Updates.tsx#*"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "empty",
+   "notification",
+   "history",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "New in brief 23: until then a notice once read was on no screen. Each row says its title, what it’s about and when, its words in two lines with Read It All, Go There and Mark Read; Unread and All, About, and Mark N Read for what the filter shows. Its line says reading one answers nothing.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g32-ui.test.ts: 'PLAYER JOURNEY: more unread than Recent Updates’ four'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b11.test.ts: 'Updates keeps a word on each term’s coursework as one row of two'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/ui-2026-10-23/app/capture.mjs"
+   }
+  ]
+ },
+ {
+  "surface": "The heads of Money, School and Papers",
+  "where": "Under each screen’s name: the worth on Money, the place in the class and what’s next on School, the cover, a claim’s weekly pay and what the returns ask on Papers",
+  "sources": [
+   "src/ui/components/Glance.tsx#*"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "overdue",
+   "details",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "Home’s Your Affairs lines, moved on 2026-10-23 (brief 23) to the heads of their own screens: “Worth $505,434.”, “You’re 1st of 16 in the class. Next: …”, “Cover: Yale Health.”; Papers’ alerts in the words Home’s What Needs You says them.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g33-ui.test.ts: 'a new student’s Money says a worth of $505,434 at its head'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g33-ui.test.ts: 'a day in, “Year 1 of 3, good standing”'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g33-ui.test.ts: 'three days past its day unfiled'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b12.test.ts: '“Unemployment, $93 a week.”'"
+   }
+  ]
+ },
+ {
+  "surface": "Rotate Your Phone To Play",
+  "where": "Over everything on a phone held upright, and the toast when it turns back while the clock was running",
+  "sources": [
+   "src/ui/shell/turn.tsx#*"
+  ],
+  "states": [
+   "unavailable",
+   "returning",
+   "confirmation"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "New in brief 23: “Rotate Your Phone To Play” and “SLATE is designed for landscape play. Turn your phone on its side and everything is as you left it.”; on return, once, “Paused while your phone was upright. Press Play to carry on.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b23-turn.test.ts: 'live, turned upright: paused through the command'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/ui-2026-10-23/rotation.md"
+   }
+  ]
+ },
+ {
+  "surface": "The bar, the menu as a drawer, and the tab bars",
+  "where": "The top bar’s Running or Paused, its save group (in the drawer’s foot on a small screen), each tab bar, and the look-after toast",
+  "sources": [
+   "src/ui/shell/GameShell.tsx#SaveGroup",
+   "src/ui/shell/GameShell.tsx#DRAWER_QUERY",
+   "src/ui/components/TabBar.tsx#TabBar",
+   "src/ui/shell/TimeControls.tsx#lookedAfter"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "Brief 23: the save group gathered (Guide, its state, Save & Exit), Running or Paused said in words beside the clock, the menu a drawer below 900 wide or 500 high, a tab bar with ‹ and › where its tabs run past it; the look-after toast shared by the bar’s menu and How You Are.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/navigation.test.ts: 'gives the calendar a section of Home, Up Next'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g32-ui.test.ts: 'a meal, eaten through Look After Yourself on How You Are'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/ui-2026-10-23/app/capture.mjs"
+   }
+  ]
+ },
+ {
+  "surface": "Player Profile, On This Page",
+  "where": "Under your name at the head of the Player Profile: the page's eight sections, each a press away, in the order the page has them",
+  "sources": [
+   "src/ui/workspaces/ProfileWorkspace.tsx#SECTIONS*"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "",
+  "changes": "New in brief 23: until then the Profile opened on its name and ran 6,400 pixels at 1440, Readiness Today fifth under the 54 genres. Readiness Today is second now, under Identity And Background, and each section is a button that brings it to the top and gives it the focus. Nothing is folded away.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b23-pages.test.ts: 'PLAYER JOURNEY: a played student’s Profile opens on who she is and Readiness Today'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b23-pages.test.ts: 'a press on the index brings its section to the top'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/ui-2026-10-23/app/capture.mjs"
+   }
+  ]
+ }
+]
