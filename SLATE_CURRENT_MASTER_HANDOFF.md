@@ -48,6 +48,11 @@ without my instruction." No pull request is open for it. There is no stash and o
   files, 5,616 of 5,616 tests, none skipped, and all 22 checks (`.../final-runs/runs/gate.txt`; brief 22's, on
   `576a0e88`, stood there until then and is in git). Its row folded in: 634 of 658. Run again on `1ba6ac00`, which holds
   that: exit 0, the same counts, the matrix holding 634 (`gate-receipt.txt`).
+- **Every page, whole, in the order a player meets them, again** (the owner's word after brief 24, 2026-10-23):
+  `docs/verification/ui-polish-2026-10-23/captures/pages/README.md` at 1440 by 900, and `pages/mobile/README.md` on a
+  phone on its side, 844 by 390. The same 67 pages each as brief 23's set, on the app built from `e39bb609` (its `src`
+  the tested commit's), by brief 23's `pages.mjs`, which reaches Calendar and Updates from Home now. It met no error and
+  no step it couldn't take, no page showed the rotate screen and none was wider than its window.
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
 
 # Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23

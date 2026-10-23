@@ -1,0 +1,1353 @@
+{
+ "size": "1440x900",
+ "dpr": 2,
+ "base": "http://localhost:4298",
+ "pages": [
+  {
+   "n": 1,
+   "moment": "A New Life, 24 August 2026",
+   "page": "The Start",
+   "files": [
+    "01-august-24-2026-a-new-life-the-start.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 2,
+   "moment": "A New Life, 24 August 2026",
+   "page": "Creation, Identity",
+   "files": [
+    "02-august-24-2026-a-new-life-creation-identity.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [
+    "Who Are You Going To Be?",
+    "Identity",
+    "Place Of Birth"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 3,
+   "moment": "A New Life, 24 August 2026",
+   "page": "Creation, Dispositions & Traits",
+   "files": [
+    "03-august-24-2026-a-new-life-creation-dispositions-and-traits.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [
+    "Who Are You Going To Be?",
+    "Dispositions",
+    "Traits"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 4,
+   "moment": "A New Life, 24 August 2026",
+   "page": "Creation, Genres & Background",
+   "files": [
+    "04-august-24-2026-a-new-life-creation-genres-and-background.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [
+    "Who Are You Going To Be?",
+    "Genres",
+    "Background",
+    "Your Family"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 5,
+   "moment": "A New Life, 24 August 2026",
+   "page": "Creation, Starting Point",
+   "files": [
+    "05-august-24-2026-a-new-life-creation-starting-point.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [
+    "Who Are You Going To Be?",
+    "Your Body",
+    "Where It Begins",
+    "Your Money",
+    "Before Yale"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 6,
+   "moment": "A New Life, 24 August 2026",
+   "page": "Creation, Review",
+   "files": [
+    "06-august-24-2026-a-new-life-creation-review.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [
+    "Who Are You Going To Be?",
+    "Alex Rivera"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 7,
+   "moment": "A New Life, 24 August 2026",
+   "page": "The Guide, Its First Chapter",
+   "files": [
+    "07-august-24-2026-a-new-life-the-guide-its-first-chapter.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·August 24, 2026EDTPaused",
+   "headings": [
+    "Guide",
+    "Your Life, Hour By Hour"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 8,
+   "moment": "A New Life, 24 August 2026",
+   "page": "Home, The Chapters Still To Read",
+   "files": [
+    "08-august-24-2026-a-new-life-home-the-chapters-still-to-read.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·August 24, 2026EDTPaused",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "Up Next",
+    "How You Are"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 9,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Your Saves",
+   "files": [
+    "09-september-1-2026-a-new-student-your-saves.jpg"
+   ],
+   "problems": [],
+   "here": null,
+   "headings": [],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 10,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Home",
+   "files": [
+    "10-september-1-2026-a-new-student-home.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 11,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Player Profile",
+   "files": [
+    "11-september-1-2026-a-new-student-player-profile.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Ada Cole",
+    "Identity And Background",
+    "Readiness Today",
+    "Attributes And Craft",
+    "Techniques",
+    "Genres",
+    "School Journey",
+    "Your Work So Far",
+    "Development History"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 12,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Calendar",
+   "files": [
+    "12-september-1-2026-a-new-student-calendar.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Your Plans And Commitments",
+    "September 2026",
+    "Today, September 1, 2026",
+    "Next Thirty Days"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 13,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Updates",
+   "files": [
+    "13-september-1-2026-a-new-student-updates.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Updates"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 14,
+   "moment": "A New Student, 1 September 2026",
+   "page": "School, Standing And Craft",
+   "files": [
+    "14-september-1-2026-a-new-student-school-standing-and-craft.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Standing",
+    "Your Composure",
+    "Your Faculty",
+    "Your Craft Against The Class",
+    "Term Reviews"
+   ],
+   "tab": "Standing And Craft",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 15,
+   "moment": "A New Student, 1 September 2026",
+   "page": "School, Classes",
+   "files": [
+    "15-september-1-2026-a-new-student-school-classes.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Week, Fall Term 2026",
+    "Year 1 Courses"
+   ],
+   "tab": "Classes",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 16,
+   "moment": "A New Student, 1 September 2026",
+   "page": "School, Coursework",
+   "files": [
+    "16-september-1-2026-a-new-student-school-coursework-part1of2.jpg",
+    "16-september-1-2026-a-new-student-school-coursework-part2of2.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Due Soonest",
+    "Acting I: Scene Study",
+    "Text And Context Across The Repertory: A Play In Its Context",
+    "The Body As Source I: A Movement Score",
+    "Voice I: A Voice Sequence",
+    "Speech And Accents I: Sound Changes And A Text",
+    "Alexander Technique I: Directions In Daily Life",
+    "Play: A Game Played Through",
+    "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice",
+    "Orientation",
+    "Plays To Read"
+   ],
+   "tab": "Coursework",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 17,
+   "moment": "A New Student, 1 September 2026",
+   "page": "School, Casting",
+   "files": [
+    "17-september-1-2026-a-new-student-school-casting.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Not Cast Yet",
+    "Around The Class",
+    "The Yale Cabaret",
+    "The Yale Summer Cabaret",
+    "Calls Ahead"
+   ],
+   "tab": "Casting",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 18,
+   "moment": "A New Student, 1 September 2026",
+   "page": "School, Shifts And Pay",
+   "files": [
+    "18-september-1-2026-a-new-student-school-shifts-and-pay.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Work-Study"
+   ],
+   "tab": "Shifts And Pay",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 19,
+   "moment": "A New Student, 1 September 2026",
+   "page": "School, Terms And Award",
+   "files": [
+    "19-september-1-2026-a-new-student-school-terms-and-award.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Terms",
+    "Your Yale Account",
+    "Finishing Early"
+   ],
+   "tab": "Terms And Award",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 20,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Career, Overview",
+   "files": [
+    "20-september-1-2026-a-new-student-career-overview.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Career",
+    "Where You Stand",
+    "The Way You’re On",
+    "What’s Missing",
+    "Needed For Any Submission",
+    "Worth Doing",
+    "What’s Next"
+   ],
+   "tab": "Overview",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 21,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Career, Portfolio",
+   "files": [
+    "21-september-1-2026-a-new-student-career-portfolio.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Career",
+    "Your Profile",
+    "School Credits",
+    "Professional Credits",
+    "Special Skills",
+    "Headshots",
+    "Résumé",
+    "Reel"
+   ],
+   "tab": "Portfolio",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 22,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Career, Representation",
+   "files": [
+    "22-september-1-2026-a-new-student-career-representation.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Career",
+    "Thomas Ashgrove"
+   ],
+   "tab": "Representation",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 23,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Career, Opportunities",
+   "files": [
+    "23-september-1-2026-a-new-student-career-opportunities.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Career",
+    "Open Calls",
+    "Jess, Static On Route 9",
+    "Ivy, Paper Moons",
+    "Through An Agent",
+    "In Progress",
+    "Offers",
+    "Booked Work"
+   ],
+   "tab": "Opportunities",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 24,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Career, Work",
+   "files": [
+    "24-september-1-2026-a-new-student-career-work.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Career",
+    "Your Engagements",
+    "Your Unions",
+    "Actors’ Equity",
+    "SAG-AFTRA"
+   ],
+   "tab": "Work",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 25,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Money, Accounts",
+   "files": [
+    "25-september-1-2026-a-new-student-money-accounts.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Chase",
+    "Chase Total Checking",
+    "Chase Savings",
+    "Move Money",
+    "Your Banks",
+    "Open An Account At Another Bank",
+    "CD"
+   ],
+   "tab": "Accounts",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 26,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Money, Cards",
+   "files": [
+    "26-september-1-2026-a-new-student-money-cards.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Chase",
+    "Chase Freedom Unlimited",
+    "Another Card",
+    "The Card’s Offers",
+    "Your Cards"
+   ],
+   "tab": "Cards",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 27,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Money, Payments And Cash",
+   "files": [
+    "27-september-1-2026-a-new-student-money-payments-and-cash.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Chase",
+    "How You Pay",
+    "Cash"
+   ],
+   "tab": "Payments And Cash",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 28,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Money, Borrowing",
+   "files": [
+    "28-september-1-2026-a-new-student-money-borrowing.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Chase",
+    "Overdraft",
+    "Personal Loan"
+   ],
+   "tab": "Borrowing",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 29,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Money, Statements",
+   "files": [
+    "29-september-1-2026-a-new-student-money-statements.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Chase",
+    "Statements",
+    "The Year",
+    "Alerts"
+   ],
+   "tab": "Statements",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 30,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Papers, Tax Returns",
+   "files": [
+    "30-september-1-2026-a-new-student-papers-tax-returns.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Papers",
+    "No Returns Yet"
+   ],
+   "tab": "Tax Returns",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 31,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Papers, Health Cover",
+   "files": [
+    "31-september-1-2026-a-new-student-papers-health-cover.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Papers",
+    "Your Doctor",
+    "Your Cover",
+    "The Marketplace",
+    "Your Long-Term Conditions",
+    "A Dental Plan",
+    "Care And Its Bills"
+   ],
+   "tab": "Health Cover",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 32,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Papers, Unemployment",
+   "files": [
+    "32-september-1-2026-a-new-student-papers-unemployment.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Papers",
+    "SNAP",
+    "No Claim Open"
+   ],
+   "tab": "Unemployment",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 33,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Papers, Passport And ID",
+   "files": [
+    "33-september-1-2026-a-new-student-papers-passport-and-id.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Papers",
+    "Your Passport",
+    "Your ID",
+    "Going Abroad"
+   ],
+   "tab": "Passport And ID",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 34,
+   "moment": "A New Student, 1 September 2026",
+   "page": "Papers, Permission To Work",
+   "files": [
+    "34-september-1-2026-a-new-student-papers-permission-to-work.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "Papers",
+    "Permission To Work",
+    "Social Security Number",
+    "OPT",
+    "Residence Abroad"
+   ],
+   "tab": "Permission To Work",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 35,
+   "moment": "A New Student, 1 September 2026",
+   "page": "How This Works",
+   "files": [
+    "35-september-1-2026-a-new-student-how-this-works.jpg"
+   ],
+   "problems": [],
+   "here": "7:30 AM·September 1, 2026EDTPaused",
+   "headings": [
+    "How This Works",
+    "On This Screen",
+    "Getting Started",
+    "Your Day And The Clock",
+    "Looking After Yourself",
+    "Staying At School",
+    "Coursework And Partners",
+    "Productions And Casting",
+    "Your Craft",
+    "Money And The Bank",
+    "Papers",
+    "Your Career"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 36,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "Home",
+   "files": [
+    "36-march-1-2029-the-last-term-home.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 37,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "School, Standing And Craft",
+   "files": [
+    "37-march-1-2029-the-last-term-school-standing-and-craft.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Standing",
+    "Your Composure",
+    "From Your Teachers",
+    "Your Faculty",
+    "Your Craft Against The Class",
+    "Term Reviews"
+   ],
+   "tab": "Standing And Craft",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 38,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "School, Classes",
+   "files": [
+    "38-march-1-2029-the-last-term-school-classes.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Week, Spring Term 2029",
+    "Year 3 Courses"
+   ],
+   "tab": "Classes",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 39,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "School, Coursework",
+   "files": [
+    "39-march-1-2029-the-last-term-school-coursework-part1of4.jpg",
+    "39-march-1-2029-the-last-term-school-coursework-part2of4.jpg",
+    "39-march-1-2029-the-last-term-school-coursework-part3of4.jpg",
+    "39-march-1-2029-the-last-term-school-coursework-part4of4.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "The Actor Showcase",
+    "Your Scenes",
+    "Due Soonest",
+    "On-Camera Acting Technique: A Self-Tape",
+    "Character Analysis And Movement: A Movement Score",
+    "Professional Preparation And Audition Workshop: Two Contrasting Monologues",
+    "Taming The Cyclops: A Self-Tape",
+    "Actor Showcase: Your Showcase Scene, To Show Again",
+    "Alexander Technique III Tutorials: Directions In Daily Life",
+    "Acting Through Song: A Song Worked Through",
+    "Speech And Accents III: Sound Changes And A Text",
+    "Voice III: A Voice Sequence",
+    "Actor Showcase: Your Showcase Scene",
+    "Actor Showcase: Your Showcase Scene",
+    "Work Shown",
+    "Your Notes",
+    "Your Class",
+    "Your Partners",
+    "Orientation",
+    "Plays To Read"
+   ],
+   "tab": "Coursework",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 40,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "School, Casting",
+   "files": [
+    "40-march-1-2029-the-last-term-school-casting.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Why This Cast",
+    "The Winter’s Tale",
+    "Around The Class",
+    "The Yale Cabaret",
+    "The Yale Summer Cabaret"
+   ],
+   "tab": "Casting",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 41,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "School, Shifts And Pay",
+   "files": [
+    "41-march-1-2029-the-last-term-school-shifts-and-pay.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Work-Study"
+   ],
+   "tab": "Shifts And Pay",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 42,
+   "moment": "The Last Term, 1 March 2029",
+   "page": "School, Terms And Award",
+   "files": [
+    "42-march-1-2029-the-last-term-school-terms-and-award.jpg"
+   ],
+   "problems": [],
+   "here": "7:05 AM·March 1, 2029ESTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Terms",
+    "Your Yale Account",
+    "Finishing Early"
+   ],
+   "tab": "Terms And Award",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 43,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Home",
+   "files": [
+    "43-september-2-2029-after-midnight-home.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Good Morning, Ada.",
+    "What Needs You",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 44,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Player Profile",
+   "files": [
+    "44-september-2-2029-after-midnight-player-profile-part1of2.jpg",
+    "44-september-2-2029-after-midnight-player-profile-part2of2.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Ada Cole",
+    "Identity And Background",
+    "Readiness Today",
+    "Attributes And Craft",
+    "Techniques",
+    "Genres",
+    "School Journey",
+    "Your Work So Far",
+    "Development History"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 45,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Calendar",
+   "files": [
+    "45-september-2-2029-after-midnight-calendar.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Your Plans And Commitments",
+    "September 2029",
+    "Today, September 2, 2029",
+    "No Plans",
+    "Next Thirty Days"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 46,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Updates",
+   "files": [
+    "46-september-2-2029-after-midnight-updates.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Updates"
+   ],
+   "tab": null,
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 47,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "School, Standing And Craft",
+   "files": [
+    "47-september-2-2029-after-midnight-school-standing-and-craft.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Standing",
+    "Your Composure",
+    "From Your Teachers",
+    "Your Faculty",
+    "Your Craft Against The Class",
+    "Term Reviews"
+   ],
+   "tab": "Standing And Craft",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 48,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "School, Classes",
+   "files": [
+    "48-september-2-2029-after-midnight-school-classes.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "No Classes Now"
+   ],
+   "tab": "Classes",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 49,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "School, Coursework",
+   "files": [
+    "49-september-2-2029-after-midnight-school-coursework.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "The Actor Showcase",
+    "Your Scenes",
+    "Work Set",
+    "Work Shown",
+    "Your Notes",
+    "Your Class",
+    "Your Partners",
+    "Orientation",
+    "Plays To Read"
+   ],
+   "tab": "Coursework",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 50,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "School, Casting",
+   "files": [
+    "50-september-2-2029-after-midnight-school-casting.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Why This Cast",
+    "No Casting Ahead",
+    "The Yale Cabaret",
+    "The Yale Summer Cabaret"
+   ],
+   "tab": "Casting",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 51,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "School, Shifts And Pay",
+   "files": [
+    "51-september-2-2029-after-midnight-school-shifts-and-pay.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Work-Study"
+   ],
+   "tab": "Shifts And Pay",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 52,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "School, Terms And Award",
+   "files": [
+    "52-september-2-2029-after-midnight-school-terms-and-award.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "David Geffen School of Drama at Yale University",
+    "Your Terms",
+    "Your Yale Account"
+   ],
+   "tab": "Terms And Award",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 53,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Career, Overview",
+   "files": [
+    "53-september-2-2029-after-midnight-career-overview.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Career",
+    "Where You Stand",
+    "The Way You’re On",
+    "What’s Missing",
+    "What’s Next"
+   ],
+   "tab": "Overview",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 54,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Career, Portfolio",
+   "files": [
+    "54-september-2-2029-after-midnight-career-portfolio.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Career",
+    "Your Profile",
+    "School Credits",
+    "Professional Credits",
+    "Special Skills",
+    "Headshots",
+    "Résumé",
+    "Reel"
+   ],
+   "tab": "Portfolio",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 55,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Career, Representation",
+   "files": [
+    "55-september-2-2029-after-midnight-career-representation.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Career",
+    "Thomas Ashgrove",
+    "How To Reach Him",
+    "People You’ve Worked With",
+    "Your Materials For Him",
+    "Why It Went This Way",
+    "History With His Office"
+   ],
+   "tab": "Representation",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 56,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Career, Opportunities",
+   "files": [
+    "56-september-2-2029-after-midnight-career-opportunities.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Career",
+    "Open Calls",
+    "Through An Agent",
+    "In Progress",
+    "Offers",
+    "Booked Work",
+    "Settled"
+   ],
+   "tab": "Opportunities",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 57,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Career, Work",
+   "files": [
+    "57-september-2-2029-after-midnight-career-work.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Career",
+    "Your Engagements",
+    "Finished Engagements",
+    "Hester Vane, The Winter Ledger",
+    "Ivy, Paper Moons",
+    "Your Unions",
+    "Actors’ Equity",
+    "SAG-AFTRA"
+   ],
+   "tab": "Work",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 58,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Money, Accounts",
+   "files": [
+    "58-september-2-2029-after-midnight-money-accounts.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Chase",
+    "Chase Total Checking",
+    "Chase Savings",
+    "Your Banks",
+    "Open An Account At Another Bank",
+    "CD",
+    "Your Accounts Over Time"
+   ],
+   "tab": "Accounts",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 59,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Money, Cards",
+   "files": [
+    "59-september-2-2029-after-midnight-money-cards.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Chase",
+    "Chase Freedom Unlimited",
+    "Another Card",
+    "The Card’s Offers",
+    "Your Cards"
+   ],
+   "tab": "Cards",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 60,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Money, Payments And Cash",
+   "files": [
+    "60-september-2-2029-after-midnight-money-payments-and-cash.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Chase",
+    "How You Pay",
+    "Cash"
+   ],
+   "tab": "Payments And Cash",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 61,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Money, Borrowing",
+   "files": [
+    "61-september-2-2029-after-midnight-money-borrowing.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Chase",
+    "Overdraft",
+    "Personal Loan"
+   ],
+   "tab": "Borrowing",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 62,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Money, Statements",
+   "files": [
+    "62-september-2-2029-after-midnight-money-statements.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Chase",
+    "Statements",
+    "The Year",
+    "Alerts"
+   ],
+   "tab": "Statements",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 63,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Papers, Tax Returns",
+   "files": [
+    "63-september-2-2029-after-midnight-papers-tax-returns.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Papers",
+    "2028 Return",
+    "2027 Return",
+    "2026 Return"
+   ],
+   "tab": "Tax Returns",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 64,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Papers, Health Cover",
+   "files": [
+    "64-september-2-2029-after-midnight-papers-health-cover.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Papers",
+    "Your Doctor",
+    "Your Cover",
+    "The Marketplace",
+    "Care And Its Bills"
+   ],
+   "tab": "Health Cover",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 65,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Papers, Unemployment",
+   "files": [
+    "65-september-2-2029-after-midnight-papers-unemployment.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Papers",
+    "SNAP",
+    "No Claim Open"
+   ],
+   "tab": "Unemployment",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 66,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Papers, Passport And ID",
+   "files": [
+    "66-september-2-2029-after-midnight-papers-passport-and-id.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Papers",
+    "Your Passport",
+    "Your ID",
+    "Going Abroad"
+   ],
+   "tab": "Passport And ID",
+   "rotate": false,
+   "pageWider": 0
+  },
+  {
+   "n": 67,
+   "moment": "b20-4 After Midnight, 2 September 2029",
+   "page": "Papers, Permission To Work",
+   "files": [
+    "67-september-2-2029-after-midnight-papers-permission-to-work.jpg"
+   ],
+   "problems": [],
+   "here": "9:00 AM·September 2, 2029EDTPaused",
+   "headings": [
+    "Papers",
+    "Permission To Work",
+    "Your Work And Your Permission",
+    "Social Security Number",
+    "OPT",
+    "Residence Abroad"
+   ],
+   "tab": "Permission To Work",
+   "rotate": false,
+   "pageWider": 0
+  }
+ ]
+}

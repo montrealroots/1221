@@ -56,8 +56,9 @@ if kind == 'desktop':
 else:
     w(f"# Brief {brief}'s Pages On A Phone Held On Its Side, In The Order A Player Meets Them")
     w('')
-    w(f'The same {len(pages)} pages as `{other}`, at the owner\'s word on 2026-10-23 ("full captures of each full page from pc and')
-    w(f'mobile"), on the same build. They\'re seen as a phone shows them held on its side, {size.replace("x", " by ")}, a touch screen with no')
+    w(f'The same {len(pages)} pages as `{other}`, at the owner\'s word on 2026-10-23 ' + ('("full captures of each full page from pc and'
+      if brief == '23' else '("the full page capture of each page on both pc'))
+    w(('mobile")' if brief == '23' else 'and mobile.")') + f', on the same build. They\'re seen as a phone shows them held on its side, {size.replace("x", " by ")}, a touch screen with no')
     w('hover, at twice the pixels; upright, a phone shows only Rotate Your Phone To Play since brief 23. The menu is opened')
     w('through Menu and closed again before each page is taken.')
 w('')
@@ -82,7 +83,7 @@ for p in pages:
     moments[-1][1].append(p)
 SAID = {
     'A New Life, 24 August 2026': 'A fresh browser with no save: the start, the five steps of creation, the guide a new life opens on, and Home.',
-    'A New Student, 1 September 2026': f'Brief 22\'s `roles` save (`{up}../career-genre-2026-10-22/app/make-saves.ts`): every place on the menu, every tab of each, and How This Works.',
+    'A New Student, 1 September 2026': f'Brief 22\'s `roles` save (`{up}../career-genre-2026-10-22/app/make-saves.ts`): every place on the menu' + ('' if brief == '23' else ' and the two Home opens') + ', every tab of each, and How This Works.',
     'The Last Term, 1 March 2029': '`tests/fixtures/journey-j01-last-term-8283f80c`: Home and the School in the term of the Actor Showcase.',
     'b20-4 After Midnight, 2 September 2029': 'Brief 22\'s `released` save: OPT ended at midnight and The Winter Ledger called off. Every place and every tab again.',
 }

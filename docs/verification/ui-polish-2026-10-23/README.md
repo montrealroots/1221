@@ -217,6 +217,9 @@ JPEG copies at quality 85 of the 2× PNGs the scripts wrote.
 - `captures/before/evidence.json` and `captures/after/evidence.json` say what each window held.
 - `measured/`: the help audit before and after (`help-*.json`, and the summaries in `help-*.log`), the checks before and
   after, and the keyboard's record.
+- `captures/pages/` and `captures/pages/mobile/` (after brief 24, at the owner's word): every page, whole, in the order a
+  player meets them, at 1440 by 900 and 844 by 390, on the app built from `e39bb609`. Each has its README; brief 23's
+  set, the same 67 pages before brief 24, is in `../ui-2026-10-23/captures/pages/`.
 
 ## The Gate
 
