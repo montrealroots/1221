@@ -1,0 +1,335 @@
+{
+ "base": "http://localhost:4296",
+ "larger": [
+  {
+   "size": "1280x720",
+   "px": 20,
+   "dest": "Home",
+   "file": "larger-20-home-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "1280x720",
+   "px": 20,
+   "dest": "Calendar",
+   "file": "larger-20-calendar-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "1280x720",
+   "px": 20,
+   "dest": "Updates",
+   "file": "larger-20-updates-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "1280x720",
+   "px": 20,
+   "dest": "Money",
+   "file": "larger-20-money-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "1280x720",
+   "px": 20,
+   "dest": "School",
+   "file": "larger-20-school-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "1280x720",
+   "px": 24,
+   "dest": "Home",
+   "file": "larger-24-home-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "1280x720",
+   "px": 24,
+   "dest": "Calendar",
+   "file": "larger-24-calendar-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "1280x720",
+   "px": 24,
+   "dest": "Updates",
+   "file": "larger-24-updates-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "1280x720",
+   "px": 24,
+   "dest": "Money",
+   "file": "larger-24-money-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "1280x720",
+   "px": 24,
+   "dest": "School",
+   "file": "larger-24-school-1280x720.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "844x390m",
+   "px": 20,
+   "dest": "Home",
+   "file": "larger-20-home-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "844x390m",
+   "px": 20,
+   "dest": "Calendar",
+   "file": "larger-20-calendar-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "844x390m",
+   "px": 20,
+   "dest": "Updates",
+   "file": "larger-20-updates-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "844x390m",
+   "px": 20,
+   "dest": "Money",
+   "file": "larger-20-money-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "844x390m",
+   "px": 20,
+   "dest": "School",
+   "file": "larger-20-school-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 20
+  },
+  {
+   "size": "844x390m",
+   "px": 24,
+   "dest": "Home",
+   "file": "larger-24-home-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "844x390m",
+   "px": 24,
+   "dest": "Calendar",
+   "file": "larger-24-calendar-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "844x390m",
+   "px": 24,
+   "dest": "Updates",
+   "file": "larger-24-updates-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "844x390m",
+   "px": 24,
+   "dest": "Money",
+   "file": "larger-24-money-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  },
+  {
+   "size": "844x390m",
+   "px": 24,
+   "dest": "School",
+   "file": "larger-24-school-844x390m.jpg",
+   "wider": 0,
+   "past": [],
+   "cut": [],
+   "cutCount": 0,
+   "helpOff": [],
+   "rootPx": 24
+  }
+ ],
+ "drawer": [
+  {
+   "size": "667x375m",
+   "controls": 9,
+   "bad": [],
+   "last": "Save & Exit",
+   "names": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada Cole, Open Your Player Profile",
+    "Guide",
+    "Save & Exit"
+   ]
+  },
+  {
+   "size": "844x390m",
+   "controls": 9,
+   "bad": [],
+   "last": "Save & Exit",
+   "names": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada Cole, Open Your Player Profile",
+    "Guide",
+    "Save & Exit"
+   ]
+  },
+  {
+   "size": "932x430m",
+   "controls": 9,
+   "bad": [],
+   "last": "Save & Exit",
+   "names": [
+    "Home",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada Cole, Open Your Player Profile",
+    "Guide",
+    "Save & Exit"
+   ]
+  }
+ ],
+ "empty": [
+  {
+   "size": "1440x900",
+   "calendar": {
+    "head": "Your Plans And Commitments",
+    "empty": [
+     "No Plans"
+    ]
+   },
+   "backFromCalendar": "Good Morning, Ada.",
+   "updates": {
+    "head": "Updates",
+    "empty": [
+     "All Read"
+    ]
+   },
+   "backFromUpdates": "Good Morning, Ada."
+  },
+  {
+   "size": "844x390m",
+   "calendar": {
+    "head": "Your Plans And Commitments",
+    "empty": [
+     "No Plans"
+    ]
+   },
+   "backFromCalendar": "Good Morning, Ada.",
+   "updates": {
+    "head": "Updates",
+    "empty": [
+     "All Read"
+    ]
+   },
+   "backFromUpdates": "Good Morning, Ada."
+  }
+ ],
+ "problems": []
+}

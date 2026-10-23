@@ -1,6 +1,45 @@
-# Read First: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23
+# Read First: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Not Merged, 2026-10-23
 
-**This section is the current status, and where a new session starts.** The owner gave brief 23
+**This section is the current status, and where a new session starts.** The owner gave brief 24
+(`docs/verification/briefs-2026-10-16/24-finish-slates-ui-alignment-home-spacing-and-navigation-cleanup.txt`, kept
+verbatim) on brief 23's line, before it was merged. It was worked on `claude/peaceful-hamilton-59zdbb` from `113765a6`,
+pushed and never force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy
+without my instruction." No pull request is open for it. There is no stash and one worktree.
+
+**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at brief 22's close; brief 23 left the 46 rows its source change made stale, and brief 24 changed `src` again.
+  Brief 22's final runs on brief 24's tested commit are under way, to fold back in: below.)
+
+- **Read first:** `docs/verification/ui-polish-2026-10-23/README.md` (the receipt) and `criteria.md` (the checks,
+  written before any change).
+- **The tested commit:** `1a87be4c`, the last change to `src`. Everything measured after was measured on the app built
+  from it.
+- **Help lines up by where it stands** (one shared rule a place, its offset the button's own padding): a card's head
+  ends its words on the content edge, on the heading's first line, and a wrapped row starts under the heading;
+  `SectionHead` for a section's head; `.help-below` under what it explains. The help audit (1,530 helps before, 1,482
+  after, four lives, three sizes) went from 13 pixels off every edge, and up to 433 beneath, to 1 or less everywhere.
+- **Home on a phone on its side** (below 500 tall): the sky in the greeting's line, no time (the bar has it), the
+  forecast and daylight folded under Forecast And Daylight, What Needs You's most pressing one with "N more waiting."
+  and Show All N, two columns from 600 wide. At 667, 844 and 932 the first window holds the greeting, the town and the
+  sky, the first thing waiting with its actions, and Up Next's next commitment.
+- **All Clear** is one line under What Needs You's head, and How You Are moves up under it.
+- **Calendar and Updates** are off the menu and the drawer (six places now), opened by Up Next's Open Calendar and
+  Recent Updates' View All Updates, each always offered, with Back To Home at their head. Open Calendar opens with
+  "What's Coming"; the guide and How This Works say how to reach both.
+- **Larger text:** the drawer's and the bar's widths are in em, so text at 125% or 150% gets the layout a narrower window
+  does. At 150% in a 1280 window brief 23's bar ran out of itself and past the window.
+- **Defects found on the way and fixed:** 5, in the receipt.
+- **Emulated:** Playwright's Chromium with a phone's screen, touch and no hover. No physical phone and no screen reader.
+- **Under way:** brief 23's walk on the final build at the brief's six sizes and upright; brief 22's final runs (P=f24),
+  the engine's lanes on `cb8b19eb` (whose `src/engine` is the tested commit's) and the browser's lanes to follow on
+  `1a87be4c`; then the gate in a clean clone, the fold, and the gate again.
+- **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
+
+# Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23
+
+**This section was the current status until brief 24, which the owner gave before it was merged; both are on the same
+branch.** The owner gave brief 23
 (`docs/verification/briefs-2026-10-16/23-complete-slates-desktop-and-landscape-only-mobile-ui.txt`, kept verbatim) after
 brief 22's merges. It was worked on `claude/peaceful-hamilton-59zdbb`, from `ebac1923` (`main`, #61), pushed and never
 force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy without my
@@ -32,10 +71,10 @@ instruction." No pull request is open for it. There is no stash and one worktree
   - **Your Affairs went from Home.** Its lines are at the heads of Money, School and Papers (`components/Glance.tsx`), and
     what they flagged is under What Needs You (`thingsToDo`).
   - **Recent Updates** has the four most important unread, a repeated notice on one line.
-  - **Updates,** on the menu, keeps every notice.
+  - **Updates,** on the menu until brief 24 (on Home's View All Updates since), keeps every notice.
 - **The layout:**
   - a bar in one row, with Running or Paused in words;
-  - a drawer at 900 wide or 500 tall, with Calendar and Updates on the menu;
+  - a drawer at 900 wide or 500 tall, with Calendar and Updates on the menu (until brief 24 took both to Home);
   - one tab bar that scrolls with a cue;
   - tables that scroll in their own box or stack on a phone (`stack-table`);
   - 44-pixel controls on a touch screen, `dvh` and the notch kept clear.
@@ -65,7 +104,9 @@ instruction." No pull request is open for it. There is no stash and one worktree
   - **The script:** `app/pages.mjs`, kept. It met no error and no step it couldn't take, and no page was wider than its
     window.
 - **The final runs again** (the owner's word, 2026-10-23, "So we can get it back to 634"): brief 22's lanes, played on
-  `97404e70`, every lane but the judge's, whose watched files brief 23 didn't touch (P=f23, `queue22.sh`). Under way.
+  `97404e70`, every lane but the judge's, whose watched files brief 23 didn't touch (P=f23, `queue22.sh`). The engine's
+  lanes were the same as brief 22's in every number (`113765a6`); the browser's were stopped for brief 24, and the runs
+  were made again on its tested commit (above).
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). A deployment of
   brief 22's line accepts this line's saves.
 

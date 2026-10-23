@@ -1,0 +1,261 @@
+{
+ "base": "http://localhost:4296",
+ "save": "docs/verification/career-genre-2026-10-22/app/saves/released.json.gz",
+ "checks": {
+  "tabOrder": {
+   "stops": 70,
+   "first": {
+    "tag": "a",
+    "name": "Skip To Content",
+    "ring": true,
+    "inView": true,
+    "underBar": false,
+    "where": "skip"
+   },
+   "sequence": [
+    "skip",
+    "bar",
+    "menu",
+    "page"
+   ],
+   "orderSensible": true,
+   "withoutRing": [],
+   "behindBar": [],
+   "outOfView": []
+  },
+  "skipLink": {
+   "first": "Skip To Content",
+   "focusIn": "page"
+  },
+  "current": [
+   {
+    "pressed": "Home",
+    "marked": "Home",
+    "trail": null,
+    "same": true
+   },
+   {
+    "pressed": "Player Profile",
+    "marked": "Player Profile",
+    "trail": "Player Profile",
+    "same": true
+   },
+   {
+    "pressed": "School",
+    "marked": "School",
+    "trail": "School",
+    "same": true
+   },
+   {
+    "pressed": "Career",
+    "marked": "Career",
+    "trail": "Career",
+    "same": true
+   },
+   {
+    "pressed": "Money",
+    "marked": "Money",
+    "trail": "Money",
+    "same": true
+   },
+   {
+    "pressed": "Papers",
+    "marked": "Papers",
+    "trail": "Papers",
+    "same": true
+   },
+   {
+    "pressed": "Ada ColeActress",
+    "marked": "Player Profile",
+    "trail": "Player Profile",
+    "same": true
+   }
+  ],
+  "menu": {
+   "opened": {
+    "expanded": "true",
+    "menu": 1,
+    "items": 8
+   },
+   "closed": {
+    "menu": 0,
+    "focus": "Advance ▾"
+   },
+   "returnsFocus": true,
+   "closesOnEscape": true
+  },
+  "dialog": {
+   "stops": 28,
+   "allInside": true,
+   "outside": [],
+   "closesOnEscape": true,
+   "returnsFocus": true
+  },
+  "tabs": {
+   "tabs": [
+    "Accounts",
+    "Cards",
+    "Payments And Cash",
+    "Borrowing",
+    "Statements"
+   ],
+   "start": "Accounts",
+   "right": "Cards",
+   "end": "Statements",
+   "home": "Accounts",
+   "moves": true
+  },
+  "zoom": {
+   "at100": {
+    "sections": [
+     "What Needs You",
+     "Up Next",
+     "How You Are",
+     "Recent Updates"
+    ],
+    "menu": 7,
+    "controls": 62,
+    "pageWider": 0
+   },
+   "at200": {
+    "drawer": true,
+    "folded": true,
+    "shortened": false,
+    "bar": [
+     "Menu",
+     "Play",
+     "Sleep",
+     "Look After Yourself ▾",
+     "Advance ▾"
+    ],
+    "sections": [
+     "What Needs You",
+     "Up Next",
+     "How You Are",
+     "Recent Updates"
+    ],
+    "menu": [
+     "Home",
+     "Player Profile",
+     "School",
+     "Career",
+     "Money",
+     "Papers",
+     "Ada Cole, Open Your Player Profile"
+    ],
+    "controls": 63,
+    "pageWider": 0,
+    "mainBelowBar": true
+   },
+   "sectionsLost": [],
+   "menuLost": [],
+   "controlsLost": [
+    "# AM"
+   ],
+   "barControls": [
+    "Play",
+    "Sleep",
+    "Look After Yourself",
+    "Advance",
+    "Menu"
+   ],
+   "guideAndSave": {
+    "at100": [
+     "Guide",
+     "Save & Exit"
+    ],
+    "at200": [
+     "Guide",
+     "Save & Exit"
+    ]
+   }
+  },
+  "heights": [
+   {
+    "width": 844,
+    "height": 390,
+    "short": 330,
+    "phone": true,
+    "seen": [
+     {
+      "label": "full",
+      "vh": 390,
+      "barTop": 0,
+      "barBottom": 48,
+      "mainTop": 48,
+      "mainBottom": 390,
+      "scroll": 400,
+      "pageWider": 0,
+      "rotate": false
+     },
+     {
+      "label": "address bar shown",
+      "vh": 330,
+      "barTop": 0,
+      "barBottom": 48,
+      "mainTop": 48,
+      "mainBottom": 330,
+      "scroll": 400,
+      "pageWider": 0,
+      "rotate": false
+     },
+     {
+      "label": "address bar hidden",
+      "vh": 390,
+      "barTop": 0,
+      "barBottom": 48,
+      "mainTop": 48,
+      "mainBottom": 390,
+      "scroll": 400,
+      "pageWider": 0,
+      "rotate": false
+     }
+    ],
+    "ok": true
+   },
+   {
+    "width": 1440,
+    "height": 900,
+    "short": 760,
+    "phone": false,
+    "seen": [
+     {
+      "label": "full",
+      "vh": 900,
+      "barTop": 0,
+      "barBottom": 56,
+      "mainTop": 56,
+      "mainBottom": 900,
+      "scroll": 267,
+      "pageWider": 0,
+      "rotate": false
+     },
+     {
+      "label": "address bar shown",
+      "vh": 760,
+      "barTop": 0,
+      "barBottom": 56,
+      "mainTop": 56,
+      "mainBottom": 760,
+      "scroll": 267,
+      "pageWider": 0,
+      "rotate": false
+     },
+     {
+      "label": "address bar hidden",
+      "vh": 900,
+      "barTop": 0,
+      "barBottom": 56,
+      "mainTop": 56,
+      "mainBottom": 900,
+      "scroll": 267,
+      "pageWider": 0,
+      "rotate": false
+     }
+    ],
+    "ok": true
+   }
+  ]
+ },
+ "problems": []
+}

@@ -1,0 +1,31 @@
+roles 1440x900: 120 help actions
+roles 844x390m: 120 help actions
+roles 667x375m: 120 help actions
+offer 1440x900: 124 help actions
+offer 844x390m: 124 help actions
+offer 667x375m: 124 help actions
+released 1440x900: 120 help actions
+released 844x390m: 120 help actions
+released 667x375m: 120 help actions
+developed 1440x900: 146 help actions
+developed 844x390m: 146 help actions
+developed 667x375m: 146 help actions
+1440x900 beneath {"n":32,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":{"min":13,"max":362.2,"distinct":[13,362.2]},"gapAbove":{"min":6.4,"max":14.4,"distinct":[6.4,14.4]}}
+1440x900 card head {"n":358,"secondRow":0,"smallOnPhone":0,"baselineOff":{"min":0,"max":0,"distinct":[0]},"rightInset":{"min":13,"max":13,"distinct":[13]},"leftOff":null,"gapAbove":null}
+1440x900 dialog foot {"n":4,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+1440x900 in a row {"n":67,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+1440x900 menu {"n":12,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+1440x900 section head {"n":37,"secondRow":0,"smallOnPhone":0,"baselineOff":{"min":0,"max":0,"distinct":[0]},"rightInset":{"min":13,"max":13,"distinct":[13]},"leftOff":null,"gapAbove":null}
+667x375m beneath {"n":32,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":{"min":13,"max":433.2,"distinct":[13,433.2]},"gapAbove":{"min":14.4,"max":22.4,"distinct":[14.4,22.4]}}
+667x375m card head {"n":358,"secondRow":20,"smallOnPhone":0,"baselineOff":{"min":0,"max":30,"distinct":[0,30]},"rightInset":{"min":13,"max":13,"distinct":[13]},"leftOff":{"min":13,"max":13,"distinct":[13]},"gapAbove":null}
+667x375m dialog foot {"n":4,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+667x375m in a row {"n":67,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+667x375m menu {"n":12,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+667x375m section head {"n":37,"secondRow":0,"smallOnPhone":0,"baselineOff":{"min":0,"max":0,"distinct":[0]},"rightInset":{"min":13,"max":13,"distinct":[13]},"leftOff":null,"gapAbove":null}
+844x390m beneath {"n":32,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":{"min":13,"max":192.2,"distinct":[13,192.2]},"gapAbove":{"min":14.4,"max":22.4,"distinct":[14.4,22.4]}}
+844x390m card head {"n":358,"secondRow":34,"smallOnPhone":0,"baselineOff":{"min":0,"max":30,"distinct":[0,30]},"rightInset":{"min":13,"max":13,"distinct":[13]},"leftOff":{"min":0,"max":13,"distinct":[0,13]},"gapAbove":null}
+844x390m dialog foot {"n":4,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+844x390m in a row {"n":67,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+844x390m menu {"n":12,"secondRow":0,"smallOnPhone":0,"baselineOff":null,"rightInset":null,"leftOff":null,"gapAbove":null}
+844x390m section head {"n":37,"secondRow":0,"smallOnPhone":0,"baselineOff":{"min":0,"max":0,"distinct":[0]},"rightInset":{"min":13,"max":13,"distinct":[13]},"leftOff":null,"gapAbove":null}
+1530 help actions; 0 problems
