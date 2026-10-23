@@ -378,8 +378,11 @@ const git = (cmd: string) => { try { return execSync(`git ${cmd}`, { encoding: '
 const out = arg('out');
 // A run is said by its commit, whether the tree was clean, and its command. Until its integration on 2026-10-16 it said
 // the wall clock's time too, which the house's lint forbids outside the world clock; the held-out runs of brief 10 keep
-// that field as they were written.
-const at = { commit: git('rev-parse HEAD'), clean: git('status --porcelain --untracked-files=no') === '', command: `npx vite-node tools/advice.ts -- ${argv.join(' ')}` };
+// that field as they were written. Clean is every tracked file as committed but the final runs' own outputs
+// (`docs/verification/*/final-runs/`): until 2026-10-23 any tracked change counted, so a lane played again on a later
+// commit, writing over the outputs its first run had committed, read as unclean for its own results (brief 22's advice
+// lanes on 933f1ae6, after #54's merge), whatever the code.
+const at = { commit: git('rev-parse HEAD'), clean: git("status --porcelain --untracked-files=no -- . ':(exclude,glob)docs/verification/*/final-runs/**'") === '', command: `npx vite-node tools/advice.ts -- ${argv.join(' ')}` };
 
 if (argv.includes('--summarize')) {
   const files = argv.slice(argv.indexOf('--summarize') + 1).filter((x) => !x.startsWith('--') && x !== out);

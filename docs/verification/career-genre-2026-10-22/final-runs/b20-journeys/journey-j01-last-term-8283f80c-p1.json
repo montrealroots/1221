@@ -3,7 +3,7 @@
  "part": 1,
  "from": "2029-03-01",
  "to": "2029-09-01",
- "secs": 102,
+ "secs": 84,
  "reloads": 10,
  "done": true,
  "standing": "graduated",

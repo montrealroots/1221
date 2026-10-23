@@ -2,9 +2,9 @@
  "playthrough": "specialist",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "16b50e07",
- "uncommitted": 0,
- "startedAt": "2026-10-22T18:49:05.783Z",
+ "commit": "933f1ae6",
+ "uncommitted": 16,
+ "startedAt": "2026-10-22T23:44:50.962Z",
  "startingPoint": {
   "kind": "save",
   "file": "specialist.json",
@@ -254,7 +254,7 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 13, 2026 LOCATION New Haven NET WORTH $503K PLAYED 53s Version 1.1.0 · Save Format 94 · 32 KB Backup from September 13, 2026 Continue Restore Ba",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 13, 2026 LOCATION New Haven NET WORTH $503K PLAYED 51s Version 1.1.0 · Save Format 94 · 32 KB Backup from September 13, 2026 Continue Restore Ba",
     "September 13, 2026 2:05 PM"
    ],
    "ok": true,
@@ -322,5 +322,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-22T18:50:14.459Z"
+ "finishedAt": "2026-10-22T23:45:58.151Z"
 }

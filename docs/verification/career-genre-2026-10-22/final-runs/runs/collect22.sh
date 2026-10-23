@@ -9,14 +9,21 @@ set -u
 S=/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad
 B=/home/user/1221/docs/verification/career-genre-2026-10-22/final-runs
 if [ -n "${P:-}" ]; then
+  # Only what each lane wrote, as its clone's git reads it changed or new: a clone of a later commit holds every lane's
+  # earlier outputs as committed, and copied whole they'd put one lane's earlier results over another's new ones.
   for L in A ADVF ADVR B C D J UI APP JR1 JR2 JR3 JRC BJ1 BJ2 BJ3; do
-    C="$S/$P-$L/docs/verification/career-genre-2026-10-22/final-runs"
-    [ -d "$C" ] || { echo "no lane $L"; continue; }
-    for d in runs advice interface-final journeys14-final app; do [ -d "$C/$d" ] && mkdir -p "$B/$d" && (cd "$C/$d" && tar cf - --exclude='*.sh' --exclude='*.py' --exclude='*.before' .) | (cd "$B/$d" && tar xf -); done
+    CL="$S/$P-$L"
+    [ -d "$CL" ] || { echo "no lane $L"; continue; }
+    git -C "$CL" -c core.quotePath=false status --porcelain --untracked-files=all -- docs/verification/career-genre-2026-10-22/final-runs \
+      | grep -E '^( M|\?\?) ' | cut -c4- | grep -vE '\.(sh|py|before)$' \
+      | while read -r f; do mkdir -p "/home/user/1221/$(dirname "$f")" && cp "$CL/$f" "/home/user/1221/$f"; done
+    echo "lane $L: $(git -C "$CL" status --porcelain --untracked-files=all -- docs/verification/career-genre-2026-10-22/final-runs | grep -cE '^( M|\?\?) ') files"
   done
-  rm -f "$B"/journeys-final/*.json; cp -r "$S/$P-journeys/." "$B/journeys-final/"
-  rm -rf "${B:?}/b20-journeys/"*; cp -r "$S/$P-b20journeys/." "$B/b20-journeys/"
-  cat $(ls "$S/$P"-B-work/life-*.json "$S/$P"-C-work/life-*.json | sort -V) > "$B/runs/lives.jsonl"
+  # The shared folders only where this prefix's lanes made them: a prefix of some lanes alone (f22e, the advice lanes
+  # played again) leaves the journeys and the lives as they are.
+  [ -d "$S/$P-journeys" ] && [ -d "$S/$P-JR1" ] && { rm -f "$B"/journeys-final/*.json; cp -r "$S/$P-journeys/." "$B/journeys-final/"; }
+  [ -d "$S/$P-b20journeys" ] && [ -d "$S/$P-BJ1" ] && { rm -rf "${B:?}/b20-journeys/"*; cp -r "$S/$P-b20journeys/." "$B/b20-journeys/"; }
+  [ -d "$S/$P-B-work" ] && [ -d "$S/$P-C-work" ] && cat $(ls "$S/$P"-B-work/life-*.json "$S/$P"-C-work/life-*.json | sort -V) > "$B/runs/lives.jsonl"
   echo "collected $P $(date -u +%T)"; exit 0
 fi
 # Brief 20's journeys (BJ1 to BJ3) were played again on afe751f1, its src the tested commit's, once their coherence check
