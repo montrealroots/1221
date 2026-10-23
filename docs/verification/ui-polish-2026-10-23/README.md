@@ -251,3 +251,10 @@ browser lanes that were stopped and why, is in
   life meets, a look's own) is read by the walk's pictures alone.
 - Larger text was set as the browser's default size. A user style sheet, or an operating system's text scaling that
   scales the whole page, wasn't tried; the second is the 200% zoom.
+
+## Merged, Not Deployed
+
+The brief: "Keep the changes reviewable. Do not merge or deploy without my instruction." Brief 24 went to `main` with
+brief 23 at "Perfect, now merge everything." (2026-10-23), in #62, merged as `a4e6795a`, after the gate in a clean clone
+of `8d4139de`, the head merged: exit 0, 488 of 488 test files, 5,616 of 5,616 tests, none skipped, and all 22 checks.
+Nothing is deployed. The save schema stays 94.

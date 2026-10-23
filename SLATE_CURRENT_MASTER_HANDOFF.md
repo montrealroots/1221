@@ -1,10 +1,12 @@
-# Read First: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Not Merged, 2026-10-23
+# Read First: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
 
 **This section is the current status, and where a new session starts.** The owner gave brief 24
 (`docs/verification/briefs-2026-10-16/24-finish-slates-ui-alignment-home-spacing-and-navigation-cleanup.txt`, kept
 verbatim) on brief 23's line, before it was merged. It was worked on `claude/peaceful-hamilton-59zdbb` from `113765a6`,
-pushed and never force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy
-without my instruction." No pull request is open for it. There is no stash and one worktree.
+pushed and never force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not
+merge or deploy without my instruction."); it went to `main`, with brief 23, at "Perfect, now merge everything."
+(2026-10-23), in #62, merged as `a4e6795a`, and this record of the merge followed it there. No other pull request was
+open. Nothing is deployed. There is no stash and one worktree.
 
 **Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
@@ -47,22 +49,25 @@ without my instruction." No pull request is open for it. There is no stash and o
 - **The gate:** in a clean clone of `859bacdb`, which holds the fold, its exit read from its file: 0. 488 of 488 test
   files, 5,616 of 5,616 tests, none skipped, and all 22 checks (`.../final-runs/runs/gate.txt`; brief 22's, on
   `576a0e88`, stood there until then and is in git). Its row folded in: 634 of 658. Run again on `1ba6ac00`, which holds
-  that: exit 0, the same counts, the matrix holding 634 (`gate-receipt.txt`).
+  that: exit 0, the same counts, the matrix holding 634 (`gate-receipt.txt`). Run once more before the merge, on
+  `8d4139de`, the head #62 merged: exit 0, the same counts, the matrix holding 634.
 - **Every page, whole, in the order a player meets them, again** (the owner's word after brief 24, 2026-10-23):
   `docs/verification/ui-polish-2026-10-23/captures/pages/README.md` at 1440 by 900, and `pages/mobile/README.md` on a
   phone on its side, 844 by 390. The same 67 pages each as brief 23's set, on the app built from `e39bb609` (its `src`
   the tested commit's), by brief 23's `pages.mjs`, which reaches Calendar and Updates from Home now. It met no error and
   no step it couldn't take, no page showed the rotate screen and none was wider than its window.
-- **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
+- **Merged, not deployed:** #62 (`a4e6795a`), with brief 23. Base44 deployment waits on the gate and the owner's word
+  (rule 14). The schema stays 94.
 
-# Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23
+# Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Merged, 2026-10-23
 
 **This section was the current status until brief 24, which the owner gave before it was merged; both are on the same
 branch.** The owner gave brief 23
 (`docs/verification/briefs-2026-10-16/23-complete-slates-desktop-and-landscape-only-mobile-ui.txt`, kept verbatim) after
 brief 22's merges. It was worked on `claude/peaceful-hamilton-59zdbb`, from `ebac1923` (`main`, #61), pushed and never
-force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy without my
-instruction." No pull request is open for it. There is no stash and one worktree.
+force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not merge or deploy
+without my instruction."); it went to `main` with brief 24, in #62, merged as `a4e6795a` (above). Nothing is deployed.
+There is no stash and one worktree.
 
 **Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
@@ -126,8 +131,8 @@ instruction." No pull request is open for it. There is no stash and one worktree
   `97404e70`, every lane but the judge's, whose watched files brief 23 didn't touch (P=f23, `queue22.sh`). The engine's
   lanes were the same as brief 22's in every number (`113765a6`); the browser's were stopped for brief 24, and the runs
   were made again on its tested commit (above).
-- **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). A deployment of
-  brief 22's line accepts this line's saves.
+- **Merged, not deployed:** with brief 24, in #62 (`a4e6795a`). Base44 deployment waits on the gate and the owner's
+  word (rule 14). A deployment of brief 22's line accepts this line's saves.
 
 # Earlier: Brief 22, The Three Remaining Career And Genre Issues, Merged, 2026-10-22
 

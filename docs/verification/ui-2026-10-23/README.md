@@ -201,7 +201,8 @@ and can again (`../career-genre-2026-10-22/final-runs/runs/`'s scripts).
 - **Start, the saves and character creation** weren't walked here. Briefs 13 and 14 walked them, and on an upright phone
   they're behind the rotate screen.
 
-## Not Merged, Not Deployed
+## Merged, Not Deployed
 
-The brief: "Keep the changes reviewable. Do not merge or deploy without my instruction." Nothing is merged or deployed.
-The save schema stays 94, so a deployment of brief 22's line accepts this line's saves.
+The brief: "Keep the changes reviewable. Do not merge or deploy without my instruction." Until the owner's word nothing
+was merged. Brief 23 went to `main` with brief 24 at "Perfect, now merge everything." (2026-10-23), in #62, merged as
+`a4e6795a`. Nothing is deployed. The save schema stays 94, so a deployment of brief 22's line accepts this line's saves.
