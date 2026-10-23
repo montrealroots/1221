@@ -194,4 +194,16 @@ describe('Home around the day (brief 23, sections 4 and 5)', () => {
     expect(coursework.every((n) => sim.universe.notifications.find((x) => x.id === n.id)!.read)).toBe(true);
     expect(sim.universe.notifications.filter((n) => !n.read).length).toBe(before - coursework.length);
   });
+
+  // Found by brief 22's walk in its final runs played again on brief 23's commit (2026-10-23): with the page no longer
+  // clipped, a table's hidden Action label (`sr-only`, placed out of the flow) ran out of its scrolling box, and in a
+  // 390-wide window Papers' Passport And ID and Permission To Work scrolled up to 319 pixels sideways. Where a label lands
+  // is the walk's to measure; here, that every box a wide table scrolls in places what it holds.
+  it('every box a wide table scrolls sideways in places what it hides, so a hidden label stays inside it', () => {
+    const css = readFileSync('src/styles/app.css', 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((m) => ({ selector: m[1]!.trim(), body: m[2]! }));
+    const scrolling = rules.filter((r) => /overflow-x:\s*auto/.test(r.body) && /(^|[\s,])(table|\.table-scroll|\.table-wrap|\.scroll-x)\s*(,|$)/.test(r.selector));
+    expect(scrolling.map((r) => r.selector)).toEqual(expect.arrayContaining(['.table-wrap, .scroll-x', 'table', '.table-scroll']));
+    for (const r of scrolling) expect(r.body, r.selector).toMatch(/position:\s*relative/);
+  });
 });

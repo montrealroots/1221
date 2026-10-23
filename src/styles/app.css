@@ -157,8 +157,12 @@ input[type="checkbox"], input[type="radio"] {
    which hid what pushed it rather than stopping it: at 667 by 375 the bar ran 34 pixels past the window, cut off unseen
    (brief 23's walk measured it with the rule set aside). What is genuinely wide scrolls in its own box below. */
 
-/* Wide content scrolls inside its own container rather than widening the page. */
-.table-wrap, .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* Wide content scrolls inside its own container rather than widening the page. Each box that scrolls is the one its
+   hidden labels are placed by (`position: relative`), so a label positioned out of the flow is clipped with the rest.
+   Until 2026-10-23 none was, and with the page no longer clipped a table's Action label, `sr-only` in its last
+   heading, ran out of its box: in a 390-wide window Papers' Passport And ID and Permission To Work scrolled 178 to 319
+   pixels sideways (brief 22's walk in its final runs played again on brief 23's commit). */
+.table-wrap, .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; }
 table { width: 100%; border-collapse: collapse; table-layout: auto; }
 
 /* Anything genuinely unbreakable gets its own scroller instead of overflowing. */
@@ -520,7 +524,7 @@ th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.table-scroll { overflow-x: auto; }
+.table-scroll { overflow-x: auto; position: relative; }
 
 .empty {
   padding: var(--s7) var(--s5); text-align: center; color: var(--text-dim);
@@ -1381,7 +1385,7 @@ td, th { overflow-wrap: break-word; }
      then it was here, at 640 or narrower, and always at the right, so a bar scrolled to its end faded its last tab. */
   .tab { padding-inline: var(--s3); }
   table {
-    display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative;
     background:
       linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
       linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
