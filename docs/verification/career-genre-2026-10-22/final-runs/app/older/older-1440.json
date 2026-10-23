@@ -1,17 +1,17 @@
 {
  "width": 1440,
  "base": "http://localhost:4221",
- "commit": "933f1ae6",
- "at": "2026-10-22T23:39:24.284Z",
+ "commit": "97404e70",
+ "at": "2026-10-23T13:49:49.234Z",
  "saves": [
   {
    "save": "journey-j01-degree-8283f80c",
-   "ms": 19858,
+   "ms": 22595,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "10:15 AM · August 4, 2029 EDT",
-     "ms": 5070,
+     "clock": "10:15 AM · August 4, 2029 EDT Running",
+     "ms": 5234,
      "picture": "journey-j01-degree-8283f80c-01"
     },
     {
@@ -25,53 +25,63 @@
      "picture": "journey-j01-degree-8283f80c-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "journey-j01-degree-8283f80c-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "journey-j01-degree-8283f80c-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "journey-j01-degree-8283f80c-04"
+     "picture": "journey-j01-degree-8283f80c-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "journey-j01-degree-8283f80c-05"
+     "picture": "journey-j01-degree-8283f80c-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "journey-j01-degree-8283f80c-06"
+     "picture": "journey-j01-degree-8283f80c-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "journey-j01-degree-8283f80c-07"
+     "picture": "journey-j01-degree-8283f80c-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "journey-j01-degree-8283f80c-08"
+     "picture": "journey-j01-degree-8283f80c-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · August 5, 2029 EDT",
+     "clock": "7:00 AM · August 5, 2029 EDT Running",
      "stops": 0,
-     "picture": "journey-j01-degree-8283f80c-09"
+     "picture": "journey-j01-degree-8283f80c-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · August 5, 2029 EDT",
-     "after": "7:00 AM · August 5, 2029 EDT",
-     "picture": "journey-j01-degree-8283f80c-10"
+     "before": "7:00 AM · August 5, 2029 EDT Running",
+     "after": "7:00 AM · August 5, 2029 EDT Running",
+     "picture": "journey-j01-degree-8283f80c-12"
     }
    ],
    "found": []
   },
   {
    "save": "journey-j01-last-term-8283f80c",
-   "ms": 20628,
+   "ms": 23605,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "7:05 AM · March 1, 2029 EST",
-     "ms": 4825,
+     "clock": "7:05 AM · March 1, 2029 EST Running",
+     "ms": 5028,
      "picture": "journey-j01-last-term-8283f80c-01"
     },
     {
@@ -85,53 +95,63 @@
      "picture": "journey-j01-last-term-8283f80c-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "journey-j01-last-term-8283f80c-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "journey-j01-last-term-8283f80c-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "journey-j01-last-term-8283f80c-04"
+     "picture": "journey-j01-last-term-8283f80c-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "journey-j01-last-term-8283f80c-05"
+     "picture": "journey-j01-last-term-8283f80c-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "journey-j01-last-term-8283f80c-06"
+     "picture": "journey-j01-last-term-8283f80c-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "journey-j01-last-term-8283f80c-07"
+     "picture": "journey-j01-last-term-8283f80c-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "journey-j01-last-term-8283f80c-08"
+     "picture": "journey-j01-last-term-8283f80c-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "9:00 AM · March 1, 2029 EST",
+     "clock": "9:00 AM · March 1, 2029 EST Paused",
      "stops": 1,
-     "picture": "journey-j01-last-term-8283f80c-09"
+     "picture": "journey-j01-last-term-8283f80c-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "9:00 AM · March 1, 2029 EST",
-     "after": "9:00 AM · March 1, 2029 EST",
-     "picture": "journey-j01-last-term-8283f80c-10"
+     "before": "9:00 AM · March 1, 2029 EST Paused",
+     "after": "9:00 AM · March 1, 2029 EST Paused",
+     "picture": "journey-j01-last-term-8283f80c-12"
     }
    ],
    "found": []
   },
   {
    "save": "journey-j01-year-one-8283f80c",
-   "ms": 19548,
+   "ms": 22327,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "7:05 AM · June 1, 2027 EDT",
-     "ms": 4779,
+     "clock": "7:05 AM · June 1, 2027 EDT Running",
+     "ms": 4973,
      "picture": "journey-j01-year-one-8283f80c-01"
     },
     {
@@ -145,53 +165,63 @@
      "picture": "journey-j01-year-one-8283f80c-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "journey-j01-year-one-8283f80c-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "journey-j01-year-one-8283f80c-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "journey-j01-year-one-8283f80c-04"
+     "picture": "journey-j01-year-one-8283f80c-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "journey-j01-year-one-8283f80c-05"
+     "picture": "journey-j01-year-one-8283f80c-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "journey-j01-year-one-8283f80c-06"
+     "picture": "journey-j01-year-one-8283f80c-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "journey-j01-year-one-8283f80c-07"
+     "picture": "journey-j01-year-one-8283f80c-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "journey-j01-year-one-8283f80c-08"
+     "picture": "journey-j01-year-one-8283f80c-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · June 2, 2027 EDT",
+     "clock": "7:00 AM · June 2, 2027 EDT Running",
      "stops": 0,
-     "picture": "journey-j01-year-one-8283f80c-09"
+     "picture": "journey-j01-year-one-8283f80c-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · June 2, 2027 EDT",
-     "after": "7:00 AM · June 2, 2027 EDT",
-     "picture": "journey-j01-year-one-8283f80c-10"
+     "before": "7:00 AM · June 2, 2027 EDT Running",
+     "after": "7:00 AM · June 2, 2027 EDT Running",
+     "picture": "journey-j01-year-one-8283f80c-12"
     }
    ],
    "found": []
   },
   {
    "save": "old-leave-ff837dfa",
-   "ms": 19403,
+   "ms": 22106,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "8:35 AM · March 12, 2028 EDT",
-     "ms": 4729,
+     "clock": "8:35 AM · March 12, 2028 EDT Running",
+     "ms": 4952,
      "picture": "old-leave-ff837dfa-01"
     },
     {
@@ -205,53 +235,63 @@
      "picture": "old-leave-ff837dfa-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "old-leave-ff837dfa-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "old-leave-ff837dfa-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "old-leave-ff837dfa-04"
+     "picture": "old-leave-ff837dfa-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "old-leave-ff837dfa-05"
+     "picture": "old-leave-ff837dfa-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "old-leave-ff837dfa-06"
+     "picture": "old-leave-ff837dfa-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "old-leave-ff837dfa-07"
+     "picture": "old-leave-ff837dfa-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "old-leave-ff837dfa-08"
+     "picture": "old-leave-ff837dfa-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · March 13, 2028 EDT",
+     "clock": "7:00 AM · March 13, 2028 EDT Running",
      "stops": 0,
-     "picture": "old-leave-ff837dfa-09"
+     "picture": "old-leave-ff837dfa-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · March 13, 2028 EDT",
-     "after": "7:00 AM · March 13, 2028 EDT",
-     "picture": "old-leave-ff837dfa-10"
+     "before": "7:00 AM · March 13, 2028 EDT Running",
+     "after": "7:00 AM · March 13, 2028 EDT Running",
+     "picture": "old-leave-ff837dfa-12"
     }
    ],
    "found": []
   },
   {
    "save": "old-nonfiler-086d00ca",
-   "ms": 19378,
+   "ms": 22144,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "7:10 AM · May 24, 2028 EDT",
-     "ms": 4660,
+     "clock": "7:10 AM · May 24, 2028 EDT Running",
+     "ms": 4905,
      "picture": "old-nonfiler-086d00ca-01"
     },
     {
@@ -265,53 +305,63 @@
      "picture": "old-nonfiler-086d00ca-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "old-nonfiler-086d00ca-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "old-nonfiler-086d00ca-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "old-nonfiler-086d00ca-04"
+     "picture": "old-nonfiler-086d00ca-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "old-nonfiler-086d00ca-05"
+     "picture": "old-nonfiler-086d00ca-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "old-nonfiler-086d00ca-06"
+     "picture": "old-nonfiler-086d00ca-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "old-nonfiler-086d00ca-07"
+     "picture": "old-nonfiler-086d00ca-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "old-nonfiler-086d00ca-08"
+     "picture": "old-nonfiler-086d00ca-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · May 25, 2028 EDT",
+     "clock": "7:00 AM · May 25, 2028 EDT Running",
      "stops": 0,
-     "picture": "old-nonfiler-086d00ca-09"
+     "picture": "old-nonfiler-086d00ca-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · May 25, 2028 EDT",
-     "after": "7:00 AM · May 25, 2028 EDT",
-     "picture": "old-nonfiler-086d00ca-10"
+     "before": "7:00 AM · May 25, 2028 EDT Running",
+     "after": "7:00 AM · May 25, 2028 EDT Running",
+     "picture": "old-nonfiler-086d00ca-12"
     }
    ],
    "found": []
   },
   {
    "save": "old-state-plan-086d00ca",
-   "ms": 19488,
+   "ms": 22499,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "7:15 PM · February 22, 2028 EST",
-     "ms": 4876,
+     "clock": "7:15 PM · February 22, 2028 EST Running",
+     "ms": 4984,
      "picture": "old-state-plan-086d00ca-01"
     },
     {
@@ -325,53 +375,63 @@
      "picture": "old-state-plan-086d00ca-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "old-state-plan-086d00ca-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "old-state-plan-086d00ca-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "old-state-plan-086d00ca-04"
+     "picture": "old-state-plan-086d00ca-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "old-state-plan-086d00ca-05"
+     "picture": "old-state-plan-086d00ca-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "old-state-plan-086d00ca-06"
+     "picture": "old-state-plan-086d00ca-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "old-state-plan-086d00ca-07"
+     "picture": "old-state-plan-086d00ca-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "old-state-plan-086d00ca-08"
+     "picture": "old-state-plan-086d00ca-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · February 23, 2028 EST",
+     "clock": "7:00 AM · February 23, 2028 EST Running",
      "stops": 0,
-     "picture": "old-state-plan-086d00ca-09"
+     "picture": "old-state-plan-086d00ca-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · February 23, 2028 EST",
-     "after": "7:00 AM · February 23, 2028 EST",
-     "picture": "old-state-plan-086d00ca-10"
+     "before": "7:00 AM · February 23, 2028 EST Running",
+     "after": "7:00 AM · February 23, 2028 EST Running",
+     "picture": "old-state-plan-086d00ca-12"
     }
    ],
    "found": []
   },
   {
    "save": "old-tax-plan-ff837dfa",
-   "ms": 19226,
+   "ms": 22056,
    "steps": [
     {
      "step": "opened with Continue",
-     "clock": "2:25 PM · April 18, 2027 EDT",
-     "ms": 4594,
+     "clock": "2:25 PM · April 18, 2027 EDT Running",
+     "ms": 4897,
      "picture": "old-tax-plan-ff837dfa-01"
     },
     {
@@ -385,41 +445,51 @@
      "picture": "old-tax-plan-ff837dfa-03"
     },
     {
+     "step": "rail: Calendar",
+     "heading": "Your Plans And Commitments",
+     "picture": "old-tax-plan-ff837dfa-04"
+    },
+    {
+     "step": "rail: Updates",
+     "heading": "Updates",
+     "picture": "old-tax-plan-ff837dfa-05"
+    },
+    {
      "step": "rail: School",
      "heading": "David Geffen School of Drama at Yale University",
-     "picture": "old-tax-plan-ff837dfa-04"
+     "picture": "old-tax-plan-ff837dfa-06"
     },
     {
      "step": "rail: Career",
      "heading": "Career",
-     "picture": "old-tax-plan-ff837dfa-05"
+     "picture": "old-tax-plan-ff837dfa-07"
     },
     {
      "step": "rail: Money",
      "heading": "Chase",
-     "picture": "old-tax-plan-ff837dfa-06"
+     "picture": "old-tax-plan-ff837dfa-08"
     },
     {
      "step": "rail: Papers",
      "heading": "Papers",
-     "picture": "old-tax-plan-ff837dfa-07"
+     "picture": "old-tax-plan-ff837dfa-09"
     },
     {
      "step": "rail: Ada Cole",
      "heading": "Ada Cole",
-     "picture": "old-tax-plan-ff837dfa-08"
+     "picture": "old-tax-plan-ff837dfa-10"
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · April 19, 2027 EDT",
+     "clock": "7:00 AM · April 19, 2027 EDT Running",
      "stops": 0,
-     "picture": "old-tax-plan-ff837dfa-09"
+     "picture": "old-tax-plan-ff837dfa-11"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · April 19, 2027 EDT",
-     "after": "7:00 AM · April 19, 2027 EDT",
-     "picture": "old-tax-plan-ff837dfa-10"
+     "before": "7:00 AM · April 19, 2027 EDT Running",
+     "after": "7:00 AM · April 19, 2027 EDT Running",
+     "picture": "old-tax-plan-ff837dfa-12"
     }
    ],
    "found": []

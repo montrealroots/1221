@@ -14,7 +14,7 @@
   {
    "name": "guide: a new player’s controls are locked until its chapters are read; read, they open",
    "ok": true,
-   "note": "12 locked at the start; 20 chapters read; none locked now"
+   "note": "9 locked at the start; 20 chapters read; none locked now"
   },
   {
    "name": "home: what needs you on the first day: no decision waiting, in the panel’s own words",
@@ -44,22 +44,22 @@
   {
    "name": "coursework: a step of preparation done from its button, the clock moved and the step counted",
    "ok": true,
-   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 42%; Read The Scene: 40 minutes, Knows The Scene up 42%."
+   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 43%; Read The Scene: 40 minutes, Knows The Scene up 43%."
   },
   {
    "name": "coursework: a way of playing it chosen and rehearsed in",
    "ok": true,
-   "note": "Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
+   "note": "Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
   },
   {
    "name": "coursework: table work answered from its select",
    "ok": true,
-   "note": "4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+   "note": "4 options, “dusk” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
   },
   {
    "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
    "ok": true,
-   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into The Middle\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slow"
+   "note": "told to learn some of the lines first: Learn Lines: Answer chosen. | Learn Lines: 45 minutes, Lines up 24%.; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 17%.; then \"The Turn Into The Second Half\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 17%. | Work It Slowly: 20.7 to 24.3."
   },
   {
    "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
@@ -109,12 +109,12 @@
   {
    "name": "profile: the development history shows the hour",
    "ok": true,
-   "note": "August 31, 2026: Emotional Depth +0.122, Sense Memory"
+   "note": "August 31, 2026: Emotional Depth +0.119, Sense Memory"
   },
   {
    "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
    "ok": true,
-   "note": "Chase Total Checking has only $90,424.00 available, so nothing was moved. / Chase Total Checking has only $90,424.00 available, so nothing was moved. | Moved $1 to Chase Savings."
+   "note": "Chase Total Checking has only $90,434.00 available, so nothing was moved. / Chase Total Checking has only $90,434.00 available, so nothing was moved. | Moved $1 to Chase Savings."
   },
   {
    "name": "papers: its five tabs open",
@@ -168,8 +168,8 @@
   },
   {
    "name": "[save: leave scenario] school: Your Classes, the first class’s productions, the evaluations",
-   "ok": true,
-   "note": "the first class’s 2 productions; 1 terms evaluated: Fall Term 2026 Good Standing"
+   "ok": false,
+   "why": "a row with no standing: Fall Term 2026\tGood Standing\t100%\t1.6\t1.3\t4 of 46 Unready or not shown | You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.6 points this term, and the middle student in"
   },
   {
    "name": "[save: leave scenario] casting: the rehearsal controls work, or say why not",
@@ -254,7 +254,7 @@
   {
    "name": "[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day",
    "ok": true,
-   "note": "A Word On Your Coursework So far this term, 3 of the 6 pieces you’ve shown were Unready. This is a warning. The term review is on December 10, 2027. If half or more of the term’s pieces are Unready or not shown by then, "
+   "note": "A Word On Your Coursework School · 30 minutes ago So far this term, 3 of the 6 pieces you’ve shown were Unready. This is a warning. The term review is on December 10, 2027. If half or more of the term’s pieces are Unread"
   },
   {
    "name": "[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy",
@@ -383,11 +383,11 @@
   },
   {
    "name": "home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves money to it, and the pounds and dollars both show",
-   "ok": true,
-   "note": "Kept At HSBC UK: £326,303 In Flexible Saver / Chase sends $100.00 for a $5.00 fee. At 2.6% under the estimated exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £71.95 after its £5.00 fee for a payment from abroad, on Thursday, August 27, 2026 (an estimate: the bank publishes no time, so the game uses"
+   "ok": false,
+   "why": "Home's money line said: "
   }
  ],
  "errors": [],
  "overflows": [],
- "failed": 0
+ "failed": 2
 }

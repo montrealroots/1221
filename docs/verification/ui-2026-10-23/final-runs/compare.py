@@ -24,6 +24,12 @@ for old, new in [
     ("open(f'{B22}/numbers-same.json', 'w', encoding='utf-8')", f"open({HERE + '/numbers-same-22.json'!r}, 'w', encoding='utf-8')"),
     ('(against brief 21)', '(against the committed runs)'),
     ('sys.exit(1 if failed else 0)', ''),
+    # The run's own record where brief 20's journeys and the app walks keep it: a fork's seconds, when a walk ran, how
+    # long a save took to open.
+    ("|^\\.parts\\[\\d+\\]\\.secs$'", "|^\\.parts\\[\\d+\\]\\.secs$|\\.forks\\[\\d+\\]\\.secs$|^\\.at$|^\\.saves\\[\\d+\\]\\.ms$'"),
+    # Brief 20's journeys and the app walks' reports as well, which brief 22's comparer leaves to its README.
+    ("for d in ('final', 'runs', 'advice', 'journeys-final', 'interface-final', 'journeys14-final'):",
+     "for d in ('final', 'runs', 'advice', 'journeys-final', 'interface-final', 'journeys14-final', 'b20-journeys', 'app', 'app/walk', 'app/older', 'app/b21', 'app/b22'):"),
 ]:
     assert old in src, old
     src = src.replace(old, new)

@@ -81,7 +81,18 @@ School
 Career
 Money
 Holiday
+Today, December 3, 2029
+
+Winter
+
+Put Something On It
+How This Works
+Paper Moons: Shoot Day 1
+7:00 AM · 11 hours · New York
 Next Thirty Days
+
+Everything in the next thirty days, a run of the same call on one line.
+
 Paper Moons: Shoot Day 1
 December 3, 2029 · 7:00 AM
 You
@@ -93,6 +104,7 @@ December 5, 2029 · 7:00 AM
 You
 Card Statement
 December 20, 2029 · 9:00 AM
+Money
 
------ 66 controls; Tab reached 65 of the 65 it can; 0 grayed
+----- 71 controls; Tab reached 70 of the 70 it can; 0 grayed
 Nothing found.

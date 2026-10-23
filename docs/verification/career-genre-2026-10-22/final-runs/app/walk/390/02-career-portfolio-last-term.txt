@@ -13,6 +13,7 @@ Portfolio
 Representation
 Opportunities
 Work
+›
 Your Profile
 How This Works
 
@@ -76,5 +77,5 @@ Not now: You have nothing recorded to cut a reel from. Tape a practice brief on 
 
 Sources And Estimates
 
------ 29 controls; Tab reached 22 of the 22 it can; 2 grayed
+----- 27 controls; Tab reached 19 of the 19 it can; 2 grayed
 Nothing found.

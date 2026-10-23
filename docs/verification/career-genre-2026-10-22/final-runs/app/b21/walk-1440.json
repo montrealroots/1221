@@ -1,15 +1,15 @@
 {
  "width": 1440,
  "base": "http://localhost:4221",
- "commit": "933f1ae6",
- "at": "2026-10-22T23:44:40.280Z",
+ "commit": "97404e70",
+ "at": "2026-10-23T13:59:06.309Z",
  "saves": [
   {
    "save": "behind",
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "9:00 AM · December 14, 2026 EST",
+     "clock": "9:00 AM · December 14, 2026 EST Running",
      "picture": "behind-01"
     },
     {
@@ -54,13 +54,13 @@
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · December 15, 2026 EST",
+     "clock": "7:00 AM · December 15, 2026 EST Running",
      "picture": "behind-07"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · December 15, 2026 EST",
-     "after": "7:00 AM · December 15, 2026 EST",
+     "before": "7:00 AM · December 15, 2026 EST Running",
+     "after": "7:00 AM · December 15, 2026 EST Running",
      "picture": "behind-08"
     }
    ],
@@ -71,7 +71,7 @@
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "9:00 AM · September 2, 2026 EDT",
+     "clock": "9:00 AM · September 2, 2026 EDT Running",
      "picture": "capone-01"
     },
     {
@@ -101,13 +101,13 @@
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · September 3, 2026 EDT",
+     "clock": "7:00 AM · September 3, 2026 EDT Running",
      "picture": "capone-07"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · September 3, 2026 EDT",
-     "after": "7:00 AM · September 3, 2026 EDT",
+     "before": "7:00 AM · September 3, 2026 EDT Running",
+     "after": "7:00 AM · September 3, 2026 EDT Running",
      "picture": "capone-08"
     }
    ],
@@ -118,7 +118,7 @@
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "9:00 AM · April 1, 2026 GMT+1",
+     "clock": "9:00 AM · April 1, 2026 GMT+1 Running",
      "picture": "london-01"
     },
     {
@@ -148,13 +148,13 @@
     },
     {
      "step": "Advance → Tomorrow Morning",
-     "clock": "7:00 AM · April 2, 2026 GMT+1",
+     "clock": "7:00 AM · April 2, 2026 GMT+1 Running",
      "picture": "london-07"
     },
     {
      "step": "Save & Exit, then Continue",
-     "before": "7:00 AM · April 2, 2026 GMT+1",
-     "after": "7:00 AM · April 2, 2026 GMT+1",
+     "before": "7:00 AM · April 2, 2026 GMT+1 Running",
+     "after": "7:00 AM · April 2, 2026 GMT+1 Running",
      "picture": "london-08"
     }
    ],

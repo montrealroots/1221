@@ -8,6 +8,7 @@ Career
 
 Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.
 
+‹
 Overview
 Portfolio
 Representation
@@ -35,5 +36,5 @@ Not now: You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role:
 
 Sources And Estimates
 
------ 22 controls; Tab reached 16 of the 16 it can; 1 grayed
+----- 20 controls; Tab reached 13 of the 13 it can; 1 grayed
 Nothing found.

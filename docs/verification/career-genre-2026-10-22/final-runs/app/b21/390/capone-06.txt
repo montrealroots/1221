@@ -1,9 +1,10 @@
 Skip To Content
 Menu
-🎬
+Money
 9:00 AM
 ·
 September 2, 2026
+Running
 Pause
 Sleep
 Look After Yourself
@@ -13,17 +14,15 @@ Advance
 
 Sleep: You’re at Classes until 3:00 PM.
 
-Guide
-Not Saved Yet
-Save & Exit
 Home
 ›
 Money
 YOUR BANK
 Capital One
 
-$503,686 held here, in 2 accounts.
+$503,686 held here, in 2 accounts. Worth $503,686.
 
+‹
 Accounts
 Cards
 Payments And Cash
@@ -76,7 +75,7 @@ CARD INTEREST PAID
 $0.00
 Alerts
 
-What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+What the bank tells you, in a notice in Updates. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
 
 How This Works
 Any Checking Account Under (USD)

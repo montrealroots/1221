@@ -1,15 +1,15 @@
 {
  "width": 390,
  "base": "http://localhost:4221",
- "commit": "933f1ae6",
- "at": "2026-10-22T23:47:38.332Z",
+ "commit": "97404e70",
+ "at": "2026-10-23T14:03:29.606Z",
  "saves": [
   {
    "save": "before",
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "2:00 PM · September 1, 2029",
+     "clock": "2:00 PM · September 1, 2029 Running",
      "picture": "before-01"
     },
     {
@@ -48,14 +48,16 @@
      "held": true
     }
    ],
-   "found": []
+   "found": [
+    "Papers, Permission To Work: the page scrolls 319px sideways"
+   ]
   },
   {
    "save": "released",
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "9:00 AM · September 2, 2029",
+     "clock": "9:00 AM · September 2, 2029 Running",
      "picture": "released-01"
     },
     {
@@ -94,14 +96,16 @@
      "held": true
     }
    ],
-   "found": []
+   "found": [
+    "Papers, Permission To Work: the page scrolls 319px sideways"
+   ]
   },
   {
    "save": "roles",
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "7:30 AM · September 1, 2026",
+     "clock": "7:30 AM · September 1, 2026 Running",
      "picture": "roles-01"
     },
     {

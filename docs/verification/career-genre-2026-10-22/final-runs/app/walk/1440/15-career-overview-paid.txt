@@ -42,5 +42,5 @@ Start with your résumé, on the Portfolio tab. Each button there says what it t
 
 Go To Portfolio
 
------ 25 controls; Tab reached 20 of the 20 it can; 0 grayed
+----- 27 controls; Tab reached 22 of the 22 it can; 0 grayed
 Nothing found.

@@ -76,5 +76,5 @@ Not now: You have nothing recorded to cut a reel from. Tape a practice brief on 
 
 Sources And Estimates
 
------ 35 controls; Tab reached 28 of the 28 it can; 2 grayed
+----- 37 controls; Tab reached 30 of the 30 it can; 2 grayed
 Nothing found.

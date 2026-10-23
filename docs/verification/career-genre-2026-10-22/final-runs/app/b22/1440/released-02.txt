@@ -5,6 +5,7 @@ SLATE
 ·
 September 2, 2029
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,9 +16,12 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
 YOU
 Player Profile
+YOUR DAY
+Calendar
+Updates
+99+
 YOUR TRAINING
 School
 YOUR WORK
@@ -27,7 +31,7 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 500 Unread
+Actress
 Home
 ›
 Papers
@@ -35,6 +39,10 @@ YOUR AFFAIRS
 Papers
 
 Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.
+
+Cover: Marketplace Plan.
+
+The 2028 return was due April 17, 2029, $776 to pay, a late penalty in it.
 
 Tax Returns
 Health Cover
@@ -59,11 +67,16 @@ Employment Authorization, OPT, United States IOE17570608 May 31, 2029 May 31, 20
 F-1 Student Visa, United States F134348227 July 25, 2026 July 30, 2029 Canceled 
 Your Work And Your Permission
 
-What your permission to work said for each engagement’s dates
+Where each engagement stands now, and what your permission to work said when you accepted it
 
 How This Works
-Hester Vane, The Winter Ledger, September 4, 2029 to November 4, 2029. Read August 16, 2029: On OPT you can work in the US until May 31, 2030. Each day of this work counts as a day worked, not one of OPT’s days without work.
-Ivy, Paper Moons, August 27, 2029 to August 29, 2029. Read August 2, 2029: On OPT you can work in the US until May 31, 2030. Each day of this work counts as a day worked, not one of OPT’s days without work.
+ENGAGEMENT DATES NOW ELIGIBILITY WHEN ACCEPTED
+Hester Vane, The Winter Ledger 
+September 4, 2029 to November 4, 2029
+ Called Off. Harrow Point Repertory Theater released you as Hester Vane on September 2, 2029: your OPT ended on September 1, 2029, after more than 90 days without work, and without it you can’t work in the United States. Read August 16, 2029: On OPT you can work in the US until May 31, 2030. Each day of this work counts as a day worked, not one of OPT’s days without work.
+Ivy, Paper Moons 
+August 27, 2029 to August 29, 2029
+ Finished. Every day of it is behind you. Read August 2, 2029: On OPT you can work in the US until May 31, 2030. Each day of this work counts as a day worked, not one of OPT’s days without work.
 Social Security Number
 
 None yet

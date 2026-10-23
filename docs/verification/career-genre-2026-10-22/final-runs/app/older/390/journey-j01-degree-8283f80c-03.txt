@@ -1,23 +1,30 @@
 Skip To Content
 Menu
-🎬
+Player Profile
 10:15 AM
 ·
 August 4, 2029
+Running
 Pause
 Sleep
 Look After Yourself
 ▾
 Advance
 ▾
-Guide
-Not Saved Yet
-Save & Exit
 Home
 ›
 Player Profile
 PLAYER PROFILE
 Ada Cole
+ON THIS PAGE
+Identity And Background
+Readiness Today
+Attributes And Craft
+Techniques
+Genres
+School Journey
+Your Work So Far
+Development History
 Identity And Background
 
 As you made your character
@@ -47,6 +54,20 @@ Dispositions. Emotional Stability 55, how quickly stress builds and how quickly 
 Money, $491,657
 Papers, No Health Cover
 Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+92
+92 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+91, 0
+1 hour of sleep owed
+Sources And Estimates
 Attributes And Craft
 
 Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
@@ -64,18 +85,90 @@ Estimate: 20 hours, an hour a day, would take it from 53 to about 57, worth abou
 
 Why This Recommendation
 ABILITY NOW FULL CLASSES REACH TODAY IT SHAPES LAST CHANGE PRACTICE
-Emotional Depth 70.4 100.0 81.3 Not held back today Believability, Connection +0.02, Class: Acting Through Song (DRAM 423a/b) Sense Memory…
-Presence 67.5 100.0 — Not held back today Connection None yet A Showing For Classmates…
-Listening And Responsiveness 69.0 100.0 78.6 Not held back today Connection, Responsiveness +0.01, Class: On-Camera Acting Technique (DRAM 463a/b) The Repetition Exercise…
-Imagination 67.5 100.0 79.9 Not held back today Believability, Interpretation +0.02, Class: Character Analysis And Movement (DRAM 273b) The Given Circumstances…
-Focus 63.6 100.0 80.9 Not held back today Interpretation, Execution, Consistency +0.03, Class: Professional Preparation And Audition Workshop (DRAM 743b) Circles Of Attention…
-Memory 65.4 100.0 79.0 Not held back today Execution +0.01, Coursework: learning the lines A Recall Drill…
-Adaptability 58.3 100.0 79.4 Not held back today Responsiveness +0.01, Coursework: the revision Adjustments…
-Composure 52.8 100.0 — Not held back today Consistency None yet Graded Exposure…
-Vocal Expression 73.8 100.0 86.1 Not held back today Execution, Consistency +0.03, Class: Voice III (DRAM 313a/b) Voice Work…
-Physical Expression 66.6 100.0 77.1 Not held back today Execution +0.03, Class: Character Analysis And Movement (DRAM 273b) Movement Work…
-Discipline 60.4 100.0 — Not held back today Consistency, Execution None yet Grows with practice kept up, day after day
-Stamina 35.0 99.0 — Not held back today Believability, Connection, Execution, Consistency, Responsiveness None yet 
+Emotional Depth 70.4 100.0 81.3 
+Not held back today
+ 
+Believability, Connection
+ 
++0.02, Class: Acting Through Song (DRAM 423a/b)
+ Sense Memory…
+Presence 67.5 100.0 — 
+Not held back today
+ 
+Connection
+ 
+None yet
+ A Showing For Classmates…
+Listening And Responsiveness 69.0 100.0 78.6 
+Not held back today
+ 
+Connection, Responsiveness
+ 
++0.01, Class: On-Camera Acting Technique (DRAM 463a/b)
+ The Repetition Exercise…
+Imagination 67.5 100.0 79.9 
+Not held back today
+ 
+Believability, Interpretation
+ 
++0.02, Class: Character Analysis And Movement (DRAM 273b)
+ The Given Circumstances…
+Focus 63.6 100.0 80.9 
+Not held back today
+ 
+Interpretation, Execution, Consistency
+ 
++0.03, Class: Professional Preparation And Audition Workshop (DRAM 743b)
+ Circles Of Attention…
+Memory 65.4 100.0 79.0 
+Not held back today
+ 
+Execution
+ 
++0.01, Coursework: learning the lines
+ A Recall Drill…
+Adaptability 58.3 100.0 79.4 
+Not held back today
+ 
+Responsiveness
+ 
++0.01, Coursework: the revision
+ Adjustments…
+Composure 52.8 100.0 — 
+Not held back today
+ 
+Consistency
+ 
+None yet
+ Graded Exposure…
+Vocal Expression 73.8 100.0 86.1 
+Not held back today
+ 
+Execution, Consistency
+ 
++0.03, Class: Voice III (DRAM 313a/b)
+ Voice Work…
+Physical Expression 66.6 100.0 77.1 
+Not held back today
+ 
+Execution
+ 
++0.03, Class: Character Analysis And Movement (DRAM 273b)
+ Movement Work…
+Discipline 60.4 100.0 — 
+Not held back today
+ 
+Consistency, Execution
+ 
+None yet
+ Grows with practice kept up, day after day
+Stamina 35.0 99.0 — 
+Not held back today
+ 
+Believability, Connection, Execution, Consistency, Responsiveness
+ 
+None yet
+ 
 Work Out, under Look After Yourself
 At an everyday life’s level
 
@@ -140,20 +233,6 @@ Biographical Physical Transformation (Character Work 70.4 of 90) 0.0 0.0 Study I
 Black Comedy Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
 Blaxploitation Not established: the research holds it with low confidence 0.0 0.0 Study It Open Its Brief
 Show 16 More
-Sources And Estimates
-Readiness Today
-
-Whether anything holds your work back today
-
-READINESS
-92
-92 at this hour
-FOR WORK
-Sufficient
-Today, nothing holds your work back
-ENERGY, STRESS
-91, 0
-1 hour of sleep owed
 Sources And Estimates
 School Journey
 

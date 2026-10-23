@@ -1,11 +1,11 @@
-ok   1. [save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day  [September 22, 2027 9:30 AM]
-ok   2. the warning opened in place: its look, who sent it and when, and Close  [September 22, 2027 9:30 AM]
-ok   3. Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready  [September 22, 2027 9:30 AM]
-ok   4. the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were  [September 22, 2027 9:30 AM]
-ok   5. Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card  [September 22, 2027 7:00 PM]
+FAIL 1. [save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day: no notice /^A Word On Your Coursework$/ among Home's: none  [September 22, 2027 9:30 AM]
+FAIL 2. the warning opened in place: its look, who sent it and when, and Close: locator.innerText: Timeout 8000ms exceeded.  [September 22, 2027 9:30 AM]
+FAIL 3. Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready: locator.click: Timeout 8000ms exceeded.  [September 22, 2027 9:30 AM]
+FAIL 4. the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were: no How This Works on the scene’s card  [September 22, 2027 9:30 AM]
+FAIL 5. Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card: no Run It With A Reader on the scene  [September 22, 2027 9:30 AM]
 ok   6. the next morning, Tomorrow Morning asked: On The Way lists the day’s classes and calls, Cancel leaves the clock  [September 23, 2027 7:00 AM]
-ok   7. the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve  [October 1, 2027 7:00 AM]
-ok   8. the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded  [October 1, 2027 7:00 AM]
-ok   9. Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were  [October 1, 2027 7:00 AM]
+FAIL 7. the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve: no On The Way taken on the way to the meeting  [September 23, 2027 7:00 AM]
+FAIL 8. the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded: no notice /^Shown: (, Round [^,]+)?, (Unready|Working|Strong|Exceptional)$/ among Home's: none  [September 23, 2027 7:00 AM]
+ok   9. Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were  [September 23, 2027 7:00 AM]
 
-setback at 1440: 9 of 9 passed; six missing: none; 0 errors; 0 overflows
+setback at 1440: 2 of 9 passed; six missing: navigation, drill-down, unavailable, notification; 0 errors; 0 overflows

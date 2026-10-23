@@ -1,3 +1,3 @@
-behind @390: 12 steps, nothing found
-capone @390: 9 steps, nothing found
-london @390: 9 steps, nothing found
+behind @390: 11 steps, the walk stopped: TimeoutError: locator.focus: Timeout 30000ms exceeded.
+capone @390: 8 steps, the walk stopped: TimeoutError: locator.focus: Timeout 30000ms exceeded.
+london @390: 8 steps, the walk stopped: TimeoutError: locator.focus: Timeout 30000ms exceeded.

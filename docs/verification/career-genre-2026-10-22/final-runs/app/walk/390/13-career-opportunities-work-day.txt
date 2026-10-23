@@ -8,11 +8,13 @@ Career
 
 Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.
 
+‹
 Overview
 Portfolio
 Representation
 Opportunities
 Work
+›
 
 Every project, company and casting office here is invented for the game: no real production is casting. New roles go up each Monday morning.
 
@@ -72,5 +74,5 @@ Jess, Static On Route 9: Brisbane Hall Casting cast another actor as Jess.
 Why It Went This Way
 Sources And Estimates
 
------ 35 controls; Tab reached 27 of the 27 it can; 3 grayed
+----- 34 controls; Tab reached 24 of the 24 it can; 3 grayed
 Nothing found.

@@ -5,6 +5,7 @@ SLATE
 ·
 September 2, 2026
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -18,9 +19,12 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-17
 YOU
 Player Profile
+YOUR DAY
+Calendar
+Updates
+17
 YOUR TRAINING
 School
 YOUR WORK
@@ -30,14 +34,14 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 17 Unread
+Actress
 Home
 ›
 Money
 YOUR BANK
 Capital One
 
-$503,686 held here, in 2 accounts.
+$503,686 held here, in 2 accounts. Worth $503,686.
 
 Accounts
 Cards

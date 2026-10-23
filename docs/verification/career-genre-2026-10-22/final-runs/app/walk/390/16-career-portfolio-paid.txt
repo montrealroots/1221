@@ -13,6 +13,7 @@ Portfolio
 Representation
 Opportunities
 Work
+›
 Your Profile
 How This Works
 
@@ -92,5 +93,5 @@ Not now: Choose at least one recorded piece to cut it from.
 
 Sources And Estimates
 
------ 32 controls; Tab reached 25 of the 25 it can; 2 grayed
+----- 30 controls; Tab reached 22 of the 22 it can; 2 grayed
 Nothing found.

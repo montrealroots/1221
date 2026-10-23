@@ -1,15 +1,15 @@
 {
  "width": 1440,
  "base": "http://localhost:4221",
- "commit": "933f1ae6",
- "at": "2026-10-22T23:46:45.663Z",
+ "commit": "97404e70",
+ "at": "2026-10-23T14:02:36.243Z",
  "saves": [
   {
    "save": "before",
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "2:00 PM · September 1, 2029 EDT",
+     "clock": "2:00 PM · September 1, 2029 EDT Running",
      "picture": "before-01"
     },
     {
@@ -55,7 +55,7 @@
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "9:00 AM · September 2, 2029 EDT",
+     "clock": "9:00 AM · September 2, 2029 EDT Running",
      "picture": "released-01"
     },
     {
@@ -101,7 +101,7 @@
    "steps": [
     {
      "step": "opened with Continue: Home",
-     "clock": "7:30 AM · September 1, 2026 EDT",
+     "clock": "7:30 AM · September 1, 2026 EDT Running",
      "picture": "roles-01"
     },
     {

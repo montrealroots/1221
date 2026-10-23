@@ -1,5 +1,5 @@
 {
- "commit": "54b4e96fce30c325b1826d595d94e5b5d60c9043",
+ "commit": "97404e700f60691707f70bebefcf6851155138c2",
  "clean": true,
  "command": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/career-genre-2026-10-22/final-runs/advice/tuning-final.json",
  "roles": {

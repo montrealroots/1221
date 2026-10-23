@@ -5,6 +5,7 @@ SLATE
 ·
 April 1, 2026
 GMT+1
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,9 +16,12 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-2
 YOU
 Player Profile
+YOUR DAY
+Calendar
+Updates
+2
 YOUR TRAINING
 School
 YOUR WORK
@@ -27,14 +31,14 @@ Money
 Papers
 YOU
 Alex Rivera
-Actor · 2 Unread
+Actor
 Home
 ›
 Money
 YOUR BANK
 Barclays
 
-£50,698 held here, in 2 accounts.
+£50,698 held here, in 2 accounts. Worth £50,698.
 
 Accounts
 Cards

@@ -5,6 +5,7 @@ SLATE
 ·
 April 1, 2026
 GMT+1
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,9 +16,12 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-2
 YOU
 Player Profile
+YOUR DAY
+Calendar
+Updates
+2
 YOUR TRAINING
 School
 YOUR WORK
@@ -27,14 +31,14 @@ Money
 Papers
 YOU
 Alex Rivera
-Actor · 2 Unread
+Actor
 Home
 ›
 Money
 YOUR BANK
 Barclays
 
-£50,698 held here, in 2 accounts.
+£50,698 held here, in 2 accounts. Worth £50,698.
 
 Accounts
 Cards
@@ -222,7 +226,7 @@ CARD INTEREST PAID
 £0.00
 Alerts
 
-What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+What the bank tells you, in a notice in Updates. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
 
 How This Works
 Any Checking Account Under (GBP)

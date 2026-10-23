@@ -5,6 +5,7 @@ SLATE
 ·
 June 1, 2027
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,9 +16,12 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
 YOU
 Player Profile
+YOUR DAY
+Calendar
+Updates
+99+
 YOUR TRAINING
 School
 YOUR WORK
@@ -27,50 +31,406 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 298 Unread
+Actress
 Home
 ›
 Player Profile
 ›
-School
+Calendar
 ›
-Career
-YOUR WORK
-Career
+Updates
+YOUR DAY
+Updates
 
-Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.
+Every notice you’ve had, newest first: what happened, what it’s about and when. Reading one answers nothing. The questions waiting on you stay under What Needs You on Home until they’re answered.
 
-Overview
-Portfolio
-Representation
-Opportunities
-Work
-Where You Stand
+Unread (298)
+All (298)
+About
+Everything
+School
+Money
+Health
+Mark 298 Read
 How This Works
-Training
-You’re an MFA candidate in Acting at the David Geffen School of Drama at Yale University, in year one of three.
-Availability
-You’re at the School until the degree, expected in May 2029.
-Based In
-New Haven
-Permission To Work
-You’re a US citizen, so you can work for any employer in the US.
-Unions
-Neither actors’ union counts you as a member yet.
-The Way You’re On
+The Summer Is Yours
+Unread
+School · 3 weeks ago · May 13, 2027
 
-Completing The Degree
+Classes are done until the fall term.
 
-Year one of the MFA: the degree comes at Commencement after your sixth term, and everything on your record goes on with you. Graduating early isn’t a route the game offers. The Bulletin says that “on rare occasions the faculty of David Geffen School of Drama may reduce the residency requirement, but in no case below a minimum of two years,” and publishes no criteria for it and no way to ask.
+Read It All
+Go There
+Mark Read
+The Director’s Note: Carlotta Festival Of New Plays
+Unread
+School · 3 weeks ago · May 12, 2027
 
-What’s Missing
-NEEDED FOR ANY SUBMISSION
-You have no headshots, and every submission starts with one. Press Book A Headshot Session on the Career screen’s Portfolio tab.
-You have no résumé. Press Make Your Résumé on the Career screen’s Portfolio tab: it takes an hour, from your record.
-WORTH DOING
-You have no reel, and nothing recorded to cut one from yet. Tape a practice brief on the Player Profile first.
-What’s Next
+Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does. Work on your presence: it held your nights back most.
 
-Start with your headshots, on the Portfolio tab. Each button there says what it takes before you press it.
+Read It All
+Go There
+Mark Read
+Looking Back: Carlotta Festival Of New Plays
+Unread
+School · 3 weeks ago · May 12, 2027
 
-Go To Portfolio
+Carlotta Festival Of New Plays: 12 calls answered of 12; 4 of 5 notes taken, 3 answered in the work, 1 worked and learned from without moving it; the dress off. With the company the nights came to 53 on average, 1 with a slip in the company, 1 of them covered. What’s still open goes with you into class. (Simulated: the game’s reading of the process.)
+
+Read It All
+Go There
+Mark Read
+A Sprained Ankle
+Unread
+Health · 5 weeks ago · April 29, 2027
+
+It takes 8 days to mend, and you can’t work out until then.
+
+Read It All
+Go There
+Mark Read
+In Good Standing
+2 Notices
+Unread
+School · 5 weeks ago · April 23, 2027
+
+The acting faculty find you in good standing. You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 45 pieces were Strong or better.
+
+Read All 2
+Go There
+Mark Read
+Shown: A Choreographed Sequence, Strong
+3 Notices
+Unread
+School · 5 weeks ago · April 23, 2027
+
+Strong again, as on the course’s last piece, shown March 26, 2027. Well prepared: The Choreography Learned, Drilled With Your Partner and Alone. You came rested and ready. You took the earlier note on alone. Simulated note from Acting Intimacy And Combat For The Stage: It held together. Here’s a next step to try. Let the other person change you: take your next line from what you were just given, not from what you planned.
+
+Read All 3
+Go There
+Mark Read
+Still There: Time On Its Feet
+Unread
+School · 6 weeks ago · April 22, 2027
+
+A Voice Sequence was shown at Unready, and the same note came back: 4 times now. It stays open under Your Notes. On the Coursework tab, an open piece that works on it offers other ways to tackle it, under A Note That Keeps Coming Back.
+
+Read It All
+Go There
+Mark Read
+Shown: Table Work, Strong
+4 Notices
+Unread
+School · 6 weeks ago · April 22, 2027
+
+Strong again, as on the course’s last piece, shown April 1, 2027. Well prepared: Knows The Play, The Analysis and Written Up. Your script analysis carried it. You came rested and ready. Simulated note from Text Analysis I: The Actor’s Table Work: It held together. Here’s a next step to try. Go back to the words: one image or one repeated word you’ve played past, and what it tells you.
+
+Read All 4
+Go There
+Mark Read
+Theo: A Word After Class
+Unread
+School · 6 weeks ago · April 22, 2027
+
+Theo caught you after class: everyone has a showing like that, and yours will come back.
+
+Read It All
+Go There
+Mark Read
+Shown: A Movement Score, Working
+10 Notices
+Unread
+School · 6 weeks ago · April 21, 2027
+
+Working again, as on the course’s last piece, shown April 7, 2027. Well prepared: The Score Made and Rehearsed In The Body. Your physical expression and dance carried it. You came rested and ready. Simulated note from The Body As Source I: It didn’t come together today. Your Stamina held back Consistency by 28.3 points. Once it does, here’s a next step to try. Take it slower than feels safe, and let go of what you’re holding to get through it: the effort shouldn’t show.
+
+Read All 10
+Go There
+Mark Read
+Shown: A Play In Its Context, Strong
+15 Notices
+Unread
+School · 6 weeks ago · April 20, 2027
+
+Strong again, as on the course’s last piece, shown April 7, 2027. Well prepared: The Play Read, Its Context Researched and The Presentation Prepared. Your script analysis carried it. You came rested and ready. Simulated note from Text And Context Across The Repertory: It held together. Here’s a next step to try. Make one moment exact: choose where it starts and ends, and repeat it the same way twice.
+
+Read All 15
+Go There
+Mark Read
+Caleb: Asks For Help
+Unread
+School · 6 weeks ago · April 20, 2027
+
+Caleb is behind on their lines and asks if you’d run them for three quarters of an hour now. They’ve had a hard week away from school.
+
+Read It All
+Go There
+Mark Read
+Shown: A Simulated Rehearsal (The Run), Working
+6 Notices
+Unread
+School · 6 weeks ago · April 19, 2027
+
+Working again, as on the course’s last piece, shown April 5, 2027. Well prepared: Knows The Scene, Lines, Table Work, On Its Feet and With Your Partner. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: It didn’t come together today. Your Composure held back Consistency by 31.4 points. Once it does, here’s a next step to try. Raise what it costs: play it as though the scene decides everything for your character, and see what that does to the pace.
+
+Read All 6
+Go There
+Mark Read
+Shown: Sound Changes And A Text, Strong
+11 Notices
+Unread
+School · 6 weeks ago · April 19, 2027
+
+Strong again, as on the course’s last piece, shown April 5, 2027. Well prepared: Transcription, The Text and Drills. You came rested and ready. Simulated note from Speech And Accents I: It held together. Here’s a next step to try. Take it slower than feels safe, and let go of what you’re holding to get through it: the effort shouldn’t show.
+
+Read All 11
+Go There
+Mark Read
+Shown: Directions In Daily Life, Working
+10 Notices
+Unread
+School · 6 weeks ago · April 19, 2027
+
+Down from Strong on the course’s last piece, shown April 5, 2027. Well prepared: Daily Practice and The Directions Understood. Your physical expression carried it. You came rested and ready. Simulated note from Alexander Technique I: It didn’t come together today. Your Stamina held back Consistency by 26.3 points. Once it does, here’s a next step to try. Do less: find the moments that need nothing added, and trust the text in them.
+
+Read All 10
+Go There
+Mark Read
+Maya: An Apology
+Unread
+School · 6 weeks ago · April 19, 2027
+
+Maya apologizes for not coming to rehearse: something at home took the evening.
+
+Read It All
+Go There
+Mark Read
+Maya Didn’t Come
+Unread
+School · 6 weeks ago · April 18, 2027
+
+You waited for Maya to rehearse A Choreographed Sequence, and they didn’t come.
+
+Read It All
+Go There
+Mark Read
+Isaiah: Run Lines Together?
+Unread
+School · 7 weeks ago · April 15, 2027
+
+Isaiah asks if you’d run lines together on April 17, 2027 at 7:00 PM, an hour. You ran theirs when they were behind.
+
+Read It All
+Go There
+Mark Read
+Zoe Asks To Rehearse
+2 Notices
+Unread
+School · 7 weeks ago · April 14, 2027
+
+Zoe asks to rehearse Arms and the Man on April 17, 2027 at 7:00 PM. Answer by 5:00 PM that day.
+
+Read All 2
+Go There
+Mark Read
+Shown: A Simulated Rehearsal (Off Book, On Its Feet), Working
+6 Notices
+Unread
+School · 7 weeks ago · April 13, 2027
+
+Working again, as on the course’s last piece, shown April 5, 2027. Well prepared: Lines and On Its Feet. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: It didn’t come together today. Your Focus held back Execution by 13.3 points. Once it does, here’s a next step to try. Let the other person change you: take your next line from what you were just given, not from what you planned.
+
+Read All 6
+Go There
+Mark Read
+Shown: A Voice Sequence, Strong
+8 Notices
+Unread
+School · 8 weeks ago · April 8, 2027
+
+Strong again, as on the course’s last piece, shown March 25, 2027. Well prepared: The Sequence Learned and Daily Practice. Your vocal expression carried it. You came rested and ready. Simulated note from Voice I: It held together. Here’s a next step to try. Make one moment exact: choose where it starts and ends, and repeat it the same way twice.
+
+Read All 8
+Go There
+Mark Read
+Voice I: A Voice Sequence
+12 Notices
+Unread
+School · 8 weeks ago · April 8, 2027
+
+The breath and resonance sequence shown, then a short text spoken on it. Put The Sequence Learned first: it counts for more when this piece is shown. It’s due in class on April 22, 2027.
+
+Read All 12
+Go There
+Mark Read
+Shown: A Simulated Rehearsal (At The Table), Working
+6 Notices
+Unread
+School · 8 weeks ago · April 7, 2027
+
+Working again, as on the course’s last piece, shown April 5, 2027. Well prepared: Knows The Scene and Table Work. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: It didn’t come together today. Your Focus held back Execution by 13 points. Once it does, here’s a next step to try. Find the turn: where your character wants the opposite of what they wanted a minute ago, and make the change visible.
+
+Read All 6
+Go There
+Mark Read
+The Body As Source I: A Movement Score
+12 Notices
+Unread
+School · 8 weeks ago · April 7, 2027
+
+A short movement score of your own, shown. Put Rehearsed In The Body first: it counts for more when this piece is shown. It’s due in class on April 21, 2027.
+
+Read All 12
+Go There
+Mark Read
+Text And Context Across The Repertory: A Play In Its Context
+16 Notices
+Unread
+School · 8 weeks ago · April 7, 2027
+
+A short presentation on the season’s play at Yale Rep, its world and its writer (The Seagull). Put Its Context Researched first: it counts for more when this piece is shown. It’s due in class on April 20, 2027.
+
+Read All 16
+Go There
+Mark Read
+Zoe: A Different Reading
+Unread
+School · 8 weeks ago · April 7, 2027
+
+Zoe reads the relationship in Arms and the Man another way: “An engaged couple”, where you have “Enemies by the war and strangers until he climbs in: a romantic young woman and a practical soldier”.
+
+Read It All
+Go There
+Mark Read
+Acting I: A Simulated Rehearsal
+6 Notices
+Unread
+School · 8 weeks ago · April 5, 2027
+
+Arms and the Man, Act One, Raina’s bedroom. You play Raina, and Zoe Osei plays Bluntschli. Put On Its Feet first: it counts for more when this piece is shown. It’s due in class on April 7, 2027.
+
+Read All 6
+Go There
+Mark Read
+Speech And Accents I: Sound Changes And A Text
+12 Notices
+Unread
+School · 8 weeks ago · April 5, 2027
+
+A text transcribed and spoken with the term’s sound changes. Put Drills first: it counts for more when this piece is shown. It’s due in class on April 19, 2027.
+
+Read All 12
+Go There
+Mark Read
+Shown: Directions In Daily Life, Strong
+Unread
+School · 8 weeks ago · April 5, 2027
+
+Up from Working on the course’s last piece, shown March 22, 2027. Well prepared: Daily Practice and The Directions Understood. Your physical expression carried it. You came rested and ready. Simulated note from Alexander Technique I: It held together. Here’s a next step to try. Take it slower than feels safe, and let go of what you’re holding to get through it: the effort shouldn’t show.
+
+Read It All
+Go There
+Mark Read
+Alexander Technique I: Directions In Daily Life
+12 Notices
+Unread
+School · 8 weeks ago · April 5, 2027
+
+The lesson’s directions shown in a simple action, in the tutorial. Put The Directions Understood first: it counts for more when this piece is shown. It’s due in class on April 19, 2027.
+
+Read All 12
+Go There
+Mark Read
+Priya: Asks For Help
+Unread
+School · 8 weeks ago · April 5, 2027
+
+Priya is behind on their lines and asks if you’d run them for three quarters of an hour now. They’ve had a hard week away from school.
+
+Read It All
+Go There
+Mark Read
+Maya Asks To Rehearse
+Unread
+School · 8 weeks ago · April 2, 2027
+
+Maya asks to rehearse A Choreographed Sequence on April 3, 2027 at 7:00 PM. Answer by 5:00 PM that day.
+
+Read It All
+Go There
+Mark Read
+Text Analysis I: The Actor’s Table Work: Table Work
+4 Notices
+Unread
+School · 2 months ago · April 1, 2027
+
+Lady Windermere’s Fan, Act One, the morning room. You play Lady Windermere. Put The Analysis first: it counts for more when this piece is shown. It’s due in class on April 22, 2027.
+
+Read All 4
+Go There
+Mark Read
+Marcus: An Apology
+Unread
+School · 2 months ago · April 1, 2027
+
+Marcus apologizes for not coming to rehearse: they lost track of the day.
+
+Read It All
+Go There
+Mark Read
+Marcus Didn’t Come
+Unread
+School · 2 months ago · March 29, 2027
+
+You waited for Marcus to rehearse Runway, and they didn’t come.
+
+Read It All
+Go There
+Mark Read
+The Director’s Note: The Seagull
+Unread
+School · 2 months ago · March 27, 2027
+
+You covered Nina on call through the run and didn’t go on. The work you did in the room isn’t lost.
+
+Read It All
+Go There
+Mark Read
+Looking Back: The Seagull
+Unread
+School · 2 months ago · March 27, 2027
+
+The Seagull: 11 calls answered of 11; 0 of 0 notes taken. (Simulated: the game’s reading of the process.)
+
+Read It All
+Go There
+Mark Read
+Acting Intimacy And Combat For The Stage: A Choreographed Sequence
+3 Notices
+Unread
+School · 2 months ago · March 26, 2027
+
+A short combat sequence shown at speed, safely, with a partner. Put Drilled With Your Partner first: it counts for more when this piece is shown. It’s due in class on April 23, 2027.
+
+Read All 3
+Go There
+Mark Read
+Samuel: Run Lines Together?
+Unread
+School · 2 months ago · March 25, 2027
+
+Samuel asks if you’d run lines together on March 27, 2027 at 7:00 PM, an hour.
+
+Read It All
+Go There
+Mark Read
+Your Card Limit Went Up
+Unread
+Money · 2 months ago · March 20, 2027
+
+It’s $78,260.00 now, because your record has been clean.
+
+Read It All
+Mark Read
+40 of 122 shown.
+Show 40 More

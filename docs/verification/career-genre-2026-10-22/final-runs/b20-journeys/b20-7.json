@@ -13,56 +13,56 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 17,
+   "secs": 23,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 38,
+   "secs": 55,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 60,
+   "secs": 84,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-01",
    "to": "2029-11-01",
-   "secs": 32,
+   "secs": 44,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-04-01",
-   "secs": 48,
+   "secs": 61,
    "reloads": 5
   },
   {
    "part": 6,
    "from": "2030-04-01",
    "to": "2030-09-01",
-   "secs": 79,
+   "secs": 107,
    "reloads": 4
   },
   {
    "part": 7,
    "from": "2030-09-01",
    "to": "2031-02-01",
-   "secs": 53,
+   "secs": 67,
    "reloads": 5
   },
   {
    "part": 8,
    "from": "2031-02-01",
    "to": "2031-03-01",
-   "secs": 9,
+   "secs": 10,
    "reloads": 1,
    "done": true
   }
@@ -14816,7 +14816,7 @@
      "work": [],
      "transactions": 1580
     },
-    "secs": 14
+    "secs": 18
    },
    {
     "why": "an audition (self-tape) set for 2030-06-09T22:00, Jess in Static On Route 9",
@@ -14861,7 +14861,7 @@
      ],
      "transactions": 1598
     },
-    "secs": 16
+    "secs": 21
    },
    {
     "why": "an offer standing: An Offer For Felix",
@@ -14912,7 +14912,7 @@
      ],
      "transactions": 1635
     },
-    "secs": 13
+    "secs": 19
    }
   ],
   "workDays": [

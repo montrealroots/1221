@@ -178,5 +178,5 @@ May 11, 2029: You checked your materials for an approach: headshots and a résum
 May 11, 2029: The School passed on a request from his office to meet you, standing until June 10, 2029.
 May 11, 2029: You first heard of him through the School’s follow-up after the showcase.
 
------ 40 controls; Tab reached 33 of the 33 it can; 2 grayed
+----- 42 controls; Tab reached 35 of the 35 it can; 2 grayed
 Nothing found.

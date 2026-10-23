@@ -6,14 +6,14 @@
    "part": 1,
    "from": "2028-05-24",
    "to": "2029-03-24",
-   "secs": 59,
+   "secs": 88,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2029-03-24",
    "to": "2029-09-01",
-   "secs": 58,
+   "secs": 79,
    "reloads": 5,
    "done": true
   }
@@ -3669,7 +3669,7 @@
      ],
      "transactions": 861
     },
-    "secs": 8
+    "secs": 13
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -3730,7 +3730,7 @@
      ],
      "transactions": 1157
     },
-    "secs": 12
+    "secs": 16
    },
    {
     "why": "an audition (in-person) set for 2029-06-11T15:00, Felix in Paper Moons",
@@ -3775,7 +3775,7 @@
      ],
      "transactions": 1173
     },
-    "secs": 11
+    "secs": 16
    }
   ],
   "workDays": [],

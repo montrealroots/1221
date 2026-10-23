@@ -92,5 +92,5 @@ Not now: Choose at least one recorded piece to cut it from.
 
 Sources And Estimates
 
------ 38 controls; Tab reached 31 of the 31 it can; 2 grayed
+----- 40 controls; Tab reached 33 of the 33 it can; 2 grayed
 Nothing found.

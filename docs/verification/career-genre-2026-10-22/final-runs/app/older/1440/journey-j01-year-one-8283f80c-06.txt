@@ -5,6 +5,7 @@ SLATE
 ·
 June 1, 2027
 EDT
+Running
 Pause
 Sleep
 Look After Yourself
@@ -15,9 +16,12 @@ Guide
 Not Saved Yet
 Save & Exit
 Home
-99+
 YOU
 Player Profile
+YOUR DAY
+Calendar
+Updates
+99+
 YOUR TRAINING
 School
 YOUR WORK
@@ -27,116 +31,144 @@ Money
 Papers
 YOU
 Ada Cole
-Actress · 298 Unread
+Actress
 Home
 ›
 Player Profile
 ›
+Calendar
+›
+Updates
+›
 School
-›
-Career
-›
-Money
-YOUR BANK
-Chase
+SCHOOL
+David Geffen School of Drama at Yale University
 
-$501,999 held here, in 2 accounts.
+MFA in Acting, class of 2029. Year 1 of 3, good standing.
 
-Accounts
-Cards
-Payments And Cash
-Borrowing
-Statements
-Chase Total Checking
+You’re 1st of 16 in the class. Next: Classes, August 30, 2027 at 9:00 AM.
 
-Chase Routing 021000021 · Account 9088881148
-
+Standing And Craft
+Classes
+Coursework
+Casting
+Shifts And Pay
+Terms And Award
+Your Standing
 How This Works
-BALANCE
-$88,924
+STANDING
+Good Standing
+ATTENDANCE THIS TERM
+100%
+You need 90% or more
+GROWTH THIS TERM
+1.6
+The middle student in your class grew 1.3. Allowing for how much room each of you has to grow, you’re ahead of the class, and you need at least half its pace
+COURSEWORK THIS TERM
+1 of 45
+How many of the pieces due were unready or not shown. Once 3 or more are due, half or more falls short of what’s asked
 
-Pays no interest.
+Attendance counts 65 of 65 class days, 38 of 38 calls and 12 of 12 assigned shifts.
 
-$15.00 a month, waived in any month you have $500 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500 in it all month, or keep an average of $5,000 across your accounts at the bank. It’s waived this month so far.
+You’re in the casting pool.
+
+Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning.
+
+At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once 3 or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing.
+
+After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
+
+Withdraw From The School…
+How This Works
+A LEAVE OF ABSENCE
+How This Works
+Kind
+Medical
+Personal
+Length
+One Term (Not Possible)
+Two Terms
+Three Terms (Not Possible)
+Reason
+Illness
+Injury
+Mental Health
+Ask For A Leave…
+
+One or three terms: You’d come back in the spring to the second halves of year-long courses (DRAM 203a/b, DRAM 213a/b and others) whose first halves you haven’t taken.
+
+If it’s granted, it runs from Fall Term 2027 to Fall Term 2028. While you’re on leave there’s no aid, and no classes, calls or shifts. Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back. Give notice of your return eight weeks before, or the leave ends in dismissal. You’d be back in year 2, with the class of 2030: your class goes on without you, and stays yours.
 
 Sources And Estimates
-Chase Savings
-
-Chase Routing 021000021 · Account 3732711312
-
+COURSES AND THE DEGREE
 How This Works
-BALANCE
-$413,075
 
-Pays 0.01% APY (0.01% a year before compounding). Interest builds up daily and is paid on the last day of the month.
+18 of 18 courses passed so far. Only the terms to come stand between you and the degree.
 
-$5.00 a month, waived in any month you keep $300 in it all month. It’s waived this month so far.
+Every Course
+Sources And Estimates
+What The School Asks (set out at orientation, August 26, 2026)
+Sources And Estimates
+Your Composure
+
+What nerves do to a performance
+
+COMPOSURE
+46
+Nerves add 3.3 stress before a performance
+
+Composure keeps your work consistent under pressure, in a scene, a song, a self-tape, an audition and a night on stage, and steadies you after a slip. It grows a little with every night in front of an audience and every solo showing. To train it, practice Graded Exposure under Attributes And Craft on your Player Profile.
 
 Sources And Estimates
-Close It
-Closing it moves its $413,075 to Chase Total Checking, including $0.11 of interest from this month.
-Move Money
+From Your Teachers
 
-Between your own accounts. Within one bank it’s instant. To another bank it takes the sending bank’s time, said below once you choose the accounts, and abroad it also costs the exchange and the fees.
+On Spring Term 2027
 
-How This Works
-From
-Chase Total Checking ···1148, Chase ($88,924)
-Chase Savings ···1312, Chase ($413,075)
-To
-Chase Savings ···1312, Chase
-Amount (USD)
-Move It
-Your Banks
-
-One checking account
-
-How This Works
-
-Chase Total Checking at Chase, $88,924. This is your primary account.
-
-Your wages and other payments are paid into it. Your everyday card’s autopay pays from it.
-
-Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases, cash from a machine, bills you pay by hand and any new standing order or autopay. Making another account primary doesn’t move anything already set up.
-
-How This Works
-
-Have Wages Paid Here, on another account, moves your wages and other payments to it. Yale’s payroll starts paying the new account after 7 days, about one of its weekly pay cycles, as Yale says. Other payers take 14 days, which is estimated: employers say one to two pay cycles.
-
-How This Works
-Open An Account At Another Bank
-How This Works
-
-There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.
-
-Bank
-Bank of America
-Wells Fargo
-Citi
-Capital One
-
-It decides an application within 2 business days, the longest it says it takes. The debit card works from the day the account opens, as a digital card in the app.
-
-It asks for an opening deposit of $100, sent from another of your accounts as you apply.
-
-Its Advantage Plus Banking costs $12.00 a month, waived in any month you have $250.00 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500.00 in it all month.
-
-Money it sends to another bank takes 3 business days.
-
-Opening Deposit From
-Chase Total Checking ···1148 (Chase)
-Chase Savings ···1312 (Chase)
-Amount (USD)
-Apply
+Gregory Wallace, Acting I: Real progress this term: you’re pulling ahead of the class in scene study, character work and emotional depth.
+Walton Wilson, Voice I: Steady work, in step with the class. Keep at your vocal expression.
+Julie Foh, Speech And Accents I: Steady work, in step with the class. Keep at your speech, and accents and dialects.
+Erica Fae, The Body As Source I: Steady work, in step with the class. Keep at your physical expression.
+Fabio Tavares, Alexander Technique I: Steady work, in step with the class. Keep at your physical expression.
+Tamilla Woodard, Text Analysis I: The Actor’s Table Work: Real progress this term: you’re pulling ahead of the class in script analysis.
+Kelsey Rainwater, Acting Intimacy And Combat For The Stage: Steady work, in step with the class. Keep at your intimacy and stage combat.
+Paul Walsh, Text And Context Across The Repertory: Real progress this term: you’re pulling ahead of the class in script analysis.
+These notes are simulated. The words are the game’s, not the teachers’.
+Your Faculty
+Evan Yionoulis: Dean And Artistic Director Of Yale Repertory Theatre, since July 1, 2026.
+Tamilla Woodard: Chair Of Acting, who casts every student and meets any whose standing falls.
 Sources And Estimates
-CD
+Your Craft Against The Class
 
-7 months at 3.5%
+You and 15 classmates, 0 to 100
 
-How This Works
-
-Locked for 7 months at a fixed 3.5%. At its end it renews for the same term at the bank’s rate on the day, unless you choose another way the bank allows. Breaking it early costs 180 days’ interest on it, never more than it has earned, and at least 7 days’ interest in its first week. Once it’s open, Break It Early is under Your Accounts Over Time.
-
-Term Deposit Amount (USD)
-Put It Away
+SKILL YOU YOU CAN REACH CLASS BEST CLASS MEDIAN YOUR PLACE
+Accents And Dialects 58.9 80.6 60.3 52.4 2 of 16
+Audition Technique 57.7 83.7 54.9 49.5 1 of 16
+Character Work 61.7 78.6 61.3 55.2 1 of 16
+Classical Text 53.2 79.2 54.4 48.8 2 of 16
+Clown And Mask 51.7 77.7 56.4 48.6 5 of 16
+Cold Reading 54.7 80.5 54.3 48.5 1 of 16
+Comedy 52.3 78.3 57.9 48.1 4 of 16
+Dance 55.5 81.5 55.0 47.0 1 of 16
+Emotional Depth 62.3 81.3 61.1 54.2 1 of 16
+Improvisation 54.8 79.4 55.0 48.7 2 of 16
+Intimacy 58.8 82.5 57.7 49.3 1 of 16
+Memory 58.0 79.0 58.5 49.8 2 of 16
+On Camera 54.8 80.8 57.6 48.4 3 of 16
+Physical Expression 59.7 77.1 59.6 55.2 1 of 16
+Scene Study 61.4 77.7 60.2 55.8 1 of 16
+Script Analysis 63.5 81.3 60.7 55.7 1 of 16
+Singing 55.0 81.0 55.1 49.4 2 of 16
+Speech 54.7 75.6 59.3 51.2 5 of 16
+Stage Combat 54.5 78.0 56.5 50.5 3 of 16
+Vocal Expression 64.7 86.1 55.5 51.2 1 of 16
+Voice-Over 53.5 79.5 54.1 49.3 4 of 16
+Acting 61.7 78.8 59.9 55.7 1 of 16
+Overall 57.2 80.0 56.3 49.9 1 of 16
 Sources And Estimates
+Term Reviews
+TERM STANDING ATTENDANCE GROWTH CLASS GROWTH COURSEWORK
+Fall Term 2026 Good Standing 100% 1.7 1.3 2 of 47 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class.
+Spring Term 2027 Good Standing 100% 1.5 1.0 1 of 45 Unready or not shown
+You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 27 of 45 pieces were Strong or better.

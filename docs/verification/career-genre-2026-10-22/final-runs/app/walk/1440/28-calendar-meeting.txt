@@ -71,7 +71,18 @@ School
 Career
 Money
 Holiday
+Today, May 25, 2029
+
+Spring
+
+Put Something On It
+How This Works
+Meeting At Halberd Talent
+11:00 AM · 1 hour · New York
 Next Thirty Days
+
+Everything in the next thirty days, a run of the same call on one line.
+
 Meeting At Halberd Talent
 May 25, 2029 · 11:00 AM
 You
@@ -81,6 +92,7 @@ Your Birthday
 June 14, 2029 · 9:00 AM
 Card Statement
 June 20, 2029 · 9:00 AM
+Money
 
------ 59 controls; Tab reached 58 of the 58 it can; 0 grayed
+----- 64 controls; Tab reached 63 of the 63 it can; 0 grayed
 Nothing found.

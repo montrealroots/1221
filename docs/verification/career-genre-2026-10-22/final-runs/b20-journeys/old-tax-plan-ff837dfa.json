@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2027-04-18",
    "to": "2028-02-16",
-   "secs": 37,
+   "secs": 55,
    "reloads": 10
   },
   {
    "part": 2,
    "from": "2028-02-16",
    "to": "2028-12-16",
-   "secs": 63,
+   "secs": 89,
    "reloads": 10
   },
   {
    "part": 3,
    "from": "2028-12-16",
    "to": "2029-09-01",
-   "secs": 115,
+   "secs": 164,
    "reloads": 8,
    "done": true
   }
@@ -6672,7 +6672,7 @@
      ],
      "transactions": 304
     },
-    "secs": 1
+    "secs": 2
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -6707,7 +6707,7 @@
      "work": [],
      "transactions": 726
     },
-    "secs": 15
+    "secs": 22
    }
   ],
   "workDays": [],
