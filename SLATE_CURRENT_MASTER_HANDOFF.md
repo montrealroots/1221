@@ -6,11 +6,11 @@ verbatim) on brief 23's line, before it was merged. It was worked on `claude/pea
 pushed and never force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy
 without my instruction." No pull request is open for it. There is no stash and one worktree.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at brief 22's close, 588 through briefs 23 and 24, whose source changes left the 46 rows brief 22's final runs
-  measured behind what they read. Those runs, played again on brief 24's tested commits and folded, hold all 46 again;
-  the 634th, the gate's own row, folds in once the gate has run on the commit holding this.)
+  measured behind what they read. Those runs, played again on brief 24's tested commits and folded, hold all 46 again,
+  and the gate's own row on the commit holding them.)
 
 - **Read first:** `docs/verification/ui-polish-2026-10-23/README.md` (the receipt) and `criteria.md` (the checks,
   written before any change).
@@ -38,9 +38,15 @@ without my instruction." No pull request is open for it. There is no stash and o
   side now, and the suite holds 14 checks for each of the eight lives.
 - **The walk** (brief 23's `capture.mjs`, eight lives, six sizes): 1,416 steps, none failing a measure, no page error.
 - **Emulated:** Playwright's Chromium with a phone's screen, touch and no hover. No physical phone and no screen reader.
-- **Under way:** brief 22's final runs (P=f24): the engine's lanes on `cb8b19eb` (whose `src/engine` is the tested
-  commit's), every step passing but JRC's `b19-lives-diff`, which exits 1 as on every commit since brief 19; the
-  browser's lanes on `05060742`. Then the gate in a clean clone, the fold, and the gate again.
+- **Brief 22's final runs again** (the owner's "So we can get it back to 634"; P=f24): the engine's lanes on `cb8b19eb`
+  (whose `src/engine` is the tested commit's), the browser's on `05060742`, each in a clean clone, every step exit 0 but
+  JRC's `b19-lives-diff`, which exits 1 as on every commit since brief 19. Against brief 22's close, every number the
+  same, the runs' own records aside; the text differs where the screens' words changed. They found defect 7, and two
+  tools reading words brief 24 changed. The record: `docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`
+  (Played Again On Brief 24's Commits).
+- **The gate:** in a clean clone of `859bacdb`, which holds the fold, its exit read from its file: 0. 488 of 488 test
+  files, 5,616 of 5,616 tests, none skipped, and all 22 checks (`.../final-runs/runs/gate.txt`; brief 22's, on
+  `576a0e88`, stood there until then and is in git). Its row folded in: 634 of 658.
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
 
 # Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23

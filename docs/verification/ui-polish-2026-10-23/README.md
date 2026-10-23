@@ -220,7 +220,9 @@ JPEG copies at quality 85 of the 2× PNGs the scripts wrote.
 
 ## The Gate
 
-To come: in a clean clone, its exit read from its file.
+In a clean clone of `859bacdb`, the commit holding the final runs' fold, its exit read from its file
+(`../career-genre-2026-10-22/final-runs/runs/gate.txt`): 0. 488 of 488 test files, 5,616 of 5,616 tests, none skipped,
+and all 22 checks, the completion matrix's last. Its row folded in, the matrix reads 634 of 658, as at brief 22's close.
 
 ## Brief 22's Final Runs
 
@@ -234,8 +236,8 @@ browser lanes that were stopped and why, is in
   differ where the screens' words changed, the acceptance walk 77 of 77 at each width as before.
 - **What they found in brief 24, and fixed:** defect 7 (Home under 600 wide), and two tools reading words brief 24
   changed (the bar's date, the line over All Clear), which led to a line What Needs You no longer showed.
-- **The matrix:** folded by `verify.py`, `advice/close.py` and `criteria.py`, 633 of 658, the 46 rows held again. The
-  634th, the gate's, below.
+- **The matrix:** folded by `verify.py`, `advice/close.py` and `criteria.py`, 633 of 658, the 46 rows held again; the
+  634th, the gate's, once it had run (below).
 
 ## Limits
 
