@@ -1628,7 +1628,10 @@ td, th { overflow-wrap: break-word; }
 .home-grid > :nth-child(4) { grid-column: 2; grid-row: 3; }
 @media (max-width: 599px) {
   .home-grid { grid-template-columns: minmax(0, 1fr); }
-  .home-grid > * { grid-column: auto; grid-row: auto; }
+  /* As specific as the placements above, so it wins: as `.home-grid > *` (until later the same day, brief 22's final runs
+     on brief 24's commit) it lost to them, the cards kept their second column, and in a window 390 wide How You Are's
+     labels broke mid-word in a squeezed column with its help cut off by the card. */
+  .home-grid > :nth-child(n) { grid-column: auto; grid-row: auto; }
 }
 /* On a phone on its side a heading of Home's keeps its help beside it, its line under it wrapping instead: at 12rem, the
    head's own, What Needs You's help took a row of its own in a column at 667, and the first thing waiting started at the
