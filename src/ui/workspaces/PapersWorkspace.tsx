@@ -49,6 +49,8 @@ import { BIENESTAR, IRISH_PENSION, bienestarRefusal, irishContributions, irishPe
 import { IMSS, grownTo, imssRefusal, weeksNeeded } from '@/engine/systems/imss';
 import { isoOfCountry } from '@/engine/systems/documents';
 import { exchange } from '@/engine/content/currency';
+import { TabBar } from '@/ui/components/TabBar';
+import { PapersGlance } from '@/ui/components/Glance';
 
 type PapersTab = 'returns' | 'health' | 'benefits' | 'passport' | 'work';
 
@@ -445,25 +447,10 @@ export function PapersWorkspace() {
         <div className="eyebrow">Your Affairs</div>
         <h1>Papers</h1>
         <p className="muted">Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.</p>
+        <PapersGlance />
       </div>
-      <div className="tabs" role="tablist" aria-label="Papers">
-        {PAPERS_TABS.map((one, i) => (
-          <button
-            key={one.id} id={`papers-tab-${one.id}`} type="button" role="tab" className="tab"
-            aria-selected={one.id === tab} aria-controls={`papers-pane-${one.id}`} tabIndex={one.id === tab ? 0 : -1}
-            onClick={() => setTab(one.id)}
-            onKeyDown={(e) => {
-              const go = (n: number) => { const next = PAPERS_TABS[(n + PAPERS_TABS.length) % PAPERS_TABS.length]!; setTab(next.id); document.getElementById(`papers-tab-${next.id}`)?.focus(); };
-              if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
-              else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
-              else if (e.key === 'Home') { e.preventDefault(); go(0); }
-              else if (e.key === 'End') { e.preventDefault(); go(PAPERS_TABS.length - 1); }
-            }}
-          >
-            {one.label}
-          </button>
-        ))}
-      </div>
+      {/* The shared tab bar from 2026-10-23 (`components/TabBar.tsx`); until then its own copy here. */}
+      <TabBar tabs={PAPERS_TABS} tab={tab} onTab={setTab} label="Papers" idPrefix="papers" />
       <div role="tabpanel" id={`papers-pane-${tab}`} aria-labelledby={`papers-tab-${tab}`} tabIndex={0}>
         {panes[tab]}
       </div>

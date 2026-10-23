@@ -16,7 +16,8 @@
  * missed for being elsewhere, since nothing in the game writes `currentLocationId` after a life begins. Until later that
  * day The Calendar said everything the world booked had Go and Stand Here alone at its stop, and a rehearsal with a
  * classmate offers Call It Off there now (`DueNow`, `ui/shell/TimeControls.tsx`). From then the entry says too that a
- * commitment the player stands at stays at the top of Home's Calendar panel (`nextCommitmentItem`, `world/calendar.ts`).
+ * commitment the player stands at stays at the top of Home's Up Next (`nextCommitmentItem`, `world/calendar.ts`; the Calendar panel
+ * until 2026-10-23, brief 23).
  * Moving Time On's list of a stop's answers left Call It Off out until later still. The Weather said then too that the
  * Look After Yourself menu read the weather as you chose and the workout as its hour ended, so a wet spell inside the
  * hour made it a workout indoors unforeseen; the menu's line has read it as the hour ends since that day too
@@ -91,11 +92,11 @@ export const DAY: readonly GuideEntry[] = [
     covers: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
     synonyms: ['commitment', 'what’s coming', 'go button', 'skip it', 'stand here', 'clock stopped', 'wanted you', 'upcoming', 'due now'],
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
-    where: { route: '/home', label: 'Home, The Calendar Panel, Open Calendar' },
+    where: { route: '/home', label: 'Home, Up Next, Open Calendar' },
     available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. Play, which moves the clock to a commitment, opens with ${chapter('clock')}.`,
-    short: 'The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it.\n\nWhen the clock reaches a commitment, it stops and asks what to do: press Go to be there, or Stand Here to wait. A plan of your own also offers Skip It, a rehearsal with a classmate Call It Off, and a meeting with an agent’s office Ask To Move, and after any of them the clock carries on to where it was headed.',
+    short: 'Up Next, on Home, shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it.\n\nWhen the clock reaches a commitment, it stops and asks what to do: press Go to be there, or Stand Here to wait. A plan of your own also offers Skip It, a rehearsal with a classmate Call It Off, and a meeting with an agent’s office Ask To Move, and after any of them the clock carries on to where it was headed.',
     steps: [
-      'Read the Calendar panel on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, such as a card statement or a birthday.',
+      'Read Up Next on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, such as a card statement or a birthday.',
       'Press an entry’s name or its time to open it under the panel: what it is, when, how long it runs, and what missing it costs.',
       'When the clock stops at something, a dialog named for it says the time and how long going takes. Press Go to be there.',
       'For a plan of your own, you can press Skip It instead, for a rehearsal with a classmate, Call It Off, and for a meeting with an agent’s office, Ask To Move. The dialog says what each does before you press it. Stand Here closes the dialog and leaves the clock paused at the commitment.',
@@ -120,7 +121,7 @@ export const DAY: readonly GuideEntry[] = [
       'Skip It: your plan is marked missed, a notice says you didn’t go, and the clock carries on to where it was headed, stopping at the next commitment on the way.',
       'Call It Off, on a rehearsal with a classmate: it’s called off at short notice, which costs their trust and stays with them, and the clock carries on to where it was headed, stopping at the next commitment on the way.',
       'If Skip It, Call It Off or Ask To Move can’t be done, nothing changes: the dialog stays open, the clock where it stopped, and a message says why.',
-      'Stand Here: the dialog closes and the clock stays paused at the commitment, which stays at the top of the Calendar panel, marked now. The commitment starts the next time the clock moves, and you’re there if you’re awake, in its town, and not kept away by a hospital bed or an injury.',
+      'Stand Here: the dialog closes and the clock stays paused at the commitment, which stays at the top of Up Next, marked now. The commitment starts the next time the clock moves, and you’re there if you’re awake, in its town, and not kept away by a hospital bed or an injury.',
       'Any stop pauses the clock, so press Play again afterwards.',
     ],
     later: [
@@ -316,20 +317,20 @@ export const DAY: readonly GuideEntry[] = [
     covers: ['ui.needs', 'world.mark_read', 'world.take_decision_action', 'world.dismiss_decision', 'look.notification', 'look.decision'],
     synonyms: ['notifications', 'notices', 'decisions', 'mark read', 'dismiss', 'inbox', 'all clear', 'badge', 'unread', 'go there'],
     questions: ['What is the number beside Home?', 'How do I clear my notices?', 'What happens if I dismiss a question?', 'Does a question go away on its own?', 'Why didn’t pressing an answer work?'],
-    where: { route: '/home', label: 'Home, The What Needs You Panel' },
+    where: { route: '/home', label: 'Home, What Needs You And Recent Updates' },
     available: `From ${chapter('needs')}.`,
-    short: 'What Needs You, on Home, holds the questions you need to answer and the notices that tell you what happened. A question has its answers as buttons, such as File It or Keep The Account, and Dismiss. A notice says what happened: groceries you couldn’t pay for, a commitment you slept through, a welcome to the school. The number beside Home on the menu counts both.',
+    short: 'What Needs You, on Home, holds the questions you need to answer and what needs putting right. A question has its answers as buttons, such as File It or Keep The Account, and Dismiss. A thing to put right, such as an overdrawn account or a return that’s due, has the button to its screen, and goes once it’s put right. Recent Updates, also on Home, shows the latest notices of what happened: groceries you couldn’t pay for, a commitment you slept through, a welcome to the school. Updates, on the menu, keeps every notice, read and unread. The number beside Home on the menu counts the questions, and the one beside Updates the unread notices.',
     steps: [
-      'Open Home and read What Needs You: questions first, then notices.',
+      'Open Home and read What Needs You: the questions first, then what needs putting right.',
       'Press one of a question’s answers to act on it from What Needs You, without opening its screen. An answer does what the same action does on the question’s own screen: File It, on your tax return’s question, files the return just as File It on Papers does.',
-      'Press Go There to open the screen a question or a notice is about.',
+      'Press Go There to open the screen a question or a notice is about, or Open Money, Open Papers, Open School or Open Calendar beside a thing to put right.',
       'Press Dismiss to take a question off the list without answering it.',
-      'Press Mark N Read, at the top of the panel, to mark every unread notice read at once.',
-      'Press Show All N, under the notices, to see every unread one before you do: the panel draws the six most important first, and Show The Six Most Important goes back to them.',
+      'Read Recent Updates: the most important unread notices, two lines of each. Press Mark Read beside one, or Mark N Read, at the top of the panel, to mark every unread notice read at once.',
+      'Press View All Updates, or Updates on the menu, for every notice, the newest first: Unread or All, and About for one kind. Read It All shows a notice’s whole text, and a notice that came more than once says how many times. Mark Read marks one read, and Mark N Read every one shown.',
       'Press a question’s or a notice’s title to open it: how urgent or important it is, when it closes, and where it sits in the list.',
     ],
     needs: [
-      `The panel, Mark Read, the answers and Dismiss open with ${chapter('needs')}.`,
+      `What Needs You, Recent Updates, Updates, Mark Read, the answers and Dismiss open with ${chapter('needs')}.`,
       'An answer does what the same action does on its own screen, so that screen’s chapter has to have been read too.',
     ],
     costs: [
@@ -344,7 +345,7 @@ export const DAY: readonly GuideEntry[] = [
     now: [
       'An answer does what its button does on its own screen. Done, the question closes; if it can’t be done, the question stays open and the reason shows.',
       'Dismiss closes the question unanswered. What it was about stands: a return still falls due, and can still be filed from its screen.',
-      'Mark Read marks every unread notice read, and the count beside Home falls by that many.',
+      'Mark Read marks a notice read, and Mark N Read every unread one, and the count beside Updates falls by that many.',
     ],
     later: [
       'Every question has a date. If you don’t answer it, it closes by itself within two days after that date.',
@@ -355,20 +356,21 @@ export const DAY: readonly GuideEntry[] = [
     interpret: [
       'The stripe beside a question turns amber at an urgency of 65 and red at 85.',
       'Overdue, in red, means a question’s date has passed, and it closes within two days.',
-      'All Clear means every question is answered and every notice read, nothing is owed past due, the bank and the card are in order, and the calendar has no clash for a month. No Questions Waiting lists what still weighs: money owed, an overdrawn account, a card near its limit or behind, a late return, a clash.',
+      'All Clear means every question is answered, nothing is owed past due, the bank and the card are in order, and the calendar has no clash for a month. Otherwise what needs putting right is listed under the questions, each with the way to its screen: money owed, an overdrawn account, a card near its limit or behind, care or a debt owed, a return due or tax owed, no health cover, a standing that has dropped, or a clash.',
       // Until 2026-10-17 this said the notices past the sixth moved up as those above them cleared, where Mark N Read
       // cleared them all at once and a notice past the sixth was on no screen (found by brief 13's interface playthroughs).
-      'Home shows six questions, with “N more waiting.” for the rest, and the six most important unread notices, with “N more unread.” and Show All N for the rest. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
+      // Until 2026-10-23 (brief 23) the notices were under the questions, six at a time with Show All N.
+      'Home shows six questions, with “N more questions waiting.” and Show All N for the rest, and the four most important unread notices, with “N more unread.” and View All Updates for the rest. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
     ],
     unavailable: [
-      `Before ${chapter('needs')} is read, the panel shows Locked, with Read About It.`,
+      `Before ${chapter('needs')} is read, What Needs You shows Locked, with Read About It, and Updates is off the menu.`,
       `An answer whose own chapter hasn’t been read says which chapter to read first: File It waits for ${chapter('papers')}.`,
       '“That question is already settled: it was answered, or its date passed.” A question answered once can’t be answered again.',
       'An answer that can’t be done keeps the question open, with the reason on screen: a payment the bank can’t cover, say.',
     ],
     mistakes: [
       'Dismiss doesn’t answer anything. Go to the question’s screen and do it there, before its date.',
-      'Mark Read clears every unread notice at once, and Home lists only the unread, so read a notice before marking it.',
+      'Mark N Read clears every unread notice at once. Updates keeps them, under All, so a notice marked read is still there to read.',
       'Opening a notice by its title doesn’t mark it read; only Mark Read does.',
     ],
     next: [
@@ -386,7 +388,7 @@ export const DAY: readonly GuideEntry[] = [
     example: {
       setup: 'February, for a student from abroad, who files a US return every year: Your 2026 Tax Return waiting under File It and Dismiss, and two unread notices.',
       steps: ['Press Dismiss on Your 2026 Tax Return.', 'Press Mark 2 Read.'],
-      result: 'The question and both notices leave the panel, and the count beside Home falls by three. The return is still due on its date, and Papers still files it.',
+      result: 'The question leaves What Needs You and both notices leave Recent Updates: the count beside Home falls by one, and the one beside Updates by two. The return is still due on its date, and Papers still files it.',
     },
   },
   {
@@ -400,7 +402,7 @@ export const DAY: readonly GuideEntry[] = [
     available: `From ${chapter('plans')}. The Calendar screen itself opens with ${chapter('calendar')}.`,
     short: 'To put a plan of your own on the calendar, press Open Calendar on Home, pick a day and press Put Something On It. Give it a name, a start time on the half hour and a length from half an hour to all day. The clock stops at your plan like any commitment, and Call It Off takes it off before it starts. A plan costs no money and changes nothing in your wellbeing beyond the hours it takes.',
     steps: [
-      'Press Open Calendar on Home’s Calendar panel, or C anywhere.',
+      'Press Open Calendar under Up Next on Home, Calendar on the menu, or C anywhere.',
       'Page the months with ‹ and ›, or Today, and press a day to open it under the month.',
       'Press Put Something On It. Fill in What Is It, When It Starts and How Long It Takes, then press Put It On.',
       'To take a plan off, press it on its day or in Next Thirty Days, then Call It Off.',
@@ -458,7 +460,7 @@ export const DAY: readonly GuideEntry[] = [
       { to: 'body.sleep', kind: 'immediate', why: 'The Sleep dialog lists a plan inside its hours as one you’d sleep through, and sleeping through misses it.' },
       { to: 'body.look-after', kind: 'immediate', why: 'A plan about to begin refuses anything in Look After Yourself that would run into it.' },
       { to: 'craft.practice', kind: 'immediate', why: 'An hour of practice that would run into a plan is refused until the plan has passed.' },
-      { to: 'day.needs', kind: 'history', why: 'Skipping a plan, or sleeping through one, leaves a notice in What Needs You.' },
+      { to: 'day.needs', kind: 'history', why: 'Skipping a plan, or sleeping through one, leaves a notice in Updates.' },
       { to: 'day.weather', kind: 'optional', why: 'A plan’s hours open onto the sky over each of them.' },
     ],
     example: {
@@ -478,16 +480,16 @@ export const DAY: readonly GuideEntry[] = [
     covers: ['ui.weather', 'look.weather', 'look.forecastday', 'look.hours', 'look.skyhour', 'look.skyweek'],
     synonyms: ['forecast', 'temperature', 'rain', 'snow', 'thunderstorm', 'humidity', 'wind', 'hour by hour', 'week ahead', 'climate'],
     questions: ['What’s the weather doing?', 'Does the weather change anything?', 'Will it rain tomorrow?', 'Why is it the same every time I look?', 'When does the flu come round?'],
-    where: { route: '/home', label: 'Home, The Weather Panel' },
+    where: { route: '/home', label: 'Home, The Weather Beside The Greeting' },
     available: `From ${chapter('weather')}.`,
-    short: 'The Weather panel on Home shows the weather in your town: now, today’s high and low, humidity and wind, and the next five days. Press any figure for more: a day opens into its hours, and the sky into the week ahead. The weather changes one thing in the game: whether a workout is a run. It comes from your town’s climate, the season and a little chance, and it’s the same every time you look.',
+    short: 'The weather on Home, beside the greeting, shows the weather in your town: now, today’s high and low, and the next five days. Press any figure for more, the humidity and the wind among it: a day opens into its hours, and the sky into the week ahead. The weather changes one thing in the game: whether a workout is a run. It comes from your town’s climate, the season and a little chance, and it’s the same every time you look.',
     steps: [
-      'Read the Weather panel on Home: the temperature now and the condition, the high and the low, humidity, wind and the climate, and five days after today.',
+      'Read the weather on Home, beside the greeting: the temperature now and the condition, the high and the low, and five days after today.',
       'Press the temperature or the condition to open the sky: the wind, the humidity, how the day sits against the date’s normal, and What It’s Usually Like.',
       'From the sky, press The Rest Of Today for each hour left to midnight, Tomorrow, or The Week Ahead.',
       'Press a day in the strip for its high, low and wind, then Hour By Hour, then any hour.',
     ],
-    needs: [`The panel and its figures open with ${chapter('weather')}.`],
+    needs: [`The weather and its figures open with ${chapter('weather')}: until then Home shows Weather, Locked, in its place.`],
     costs: [
       { label: 'Time', value: 'None' },
       { label: 'Money', value: 'None' },
@@ -508,7 +510,7 @@ export const DAY: readonly GuideEntry[] = [
       'Fahrenheit and miles an hour in the United States and the few other countries that read Fahrenheit; Celsius and kilometers an hour elsewhere.',
       'The weather is estimated from a climate model of the town, so a day ahead is as fixed as today: what it shows for Thursday is what Thursday brings.',
     ],
-    unavailable: [`The panel and its figures stay plain until ${chapter('weather')} is read.`],
+    unavailable: [`The weather and its figures stay a locked button until ${chapter('weather')} is read.`],
     mistakes: [
       'Expecting rain to call off a class or a shift: it changes neither. The one thing it changes is whether a workout is a run.',
       'Judging a run by the sky now: a workout checks the weather as its hour ends, and so does its line in Look After Yourself, which tells you before you press it whether it’ll be a run.',

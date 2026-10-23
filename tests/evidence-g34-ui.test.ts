@@ -193,8 +193,9 @@ function creation(step: number, config: NewSaveConfig): Drawn {
   return { html, text: onScreen(html), controls: [...h.controls] };
 }
 const headings = (html: string) => [...html.matchAll(/<h([1-4])[^>]*>([\s\S]*?)<\/h\1>/g)].map((m) => onScreen(m[2]!).trim());
-/** Home's What Needs You panel, from its heading to the next panel's. */
-const needs = (text: string) => text.slice(text.indexOf('What Needs You'), text.indexOf('Your Affairs') > text.indexOf('What Needs You') ? text.indexOf('Your Affairs') : undefined);
+/** Home's What Needs You panel, from its heading to the next panel's: Up Next from 2026-10-23 (brief 23), Your Affairs at
+ * the foot until then. */
+const needs = (text: string) => text.slice(text.indexOf('What Needs You'), text.indexOf('Up Next') > text.indexOf('What Needs You') ? text.indexOf('Up Next') : undefined);
 const pressed = (d: Drawn, words: string) => {
   const found = d.controls.filter((c) => c.type === 'button' && c.text === words);
   expect(found, `one button “${words}”`).toHaveLength(1);
@@ -220,7 +221,7 @@ describe('n-dismiss-expire', () => {
     expect(row.actions).toEqual([{ label: 'File It', commandKind: 'tax.file', payload: { year: 2026 } }]);
 
     const before = drawn(sim, Home);
-    expect(needs(before.text)).toContain('What Needs You 1 open');
+    expect(needs(before.text)).toContain('What Needs You A question waiting on you');
     expect(needs(before.text)).toContain('Your 2026 Tax Return');
     expect(before.controls.filter((c) => c.type === 'button').map((c) => c.text)).toEqual(expect.arrayContaining(['File It', 'Go There', 'Dismiss']));
 
@@ -231,7 +232,10 @@ describe('n-dismiss-expire', () => {
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeUndefined();
     expect(openDecisions(sim)).toEqual([]);
     const after = drawn(sim, Home);
-    expect(needs(after.text)).toContain('What Needs You No questions are waiting on you.');
+    // No question waits, and what the return still asks is there to put right, from Papers (from 2026-10-23, brief 23:
+    // until then “No questions are waiting on you.” over its notices, and the return said nothing more).
+    expect(needs(after.text)).toMatch(/^What Needs You (One thing|Two things) to put right\./);
+    expect(needs(after.text)).toContain('The 2026 return is due April 15, 2027,');
     expect(after.text).not.toContain('Your 2026 Tax Return');
     expect(after.controls.some((c) => c.type === 'button' && c.text === 'Dismiss')).toBe(false);
 
@@ -309,7 +313,7 @@ describe('n-dismiss-expire', () => {
     expect(sim.must<{ ok: boolean }>({ kind: 'world.take_decision_action', payload: { decisionId: grapes, actionIndex: 0 } }).ok).toBe(true);
 
     const shown = needs(drawn(sim, Home).text);
-    expect(shown).toContain('What Needs You 5 open');
+    expect(shown).toContain('What Needs You Five questions waiting on you.');
     const order = ['Apples', 'Bananas', 'Cherries', 'Dates', 'Elderberries'].map((t) => shown.indexOf(t));
     expect(order.every((n) => n >= 0)).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);

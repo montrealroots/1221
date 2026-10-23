@@ -17,9 +17,9 @@
  */
 
 import { useEffect, useState } from 'react';
-import { useGame, useWorld } from '@/app/game-context';
+import { useGame, useWorld, labelForRoute } from '@/app/game-context';
 import { LifeEnded } from './LifeEnded';
-import { RAIL_DESTINATIONS } from './destinations';
+import { RAIL_DESTINATIONS, UPDATES_ROUTE } from './destinations';
 import { isOpen } from '@/engine/world/tutorial';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
@@ -29,6 +29,15 @@ import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
+import { usePauseWhileUpright } from './turn';
+import { useMedia } from '@/ui/components/media';
+
+/**
+ * When the rail is a drawer behind Menu: a window narrower than a laptop's, and any window too short for a column of
+ * destinations beside the page, as a phone on its side is (from 2026-10-23, brief 23: until then a phone 932 wide on its
+ * side kept the desktop's rail, a third of its width, beside a page 700 wide).
+ */
+export const DRAWER_QUERY = '(max-width: 900px), (max-height: 500px)';
 
 
 export function GameShell() {
@@ -40,6 +49,10 @@ export function GameShell() {
   // The destinations the guide has opened, by group, none left empty.
   const railGroups = useWorld((s) => RAIL_DESTINATIONS.map((g) => ({ ...g, items: g.items.filter((i) => isOpen(s, i.feature)) })).filter((g) => g.items.length > 0));
   const profileOpen = useWorld((s) => isOpen(s, 'ui.profile'));
+  const running = useWorld((s) => s.universe.preferences.timeSpeed !== 'paused');
+  const drawer = useMedia(DRAWER_QUERY);
+  // A phone held upright covers the game and pauses it (`ui/shell/turn.tsx`).
+  usePauseWhileUpright();
 
   // Escape closes the drawer, the way it closes the dialogs. Without it the
   // only ways out were the Menu button and a shade the drawer covers most of,
@@ -90,27 +103,31 @@ export function GameShell() {
           <span className="hide-sm">SLATE</span>
         </button>
 
+        {/* Where you are, in the bar, while the rail that marks it is folded away (from 2026-10-23, brief 23). */}
+        {drawer && <span className="topbar-here">{labelForRoute(route)}</span>}
+
         <div className="topbar-clock" aria-live="polite">
           <strong>{formatTime(sim.now, sim.zone)}</strong>
           <span className="topbar-clock-sep" aria-hidden="true">·</span>
           <span className="topbar-clock-date">{formatDate(sim.now, sim.zone)}</span>
           <span className="topbar-clock-zone">{zoneAbbreviation(sim.now, sim.zone)}</span>
+          {/* Whether the clock is moving, in a word beside it (from 2026-10-23, brief 23): until then only Play or Pause
+              said it, by naming what a press would do. */}
+          <span className="clock-state" data-running={running}>{running ? 'Running' : 'Paused'}</span>
         </div>
 
         <TimeControls />
 
         <div className="grow" />
 
-        <span className="topbar-divider" aria-hidden="true" />
-
-        <div className="topbar-group" role="group" aria-label="Your Save">
-          <GuideButton />
-          <SaveIndicator />
-
-          <button className="btn btn-ghost btn-sm" onClick={game.exitToMenu}>
-            Save &amp; Exit
-          </button>
-        </div>
+        {/* The guide and the save, the bar's secondary side; in the drawer's foot while the rail is a drawer, so a phone
+            on its side keeps one row of bar (from 2026-10-23, brief 23: until then a phone's bar was two or three rows). */}
+        {!drawer && (
+          <>
+            <span className="topbar-divider" aria-hidden="true" />
+            <SaveGroup />
+          </>
+        )}
       </header>
 
       <div className="shell-body">
@@ -122,9 +139,11 @@ export function GameShell() {
               onClick={() => go('/home', 'Home')}
             >
               <span className="grow truncate">Home</span>
-              {waiting + unread > 0 && (
-                <span className="rail-badge" aria-label={`${waiting + unread} Waiting On You`}>
-                  {waiting + unread > 99 ? '99+' : waiting + unread}
+              {/* The questions waiting, from 2026-10-23 (brief 23); the unread notices are counted beside Updates. Until
+                  then Home counted both, and a graduate's read 99+ for 500 notices and no question. */}
+              {waiting > 0 && (
+                <span className="rail-badge" aria-label={`${waiting} Waiting On You`}>
+                  {waiting > 99 ? '99+' : waiting}
                 </span>
               )}
             </button>
@@ -142,6 +161,11 @@ export function GameShell() {
                   onClick={() => go(item.route, item.label)}
                 >
                   <span className="grow truncate">{item.label}</span>
+                  {item.route === UPDATES_ROUTE && unread > 0 && (
+                    <span className="rail-badge rail-badge-quiet" aria-label={`${unread} Unread`}>
+                      {unread > 99 ? '99+' : unread}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -159,12 +183,17 @@ export function GameShell() {
             >
               <span className="col">
                 <span className="small strong truncate">{sim.player.displayName}</span>
-                <span className="xs dim truncate">
-                  {PERFORMER_NOUN[sim.player.performerTitle]} · {unread > 0 ? `${unread} Unread` : 'All Read'}
-                </span>
+                {/* The unread count went to Updates on 2026-10-23 (brief 23): here it was said a third time. */}
+                <span className="xs dim truncate">{PERFORMER_NOUN[sim.player.performerTitle]}</span>
               </span>
             </button>
           </div>
+
+          {drawer && (
+            <div className="rail-group rail-foot">
+              <SaveGroup />
+            </div>
+          )}
         </nav>
 
         {railOpen && (
@@ -214,6 +243,20 @@ function Screen({ route }: { route: string }) {
   if (route === '/home') return <Home />;
   if (route.startsWith('/workspace/')) return <WorkspaceRouter route={route} />;
   return <Home />;
+}
+
+/** The guide, where the save stands, and Save & Exit: the bar's right side, or the drawer's foot. */
+function SaveGroup() {
+  const game = useGame();
+  return (
+    <div className="topbar-group" role="group" aria-label="Your Save">
+      <GuideButton />
+      <SaveIndicator />
+      <button className="btn btn-ghost btn-sm" onClick={game.exitToMenu}>
+        Save &amp; Exit
+      </button>
+    </div>
+  );
 }
 
 /**

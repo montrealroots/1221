@@ -44,6 +44,8 @@ import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
 import { ClassesPanel, LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
 import { enrolledTerms, yaleAccount } from '@/engine/systems/leave';
 import { hasProcess, holderFor } from '@/engine/systems/production';
+import { TabBar } from '@/ui/components/TabBar';
+import { SchoolGlance } from '@/ui/components/Glance';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
 
@@ -84,6 +86,7 @@ export function SchoolWorkspace() {
         <div className="eyebrow">School</div>
         <h1><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.name}</Open></h1>
         <p className="muted"><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.degree} in {YALE_DRAMA.program}</Open>, class of {school.classOf}. {where}</p>
+        <SchoolGlance />
       </LookRegion>
       <SchoolTabs tab={tab} onTab={setTab} />
       <div role="tabpanel" id={`school-pane-${tab}`} aria-labelledby={`school-tab-${tab}`} tabIndex={0}>
@@ -93,38 +96,9 @@ export function SchoolWorkspace() {
   );
 }
 
-/** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
+/** The tabs, as a tab list: the shared bar from 2026-10-23 (`components/TabBar.tsx`), its own copy until then. */
 function SchoolTabs({ tab, onTab }: { tab: SchoolTab; onTab: (tab: SchoolTab) => void }) {
-  const go = (index: number) => {
-    const next = SCHOOL_TABS[(index + SCHOOL_TABS.length) % SCHOOL_TABS.length]!;
-    onTab(next.id);
-    document.getElementById(`school-tab-${next.id}`)?.focus();
-  };
-  return (
-    <div className="tabs" role="tablist" aria-label="School">
-      {SCHOOL_TABS.map((one, i) => (
-        <button
-          key={one.id}
-          id={`school-tab-${one.id}`}
-          type="button"
-          role="tab"
-          className="tab"
-          aria-selected={one.id === tab}
-          aria-controls={`school-pane-${one.id}`}
-          tabIndex={one.id === tab ? 0 : -1}
-          onClick={() => onTab(one.id)}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
-            else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
-            else if (e.key === 'Home') { e.preventDefault(); go(0); }
-            else if (e.key === 'End') { e.preventDefault(); go(SCHOOL_TABS.length - 1); }
-          }}
-        >
-          {one.label}
-        </button>
-      ))}
-    </div>
-  );
+  return <TabBar tabs={SCHOOL_TABS} tab={tab} onTab={onTab} label="School" idPrefix="school" />;
 }
 
 /** Standing, this term's tally against the floors, the craft against the class, and the evaluations. */

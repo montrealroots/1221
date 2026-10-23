@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
@@ -15,6 +15,13 @@ import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/co
 import { canPlan, dayLabel, firstFreeSlot, hiddenIn, holidayChips, openSlots, roomFor, standingIn, stillStands } from './cell';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/** The entries as runs: the same title together, in the order each first comes. */
+export function runsOf(entries: readonly CalendarEntry[]): { title: string; entries: CalendarEntry[] }[] {
+  const runs = new Map<string, CalendarEntry[]>();
+  for (const e of [...entries].sort((a, b) => a.at - b.at)) runs.set(e.title, [...(runs.get(e.title) ?? []), e]);
+  return [...runs].map(([title, list]) => ({ title, entries: list }));
+}
 
 export function CalendarWorkspace() {
   const { sim, refresh } = useGame();
@@ -46,7 +53,14 @@ export function CalendarWorkspace() {
     runs.push({ end: e.endsAt ?? e.at });
     return runs;
   }, [] as { end: number }[]).length;
-  const selectedDay = days.find((d) => d.key === selected);
+  // The day chosen, or today's while none is (from 2026-10-23, brief 23): choosing a day shows its agenda, brought into
+  // view under the month. Until then nothing showed under the month until a day was chosen, and the choice opened below
+  // the fold at 1440 by 900 with nothing to say it had.
+  const selectedDay = days.find((d) => d.key === selected) ?? days.find((d) => d.isToday);
+  const agenda = useRef<HTMLDivElement>(null);
+  useEffect(() => { if (selected) agenda.current?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' }); }, [selected]);
+  const groups = runsOf(next30);
+  const [openRuns, setOpenRuns] = useState<ReadonlySet<string>>(new Set());
   const planningDay = days.find((d) => d.key === planning);
 
   const shift = (delta: number) => {
@@ -149,8 +163,9 @@ export function CalendarWorkspace() {
       </Panel>
 
       {selectedDay && (
+        <div ref={agenda}>
         <Panel
-          title={formatDate(selectedDay.date, sim.homeZone)}
+          title={`${selectedDay.isToday ? 'Today, ' : ''}${formatDate(selectedDay.date, sim.homeZone)}`}
           subtitle={selectedDay.holidays.length > 0 ? selectedDay.holidays.map(holidayLabel).join(' · ') : `${selectedDay.season}`}
           flush
           actions={(
@@ -160,7 +175,7 @@ export function CalendarWorkspace() {
                   Put Something On It
                 </Gated>
               )}
-              <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>
+              {!selectedDay.isToday && <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Show Today</button>}
             </>
           )}
           help="day.plans"
@@ -189,6 +204,7 @@ export function CalendarWorkspace() {
                       {entry.locationId ? ` · ${CITIES.get(entry.locationId)?.name ?? ''}` : ''}
                     </div>
                   </div>
+                  {entry.category === 'home' && <span className="chip chip-positive">{LEGEND_BY_CATEGORY.home?.label}</span>}
                   {entry.conflicted && <span className="chip chip-negative">Clash</span>}
                   {statusOf(entry) !== 'pending' && <span className="chip">{statusWords(statusOf(entry))}</span>}
                 </button>
@@ -196,10 +212,13 @@ export function CalendarWorkspace() {
             </div>
           )}
         </Panel>
+        </div>
       )}
 
 
-      <Panel title="Next Thirty Days" flush>
+      {/* A run of the same call is one line, its count and its dates, opening into each (from 2026-10-23, brief 23): until
+          then the next thirty days listed each, and a run's rehearsals filled the twenty it showed. */}
+      <Panel title="Next Thirty Days" subtitle={next30.length ? 'Everything in the next thirty days, a run of the same call on one line.' : undefined} flush>
         {next30.length === 0 ? (
           <Empty
             title="No Plans Ahead"
@@ -207,23 +226,58 @@ export function CalendarWorkspace() {
           />
         ) : (
           <div className="list">
-            {next30.slice(0, 20).map((entry) => (
-              <button key={entry.id} className="list-item" onClick={() => setDetail(entry)}>
-                <span
-                  className="cal-swatch"
-                  style={{ background: LEGEND_BY_CATEGORY[entry.category]?.colour }}
-                  aria-hidden="true"
-                />
-                <div className="grow">
-                  <div className="small">{titleCaseLabel(entry.title)}</div>
-                  <div className="xs dim">
-                    {formatDate(entry.at, sim.homeZone)} · {formatTime(entry.at, sim.homeZone)}
-                  </div>
+            {groups.map((group) => {
+              const first = group.entries[0]!;
+              const many = group.entries.length > 1;
+              const open = openRuns.has(group.title);
+              const clash = group.entries.some((e) => e.conflicted);
+              const swatch = <span className="cal-swatch" style={{ background: LEGEND_BY_CATEGORY[first.category]?.colour }} aria-hidden="true" />;
+              const chips = (
+                <>
+                  {first.requiresPlayer && <span className="chip">You</span>}
+                  {first.category === 'home' && <span className="chip chip-positive">{LEGEND_BY_CATEGORY.home?.label}</span>}
+                  {clash && <span className="chip chip-negative">Clash</span>}
+                </>
+              );
+              if (!many) {
+                return (
+                  <button key={first.id} className="list-item" onClick={() => setDetail(first)}>
+                    {swatch}
+                    <div className="grow">
+                      <div className="small">{titleCaseLabel(first.title)}</div>
+                      <div className="xs dim">{formatDate(first.at, sim.homeZone)} · {formatTime(first.at, sim.homeZone)}</div>
+                    </div>
+                    {chips}
+                  </button>
+                );
+              }
+              const last = group.entries[group.entries.length - 1]!;
+              return (
+                <div key={group.title} className="cal-run">
+                  <button className="list-item" aria-expanded={open} onClick={() => setOpenRuns((was) => { const next = new Set(was); if (next.has(group.title)) next.delete(group.title); else next.add(group.title); return next; })}>
+                    {swatch}
+                    <div className="grow">
+                      <div className="small">{`${titleCaseLabel(first.title)} (${group.entries.length})`}</div>
+                      <div className="xs dim">{`${formatDate(first.at, sim.homeZone)} to ${formatDate(last.at, sim.homeZone)}, the next at ${formatTime(first.at, sim.homeZone)}`}</div>
+                    </div>
+                    {chips}
+                    <span className="xs dim">{open ? 'Hide Each' : 'Show Each'}</span>
+                  </button>
+                  {open && (
+                    <div className="list cal-run-each">
+                      {group.entries.map((entry) => (
+                        <button key={entry.id} className="list-item" onClick={() => setDetail(entry)}>
+                          <div className="grow">
+                            <div className="xs">{formatDate(entry.at, sim.homeZone)} · {formatTime(entry.at, sim.homeZone)}</div>
+                          </div>
+                          {entry.conflicted && <span className="chip chip-negative">Clash</span>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                {entry.requiresPlayer && <span className="chip">You</span>}
-                {entry.conflicted && <span className="chip chip-negative">Clash</span>}
-              </button>
-            ))}
+              );
+            })}
           </div>
         )}
       </Panel>

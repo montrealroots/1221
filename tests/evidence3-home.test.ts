@@ -1,7 +1,8 @@
 /**
  * Round three of 2026-10-14 was for six rows the first two rounds (tests/evidence-g32-ui.test.ts,
  * tests/evidence-g33-ui.test.ts, tests/evidence2-b11.test.ts, tests/evidence2-b12.test.ts) left partial: Home's What
- * Needs You and its three lines of Your Affairs, a foreign graduate's status decision, and the Profile's School Journey.
+ * Needs You and its three lines of Your Affairs (at the heads of Money, the School and Papers from 2026-10-23, brief 23),
+ * a foreign graduate's status decision, and the Profile's School Journey.
  * What those rounds reached only by a fixture was reached here by play, once creation offered a family with need
  * (`withFamily`, `FAMILIES`, from 2026-10-14), and a school was played to its degree in slices across reloads.
  *
@@ -126,6 +127,9 @@ vi.mock('@/ui/kept', async (orig) => {
 
 const { Home } = await import('@/ui/screens/Home');
 const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
+const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
+const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 
 // ---------------------------------------------------------------------------
 // Lives, the screens over them, and the figures worked out by hand
@@ -172,6 +176,14 @@ function between(text: string, from: string, to?: string): string {
   const j = to ? text.indexOf(to, i + from.length) : -1;
   return text.slice(i, j < 0 ? undefined : j).trim();
 }
+/**
+ * Money's, the School's or Papers' head, from its name to its tabs, where it says where it stands: Home's Your Affairs
+ * said it in a line each until 2026-10-23 (brief 23), when the lines went to the heads of their own screens.
+ */
+function head(sim: Simulation, screen: FunctionComponent): string {
+  const { html } = drawn(sim, screen);
+  return words(html.slice(0, html.lastIndexOf('<', html.indexOf('tabs-wrap'))));
+}
 /** Cents written to the whole dollar, as Home writes a sum owed. */
 const dollars = (n: number) => `$${Math.round(n / 100).toLocaleString('en-US')}`;
 const own = (sim: Simulation, kind: Account['kind']): Account => sim.ledger.accountsOf(sim.player.id).find((a) => a.kind === kind && !a.closedAt && a.category !== 'term')!;
@@ -194,7 +206,7 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe('h-needs', () => {
-  const needs = (sim: Simulation) => between(drawn(sim, Home).text, 'What Needs You', 'How You Are');
+  const needs = (sim: Simulation) => between(drawn(sim, Home).text, 'What Needs You', 'Up Next');
   const unread = (sim: Simulation) => sim.universe.notifications.filter((n) => !n.read).length;
   /** Mark N Read, pressed on the panel, N counted here from the save. */
   const markRead = (sim: Simulation) => {
@@ -203,7 +215,12 @@ describe('h-needs', () => {
     drawn(sim, Home);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
   };
-  const WAITING = 'What Needs You No questions are waiting on you. How This Works No Questions Waiting';
+  /**
+   * What Needs You with nothing to decide and these to put right, each with the way to its screen. Until 2026-10-23
+   * (brief 23) it said “No questions are waiting on you.” over “No Questions Waiting” and the lines, once the notices
+   * under it were marked read; the notices are Recent Updates since, and the lines are counted.
+   */
+  const waiting = (...items: [string, string][]) => `What Needs You ${['One thing', 'Two things', 'Three things'][items.length - 1]} to put right. How This Works ${items.map(([line, screen]) => `${line} Open ${screen} How This Works`).join(' ')}`;
   const ALL_CLEAR = 'What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
 
   it('PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine: “You owe $1,882 that went unpaid.” at noon, across a reload, paid back out of savings at midnight; her twin who kept it is All Clear', () => {
@@ -219,7 +236,7 @@ describe('h-needs', () => {
     // The Bulletin's 2026–27 Yale Health plan, $3,764 a year, half of it a term, billed at nine to a checking with
     // nothing in it: owed (until 2026-10-13 a plan the bank couldn't pay was dropped, tests/evidence2-b10.test.ts).
     expect(sim.universe.transactions.filter((t) => t.memo === 'Yale Health plan, the fall term of 2026, unpaid').map((t) => t.at)).toEqual([at(2026, 8, 24, 9)]);
-    const said = `${WAITING} You owe $${(3_764 / 2).toLocaleString('en-US')} that went unpaid.`;
+    const said = waiting([`You owe $${(3_764 / 2).toLocaleString('en-US')} that went unpaid.`, 'Money']);
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
     // What's owed is paid back at midnight where the bank has it, savings included (`settleArrears`): the day after,
@@ -232,7 +249,8 @@ describe('h-needs', () => {
   });
 
   // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent”.
-  it('PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,443, then at its $1,630 limit “nearly at its limit”, then charged off 180 days past the first due date missed: “$2,038 is with collections.”, the checking still named on the Money line, and gone once Pay is sent', () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's Money line went: until then “…, the checking still named on the Money line, and gone once Pay is sent”.
+  it('PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,443, then at its $1,630 limit “nearly at its limit”, then charged off 180 days past the first due date missed: “$2,038 is with collections.”, the checking still listed on Money, and gone once Pay is sent', () => {
     const sim = ada('r3-coll', 'scraping');
     const card = cardsOf(sim, sim.player)[0]!;
     // The Scraping profile's card: a 1,500 € limit and 840 € owed, at SLATE's 0.92 € to the dollar, to the dollar
@@ -259,13 +277,13 @@ describe('h-needs', () => {
     markRead(sim);
     expect(-card.balance).toBe(913_00 + 50 * 10_00 + 30_00);
     expect(-card.balance).toBeLessThan(0.9 * 1_630_00);
-    expect(needs(sim)).toBe(`${WAITING} Your card is a payment behind, owing $1,443.`);
+    expect(needs(sim)).toBe(waiting(['Your card is a payment behind, owing $1,443.', 'Money']));
 
     // The second, an hour before: the groceries have taken the card to its limit and no further, $1,630, past $1,467.
     const second = toDue();
     markRead(sim);
     expect(-card.balance).toBe(1_630_00);
-    expect(needs(sim)).toBe(`${WAITING} Your card is nearly at its limit, owing $1,630. Your card is a payment behind, owing $1,630.`);
+    expect(needs(sim)).toBe(waiting(['Your card is nearly at its limit, owing $1,630.', 'Money'], ['Your card is a payment behind, owing $1,630.', 'Money']));
     past(second);
 
     // The third to the sixth missed the same way, and the card still open: a US card is charged off 180 days past the due
@@ -292,13 +310,17 @@ describe('h-needs', () => {
     if (openDecisions(sim).some((d) => d.title === 'Your 2026 Tax Return')) expect(press(button('File It'))).toMatchObject({ ok: true });
     expect(openDecisions(sim)).toEqual([]);
     markRead(sim);
-    const said = `${WAITING} $2,038 you owe is with a collection agency.`;
+    // Left to the clock, her first year has its concern too, which Home's School line said until 2026-10-23 (brief 23),
+    // and What Needs You since.
+    expect(sim.player.school!.standing).toBe('concern');
+    const said = waiting(['$2,038 you owe is with a collection agency.', 'Money'], ['Your standing is academic concern. The School screen says why.', 'School']);
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
-    // h-money: the card closed to collections, the checking stays, and the Money line names it.
-    // What it holds isn't the point: read on 11 April, money has come into it since the last due date emptied it
-    // (until brief 21, 2026-10-22, read at that due date, $0.00).
-    expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/^Your Affairs (How This Works )?Money Chase Total Checking: \$[\d,]+\.\d{2}\. Worth /);
+    // h-money: the card closed to collections, the checking stays, and Money lists it (Home's Money line named it until
+    // 2026-10-23, brief 23). What it holds isn't the point: read on 11 April, money has come into it since the last due
+    // date emptied it (until brief 21, 2026-10-22, read at that due date, $0.00).
+    expect(drawn(sim, BankWorkspace).text).toMatch(/Chase Total Checking .*?Balance \$[\d,]+ /);
+    expect(head(sim, BankWorkspace)).toMatch(/ Worth /);
     // Paid from the checking, the money brought back from savings: the debt settled, and the sentence gone.
     const debt = sim.ledger.accountsOf(sim.player.id).find((a) => a.category === 'collections')!;
     const owed = -debt.balance;
@@ -326,7 +348,7 @@ describe('h-needs', () => {
     };
     const sim = played(true);
     expect(healthOf(sim.player).bills[0]!.inDebt).toBe(true);
-    const said = `${WAITING} You owe $50 for medical care.`;
+    const said = waiting(['You owe $50 for medical care.', 'Papers']);
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
     const twin = played(false);
@@ -335,18 +357,20 @@ describe('h-needs', () => {
     // Chase pays an item up to $500 past zero (`perItemCover`, SLATE's estimate), so the bill is paid into an overdraft.
     const chase = played(true, 'us-chase');
     expect(healthOf(chase.player).bills[0]!.paid).toBe(true);
-    expect(needs(chase)).toBe(`${WAITING} Your account is $50 overdrawn.`);
+    expect(needs(chase)).toBe(waiting(['Your account is $50 overdrawn.', 'Money']));
   });
 });
 
 describe('h-money', () => {
-  it('PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: the line names it, and “No account” is reached by no life', () => {
+  it('PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: Money names it, and “No account” is reached by no life', () => {
     const sim = ada('r3-nothing', 'nothing');
     // 40 € at 0.92 to the dollar, $43, and no savings or card (tests/need-paths.test.ts).
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => [a.name, a.balance])).toEqual([['Chase Total Checking', 43_00]]);
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checkingOf(sim).id } }).error)
       .toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
-    expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/Money Chase Total Checking: \$43\.00\. Worth \$43\. Chase How This Works/);
+    // Home's line said “Money Chase Total Checking: $43.00. Worth $43.” until 2026-10-23 (brief 23); Money's head since.
+    expect(head(sim, BankWorkspace)).toBe('Your Bank Chase $43 held here, in one account. Worth $43.');
+    expect(drawn(sim, BankWorkspace).text).toMatch(/Chase Total Checking .*?Balance \$43 /);
   });
 });
 
@@ -361,8 +385,8 @@ describe('h-papers', () => {
     sim.advanceTo(at(2028, 2, 1, 12));
     return sim;
   };
-  /** Your Affairs' Papers line, its alerts in it. */
-  const papers = (one: Simulation) => between(between(drawn(one, Home).text, 'Your Affairs'), 'Papers Cover', 'Papers How This Works');
+  /** Papers' head, its alerts in it: Home's Your Affairs line until 2026-10-23 (brief 23). */
+  const papers = (one: Simulation) => between(head(one, PapersWorkspace), 'Cover:');
 
   it('PLAYER JOURNEY: on 1 February 2028, her 2026 return unfiled, owing nobody since Connecticut’s levy, and her 2027 return owing $2,286, Home’s alert names the 2027 return and what it would pay', () => {
     const sim = needy();
@@ -476,7 +500,7 @@ describe('the graduate, played', () => {
     }, 60_000);
   }
 
-  it('h-school: PLAYER JOURNEY: the degree played, Home says “Graduated, N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload', () => {
+  it('h-school: PLAYER JOURNEY: the degree played, the School says “Graduated. You’re N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload', () => {
     expect(kept.graduated, 'the slices played').toBeDefined();
     const sim = opened(kept.graduated!);
     expect(sim.player.school!.standing).toBe('graduated');
@@ -484,12 +508,13 @@ describe('the graduate, played', () => {
     const mean = (c: object) => SKILLS.reduce((a, s) => a + (c as Record<string, number>)[s.id]!, 0) / SKILLS.length;
     const mine = mean(sim.player.craft!);
     const place = 1 + sim.player.school!.classmates.filter((x) => mean(x.craft) > mine).length;
-    const line = `School Graduated, ${place}${[11, 12, 13].includes(place % 100) || place % 10 > 3 ? 'th' : ['th', 'st', 'nd', 'rd'][place % 10]} of 16 in the class. Yale How This Works`;
+    // Home's School line until 2026-10-23 (brief 23), “School Graduated, N of 16 in the class.”; the School's head since.
+    const line = `Graduated. You’re ${place}${[11, 12, 13].includes(place % 100) || place % 10 > 3 ? 'th' : ['th', 'st', 'nd', 'rd'][place % 10]} of 16 in the class.`;
     for (const one of [sim, reload(sim)]) {
-      const affairs = between(drawn(one, Home).text, 'Your Affairs');
-      expect(affairs).toContain(line);
-      expect(affairs).not.toContain('Graduated, graduated');
-      expect(affairs).not.toContain('Your standing is');
+      const said = head(one, SchoolWorkspace);
+      expect(said.endsWith(line)).toBe(true);
+      expect(said).not.toMatch(/Graduated, graduated|Next:/);
+      expect(drawn(one, Home).text).not.toContain('Your standing is');
     }
   });
 
@@ -533,7 +558,8 @@ describe('the graduate, played', () => {
     for (const c of credits) expect(journey(sim).split(`${c.role} in ${c.production}`).length - 1, c.role).toBe(1);
   });
 
-  it('p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says “Graduated”, once, as Home’s School line has since 2026-10-13', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “…, as Home’s School line has since 2026-10-13”, a line that went from Home that day.
+  it('p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says “Graduated”, once, as the School’s head does', () => {
     expect(kept.graduated, 'the slices played').toBeDefined();
     const sim = opened(kept.graduated!);
     expect(journey(sim)).toMatch(/^School Journey Graduated How This Works On stage: /);

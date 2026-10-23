@@ -737,9 +737,10 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
     expect(titled(idle, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and you met its work rules in October 2027, with $580.00 or more of income.']);
     expect(titled(idle, 'A Notice Of Noncompliance')).toEqual([]);
-    // Home draws it as she met it, by the $930.00 her savings earned (brief 12, 2026-10-17): no hours of work, which she has none of.
+    // Home draws it as she met it, by the $930.00 her savings earned (brief 12, 2026-10-17): no hours of work, which she
+    // has none of. Under Recent Updates from 2026-10-23 (brief 23), its title, what it's about and when, then its words.
     const idleHome = drawn(idle, Home).text;
-    expect(idleHome).toContain('Your Public Cover Changed At Renewal Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and you met its work rules in October 2027, with $580.00 or more of income.');
+    expect(idleHome).toMatch(/Your Public Cover Changed At Renewal Health · [^·]+? Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and you met its work rules in October 2027, with \$580\.00 or more of income\./);
     expect(idleHome).not.toMatch(/hours’ work|half-time/);
 
     const low = twin('low');

@@ -184,27 +184,29 @@ const ADVANCE_FEE = Math.max(CHASE_CARD.cashFeeMin ?? 0, Math.round(60_00 * (CHA
 export const MONEY: readonly GuideEntry[] = [
   {
     id: 'money.affairs',
-    title: 'Your Affairs And What You’re Worth',
+    // Until 2026-10-23 (the owner's brief 23) this was Your Affairs And What You're Worth: the Money line in Your Affairs
+    // on Home, whose heading opened Net Worth. Your Affairs went from Home that day; Net Worth opens from the Money
+    // screen's head, and what the line flagged is in What Needs You.
+    title: 'What You’re Worth',
     goal: 'money',
     covers: ['ui.money', 'look.account', 'look.networth', 'look.debt'],
-    synonyms: ['net worth', 'money line', 'account balance', 'what I owe', 'debts', 'credit used', 'a year of interest', 'where it went', 'spending by category'],
+    synonyms: ['net worth', 'your affairs', 'account balance', 'what I owe', 'debts', 'credit used', 'a year of interest', 'where it went', 'spending by category'],
     questions: ['How much am I worth?', 'How much do I owe?', 'Where did my money go this month?', 'What does a debt cost me a year?', 'What counts in my net worth?'],
-    where: { route: '/home', label: 'Home, Your Affairs, The Money Line' },
-    available: `Once you’ve read “${chapter('ui.money')}” in the guide. The button to your bank opens once you’ve read “${chapter('ui.bank')}”.`,
-    short: 'The Money line in Your Affairs on Home sums up your money: your primary account and its balance, what you’re worth, and how much of that you owe. Press Your Affairs for the detail behind it.',
+    where: { route: '/workspace/bank', label: 'Money, What You’re Worth At Its Top' },
+    available: `Net Worth opens once you’ve read “${chapter('ui.money')}” in the guide, and Money itself once you’ve read “${chapter('ui.bank')}”.`,
+    short: 'Worth and its figure, at the top of Money, open Net Worth: what you have, what you owe, and the difference, with where your money went over the last 30 days. When your money needs putting right, What Needs You, on Home, says so, with Open Money.',
     steps: [
-      'On Home, find Money in Your Affairs. It names your primary account and its balance, then Worth, and how much of it you owe. While the primary account is below zero, “Your account is overdrawn.” shows under it.',
-      'Press the Your Affairs heading to open Net Worth. It shows In The Bank (In The Bank And In Hand while you carry cash), Owed and Net, and Where It Went: what you spent over the last 30 days, by kind.',
+      'Open Money from the menu, and press Worth, at the top of it, to open Net Worth. It shows In The Bank (In The Bank And In Hand while you carry cash), Owed and Net, and Where It Went: what you spent over the last 30 days, by kind.',
       'In Net Worth, press an account to see its Balance (or what’s Owed on it), Left To Spend on a card, its Rate, and the last four digits it Ends In.',
       'Press Owed, shown while you owe anything, to see each debt with its rate, A Year Of Interest, and Credit Used across your cards. A card in its introductory months shows the day that rate ends and the rate after it.',
-      'Press the button named for your bank, at the end of the Money line, to open Money.',
+      'On Home, What Needs You lists what your money needs: an account overdrawn, a bill unpaid, a card near its limit or behind, a debt in collections. Press Open Money beside one to go there.',
     ],
     needs: [
-      'There’s nothing to set up: every life opens a checking account at a bank where it begins, and savings if it begins with some, so the line is there from the first day.',
+      'There’s nothing to set up: every life opens a checking account at a bank where it begins, and savings if it begins with some, so Net Worth has something to count from the first day.',
       'Owed opens only while you owe something: a card, a loan, an unpaid bill, a medical bill or a debt in collections.',
     ],
     costs: [
-      { label: 'Time', value: 'None. Reading the line and opening its figures doesn’t move the clock' },
+      { label: 'Time', value: 'None. Reading Net Worth and opening its figures doesn’t move the clock' },
       { label: 'Money', value: 'None' },
     ],
     reads: [
@@ -217,7 +219,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     now: ['Looking changes nothing. Each balance is added up from every payment into and out of the account, and your net worth is added up again each time you look.'],
     later: [
-      'The line moves as your money does: wages paid in, each morning’s groceries, and fees and interest at the month’s end.',
+      'Net Worth moves as your money does: wages paid in, each morning’s groceries, and fees and interest at the month’s end.',
       'Each day something here worries you (the primary account overdrawn, a bill unpaid, a card nine-tenths used or behind, a medical bill, a debt in collections, tax owed or a return late), it adds 4 stress and takes 2 morale, more or less depending on your personality.',
     ],
     interpret: [
@@ -225,10 +227,10 @@ export const MONEY: readonly GuideEntry[] = [
       'A Year Of Interest is what your debts would cost over a year at today’s rates if you paid none of them off. A card you pay in full each month is charged none of it.',
       'Owed calls the debt with the highest rate above 0% “the expensive one”. A card at 0% during its introduction is never the expensive one. “They’re charged no interest today.” means none of it is charged interest now, though a card can still charge fees; the line after it says when an introductory rate ends.',
       'Credit Used turns into a warning past 30%. It counts every open card’s limit, including a card with nothing on it.',
-      'The balance on the line is your primary account’s alone. Your other accounts are in Net Worth.',
+      'Net Worth counts every account of yours, at every bank, not only the one Money opens on.',
     ],
     unavailable: [
-      `The Money line shows Locked until you’ve read “${chapter('ui.money')}” in the guide, and the bank’s button until you’ve read “${chapter('ui.bank')}”.`,
+      `Money is off the menu until you’ve read “${chapter('ui.bank')}” in the guide, and Worth stays plain words until you’ve read “${chapter('ui.money')}”.`,
       'Owed isn’t shown while you owe nothing: “You don’t owe anyone anything, so there’s nothing to show here.”',
       'A closed account no longer opens: “That account is closed. What was in it went elsewhere when it closed.”',
     ],
@@ -238,21 +240,21 @@ export const MONEY: readonly GuideEntry[] = [
       'Letting a card go past nine-tenths of its limit. It worries you every day, and each month’s credit report takes points for each tenth past 30%.',
     ],
     next: [
-      'Press the button for your bank to see each account, its fees and how this month stands.',
+      'Press Accounts, on Money, to see each account, its fees and how this month stands.',
       'If Credit Used is past 30%, pay the card down on Money, under Cards.',
       'If you owe on more than one thing, pay the expensive one off first.',
     ],
     related: ['bank.accounts', 'bank.card', 'bank.borrowing', 'bank.transfer'],
     connections: [
-      { to: 'bank.accounts', kind: 'optional', why: 'The button at the end of the Money line opens Money, where you manage each account.' },
+      { to: 'bank.accounts', kind: 'optional', why: 'Your worth is at the top of Money, where you manage each account.' },
       { to: 'bank.card', kind: 'evaluation', why: 'Each card’s monthly credit report scores your record on Credit Used, counted across every card’s limit.' },
       { to: 'body.how', kind: 'scheduled', why: 'Each day something here worries you, it adds stress and takes morale.' },
       { to: 'taxes.pay', kind: 'optional', why: 'Tax owed worries you each day like a debt, though it’s on Papers and Owed leaves it out.' },
     ],
     example: {
       setup: `A life begun in New Haven with Modest means, at Chase: ${usd(MODEST.checking)} in ${CHECKING.name}, ${usd(MODEST.savings)} in ${SAVINGS.name}, and ${usd(OWED)} owed on the ${CHASE_CARD.name} against a ${usd(MODEST.cardLimit)} limit.`,
-      steps: ['Read the Money line on Home.', 'Press Your Affairs, then Owed.'],
-      result: `The line reads “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, after ${formatMoney(OWED, 'USD', { cents: false })} owed.” The card is still in its introductory months, so Owed says it’s charged no interest today, and that the card is at ${pct(CHASE_CARD.introApr ?? 0)} until the day they end, then ${pct(CHASE_RATE)}: about ${usd(Math.round((OWED * CHASE_RATE) / 100) * 100)} a year from then if none of it were paid. Credit Used is ${Math.round((OWED / MODEST.cardLimit) * 100)}%, under the 30% where your score starts to suffer.`,
+      steps: ['Open Money, and press Worth at the top of it.', 'Press Owed.'],
+      result: `Net Worth says “You’re worth ${formatMoney(WORTH, 'USD')}: ${formatMoney(MODEST.checking + MODEST.savings, 'USD')} in the bank and ${formatMoney(OWED, 'USD')} owed against it.” The card is still in its introductory months, so Owed says it’s charged no interest today, and that the card is at ${pct(CHASE_CARD.introApr ?? 0)} until the day they end, then ${pct(CHASE_RATE)}: about ${usd(Math.round((OWED * CHASE_RATE) / 100) * 100)} a year from then if none of it were paid. Credit Used is ${Math.round((OWED / MODEST.cardLimit) * 100)}%, under the 30% where your score starts to suffer.`,
     },
   },
   {
@@ -266,7 +268,7 @@ export const MONEY: readonly GuideEntry[] = [
     available: `Once you’ve read “${chapter('ui.bank')}” in the guide.`,
     short: 'Money is your bank. The Accounts tab shows each of your checking and savings accounts: its number, its balance, what it pays, what it costs and whether this month’s fee is waived so far. Open or close savings here, and choose which checking account is your primary account.',
     steps: [
-      'Open Money: press Money on the menu, or the button named for your bank at the end of Home’s Money line. Its tabs are Accounts, Cards, Payments And Cash, Borrowing and Statements.',
+      'Open Money: press Money on the menu. Its tabs are Accounts, Cards, Payments And Cash, Borrowing and Statements.',
       'On Accounts, each account’s panel shows its Balance, what it pays a year with its APY, and its monthly fee with how this month stands so far.',
       `To open savings, press Open A and the bank’s name for it (Open A ${SAVINGS.name} at Chase). It’s shown at each bank where you have a checking account and no easy-access savings.`,
       'To close savings, press Close It on its panel. The line beside the button says where its money will go.',
@@ -330,7 +332,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     related: ['money.affairs', 'bank.transfer', 'bank.payments', 'bank.other-banks', 'bank.term', 'bank.upkeep'],
     connections: [
-      { to: 'money.affairs', kind: 'immediate', why: 'Every balance here counts in your net worth, and your primary account’s balance is the first figure on Home’s Money line.' },
+      { to: 'money.affairs', kind: 'immediate', why: 'Every balance here counts in your net worth, which Worth, at the top of Money, opens.' },
       { to: 'bank.payments', kind: 'prerequisite', why: 'A standing order needs a savings account to pay into, and Savings Covers The Checking Account uses easy-access savings at the same bank as the checking account a payment comes from.' },
       { to: 'bank.transfer', kind: 'optional', why: 'Move Money appears on this tab once you have two accounts.' },
       { to: 'bank.borrowing', kind: 'immediate', why: 'Your primary account’s bank runs the overdraft your day-to-day spending can run into.' },
@@ -385,7 +387,7 @@ export const MONEY: readonly GuideEntry[] = [
       'A withdrawal fee, where one is due, comes out of the savings as a separate line.',
     ],
     later: [
-      'On the day, it arrives in the account it was sent to. If that account has closed, it comes back to the account it left, and What Needs You, on Home, tells you.',
+      'On the day, it arrives in the account it was sent to. If that account has closed, it comes back to the account it left, and a notice tells you.',
       'A move counts as using both accounts, which keeps them from becoming inactive.',
     ],
     interpret: [
@@ -471,7 +473,7 @@ export const MONEY: readonly GuideEntry[] = [
       'Take The Interest So Far: what it has earned, minus any tax, goes into your primary account, and the deposit keeps earning until its end.',
     ],
     later: [
-      'The bank sends a notice to What Needs You a month before the end, or two weeks before the last day to change the end, if that’s earlier.',
+      'The bank sends a notice a month before the end, or two weeks before the last day to change the end, if that’s earlier.',
       `On the end date it renews, with its interest added, for the same term at the bank’s rate that day, with any grace days to take it out whole (Chase gives ${CHASE_LIFE.graceDays}). Or it moves into savings at the bank (opened for it if you have none there), or it’s paid into your checking account at that bank.`,
       'If you gave notice to close it early, it closes when the notice ends, with the penalty as it stands then.',
     ],
@@ -505,7 +507,7 @@ export const MONEY: readonly GuideEntry[] = [
     connections: [
       { to: 'bank.accounts', kind: 'prerequisite', why: 'A term deposit is paid for from your checking account at the same bank.' },
       { to: 'money.affairs', kind: 'immediate', why: 'What it holds counts in your worth from the day it opens, though you can’t spend it.' },
-      { to: 'day.needs', kind: 'scheduled', why: 'The bank’s notice before the end, and the renewal or payout on the day, come to What Needs You.' },
+      { to: 'day.needs', kind: 'scheduled', why: 'The bank’s notice before the end, and the renewal or payout on the day, come as notices, in Updates.' },
       { to: 'bank.upkeep', kind: 'optional', why: 'Where the country gives a cooling-off period, you can cancel a new term deposit during it without a penalty.' },
     ],
     example: {
@@ -578,7 +580,7 @@ export const MONEY: readonly GuideEntry[] = [
       // began refusing it; until then cash went in and the account stayed dormant, and this line, rightly, left it out.
       'On the 1st of each month the bank checks again. Until it’s reactivated, a dormant account refuses Move Money into or out of it and cash paid into it, and a dormant primary account refuses cash taken out. At Bank of America and Capital One it also stops earning interest.',
       `On the 1st of a month within the ${ESCHEAT_NOTICE_DAYS} days before the country’s number of years runs out, the bank writes and What Needs You asks you. If you leave it, then on the 1st of the month after, the balance goes to the state and the account closes, and standing orders into it are canceled. Your primary account is never handed over.`,
-      'Alerts arrive in What Needs You at the end of the day.',
+      'Alerts arrive as notices at the end of the day.',
     ],
     interpret: [
       '“… is inactive: it hasn’t been used for months” is a warning. Using it makes it active again.',
@@ -614,7 +616,7 @@ export const MONEY: readonly GuideEntry[] = [
       { to: 'bank.card-security', kind: 'immediate', why: `A Payment Over set at or under a stranger’s charge tells you the day it happens, so you know of it from then: in the US, a debit card charge reported within ${clockOf(DEBIT_PROMPT, 'of')} costs you at most ${usd(DEBIT_PROMPT.max ?? 0)}.` },
       { to: 'bank.payments', kind: 'optional', why: `Short For A Payment watches each standing order and payment set for a date, ${LOOKAHEAD_DAYS} days ahead.` },
       { to: 'bank.card', kind: 'optional', why: 'Short For A Payment watches each card’s autopay against the account it pays from.' },
-      { to: 'day.needs', kind: 'scheduled', why: 'Alerts, the dormancy notice and the bank’s letter before it hands money over come to What Needs You.' },
+      { to: 'day.needs', kind: 'scheduled', why: 'Alerts and the dormancy notice come as notices, in Updates, and the bank’s letter before it hands money over as a question in What Needs You.' },
       { to: 'bank.term', kind: 'optional', why: 'A term deposit’s end and breaking it early are handled on the same panel.' },
       { to: 'bank.round-ups', kind: 'optional', why: 'Round-ups are set on the same panel, where your bank offers them.' },
     ],
@@ -805,7 +807,7 @@ export const MONEY: readonly GuideEntry[] = [
     example: {
       setup: `A student at Chase sets up a ${usd(50_00)} standing order into ${SAVINGS.name} on the 1st, and ${CHECKING.name} holds ${usd(30_00)} that morning.`,
       steps: ['Under Standing Orders, type 50 and 1, and press Set Up A Standing Order Into Savings.', 'Let the 1st come with the account short.'],
-      result: `At 9 AM on the 1st the order doesn’t go: ${usd(30_00)} is short of ${usd(50_00)}, and an order goes in full or not at all. What Needs You says “A Standing Order Didn’t Go”, and it’s set again for the 1st of next month. Short For A Payment would have warned you up to ${LOOKAHEAD_DAYS} days before.`,
+      result: `At 9 AM on the 1st the order doesn’t go: ${usd(30_00)} is short of ${usd(50_00)}, and an order goes in full or not at all. A notice, “A Standing Order Didn’t Go”, says so, and it’s set again for the 1st of next month. Short For A Payment would have warned you up to ${LOOKAHEAD_DAYS} days before.`,
     },
   },
   {
@@ -932,7 +934,7 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'Going Over The Limit', value: 'Up to a tenth past the limit, with no fee, since no card here publishes one', estimate: true },
     ],
     now: [
-      `Apply: ${INQUIRY} points come off your score at once. If you’re approved, What Needs You gives the limit and the card arrives in a week. If you’re declined, it says why.`,
+      `Apply: ${INQUIRY} points come off your score at once. If you’re approved, a notice gives the limit and the card arrives in a week. If you’re declined, a notice says why.`,
       'Pay Card In Full: from your primary account, then savings at its bank, as much as you owe or as much as you have. Paid from another bank, some banks hold back the room it frees for a few days while it clears.',
       'Autopay, Statement Day, Raise My Limit Automatically and Going Over The Limit are saved at once.',
       `Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, can be asked for six months after the card opened and six months after you last asked or it was last raised. It needs a credit score of ${RAISE_FROM} or more, no late payment in a year, a card that isn’t suspended, and income or savings that cover the payments on it, as a review does.`,
@@ -969,7 +971,7 @@ export const MONEY: readonly GuideEntry[] = [
     unavailable: [
       '“You have no credit record to apply with.”, “A card is already on its way.” or “You need a bank to apply to.”',
       '“You can only apply for a card in the country you bank in, and … is elsewhere.”, “… doesn’t issue a credit card.” or “You already have …’s card.”',
-      `Declined, in What Needs You: a credit score under ${APPROVE_FROM}, a debt in collections, no money in your accounts to repay it from, or in the US under 21 without money of your own.`,
+      `Declined, in a notice: a credit score under ${APPROVE_FROM}, a debt in collections, no money in your accounts to repay it from, or in the US under 21 without money of your own.`,
       '“You don’t have a card.”, “You don’t owe anything on it.” or “Your bank accounts have nothing available to pay it with, so nothing was paid.”',
       '“… takes the whole statement from your account each month. The … can’t carry a balance.” for a charge card’s autopay.',
       '“Pick a day from the 1st to the 28th.”, “Enter the limit you want.” or “Only a US card lets you opt in to going over the limit.”',
@@ -995,7 +997,7 @@ export const MONEY: readonly GuideEntry[] = [
       { to: 'bank.card-offers', kind: 'optional', why: 'Its introductory rate, rewards, money transfers and payment plans are under The Card’s Offers on the same tab.' },
       { to: 'bank.card-security', kind: 'immediate', why: 'A card that’s locked or reported has nothing Left To Spend until it’s unlocked or the new one arrives.' },
       { to: 'bank.borrowing', kind: 'evaluation', why: 'The credit record your card payments build is what a bank looks at to arrange an overdraft or lend to you, and at what rate.' },
-      { to: 'day.needs', kind: 'scheduled', why: 'A statement with a payment due, a late payment, a failed autopay and a raised limit all come to What Needs You.' },
+      { to: 'day.needs', kind: 'scheduled', why: 'A statement with a payment due, a late payment, a failed autopay and a raised limit all come as notices, in Updates.' },
     ],
     example: {
       setup: `A student at Chase with a credit score of ${RECORD}, holding the ${CHASE_CARD.name}, applies for the ${WF_CARD.name}.`,
@@ -1142,7 +1144,7 @@ export const MONEY: readonly GuideEntry[] = [
       'Move My Account To A New Number: the checking account’s number changes at once, and its debit card is replaced.',
     ],
     later: [
-      'The new card arrives in the bank’s business days, unlocked, with new last four digits, and What Needs You tells you.',
+      'The new card arrives in the bank’s business days, unlocked, with new last four digits, and a notice tells you.',
       'The refund arrives on its day, minus what the law leaves you to pay.',
       'A month before a card expires, a new one with the same number is sent.',
       `If a stranger used your debit card at a bank that moves accounts to a new number, the account’s number stays exposed for ${EXPOSURE.days} days: debits may be tried on it, and once the account has moved they’re declined.`,
@@ -1178,7 +1180,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     example: {
       setup: `A stranger spends ${usd(US_LAW.avgLoss ?? 0)}, the US average case, on a Chase debit card. A Payment Over is set at ${usd(500_00)}.`,
-      steps: ['What Needs You says “A Large Payment” the same day.', 'The next morning, press Report It As Not Mine beside it.'],
+      steps: ['A notice, “A Large Payment”, comes the same day.', 'The next morning, press Report It As Not Mine beside the payment, on Money.'],
       result: `Reported a day after you found out, US law leaves you to pay at most ${usd(DEBIT_PROMPT.max ?? 0)}, and ${usd((US_LAW.avgLoss ?? 0) - (DEBIT_PROMPT.max ?? 0))} comes back within ${US_LAW.refundDays} business days. The card is stopped, and a new one with a new number arrives in ${CHASE_SAFE.standardDays} business days, free.`,
     },
   },

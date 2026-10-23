@@ -1,29 +1,31 @@
 /**
  * Evidence for the seven rows the review of 2026-10-13 left partial in verification group g33-ui: Home's three lines of
- * Your Affairs, the person look and the stress dial's sentence, and two decisions, the year's tax return and a foreign
+ * Your Affairs (at the heads of Money, the School and Papers from 2026-10-23), the person look and the stress dial's sentence, and two decisions, the year's tax return and a foreign
  * graduate's status. Each gap the review named is closed here through what the player does: Home drawn as they have it
  * and its own buttons pressed, the command a button sends, or the clock; and each consequence is read where the row
  * says it's read, against figures worked out here from the rule's own numbers, never asked of the helper the engine
  * computes them with.
  *
- * - `h-money`: a new student's line is "Chase Total Checking: $92,391.00. Worth $505,434." (the wealthy profile's
- *   85,000 € and 380,000 € at 0.92 € to the dollar, to the whole dollar); overdrawn by $25.00 it reads -$25.00 and
- *   "Your account is overdrawn.", and a Move Money of $1,000.00 from savings takes the alert away with the worth
- *   unmoved, across a reload; the day's spending put on the card adds ", $X of it owed"; its Chase button navigates to
- *   ('/workspace/bank', 'Money'); a guided life shows Money as its LockedPanel until "Money" is read, then Chase as
- *   Locked until "Your Bank" is, pressing it going nowhere and the bank refusing a transfer in the guide's words.
- *   "No account" can't be reached: the bank refuses to close a life's only current account, in its words.
- * - `h-school`: each branch of the line, played: Arriving with the registration booked for 10 AM on 24 August, Year 1
- *   with the next thing booked, a fall played without going to class giving "academic concern" and its alert with
- *   "Next: Classes" the next class day at nine, On Leave with no Next, Left the School (until 2026-10-17 "Left the school") with no Next, and a graduate's
- *   "Graduated" said once; the place in the class counted here from the class's 21 skills; its Yale button and its
- *   LockedPanel before "Drama School".
+ * - `h-money`: a new student's worth is $505,434 (the wealthy profile's 85,000 € and 380,000 € at 0.92 € to the dollar, to
+ *   the whole dollar), her Chase Total Checking $92,391; overdrawn by $25.00 the tile reads −$25.00, Money's head “Your
+ *   account is overdrawn.” and Home “Your account is $25 overdrawn.”, and a Move Money of $1,000.00 from savings takes
+ *   both away with the worth unmoved, across a reload; the day's spending put on the card adds “, after $X owed”; a
+ *   guided life's Home says nothing of money until "Money" is read, then Open Money is Locked until "Your Bank" is,
+ *   pressing it going nowhere and the bank refusing a transfer in the guide's words. "No account" can't be reached: the
+ *   bank refuses to close a life's only current account, in its words. Until 2026-10-23 (brief 23) these were Home's
+ *   Your Affairs line and its Chase button; Money's head and What Needs You say them since.
+ * - `h-school`: each branch of the School's head, played: Arriving with the registration booked for 10 AM on 24 August,
+ *   Year 1 with the next thing booked, a fall played without going to class giving "academic concern", put right from
+ *   Home, with "Next: Classes" the next class day at nine, On Leave with no Next, Left the School with no Next, and a
+ *   graduate's "Graduated" said once; the place in the class counted here from the class's 21 skills; and a guided
+ *   life's Home saying nothing of a troubled standing before "Drama School". Home's Your Affairs line until 2026-10-23.
  * - `h-papers`: the 2026 return the tax season raises for an F-1 student, $165.60 (10% of $1,656.00 of work-study, 72
  *   hours at $23), is "$166 to pay"; three days past its day unfiled, "$174 to pay, a late penalty in it" (5% for a
- *   month or part, $8.28); filed on 1 February with nothing in the bank, "$166 of tax owed" until the due date and
- *   "$169" sixty days past it (0.5% a month for two months and 7% a year compounded daily), where the balance last
- *   stored reads $168; "Cover: none." and "You have no health cover." after a withdrawal; the Papers button; and a
- *   claim for unemployment refused in its own words, so the line carries no Unemployment clause.
+ *   month or part, $8.28), on Papers and on Home; filed on 1 February with nothing in the bank, "$166 of tax owed" until
+ *   the due date and "$169" sixty days past it (0.5% a month for two months and 7% a year compounded daily), where the
+ *   balance last stored reads $168; "Cover: none." and "You have no health cover." after a withdrawal; and a claim for
+ *   unemployment refused in its own words, so Papers' head carries no Unemployment clause. Home's Your Affairs line
+ *   until 2026-10-23.
  * - `l-person`: her name on Home pressed, the person look opens under it: the traits, the body in feet and pounds
  *   where she lives (5 ft 7 in and 143 lb for 170 cm and 65 kg, a body mass index of 22.5) and in centimeters for a
  *   life in London, her pronouns and citizenship, her own terms, her background and films, the eight dials with their
@@ -134,7 +136,15 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
+vi.mock('@/ui/kept', async (orig) => {
+  const real = await orig<typeof import('@/ui/kept')>();
+  return { ...real, useKept: <T,>(_key: string, initial: T) => [initial, () => undefined] as const };
+});
+
 const { Home } = await import('@/ui/screens/Home');
+const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
+const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
+const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 
 // ---------------------------------------------------------------------------
 // Lives, the screen, and figures
@@ -151,13 +161,24 @@ const opened = (text: string): Simulation => loadSave(deserialise(text) as never
 /** Every disposition at the middle, as the sliders can set them: each knob a trait doesn't move is 1. */
 const MIDDLE: Personality = { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, emotionalStability: 50, ambition: 50, riskTolerance: 50 };
 
-/** Home as the player has it: its markup, its words, and Your Affairs' words. */
-function drawn(sim: Simulation, open: unknown[] = []): { html: string; text: string; affairs: string } {
+/** Home, or another screen, as the player has it: its markup and its words. */
+function drawn(sim: Simulation, open: unknown[] = [], screen: () => unknown = Home): { html: string; text: string } {
   h.sim = sim; h.went = []; h.open = [...open]; h.opened = []; h.buttons = [];
-  const html = renderToStaticMarkup(createElement(Home)).replace(/<!-- -->/g, '');
+  const html = renderToStaticMarkup(createElement(screen as never)).replace(/<!-- -->/g, '');
   const text = html.replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
-  return { html, text, affairs: text.slice(text.indexOf('Your Affairs')) };
+  return { html, text };
 }
+/**
+ * Money's, the School's or Papers' head, from its name to its tabs, where it says where it stands: Home's Your Affairs
+ * said it in a line each until 2026-10-23 (brief 23), when the lines went to the heads of their own screens.
+ */
+function head(sim: Simulation, screen: () => unknown): string {
+  const { html } = drawn(sim, [], screen);
+  return html.slice(0, html.lastIndexOf('<', html.indexOf('tabs-wrap'))).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ').replace(/ ([.,])/g, '$1').trim();
+}
+const money = (sim: Simulation) => head(sim, BankWorkspace);
+const schoolHead = (sim: Simulation) => head(sim, SchoolWorkspace);
+const papers = (sim: Simulation) => head(sim, PapersWorkspace);
 /** The one button drawn with these words. */
 function button(words: string): { text: string; props: Record<string, unknown> } {
   const found = h.buttons.filter((b) => b.text === words);
@@ -173,8 +194,7 @@ function setBalance(sim: Simulation, account: Account, to: number): void {
   const by = to - account.balance;
   if (by !== 0) sim.post({ memo: 'TEST SETUP', category: 'opening', postings: [{ accountId: account.id, amount: by }, { accountId: sim.nominalAccount('equity', 'Test Setup').id, amount: -by }] });
 }
-/** Cents written as the line writes a balance, and as it writes a worth, to the whole dollar. */
-const cents = (n: number) => `${n < 0 ? '-' : ''}$${(Math.abs(n) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+/** A worth written to the whole dollar. (A balance to the cent, as Home's Money line wrote one, went with the line on 2026-10-23.) */
 const dollars = (n: number) => `$${Math.round(n / 100).toLocaleString('en-US')}`;
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 const memoed = (sim: Simulation, memo: string) => sim.universe.transactions.filter((t) => t.memo === memo);
@@ -211,37 +231,38 @@ const DUE = at(2027, 4, 15, 23, 59);
 // h-money
 // ---------------------------------------------------------------------------
 
+// Home's Money line, “Chase Total Checking: $92,391.00. Worth $505,434.” with a Chase button, went with Your Affairs on
+// 2026-10-23 (brief 23). The worth and the overdrawn alert are said at the head of Money since, the account's balance
+// on its own tile, and what needs putting right under What Needs You on Home. The tests below read them there.
 describe('h-money', () => {
-  it('PLAYER JOURNEY: a new student’s Money line is Chase Total Checking at $92,391.00 and a worth of $505,434, with no alert, and its Chase button opens the bank screen', () => {
+  it('PLAYER JOURNEY: a new student’s Money says a worth of $505,434 at its head, with no alert, her Chase Total Checking holding $92,391; Home says nothing of money', () => {
     const sim = life('g33-money');
-    const { affairs } = drawn(sim);
     // The wealthy profile's 85,000 € and 380,000 € at SLATE's 0.92 € to the dollar, to the whole dollar: $92,391 and
-    // $413,043, with nothing on the card, so a worth of $505,434 and no "of it owed".
-    expect(affairs).toContain('Money Chase Total Checking: $92,391.00. Worth $505,434. Chase How This Works School');
-    expect(affairs).not.toMatch(/overdrawn|after \$[\d,]+ owed/);
-    expect(button('Chase').props.className).toBe('btn btn-sm');
-    press('Chase');
-    expect(h.went).toEqual([['/workspace/bank', 'Money']]);
+    // $413,043, with nothing on the card, so a worth of $505,434 and no "after … owed".
+    expect(money(sim)).toBe('Your Bank Chase $505,434 held here, in 2 accounts. Worth $505,434.');
+    expect(drawn(sim, [], BankWorkspace).text).toMatch(/Chase Total Checking .*?Balance \$92,391 /);
+    expect(drawn(sim).text).not.toMatch(/overdrawn|Open Money/);
   });
 
-  it('overdrawn by $25.00 it reads -$25.00 and “Your account is overdrawn.”; a Move Money of $1,000.00 from savings takes the alert away with the worth unmoved, and a reload keeps it so', () => {
+  it('overdrawn by $25.00 Money says “Your account is overdrawn.” and Home “Your account is $25 overdrawn.”; a Move Money of $1,000.00 from savings takes both away with the worth unmoved, and a reload keeps it so', () => {
     const sim = life('g33-money-over');
     const checking = primary(sim);
     // TEST SETUP: the checking brought to -$25.00, $92,416.00 out of the worth.
     setBalance(sim, checking, -25_00);
     // $413,043 in savings less the $25.00 overdrawn: $413,018.
-    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: −$25.00. Worth $413,018. Your account is overdrawn. Chase How This Works');
+    expect(money(sim)).toContain('Worth $413,018. Your account is overdrawn.');
+    expect(drawn(sim, [], BankWorkspace).text).toMatch(/Chase Total Checking .*?Balance −\$25\.00 /);
+    expect(drawn(sim).text).toContain('Your account is $25 overdrawn. Open Money');
     const moved = sim.must<{ moved: number }>({ kind: 'bank.transfer', payload: { fromId: own(sim, 'savings').id, toId: checking.id, amount: 1_000_00 } });
     expect(moved.moved).toBe(1_000_00);
-    const after = drawn(sim).affairs;
-    expect(after).toContain('Money Chase Total Checking: $975.00. Worth $413,018. Chase How This Works');
-    expect(after).not.toContain('Your account is overdrawn.');
-    const kept = drawn(reload(sim)).affairs;
-    expect(kept).toContain('Money Chase Total Checking: $975.00. Worth $413,018. Chase How This Works');
-    expect(kept).not.toContain('Your account is overdrawn.');
+    for (const one of [sim, reload(sim)]) {
+      expect(money(one)).toMatch(/Worth \$413,018\.$/);
+      expect(drawn(one, [], BankWorkspace).text).toMatch(/Chase Total Checking .*?Balance \$975 /);
+      expect(drawn(one).text).not.toContain('overdrawn');
+    }
   });
 
-  it('with the day’s spending put on the card, the worth counts what the card owes and the line says “, $X of it owed”', () => {
+  it('with the day’s spending put on the card, the worth counts what the card owes and Money says “, after $X owed”', () => {
     const sim = life('g33-money-card');
     sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
     sim.advanceTo(at(2026, 8, 26, 7, 30));
@@ -250,39 +271,38 @@ describe('h-money', () => {
     const checking = primary(sim).balance;
     const savings = own(sim, 'savings').balance;
     // The worth is what the accounts hold less what the card owes, to the whole dollar.
-    expect(drawn(sim).affairs).toContain(`Money Chase Total Checking: ${cents(checking)}. Worth ${dollars(checking + savings - owed)}, after ${dollars(owed)} owed. Chase How This Works`);
+    expect(money(sim)).toContain(`Worth ${dollars(checking + savings - owed)}, after ${dollars(owed)} owed.`);
   });
 
-  it('PLAYER JOURNEY, guided: Money is its LockedPanel until “Money” is read; then Chase is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Chase opens the bank screen', () => {
+  it('PLAYER JOURNEY, guided: overdrawn, Home says nothing of it until “Money” is read; then Open Money is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Open Money opens the bank screen', () => {
     const sim = life('g33-money-guided', { tutorial: true });
-    const before = drawn(sim).affairs;
-    // Until 2026-10-20 (brief 17) the line was the chapter's lead, “everything you have and owe, at a glance”; it says what the panel shows now.
-    expect(before).toContain('Money Locked What your main account holds, and what you’re worth after what you owe. It opens when you read “Money” in the guide. Read About It');
-    expect(before).not.toContain('Chase Total Checking');
+    // TEST SETUP: the checking brought to -$25.00, so there's something about money to put right.
+    setBalance(sim, primary(sim), -25_00);
+    expect(drawn(sim).text).not.toContain('overdrawn');
     readTo(sim, 'documents');
-    expect(drawn(sim).affairs).toContain('Money Locked What your main account holds, and what you’re worth after what you owe. It opens when you read “Money” in the guide');
+    expect(drawn(sim).text).not.toContain('overdrawn');
     readTo(sim, 'money');
-    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: $92,391.00. Worth $505,434. Chase Locked How This Works');
-    const locked = button('ChaseLocked');
+    expect(drawn(sim).text).toContain('Your account is $25 overdrawn. Open Money Locked How This Works');
+    const locked = button('Open MoneyLocked');
     expect(locked.props.title).toBe('Read “Your Bank” in the guide first. Press Guide, at the top of the screen, to read it.');
     expect(locked.props.className).toBe('btn btn-sm is-locked');
-    press('ChaseLocked');
+    press('Open MoneyLocked');
     expect(h.went).toEqual([]);
     expect(sim.execute({ kind: 'bank.transfer', payload: { fromId: own(sim, 'savings').id, toId: primary(sim).id, amount: 1_00 } }).error).toBe('Read “Your Bank” in the guide first. Press Guide, at the top of the screen, to read it.');
     const kept = reload(sim);
-    expect(drawn(kept).affairs).toContain('Chase Locked How This Works');
+    expect(drawn(kept).text).toContain('Open Money Locked How This Works');
     kept.must({ kind: 'tutorial.read', payload: { chapterId: 'bank' } });
     drawn(kept);
-    expect(button('Chase').props.className).toBe('btn btn-sm');
-    press('Chase');
+    expect(button('Open Money').props.className).toBe('btn btn-sm');
+    press('Open Money');
     expect(h.went).toEqual([['/workspace/bank', 'Money']]);
   });
 
-  it('“No account” can’t be reached: the bank refuses to close a life’s only current account, in its words, and the line still names it', () => {
+  it('“No account” can’t be reached: the bank refuses to close a life’s only current account, in its words, and Money still lists it', () => {
     const sim = life('g33-money-close');
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: primary(sim).id } }).error)
       .toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
-    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: $92,391.00.');
+    expect(drawn(sim, [], BankWorkspace).text).toMatch(/Chase Total Checking .*?Balance \$92,391 /);
   });
 });
 
@@ -290,76 +310,75 @@ describe('h-money', () => {
 // h-school
 // ---------------------------------------------------------------------------
 
+// Home's School line, “Arriving, good standing, 5th of 16 in the class. Next: …” with a Yale button, went with Your
+// Affairs on 2026-10-23 (brief 23). The School's head says the year and the standing, as it did, and the place in the
+// class and what's next since; a troubled standing is put right from What Needs You on Home.
 describe('h-school', () => {
-  it('PLAYER JOURNEY: a new student is “Arriving, good standing”, her place counted from the class’s skills, “Next: Registration And Your Account, August 24, 2026 at 10:00 AM.”; its Yale button opens the School screen', () => {
+  it('PLAYER JOURNEY: a new student is “Arriving for the fall term”, her place counted from the class’s skills, “Next: Registration And Your Account, August 24, 2026 at 10:00 AM.”', () => {
     const sim = life('g33-school');
     // Fifteen classmates and her, sixteen; the 21 skills the School screen lists.
     expect(sim.player.school!.classmates).toHaveLength(15);
     expect(SKILLS).toHaveLength(21);
-    const { affairs } = drawn(sim);
-    expect(affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works`);
-    expect(affairs).not.toContain('Your standing is');
-    press('Yale');
-    expect(h.went).toEqual([['/workspace/school', 'School']]);
+    expect(schoolHead(sim)).toContain(`class of 2029. Arriving for the fall term. You’re ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM.`);
+    expect(drawn(sim).text).not.toContain('Your standing is');
   });
 
-  it('a day in, “Year 1, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”', () => {
+  it('a day in, “Year 1 of 3, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”', () => {
     const sim = life('g33-school-year');
     sim.advanceTo(at(2026, 8, 25, 12));
-    expect(drawn(sim).affairs).toContain(`School Year 1, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works`);
+    expect(schoolHead(sim)).toContain(`Year 1 of 3, good standing. You’re ${ordinal(rankOf(sim))} of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.`);
   });
 
-  it('PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern, and the line says so with its alert; Next is the next class day at nine, Tuesday 2 February at noon on the Monday; a reload keeps it', () => {
+  it('PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern, which the School’s head says and Home puts right; Next is the next class day at nine, Tuesday 2 February at noon on the Monday; a reload keeps it', () => {
     const sim = feb1();
     expect(sim.player.school!.standing).toBe('concern');
     expect(titled(sim, 'A Notice Of Academic Concern')).toHaveLength(1);
-    // Classes run nine to three on the class days: at noon on Monday 1 February, Monday's began at nine.
-    const line = `School Year 1, academic concern, ${ordinal(rankOf(sim))} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern. The School screen says why. Yale How This Works`;
-    expect(drawn(sim).affairs).toContain(line);
-    expect(drawn(reload(sim)).affairs).toContain(line);
+    for (const one of [sim, reload(sim)]) {
+      // Classes run nine to three on the class days: at noon on Monday 1 February, Monday's began at nine.
+      expect(schoolHead(one)).toContain(`Year 1 of 3, academic concern. You’re ${ordinal(rankOf(one))} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM.`);
+      expect(drawn(one).text).toContain('Your standing is academic concern. The School screen says why. Open School');
+    }
   });
 
-  it('PLAYER JOURNEY: a personal leave asked on 13 January 2027 and begun on its decision is “On Leave”, with no Next', () => {
+  it('PLAYER JOURNEY: a personal leave asked on 13 January 2027 and begun on its decision is “On leave until …”, with no Next', () => {
     const sim = life('g33-school-leave');
     sim.advanceTo(at(2027, 1, 13, 12));
     const asked = sim.must<{ decideAt: number; startsNow: boolean }>({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } });
     expect(asked.startsNow).toBe(true);
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
-    const { affairs } = drawn(sim);
-    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${ordinal(rankOf(sim))} of 16 in the class\\.( Your standing is [a-z ]+\\. The School screen says why\\.)? Yale How This Works`));
-    expect(affairs).not.toContain('Next:');
+    const line = schoolHead(sim);
+    expect(line).toMatch(new RegExp(`On leave until [A-Za-z0-9 ]+\\. You’re ${ordinal(rankOf(sim))} of 16 in the class\\.$`));
+    expect(line).not.toContain('Next:');
   });
 
-  it('PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the school, withdrawn”, with no Next and no alert, across a reload', () => {
+  it('PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the School.”, with no Next and no alert, across a reload', () => {
     const sim = life('g33-school-withdraw');
     sim.advanceTo(at(2026, 9, 1, 12));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     for (const one of [sim, reload(sim)]) {
-      const { affairs } = drawn(one);
-      expect(affairs).toContain(`School Left the School, withdrawn, ${ordinal(rankOf(one))} of 16 in the class. Yale How This Works`);
-      expect(affairs).not.toMatch(/Next:|Your standing is/);
+      expect(schoolHead(one)).toMatch(new RegExp(`Left the School\\. You’re ${ordinal(rankOf(one))} of 16 in the class\\.$`));
+      expect(drawn(one).text).not.toContain('Your standing is');
     }
   });
 
-  it('a graduate’s line says Graduated once, not “Graduated, graduated”, with no Next', () => {
+  it('a graduate’s head says Graduated once, not “Graduated, graduated”, with no Next', () => {
     const sim = life('g33-school-graduate');
     // TEST SETUP: the degree conferred by the School's own setStanding, three years early.
     setStanding(sim, sim.player, 'graduated', 'TEST SETUP: the degree conferred by hand.');
-    const { affairs } = drawn(sim);
-    expect(affairs).toContain(`School Graduated, ${ordinal(rankOf(sim))} of 16 in the class. Yale How This Works`);
-    expect(affairs).not.toMatch(/Graduated, graduated|Next:|Your standing is/);
+    const line = schoolHead(sim);
+    expect(line).toMatch(new RegExp(`Graduated\\. You’re ${ordinal(rankOf(sim))} of 16 in the class\\.$`));
+    expect(line).not.toMatch(/Graduated, graduated|Next:/);
   });
 
-  it('PLAYER JOURNEY, guided: School is its LockedPanel until “Drama School” is read, and the line once it is', () => {
+  it('PLAYER JOURNEY, guided: a standing of concern is put right from Home once “Drama School” is read, and not before', () => {
     const sim = life('g33-school-guided', { tutorial: true });
+    // TEST SETUP: the standing set by the School's own setStanding, as a fall without classes leaves it (feb1, above).
+    setStanding(sim, sim.player, 'concern', 'TEST SETUP: the faculty’s concern, by hand.');
     readTo(sim, 'weather');
-    const before = drawn(sim).affairs;
-    // Until 2026-10-20 (brief 17) the line was the chapter's lead; it says what the line will show now.
-    expect(before).toContain('School Locked Your year at the School, your standing, your place in the class and what’s next. It opens when you read “Drama School” in the guide. Read About It');
-    expect(before).not.toContain('Arriving');
+    expect(drawn(sim).text).not.toContain('Your standing is');
     readTo(sim, 'school');
-    expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account`);
+    expect(drawn(sim).text).toContain('Your standing is academic concern. The School screen says why. Open School');
   });
 });
 
@@ -367,31 +386,30 @@ describe('h-school', () => {
 // h-papers
 // ---------------------------------------------------------------------------
 
+// Home's Papers line, “Cover: Yale Health.” and its alerts with a Papers button, went with Your Affairs on 2026-10-23
+// (brief 23). Papers' head says them since, and the alerts are put right from What Needs You on Home.
 describe('h-papers', () => {
-  it('PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”: 10% of the $1,656.00 of work-study, 72 hours at $23; the Papers button opens Papers', () => {
+  it('PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”: 10% of the $1,656.00 of work-study, 72 hours at $23', () => {
     const sim = feb1();
     const wages = sim.universe.transactions.filter((t) => /^Work-study wages, \d+ hours/.test(t.memo) && t.at < at(2027, 1, 1, 0));
     expect(wages.reduce((n, t) => n + Number(/(\d+) hours/.exec(t.memo)![1]), 0)).toBe(72);
     expect(wages.reduce((n, t) => n + fromPlayer(sim, t), 0)).toBe(72 * 23_00);
     // A 1040-NR taxes a student's wages from the first dollar, with no standard deduction: 10% of $1,656.00, $165.60.
     expect(sim.player.returns!['2026']!.figures.balance).toBe(165_60);
-    const { affairs } = drawn(sim);
-    expect(affairs).toContain('Papers Cover: Yale Health. The 2026 return is due April 15, 2027, $166 to pay. Papers How This Works');
-    press('Papers');
-    expect(h.went).toEqual([['/workspace/papers', 'Papers']]);
+    expect(papers(sim)).toMatch(/Cover: Yale Health\. The 2026 return is due April 15, 2027, \$166 to pay\.$/);
   });
 
-  it('three days past its day unfiled: “$174 to pay, a late penalty in it”, $165.60 and 5% for a month or part, $8.28', () => {
+  it('three days past its day unfiled: “$174 to pay, a late penalty in it”, $165.60 and 5% for a month or part, $8.28, on Papers and on Home', () => {
     const sim = feb1();
     sim.advanceTo(DUE + 3 * MS_DAY);
     // Three days gone, it “was due”: until 2026-10-14 this held the alert to “is due April 15, 2027”, a date past
     // (tests/evidence3-home.test.ts, h-papers).
-    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. The 2026 return was due April 15, 2027, $174 to pay, a late penalty in it. Papers How This Works');
-    // What Needs You says what weighs once nothing is waiting there: the notices marked read with its own button.
-    const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
-    expect(mark).toHaveLength(1);
-    (mark[0]!.props.onClick as () => void)();
-    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.');
+    expect(papers(sim)).toMatch(/Cover: Yale Health\. The 2026 return was due April 15, 2027, \$174 to pay, a late penalty in it\.$/);
+    // The return's question lapsed at its day, so What Needs You puts it right in Papers' words. Until 2026-10-23 it said
+    // “A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.” once its
+    // notices were marked read, beside Papers' line saying the same.
+    expect(drawn(sim).text).toContain('The 2026 return was due April 15, 2027, $174 to pay, a late penalty in it. Open Papers');
+    expect(drawn(sim).text).not.toContain('A tax return is past its due date');
   });
 
   it('filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date, nothing accruing before it, and $169 sixty days past it, where the balance last stored reads $168; a reload says the same', () => {
@@ -403,9 +421,9 @@ describe('h-papers', () => {
     // The alert whole: what's owed, and whether it says it's growing. Until 2026-10-13 this read only the amount, under
     // words that said it was growing from the day of filing, before the due date, when nothing grows; they're said only
     // past the due date since (tests/evidence2-b12.test.ts, h-papers).
-    const owedAlert = (s: Simulation) => /Papers Cover: Yale Health\. (\$[\d,]+ of tax owed[^.]*)\. Papers How This Works/.exec(drawn(s).affairs)?.[1];
+    const owedAlert = (s: Simulation) => /Cover: Yale Health\. (\$[\d,]+ of tax owed[^.]*)\.$/.exec(papers(s))?.[1];
     expect(owedAlert(sim)).toBe('$166 of tax owed');
-    expect(drawn(sim).affairs).not.toContain('The 2026 return is due');
+    expect(papers(sim)).not.toContain('The 2026 return is due');
     // Interest and the late-payment penalty run from the due date (IRC 6601(a), 6651(a)(2)): the day before, still $165.60.
     sim.advanceTo(DUE - MS_DAY);
     expect(troubles(sim, sim.player).find((t) => t.kind === 'tax')?.amount).toBe(165_60);
@@ -426,19 +444,20 @@ describe('h-papers', () => {
   it('PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health is gone: “Cover: none.” and “You have no health cover.”', () => {
     const sim = life('g33-papers-cover');
     sim.advanceTo(at(2026, 9, 1, 12));
-    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. Papers How This Works');
+    expect(papers(sim)).toMatch(/Cover: Yale Health\.$/);
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
-    expect(drawn(sim).affairs).toContain('Papers Cover: none. You have no health cover. Papers How This Works');
+    expect(papers(sim)).toMatch(/Cover: none\. You have no health cover\.$/);
+    expect(drawn(sim).text).toContain('You have no health cover. Open Papers');
   });
 
-  it('a claim for unemployment is refused at school and after leaving it, in its own words, so the line has no Unemployment clause', () => {
+  it('a claim for unemployment is refused at school and after leaving it, in its own words, so Papers’ head has no Unemployment clause', () => {
     const sim = life('g33-papers-claim');
     sim.advanceTo(at(2027, 4, 5, 12));
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.');
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('Connecticut asks for base-period wages of 40 times the weekly benefit: $1,800.00 for $45.00. Your base period’s quarters paid $0.00, $0.00, $0.00, $0.00.');
     expect(sim.player.unemployment?.claim).toBeUndefined();
-    expect(drawn(sim).affairs).not.toContain('Unemployment');
+    expect(papers(sim)).not.toContain('Unemployment');
   });
 });
 
@@ -654,7 +673,7 @@ describe('n-decision-tax', () => {
     const paid = memoed(sim, 'Federal income tax, 2026');
     expect(paid).toHaveLength(1);
     expect(fromPlayer(sim, paid[0]!)).toBe(-165_60);
-    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. Papers How This Works');
+    expect(papers(sim)).toMatch(/Cover: Yale Health\.$/);
     expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe('You’ve already filed it. To change it, file an amended return.');
     const kept = reload(sim);
@@ -855,8 +874,8 @@ describe('h-money, a worth below nothing', () => {
     // TEST SETUP: the savings emptied and the checking brought to -$227.00, so the worth is -$227 with nothing owed.
     setBalance(sim, own(sim, 'savings'), 0);
     setBalance(sim, primary(sim), -227_00);
-    const { affairs } = drawn(sim);
-    expect(affairs).toContain('Money Chase Total Checking: −$227.00. Worth −$227. Your account is overdrawn. Chase How This Works');
-    expect(affairs).not.toMatch(/-\$/);
+    const line = money(sim);
+    expect(line).toContain('Worth −$227. Your account is overdrawn.');
+    expect(line).not.toMatch(/-\$/);
   });
 });

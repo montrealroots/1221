@@ -187,34 +187,36 @@ export const PAPERS: readonly GuideEntry[] = [
     covers: ['ui.papers'],
     synonyms: ['paperwork', 'your affairs', 'forms', 'papers screen', 'papers tabs'],
     questions: ['Where are my tax returns?', 'Where do I see my health cover?', 'Where do I claim unemployment or SNAP?', 'Where are my passport and ID?', 'Why is Papers locked?'],
-    where: { route: ROUTE, label: 'Papers, Your Affairs On Home, Or The Menu' },
+    where: { route: ROUTE, label: 'Papers, On The Menu' },
     available: `From the guide’s chapter “${CHAPTER}”.`,
-    short: 'Papers is where your official paperwork lives: each year’s tax return, your health cover and the bills for your care, unemployment, SNAP and pensions, your passport and ID, and your permission to work. Its five tabs are Tax Returns, Health Cover, Unemployment, Passport And ID and Permission To Work. You reach it from the Papers button on the Papers line in Your Affairs on Home, from Papers on the menu, or from Go There on a notice about any of these.',
+    short: 'Papers is where your official paperwork lives: each year’s tax return, your health cover and the bills for your care, unemployment, SNAP and pensions, your passport and ID, and your permission to work. Its five tabs are Tax Returns, Health Cover, Unemployment, Passport And ID and Permission To Work. You reach it from Papers on the menu, from Open Papers beside what needs doing under What Needs You on Home, or from Go There on a notice about any of these.',
     steps: [
-      `Read “${CHAPTER}” in the guide and press I’ve Read It. Papers joins the menu, and the Papers line in Your Affairs on Home gets its Papers button.`,
-      'Press Papers on that line, or on the menu.',
+      `Read “${CHAPTER}” in the guide and press I’ve Read It. Papers joins the menu.`,
+      'Press Papers on the menu.',
       'Pick a tab. Papers opens on Tax Returns the first time. After that, while the game stays open, it opens on the tab you left it on. The tab is remembered on screen, not in your save.',
       'With a tab focused, the arrow keys move between tabs, and Home and End jump to the first and the last.',
     ],
-    needs: [`Your Affairs shows the Papers line from a school life’s first day. Until you’ve read “${CHAPTER}”, the line is a locked panel with Read About It.`],
+    needs: [`Until you’ve read “${CHAPTER}”, Papers is off the menu, and What Needs You says nothing of it.`],
     costs: [{ label: 'Time', value: 'None: opening Papers and moving between its tabs doesn’t move the clock' }, { label: 'Money', value: 'None' }],
     reads: [
-      { label: 'The Papers Line On Home', value: 'What covers you this month and an open unemployment claim’s weekly amount, with an alert for no cover, a return due and tax owed' },
+      { label: 'The Head Of Papers', value: 'What covers you, a claim’s weekly pay, and a line for no cover, a return due and tax owed' },
+      { label: 'What Needs You On Home', value: 'The same lines for no cover, a return due and tax owed, each with Open Papers' },
       { label: 'Each Tab', value: 'Read from the rules behind it the moment you look: your returns, your cover and bills, your claims and pensions, your documents' },
     ],
     now: ['Opening the screen and its tabs changes nothing in the game. Each button on it does what its own entry says.'],
     later: [],
     interpret: [
       // Until 2026-10-13 this said tax owed grew each month whenever it was owed; Home’s alert says so only once a
-      // return’s due date has passed, from which interest and the late-payment penalty run (`growing`, ui/screens/Home.tsx).
-      'The Papers line on Home shows what needs doing as an alert: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed, with its interest and a late penalty growing each month once its return’s due date has passed.',
-      'Cover on the line names what covers you this month: Yale Health, HUSKY D, Covered Connecticut or Marketplace Plan, or none. A program shows by its own name, as Your Cover shows it.',
+      // return’s due date has passed, from which interest and the late-payment penalty run (`thingsToDo`, ui/screens/Home.tsx).
+      // Until 2026-10-23 (brief 23) these were the Papers line's, in Your Affairs on Home, with its cover beside them.
+      'Under its name Papers says what covers you, as “Cover: Yale Health.”, and a claim’s weekly pay. Under that, and under What Needs You on Home, it says what needs doing here: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed, with its interest and a late penalty growing each month once its return’s due date has passed.',
+      'Your Cover, on Health Cover, names what covers you this month by the program’s own name: Yale Health, HUSKY D, Covered Connecticut or a Marketplace Plan.',
     ],
     next: [
-      'Start with whatever the Papers line on Home flags: a return due, tax owed, or no health cover.',
+      'Start with whatever What Needs You on Home flags: a return due, tax owed, or no health cover.',
       'Each tab’s panels have their own How This Works, which explains that part in detail.',
     ],
-    unavailable: [`Until you’ve read “${CHAPTER}”, Papers is off the menu, and Home’s Papers line is a panel marked Locked. Its Read About It opens the guide at that chapter.`],
+    unavailable: [`Until you’ve read “${CHAPTER}”, Papers is off the menu, and opening it some other way shows it Locked, with Read About It, which opens the guide at that chapter.`],
     mistakes: [
       'Each tab is a view: moving between tabs files, pays and claims nothing, so there’s nothing to undo.',
       'Leaving Papers, or switching to another of its tabs, with an amount half typed in a payment box loses it: only the tab showing is kept on screen. Opening How This Works over it doesn’t lose it.',
@@ -228,7 +230,7 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     example: {
       setup: `A first-year in New Haven, the day “${CHAPTER}” is read.`,
-      steps: ['Press Papers on the Papers line in Your Affairs.', 'Open the Health Cover tab.', 'Press H for Home, then Papers on the menu.'],
+      steps: ['Press Papers on the menu.', 'Open the Health Cover tab.', 'Press H for Home, then Papers on the menu.'],
       result: 'Papers opens on Tax Returns; Health Cover shows Yale Health under Your Cover, This Month; back from Home, the screen is on Health Cover, where you left it. The clock didn’t move, and nothing in the world changed.',
     },
   },
@@ -495,7 +497,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { to: 'day.calendar', kind: 'scheduled', why: `A booked appointment is a commitment on the calendar, ${CONSULT_MINUTES} minutes at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday, and the clock stops at it.` },
       { to: 'papers.health-cover', kind: 'immediate', why: `A visit you keep is billed at once for your share, and its bill joins Care And Its Bills, due in ${MEDICAL_DEBT.dueDays} days.` },
       { to: 'papers.conditions', kind: 'evaluation', why: 'Your Pharmacy’s cash price is read for every generic fill of a condition’s medicine.' },
-      { to: 'day.needs', kind: 'scheduled', why: 'Booking sends “A Doctor’s Appointment” to What Needs You, a missed one “Missed The Doctor”, and a referral “A Referral”.' },
+      { to: 'day.needs', kind: 'scheduled', why: 'Booking sends the notice “A Doctor’s Appointment”, a missed one “Missed The Doctor”, and a referral “A Referral”, each in Updates.' },
     ],
     example: {
       setup: 'A student on Yale Health in New Haven, whose Monday brought a doctor’s visit.',

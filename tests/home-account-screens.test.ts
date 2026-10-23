@@ -52,7 +52,6 @@ vi.mock('@/app/game-context', () => {
 });
 const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
 const { BankStatements } = await import('@/ui/bank/BankStatements');
-const { Home } = await import('@/ui/screens/Home');
 
 /** A Yale life, as the game makes one, from a modest family, banking at Chase, born 14 June 2002. */
 const life = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({
@@ -86,7 +85,6 @@ function screens(sim: Simulation) {
   const current = at(sim, 'gb-hsbc', 'checking');
   return {
     bank: onScreen(sim, createElement(BankWorkspace)),
-    home: onScreen(sim, createElement(Home)),
     saverLook: summary(sim, 'account', saver.id),
     currentLook: summary(sim, 'account', current.id),
     bankLook: summary(sim, 'bank', 'gb-hsbc'),
@@ -96,7 +94,8 @@ function screens(sim: Simulation) {
 }
 
 describe('an account kept at home, in its own money on every screen', () => {
-  it('shows HSBC UK’s accounts in pounds with the dollars beside, on the bank, Home, the looks and the statement, through a reload', async () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's money line went to the head of Money: until then “… on the bank, Home, the looks …”.
+  it('shows HSBC UK’s accounts in pounds with the dollars beside, on the bank, the looks and the statement, through a reload', async () => {
     const sim = await make(london('gb-hsbc'));
     const saver = at(sim, 'gb-hsbc', 'savings');
     const current = at(sim, 'gb-hsbc', 'checking');
@@ -117,8 +116,9 @@ describe('an account kept at home, in its own money on every screen', () => {
     // 12 × (1.0105^(1/12) − 1) = 1.045% (from 2026-10-22, brief 21: until then "Pays 1.05% a year (1.055% APY).").
     expect(s.bank).toContain('Pays 1.05% AER (1.045% a year before compounding).');
     expect(s.bank).toMatch(/at your other banks, £5,\d{3} of it at HSBC UK\./);
-    // Home's money line.
-    expect(s.home).toContain(`and ${held(saver.held! + current.held!)} at HSBC UK. Worth`);
+    // What Home's money line said until 2026-10-23 (brief 23), “… and £5,582.10 at HSBC UK. Worth …”: the head of Money
+    // says the pounds at HSBC UK, above, and the worth after them.
+    expect(s.bank).toMatch(/of it at HSBC UK\. Worth \$[\d,]+[.,]/);
     // The looks: each account, and the bank.
     expect(s.saverLook).toContain(`You have ${held(saver.held!)} ($`);
     expect(s.currentLook).toContain('You have £100.00 ($126.58) in it at HSBC UK');

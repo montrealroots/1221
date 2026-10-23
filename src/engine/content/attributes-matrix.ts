@@ -117,8 +117,10 @@ export function attributesMatrix(): string {
   out.push('', '## Profile Sections: 7 of 7', '', row(['Section', 'Reads']), '| --- | --- |');
   for (const [s, r] of [['Identity And Background', 'the character sheet, the bank, the cover'], ['Attributes And Craft', '`abilityOf`, `abilityFull`, `reachOf`, today’s condition, the development history, the last five pieces’ limits'], ['Techniques', '`craft`, `reachOf`, `MASTERED`'], ['Genres', '`genres`, `engagement.byGenre`, the next part’s play'], ['Readiness Today', '`readiness`, `conditionAt`'], ['School Journey', '`school`, `journey`, `work`'], ['Development History', '`development.history`']] as const) out.push(row([s, r]));
 
-  out.push('', '## Navigation Destinations: 6 of 6', '', row(['Destination', 'Route', 'Where']), '| --- | --- | --- |');
-  for (const [n, r, w] of [['Home', '/home', 'the rail’s top, the brand, `h`'], ['Player Profile', '/workspace/profile', 'the rail, your name at its foot, `p`'], ['Calendar', '/workspace/calendar', 'Home’s Calendar section, `c` (kept off the rail by an earlier decision)'], ['School', '/workspace/school', 'the rail, Home’s Your Affairs'], ['Money', '/workspace/bank', 'the rail, Home’s Your Affairs'], ['Papers', '/workspace/papers', 'the rail, Home’s Your Affairs']] as const) out.push(row([n, `\`${r}\``, w]));
+  // Calendar joined the rail, and Updates was made, on 2026-10-23 (brief 23), when Your Affairs went from Home: until then
+  // the Calendar was off the rail, on Home's Calendar section, and School, Money and Papers were on Your Affairs too.
+  out.push('', '## Navigation Destinations: 7 of 7', '', row(['Destination', 'Route', 'Where']), '| --- | --- | --- |');
+  for (const [n, r, w] of [['Home', '/home', 'the rail’s top, the brand, `h`'], ['Player Profile', '/workspace/profile', 'the rail, your name at its foot, `p`'], ['Calendar', '/workspace/calendar', 'the rail, Home’s Up Next, `c`'], ['Updates', '/workspace/updates', 'the rail, Home’s Recent Updates'], ['School', '/workspace/school', 'the rail, Open School under What Needs You'], ['Money', '/workspace/bank', 'the rail, Open Money under What Needs You'], ['Papers', '/workspace/papers', 'the rail, Open Papers under What Needs You']] as const) out.push(row([n, `\`${r}\``, w]));
   out.push('');
   return out.join('\n');
 }

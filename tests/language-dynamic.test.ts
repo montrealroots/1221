@@ -319,18 +319,23 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     sim.must({ kind: 'world.mark_read', payload: {} });
     let home = drawn(sim, Home);
     expect(home).not.toMatch(/Mark \d+ Read/);
+    expect(home).toContain('Recent Updates\nNothing unread.');
     sim.notify({ category: 'school', title: 'A First Notice', body: 'One thing happened.', importance: 60 });
     const first = sim.universe.notifications.at(-1)!;
     home = drawn(sim, Home);
     expect(home).toContain('Mark 1 Read');
+    expect(home).toContain('Recent Updates\nOne unread notice.');
     expect(opened(sim, 'notification', first.id).look.summary).toBe('It came in just now, and it’s your only unread notice.');
     for (let n = 2; n <= 8; n += 1) sim.notify({ category: 'school', title: `Notice Number ${n}`, body: 'Another thing happened.', importance: 50 });
     home = drawn(sim, Home);
     expect(home).toContain('Mark 8 Read');
-    expect(home).toContain('These six are the most important. 2 more are unread.');
+    // Recent Updates draws four from 2026-10-23 (brief 23): until then What Needs You drew six, and said “These six are
+    // the most important. 2 more are unread.”
+    expect(home).toContain('Recent Updates\nEight unread, the most important first.');
+    expect(home).toContain('Four more unread.');
     expect(opened(sim, 'notification', first.id).look.summary).toBe('It came in just now. It’s first of your eight unread notices.');
     sim.notify({ category: 'school', title: 'Notice Number 9', body: 'Another thing happened.', importance: 10 });
-    expect(drawn(sim, Home)).toContain('These six are the most important. 3 more are unread.');
+    expect(drawn(sim, Home)).toContain('Five more unread.');
     sound(home); agrees(home, ['notice']);
     sim.must({ kind: 'world.mark_read', payload: {} });
     expect(opened(sim, 'notification', first.id).look.summary).toBe('You’ve read this notice. It came in just now.');
@@ -650,9 +655,13 @@ describe('each academic standing: good standing, academic concern, academic warn
     tended(sim, on(2026, 9, 14, 12));
     const school = sim.player.school!;
     const head = () => drawn(sim, SchoolWorkspace).split('\n').find((l) => l.startsWith('MFA in Acting, class of 2029.'))!;
-    const affairs = () => drawn(sim, Home).split('\n').find((l) => l.startsWith('School '))!;
+    // Home's School line until 2026-10-23 (brief 23): the place and Next under the School's head since, and the standing
+    // put right from What Needs You on Home.
+    const glance = () => drawn(sim, SchoolWorkspace).split('\n').find((l) => l.startsWith('You’re '))!;
+    const putRight = () => drawn(sim, Home).split('\n').find((l) => l.startsWith('Your standing is '));
     expect(head()).toBe('MFA in Acting, class of 2029. Year 1 of 3, good standing.');
-    expect(affairs()).toMatch(new RegExp(`^School Year 1, good standing, \\d+(?:st|nd|rd|th) of 16 in the class\\. Next: .+, ${MONTH} \\d{1,2}, \\d{4} at \\d{1,2}:\\d{2} [AP]M\\.`));
+    expect(glance()).toMatch(new RegExp(`^You’re \\d+(?:st|nd|rd|th) of 16 in the class\\. Next: .+, ${MONTH} \\d{1,2}, \\d{4} at \\d{1,2}:\\d{2} [AP]M\\.$`));
+    expect(putRight()).toBeUndefined();
     // TEST SETUP: each term's attendance short of the floor (90%), the term's tally as staying away leaves it, then the
     // faculty's review as the term's end runs it (`evaluate`). The next term begun by hand where the clock would begin it.
     const shortTerm = (term: number) => {
@@ -680,13 +689,13 @@ describe('each academic standing: good standing, academic concern, academic warn
       expect(tab).toContain(`${termLabel(term)}\n${label}\n50%`);
       if (e.standing === 'dismissed') {
         expect(head()).toBe('MFA in Acting, class of 2029. Left the School.');
-        expect(affairs()).toMatch(/^School Left the School, dismissed, \d+(?:st|nd|rd|th) of 16 in the class\. Your standing is dismissed\. The School screen says why\./);
+        expect(glance()).toMatch(/^You’re \d+(?:st|nd|rd|th) of 16 in the class\.$/);
+        expect(putRight()).toBe('Your standing is dismissed. The School screen says why.');
       } else {
         expect(head()).toBe(`MFA in Acting, class of 2029. Year ${term < 2 ? 1 : 2} of 3, ${label.toLowerCase()}.`);
-        expect(affairs()).toContain(`, ${label.toLowerCase()}, `);
-        expect(affairs()).toContain(`Your standing is ${label.toLowerCase()}. The School screen says why.`);
+        expect(putRight()).toBe(`Your standing is ${label.toLowerCase()}. The School screen says why.`);
       }
-      sound(tab); sound(affairs());
+      sound(tab); sound(glance()); sound(putRight()!);
     }
   });
 
@@ -708,9 +717,10 @@ describe('each academic standing: good standing, academic concern, academic warn
     // Back with the class a year behind, the class of 2030 (`joinCohort`).
     const head = drawn(sim, SchoolWorkspace).split('\n').find((l) => l.startsWith('MFA in Acting, class of'))!;
     expect(head).toBe(`MFA in Acting, class of ${school.classOf}. On leave until Fall Term 2027.`);
-    const affairs = drawn(sim, Home).split('\n').find((l) => l.startsWith('School '))!;
-    expect(affairs).toMatch(/^School On Leave, good standing, \d+(?:st|nd|rd|th) of 16 in the class\./);
-    for (const s of [refused.error!, pending.error!, head, affairs]) { sound(s); whole(s); dated(s); }
+    // Home's School line said “On Leave, good standing, …” until 2026-10-23 (brief 23); the School's head says the place.
+    const glance = drawn(sim, SchoolWorkspace).split('\n').find((l) => l.startsWith('You’re '))!;
+    expect(glance).toMatch(/^You’re \d+(?:st|nd|rd|th) of 16 in the class\.$/);
+    for (const s of [refused.error!, pending.error!, head, glance]) { sound(s); whole(s); dated(s); }
   });
 });
 
@@ -948,22 +958,24 @@ describe('positive, zero and negative balances: an account, a card, a payment pl
     if (by) sim.post({ memo: 'Spent', category: 'food', postings: [{ accountId: id, amount: by }, { accountId: sim.nominalAccount('expense', 'Groceries').id, amount: -by }] });
   };
 
-  it('an account: money in it, nothing, and overdrawn, on its look and on Home, written as money is written', () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's Money line went to the head of Money: until then “… on its look and on Home, …”.
+  it('an account: money in it, nothing, and overdrawn, on its look and at the head of Money, written as money is written', async () => {
+    const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
     const sim = student('dyn-balance');
     const checking = sim.player.primaryAccountId!;
-    const line = () => drawn(sim, Home).split('\n').find((l) => l.startsWith('Money '))!;
+    const line = () => drawn(sim, BankWorkspace).split('\n').filter((l) => / held here, in |^Your account is overdrawn\.$/.test(l)).join(' ');
     bring(sim, checking, 1234_56);
     expect(opened(sim, 'account', checking).look.summary).toBe('You have $1,234.56 in it at Chase. It’s your primary account, so the day’s spending comes out of it.');
-    expect(line()).toMatch(/^Money Chase Total Checking: \$1,234\.56\. Worth \$[\d,]+\./);
+    expect(line()).toMatch(/ held here, in 2 accounts\. Worth \$[\d,]+\.$/);
     bring(sim, checking, 0);
     expect(opened(sim, 'account', checking).look.summary).toBe('There’s nothing in it at Chase. It’s your primary account, so the day’s spending comes out of it.');
-    expect(line()).toMatch(/^Money Chase Total Checking: \$0\.00\. Worth \$[\d,]+\./);
+    expect(line()).toMatch(/ held here, in 2 accounts\. Worth \$[\d,]+\.$/);
     bring(sim, checking, -41_10);
     expect(opened(sim, 'account', checking).look.summary).toBe('It’s $41.10 overdrawn at Chase, and every day it stays overdrawn can cost you.');
-    expect(line()).toMatch(/^Money Chase Total Checking: −\$41\.10\. Worth \$[\d,]+\. Your account is overdrawn\./);
+    expect(line()).toMatch(/ held here, in 2 accounts\. Worth \$[\d,]+\. Your account is overdrawn\.$/);
     // Worth below nothing too: every account brought down. TEST SETUP.
     for (const a of sim.ledger.accountsOf(sim.player.id).filter((x) => !x.nominal && x.kind === 'savings')) bring(sim, a.id, 0);
-    expect(line()).toMatch(/^Money Chase Total Checking: −\$41\.10\. Worth −\$41\. Your account is overdrawn\./);
+    expect(line()).toBe('−$41.10 held here, in 2 accounts. Worth −$41. Your account is overdrawn.');
     for (const s of [opened(sim, 'account', checking).text, line()]) sound(s);
   });
 
@@ -1064,11 +1076,12 @@ describe('a new player, an advanced one and a finished school journey: the Profi
         dated(text);
       }
       const lines = (t: string) => t.split('\n');
-      const affairs = lines(screens.home).find((l) => l.startsWith('School '))!;
+      // Home's School line until 2026-10-23 (brief 23), “School Arriving, good standing, …”; the School's head since.
+      const glance = lines(screens.school).find((l) => l.startsWith('You’re '))!;
       const head = lines(screens.school).find((l) => l.startsWith('MFA in Acting, class of 2029.'))!;
       const profileSchool = lines(screens.profile).slice(lines(screens.profile).indexOf('School'), lines(screens.profile).indexOf('School') + 3);
       if (stage === 'new') {
-        expect(affairs).toMatch(/^School Arriving, good standing, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
+        expect(glance).toMatch(/^You’re \d+(?:st|nd|rd|th) of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
         expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
         expect(screens.profile).toContain('None of your work has been judged yet. After your first showing, night on stage or self-tape, this will say what to work on next, from what held that work back.');
         expect(head).toBe('MFA in Acting, class of 2029. Arriving for the fall term.');
@@ -1076,7 +1089,7 @@ describe('a new player, an advanced one and a finished school journey: the Profi
         expect(screens.school).toContain('Coursework This Term\nNone Yet');
         expect(screens.coursework).toContain('Nothing is set yet. Each course sets its work in class, and in your first week the orientation session The Courses And What They Ask sets the first pieces.');
       } else if (stage === 'a year played') {
-        expect(affairs).toMatch(/^School Year 1, good standing, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Classes, August 30, 2027 at 9:00 AM\.$/);
+        expect(glance).toMatch(/^You’re \d+(?:st|nd|rd|th) of 16 in the class\. Next: Classes, August 30, 2027 at 9:00 AM\.$/);
         expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
         expect(screens.profile).toContain('What To Work On Next');
         expect(head).toBe('MFA in Acting, class of 2029. Year 1 of 3, good standing.');
@@ -1086,7 +1099,7 @@ describe('a new player, an advanced one and a finished school journey: the Profi
         expect(screens.school).toContain('From Your Teachers\nOn Spring Term 2027');
         expect(screens.school).toContain('Attendance This Term');
       } else {
-        expect(affairs).toMatch(/^School Graduated, \d+(?:st|nd|rd|th) of 16 in the class\.$/);
+        expect(glance).toMatch(/^You’re \d+(?:st|nd|rd|th) of 16 in the class\.$/);
         expect(profileSchool).toEqual(['School', 'Graduated', 'Class of 2029, graduated']);
         expect(head).toBe('MFA in Acting, class of 2029. Graduated.');
         expect(screens.school).toContain('Attendance Last Term');

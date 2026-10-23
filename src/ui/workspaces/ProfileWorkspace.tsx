@@ -364,7 +364,7 @@ function AbilitiesPanel() {
                     <td className="num mono">{one(now)}</td>
                     <td className="num mono">{one(full)}</td>
                     <td className="num mono" title={classesGrow(d.id) ? undefined : 'Classes don’t build it'}>{classesGrow(d.id) ? one(Math.min(full, reachOf(person, d.id))) : '—'}</td>
-                    <td className="xs">{today.length ? today.join('; ') : 'Not held back today'}</td>
+                    <td className="xs"><div className="cell-min">{today.length ? today.join('; ') : 'Not held back today'}</div></td>
                     <td className="xs">{[...new Set(readersOf(d.id).flatMap((r) => r.dims))].map((x) => DIMENSION_LABEL[x]).join(', ') || '—'}</td>
                     <td className="xs nowrap">{h ? `+${h.delta.toFixed(2)}, ${sourceWords(h.source)}` : 'None yet'}</td>
                     <td className="nowrap"><PracticeButton id={d.id} /></td>

@@ -887,7 +887,8 @@ describe('c-tutorial', () => {
     const rail = shell.elements.filter((e) => e.type === 'button' && e.props.className === 'rail-item').map((e) => e.first);
     expect(rail).toEqual(['Home', ...RAIL_DESTINATIONS.flatMap((g) => g.items.map((i) => i.label))]);
     // Career under Your Work from 2026-10-20 (brief 19), between School and Money; the rail had four destinations until then.
-    expect(rail).toEqual(['Home', 'Player Profile', 'School', 'Career', 'Money', 'Papers']);
+    // The Calendar and Updates under Your Day from 2026-10-23 (brief 23): the Calendar was Home's until then, and Updates new.
+    expect(rail).toEqual(['Home', 'Player Profile', 'Calendar', 'Updates', 'School', 'Career', 'Money', 'Papers']);
     // Time Controls: Play, the clock paused. Its words say what a press does, with no pressed state: until 2026-10-13
     // this held `aria-pressed` true on it, and a screen reader said “Play, pressed” with the clock stopped (WAI-ARIA
     // Authoring Practices, Button pattern: a toggle’s label doesn’t change with its state, and one that changes needs no
@@ -904,8 +905,8 @@ describe('c-tutorial', () => {
     expect(pause.props['aria-pressed']).toBeUndefined();
     // Every screen a destination opens, the calendar too, is open.
     const routes = DESTINATIONS.flatMap((g) => g.items.map((i) => i.route));
-    // Six with the Career's from 2026-10-20 (brief 19); five until then.
-    expect(routes).toHaveLength(6);
+    // Seven with the Updates from 2026-10-23 (brief 23); six with the Career's from 2026-10-20 (brief 19); five until then.
+    expect(routes).toHaveLength(7);
     for (const route of routes) expect(locks(screenAt(sim, route)), route).toEqual({ controls: 0, panels: 0, screens: 0 });
   });
 
@@ -915,8 +916,10 @@ describe('c-tutorial', () => {
     const { sim, phase } = await appBegin(app(STEP.review, chosen));
     expect(sim.universe.tutorial).toEqual({ read: [] });
     const shell = playing(phase, sim);
-    // Four controls locked in the shell (Play and Sleep among them) and eight of Home's panels, each opening with its chapter.
-    expect(locks(shell.html)).toEqual({ controls: 4, panels: 8, screens: 0 });
+    // Six controls locked (Play and Sleep among them, and Today's Where You Are and Weather) and three of Home's panels,
+    // each opening with its chapter. Until 2026-10-23 (brief 23) four controls and eight panels: Where You Are and the
+    // Weather were panels, and Your Affairs' Money, School and Papers lines locked panels too.
+    expect(locks(shell.html)).toEqual({ controls: 6, panels: 3, screens: 0 });
     const rail = shell.elements.filter((e) => e.type === 'button' && e.props.className === 'rail-item').map((e) => e.first);
     expect(rail).toEqual(['Home']);
     const play = control(shell, 'button', (e) => e.first === 'Play', 'Play');

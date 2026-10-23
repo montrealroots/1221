@@ -28,6 +28,7 @@ import {
   schoolCreditWords, type MaterialProblem,
 } from '@/engine/systems/pro';
 import { OpportunitiesPane } from '@/ui/career/OpportunitiesPane';
+import { TabBar } from '@/ui/components/TabBar';
 
 type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work';
 
@@ -47,24 +48,8 @@ export function CareerWorkspace() {
         <h1>Career</h1>
         <p className="muted">Where you stand as a professional actor, your portfolio, and the work you’ve booked with its pay and your unions.</p>
       </div>
-      <div className="tabs" role="tablist" aria-label="Career">
-        {CAREER_TABS.map((one, i) => (
-          <button
-            key={one.id} id={`career-tab-${one.id}`} type="button" role="tab" className="tab"
-            aria-selected={one.id === tab} aria-controls={`career-pane-${one.id}`} tabIndex={one.id === tab ? 0 : -1}
-            onClick={() => setTab(one.id)}
-            onKeyDown={(e) => {
-              const go = (n: number) => { const next = CAREER_TABS[(n + CAREER_TABS.length) % CAREER_TABS.length]!; setTab(next.id); document.getElementById(`career-tab-${next.id}`)?.focus(); };
-              if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
-              else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
-              else if (e.key === 'Home') { e.preventDefault(); go(0); }
-              else if (e.key === 'End') { e.preventDefault(); go(CAREER_TABS.length - 1); }
-            }}
-          >
-            {one.label}
-          </button>
-        ))}
-      </div>
+      {/* The shared tab bar from 2026-10-23 (`components/TabBar.tsx`); until then its own copy here. */}
+      <TabBar tabs={CAREER_TABS} tab={tab} onTab={setTab} label="Career" idPrefix="career" />
       <div role="tabpanel" id={`career-pane-${tab}`} aria-labelledby={`career-tab-${tab}`} tabIndex={0}>
         {panes[tab]}
       </div>

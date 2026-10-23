@@ -220,10 +220,10 @@ export const SCHOOL: readonly GuideEntry[] = [
     synonyms: ['school screen', 'academic standing', 'term evaluation', 'attendance', 'academic warning', 'academic concern', 'craft against the class', 'class rank', 'timetable', 'skills', 'casting pool'],
     questions: ['How am I doing at school?', 'What does the end-of-term evaluation read?', 'Why did my standing drop?', 'How do I get back to good standing?', 'How do classes grow my craft?', 'Where do I stand against the class?'],
     where: { route: ROUTE, tab: TAB.standing, label: 'School, Standing And Craft' },
-    available: `${OPENED}: the School line in Your Affairs on Home, and School on the menu.`,
+    available: `${OPENED}: School on the menu, and Open School under What Needs You on Home when your standing needs putting right.`,
     short: `Your standing is how the faculty judge each term, and it decides whether you stay, whether you’re cast and whether you get your degree. Standing And Craft shows where you stand, how this term is going, your ${SKILLS.length} skills against the other ${YALE_DRAMA.classSize - 1} students in your class, and every review so far.\n\nAt five on the last day of each term’s classes, the faculty review the term. Fall short of anything they ask and your standing drops a step, from ${STANDING_LABEL.good} to ${STANDING_LABEL.concern}, then ${STANDING_LABEL.warning}, then dismissal; meet everything and you’re back in ${STANDING_LABEL.good}.`,
     steps: [
-      `Open School from the menu, or press ${YALE_DRAMA.short} on the School line in Your Affairs on Home.`,
+      'Open School from the menu, or press Open School beside your standing under What Needs You on Home. Under its name it says your year and standing, your place in the class and the next thing the School has for you.',
       // Coursework This Term from 2026-10-16: until then the review's third measure had no figure on the tab.
       'Standing And Craft opens first. Under Your Standing are Standing, Attendance This Term, Growth This Term and Coursework This Term, each with what’s asked, and a line saying whether you’re in the casting pool.',
       'Your Craft Against The Class lists each skill with You, You Can Reach, Class Best, Class Median and Your Place. Press a skill to open it.',

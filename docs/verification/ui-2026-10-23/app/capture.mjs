@@ -11,15 +11,18 @@
 //     FULL   the sizes that also get a whole-page image of each page (default none)
 //     SHOTS  all | none | pages,... (default all): which steps keep a viewport image
 //
-// A whole page is captured by letting the document grow to hold the screen (the shell's fixed height and the main
-// column's own scroller set aside for the image only), so a phone's window never turns upright to fit it.
+// A whole page is the main column scrolled a window at a time and joined (`shoot`), at the window's own size.
 import { chromium } from 'playwright';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { gunzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { launchOptions } from '../../../../tools/browser.mjs';
 
 const BASE = process.env.SLATE_BASE ?? 'http://localhost:4291';
+const COMPOSE = join(dirname(fileURLToPath(import.meta.url)), 'compose.py');
 const [OUT, LIVES, SIZES, FULL = '', SHOTS = 'all'] = process.argv.slice(2);
 const lives = LIVES.split(',').map((s) => s.split('='));
 const sizes = SIZES.split(',');
@@ -146,13 +149,38 @@ function measure() {
   return out;
 }
 
+/**
+ * A viewport image, or a whole page at the window's own size: the bar as it stands, then the main column scrolled a
+ * window at a time and each slice taken, joined by `compose.py`. Growing the window to fit the page, or Chromium's
+ * full-page capture (which grows it for the image), would set the page out for a taller screen than the one walked: a
+ * phone on its side is under 500 pixels tall, and the page is laid out for that.
+ */
 async function shoot(page, file, full) {
   if (!full) { await page.screenshot({ path: file, type: 'jpeg', quality: 72, scale: 'css' }); return; }
-  await page.addStyleTag({ content: 'html,body,#root,.shell{height:auto!important;overflow:visible!important}.shell-body{min-height:0}.main{overflow:visible!important;flex:none!important}' }).then((h) => h.evaluate((n) => n.setAttribute('data-cap-full', '')));
-  await wait(page, 300);
-  await page.screenshot({ path: file, type: 'jpeg', quality: 72, scale: 'css', fullPage: true });
-  await page.evaluate(() => document.querySelectorAll('[data-cap-full]').forEach((n) => n.remove()));
-  await wait(page, 200);
+  const box = await page.evaluate(() => {
+    const main = document.querySelector('#main');
+    if (!main) return null;
+    const r = main.getBoundingClientRect();
+    return { top: Math.round(r.top), left: Math.round(r.left), width: Math.round(r.width), height: Math.round(main.clientHeight), scroll: main.scrollHeight, was: main.scrollTop, vw: window.innerWidth };
+  });
+  if (!box || box.scroll <= box.height + 2) { await page.screenshot({ path: file, type: 'jpeg', quality: 72, scale: 'css' }); return; }
+  const parts = [];
+  const topFile = `${file}.top.png`;
+  await page.evaluate(() => document.querySelector('#main').scrollTo(0, 0)); await wait(page, 250);
+  await page.screenshot({ path: topFile, scale: 'css', clip: { x: 0, y: 0, width: box.vw, height: box.top } });
+  let y = 0, overlap = 0;
+  for (let k = 0; y < box.scroll && k < 60; k += 1) {
+    const at = Math.min(y, box.scroll - box.height);
+    overlap = y - at;
+    await page.evaluate((v) => document.querySelector('#main').scrollTo(0, v), at); await wait(page, 220);
+    const f = `${file}.${k}.png`;
+    // The first slice the window's width, the rail beside it; the rest the main column alone (the rail doesn't scroll).
+    await page.screenshot({ path: f, scale: 'css', clip: k === 0 ? { x: 0, y: box.top, width: box.vw, height: box.height } : { x: box.left, y: box.top, width: box.width, height: box.height } });
+    parts.push(f); y += box.height;
+  }
+  execFileSync('python3', [COMPOSE, file, topFile, String(overlap), String(box.left), ...parts]);
+  for (const f of [topFile, ...parts]) rmSync(f, { force: true });
+  await page.evaluate((v) => document.querySelector('#main').scrollTo(0, v), box.was); await wait(page, 200);
 }
 
 async function step(ctx, name, { full = true } = {}) {

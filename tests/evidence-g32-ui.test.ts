@@ -1,7 +1,8 @@
 /**
  * Evidence for seven screen rows the review of 2026-10-13 left partial (verification group g32-ui): the Player Profile's
  * Current Condition, its School Journey with Your Work So Far and Development History, and Home's head, Calendar, What
- * Needs You, How You Are, and Where You Are with the Weather. The review found each drawn by some test and read by none,
+ * Needs You, How You Are, and Where You Are with the Weather (Today, Up Next, What Needs You, How You Are and Recent
+ * Updates from 2026-10-23, brief 23). The review found each drawn by some test and read by none,
  * or read only as the engine function the panel calls. Here each is drawn as the player has it and read for its words
  * and its controls, its buttons pressed and the screen read again, and each figure set against one worked out here from
  * the rule's own numbers or a published source, never asked of the helper the engine computes it with.
@@ -17,22 +18,27 @@
  *   next casting, Your School going to /workspace/school, and Your Work So Far's count and kinds. Found on the way, and
  *   held by a test that fails until it's fixed: once the run has closed, its milestone on the same panel, School Journey
  *   still says the part "is running", until the next term's casting files its credit (`JourneyPanel`).
- * - `h-head`: the weekday date, the noun, "Good <part of day>, <name>.", the time, the city, the zone, the season and
- *   the sky, each opening its look; the part of day at every boundary as the clock reaches it; the name a player goes
- *   by; and a January in New Haven.
+ * - `h-head`: the weekday date, the noun, "Good <part of day>, <name>.", the time, the city with its region, the zone,
+ *   the season and the daylight, and the sky beside them, each opening its look; the part of day at every boundary as
+ *   the clock reaches it; the name a player goes by; and a January in New Haven. Today, from 2026-10-23 (brief 23).
  * - `h-calendar`: a plan two days out as the next commitment, a second under it, both called off; a call in Los Angeles
  *   on its own clock with "you’re not in Los Angeles", and the notice when it's missed, on the call’s clock too (until
  *   2026-10-13 on the home clock with no zone); Open Calendar pressed; the
- *   section and its button locked until their chapters; a plan across a reload.
- * - `h-needs`: a student from abroad's 2026 return on 1 February 2027, with its notices, Go There, Dismiss and Mark N
- *   Read pressed to All Clear; File It refused in the guide's words and then filing; the return left unfiled, Overdue at
- *   midnight, gone two days on, and weighing what it owed and 5% of it (IRC §6651); each other sentence of what weighs;
- *   and more than six questions.
- * - `h-how`: the summary and the three meters at the dials' own figures, Readiness by hand; a meal moving them; the tone
- *   at EMPTY and OVERWROUGHT and fifteen inside each; each summary; each meter opening its look at the same figure.
- * - `h-where-weather`: New Haven, Connecticut · United States, Home., 130K people, its clock and its daylight against the
- *   sunrise equation; the weather in °F and mph, the climate, the five days ahead, each the day the clock then brings; a
- *   London life in °C and km/h. The away line ("… from home in …") wasn't reached: Home profiles the city the player is
+ *   section and its button locked until their chapters; a plan across a reload. Up Next, after What Needs You, from
+ *   2026-10-23.
+ * - `h-needs`: a student from abroad's 2026 return on 1 February 2027, with Go There and Dismiss pressed, what the return
+ *   still asks put right from Papers, and the notices under Recent Updates, Mark N Read pressed, and every one on
+ *   Updates past Home's four; File It refused in the guide's words and then filing; the return left unfiled, Overdue at
+ *   midnight, gone two days on, and what it owed and 5% of it (IRC §6651) said after; each other sentence of what
+ *   weighs, each with the way to its screen; and more than six questions. Until 2026-10-23 the notices were under the
+ *   questions, every one.
+ * - `h-how`: the summary and the three meters at the dials' own figures, Readiness by hand, and Look After Yourself
+ *   under them; a meal pressed there moving them; the tone at EMPTY and OVERWROUGHT and fifteen inside each; each
+ *   summary; each meter opening its look at the same figure.
+ * - `h-where-weather`: New Haven, Connecticut on Today's line, its clock and its daylight against the sunrise equation,
+ *   and its look's Your home., 130K people and daylight; the weather in °F, the five days ahead, each the day the clock
+ *   then brings, and its look's mph and climate; a London life in °C and km/h. Two panels until 2026-10-23, said in a
+ *   line and a press since. The away line ("… from home in …") wasn't reached: Home profiles the city the player is
  *   in, and since the scope reset of 2026-10-09 that's their home too (`homeCityOf`, `world/place.ts`).
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, she/her, an actress at Yale in New Haven
@@ -64,7 +70,8 @@ import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { instantFromZoned, zonedParts, MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { openDecisions } from '@/engine/world/world';
-import { forecastFor, weatherAt } from '@/engine/systems/weather';
+import { WEATHER_EMOJI, forecastFor, weatherAt } from '@/engine/systems/weather';
+import { titleCaseLabel } from '@/engine/core/text';
 import { healthOf } from '@/engine/systems/health';
 import { cardsOf } from '@/engine/systems/credit';
 import { returnsOf, type TaxReturn } from '@/engine/systems/taxreturn';
@@ -127,6 +134,7 @@ vi.mock('@/app/game-context', () => {
 
 const { Home } = await import('@/ui/screens/Home');
 const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+const { Updates } = await import('@/ui/screens/Updates');
 
 // ---------------------------------------------------------------------------
 // Lives, the screens over them, and the figures worked out by hand
@@ -490,25 +498,31 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
 // h-head
 // ---------------------------------------------------------------------------
 
+// Home's head became Today on 2026-10-23 (brief 23): the line under the greeting names the town with its region, the
+// zone, the season and the daylight, which Where You Are's panel said until then, and the sky beside it is the Weather's.
 describe('h-head: the head of Home', () => {
-  const head = (sim: Simulation) => { const { text } = drawn(sim, Home); return text.slice(0, text.indexOf('Calendar')).trim(); };
+  const head = (sim: Simulation) => { const { text } = drawn(sim, Home); return text.slice(0, text.indexOf(' How Home Works')).trim(); };
+  /** The sky beside it, from the town's weather now to its days ahead. */
+  const sky = (sim: Simulation) => between(drawn(sim, Home).text, 'How Home Works', 'How The Weather Works').replace('How Home Works ', '');
 
-  it('PLAYER JOURNEY: on the first morning it reads Monday, August 24, 2026 · Actress, Good Morning, Ada., and 7:30 AM in New Haven · EDT · Summer with the sky as it is; each opens its look, and none of it changes the save', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “… and 7:30 AM in New Haven · EDT · Summer with the sky as it is; …”.
+  it('PLAYER JOURNEY: on the first morning it reads Monday, August 24, 2026 · Actress, Good Morning, Ada., and 7:30 AM in New Haven, Connecticut · EDT · Summer · its daylight, with the sky as it is beside it; each opens its look, and none of it changes the save', () => {
     const sim = ada('g32-head');
     const before = serialise(sim.universe);
     const w = weatherAt(sim, NEW_HAVEN)!;
     const shown = head(sim);
-    expect(shown.startsWith('Monday, August 24, 2026 · Actress Good Morning, Ada. 7:30 AM in New Haven · EDT · Summer · ')).toBe(true);
-    expect(shown.endsWith(` ${w.temperature}°F ${w.condition}`)).toBe(true);
+    expect(shown.startsWith('Monday, August 24, 2026 · Actress Good Morning, Ada. 7:30 AM in New Haven, Connecticut · EDT · Summer · Daylight ')).toBe(true);
+    expect(sky(sim).startsWith(`${WEATHER_EMOJI[w.condition]} ${w.temperature}°F ${titleCaseLabel(w.condition)} High ${w.high}°F · Low ${w.low}°F `)).toBe(true);
     // Each word is the way into its thing: pressed, the thing opens under the head.
     const looks: [string, string][] = [
       ['Monday, August 24, 2026', 'The Day Monday, August 24 Close It’s 7:30 AM in New Haven on Monday, August 24'],
       ['Actress', 'Yourself Ada Cole Close'],
       ['Ada', 'Yourself Ada Cole Close'],
+      ['7:30 AM', 'The Day Monday, August 24 Close It’s 7:30 AM in New Haven on Monday, August 24'],
       ['New Haven', 'Where You Live New Haven Close This is where you live. It’s 7:30 AM'],
       ['EDT', 'Where You Live New Haven Close'],
       ['Summer', 'Season Summer Close It’s summer in New Haven. Here it runs through June, July and August.'],
-      [`${w.temperature}°F ${w.condition}`, `Weather Now Weather In New Haven Close It’s ${w.temperature}°F and ${w.condition.toLowerCase()} where you are, with a high of ${w.high}°F and a low of ${w.low}°F today.`],
+      [`${w.temperature}°F ${titleCaseLabel(w.condition)}`, `Weather Now Weather In New Haven Close It’s ${w.temperature}°F and ${w.condition.toLowerCase()} where you are, with a high of ${w.high}°F and a low of ${w.low}°F today.`],
     ];
     for (const [word, look] of looks) {
       h.given = new Map();
@@ -548,7 +562,7 @@ describe('h-head: the head of Home', () => {
     const sim = quickSave({ startLocationId: NEW_HAVEN, homeRegionId: NEW_HAVEN, livesWhereBorn: true, wealth: 'comfortable' }, 'g32-head-winter');
     const shown = head(sim);
     expect(shown.startsWith('Monday, January 5, 2026 · ')).toBe(true);
-    expect(shown).toMatch(/ in New Haven · EST · Winter · /);
+    expect(shown).toMatch(/ in New Haven, Connecticut · EST · Winter · Daylight /);
   });
 });
 
@@ -556,8 +570,9 @@ describe('h-head: the head of Home', () => {
 // h-calendar
 // ---------------------------------------------------------------------------
 
+// Home's Calendar section was retitled Up Next on 2026-10-23 (brief 23) and put after What Needs You.
 describe('h-calendar: the Calendar section of Home', () => {
-  const calendar = (sim: Simulation) => between(drawn(sim, Home).text, 'Calendar', 'What Needs You');
+  const calendar = (sim: Simulation) => between(drawn(sim, Home).text, 'Up Next', 'How You Are');
   const plan = (sim: Simulation, payload: Record<string, unknown>) => sim.must<{ ok: boolean; id?: string; error?: string }>({ kind: 'calendar.schedule', payload });
 
   it('PLAYER JOURNEY: a plan made two days out is the next commitment with its time to go, its title and its date; a second is listed under it; called off, the day is hers; a time gone by is refused in its own words', () => {
@@ -567,7 +582,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     const read = plan(sim, { title: 'table read', at: sim.now + 2 * MS_DAY, durationMinutes: 120 });
     expect(read.ok).toBe(true);
     let shown = calendar(sim);
-    expect(shown.startsWith('Calendar What’s coming up, and when. Open Calendar How This Works in 2 days Table Read August 26, 2026 at 7:30 AM')).toBe(true);
+    expect(shown.startsWith('Up Next What’s coming up, and when. Open Calendar How This Works in 2 days Table Read August 26, 2026 at 7:30 AM')).toBe(true);
     const coffee = plan(sim, { title: 'Coffee With Sam', at: sim.now + 3 * MS_DAY + 2 * MS_HOUR, durationMinutes: 60 });
     shown = calendar(sim);
     expect(shown).toContain('in 2 days Table Read August 26, 2026 at 7:30 AM');
@@ -610,12 +625,12 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(h.went).toEqual(['/workspace/calendar']);
     const guided = ada('g32-calendar-guided', { tutorial: true });
     const read = (id: string) => expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
-    expect(drawn(guided, Home).text).toContain('Calendar Locked What’s coming up, and when. It opens when you read “What’s Coming” in the guide. Read About It');
+    expect(drawn(guided, Home).text).toContain('Up Next Locked What’s coming up, and when. It opens when you read “What’s Coming” in the guide. Read About It');
     read('welcome');
     read('calendar');
     const { text } = drawn(guided, Home);
-    expect(text).not.toContain('Calendar Locked Opens with');
-    expect(between(text, 'Calendar', 'What Needs You')).toContain('Open Calendar Locked');
+    expect(text).not.toContain('Up Next Locked');
+    expect(between(text, 'Up Next', 'How You Are')).toContain('Open Calendar Locked');
     h.went = [];
     press(button('Open CalendarLocked'));
     expect(h.went).toEqual([]);
@@ -641,14 +656,21 @@ describe('h-calendar: the Calendar section of Home', () => {
 // h-needs
 // ---------------------------------------------------------------------------
 
+// What Needs You was the questions with every unread notice under them until 2026-10-23 (brief 23), and “No questions
+// are waiting on you.” over “No Questions Waiting” and what weighed once there were none. Since then it's the questions
+// and what needs putting right, each with the way to its screen, counted in its line; the unread are Recent Updates,
+// the four most important, and every notice is on Updates (`ui/screens/Updates.tsx`).
 describe('h-needs: What Needs You on Home', () => {
-  const needs = (sim: Simulation) => between(drawn(sim, Home).text, 'What Needs You', 'How You Are');
+  const needs = (sim: Simulation) => between(drawn(sim, Home).text, 'What Needs You', 'Up Next');
+  const recent = (sim: Simulation) => between(drawn(sim, Home).text, 'Recent Updates');
   const unread = (sim: Simulation) => sim.universe.notifications.filter((n) => !n.read).length;
   const ALL_CLEAR = 'All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
   /** The IRS's day for a 2026 return with wages: 15 April 2027 at 11:59 PM, Emancipation Day falling on the Friday after. */
   const APRIL_15 = at(2027, 4, 15, 23, 59);
+  /** The rows Recent Updates draws, one a notice. */
+  const rows = (html: string) => html.match(/<div class="list-item list-static notice-row">/g)?.length ?? 0;
 
-  it('PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting: its title and when it’s due, its detail, its stripe and its buttons, the notices under it, and Mark N Read counting them; Go There goes where each says', () => {
+  it('PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting: its title and when it’s due, its detail, its stripe and its buttons; the notices under Recent Updates, Mark N Read counting them; Go There goes where each says', () => {
     const sim = fromAbroad('g32-needs');
     sim.advanceTo(at(2027, 2, 1, 12));
     const r = returnsOf(sim.player)['2026']!;
@@ -656,25 +678,25 @@ describe('h-needs: What Needs You on Home', () => {
     const decision = openDecisions(sim)[0]!;
     expect(openDecisions(sim)).toHaveLength(1);
     const n = unread(sim);
-    expect(n).toBeGreaterThan(6);
+    expect(n).toBeGreaterThan(4);
     const { html } = drawn(sim, Home);
-    const shown = needs(sim);
     // 15 April at 11:59 PM is 73 days and twelve hours on: two months, as a month is 30.44 days.
-    expect(shown.startsWith(`What Needs You 1 open Mark ${n} Read How This Works Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss`)).toBe(true);
+    expect(needs(sim).startsWith(`What Needs You A question waiting on you, and one thing to put right. How This Works Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss Read It All`)).toBe(true);
     expect(decision.detail).toContain('File it by April 15, 2027.');
-    // Urgency 70: past the 65 that's high, short of the 85 that's critical.
-    expect(html.match(/data-urgency="\w+"/g)).toEqual(['data-urgency="high"']);
-    expect(html.match(/<div class="list-item list-static">/g)).toHaveLength(6);
+    // Urgency 70: past the 65 that's high, short of the 85 that's critical; and the standing's line, high as each is.
+    expect(html.match(/data-urgency="\w+"/g)).toEqual(['data-urgency="high"', 'data-urgency="high"']);
+    expect(recent(sim).startsWith(`Recent Updates ${n} unread, the most important first. Mark ${n} Read How This Works`)).toBe(true);
+    expect(recent(sim).endsWith(`${n - 4} more unread. View All Updates`)).toBe(true);
+    expect(rows(html)).toBe(4);
+    // Each Go There pressed: the question's to Papers, and each notice's shown to where it says.
+    const shownNotes = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at).slice(0, 4);
+    expect(shownNotes[0]!.route).toBeDefined();
     drawn(sim, Home);
-    press(button('Go There', 0));
-    expect(h.went).toEqual(['/workspace/papers']);
-    const newest = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[0]!;
-    expect(newest.route).toBeDefined();
-    press(button('Go There', 1));
-    expect(h.went).toEqual(['/workspace/papers', newest.route]);
+    for (const b of h.buttons.filter((x) => x.text === 'Go There')) press(b);
+    expect([...h.went].sort()).toEqual(['/workspace/papers', ...shownNotes.flatMap((x) => (x.route ? [x.route] : []))].sort());
   });
 
-  it('PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel: the row goes, then the notices, and with nothing weighing it’s All Clear; a reload keeps it so, and the return still files', () => {
+  it('PLAYER JOURNEY: Dismiss, pressed on the panel, takes the row away, and what the return still asks is put right from Papers; the notices hold nothing open, and Mark N Read reads them; a reload keeps it so, and the return still files', () => {
     const sim = fromAbroad('g32-needs');
     sim.advanceTo(at(2027, 2, 1, 12));
     const decision = openDecisions(sim)[0]!;
@@ -683,14 +705,18 @@ describe('h-needs: What Needs You on Home', () => {
     expect(press(button('Dismiss'))).toMatchObject({ ok: true, value: { dismissed: true } });
     expect(sim.universe.decisions[decision.id]!.dismissedAt).toBe(sim.now);
     let shown = needs(sim);
-    expect(shown.startsWith(`What Needs You No questions are waiting on you. Mark ${n} Read`)).toBe(true);
+    // The question dismissed, the return is still to file: its line, which the question said above it until then.
+    expect(shown.startsWith('What Needs You Two things to put right. How This Works')).toBe(true);
+    expect(shown).toContain('The 2026 return is due April 15, 2027, $166 to pay. Open Papers How This Works');
     expect(shown).not.toContain('Your 2026 Tax Return');
-    expect(shown).not.toContain('All Clear');
+    expect(recent(sim)).toContain(`${n} unread`);
+    drawn(sim, Home);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
-    shown = needs(sim);
-    expect(shown).toBe(`What Needs You No questions are waiting on you. How This Works ${ALL_CLEAR}`);
+    expect(needs(sim)).toBe(shown);
+    shown = recent(sim);
+    expect(shown).toBe('Recent Updates Nothing unread. How This Works You’ve read every notice. Updates keeps them all. View All Updates');
     const back = reload(sim);
-    expect(needs(back)).toBe(shown);
+    expect(recent(back)).toBe(shown);
     expect(openDecisions(back)).toHaveLength(0);
     expect(back.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(true);
   });
@@ -705,7 +731,7 @@ describe('h-needs: What Needs You on Home', () => {
     const sim = fromAbroad('g32-needs');
     drawn(sim, Home);
     press(button('Welcome To The Class Of 2029'));
-    let shown = needs(sim);
+    let shown = recent(sim);
     expect(shown).toContain('Notice Welcome To The Class Of 2029 Close It came in');
     expect(shown).not.toContain('2,029');
     sim.advanceTo(at(2027, 2, 1, 12));
@@ -721,30 +747,28 @@ describe('h-needs: What Needs You on Home', () => {
    * DEFECT (brief 13's interface playthroughs, 2026-10-17, `tools/playthroughs-ui.mjs normal`, the first Saturday): the
    * panel drew the six heaviest unread notices and said nothing of the rest, and Mark N Read marked them all, so a notice
    * past the sixth was never on any screen. A new life has fourteen unread by its first Saturday, and The Courses And What
-   * They Ask, the orientation session that sets the term's work, was the thirteenth.
+   * They Ask, the orientation session that sets the term's work, was the thirteenth. From 2026-10-23 (brief 23) Home
+   * draws the four most important and says how many more, and Updates has every one.
    */
-  it('PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one', () => {
+  it('PLAYER JOURNEY: more unread than Recent Updates’ four: it says how many more and View All Updates goes to Updates, where the fifth most important is, with every unread counted; Mark N Read there marks every one', () => {
     const sim = fromAbroad('g32-needs');
     sim.advanceTo(at(2027, 2, 1, 12));
     const n = unread(sim);
-    expect(n).toBeGreaterThan(6);
-    const seventh = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[6]!;
-    const rows = (html: string) => html.match(/<div class="list-item list-static">/g)?.length ?? 0;
-    expect(rows(drawn(sim, Home).html)).toBe(6);
-    expect(needs(sim)).toContain(`These six are the most important. ${n - 6} more are unread. Show All ${n}`);
-    expect(needs(sim)).not.toContain(seventh.body);
+    expect(n).toBeGreaterThan(4);
+    const fifth = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[4]!;
+    expect(rows(drawn(sim, Home).html)).toBe(4);
+    expect(recent(sim)).toContain(`${n - 4} more unread. View All Updates`);
+    expect(recent(sim)).not.toContain(fifth.body);
     drawn(sim, Home);
-    press(button(`Show All ${n}`));
-    expect(rows(drawn(sim, Home).html)).toBe(n);
-    expect(needs(sim)).toContain(seventh.body);
-    expect(needs(sim)).toContain(`All ${n} unread, the most important first. Show The Six Most Important`);
-    drawn(sim, Home);
-    expect(h.buttons.filter((b) => b.text === 'Go There').length).toBe(1 + sim.universe.notifications.filter((x) => !x.read && x.route).length);
-    press(button('Show The Six Most Important'));
-    expect(rows(drawn(sim, Home).html)).toBe(6);
+    press(button('View All Updates'));
+    expect(h.went).toEqual(['/workspace/updates']);
+    h.given = new Map();
+    const { text } = drawn(sim, Updates);
+    expect(text).toContain(`Unread (${n}) All (${sim.universe.notifications.length})`);
+    expect(text).toContain(titleCaseLabel(fifth.title));
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     expect(rows(drawn(sim, Home).html)).toBe(0);
-    expect(needs(sim)).not.toContain('more are unread');
+    expect(recent(sim)).not.toContain('more unread');
   });
 
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {
@@ -772,7 +796,9 @@ describe('h-needs: What Needs You on Home', () => {
     expect(needs(sim)).not.toContain('Your 2026 Tax Return');
   });
 
-  it('PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight, gone at the world’s look two days on, and then No Decisions Waiting says it’s past its day: what it owed and 5% for a month or part of one late (IRC §6651), across a reload', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “…, and then No Decisions Waiting says it’s past its day: what it owed
+  // and 5% …”, in “A tax return is past its due date and not filed yet. You owe $N, including the penalty so far.”
+  it('PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight, gone at the world’s look two days on, and then What Needs You says it was due: what it owed and 5% for a month or part of one late (IRC §6651), across a reload', () => {
     const sim = fromAbroad('g32-needs');
     sim.advanceTo(APRIL_15 + 90_000);
     const r = returnsOf(sim.player)['2026']!;
@@ -783,21 +809,18 @@ describe('h-needs: What Needs You on Home', () => {
     const { html } = drawn(sim, Home);
     expect(needs(sim)).toContain('Your 2026 Tax Return Overdue');
     expect(html).toContain('<span class="xs negative"><button type="button" class="link" aria-expanded="false">Overdue</button></span>');
-    drawn(sim, Home);
-    press(button(/^Mark \d+ Read$/));
     sim.advanceTo(at(2027, 4, 18, 12));
     expect(sim.universe.decisions[decision.id]!.resolvedAt).toBeDefined();
     expect(openDecisions(sim)).toHaveLength(0);
-    sim.must({ kind: 'world.mark_read', payload: {} });
     // 4.5% for filing late and 0.5% for paying late, the first month or part of one: 5% of what it owed, to the dollar.
     const late = `$${Math.round((r.figures.balance * 1.05) / 100)}`;
-    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting A tax return is past its due date and not filed yet. You owe ${late}, including the penalty so far.`;
-    expect(needs(sim)).toBe(said);
-    expect(needs(reload(sim))).toBe(said);
+    const said = `The 2026 return was due April 15, 2027, ${late} to pay, a late penalty in it. Open Papers How This Works`;
+    expect(needs(sim)).toContain(said);
+    expect(needs(reload(sim))).toContain(said);
   });
 
-  describe('what weighs once nothing is open or unread, each in its own sentence', () => {
-    /** A new life with its welcome read on the panel, All Clear: the falsifiability test's other side. */
+  describe('what weighs once nothing is open, each in its own sentence', () => {
+    /** A new life with its welcome read, All Clear: the falsifiability test's other side. */
     const clear = (seed: string) => {
       const sim = ada(seed);
       drawn(sim, Home);
@@ -805,7 +828,10 @@ describe('h-needs: What Needs You on Home', () => {
       expect(needs(sim)).toContain(ALL_CLEAR);
       return sim;
     };
-    const weighs = (sim: Simulation) => needs(sim).replace('What Needs You No questions are waiting on you. How This Works ', '');
+    const weighs = (sim: Simulation) => needs(sim).replace(/^What Needs You /, '');
+    /** What Needs You's words with these to put right, each with its way to its screen. */
+    const things = (...items: [string, string][]) => `${['One thing', 'Two things'][items.length - 1]} to put right. How This Works ${items.map(([line, screen]) => `${line} Open ${screen} How This Works`).join(' ')}`;
+    const CLEAR = `No questions are waiting on you. How This Works ${ALL_CLEAR}`;
     /** TEST SETUP: an account set to a balance by a posting against a test equity line, as tests/defects-g18-1.test.ts sets one. */
     const setBalance = (sim: Simulation, id: string, to: number) => {
       const a = sim.universe.accounts[id]!;
@@ -821,13 +847,13 @@ describe('h-needs: What Needs You on Home', () => {
     it('something gone unpaid: You owe $120 that went unpaid.', () => {
       const sim = clear('g32-weigh-owed');
       debt(sim, 'arrears', 'Bills Owed', 120_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting You owe $120 that went unpaid.');
+      expect(weighs(sim)).toBe(things(['You owe $120 that went unpaid.', 'Money']));
     });
 
     it('the current account overdrawn: Your current account is $250 overdrawn.', () => {
       const sim = clear('g32-weigh-overdrawn');
       setBalance(sim, sim.player.primaryAccountId!, -250_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting Your account is $250 overdrawn.');
+      expect(weighs(sim)).toBe(things(['Your account is $250 overdrawn.', 'Money']));
     });
 
     it('the card at nine-tenths of its limit and over: Your card is nearly at its limit, owing $59,000; under it, nothing', () => {
@@ -835,21 +861,21 @@ describe('h-needs: What Needs You on Home', () => {
       // The wealthy profile's 60,000 € limit at SLATE's 0.92 to the dollar: $65,217; nine-tenths of it $58,695.30.
       expect(card(sim).creditLimit).toBe(65_217_00);
       setBalance(sim, card(sim).id, -58_000_00); // TEST SETUP
-      expect(weighs(sim)).toBe(ALL_CLEAR);
+      expect(weighs(sim)).toBe(CLEAR);
       setBalance(sim, card(sim).id, -59_000_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting Your card is nearly at its limit, owing $59,000.');
+      expect(weighs(sim)).toBe(things(['Your card is nearly at its limit, owing $59,000.', 'Money']));
     });
 
     it('the card behind: a payment, and suspended', () => {
       const sim = clear('g32-weigh-behind');
       setBalance(sim, card(sim).id, -500_00); // TEST SETUP
-      expect(weighs(sim)).toBe(ALL_CLEAR);
+      expect(weighs(sim)).toBe(CLEAR);
       Object.assign(sim.player.credit!, { missed: 1 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting Your card is a payment behind, owing $500.');
+      expect(weighs(sim)).toBe(things(['Your card is a payment behind, owing $500.', 'Money']));
       // Until 2026-10-13 two missed and unsuspended read “Your card is 2 payments behind”, set here by hand: no played life
       // reaches it, the second miss suspending the card (`SUSPEND_AFTER`), and the words went.
       Object.assign(sim.player.credit!, { missed: 0, suspended: true }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting Your card is suspended, owing $500.');
+      expect(weighs(sim)).toBe(things(['Your card is suspended, owing $500.', 'Money']));
     });
 
     it('PLAYER JOURNEY: with a second card, applied for at Capital One and arrived a week on, the card behind is named: The Platinum from Capital One is a payment behind', () => {
@@ -859,40 +885,42 @@ describe('h-needs: What Needs You on Home', () => {
       const cards = cardsOf(sim, sim.player);
       expect(cards.map((c) => c.name)).toEqual(['Chase Freedom Unlimited', 'Platinum from Capital One']);
       sim.must({ kind: 'world.mark_read', payload: {} });
-      expect(weighs(sim)).toBe(ALL_CLEAR);
+      expect(weighs(sim)).toBe(CLEAR);
       setBalance(sim, cards[1]!.id, -80_00); // TEST SETUP
       Object.assign(sim.player.credit!.cards![cards[1]!.id]!, { missed: 1 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting The Platinum from Capital One is a payment behind, owing $80.');
+      expect(weighs(sim)).toBe(things(['The Platinum from Capital One is a payment behind, owing $80.', 'Money']));
     });
 
     it('medical care owed, and a debt with collections', () => {
       const sim = clear('g32-weigh-medical');
       debt(sim, 'medical', 'Owed For Medical Care', 350_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting You owe $350 for medical care.');
+      expect(weighs(sim)).toBe(things(['You owe $350 for medical care.', 'Papers']));
       debt(sim, 'collections', 'In Collections', 800_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Questions Waiting You owe $350 for medical care. $800 you owe is with a collection agency.');
+      expect(weighs(sim)).toBe(things(['You owe $350 for medical care.', 'Papers'], ['$800 you owe is with a collection agency.', 'Money']));
     });
 
-    it('income tax owed on a return filed: You owe $1,234 of income tax.', () => {
+    // Renamed on 2026-10-23 (brief 23): until then “…: You owe $1,234 of income tax.”, the words for a life without
+    // Papers, which What Needs You said beside the Papers line's “$1,234 of tax owed.”
+    it('income tax owed on a return filed: $1,234 of tax owed.', () => {
       const sim = clear('g32-weigh-tax');
       // TEST SETUP: a 2026 return filed before its day, $1,234 of it owed and nothing charged on it yet.
       returnsOf(sim.player)['2026'] = { year: 2026, due: APRIL_15, filedAt: sim.now, figures: { income: 50_000_00, balance: 1_234_00, owedTo: { irs: 1_234_00, states: {} } }, owed: 1_234_00, parts: { tax: 1_234_00, penalty: 0, interest: 0 }, base: 1_234_00, accruedAt: sim.now } as unknown as TaxReturn;
-      expect(weighs(sim)).toBe('No Questions Waiting You owe $1,234 of income tax.');
+      expect(weighs(sim)).toBe(things(['$1,234 of tax owed.', 'Papers']));
     });
 
     it('PLAYER JOURNEY: two of her plans a week out wanting her at once: the calendar clashes; the same two a month and a day out don’t weigh yet', () => {
       const sim = clear('g32-weigh-clash');
       sim.must({ kind: 'calendar.schedule', payload: { title: 'Rehearsal With Theo', at: at(2026, 8, 31, 19), durationMinutes: 120 } });
       sim.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at: at(2026, 8, 31, 20), durationMinutes: 60 } });
-      expect(weighs(sim)).toBe('No Questions Waiting Two things on your calendar in the next month are at the same time.');
+      expect(weighs(sim)).toBe(things(['Two things on your calendar in the next month are at the same time.', 'Calendar']));
       const later = clear('g32-weigh-clash-later');
       later.must({ kind: 'calendar.schedule', payload: { title: 'Rehearsal With Theo', at: at(2026, 9, 24, 19), durationMinutes: 120 } });
       later.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at: at(2026, 9, 24, 20), durationMinutes: 60 } });
-      expect(weighs(later)).toBe(ALL_CLEAR);
+      expect(weighs(later)).toBe(CLEAR);
     });
   });
 
-  it('more than six questions: six rows and 1 more waiting, an overdue one first, the stripes at 85 and 65, and Go There only where a row has somewhere to go (TEST SETUP: raised through requireDecision, as a raiser raises one; a life reaches three kinds, never seven at once)', () => {
+  it('more than six questions: six rows and one more waiting, an overdue one first, the stripes at 85 and 65, and Go There only where a row has somewhere to go (TEST SETUP: raised through requireDecision, as a raiser raises one; a life reaches three kinds, never seven at once)', () => {
     const sim = ada('g32-needs-many');
     sim.must({ kind: 'world.mark_read', payload: {} });
     const urgencies = [90, 85, 84, 65, 64, 50, 40];
@@ -904,12 +932,12 @@ describe('h-needs: What Needs You on Home', () => {
     }));
     const { html } = drawn(sim, Home);
     const shown = needs(sim);
-    expect(shown).toContain('What Needs You 7 open');
+    expect(shown).toContain('What Needs You Seven questions waiting on you.');
     // The overdue one first, then by urgency; the seventh not drawn.
     expect([...shown.matchAll(/Question (\d)/g)].map((m) => m[1])).toEqual(['5', '1', '2', '3', '4', '6']);
     expect(shown).toContain('Question 5 Overdue Detail 5.');
     expect(html.match(/data-urgency="\w+"/g)).toEqual(['normal', 'critical', 'critical', 'high', 'high', 'normal'].map((u) => `data-urgency="${u}"`));
-    expect(shown).toContain('1 more waiting. Each one comes up here as one above it closes.');
+    expect(shown).toContain('One more question waiting. Show All 7');
     expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(1);
     press(button('Go There'));
     expect(h.went).toEqual(['/workspace/bank']);
@@ -922,7 +950,7 @@ describe('h-needs: What Needs You on Home', () => {
 // ---------------------------------------------------------------------------
 
 describe('h-how: How You Are on Home', () => {
-  const how = (sim: Simulation) => between(drawn(sim, Home).text, 'How You Are', 'Where You Are');
+  const how = (sim: Simulation) => between(drawn(sim, Home).text, 'How You Are', 'Recent Updates');
 
   it('PLAYER JOURNEY: on the first morning it reads Rested, steady and ready for a real day. and three meters at the dials’ own figures: Energy 82, Stress 18, Readiness 79 worked out by hand', () => {
     const sim = ada('g32-how');
@@ -931,16 +959,18 @@ describe('h-how: How You Are on Home', () => {
     // 1.024 × 1.030 × 1.05 × 0.9825 × 1.006 × 1.008 × 0.964 = 1.06364, over 1.35: 78.79.
     expect(Math.round(byHand(w))).toBe(79);
     const { html } = drawn(sim, Home);
-    expect(how(sim)).toBe('How You Are How This Works Rested, steady and ready for a real day. Energy 82 Stress 18 Readiness 79');
+    // Look After Yourself under the meters from 2026-10-23 (brief 23): the two it would do first, and why the first.
+    expect(how(sim)).toBe('How You Are How This Works Rested, steady and ready for a real day. Energy 82 Stress 18 Readiness 79 Look After Yourself Eat A Meal 40 Min, $5.00 Order In 50 Min, $34.65 Nourishment at 75 is costing readiness. How This Works');
     expect(meter(html, 'Energy')).toEqual({ tone: 'positive', now: 82 });
     expect(meter(html, 'Stress')).toEqual({ tone: 'positive', now: 18 });
     expect(meter(html, 'Readiness')).toEqual({ tone: 'positive', now: 79 });
   });
 
-  it('PLAYER JOURNEY: a meal, eaten through Look After Yourself, fills her and the meters move: Readiness to what the dials then make it, and up', () => {
+  it('PLAYER JOURNEY: a meal, eaten through Look After Yourself on How You Are, fills her and the meters move: Readiness to what the dials then make it, and up', () => {
     const sim = ada('g32-how-meal');
     const before = meter(drawn(sim, Home).html, 'Readiness').now;
-    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'eat' } }).ok).toBe(true);
+    // Pressed under the meters, where it is from 2026-10-23 (brief 23); until then only the bar's menu had it.
+    press(button('Eat A Meal 40 Min, $5.00'));
     const w = sim.player.wellbeing;
     expect(w.nourishment).toBe(100);
     const { html } = drawn(sim, Home);
@@ -1002,9 +1032,22 @@ describe('h-how: How You Are on Home', () => {
 // h-where-weather
 // ---------------------------------------------------------------------------
 
+// Where You Are and the Weather were panels on Home until 2026-10-23 (brief 23): the town, its region and country, its
+// size, its local time and daylight, and the sky now with its humidity, wind and climate and the five days ahead. Since
+// then Today's line says the town with its region, the zone, the season and the daylight, the sky beside it says the
+// weather now and the days ahead, and the rest is one press away, in the town's look and the weather's.
 describe('h-where-weather: Where You Are and the Weather on Home', () => {
-  const where = (text: string) => between(text, 'Where You Are', 'Its money, costs, taxes and languages');
-  const weather = (text: string) => between(text, 'Weather How This Works', 'Your Affairs');
+  /** Today's line, from the time to How Home Works. */
+  const line = (text: string) => between(between(text, 'Good '), ' ', ' How Home Works').replace(/^.*?\. /, '');
+  const weather = (text: string) => between(text, 'How Home Works', 'How The Weather Works').replace('How Home Works ', '');
+  /** A look opened from Home by its word, in words: its name to its sources. */
+  const look = (sim: Simulation, word: string) => {
+    h.given = new Map();
+    drawn(sim, Home);
+    press(button(word));
+    const { html } = drawn(sim, Home);
+    return words(html.slice(html.indexOf('<div class="look" data-depth'))).split(' What Needs You ')[0]!;
+  };
   /**
    * Sunrise and sunset by the sunrise equation (Wikipedia, "Sunrise equation", its complete calculation), with the
    * sun's center 0.833° under the horizon: not the NOAA series `core/sun.ts` sums. Each to the minute, in UTC.
@@ -1026,50 +1069,51 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
   const edtMinutes = (utc: number) => { const d = new Date(utc - 4 * MS_HOUR); return d.getUTCHours() * 60 + d.getUTCMinutes() + d.getUTCSeconds() / 60; };
   const clockMinutes = (said: string) => { const [, hh, mm, half] = said.match(/^(\d+):(\d+) ([AP]M)$/)!; return (Number(hh) % 12 + (half === 'PM' ? 12 : 0)) * 60 + Number(mm); };
 
-  it('PLAYER JOURNEY, guided: Where You Are and the Weather, locked, say what each shows and the chapter that opens it, and open, show it', () => {
+  it('PLAYER JOURNEY, guided: Where You Are and the Weather, locked, are buttons whose reason names the chapter that opens each, and open, Today says the town, its local time and its daylight', () => {
     const guided = ada('g32-where-locked', { tutorial: true });
-    const before = drawn(guided, Home).text;
+    const { html, text } = drawn(guided, Home);
     // Until 2026-10-20 (brief 17, the frame editor's finding) a locked panel said its chapter's lead, and Where You
-    // Are's was chapter 1's, “how SLATE works, and how to read Home”, which says nothing of the panel.
-    expect(before).toContain('Where You Are Locked The town you live in, its local time and its daylight. It opens when you read “Your Life, Hour By Hour” in the guide. Read About It');
-    expect(before).not.toContain('how SLATE works');
-    expect(before).toContain('Weather Locked The weather in your town, today and the days ahead. It opens when you read “Weather” in the guide. Read About It');
+    // Are's was chapter 1's, “how SLATE works, and how to read Home”, which says nothing of the panel. From 2026-10-23
+    // each is a locked button on Today, pressed to ask for its chapter.
+    expect(text).toContain('Good Morning, Ada. 7:30 AM in New Haven, Connecticut · EDT · Summer Where You Are Locked How Home Works Weather Locked How The Weather Works');
+    expect(html).toMatch(/title="Read “Your Life, Hour By Hour” in the guide first\./);
+    expect(html).toMatch(/title="Read “Weather” in the guide first\./);
+    expect(text).not.toContain('how SLATE works');
     expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: 'welcome' } }).ok).toBe(true);
-    const shown = where(drawn(guided, Home).text);
-    // What the locked line said it would show: the town you live in, its local time and its daylight.
-    expect(shown).toContain('New Haven, Connecticut · United States Your home.');
-    expect(shown).toContain('Local Time 7:30 AM EDT Daylight ');
+    // What the lock said it would show: the town you live in, its local time and its daylight.
+    expect(line(drawn(guided, Home).text)).toMatch(/^7:30 AM in New Haven, Connecticut · EDT · Summer · Daylight \d+:\d+ AM to \d+:\d+ PM, \d+h \d+m$/);
   });
 
-  it('PLAYER JOURNEY: on the first morning Where You Are names New Haven, Connecticut · United States, says Home. 130K people., Local Time 7:30 AM EDT, and Daylight within two minutes of the sunrise equation’s at each end', () => {
+  it('PLAYER JOURNEY: on the first morning Today names New Haven, Connecticut, its local time 7:30 AM EDT and its daylight within two minutes of the sunrise equation’s at each end; the town opens on Your home., 130K people and the same day; Connecticut opens on the United States', () => {
     const sim = ada('g32-where');
-    const shown = where(drawn(sim, Home).text);
-    // 130,322 people, to the thousand.
-    expect(shown.startsWith('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT Daylight ')).toBe(true);
-    const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) (\d+)h (\d+)m of daylight$/)!;
+    const shown = line(drawn(sim, Home).text);
+    expect(shown.startsWith('7:30 AM in New Haven, Connecticut · EDT · Summer · Daylight ')).toBe(true);
+    const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) to (\d+:\d+ PM), (\d+)h (\d+)m$/)!;
     // New Haven at 41.3081° N, 72.9282° W.
     const sun = sunByHand(2026, 8, 24, 41.3081, -72.9282);
     expect(Math.abs(clockMinutes(rise!) - edtMinutes(sun.rise))).toBeLessThanOrEqual(2);
     expect(Math.abs(clockMinutes(set!) - edtMinutes(sun.set))).toBeLessThanOrEqual(2);
     expect(Math.abs(Number(hours) * 60 + Number(minutes) - (sun.set - sun.rise) / 60_000)).toBeLessThanOrEqual(4);
-    // Each name opens its place: the region and the country under it.
-    for (const name of ['Connecticut', 'United States']) {
-      h.given = new Map();
-      drawn(sim, Home);
-      press(button(name));
-      expect(opened(drawn(sim, Home).html), name).toContain(name);
-    }
+    // What Where You Are's panel said, in the town's look: 130,322 people, to the thousand, and the same day.
+    const town = look(sim, 'New Haven');
+    expect(town.startsWith('Where You Live New Haven Close This is where you live. It’s 7:30 AM, and 130K people live here.')).toBe(true);
+    expect(town).toContain(`Local Time 7:30 AM EDT Daylight ${rise} – ${set} ${hours}h ${minutes}m of daylight`);
+    expect(look(sim, 'Connecticut')).toContain('United States The country it’s in');
   });
 
-  it('PLAYER JOURNEY: the Weather is the sky now in °F with its high and low, humidity, the wind in miles an hour, the climate, and the five days ahead; the next morning, Tuesday is what the strip said, and the strip begins on Wednesday', () => {
+  it('PLAYER JOURNEY: the Weather is the sky now in °F with its high and low and the five days ahead, its look the humidity, the wind in miles an hour and the climate; the next morning, Tuesday is what the strip said, and the strip begins on Wednesday', () => {
     const sim = ada('g32-weather');
     const w = weatherAt(sim, NEW_HAVEN)!;
-    // A kilometer is 0.621371 of a mile. The sky's picture before the figure is for the eye alone (aria-hidden).
+    // The sky's picture before the figure is for the eye alone (aria-hidden).
     const said = weather(drawn(sim, Home).text);
-    expect(said.replace(/^Weather How This Works \S+ /, '').startsWith(`${w.temperature}°F ${w.condition} · High ${w.high}°F · Low ${w.low}°F Humidity ${w.humidity}% · Wind ${Math.round(w.windKph * 0.621371)} mph · Continental `)).toBe(true);
+    expect(said.startsWith(`${WEATHER_EMOJI[w.condition]} ${w.temperature}°F ${titleCaseLabel(w.condition)} High ${w.high}°F · Low ${w.low}°F `)).toBe(true);
     const strip = [...said.matchAll(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun) \S+(?: \S+)? (\d+)° \/ (\d+)°/g)].map((m) => ({ day: m[1], high: Number(m[2]), low: Number(m[3]) }));
     expect(strip.map((d) => d.day)).toEqual(['Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
     expect(strip.map(({ high, low }) => ({ high, low }))).toEqual(forecastFor(sim, NEW_HAVEN, 6).slice(1).map(({ high, low }) => ({ high, low })));
+    // A kilometer is 0.621371 of a mile.
+    const sky = look(sim, `${w.temperature}°F ${titleCaseLabel(w.condition)}`);
+    expect(sky).toContain(`The wind is ${Math.round(w.windKph * 0.621371)} mph and the humidity is ${w.humidity}%.`);
+    expect(sky).toContain('New Haven has a continental climate');
     sim.advanceTo(at(2026, 8, 25, 7, 30));
     const tuesday = weather(drawn(sim, Home).text);
     expect(tuesday).toContain(`High ${strip[0]!.high}°F · Low ${strip[0]!.low}°F`);
@@ -1081,25 +1125,30 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const tue = forecastFor(sim, NEW_HAVEN, 6)[1]!;
     drawn(sim, Home);
     press(button('Tue'));
-    const look = opened(drawn(sim, Home).html);
-    expect(look).toMatch(new RegExp(`Tomorrow Tuesday Close [A-Z][a-z ]+ in New Haven tomorrow, ${tue.low}°F to ${tue.high}°F\\.`));
+    const shown = opened(drawn(sim, Home).html);
+    expect(shown).toMatch(new RegExp(`Tomorrow Tuesday Close [A-Z][a-z ]+ in New Haven tomorrow, ${tue.low}°F to ${tue.high}°F\\.`));
   });
 
-  it('Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England · United Kingdom, Home. with the city’s own tags, 7:30 AM GMT, its short January daylight by the sunrise equation, and the sky in °C with the wind in km/h', () => {
+  it('Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England, 7:30 AM GMT and its short January daylight by the sunrise equation, the town’s look its own tags, and the sky in °C with the wind in km/h', () => {
     const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable' }, 'g32-london');
     expect(zonedParts(sim.now, 'Europe/London')).toMatchObject({ year: 2026, month: 1, day: 5, hour: 7, minute: 30 });
     const { text } = drawn(sim, Home);
     const w = weatherAt(sim, 'uk-eng-london')!;
-    const shown = where(text);
-    // Tags where SLATE keeps them, in place of the kind and the size New Haven reads; "Theater" as the player reads it
-    // (until 2026-10-13 the tag was spelled the British way, and this read it so).
-    expect(shown.startsWith('Where You Are How This Works London, England · United Kingdom Your home. Theater · Production Hub · International. Local Time 7:30 AM GMT Daylight ')).toBe(true);
+    const shown = line(text);
+    expect(shown.startsWith('7:30 AM in London, England · GMT · Winter · Daylight ')).toBe(true);
     // London at 51.51° N, 0.13° W, its January clock on UTC.
-    const [, rise, set] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) /)!;
+    const [, rise, set] = shown.match(/Daylight (\d+:\d+ AM) to (\d+:\d+ PM), /)!;
     const sun = sunByHand(2026, 1, 5, 51.51, -0.13);
     const gmtMinutes = (utc: number) => { const d = new Date(utc); return d.getUTCHours() * 60 + d.getUTCMinutes() + d.getUTCSeconds() / 60; };
     expect(Math.abs(clockMinutes(rise!) - gmtMinutes(sun.rise))).toBeLessThanOrEqual(2);
     expect(Math.abs(clockMinutes(set!) - gmtMinutes(sun.set))).toBeLessThanOrEqual(2);
-    expect(weather(text).replace(/^Weather How This Works \S+ /, '').startsWith(`${w.temperature}°C ${w.condition} · High ${w.high}°C · Low ${w.low}°C Humidity ${w.humidity}% · Wind ${w.windKph} km/h · `)).toBe(true);
+    // Tags where SLATE keeps them, in place of the kind and the size New Haven reads; "Theater" as the player reads it
+    // (until 2026-10-13 the tag was spelled the British way, and this read it so).
+    expect(look(sim, 'London')).toContain('Theater · Production Hub · International');
+    expect(weather(text).startsWith(`${WEATHER_EMOJI[w.condition]} ${w.temperature}°C ${titleCaseLabel(w.condition)} High ${w.high}°C · Low ${w.low}°C `)).toBe(true);
+    const sky = look(sim, `${w.temperature}°C ${titleCaseLabel(w.condition)}`);
+    expect(sky).toContain(`The wind is ${w.windKph} km/h and the humidity is ${w.humidity}%.`);
+    // “a oceanic” until 2026-10-23, found by brief 23's walk of these looks.
+    expect(sky).toContain('London has an oceanic climate');
   });
 });

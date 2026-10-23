@@ -172,16 +172,13 @@ function press(view: ReturnType<typeof shown>, words: string): void {
   found[0]!.onClick!();
 }
 /**
- * Home's What Needs You as the player reads it: what weighs is said there once nothing is unread (`Empty` under "No
- * Decisions Waiting"), so Mark N Read is pressed first where it's shown.
+ * Home's What Needs You as the player reads it: what needs putting right is said under the questions, each with the way
+ * to its screen, whatever is unread. Until 2026-10-23 (brief 23) it was said only once nothing was unread (`Empty` under
+ * "No Decisions Waiting"), so Mark N Read was pressed first where it was shown.
  */
 function homeSays(sim: Simulation): string {
-  const first = shown(sim, Home);
-  const mark = first.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
-  if (mark.length) press(first, mark[0]!.text);
   const text = shown(sim, Home).text;
-  expect(text).toContain('What Needs You No questions are waiting on you.');
-  return text;
+  return text.slice(text.indexOf('What Needs You'), text.indexOf('Up Next'));
 }
 /** The select with this id, changed to a value as the player picks it. */
 function pick(view: ReturnType<typeof shown>, id: string, value: string): void {
@@ -723,8 +720,7 @@ describe('health.pay_bill', () => {
       const owing = shown(sim);
       expect(owing.text).toMatch(/A Care Bill August 24, 2026 \$900\.00 Owed As Debt/);
       const worries = homeSays(sim);
-      expect(worries).toContain('No Questions Waiting');
-      expect(worries).toContain('You owe $900 for medical care.');
+      expect(worries).toContain('You owe $900 for medical care. Open Papers');
       if (pay) {
         const was = current(sim).balance;
         h.toasts = [];

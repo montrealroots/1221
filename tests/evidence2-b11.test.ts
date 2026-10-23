@@ -130,6 +130,7 @@ vi.mock('@/ui/kept', async (orig) => {
 
 const { Home } = await import('@/ui/screens/Home');
 const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+const { Updates, aboutLabel } = await import('@/ui/screens/Updates');
 const { CharacterCreation } = await import('@/ui/creation/CharacterCreation');
 
 // ---------------------------------------------------------------------------
@@ -606,7 +607,13 @@ describe('p-journey-history', () => {
 // ---------------------------------------------------------------------------
 
 describe('h-needs', () => {
-  const needs = (sim: Simulation) => between(drawn(sim, Home).text, 'What Needs You', 'How You Are');
+  // What Needs You ends at Up Next, and the notices are Recent Updates', from 2026-10-23 (brief 23): until then they were
+  // under the questions, and How You Are came next.
+  const needs = (sim: Simulation) => between(drawn(sim, Home).text, 'What Needs You', 'Up Next');
+  const recent = (sim: Simulation) => between(drawn(sim, Home).text, 'Recent Updates');
+  /** A notice as Recent Updates draws it: its title, what it's about and when, then its words. */
+  const notice = (title: string, body: string) => new RegExp(`${esc(title)} [A-Z][a-z]+(?: [A-Z][a-z]+)? · [^·]+? ${esc(body)}`);
+  const esc = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const unread = (sim: Simulation) => sim.universe.notifications.filter((n) => !n.read).length;
   /** Mark N Read, pressed on the panel, N counted here from the save. */
   const markRead = (sim: Simulation) => {
@@ -624,7 +631,9 @@ describe('h-needs', () => {
     return `${Math.round(d / 30.44)} months ago`;
   };
 
-  it('PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 159, each with its words and how long ago it came, a word on each term’s coursework among them', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “… the notices under her return are the six most pressing of 159, each
+  // with its words and how long ago it came, a word on each term’s coursework among them”, under What Needs You.
+  it('PLAYER JOURNEY: on 1 February 2027 Recent Updates draws the four most pressing of 159 notices, each with what it’s about, how long ago it came and its words, and Updates keeps a word on each term’s coursework as one row of two', () => {
     const sim = fromAbroad('g32-needs');
     sim.advanceTo(at(2027, 2, 1, 12));
     // 157 until 2026-10-16, when a term whose pieces come out Unready was warned in the term (`termWarning`): this life
@@ -632,24 +641,26 @@ describe('h-needs', () => {
     expect(unread(sim)).toBe(159);
     const { html, text } = drawn(sim, Home);
     expect(text).toContain('Mark 159 Read');
-    const items = [...html.matchAll(/<div class="list-item list-static">([\s\S]*?)Go There<\/button><\/div>/g)].map((m) => words(m[1]!));
+    const items = [...html.matchAll(/<div class="list-item list-static notice-row">([\s\S]*?)<div class="row gap-2 notice-row-actions">/g)].map((m) => words(m[1]!));
     // The most important first, the newest first among equals, worked out here from the notices themselves.
-    const unreadNotes = sim.universe.notifications.filter((n) => !n.read && n.route);
-    const order = [...unreadNotes].sort((x, y) => (y.importance ?? 0) - (x.importance ?? 0) || y.at - x.at);
+    const order = sim.universe.notifications.filter((n) => !n.read).sort((x, y) => (y.importance ?? 0) - (x.importance ?? 0) || y.at - x.at);
     const seenTitles = new Set<string>();
-    const top = order.filter((n) => { const k = `${n.title}|${n.body}`; if (seenTitles.has(k)) return false; seenTitles.add(k); return true; }).slice(0, 6);
-    expect(items).toHaveLength(6);
+    const top = order.filter((n) => { const k = `${n.title}|${n.body}`; if (seenTitles.has(k)) return false; seenTitles.add(k); return true; }).slice(0, 4);
+    expect(items).toHaveLength(4);
     expect(top.slice(0, 3).map((n) => n.title)).toEqual(['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029']);
-    const warnings = top.filter((n) => n.title === 'A Word On Your Coursework').sort((x, y) => x.at - y.at);
+    expect(items).toEqual(top.map((n) => words(`${n.title} ${aboutLabel(n.category)} · ${ago(n.at, sim.now)} ${n.body}`)));
+    expect(text).toContain('155 more unread. View All Updates');
+    // Each notice drawn with somewhere to go has its Go There, beside the return's.
+    expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(1 + top.filter((n) => n.route).length);
+    press(button('Go There', 0));
+    expect(h.went).toEqual([top.find((n) => n.route)!.route]);
+    // The two words on the coursework, each term's: the spring's says it's the second, after the fall's (from
+    // 2026-10-20, brief 16: until then each read as the first). Updates keeps them as one row, its count beside it.
+    const warnings = order.filter((n) => n.title === 'A Word On Your Coursework').sort((x, y) => x.at - y.at);
     expect(warnings).toHaveLength(2);
-    // The spring's says it's the second, after the fall's (from 2026-10-20, brief 16): until then each read as the first.
     expect(warnings[0]!.body).toContain('. This is a warning. ');
     expect(warnings[1]!.body).toContain('. This is your second coursework warning, after one last term. ');
-    expect(items).toEqual(top.map((n) => words(`${n.title} ${n.body} ${ago(n.at, sim.now)}`)));
-    // Each has somewhere to go: the return's Go There and six more.
-    expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(7);
-    press(button('Go There', 3));
-    expect(h.went).toEqual(['/workspace/school']);
+    expect(drawn(sim, Updates).text).toContain('A Word On Your Coursework 2 Notices Unread');
   });
 
   // Renamed on 2026-10-22 (brief 21): until then “PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload”, the due dates the 11th and the 10th.
@@ -675,24 +686,26 @@ describe('h-needs', () => {
     const first = toDue();
     // Chase's due day, the 13th, from 2026-10-22 (brief 21): until then 21 days on, 11 October and 10 November.
     expect(written(first)).toBe('October 13, 2026');
-    expect(needs(sim)).toContain('A Late Card Payment The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.');
+    expect(recent(sim)).toMatch(notice('A Late Card Payment', 'The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.'));
     markRead(sim);
     // New Haven's $10.00 of groceries on the card each midnight from 25 August to 13 October, 50 of them, and the late
     // fee: Regulation Z's safe harbor, $30 for a first, never over the $40 minimum it was late on.
-    expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${50 * 10 + 30}.`);
+    expect(needs(sim)).toBe(`What Needs You One thing to put right. How This Works Your card is a payment behind, owing $${50 * 10 + 30}. Open Money How This Works`);
     const second = toDue();
     expect(written(second)).toBe('November 13, 2026');
-    expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you pay at least the minimum by a due date, or pay the card off.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(recent(sim)).toMatch(notice('Your Card Is Suspended', 'You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you pay at least the minimum by a due date, or pay the card off.')); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
     // 81 days of groceries to 13 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.
-    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is suspended, owing $${81 * 10 + 30 + 40}.`;
+    const said = `What Needs You One thing to put right. How This Works Your card is suspended, owing $${81 * 10 + 30 + 40}. Open Money How This Works`;
     expect(needs(sim)).toBe(said);
     expect(stateOf(sim.player, card)).toMatchObject({ missed: 2, suspended: 'late' });
     expect(needs(reload(sim))).toBe(said);
   });
 
-  it('PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and once its notices are read What Needs You says You owe $166 of income tax, 10% of her $1,656; her twin who could pay is All Clear (TEST SETUP: the bank emptied)', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “… What Needs You says You owe $166 of income tax, …; her twin who could
+  // pay is All Clear”, the words for a life without Papers, said once the notices were read.
+  it('PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and What Needs You says $166 of tax owed, 10% of her $1,656, beside her standing; her twin who could pay owes nothing (TEST SETUP: the bank emptied)', () => {
     const filed = (empty: boolean) => {
       const sim = fromAbroad('g32-needs');
       sim.advanceTo(at(2027, 2, 1, 12));
@@ -713,12 +726,14 @@ describe('h-needs', () => {
     };
     const unpaid = filed(true);
     expect(returnsOf(unpaid.player)['2026']!.owed).toBe(165_60);
-    expect(needs(unpaid)).toBe('What Needs You No questions are waiting on you. How This Works No Questions Waiting You owe $166 of income tax.');
+    // Left to the clock, her fall ended in the faculty's concern, which What Needs You says beside the tax.
+    const standing = 'Your standing is academic concern. The School screen says why. Open School How This Works';
+    expect(needs(unpaid)).toBe(`What Needs You Two things to put right. How This Works ${standing} $166 of tax owed. Open Papers How This Works`);
     unpaid.advanceTo(at(2027, 2, 1, 23));
-    expect(needs(unpaid)).toContain('You owe $166 of income tax.');
+    expect(needs(unpaid)).toContain('$166 of tax owed. Open Papers');
     const paid = filed(false);
     expect(returnsOf(paid.player)['2026']!.owed).toBeUndefined();
-    expect(needs(paid)).toBe('What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.');
+    expect(needs(paid)).toBe(`What Needs You One thing to put right. How This Works ${standing}`);
   });
 });
 
@@ -726,18 +741,22 @@ describe('h-needs', () => {
 // h-where-weather
 // ---------------------------------------------------------------------------
 
+// Where You Are was a panel until 2026-10-23 (brief 23), “Where You Are How This Works New Haven, Connecticut · United
+// States Your home. 130K people. Local Time 7:30 AM EDT”; Today's line says the town and its time since, and the town's
+// look the rest.
 describe('h-where-weather', () => {
-  const where = (sim: Simulation) => between(drawn(sim, Home).text, 'Where You Are', 'Daylight');
+  const where = (sim: Simulation) => between(drawn(sim, Home).text, 'Good ', ' · Daylight').replace(/^Good \w+, [^.]+\. /, '');
 
   it('PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does, with no distance or hours from home: Home is the city she lives in (`homeCityOf`), and London is where she’s from', () => {
     const london = fromAbroad('b11-where');
     const newYork = ada('b11-where');
-    const said = 'Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT';
+    const said = '7:30 AM in New Haven, Connecticut · EDT · Summer';
     expect(where(london)).toBe(said);
     expect(where(newYork)).toBe(said);
+    expect(drawn(london, Home).text).not.toMatch(/from home|London/);
     // Where she's from is kept, and read on the Profile: not where Home measures from.
     expect(drawn(london, ProfileWorkspace).text).toContain('From London A citizen of the United Kingdom');
     london.advanceTo(at(2026, 9, 14, 12));
-    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 12:00 PM EDT');
+    expect(where(london)).toBe('12:00 PM in New Haven, Connecticut · EDT · Autumn');
   });
 });

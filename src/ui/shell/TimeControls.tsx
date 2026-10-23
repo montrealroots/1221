@@ -713,10 +713,8 @@ function LookAfterMenu() {
 
   const act = (action: LookAfter) => {
     setOpen(false);
-    const result = run<{ doneAt: number }>('life.look_after', { action });
-    if (result.ok && result.value) {
-      toast(`${labelFor(sim, action)}: done at ${formatTime(result.value.doneAt, sim.zone)}.`, 'positive');
-    }
+    const said = lookedAfter(sim, action, run<{ doneAt: number }>('life.look_after', { action }));
+    if (said) toast(said, 'positive');
   };
 
   return (
@@ -769,4 +767,12 @@ function LookAfterMenu() {
       )}
     </div>
   );
+}
+
+/**
+ * What a look-after done says, as the menu and Home's How You Are say it (from 2026-10-23, brief 23, when How You Are
+ * took the first two too): when it was done, or nothing where it was refused, whose words the command's toast says.
+ */
+export function lookedAfter(sim: { zone: string } & Parameters<typeof labelFor>[0], action: LookAfter, result: { ok: boolean; value?: { doneAt: number } }): string | undefined {
+  return result.ok && result.value ? `${labelFor(sim, action)}: done at ${formatTime(result.value.doneAt, sim.zone)}.` : undefined;
 }

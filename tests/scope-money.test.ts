@@ -161,6 +161,7 @@ vi.mock('@/ui/kept', async (orig) => {
 });
 
 const { Home } = await import('@/ui/screens/Home');
+const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
 const { BankLending } = await import('@/ui/bank/BankLending');
 const { BankMoves } = await import('@/ui/bank/BankMoves');
 const { BankAccountLife } = await import('@/ui/bank/BankAccountLife');
@@ -275,25 +276,27 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe('h-money', () => {
-  const affairs = (sim: Simulation) => {
-    const text = drawn(sim, createElement(Home));
-    const i = text.indexOf('Your Affairs');
+  /** Money's head, from its name to its tabs: Home's Your Affairs line said its worth until 2026-10-23 (brief 23). */
+  const money = (sim: Simulation) => {
+    const text = drawn(sim, createElement(BankWorkspace));
+    const i = text.indexOf(' ‹ ');
     expect(i).toBeGreaterThanOrEqual(0);
-    return text.slice(i);
+    return text.slice(0, i).replace(/ ([.,])/g, '$1').trim();
   };
 
-  it('GUARD: a save whose primary account is gone, which no played life reaches, draws “No account: $0.00.” and a “Your Bank” button that still opens the bank', () => {
+  // Renamed on 2026-10-23 (brief 23): until then “… draws “No account: $0.00.” and a “Your Bank” button that still opens
+  // the bank”, Home's Money line, which went from Home that day.
+  it('GUARD: a save whose primary account is gone, which no played life reaches, draws Money’s empty state, and Home with nothing of money to put right', () => {
     const sim = ada('scope-money-guard', 'nothing');
     // FIXTURE: the primary account forgotten by hand. tests/evidence3-home.test.ts plays why no life gets here: the bank
     // refuses to close a life's only current account, and a charge-off leaves the checking named.
     delete sim.player.primaryAccountId;
     for (const a of mine(sim)) if (!a.closedAt) a.closedAt = sim.now;
-    expect(affairs(sim)).toContain('Money No account: $0.00. Worth $0. Your Bank How This Works');
-    press('Your Bank');
-    expect(h.went).toEqual([['/workspace/bank', 'Money']]);
+    expect(drawn(sim, createElement(BankWorkspace)).trim()).toBe('No Bank None of your money is at a bank the game covers, so there’s nothing to show here.');
+    expect(drawn(sim, createElement(Home))).not.toContain('Open Money');
   });
 
-  it('PLAYER JOURNEY: a Comfortable student played to 2 October 2026, reloaded a minute either side of each month’s end, keeps the same postings as her twin played straight: the savings’ interest posted once a month, the year’s interest income their sum, the month’s income that and her work-study pay, and the Money line and the worth the ledger’s own', () => {
+  it('PLAYER JOURNEY: a Comfortable student played to 2 October 2026, reloaded a minute either side of each month’s end, keeps the same postings as her twin played straight: the savings’ interest posted once a month, the year’s interest income their sum, the month’s income that and her work-study pay, and Money’s worth the ledger’s own', () => {
     const straight = ada('scope-money-agree', 'comfortable');
     let kept = ada('scope-money-agree', 'comfortable');
     straight.advanceTo(at(2026, 10, 2, 12));
@@ -336,14 +339,15 @@ describe('h-money', () => {
       expect(septemberPay).toBe(414_00);
       expect(kinds['2026-09']!.workStudy).toBe(septemberPay);
       expect([months['2026-08'], months['2026-09']]).toEqual([paid[0], paid[1]! + septemberPay]);
-      // Home's line and the worth are what the accounts hold, added up here.
+      // The worth at the head of Money (Home's line until 2026-10-23, brief 23) is what the accounts hold, added up here.
       const held = mine(sim).filter((a) => !a.closedAt && (a.kind === 'checking' || a.kind === 'savings')).reduce((n, a) => n + a.balance, 0);
       const owed = mine(sim).filter((a) => !a.closedAt && a.kind === 'credit_card').reduce((n, a) => n + Math.max(0, -a.balance), 0);
       expect(netWorth(sim, sim.player.id).total).toBe(held - owed);
       const c = primary(sim);
       const usd = (n: number) => `${n < 0 ? '−' : ''}$${(Math.abs(n) / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
       const whole = (n: number) => `$${Math.round(n / 100).toLocaleString('en-US')}`;
-      expect(affairs(sim)).toContain(`Money Chase Total Checking: ${usd(c.balance)}. Worth ${whole(held - owed)}${owed > 0 ? `, after ${whole(owed)} owed` : ''}.`);
+      expect(money(sim)).toContain(`Worth ${whole(held - owed)}${owed > 0 ? `, after ${whole(owed)} owed` : ''}.`);
+      expect(drawn(sim, createElement(BankWorkspace))).toContain(`Chase Total Checking Chase ${c.number} How This Works Balance ${c.balance < 0 ? usd(c.balance) : whole(c.balance)} `);
     }
   }, 60_000);
 });

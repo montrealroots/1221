@@ -30,6 +30,7 @@ import { BankStatements } from '@/ui/bank/BankStatements';
 import { BankPayments } from '@/ui/bank/BankPayments';
 import { BankCash } from '@/ui/bank/BankCash';
 import { BankAccountLife } from '@/ui/bank/BankAccountLife';
+import { WorthWords } from '@/ui/components/Glance';
 import { apyOf } from '@/engine/systems/statements';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateKey } from '@/engine/core/time';
@@ -47,6 +48,7 @@ import { abroadQuote, heldOf, heldText, homeAccountLines, quoteWords } from '@/e
 import { arrivalOf } from '@/engine/systems/bankmoves';
 import { exchange } from '@/engine/content/currency';
 import { waiverWords } from '@/ui/bank/feeWords';
+import { TabBar } from '@/ui/components/TabBar';
 
 export function BankWorkspace() {
   const { sim, run, toast } = useGame();
@@ -290,7 +292,11 @@ export function BankWorkspace() {
             ? <Open subject={at('account', here[0].id)}>one account</Open>
             : <Open subject={at('bank', bank.id)}>{here.length} accounts</Open>}
           {accounts.length > here.length ? `, and ${othersText(accounts.filter((a) => a.bankId !== bank.id), money)}` : ''}.
+          {/* What you're worth, everything held less everything owed (`networth`'s look), here from 2026-10-23 (brief 23):
+              until then it was Home's Your Affairs line, which went from Home. */}
+          {' '}<WorthWords />
         </p>
+        {current && current.balance < 0 && <p className="glance glance-alert">Your account is overdrawn.</p>}
       </LookRegion>
 
       <BankTabs tab={tab} onTab={setTab} />
@@ -332,38 +338,9 @@ function BorrowingAt({ primaryBank }: { primaryBank: import('@/engine/content/ba
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`, from 2026-10-08). */
 const BANK_TABS = SECTIONS['/workspace/bank'] as readonly { id: BankTab; label: string }[];
 
-/** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
+/** The tabs, as a tab list: the shared bar from 2026-10-23 (`components/TabBar.tsx`), its own copy until then. */
 function BankTabs({ tab, onTab }: { tab: BankTab; onTab: (tab: BankTab) => void }) {
-  const go = (index: number) => {
-    const next = BANK_TABS[(index + BANK_TABS.length) % BANK_TABS.length]!;
-    onTab(next.id);
-    document.getElementById(`bank-tab-${next.id}`)?.focus();
-  };
-  return (
-    <div className="tabs" role="tablist" aria-label="Your Bank">
-      {BANK_TABS.map((one, i) => (
-        <button
-          key={one.id}
-          id={`bank-tab-${one.id}`}
-          type="button"
-          role="tab"
-          className="tab"
-          aria-selected={one.id === tab}
-          aria-controls={`bank-pane-${one.id}`}
-          tabIndex={one.id === tab ? 0 : -1}
-          onClick={() => onTab(one.id)}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
-            else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
-            else if (e.key === 'Home') { e.preventDefault(); go(0); }
-            else if (e.key === 'End') { e.preventDefault(); go(BANK_TABS.length - 1); }
-          }}
-        >
-          {one.label}
-        </button>
-      ))}
-    </div>
-  );
+  return <TabBar tabs={BANK_TABS} tab={tab} onTab={onTab} label="Your Bank" idPrefix="bank" />;
 }
 
 /**

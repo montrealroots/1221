@@ -153,8 +153,9 @@ input[type="checkbox"], input[type="radio"] {
   cursor: pointer;
 }
 
-/* Nothing pushes the page itself sideways. */
-html, body { overflow-x: hidden; }
+/* Nothing pushes the page itself sideways. Until 2026-10-23 that was said here by `html, body { overflow-x: hidden; }`,
+   which hid what pushed it rather than stopping it: at 667 by 375 the bar ran 34 pixels past the window, cut off unseen
+   (brief 23's walk measured it with the rule set aside). What is genuinely wide scrolls in its own box below. */
 
 /* Wide content scrolls inside its own container rather than widening the page. */
 .table-wrap, .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -191,7 +192,7 @@ pre, code, .mono-block {
 /* Numbers line up and never wrap mid-figure. */
 .tabular, .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-html, body, #root { height: 100%; }
+html, body, #root, .turn-frame { height: 100%; }
 
 body {
   margin: 0;
@@ -697,6 +698,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 /* ---------- App shell ---------- */
 
 .shell { display: flex; flex-direction: column; height: 100%; }
+/* The height the browser shows now (from 2026-10-23, brief 23): a phone's address bar comes and goes, and 100% was the
+   height with it gone, so the foot of the page sat under it. */
+@supports (height: 100dvh) { .shell { height: 100dvh; } }
 
 .topbar {
   display: flex; align-items: center; gap: var(--s4);
@@ -750,14 +754,15 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 @media (max-width: 620px) {
   header.topbar {
     display: grid; height: auto; min-height: var(--nav-h);
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
-    grid-template-areas: "menu brand clock save" "time time time time";
+    grid-template-columns: auto auto minmax(0, 1fr);
+    grid-template-areas: "menu here clock" "time time time";
     column-gap: var(--s2); row-gap: var(--s1); padding: var(--s1) var(--s3) var(--s2);
   }
   .topbar > .rail-toggle { grid-area: menu; }
-  .topbar > .topbar-brand { grid-area: brand; padding-inline: var(--s1); }
-  .topbar > .topbar-clock { grid-area: clock; min-width: 0; }
-  .topbar > .topbar-group { grid-area: save; gap: var(--s1); }
+  /* The name of the screen stands where the brand did: the drawer has Home (from 2026-10-23). */
+  .topbar > .topbar-brand { display: none; }
+  .topbar > .topbar-here { grid-area: here; }
+  .topbar > .topbar-clock { grid-area: clock; min-width: 0; justify-content: flex-end; }
   .topbar > .topbar-time { grid-area: time; display: flex; gap: var(--s1); }
   .topbar > .topbar-why { grid-column: 1 / -1; order: 0; padding-bottom: 0; }
   .topbar-time > * { flex: 1 1 auto; justify-content: center; }
@@ -771,19 +776,12 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   .topbar-time .btn.is-locked { flex-direction: column; gap: 0; }
   .topbar-time .btn.is-locked .lock-word { margin-left: 0; white-space: nowrap; }
 }
-/* On a narrow phone (from 2026-10-19, the same report) the guide and Save & Exit take a row of their own: the menu, the
-   name, the clock, the guide, the save's state and Save & Exit came to more than 390 pixels, and the clock ran over the
-   guide's button. */
-@media (max-width: 480px) {
-  header.topbar {
-    grid-template-columns: auto auto minmax(0, 1fr);
-    grid-template-areas: "menu brand clock" "save save save" "time time time";
-  }
-  .topbar > .topbar-group { justify-content: flex-end; }
-}
+/* On a narrow phone the guide and Save & Exit took a row of their own from 2026-10-19 to 2026-10-23, when they went to
+   the drawer's foot with the rail (brief 23). */
 
-/* Below a laptop the rail folds away and comes back as a drawer. */
-@media (max-width: 900px) {
+/* Below a laptop the rail folds away and comes back as a drawer, and on a screen too short for it beside the page, as a
+   phone's on its side is (from 2026-10-23, brief 23: until then a phone 932 wide kept the desktop's rail). */
+@media (max-width: 900px), (max-height: 500px) {
   /* Closed, the drawer is off the left edge and hidden outright, so nothing
      in it can take focus or be read as spilling out of the page. */
   .rail {
@@ -795,7 +793,7 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   .rail[data-open="true"] { transform: none; visibility: visible; transition: transform .2s, visibility 0s; }
   .rail-shade { display: block; }
 }
-@media (min-width: 901px) {
+@media (min-width: 901px) and (min-height: 501px) {
   .rail-toggle { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -867,6 +865,10 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 
 .page-head { margin-bottom: var(--s5); }
 .page-head h1 { margin-bottom: var(--s1); }
+/* Where a screen stands, under its name (`components/Glance.tsx`, from 2026-10-23): Money's worth, the School's place
+   and what's next, Papers' cover and what the returns ask. */
+.page-head .glance { margin: var(--s2) 0 0; font-size: var(--size-sm); color: var(--text); }
+.page-head .glance-alert { color: var(--warning); }
 
 .tabs {
   display: flex; gap: var(--s1); border-bottom: 1px solid var(--line);
@@ -956,7 +958,7 @@ kbd {
 .modal {
   width: min(640px, 100%); background: var(--surface);
   border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg); max-height: 84vh;
+  box-shadow: var(--shadow-lg); max-height: 84vh; max-height: 84dvh;
   display: flex; flex-direction: column;
 }
 .modal-head { padding: var(--s5); border-bottom: 1px solid var(--line); }
@@ -1366,11 +1368,8 @@ td, th { overflow-wrap: break-word; }
    column the desktop shows, scrolling in its panel, with a shadow on the side that has more (the scrolling-shadows
    technique: covers that move with the content, shadows that stay with the box). */
 @media (max-width: 640px) {
-  .tabs {
-    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
-  }
-  .tabs::-webkit-scrollbar { display: none; }
+  /* The fade at the edge with more is the tab bar's own at every width from 2026-10-23 (`.tabs-wrap`, below): until
+     then it was here, at 640 or narrower, and always at the right, so a bar scrolled to its end faded its last tab. */
   .tab { padding-inline: var(--s3); }
   table {
     display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
@@ -1380,21 +1379,7 @@ td, th { overflow-wrap: break-word; }
       radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
       radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
   }
-  /* A wide table in its scrolling region keeps the desktop's layout at a width its columns can be read at, by how
-     many it has, rather than squeezed to the phone's width with every cell wrapped to a sliver (a cell's own
-     min-width is ignored by table layout, so it's the table's). The region scrolls and carries the shadows. */
   .table-scroll > table { display: table; background: none; }
-  .table-scroll > table:has(th:nth-child(4)) { min-width: 520px; }
-  .table-scroll > table:has(th:nth-child(5)) { min-width: 680px; }
-  .table-scroll > table:has(th:nth-child(7)) { min-width: 880px; }
-  .table-scroll {
-    -webkit-overflow-scrolling: touch;
-    background:
-      linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
-      linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
-      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
-      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
-  }
   /* The portrait above the facts, not a column beside them taking a third of the width. */
   .identity-row { flex-direction: column; }
   .identity-row > .grow { width: 100%; }
@@ -1446,3 +1431,246 @@ td, th { overflow-wrap: break-word; }
      in (docs/verification/editorial-2026-10-19/tutorial/phone/guide-school-details-390.png). */
   .guide-page { max-height: none; overflow-y: visible; }
 }
+
+/* ==========================================================================
+   Brief 23 (2026-10-23): desktop and landscape phones
+   ========================================================================== */
+
+:root {
+  /* The page's gutter, one for every screen: the main column's padding, and what a drawer and the bar keep from a
+     notch. */
+  --gutter: var(--s5);
+  /* A readable line of running text, held at about 75 characters. */
+  --measure: 78ch;
+  /* The smallest a control is: a pointer's, and a finger's (WCAG 2.5.5's 44 pixels) on a touch screen. */
+  --control: 32px;
+  --control-sm: 28px;
+}
+@media (max-width: 900px) { :root { --gutter: var(--s4); } }
+@media (max-height: 500px) { :root { --gutter: var(--s3); --nav-h: 48px; } }
+@media (pointer: coarse) { :root { --control: 44px; --control-sm: 44px; } }
+
+/* Controls, one height each. A link inside a sentence keeps the sentence's line (WCAG 2.5.8 excepts it). */
+.btn { min-height: var(--control); }
+.btn-sm { min-height: var(--control-sm); }
+.tab, .rail-item, .menu-item, .guide-toc-item, .picker-option { min-height: var(--control); }
+.btn, .tab, .rail-item, .menu-item { justify-content: center; }
+.rail-item, .menu-item { justify-content: flex-start; }
+@media (pointer: coarse) {
+  .btn-sm { padding-inline: var(--s3); }
+  select, input:not([type]), input[type="text"], input[type="number"], input[type="date"], input[type="search"] { min-height: 44px; }
+  summary { min-height: 44px; display: flex; align-items: center; gap: var(--s1); }
+  details > summary { list-style-position: inside; }
+  .breadcrumbs button { min-height: 44px; padding: 0 var(--s1); }
+  .link.strong, .help-link { min-height: 32px; }
+  .cal-day { cursor: pointer; }
+}
+
+/* The page's gutter and the notch. The bar, the drawer and the column keep clear of a phone's notch and its home bar
+   (`viewport-fit=cover`, `env(safe-area-inset-*)`). */
+.topbar { padding-left: max(var(--s4), env(safe-area-inset-left)); padding-right: max(var(--s4), env(safe-area-inset-right)); }
+.main {
+  padding: var(--gutter);
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+  padding-bottom: max(var(--gutter), env(safe-area-inset-bottom));
+}
+@media (max-width: 900px), (max-height: 500px) {
+  .rail { padding-left: max(var(--s2), env(safe-area-inset-left)); padding-bottom: max(var(--s3), env(safe-area-inset-bottom)); top: var(--nav-h); }
+  .rail-shade { inset: var(--nav-h) 0 0 0; }
+}
+.toasts { bottom: max(var(--s5), env(safe-area-inset-bottom)); }
+
+/* Running text held to a readable line, in a card and at a page's head. */
+.card p, .page-head p, .prose { max-width: var(--measure); }
+
+/* ---------- The bar ---------- */
+
+.topbar-here {
+  font-weight: 650; font-size: var(--size-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  min-width: 0; max-width: 11rem; flex: 0 1 auto;
+}
+.clock-state {
+  display: inline-flex; align-items: center; gap: 6px; align-self: center;
+  font-size: var(--size-xs); font-weight: 650; color: var(--text-muted);
+  border: 1px solid var(--line); border-radius: 100px; padding: 1px 8px; line-height: 1.5;
+}
+.clock-state::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); }
+.clock-state[data-running="true"] { color: var(--positive); border-color: transparent; background: var(--positive-dim); }
+.clock-state[data-running="true"]::before { background: var(--positive); }
+/* The bar on a phone on its side: one row, every control a finger's size, the clock's date stepping aside first. */
+@media (max-height: 500px) {
+  .topbar { gap: var(--s2); padding-top: 0; padding-bottom: 0; }
+  .topbar > .topbar-brand { display: none; }
+  .topbar .btn { padding-inline: var(--s2); }
+  .topbar-time { gap: var(--s1); }
+  .page-head { margin-bottom: var(--s4); }
+  .breadcrumbs { margin-bottom: var(--s2); }
+}
+@media (max-height: 500px) and (max-width: 760px) {
+  .clock-state { padding: 1px 6px; }
+  .topbar-here { max-width: 7rem; }
+}
+
+/* ---------- The rail ---------- */
+
+.rail-badge-quiet { background: var(--surface-3); color: var(--text-muted); }
+.rail-foot { border-top: 1px solid var(--line); padding-top: var(--s3); margin-top: var(--s3); }
+.rail-foot .topbar-group { flex-wrap: wrap; padding: 0 var(--s2); }
+
+/* ---------- Tabs ---------- */
+
+/* A tab bar wider than its page scrolls sideways, and fades on the side that has more, with a button there that scrolls
+   it on (from 2026-10-23, brief 23): until then a phone's bar cut "Opportunities" in half at its right edge. */
+.tabs-wrap { position: relative; margin-bottom: var(--s5); }
+.tabs-wrap > .tabs { margin-bottom: 0; flex-wrap: nowrap; scrollbar-width: none; overscroll-behavior-x: contain; }
+.tabs-wrap > .tabs::-webkit-scrollbar { display: none; }
+.tabs-wrap[data-overflow="end"] > .tabs { mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
+.tabs-wrap[data-overflow="start"] > .tabs { mask-image: linear-gradient(to left, #000 calc(100% - 56px), transparent); }
+.tabs-wrap[data-overflow="both"] > .tabs { mask-image: linear-gradient(to right, transparent, #000 56px, #000 calc(100% - 56px), transparent); }
+.tabs-more {
+  position: absolute; top: 0; bottom: 1px; display: none; align-items: center; justify-content: center;
+  width: 36px; border: 0; background: transparent; color: var(--accent-strong); cursor: pointer; font-size: var(--size-md);
+}
+.tabs-more[data-side="end"] { right: 0; }
+.tabs-more[data-side="start"] { left: 0; }
+.tabs-wrap[data-overflow="end"] > .tabs-more[data-side="end"],
+.tabs-wrap[data-overflow="start"] > .tabs-more[data-side="start"],
+.tabs-wrap[data-overflow="both"] > .tabs-more { display: flex; }
+
+/* ---------- Home ---------- */
+
+.today { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--s4) var(--s6); }
+.today-main { flex: 1 1 24rem; min-width: 0; }
+.today-line { margin: var(--s1) 0 0; }
+.today-weather { flex: 0 1 22rem; min-width: min(16rem, 100%); }
+.today-weather-now { display: flex; align-items: center; gap: var(--s2); font-size: var(--size-sm); }
+.today-weather-now > span:last-child { display: flex; flex-wrap: wrap; gap: 0 var(--s2); align-items: baseline; }
+.today-weather-icon { font-size: var(--size-lg); }
+.today-week { margin-top: var(--s2); padding-top: var(--s2); }
+
+.home-grid {
+  display: grid; gap: var(--s4); margin-bottom: var(--s5);
+  grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch;
+}
+.home-grid > .card { margin: 0; }
+/* One column where two would be narrower than a panel's head and its buttons, as at 667 on a phone's side. */
+@media (max-width: 700px) { .home-grid { grid-template-columns: minmax(0, 1fr); } }
+.panel-foot { padding: var(--s3) var(--s4); border-top: 1px solid var(--line); gap: var(--s2); flex-wrap: wrap; }
+.notice-row { align-items: flex-start; }
+.notice-row-actions { flex: none; }
+.look-after-now { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); }
+.look-after-now .eyebrow { margin-bottom: var(--s2); }
+.btn-detail { font-weight: 500; opacity: .75; }
+
+/* ---------- Updates ---------- */
+
+.updates-bar {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s3);
+  padding: var(--s4) var(--s5); border-bottom: 1px solid var(--line);
+}
+.updates-about { margin: 0; }
+.updates-about select { width: auto; min-width: 11rem; }
+.segmented { display: inline-flex; }
+.segmented > .btn { border-radius: 0; }
+.segmented > .btn:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.segmented > .btn:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-left: -1px; }
+.segmented > .btn[aria-pressed="true"] { background: var(--accent-dim); border-color: var(--accent-line); color: var(--accent-strong); }
+.notice-list { list-style: none; margin: 0; padding: 0; }
+.notice {
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: flex-start;
+  padding: var(--s4) var(--s5); border-bottom: 1px solid var(--line); border-left: 3px solid transparent;
+}
+.notice[data-unread="true"] { border-left-color: var(--accent); }
+.notice:last-child { border-bottom: 0; }
+.notice-main { flex: 1 1 26rem; min-width: 0; }
+.notice-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.notice-meta { font-size: var(--size-xs); color: var(--text-dim); margin-top: 2px; }
+.notice-body { font-size: var(--size-sm); color: var(--text-muted); margin: var(--s1) 0 0; max-width: var(--measure); }
+.notice-earlier { list-style: none; margin: var(--s3) 0 0; padding: 0 0 0 var(--s3); border-left: 2px solid var(--line); display: flex; flex-direction: column; gap: var(--s3); }
+.notice-actions { display: flex; flex-wrap: wrap; gap: var(--s2); flex: none; }
+.updates-foot { padding: var(--s3) var(--s5); border-top: 1px solid var(--line); }
+
+/* ---------- Dialogs and menus on a short screen ---------- */
+
+.menu { max-height: calc(100dvh - var(--nav-h) - var(--s4)); overflow-y: auto; }
+@media (max-height: 500px) {
+  .overlay { padding: var(--s2) max(var(--s3), env(safe-area-inset-right)) var(--s2) max(var(--s3), env(safe-area-inset-left)); align-items: center; }
+  .modal { max-height: calc(100dvh - 2 * var(--s2)); }
+  .modal-head { padding: var(--s3) var(--s4); }
+  .modal-body { padding: var(--s4); }
+  .modal-foot { padding: var(--s2) var(--s4); }
+}
+
+/* ---------- Rotate Your Phone To Play (`ui/shell/turn.tsx`) ---------- */
+
+.turn-frame[inert] { pointer-events: none; user-select: none; }
+.rotate-screen {
+  position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--s3); text-align: center; background: var(--bg); color: var(--text);
+  padding: max(var(--s5), env(safe-area-inset-top)) max(var(--s5), env(safe-area-inset-right)) max(var(--s5), env(safe-area-inset-bottom)) max(var(--s5), env(safe-area-inset-left));
+}
+.rotate-screen:focus { outline: none; }
+.rotate-screen h1 { font-size: var(--size-xl); }
+.rotate-screen p { max-width: 30ch; color: var(--text-muted); margin: 0; }
+.rotate-glyph {
+  width: 72px; height: 72px; fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+  animation: rotate-hint 2.4s ease-in-out infinite;
+}
+@keyframes rotate-hint { 0%, 35% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+@media (prefers-reduced-motion: reduce) { .rotate-glyph { animation: none; transform: rotate(-90deg); } }
+
+/* ---------- Summary, then the detail that opens (brief 23, section 8) ---------- */
+
+/* A record's head: its name and where it stands, then its facts in label and value pairs, in columns where there's room. */
+.engagement { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); }
+.engagement-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); }
+.engagement-head h3 { margin: 0; font-size: var(--size-md); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: var(--s2) var(--s5); margin: 0; font-size: var(--size-sm); }
+.facts > div { min-width: 0; }
+.facts dt { font-size: var(--size-xs); color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; font-weight: 650; }
+.facts dd { margin: 0; }
+/* A section that opens: its name a control a finger can press, its body under a hairline. */
+details.section-fold { border-top: 1px solid var(--line); padding-top: var(--s2); }
+details.section-fold > summary { cursor: pointer; font-weight: 600; font-size: var(--size-sm); min-height: var(--control); display: flex; align-items: center; gap: var(--s2); }
+details.section-fold > summary::-webkit-details-marker { display: none; }
+details.section-fold > summary::before { content: "›"; display: inline-block; width: 1em; color: var(--accent); transition: transform .12s; }
+details.section-fold[open] > summary::before { transform: rotate(90deg); }
+details.section-fold[open] > summary { margin-bottom: var(--s2); }
+.pay-table td { vertical-align: top; }
+.pay-table td:nth-child(4) { min-width: 16rem; }
+.cal-run-each { border-top: 1px solid var(--line); }
+.cal-run-each .list-item { padding-left: var(--s7); }
+
+/* A wide table in its scrolling region keeps a width its columns can be read at, by how many it has, rather than being
+   squeezed with every cell wrapped to a sliver, and the region scrolls with a shadow on the side that has more. Until
+   2026-10-23 this held at 640 or narrower only, so at a phone's 844 on its side the Player Profile's Today column took
+   "Not held back today" in five lines (brief 23's walk). */
+.table-scroll > table:has(th:nth-child(4)) { min-width: 520px; }
+.table-scroll > table:has(th:nth-child(5)) { min-width: 680px; }
+.table-scroll > table:has(th:nth-child(7)) { min-width: 880px; }
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(to right, var(--surface) 30%, transparent) left center / 24px 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 30%, transparent) right center / 24px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .45), transparent) left center / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .45), transparent) right center / 12px 100% no-repeat scroll;
+}
+/* A cell's own words at a width they read at: a table cell's min-width isn't one table layout keeps, a box inside it is. */
+.cell-min { min-width: 9rem; }
+
+/* A page's head on a phone on its side (from 2026-10-23, brief 23): the trail is the screen you came from, as a way back,
+   and the heading's group, which the drawer shows, steps aside, so the page's own content starts nearer the top. The
+   heading is a step smaller; running text isn't. */
+@media (max-height: 500px) {
+  .breadcrumbs > span { display: none; }
+  .breadcrumbs > span:nth-last-child(2) { display: flex; }
+  .breadcrumbs > span:nth-last-child(2) > [aria-hidden="true"] { display: none; }
+  .breadcrumbs > span:nth-last-child(2) button::before { content: "‹ "; }
+  .page-head > .eyebrow:first-child { display: none; }
+  .page-head h1 { font-size: var(--size-lg); }
+  .tabs-wrap { margin-bottom: var(--s3); }
+  .main-inner > .card, .home-grid { margin-bottom: var(--s4); }
+}
+.decision .row-between > span:last-child { white-space: nowrap; }

@@ -258,7 +258,8 @@ describe('a save from before', () => {
 });
 
 describe('the screens', () => {
-  it('run the card from the bank’s screen, and keep Home to a line of money (from 2026-10-10)', async () => {
+  // Renamed on 2026-10-23 (brief 23): until then “…, and keep Home to a line of money (from 2026-10-10)”.
+  it('run the card from the bank’s screen, and keep Home to what needs putting right (from 2026-10-10)', async () => {
     const { readFileSync } = await import('node:fs');
     const bank = readFileSync('src/ui/bank/BankCard.tsx', 'utf8');
     const home = readFileSync('src/ui/screens/Home.tsx', 'utf8');
@@ -266,10 +267,11 @@ describe('the screens', () => {
     expect(bank).toContain('feature="finance.set_autopay"');
     expect(home).not.toContain('finance.pay_card');
     // Until 2026-10-10 Home showed the card and the credit record at a glance; the owner's brief of that day moved the
-    // detail to Money, leaving Home a line of it, and a card's trouble in What Needs You (`troubles`).
+    // detail to Money, leaving Home a line of it, and a card's trouble in What Needs You (`troubles`). The line went to
+    // Money's head on 2026-10-23 (brief 23, `components/Glance.tsx`), and the trouble stayed.
     expect(home).not.toContain('<CardSummary');
-    expect(home).toContain('title="Money"');
-    expect(home).toContain('troubles(s, s.player)');
+    expect(home).not.toContain('title="Money"');
+    expect(home).toContain('troubles(s, person)');
   });
 });
 

@@ -227,7 +227,7 @@ function AlertsView() {
     if (answer.ok) toast('Alerts saved.', 'positive');
   };
   return (
-    <Panel title="Alerts" subtitle={`What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][LOOKAHEAD_DAYS] ?? LOOKAHEAD_DAYS} days. That alert is the game’s own, not a feature of a real bank.`} help="bank.set_alerts">
+    <Panel title="Alerts" subtitle={`What the bank tells you, in a notice in Updates. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][LOOKAHEAD_DAYS] ?? LOOKAHEAD_DAYS} days. That alert is the game’s own, not a feature of a real bank.`} help="bank.set_alerts">
       <div className="field-row">
         <div className="field">
           <label htmlFor="alert-low">Any Checking Account Under ({cur})</label>

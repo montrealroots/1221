@@ -13,8 +13,8 @@
  * would make it (`somebodyElse`), a medical bill paid the way the health system pays one (`payFromCurrent`), a current
  * account kept in money for the years an idle savings account takes, and a credit record set at a figure.
  *
- * Home is drawn to markup (react-dom/server) over the save, as tests/defects-g8-4.test.ts draws it: `useGame` stands in
- * for the provider.
+ * The screens are drawn to markup (react-dom/server) over the save, as tests/defects-g8-4.test.ts draws them: `useGame`
+ * stands in for the provider. Home was drawn for its Money line until 2026-10-23 (brief 23), when the line went.
  *
  * From 2026-10-16, A Bank At Home's too, its life made at Yale as the game makes one rather than pressed into.
  *
@@ -82,14 +82,7 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
-const { Home } = await import('@/ui/screens/Home');
 const { BankAccountLife } = await import('@/ui/bank/BankAccountLife');
-
-/** Home as the player has it, its text with the tags taken out. */
-function homeText(sim: Simulation): string {
-  h.sim = sim;
-  return renderToStaticMarkup(createElement(Home)).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
-}
 
 const NEW_HAVEN = 'us-ct-newhaven';
 const HOUR = 3_600_000;
@@ -205,9 +198,11 @@ const PLAYS: Record<string, () => void> = {
     expect(-card.balance).toBe(started.owed);
     expect(card.creditLimit).toBe(sum(setup, 'against a ', ' limit'));
 
-    // The Money line, as Home draws it. Until a later pass of 2026-10-12 it was rebuilt here from Home's template, which
-    // a change to Home wouldn't have failed.
-    expect(homeText(sim)).toContain(grab(result, 'The line reads “', '(.+?)', '”'));
+    // Net Worth, as its look says it, opened from Worth at the top of Money. Until 2026-10-23 (brief 23) this read Home's
+    // Money line, which went from Home that day; until a later pass of 2026-10-12 that was rebuilt here from Home's
+    // template, which a change to Home wouldn't have failed.
+    const worth = resolveLook(sim, { kind: 'networth', id: sim.player.id }) as { summary: string };
+    expect(worth.summary).toContain(grab(result, 'Net Worth says “', '(.+?)', '”'));
 
     // Owed: the card in its introduction, charged nothing today, its own rate after.
     const owedLook = () => resolveLook(sim, { kind: 'debt', id: sim.player.id }) as { summary: string; body: ReactElement };

@@ -286,9 +286,10 @@ describe('What Needs You', () => {
     expect(needs.later).toContain('You can still open a closed question for 180 days after it closes, and SLATE keeps your latest 500 notices.');
   }, 60_000);
 
-  it('the Papers entry gives Home’s tax owed as growing only once its return’s due date has passed, as the alert says it (`growing`, ui/screens/Home.tsx)', () => {
-    // Until 2026-10-13 it said tax owed grew each month whenever it was owed (left by that day’s second round).
-    const overview = PAPERS.find((e) => e.interpret.some((line) => line.startsWith('The Papers line on Home')))!;
-    expect(overview.interpret).toContain('The Papers line on Home shows what needs doing as an alert: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed, with its interest and a late penalty growing each month once its return’s due date has passed.');
+  it('the Papers entry gives Home’s tax owed as growing only once its return’s due date has passed, as the alert says it (`growing`, ui/components/Glance.tsx)', () => {
+    // Until 2026-10-13 it said tax owed grew each month whenever it was owed (left by that day’s second round). Until
+    // 2026-10-23 (brief 23) it said so of “The Papers line on Home”, which went to the head of Papers that day.
+    const overview = PAPERS.find((e) => e.id === 'papers.overview')!;
+    expect(overview.interpret).toContain('Under its name Papers says what covers you, as “Cover: Yale Health.”, and a claim’s weekly pay. Under that, and under What Needs You on Home, it says what needs doing here: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed, with its interest and a late penalty growing each month once its return’s due date has passed.');
   });
 });

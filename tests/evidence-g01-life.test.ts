@@ -807,7 +807,8 @@ describe('calendar.schedule', () => {
     // its start at 10:30 AM (630 minutes into the day) and Two Hours.
     const form = (title: string) => {
       h.buttons = [];
-      h.states = [h.keep, '2026-08-24', null, '2026-08-24', title, 630, 120, undefined];
+      // The Calendar's open runs kept after Put Something On's day from 2026-10-23 (brief 23), its fifth useState.
+      h.states = [h.keep, '2026-08-24', null, '2026-08-24', h.keep, title, 630, 120, undefined];
       const text = onScreen(renderToStaticMarkup(createElement(CalendarWorkspace)));
       expect(h.states).toHaveLength(0);
       return { text, put: h.buttons.find((b) => b.text === 'Put It On')! };

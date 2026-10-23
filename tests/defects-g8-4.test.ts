@@ -4,7 +4,7 @@
  * the term's start, where it went back to the insurance term's (1 August) in a fall and only to the day of withdrawing
  * in a spring; HUSKY D's work test counted a benefit, interest or a pension as work, and never read the 80 hours it
  * named (the 80 hours stood until 2026-10-17, when brief 12 had them cut; from 2026-10-16 a month's income of any kind counts toward the $580 again, as CMS's rule of
- * 3 June 2026 reads it, and a renewal reads six months); Your Cover, Home and the bills' subtitle called Covered Connecticut and HUSKY D the Essential Plan; Yale's
+ * 3 June 2026 reads it, and a renewal reads six months); Your Cover, Home (Papers' head from 2026-10-23) and the bills' subtitle called Covered Connecticut and HUSKY D the Essential Plan; Yale's
  * dental plan bought in August covered five weeks, and the degree ended a paid year with no refund; and Your Doctor's
  * and Your Pharmacy's empty options did nothing once a choice was made, beside a pharmacy price with no currency.
  *
@@ -61,7 +61,6 @@ vi.mock('@/app/game-context', () => {
 
 const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
 const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
-const { Home } = await import('@/ui/screens/Home');
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
@@ -215,23 +214,26 @@ describe('a program is called by its own name', () => {
     expect(coverLabel(sim.player, sim.now)).toBeUndefined();
   });
 
-  /** FIXTURE: the degree conferred in May 2026, so Yale Health ended on 1 August: Home shows Papers to a student's life. */
+  /** FIXTURE: the degree conferred in May 2026, so Yale Health ended on 1 August. Home showed Papers' line to a student's
+   * life only, which this was for too, until the line went to the head of Papers on 2026-10-23. */
   const graduate = (seed: string) => {
     const sim = student(seed);
     Object.assign(sim.player.school!, { standing: 'graduated', endedAt: at(2026, 5, 18) });
     return sim;
   };
 
-  it('on Your Cover, on the bills’ subtitle and on Home’s Papers line', () => {
+  // Renamed on 2026-10-23 (brief 23), when Home's Papers line went to the head of Papers: until then “… and on Home’s Papers line”.
+  it('on Your Cover, on the bills’ subtitle and at the head of Papers', () => {
     const husky = holding(graduate('g84-label-husky'), 'ct', 'medicaid');
     const papers = drawn(husky, PapersWorkspace, healthTab).text;
     expect(papers).toMatch(/This Month HUSKY D/);
     expect(papers).toMatch(/Care And Its Bills HUSKY D: \$0\.00 paid this year /); expect(papers).not.toMatch(/of \$0\.00 paid this year/); // no most a year, said as none from 2026-10-17 (it read “HUSKY D: $20.00 of $0.00 paid this year”)
     expect(papers).not.toMatch(/Essential Plan:|This Month Medicaid/);
-    expect(drawn(husky, Home).text).toMatch(/Cover: HUSKY D\./);
+    expect(papers).toMatch(/^\s*Your Affairs Papers .*? Cover: HUSKY D\. /);
     const covered = holding(graduate('g84-label-covered'), 'ct', 'essential');
-    expect(drawn(covered, PapersWorkspace, healthTab).text).toMatch(/This Month Covered Connecticut .*Care And Its Bills Covered Connecticut: /);
-    expect(drawn(covered, Home).text).toMatch(/Cover: Covered Connecticut\./);
+    const coveredPapers = drawn(covered, PapersWorkspace, healthTab).text;
+    expect(coveredPapers).toMatch(/This Month Covered Connecticut .*Care And Its Bills Covered Connecticut: /);
+    expect(coveredPapers).toMatch(/^\s*Your Affairs Papers .*? Cover: Covered Connecticut\. /);
   });
 });
 

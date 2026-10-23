@@ -83,22 +83,29 @@ describe('the Work tab', () => {
     const promised = drawn(sim).shown;
     expect(promised).toContain('Desk Clerk, The Calloway Files');
     expect(promised).toContain('Who Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.');
-    expect(promised).toContain('Permission To Work Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
+    // Permission to work now, and what it said when the work was accepted, apart (from 2026-10-23, brief 23: until then
+    // “Permission To Work Read September 3, 2026: …”, the reading at acceptance alone, under its own label).
+    expect(promised).toContain('Permission To Work Now. You’re a US citizen, so you can work for any employer in the US.');
+    expect(promised).toContain('Eligibility When Accepted Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
     // The count in words, as the Opportunities tab says the same days (from 2026-10-21, brief 19's app walk: "2 days").
     expect(promised).toContain('Dates September 21, 2026 to September 22, 2026, two days of work.');
-    expect(promised).toContain('The week of September 20, 2026: $2,822.60 promised by Bright Harbor Television, due October 1, 2026. It isn’t paid until then, so it isn’t in your accounts yet.');
-    // The amount said once (from 2026-10-21: until then "$256.60. $256.60, what’s paid over scale").
-    expect(promised).toContain('Commission expected: $256.60. What’s paid over scale ($2,566.00), so you keep scale.');
+    // A row a week, from 2026-10-23 (brief 23): until then a paragraph each, “The week of September 20, 2026: $2,822.60
+    // promised by Bright Harbor Television, due October 1, 2026. …” and “Commission expected: $256.60. …”.
+    expect(promised).toContain('Paid by Bright Harbor Television, a payment for each week. Week Of Promised Due Where It Stands Commission September 20, 2026 $2,822.60 October 1, 2026 Promised. It isn’t paid until it’s due, so it isn’t in your accounts yet. $256.60 expected');
+    // The amount said once (from 2026-10-21: until then "$256.60. $256.60, what’s paid over scale"), and the why once
+    // under the table.
+    expect(promised).toContain('Commission: What’s paid over scale ($2,566.00), so you keep scale.');
     tended(sim, at(2026, 10, 2));
     const held = drawn(sim).shown;
     expect(held).toContain('Paid into Halberd Talent’s client trust account on October 1, 2026, and passed on to you by October 6, 2026.');
-    expect(held).toContain('Commission: $256.60, taken when it’s passed on.');
+    expect(held).toContain('held for you $');
+    expect(held).toContain('$256.60, taken when it’s passed on');
     tended(sim, at(2026, 10, 7));
     const r = e.pay[0]!.received!;
     const done = drawn(sim).shown;
     expect(done).toContain('Received October 6, 2026, passed on from Halberd Talent’s client trust account.');
     expect(done).toContain(`Gross $2,822.60, withheld for tax $${(r.withheld / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}, to you $${(r.net / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
-    expect(done).toContain('Commission: $256.60, taken before it reached you.');
+    expect(done).toContain('$256.60, taken before it reached you');
     // In Money, the account's statement: the deposit's line names the commission taken from it.
     const account = sim.universe.accounts[sim.player.primaryAccountId!]!;
     const lines = activity(sim, account, at(2026, 10, 1), sim.now).lines.filter((l) => l.memo.includes('Calloway'));
@@ -111,7 +118,10 @@ describe('the Work tab', () => {
     expect(schedulePay(sim, sim.player, e)).toEqual({ scheduled: 0, deferred: 1 });
     const { shown } = drawn(sim);
     expect(shown).toContain('Ivy, Paper Moons');
-    expect(shown).toContain(`The week of September 20, 2026: deferred by a graduate film program’s thesis production. SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it.`);
+    // A row a week from 2026-10-23 (brief 23): until then “The week of September 20, 2026: deferred by a graduate film
+    // program’s thesis production. …”.
+    expect(shown).toContain(`Deferred by a graduate film program’s thesis production: nothing is paid for this work. Week Of Promised Due Where It Stands Commission September 20, 2026 Deferred Never SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it. None`);
+    expect(shown).not.toContain('Paid by a graduate film');
     expect(shown).not.toMatch(/never paid|\$0\.00 promised/);
   });
 
@@ -137,7 +147,9 @@ describe('the Work tab', () => {
     schedulePay(sim, sim.player, e);
     const shown = words(renderToStaticMarkup(createElement(PapersWork)));
     expect(shown).toContain('Your Work And Your Permission');
-    expect(shown).toContain('Robin, Last Bus To Eastview, September 14, 2026 to September 15, 2026. Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
+    // A table from 2026-10-23 (brief 23), where it stands now beside what was read when it was accepted: until then a line,
+    // “Robin, Last Bus To Eastview, September 14, 2026 to September 15, 2026. Read September 3, 2026: …”.
+    expect(shown).toContain('Engagement Dates Now Eligibility When Accepted Robin, Last Bus To Eastview September 14, 2026 to September 15, 2026 Booked. You’re a US citizen, so you can work for any employer in the US. Read September 3, 2026: You’re a US citizen, so you can work for any employer in the US.');
   }, 90_000);
 
   it('PLAYER JOURNEY: on OPT, Papers says the days counted so far and the end of its days without work, which the work booked moves thirteen days later, its first day to its last', () => {

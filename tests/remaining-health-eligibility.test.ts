@@ -169,12 +169,17 @@ function papers(sim: Simulation, tab = 'health'): string {
   return onScreen(renderToStaticMarkup(createElement(PapersWorkspace as FunctionComponent)));
 }
 const drawnFor = (feature: string) => h.clicks.filter((c) => c.feature === feature);
-/** Home as the player has it: What Needs You draws the six unread notices, the most important and latest first. */
+/** Home as the player has it: Recent Updates draws the four unread notices, the most important and latest first (What
+ * Needs You drew six until 2026-10-23, brief 23). */
 function home(sim: Simulation): string {
   h.sim = sim;
   h.clicks = [];
   return onScreen(renderToStaticMarkup(createElement(Home as FunctionComponent)));
 }
+/** A notice as Recent Updates on Home draws it (from 2026-10-23, brief 23): its title, what it's about and when, then its
+ * words. What Needs You drew the title and the words together until then. */
+const notice = (title: string, body: string) => new RegExp(`${esc(title)} [A-Z][a-z]+(?: [A-Z][a-z]+)? · [^·]+? ${esc(body)}`);
+const esc = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** Papers' paragraph on the work rules, as the player meets them (from 2026-10-17, brief 12: until then it began “80 hours’ work”). */
 const RULES_LINE = 'From 2027 Medicaid also has work rules. You meet them in any month you spend some of at the School, or in a month with $580.00 of income (pay, interest, a benefit or a pension). In Connecticut that’s the month before you apply, or any one of the 6 months before a renewal. You also meet them if you’re 65 or over, if you get SNAP under its own work rules, or if you ask for a hospital stay to count.';
 /** No screen says hours of work meet the rules, or asks school at least half-time (brief 12). */
@@ -217,7 +222,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     sim.must({ kind: 'world.mark_read', payload: {} });
     expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided on February 8, 2027.']);
     const told = home(sim);
-    expect(told).toContain(`A Notice Of Noncompliance ${APPLIED_NOTICE}`);
+    expect(told).toMatch(notice('A Notice Of Noncompliance', APPLIED_NOTICE));
     expect(told).not.toMatch(NO_HOURS);
     // Approved, it would begin on the first of the month of application, 1 January (from 2026-10-16; until then 1 February).
     expect(healthOf(sim.player).pending).toEqual({ kind: 'application', state: 'ct', noticeAt: at(2027, 1, 4, 9), decideAt: at(2027, 2, 8, 0), months: ['2026-12'], band: 'low', from: at(2027, 1, 1, 0) });
@@ -249,7 +254,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(titled(jump, 'Public Cover Denied').map((n) => [n.at, n.body])).toEqual([[at(2027, 2, 8, 0), 'HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in December 2026, and nothing was shown by February 7, 2027, so your application is denied. You can still buy a marketplace plan in its enrollment windows, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
     expect(titled(jump, 'A Notice Of Noncompliance')).toHaveLength(1);
     const denied = home(jump);
-    expect(denied).toContain('Public Cover Denied HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in December 2026, and nothing was shown by February 7, 2027, so your application is denied.');
+    expect(denied).toMatch(notice('Public Cover Denied', 'HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in December 2026, and nothing was shown by February 7, 2027, so your application is denied.'));
     expect(denied).not.toMatch(NO_HOURS);
     expect(healthOf(jump.player).pending).toBeUndefined();
     expect(healthOf(jump.player).program).toBeUndefined();
@@ -364,7 +369,7 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(papers(sim)).toContain('If you were in hospital in one of those months, you can ask for it to count.');
     expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['Hardship exception granted. The work rules count as met.']);
     expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D covers you from December 1, 2026, with no premium. You met its work rules in December 2026, through a stay in hospital you asked to count. Your marketplace plan ends when HUSKY D begins.']);
-    expect(home(sim)).toContain('Public Cover Approved HUSKY D covers you from December 1, 2026, with no premium. You met its work rules in December 2026, through a stay in hospital you asked to count. Your marketplace plan ends when HUSKY D begins.');
+    expect(home(sim)).toMatch(notice('Public Cover Approved', 'HUSKY D covers you from December 1, 2026, with no premium. You met its work rules in December 2026, through a stay in hospital you asked to count. Your marketplace plan ends when HUSKY D begins.'));
     expect(healthOf(sim.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 12, 1, 0), band: 'low', renewAt: at(2027, 7, 1, 0) });
     const stay = healthOf(sim.player).careLog!.find((e) => e.care === 'stay')!;
     expect([stay.share, stay.planPaid! > 0]).toEqual([0, true]);
