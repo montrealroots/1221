@@ -300,7 +300,7 @@ Readings made on SLATE's judgment, each for the owner to keep or change:
 ## After The Merge
 
 The pages captured on the built app after #54's merge (2026-10-22) showed two defects, and the owner said to fix them
-("Yes"), on the branch and not merged:
+("Yes"), then "Run the final runs then merge everything."; it went to `main` in #56, merged as `6e5dc42e`:
 - **Paydays for work called off.** `callOff` dropped a week with nothing worked from what was owed and took the work's
   calls off the calendar, but not the week's payday, which went on the clock under another reference. So on 2 September
   2029, b20-4 released as Hester Vane at midnight with nothing owed, Home and the calendar still said "Payday: The Winter

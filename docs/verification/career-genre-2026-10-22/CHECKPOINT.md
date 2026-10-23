@@ -44,7 +44,9 @@ For the next session or the other account, beside the handoff. The tree outranks
   built-app pages (`5ccf054e`); the final runs played again on it (`933f1ae6`, the advice on `54b4e96f`), every figure
   the first runs'; the matrix at 633 before the gate's figure.
 
+- **Merged:** the follow-up in #56 (`6e5dc42e`), its gates exit 0 on `5ccf054e`, `576a0e88` and `6f44b403`, the matrix at
+  634 of 658.
+
 ## Next
 
-1. The gate on the fold's commit and again after its figure, then the merge, at the owner's "Run the final runs then
-   merge everything."
+Nothing in brief 22 or its follow-up is left. Nothing is deployed; the next session starts from the owner's next brief.
