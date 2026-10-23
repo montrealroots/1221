@@ -16,12 +16,14 @@ reader was run.
 
 ## The Tested Commit
 
-`4bfb3f33` on `claude/peaceful-hamilton-59zdbb`, the last change to `src`. Brief 22's browser lanes were played on it.
+`05060742` on `claude/peaceful-hamilton-59zdbb`, the last change to `src`. Brief 22's browser lanes were played on it.
 The turn suite was made on `23b8a77a`'s build, and the after pictures, the help audit, the checks, the keyboard and the
-walk on `1a87be4c`'s. `src` differs from the tested commit's in two places, and neither changes what a screen draws:
+walk on `1a87be4c`'s. `src` differs from the tested commit's in three places, none of which changes what those measured
+draw:
 - `shell/turn.tsx`, a scroll kept while the phone is on its side, which acts only when a phone turns upright (the turn
   suite was made with it);
-- `screens/Home.tsx`, What Needs You's line for nothing waiting, which no screen drew once All Clear stood alone. The before pictures and the before audit were made on brief 23's build
+- `screens/Home.tsx`, What Needs You's line for nothing waiting, which no screen drew once All Clear stood alone;
+- the stylesheet's one column for Home under 600 wide (defect 7), a width none of them used (the 200% window is 640). The before pictures and the before audit were made on brief 23's build
 (`113765a6`, its `src` `a00f159a`'s).
 
 | Commit | What |
@@ -32,6 +34,7 @@ walk on `1a87be4c`'s. `src` differs from the tested commit's in two places, and 
 | `23b8a77a` | A phone turned upright keeps each scroll as it stood on its side (the walk's turn suite found it) |
 | `8ad20c4d` | The playthroughs and the acceptance walk read the game's date from the bar's own date (no `src` change) |
 | `4bfb3f33` | What Needs You's line loses words it no longer showed; the acceptance walk reads All Clear as the panel says it |
+| `05060742` | Home under 600 wide is one column again (brief 22's UI lane found it at 390) |
 
 ## What Changed
 
@@ -101,6 +104,7 @@ card stretched to Up Next's height. How You Are moves up under it. Nothing in th
 | 4 | Text at 150% in a 1280 window kept the desktop's bar: Look After Yourself ran to three lines out of it and Save & Exit 5 pixels past the window | The drawer's and the bar's widths in em (`DRAWER_QUERY` and the stylesheet) | `app/checks.mjs` |
 | 5 | The first version of 4 left Menu's own rule at 901px: with text at 150% the rail was a drawer with no Menu to open it | Menu's rule the drawer query's complement, in em | `app/checks.mjs` |
 | 6 | A phone turned upright and back put four of eight lives' Career Work 63 pixels up the page (300 to 237): at 390 wide the page was shorter once help sat beside its labels, the browser clamped the scroll as the window narrowed, and the turn read it after | `TurnFrame` keeps each scroll as it moves while the phone is on its side, and puts that back | the walk's turn suite, 8 of 8 |
+| 7 | In a window under 600 wide Home's cards kept their second column: at 390 the grid was 0 and 342 pixels, What Needs You 2 pixels wide and How You Are 34, its labels split mid-word and its help cut off (`captures/checks/home-grid-390-on-4bfb3f33.jpg`) | The one-column rule as specific as the placements it undoes | brief 22's UI lane at 390; one column of 358 at 390 and 528 at 560 after |
 
 ## Measured
 
