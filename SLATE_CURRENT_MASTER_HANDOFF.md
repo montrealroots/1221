@@ -13,9 +13,10 @@ without my instruction." No pull request is open for it. There is no stash and o
 
 - **Read first:** `docs/verification/ui-polish-2026-10-23/README.md` (the receipt) and `criteria.md` (the checks,
   written before any change).
-- **The tested commit:** `23b8a77a`, the last change to `src`. The turn suite and the browser's final-run lanes ran on
-  it; the pictures, the audits, the checks and the walk on `1a87be4c`, whose `src` differs in `shell/turn.tsx`'s scroll
-  keeping alone, which acts only when a phone turns upright.
+- **The tested commit:** `4bfb3f33`, the last change to `src`; the browser's final-run lanes ran on it. The turn suite
+  ran on `23b8a77a`, and the pictures, the audits, the checks and the walk on `1a87be4c`. Their `src` differs from the
+  tested commit's in `shell/turn.tsx`'s scroll keeping (with which the turn suite ran) and a line What Needs You no
+  longer drew, neither of which changes what a screen shows.
 - **Help lines up by where it stands** (one shared rule a place, its offset the button's own padding): a card's head
   ends its words on the content edge, on the heading's first line, and a wrapped row starts under the heading;
   `SectionHead` for a section's head; `.help-below` under what it explains. The help audit (1,530 helps before, 1,482
@@ -35,9 +36,9 @@ without my instruction." No pull request is open for it. There is no stash and o
   side now, and the suite holds 14 checks for each of the eight lives.
 - **The walk** (brief 23's `capture.mjs`, eight lives, six sizes): 1,416 steps, none failing a measure, no page error.
 - **Emulated:** Playwright's Chromium with a phone's screen, touch and no hover. No physical phone and no screen reader.
-- **Under way:** brief 22's final runs (P=f24), the engine's lanes on `cb8b19eb` (whose `src/engine` is the tested
-  commit's) and the browser's lanes to follow on `23b8a77a`; then the gate in a clean clone, the fold, and the gate
-  again.
+- **Under way:** brief 22's final runs (P=f24): the engine's lanes on `cb8b19eb` (whose `src/engine` is the tested
+  commit's), every step passing but JRC's `b19-lives-diff`, which exits 1 as on every commit since brief 19; the
+  browser's lanes on `4bfb3f33`. Then the gate in a clean clone, the fold, and the gate again.
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
 
 # Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23
