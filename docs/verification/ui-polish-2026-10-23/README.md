@@ -224,7 +224,18 @@ To come: in a clean clone, its exit read from its file.
 
 ## Brief 22's Final Runs
 
-To come.
+Every lane but the judge's (whose watched files neither brief 23 nor 24 touched), prefix `f24`, each in a clean clone:
+the engine's on `cb8b19eb`, whose `src/engine` is the tested commit's, and A, UI and APP on `05060742`, every step exit 0
+but JRC's `b19-lives-diff`, which exits 1 as on every commit since brief 19. The record, with the four starts of the
+browser lanes that were stopped and why, is in
+`../career-genre-2026-10-22/final-runs/runs/README.md` (Played Again On Brief 24's Commits).
+- **Against brief 22's close** (`final-runs/compare.py`, `final-runs/numbers-same-22.json`, `text-same-22.json`): every
+  number the same, the runs' own records aside, and six save-opening times in the older-save walk. The text outputs
+  differ where the screens' words changed, the acceptance walk 77 of 77 at each width as before.
+- **What they found in brief 24, and fixed:** defect 7 (Home under 600 wide), and two tools reading words brief 24
+  changed (the bar's date, the line over All Clear), which led to a line What Needs You no longer showed.
+- **The matrix:** folded by `verify.py`, `advice/close.py` and `criteria.py`, 633 of 658, the 46 rows held again. The
+  634th, the gate's, below.
 
 ## Limits
 
