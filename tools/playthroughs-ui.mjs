@@ -138,10 +138,20 @@ const clock = async () => (await page.getByRole('group', { name: 'Time Controls'
 const dateText = async () => (await page.locator('header, .topbar, body').first().innerText({ timeout: 2000 })).match(/[A-Z][a-z]+ \d{1,2}, \d{4}/)?.[0] ?? '';
 const when = async () => `${await dateText()} ${await clock()}`;
 async function rail(name) {
-  if (PHONE) { await press(page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first(), 'Menu'); await wait(400); }
   const b = page.locator('#rail').getByRole('button', { name: new RegExp(`^${name}`) }).first();
+  // The menu opened only where it's shut (from 2026-10-23: a press in its foot can leave it open, and Menu then shut it).
+  if (PHONE && !(await b.isVisible().catch(() => false))) { await press(page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first(), 'Menu'); await wait(400); }
   must(await b.count(), `no rail entry ${name}`);
   await press(b, name); await wait(900);
+}
+/**
+ * A control of the bar's secondary side, the guide or Save & Exit, pressed: in the drawer's foot while the rail is a
+ * drawer (from brief 23, 2026-10-23), so there the menu is opened first. Until then it stood in the bar at every width,
+ * and on brief 23's commit Save & Exit timed out at 390 (brief 22's final runs played again, 2026-10-23).
+ */
+async function inBar(loc, words) {
+  if (!(await loc.isVisible().catch(() => false))) { await press(page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first(), 'Menu'); await wait(400); }
+  await press(loc, words);
 }
 async function tab(name) {
   const t = page.getByRole('tab', { name: new RegExp(`^${name}`) }).first();
@@ -366,7 +376,7 @@ async function onTheWayCancelled(item) {
 /** Save & Exit, then Continue: the same moment comes back. */
 async function saveAndContinue() {
   const before = await when();
-  await press(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
+  await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
   await press(page.getByRole('button', { name: /^Continue$/ }).first(), 'Continue'); await wait(4000);
   await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 });
   const after = await when();
@@ -376,7 +386,7 @@ async function saveAndContinue() {
 /** Save & Exit, Delete on the slot, Confirm Deletion read and Keep It, the slot still there, then Continue. */
 async function deleteKeptThenContinue() {
   const before = await when();
-  await press(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
+  await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first(), 'Save & Exit'); await wait(1500);
   const del = page.getByRole('button', { name: /^Delete$/ }).first();
   must(await del.count(), 'no Delete on the slot');
   await press(del, 'Delete'); await wait(500);
@@ -446,7 +456,7 @@ async function normal() {
       if (!(await b.count()) || !(await b.isVisible().catch(() => false))) {
         const g = page.getByRole('button', { name: /^Guide \(\d+ Left\)/ }).first();
         if (!(await g.count())) break;
-        await g.click({ timeout: 5000 }); await wait(500);
+        await inBar(g); await wait(500);
         b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
         if (!(await b.count())) break;
       }

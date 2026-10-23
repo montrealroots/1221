@@ -90,10 +90,20 @@ const toast = async () => (await page.locator('[role="status"], .toast').allInne
 const clock = async () => (await page.getByRole('group', { name: 'Time Controls' }).locator('xpath=..').innerText().catch(() => '')).match(/\d{1,2}:\d{2}\s?[AP]M/)?.[0] ?? '';
 const dateText = async () => (await page.locator('header, .topbar, body').first().innerText()).match(/[A-Z][a-z]+ \d{1,2}, \d{4}/)?.[0] ?? '';
 async function rail(name) {
-  if (PHONE) { await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first().click(); await wait(400); }
   const b = page.locator('#rail').getByRole('button', { name: new RegExp(`^${name}`) }).first();
+  // The menu opened only where it's shut (from 2026-10-23: a press in its foot can leave it open, and Menu then shut it).
+  if (PHONE && !(await b.isVisible().catch(() => false))) { await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first().click(); await wait(400); }
   must(await b.count(), `no rail entry ${name}`);
   await b.click(); await wait(900);
+}
+/**
+ * A control of the bar's secondary side, the guide or Save & Exit, pressed: in the drawer's foot while the rail is a
+ * drawer (from brief 23, 2026-10-23), so there the menu is opened first. Until then it stood in the bar at every width,
+ * and on brief 23's commit Save & Exit timed out at 390 (brief 22's final runs played again, 2026-10-23).
+ */
+async function inBar(loc) {
+  if (!(await loc.isVisible().catch(() => false))) { await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first().click(); await wait(400); }
+  await loc.click({ timeout: 5000 });
 }
 async function tab(name) { const t = page.getByRole('tab', { name: new RegExp(`^${name}$`) }).first(); must(await t.count(), `no tab ${name}`); await t.click(); await wait(700); }
 /** The IRS Payment Plan panel on Papers' Tax Returns, by its heading. */
@@ -174,7 +184,7 @@ await step('guide: a new player’s controls are locked until its chapters are r
       // The Guide's own button in the top bar reopens it while chapters are left.
       const g = page.getByRole('button', { name: /^Guide \(\d+ Left\)/ }).first();
       if (!(await g.count())) break;
-      await g.click({ timeout: 5000 }); await wait(500);
+      await inBar(g); await wait(500);
       b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
       if (!(await b.count())) break;
     }
@@ -683,7 +693,7 @@ await step('papers: its five tabs open', async () => {
 // Save, exit and open again: the same moment.
 await step('save and exit, then Continue: the same day and hour', async () => {
   const before = `${await dateText()} ${await clock()}`;
-  await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+  await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
   await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
   const after = `${await dateText()} ${await clock()}`;
   must(before === after, `${before} → ${after}`);
@@ -698,7 +708,7 @@ await step('save and exit, then Continue: the same day and hour', async () => {
  */
 await step('address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School', async () => {
   const load = async (address) => {
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.goto(new URL(address, BASE).href); await page.reload({ waitUntil: 'networkidle' }); await wait(2000);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     return new URL(page.url()).hash;
@@ -810,7 +820,7 @@ await step('papers: a Connecticut ID card got from Passport And ID, its fee, its
   await get.click(); await wait(1000);
   const said = await toast();
   must(/You applied for the Non-Driver Identification Card and paid \$28\.00\. The card comes [A-Z][a-z]+ \d{1,2}, \d{4}, and it’s good until [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(said), `the toast said: ${said}`);
-  await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+  await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
   await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
   await rail('Papers'); await tab('Passport And ID');
   const again = page.getByRole('button', { name: /^Get Non-Driver Identification Card$/ }).first();
@@ -1101,7 +1111,7 @@ if (DIR) {
     const tries = await partBook().locator('table[data-tries] tbody tr').count();
     // Their text whether the list is open or closed: it was opened above, and a page opened again shows it closed.
     const seen = (await history().textContent().catch(() => '')) + (await noteLine().textContent());
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('School'); await tab('Casting');
     must((await partBook().locator('table[data-tries] tbody tr').count()) === tries, 'the tries weren’t kept');
@@ -1198,7 +1208,7 @@ if (DIR) {
   });
   await step('[save: roundups scenario] save and exit, Continue: still on, its choices and its last transfer kept', async () => {
     const before = (await panel().innerText()).replace(/\s+/g, ' ');
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('Money'); await tab('Accounts');
     must(/^Round-Ups: On/.test(await toggle().innerText()), 'off after the reload');
@@ -1271,7 +1281,7 @@ if (DIR) {
   });
   await step('[save: workload scenario] save and exit, Continue: Shown Today and the warning as they were', async () => {
     const before = (await page.locator(`[data-shown-today="${id}"]`).innerText()).replace(/\s+/g, ' ');
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('School'); await tab('Coursework');
     const after = (await page.locator(`[data-shown-today="${id}"]`).innerText()).replace(/\s+/g, ' ');
@@ -1324,7 +1334,7 @@ if (DIR && existsSync(`${DIR}/roundups.json`)) {
       picked = rowText;
     }
     must(picked, 'no stage scene whose suited scale side rests on its circumstances');
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('School'); await tab('Coursework');
     must(/rehearsed your current choice to \d+% so far \(it’s complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
@@ -1488,7 +1498,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
   await step('[save: brief scenario] save and exit, Continue: the brief, its takes and its preparation kept', async () => {
     // The takes as they stand before, however many the steps above made (the reader's take, from 2026-10-12, is a third).
     const kept = await briefPane().locator('table[data-takes] tbody tr').count();
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await openBrief('Drama');
     const rows = briefPane().locator('table[data-takes] tbody tr');
@@ -1538,7 +1548,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
       must(/The Last Take/i.test(text), 'no last take');
       must(/held back your [a-z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
       const note = text.match(/[^\n.]*asks for it/)?.[0] ?? '(no concern behind the limit)';
-      await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+      await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
       await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
       await openBrief(label);
       must(await briefPane().locator('table[data-takes] tbody tr').count() >= 1, 'the take isn’t kept after Continue');
@@ -1577,7 +1587,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
     const advice = text.match(/Estimate: (\d+) hours(?:, an hour a day,)? would take it from \d+ to about \d+, worth about [\d.]+ points? a piece on your recent work\./)?.[0];
     must(advice, 'What To Work On isn’t forecast');
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await openBrief('Melodrama');
     const back = (await briefPane().innerText()).replace(/\s+/g, ' ');
@@ -1620,7 +1630,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     return `${paid} / ${asked}`;
   });
   await step('[save: lien scenario] save and exit, Continue, and weeks on: released', async () => {
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('Papers'); await tab('Tax Returns');
     must(/It’s to be released by/.test(await lienLine().innerText()), 'the request didn’t survive the reload');
@@ -1662,7 +1672,7 @@ if (DIR && existsSync(`${DIR}/missed-plan.json`)) {
     must(/Caught up: \$[\d,.]+ paid\./.test(said), `no confirmation: ${said}`);
     must(!(await page.getByRole('button', { name: /^Catch Up$/ }).count()), 'Catch Up still offered');
     must(await page.getByText(/^Next Payment$/).count(), 'no next payment shown');
-    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await inBar(page.getByRole('button', { name: /^Save & Exit$/ }).first()); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('Papers'); await tab('Tax Returns');
     must(!(await page.getByRole('button', { name: /^Catch Up$/ }).count()) && await page.getByText(/^Next Payment$/).count(), 'not in force after the reload');
@@ -1712,7 +1722,7 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
     if (!(await b.count()) || !(await b.isVisible().catch(() => false))) {
       const g = page.getByRole('button', { name: /^Guide \(\d+ Left\)/ }).first();
       if (!(await g.count())) break;
-      await g.click({ timeout: 5000 }); await wait(500);
+      await inBar(g); await wait(500);
       b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
       if (!(await b.count())) break;
     }
