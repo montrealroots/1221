@@ -1733,9 +1733,15 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
   const sent = await toast();
   // From brief 15 the toast names where the money went; until its final runs this matched "Sent $100. It arrives".
   must(/Sent \$100(\.00)? to HSBC Bank Account\. It arrives [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(sent), `the toast said: ${sent}`);
-  await rail('Home');
-  const line = (await page.locator('body').innerText()).match(/Chase Total Checking: [^\n]*/)?.[0] ?? '';
-  must(/at HSBC UK/.test(line) && /£/.test(line) && /\$/.test(line), `Home's money line said: ${line}`);
+  // Until brief 23 (2026-10-23) Home's Your Affairs had a Money line naming each account in its own money ("Chase Total
+  // Checking: … at HSBC UK …"), read here. That brief took Your Affairs from Home and put the worth at the head of Money,
+  // in dollars, and on its commit this found no line (brief 22's final runs played again, 2026-10-23). The pounds and the
+  // dollars are read where they stand now, after the move: the head's worth, and the account held abroad on Accounts.
+  await rail('Money'); await tab('Accounts');
+  const head = ((await page.locator('main').innerText()).match(/Worth −?[$£][\d,]+[^\n]*/) ?? [''])[0];
+  const abroad = (await page.locator('section.card').filter({ hasText: 'Held From Abroad' }).filter({ hasText: 'HSBC' }).first().innerText().catch(() => '')).replace(/\s+/g, ' ').trim();
+  must(/\$[\d,]+/.test(head) && /£[\d,]+/.test(abroad) && /at an estimated exchange rate/.test(abroad), `Money's head said: ${head || 'nothing'}; the account abroad: ${abroad.slice(0, 200) || 'not shown'}`);
+  const line = `${head} / ${abroad.slice(0, 160)}`;
   return `${kept} / ${quote} / ${sent} / ${line}`;
 });
 
