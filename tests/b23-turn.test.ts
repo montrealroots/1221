@@ -18,6 +18,7 @@ import { createSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { serialise } from '@/engine/persistence/adapter';
+import { readdirSync, readFileSync } from 'node:fs';
 
 type Deps = readonly unknown[] | undefined;
 
@@ -356,6 +357,37 @@ describe('A phone upright pauses the game, and it stays paused until Play', () =
     expect(sim.now).toBe(was);
   });
 
+  it('PLAYER JOURNEY: a stop open when it turns (the clock halted at the first thing that wants her), upright and back: no command, nothing said, and the stop still there, waiting on her', () => {
+    const sim = student('b23-turn-stop');
+    let game: ReturnType<typeof useGame> | undefined;
+    function Grab() { game = useGame(); return null; }
+    vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval', 'setTimeout', 'clearTimeout', 'Date'] });
+    h.real = actual as never;
+    h.sim = sim;
+    windowAt('#/home');
+    const p = mounted(() => provider(sim, createElement(UprightContext.Provider, { value: turned.upright },
+      createElement(GuideProvider, null, createElement(HelpProvider, null, createElement(Grab), createElement(Paused), createElement(TimeControls), createElement(Toasts))))));
+    // The first thing that wants her, and the clock sent past it from the bar's own advance: it halts there, paused.
+    const first = sim.universe.scheduled.filter((x) => x.status === 'pending' && x.requiresPlayer).sort((x, y) => x.at - y.at)[0]!;
+    game!.advanceTo(first.at + 60 * 60_000);
+    p.settle();
+    expect(game!.standingAt?.item.id).toBe(first.id);
+    expect(sim.universe.preferences.timeSpeed).toBe('paused');
+    const was = sim.now;
+    const sent = vi.spyOn(sim, 'execute');
+    turned.upright = true;
+    p.settle();
+    vi.advanceTimersByTime(60_000);
+    expect(game!.standingAt?.item.id).toBe(first.id);
+    turned.upright = false;
+    p.settle();
+    expect(sent.mock.calls.filter(([c]) => c.kind === 'world.set_preferences')).toEqual([]);
+    expect(p.text).not.toContain(PAUSED_WHILE_UPRIGHT);
+    expect(game!.standingAt?.item.id).toBe(first.id);
+    expect(sim.universe.scheduled.find((x) => x.id === first.id)!.status).toBe('pending');
+    expect(sim.now).toBe(was);
+  });
+
   it('PLAYER JOURNEY: turned upright twice in a row: paused once, said once, and the second turn says nothing new', () => {
     const sim = student('b23-turn-twice');
     const p = bar(sim);
@@ -410,5 +442,14 @@ describe('What a phone is, and upright, read from the device', () => {
     expect(askLandscapeOnce(page)).toBe(false);
     await Promise.resolve();
     expect(asked).toEqual(['landscape']);
+  });
+
+  it('fullscreen is never asked for: no source of the game calls it, by any of its names', () => {
+    const files = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(`${dir}/${e.name}`) : /\.(ts|tsx)$/.test(e.name) ? [`${dir}/${e.name}`] : []));
+    const all = files('src');
+    expect(all.length).toBeGreaterThan(100);
+    expect(all.some((f) => f.endsWith('ui/shell/turn.tsx'))).toBe(true);
+    const asks = all.filter((f) => /\b(request|webkitRequest|mozRequest|msRequest)Full[sS]creen\b/.test(readFileSync(f, 'utf8')));
+    expect(asks).toEqual([]);
   });
 });

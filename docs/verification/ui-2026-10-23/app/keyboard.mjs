@@ -1,6 +1,7 @@
-// Brief 23's keyboard and zoom checks on the built app (criteria X2, X4 and L4): a desktop window driven by the keyboard
-// alone, then the same life at 200% zoom. Playwright's Chromium, not a person at a keyboard, and not a screen reader:
-// what it says is what the page does with key presses and where the focus goes.
+// Brief 23's keyboard, zoom and height checks on the built app (criteria X2, X4, L4, T2 and D6): a desktop window driven
+// by the keyboard alone, the same life at 200% zoom, and a window whose height changes. Playwright's Chromium, not a
+// person at a keyboard, and not a screen reader: what it says is what the page does with key presses and where the focus
+// goes.
 //
 //   SLATE_BASE=http://localhost:4292 node docs/verification/ui-2026-10-23/app/keyboard.mjs OUT.json SAVE.json.gz
 //
@@ -11,7 +12,9 @@
 // 4. A dialog (Sleep) keeps the focus inside it both ways round, and gives it back to Sleep on Escape.
 // 5. A tab bar (Money's) moves with the arrows, Home and End, the selected tab said (`aria-selected`).
 // 6. At 200% (a 1280×720 window read at 640×360, as the browser lays it out): the bar's controls, the menu's eight places,
-//    Home's five sections and every control Home has at 100% are there, and the page is no wider than the window.
+//    Home's four panels and every control Home has at 100% are there, the guide and the save (in the drawer's foot),
+//    and the page is no wider than the window.
+// 7. A changing height: the address bar shown and hidden on a phone on its side and on a desktop (D6).
 import { chromium } from 'playwright';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
@@ -23,8 +26,8 @@ const browser = await chromium.launch(launchOptions());
 const wait = (page, ms) => page.waitForTimeout(ms);
 const out = { base: BASE, save: SAVE, checks: {}, problems: [] };
 
-async function open(width, height, scale = 1) {
-  const ctx = await browser.newContext({ viewport: { width, height }, screen: { width, height }, deviceScaleFactor: scale });
+async function open(width, height, scale = 1, phone = false) {
+  const ctx = await browser.newContext({ viewport: { width, height }, screen: { width, height }, deviceScaleFactor: phone ? 3 : scale, isMobile: phone, hasTouch: phone });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => out.problems.push(`page error: ${String(e).slice(0, 200)}`));
   const text = gunzipSync(readFileSync(SAVE)).toString('utf8');
@@ -54,7 +57,7 @@ const focused = (page) => page.evaluate(() => {
     name: (el.getAttribute('aria-label') || el.innerText || el.value || el.id || '').replace(/\s+/g, ' ').trim().slice(0, 48),
     ring,
     inView: r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth,
-    // Covered, by the bar or anything else: what's on top at the control's centre isn't it or inside it. The skip link
+    // Covered, by the bar or anything else: what's on top at the control's center isn't it or inside it. The skip link
     // sits over the bar, in front of it, which isn't covered.
     underBar: (() => { const x = r.left + r.width / 2, y = r.top + r.height / 2; if (y < 0 || y > innerHeight) return false; const top = document.elementFromPoint(x, y); return Boolean(top && top !== el && !el.contains(top) && bar && top.closest('header.topbar')); })(),
     where: el.closest('[role=dialog]') ? 'dialog' : el.closest('header.topbar') ? 'bar' : el.closest('nav.rail') ? 'menu' : el.closest('main') ? 'page' : el.classList.contains('skip-link') ? 'skip' : 'other',
@@ -147,6 +150,8 @@ async function homeAt(width, height, scale) {
     return {
       bar: names('header.topbar button'),
       menu: names('nav.rail .rail-item'),
+      // The guide and the save, in the bar on a desktop and at the drawer's foot where the rail is a drawer.
+      guideAndSave: names('header.topbar button, nav.rail button').filter((n) => /^(Guide|Save & Exit)$/.test(n)),
       sections: names('main h2'),
       controls: names('main button, main a[href], main [role=tab], main select, main input'),
       pageWider: document.documentElement.scrollWidth - innerWidth,
@@ -167,7 +172,40 @@ out.checks.zoom = {
   menuLost: missing(at100.menu, at200.menu),
   controlsLost: missing(at100.controls, at200.controls),
   barControls: ['Pause', 'Play', 'Sleep', 'Look After Yourself', 'Advance', 'Menu'].filter((n) => at200.bar.some((b) => b.startsWith(n))),
+  guideAndSave: { at100: at100.guideAndSave, at200: at200.guideAndSave },
 };
+
+// 7. A changing height (criterion D6): the window's height shrunk by an address bar's worth and given back, on a phone on
+//    its side and on a desktop, with the page scrolled. The bar stays at the top, the page starts under it and reaches
+//    the window's foot, the scroll is kept, the page is no wider, and a phone shows no rotate screen.
+async function heights(width, height, short, phone) {
+  const { ctx, page } = await open(width, height, 1, phone);
+  const career = page.locator('nav.rail .rail-item').filter({ hasText: 'Career' }).first();
+  if (phone) { await page.getByRole('button', { name: /^Menu$/ }).first().tap(); await wait(page, 300); await career.tap(); }
+  else await career.click();
+  await wait(page, 800);
+  await page.evaluate(() => { const m = document.querySelector('#main'); if (m) m.scrollTop = 400; });
+  await wait(page, 300);
+  const read = () => page.evaluate(() => {
+    const bar = document.querySelector('header.topbar')?.getBoundingClientRect();
+    const main = document.querySelector('main.main')?.getBoundingClientRect();
+    return {
+      vh: innerHeight, barTop: Math.round(bar?.top ?? -1), barBottom: Math.round(bar?.bottom ?? -1),
+      mainTop: Math.round(main?.top ?? -1), mainBottom: Math.round(main?.bottom ?? -1),
+      scroll: Math.round(document.querySelector('#main')?.scrollTop ?? -1),
+      pageWider: document.documentElement.scrollWidth - innerWidth,
+      rotate: Boolean(document.querySelector('[data-rotate-screen]')),
+    };
+  });
+  const steps = [['full', height], ['address bar shown', short], ['address bar hidden', height]];
+  const seen = [];
+  for (const [label, h] of steps) { await page.setViewportSize({ width, height: h }); await wait(page, 500); seen.push({ label, ...(await read()) }); }
+  await ctx.close();
+  const ok = seen.every((x) => x.barTop === 0 && x.mainTop >= x.barBottom && Math.abs(x.mainBottom - x.vh) <= 1 && x.pageWider <= 0 && !x.rotate)
+    && seen.every((x) => x.scroll === seen[0].scroll);
+  return { width, height, short, phone, seen, ok };
+}
+out.checks.heights = [await heights(844, 390, 330, true), await heights(1440, 900, 760, false)];
 
 await browser.close();
 writeFileSync(OUT, JSON.stringify(out, null, 1));

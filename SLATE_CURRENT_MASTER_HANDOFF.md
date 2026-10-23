@@ -1,6 +1,65 @@
-# Read First: Brief 22, The Three Remaining Career And Genre Issues, Merged, 2026-10-22
+# Read First: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23
 
-**This section is the current status, and where a new session starts.** The owner gave brief 22
+**This section is the current status, and where a new session starts.** The owner gave brief 23
+(`docs/verification/briefs-2026-10-16/23-complete-slates-desktop-and-landscape-only-mobile-ui.txt`, kept verbatim) after
+brief 22's merges. It was worked on `claude/peaceful-hamilton-59zdbb`, from `ebac1923` (`main`, #61), pushed and never
+force-pushed. It's **not merged and not deployed**: "Keep the changes reviewable. Do not merge or deploy without my
+instruction." No pull request is open for it. There is no stash and one worktree.
+
+**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at brief 22's close. Brief 23 changed `src` (the interface, the guide's and the tutorial's words, and
+  `content/attributes-matrix.ts`'s navigation table). So the 46 rows brief 22's final runs measured on the engine's or the
+  app's whole source read as measured before what they read last changed, and 20 more were already incomplete. Brief 23
+  changed no game rule. The final runs that would measure them again weren't made; the owner has asked for them before
+  a merge, and can again (`docs/verification/career-genre-2026-10-22/final-runs/runs/`, its scripts, on brief 23's
+  tested commit).)
+
+- **Read first:** `docs/verification/ui-2026-10-23/README.md` (the receipt), `coverage.md` (screen by screen),
+  `criteria.md` (the checks, before any change), `inventory.md` (every screen before), `rotation.md` (the upright phone)
+  and `CHECKPOINT.md`.
+- **The tested commit:** `208dbf1f`, the last change to `src`. The final walk was made on the app built from it. Later
+  commits change tests and documents only.
+- **A phone upright** (`ui/shell/turn.tsx`):
+  - **What it sees:** Rotate Your Phone To Play, over a game that is `inert`.
+  - **The clock:** a live clock is paused through Pause's own command. On its side again the game stays paused until
+    Play, says why once, and adds none of the minutes upright.
+  - **What's kept:** nothing unmounts, and a stop open when it turns stays waiting.
+  - **What a phone is:** a coarse pointer and a screen whose short side is 500 or less. A desktop window of any width is
+    never one.
+  - **Orientation and fullscreen:** the lock is asked for once; fullscreen never.
+- **Home:** Today, What Needs You, Up Next, How You Are, Recent Updates.
+  - **Your Affairs went from Home.** Its lines are at the heads of Money, School and Papers (`components/Glance.tsx`), and
+    what they flagged is under What Needs You (`thingsToDo`).
+  - **Recent Updates** has the four most important unread, a repeated notice on one line.
+  - **Updates,** on the menu, keeps every notice.
+- **The layout:**
+  - a bar in one row, with Running or Paused in words;
+  - a drawer at 900 wide or 500 tall, with Calendar and Updates on the menu;
+  - one tab bar that scrolls with a cue;
+  - tables that scroll in their own box or stack on a phone (`stack-table`);
+  - 44-pixel controls on a touch screen, `dvh` and the notch kept clear.
+- **The dense pages:**
+  - an offer and an engagement lead with their facts, the pay a table;
+  - Eligibility When Accepted is labeled;
+  - the Calendar opens on its agenda, with runs of one call as one line;
+  - the Profile starts with Readiness Today and On This Page;
+  - School's Term Reviews keep why under each review.
+- **The walk** (`app/capture.mjs`), eight lives, nine sizes, emulated:
+  - **After, on `208dbf1f`:** 1,912 steps, none failing a measure, no page error.
+  - **Before:** `ebac1923` measured again with the same script, 63 screen-and-size pairs failing.
+  - **Keyboard, 200% zoom and a changing height** (`app/keyboard.mjs`): every check holds.
+  - **No physical phone and no screen reader were used.**
+- **Saves:** the schema stays 94, no migration. The sixteen saves the walk and tests open all load, play a day on, and
+  save and load again (`after/save-compat.txt`).
+- **Defects found on the way and fixed:** 15, in the receipt with what holds each.
+- **The gate:** in the receipt.
+- **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). A deployment of
+  brief 22's line accepts this line's saves.
+
+# Earlier: Brief 22, The Three Remaining Career And Genre Issues, Merged, 2026-10-22
+
+**This section was the current status until brief 23.** The owner gave brief 22
 (`docs/verification/briefs-2026-10-16/22-finish-the-three-remaining-career-and-genre-issues.txt`, kept verbatim) after
 brief 21's merge. It was worked on `claude/peaceful-hamilton-59zdbb`, from `46822660` (`main`, #53), pushed and never
 force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not merge or deploy

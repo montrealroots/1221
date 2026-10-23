@@ -65,6 +65,8 @@ exactly this, not built as a portrait game.
   - back on its side, the game is still paused and says so once;
   - Play goes on from then;
   - an already-paused clock gets no command and no word;
+  - a stop (the clock halted at the first thing that wants the player) open when the phone turns is still there,
+    pending and waiting, when it comes back, with no command and no word (from the after walk's day, 2026-10-23);
   - a second turn says nothing new;
   - the device table above, and the lock asked for once.
 - **Mutations:** each line of the pause and the read was mutated. Every one failed a test but two, which both went: the
