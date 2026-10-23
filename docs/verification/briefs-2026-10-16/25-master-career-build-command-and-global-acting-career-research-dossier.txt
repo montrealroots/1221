@@ -1,0 +1,5042 @@
+SLATE — MASTER CAREER BUILD COMMAND
+
+Treat this as an implementation request. Inspect the actual repository, preserve existing work, then build, integrate, test and fix the career expansion described below.
+
+Do not stop at a plan, placeholder screens, disconnected features or a list of names. Continue through all unblocked authorized work and provide evidence of what functions.
+
+MY VISION
+
+I want a deeply immersive text-based acting career with limitless, extensible options and a persistent history.
+
+Use real agencies, individual agents, shows, films, production companies, broadcasters, streaming platforms, directors, actors, actresses, festivals and awards wherever their identities and relationships can be verified.
+
+Every supported action must read relevant state, produce a logical result, have meaningful downstream consequences and persist correctly. Everything must work cohesively with my existing game.
+
+Nothing should be a decorative placeholder. Informational content should explain genuine underlying state; do not attach arbitrary stat changes to labels just to claim they have effects.
+
+“Limitless” means extensible catalogs, combinations, opportunities and contextual situations without arbitrary content caps. Do not claim infinite content has been implemented.
+
+My quality target is 10/10. Demonstrate quality through functioning gameplay, defined acceptance criteria and test evidence—not an unsupported perfect rating.
+
+WORK EFFICIENTLY
+
+Use one primary coding agent by default. Do not launch multiple agents unless I explicitly request it.
+
+Reuse existing code, tests and verified research. Research specific missing or stale facts rather than repeatedly rebuilding the entire plan.
+
+Keep a durable checklist and checkpoints so this work can survive an interruption.
+
+PART 1 — ESTABLISH THE REAL STARTING POINT
+
+Inspect:
+- Repository instructions.
+- Current branch and exact HEAD.
+- Remote main and available handoff.
+- Uncommitted changes and worktrees.
+- Existing architecture and tests.
+
+Fetch remote history when available without overwriting local work. Preserve user changes. Do not assume previous messages prove that a merge landed.
+
+Audit the existing:
+- Creation suite and player profile.
+- School and graduation.
+- Career foundation.
+- Attributes, interests and genres.
+- Money and banking.
+- Papers.
+- Calendar and Advance.
+- Inbox.
+- Geography and location.
+- Weather, holidays and retained self-care.
+- Tutorials.
+- Saves and migrations.
+- Desktop and mobile UI.
+
+Extend existing systems. Do not create duplicate clocks, banks, player records or parallel career engines.
+
+Preserve valid early-graduation behavior where already established. School attendance, graduation and permission to work are separate constraints.
+
+Do not block all professional interactions until graduation. Do not assume every student can legally accept every paid engagement.
+
+Do not restore removed housing, vehicle ownership, general shopping, unrelated occupations or parental leave.
+
+Career travel and temporary accommodation are in scope where required for work.
+
+Preserve established desktop and landscape-mobile navigation, title-case rules and alignment. Do not reintroduce redundant navigation sections.
+
+PART 2 — BUILD A COVERAGE REGISTER
+
+Create a durable register with one row per feature, rule and supported data family.
+
+Each row must include:
+- Requirement ID.
+- Description.
+- Source and edition.
+- Applicability.
+- Implementation location.
+- Player entry point.
+- State read.
+- State written.
+- Downstream consumers.
+- Save behavior.
+- Tests.
+- Current status.
+- Specific blocker, if any.
+
+Track these separately:
+- Source located.
+- Source verified.
+- Rule extracted.
+- Implemented.
+- Tested.
+- Externally blocked.
+
+Do not improve completion percentages by deleting failed requirements, weakening acceptance criteria or relabeling unfinished work as irrelevant.
+
+PART 3 — REAL-WORLD BASELINE AND SIMULATED HISTORY
+
+Maintain four distinct kinds of information:
+1. Verified real-world reference facts.
+2. Proposed game-design assumptions.
+3. Events simulated within this save.
+4. Unknown or unavailable information.
+
+Store field-level provenance:
+- Source URL.
+- Publication date when available.
+- Retrieval date.
+- Effective date or edition.
+- Territory.
+- Verification status.
+
+Recheck facts that may have changed since the research baseline of 23 October 2026.
+
+A real show is not evidence that it is currently casting.
+
+A fictional offer from a real director is a game event, not an actual public announcement.
+
+Do not invent confidential salaries, private contracts, private ballots, internal retention, private casting briefs or current representation relationships.
+
+Keep the factual baseline separate from save-world history. Data updates must not erase accepted contracts, completed work, money, credits or awards.
+
+Do not insert the player into completed filming as though it were a current vacancy.
+
+Preserve attached real cast unless a clearly identified alternate-history mode explicitly allows replacement.
+
+For missing creative details, use labeled simulation assumptions. For unsupported material rules, record the gap rather than presenting a guess as verified fact.
+
+PART 4 — AGENCIES AND INDIVIDUAL AGENTS
+
+Build agency records and individual-person records separately.
+
+Each supported agent needs:
+- Real name.
+- Agency.
+- Professional role.
+- Department.
+- Office or territory.
+- Sourced specialties where available.
+- Submission route.
+- Verified professional relationships where available.
+- Last verification date.
+
+Start from existing content and verified sources for:
+CAA.
+WME.
+UTA.
+Stewart Talent.
+Curtis Brown UK.
+United Agents.
+
+Do not claim an objective “top ten” ranking without a defined, sourced metric.
+
+Develop agents individually with useful interactions. Do not present an agency logo as a complete representation engine.
+
+Representation journey:
+Discover an appropriate agent.
+Inspect the profile.
+Prepare truthful materials.
+Submit through an appropriate simulated route or receive a referral.
+Wait for a response.
+Attend a meeting if invited.
+Review a representation offer.
+Negotiate, accept or decline.
+Maintain the relationship.
+Renew or terminate under the agreement.
+
+Differentiate:
+School showcase interest.
+Professional referrals.
+Direct inquiries.
+Unsolicited submissions.
+Existing relationships.
+
+Track:
+Headshots.
+CV and credits.
+Showreels.
+Relevant skills.
+Application status.
+Follow-up timing.
+Territory.
+Exclusivity.
+Commission applicability.
+Relationship history.
+
+Do not apply print-department submission rules to theatrical representation.
+
+Do not fabricate private preferences or roster capacity for a real agent.
+
+Do not make representation an arbitrary purchase. Prevent duplicate commissions and incompatible representation agreements.
+
+All agency messages and applications remain simulated inside the game. Do not contact real people or submit anything externally.
+
+PART 5 — REAL INDUSTRY CATALOG
+
+Separate:
+Production company.
+Studio.
+Distributor.
+Broadcaster.
+Streaming platform.
+Project.
+Season.
+Episode.
+Role.
+Character.
+Performer.
+Director.
+Showrunner.
+Casting director.
+Representative.
+
+Do not confuse ownership, production and distribution.
+
+Create a transparent major-company coverage inventory. Research each company’s official current slate within a recorded date range.
+
+Report:
+Catalog pages inspected.
+Titles discovered.
+Titles imported.
+Duplicates removed.
+Unresolved records.
+Unverified fields.
+
+Do not claim “all current productions” based on a handful of examples.
+
+Include real reference records for:
+9-1-1.
+Slow Horses.
+Severance.
+Abbott Elementary.
+Relevant officially announced film slates.
+
+Each production needs applicable:
+- Stable ID.
+- Real title.
+- Format.
+- Genres and subgenres.
+- Languages.
+- Companies and their roles.
+- Current status.
+- Season and episode structure.
+- Planned and actual runtime.
+- Territory-specific classification.
+- Cast and character relationships.
+- Directors scoped to production or episode.
+- Filming locations.
+- Schedule.
+- Release windows.
+- Provenance.
+
+Do not infer filming location from story setting.
+
+A general series cast page does not prove that everyone appears in every season or episode.
+
+An announced film does not prove that a role is available.
+
+Use real baseline records to generate explicitly simulated additional roles, future opportunities and career situations without misrepresenting them as actual casting notices.
+
+PART 6 — BELIEVABLE CASTING AND MATCHING
+
+Separate:
+Opportunity access.
+Role suitability.
+Audition execution.
+Booking decision.
+
+Check:
+Project casting state.
+Role need.
+Availability.
+Essential capabilities.
+Work eligibility.
+Relevant attributes.
+Genre proficiency.
+Preparation.
+Evidence.
+Language or dialect needs.
+Appropriate character requirements.
+Professional history.
+
+Give beginners viable routes to first credits. Do not require existing professional credits for every entry-level role.
+
+Direct offers from prominent directors are possible earned routes, not the default for every beginner.
+
+Ordinary opportunities can involve:
+Representative submission.
+Self-tape.
+Audition.
+Callback.
+Chemistry read.
+Screen test.
+Creative approval.
+Offer.
+Negotiation.
+
+Use these stages only where appropriate.
+
+For mixed genres, derive scene-specific demands. Do not average every genre tag equally.
+
+Maxed relevant skills should produce consistently strong controllable execution under comparable conditions. They must not guarantee every role, profitable production or award.
+
+Do not count the same attribute bonus repeatedly across audition, filming and reception as multiple boosts to the same result.
+
+Explain outcomes naturally:
+Scheduling conflict.
+Missing materials.
+Strong fit.
+Callback requested.
+Paperwork unresolved.
+Another candidate selected.
+
+A suitability score is not a booking probability unless calibrated as one.
+
+Persist decisions and competition. Opening a screen or reloading must not reroll the outcome.
+
+PART 7 — CONTRACTS AND PAYMENTS
+
+Implement:
+Inquiry.
+Audition.
+Callback or test where applicable.
+Offer.
+Negotiation.
+Agreement.
+Onboarding.
+Preparation.
+Services.
+Completion.
+Payment.
+Release and reuse.
+Career consequences.
+
+Contracts must distinguish applicable:
+Role classification.
+Production format.
+Governing agreement.
+Effective date.
+Service dates.
+Location.
+Episode guarantee.
+Expected appearances.
+Daily, weekly or per-episode basis.
+Negotiated compensation.
+Options.
+Exclusivity.
+Billing.
+Publicity obligations.
+Travel.
+Expenses.
+Allowances.
+Overtime.
+Residuals.
+Riders.
+
+Do not apply every clause to every contract.
+
+A contract’s headline value is not cash.
+
+The number of episodes ordered is not automatically the player’s guaranteed paid appearances.
+
+Track:
+Estimated compensation.
+Earned compensation.
+Payment due.
+Actual settlement.
+Overdue amounts.
+Disputes.
+Reimbursements.
+Commission.
+Employer contributions.
+Withholding.
+Residuals.
+Negotiated participation.
+
+Employer contributions must not silently become personal deductions.
+
+Use decimal or integer-minor-unit money, explicit rounding, currency and applicable conversion dates.
+
+Retried events, imported records or notifications must never deposit twice.
+
+Residuals need separate entitlement, exploitation, calculation and settlement records.
+
+Box-office gross is not actor income. A weekly chart update is not a payday.
+
+Do not invent confidential participation terms as facts.
+
+PART 8 — DISTINCT PRODUCTION WORKFLOWS
+
+Support distinct workflows for:
+Live-action feature films.
+Independent and studio productions.
+Procedural television.
+Serialized drama.
+Serialized comedy.
+Limited series.
+Anthologies.
+Television movies.
+Single-camera comedy.
+Multicamera comedy.
+Animated films.
+Animated series.
+Dubbing and localization.
+Performance capture.
+Documentary narration.
+Documentary reenactments.
+Musical work.
+Action-heavy work.
+Short films.
+Student-to-professional transition work.
+
+Do not create different labels over an identical generic activity.
+
+Each enabled workflow needs:
+Real entry points.
+Preparation.
+Work units.
+Player decisions.
+Feedback.
+Completion conditions.
+Consequences.
+
+Use original scenes and exercises rather than copying complete copyrighted scripts.
+
+Applicable activities include:
+Character objectives.
+Listening and reaction.
+Timing.
+Blocking.
+Continuity.
+Direction changes.
+Takes.
+Recording sessions.
+Vocal preparation.
+Pickups.
+ADR.
+Choreography.
+Specialist preparation.
+
+Track scene and script versions, episode IDs, preparation, work reports, fatigue and performance evidence.
+
+Filming order can differ from release order.
+
+Distinguish stamina, general health and vocal condition where supported without creating cosmetic duplicate stats.
+
+Safety, accommodations and agreed boundaries must affect the workflow. Do not make accepting intimate content a universal requirement for career success.
+
+PART 9 — WORLDWIDE WORK, MONEY AND PAPERS
+
+Australia is an example, not the world boundary.
+
+Use extensible country and regional packages sharing one geography and travel system.
+
+For each enabled jurisdiction, verify applicable:
+Nationality and immigration status.
+Work permission.
+Sponsor conditions.
+Permit restrictions.
+Employer and location.
+Local time.
+Agreement applicability.
+Working conditions.
+Withholding.
+Required documents.
+
+Maintain a country coverage matrix.
+
+Research entry points exist for the US, UK, Australia, Canada, New Zealand, France, Japan and India. A source link is not a finished country engine.
+
+Do not silently apply US rules worldwide.
+
+Travel must consume real elapsed time and account for:
+Time zones.
+Arrival location.
+Local dates.
+Rest.
+Work readiness.
+Existing commitments.
+Temporary accommodation.
+
+Connect:
+Documents to Papers.
+Income and expenses to Money.
+Conflicts to school and calendar.
+Readiness to existing condition systems.
+Experience and exposure to profile and career.
+
+Withholding is not final tax liability. Do not calculate worldwide taxation with one generic percentage.
+
+Do not invent cancellation fees, compensation clawbacks or termination rights. Apply the actual supported agreement.
+
+PART 10 — WEEKLY BOX OFFICE AND STREAMING
+
+Keep separate:
+Domestic box office.
+Individual-country or grouped-territory box office.
+Supported worldwide aggregates.
+Netflix views.
+Netflix viewing hours.
+Nielsen viewing minutes.
+Rank-only platform charts.
+Linear television measurements where supported.
+
+Never combine incompatible units, overlapping territories or mismatched reporting periods.
+
+Every snapshot needs:
+Source.
+Measured interval.
+Publication date.
+Import date.
+Territory.
+Metric.
+Unit.
+Rank.
+Value or explicit unknown.
+Actual/estimate/simulation status.
+Revision.
+Stable title mapping.
+
+Implement three input modes:
+1. Authorized provider integration where available.
+2. Dated imported reference data.
+3. Clearly labeled save-world simulation.
+
+Do not purchase data services without separate authorization.
+
+Public access does not establish unrestricted automated reuse.
+
+Separate real-reference charts from save-world charts. When the player changes a production, generated results must not be presented as published facts.
+
+Display the measured week.
+
+Handle:
+Stale reports.
+Unavailable figures.
+Rank-only data.
+Partial reports.
+Corrections.
+Provider outages.
+Revised snapshots.
+Duplicate imports.
+
+Unknown is not zero. Outside the top ten does not automatically mean rank eleven.
+
+Do not infer private retention or completion rates from public rankings.
+
+Outside productions currently provide rankings and market context. Do not build complete autonomous careers for every celebrity.
+
+PART 11 — FESTIVALS AND AWARDS
+
+Implement:
+Institution.
+Edition.
+Section or category.
+Eligibility.
+Submission.
+Consideration.
+Selection or nomination.
+Voting or jury process.
+Result.
+Recognition.
+
+Create a named coverage inventory for:
+Oscars.
+Television Academy Emmys.
+Relevant NATAS competitions.
+International Emmys.
+BAFTA.
+Actor Awards.
+Golden Globes.
+Spirit Awards.
+Critics Choice.
+Gotham.
+AACTA.
+César.
+Goya.
+Annie Awards.
+
+Festival inventory:
+Cannes.
+Venice.
+Berlin.
+Sundance.
+TIFF.
+Annecy.
+IDFA.
+Busan.
+
+Expand as verified coverage grows.
+
+Extract applicable edition/category rules before enabling authoritative eligibility decisions.
+
+Do not treat all Emmy organizations as one competition or all festival sections as one rulebook.
+
+Store:
+Recipient rules.
+Role restrictions.
+Runtime thresholds.
+Territory.
+Qualifying release windows.
+Premiere restrictions.
+Submission authority.
+Deadlines and time zones.
+Voting rounds.
+Nominee counts.
+Tie rules.
+Ceremony dates.
+Source references.
+
+Track submission, selection, acceptance and exhibition separately.
+
+Prior selection itself may affect eligibility under some festival rules. Do not assume only public screening matters.
+
+The player cannot unilaterally submit or distribute a whole production without the relevant authority.
+
+Use published annual calendars. Do not reuse a previous year’s date as verified current information.
+
+Unpublished future rules must be unknown or explicitly projected simulation rules.
+
+Do not nominate old work years later unless the actual rule permits it.
+
+PART 12 — ANONYMOUS AWARD COMPETITION
+
+Maintain a functioning anonymous competitive field with stable IDs, simulated strength and exposure.
+
+Follow published voting structures without claiming knowledge of real private ballots.
+
+Outside nominees and winners remain unnamed.
+
+Player states must distinguish:
+Ineligible.
+Eligible.
+Not entered.
+Entered.
+Not nominated.
+Nominated.
+Did not win.
+Won.
+Disqualified.
+
+If I lose, the UI can simply say I did not win. Preserve my nomination.
+
+If I win, permanently record:
+Award.
+Category.
+Edition.
+Work.
+Performance.
+Eligible recipient status.
+
+Being in a Best Picture-winning film does not automatically make me a personal Best Picture recipient.
+
+Apply actual ensemble-recipient conditions.
+
+Attendance does not guarantee victory. Do not invent cash prizes.
+
+Provide an interactive ceremony and an optional concise recap of the same settled result.
+
+Reloading or changing presentation mode must not change who won.
+
+Awards can influence visibility and future access without automatically rewriting contracts, depositing money or guaranteeing another award.
+
+PART 13 — CONTINUITY AND FRESHNESS
+
+Persist:
+Applications.
+Auditions.
+Negotiations.
+Contracts.
+Roles.
+Collaborators.
+Scenes.
+Footage.
+Credits.
+Earnings.
+Reception.
+Nominations.
+Awards.
+Professional relationships.
+
+Separate show renewal from renewal of my engagement.
+
+Implement:
+Options.
+Expiration.
+New offers.
+Schedule conflicts.
+Renegotiation.
+Character exits.
+Reduced episode orders.
+Cancellation.
+Production suspension.
+Delayed release.
+Edited-out performances.
+Later revival.
+
+Preserve valid completed work and earned compensation.
+
+A revival creates new engagement and eligibility records while retaining earlier history.
+
+New situations should follow from history, changing demands and world state—not merely shuffled text.
+
+Track recent event signatures and dialogue context to reduce unnecessary repetition.
+
+Real recurring activities may recur. Identical consequence-free loops should not.
+
+Do not make every rejection punitive, every success an instant promotion or every week a manufactured crisis.
+
+PART 14 — ONE CONSISTENT TIME LOOP
+
+Use timestamps and dependencies rather than panel-render order.
+
+Resolve:
+Contract deadlines and responses.
+Calendar obligations.
+Travel and work.
+Earned compensation.
+Due settlements.
+Actual releases.
+Available chart reports or simulated results.
+Exposure and reception.
+Project decisions.
+New opportunities.
+Festival and award events.
+Save and recap.
+
+Important messages must arrive with meaningful response windows.
+
+If Advance crosses an actionable deadline, pause beforehand or apply an explicitly configured player response policy.
+
+Never accept a binding offer automatically merely to keep time moving.
+
+Weekly reporting is a presentation interval. Do not force every renewal, payment and award event onto the same weekly tick.
+
+PART 15 — NATURAL TEXT, NAVIGATION AND TUTORIALS
+
+Use natural game language.
+
+Tell me:
+What happened.
+What I can do.
+What deadline applies.
+What consequence matters.
+
+Keep developer jargon and formula dumps out of ordinary screens.
+
+Provide connected drill-downs:
+Project → Role → Offer → Contract → Calendar → Work → Pay → Release → Recognition.
+
+Preserve back navigation, filters and scroll context.
+
+Tutorials must explain actual implemented behavior and connections.
+
+“Why can’t I accept?” must identify the real blocker and link to the relevant schedule, document or requirement.
+
+Preserve desktop and landscape-mobile layout. Fix overflow, alignment, touch targets and help-control placement.
+
+Do not reintroduce redundant sidebar destinations.
+
+PART 16 — REQUIRED TESTING
+
+Write measurable acceptance criteria before tuning.
+
+If the longer research dossier is available, map T01–T100 to executable tests. If unavailable, reconstruct the scenario inventory from this command and explicitly report that the original dossier was not available.
+
+Required test layers:
+Unit tests.
+Cross-engine integration tests.
+Real UI action tests.
+Save migration and reload.
+Event replay and idempotency.
+Data-adapter failures and corrections.
+Regression tests preserving existing systems.
+
+Run multiple complete playthroughs covering:
+Newcomer.
+Experienced performer.
+Relevant maxed skills.
+Mixed genres.
+Low funds.
+Rejected audition.
+Direct offer.
+International work.
+Scheduling conflict.
+Animation.
+Narration.
+Returning season.
+Cancellation.
+Delayed release.
+Nomination loss.
+Personal award win.
+Eligible ensemble recognition.
+
+Use at least 100 reproducible lightweight simulation seeds for balance where feasible. This is not a requirement for 100 expensive browser runs.
+
+Use fixed seed lists, paired comparisons and separate calibration/verification sets.
+
+Verify:
+Relevant skill improves controllable execution under matched conditions.
+Irrelevant skill does not dominate.
+Beginners have viable entry routes.
+High skill does not guarantee unrelated outcomes.
+Genre effects are not duplicated.
+Money and time remain consistent.
+Events and history survive reload.
+No duplicate payments.
+No impossible simultaneous locations.
+No invalid award-year assignment.
+No retroactive current casting into completed production.
+No unsupported permissions silently granted.
+
+Report distributions and failures, not only successful examples.
+
+Trace representative features:
+UI → validated command → state/event → downstream consumer → visible result → save/reload.
+
+Fix discovered defects. Rerun affected checks, then run the required final repository gate on the final intended commit.
+
+Do not call pending tests passed.
+
+PART 17 — RESEARCH SOURCES TO START FROM
+
+Use these primary sources and inspect their current applicable versions.
+
+AGENCIES
+
+https://www.unitedagents.co.uk/agents/
+https://www.unitedagents.co.uk/agent/lindy-king/
+https://www.unitedagents.co.uk/submission-guidelines/
+https://print.stewarttalent.com/about
+https://print.stewarttalent.com/submissions
+https://www.curtisbrown.co.uk/page/actors-becoming-a-client
+https://www.caa.com/entertainmenttalent/motion-pictures
+https://www.unitedtalent.com/talent
+https://www.wmeagency.com/expertise/acting-talent/
+
+PRODUCTIONS
+
+https://www.detpress.com/abc/shows/9-1-1/
+https://www.apple.com/tv-pr/originals/slow-horses/
+https://www.apple.com/tv-pr/originals/severance/cast-crew/
+https://www.detpress.com/abc/shows/abbott-elementary/
+https://www.aboutamazon.com/news/entertainment/amazon-mgm-studios-films
+https://www.aboutamazon.com/news/entertainment/i-play-rocky-trailer-cast-release-date-amazon-mgm-studios
+
+WORK ELIGIBILITY
+
+https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-activity-408/entertainment-activities
+https://www.gov.uk/creative-worker-visa
+https://www.gov.uk/creative-worker-visa/eligibility
+https://immigration.govt.nz/visas/entertainers-work-visa
+https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement
+https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/employer-specific.html
+https://france-visas.gouv.fr/en/talents-internationaux-et-attractivite-economique
+https://www.france-visas.gouv.fr/en/activite-salariee
+https://www.mofa.go.jp/j_info/visit/visa/long/visa3.html
+https://indiacinehub.gov.in/applying-for-film-visa
+https://www.mea.gov.in/documentary-filming-in-india
+https://oiss.yale.edu/employment-taxes/employment-for-international-students/employment-for-f-1-students
+
+AGREEMENTS
+
+https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts
+https://www.sagaftra.org/industry-resources/rates-agreements/standard-television
+https://www.sagaftra.org/sites/default/files/2026-05/2026%20Theatrical-Television%20MOA.pdf
+https://www.sagaftra.org/sites/default/files/2026-06/Current%20Low%20Budget%20Agreement%20%28LBA%29%20Rate%20Sheet.pdf
+https://www.actra.ca/agreements/ipa/
+https://www.equity.org.uk/advice-and-support/rates-and-agreements
+https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html
+https://www.meaa.org/resources/
+
+RANKINGS AND DATA ACCESS
+
+https://www.boxofficemojo.com/weekly/
+https://help.imdb.com/article/imdbpro/industry-research/box-office-mojo-by-imdbpro-faq/GCWTV4MQKGWRAUAP
+https://www.netflix.com/tudum/top10
+https://www.netflix.com/tudum/top10/tv
+https://www.nielsen.com/data-center/top-ten/
+
+AWARDS AND FESTIVALS
+
+https://www.oscars.org/oscars/rules-eligibility
+https://www.oscars.org/99th-oscars-and-academy-key-dates
+https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf
+https://www.televisionacademy.com/downloads
+https://theemmys.tv/rules/
+https://www.iemmys.tv/entries-judging/judging-process/
+https://www.bafta.org/awards/awards-information/film/
+https://www.bafta.org/awards/film-rules/
+https://www.festival-cannes.com/en/take-part/submit-a-film/
+https://www.labiennale.org/en/cinema/2026/regulations
+https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html
+https://www.sundance.org/festivals/sundance-film-festival/submit/
+https://tiff.net/submissions
+https://www.annecyfestival.com/en/take-part/submit-film
+https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/
+https://www.biff.kr/
+
+These are starting sources, not a claim that every page has been fully extracted or every listed system is implemented.
+
+PART 18 — COMPLETION AND PROOF
+
+Continue through all unblocked authorized requirements. Do not stop after planning, stubs, a catalog dump or the first green test.
+
+Maintain resumable checkpoints containing:
+Completed requirement IDs.
+Remaining work.
+Branch and commit.
+Test commands and results.
+Blockers.
+Next concrete action.
+
+If a genuine external blocker remains, identify:
+What is unavailable.
+What was attempted.
+Which functionality it affects.
+What honest fallback exists.
+
+Continue independent work. Do not fabricate success or repeat the same blocked operation indefinitely.
+
+Deliver:
+1. Exact tested commit and branch.
+2. Reviewable changes.
+3. Updated coverage register.
+4. Source and effective-date registry.
+5. Catalog counts and factual-completeness status.
+6. Test commands and pass/fail/skipped counts.
+7. Seeds, logs and balance results.
+8. Representative playthrough evidence.
+9. Save compatibility and migration evidence.
+10. Known defects and external blockers.
+11. A plain-language explanation of the functioning career loop.
+
+Target 100% completion of the explicitly supported acceptance scope.
+
+Do not claim every worldwide fact is researched, every future event is known or every possible bug is eliminated.
+
+A defensible completion report states exactly what is implemented and tested, what passed and what remains blocked.
+
+Begin now: audit the actual repository, create the coverage register and implement the first missing connected slice.
+
+SLATE — GLOBAL ACTING CAREER RESEARCH & IMPLEMENTATION DOSSIER
+
+RESEARCH PART 1 — SECTIONS 1–6
+
+Research cut-off: 23 October 2026, America/Chicago.
+Purpose: a source-backed development handoff for Claude Code.
+Status: research and proposed design; no game code changed or gameplay tests executed in this research task.
+
+IMPORTANT READING INSTRUCTION
+
+This dossier contains later revisions. Sections 27–29 take precedence wherever they conflict with earlier material. Do not implement conflicting source claims without resolving their dates, editions and applicability.
+
+1. READ THIS FIRST
+
+The goal is a text simulation where an acting career takes place in a persistent, geographically coherent world. Accepting a shoot in Australia must eventually put the player at the actual production location, with elapsed travel time, local dates, valid work eligibility, scheduled obligations, accommodation, payment obligations, and consequences carried forward.
+
+This dossier contains 110 selected source records, researched findings, implementation requirements, a coverage matrix, 100 acceptance scenarios, and an efficient handoff brief. Section 27 adds the latest role-matching, weekly-ranking and anonymous-awards requirements. Sources are primarily government departments, unions, awards institutions, festivals, studios, and broadcasters. Some complete rulebooks are linked but have only been inspected in relevant excerpts. They are not all fully transcribed or validated clause by clause.
+
+This is not a certification of 100% worldwide legal or industry accuracy. A source found today may describe an older season, an earlier agreement, or last year's competition. Private negotiations, private ballots, future casting, and unpublished audience data cannot be recovered as public facts. Unsupported rules and values must remain explicit gaps. That is a necessary part of accuracy, not permission to fill them with invented facts.
+
+Use three distinct kinds of content:
+
+- Verified fact: a dated, scoped statement backed by the cited source.
+- Proposed simulation behavior: the way SLATE should model an activity or consequence.
+- Unresolved rule: required research or interpretation that is not yet sufficiently established.
+
+All uncited implementation behavior below is a design proposal, not a statement of universal industry law.
+
+SCOPE DECISION CARRIED INTO THIS PACKAGE
+
+Retain the creation suite, school, attributes/genres, money/banking, papers, calendar/Advance, weather, and self-care. Add career-related travel, temporary accommodation, transfers, and location presence because overseas work requires them.
+
+This is not authorization to restore the removed vehicle ownership, housing construction, general shopping, or unrelated personal-life engines. Parental leave remains excluded as previously requested.
+
+Use the existing authoritative clock, bank ledger, eligibility state, character identity, and save system where the repository provides them. Claude must inspect the actual current main branch before choosing integration points. This report does not claim knowledge of changes merged during this research session.
+
+2. WHAT THE RESEARCH CHANGES
+
+AUSTRALIA
+
+Finding:
+Australia publishes a Temporary Activity subclass 408 entertainment route. [S01]
+
+Consequence:
+A foreign performer's permission is a real prerequisite branch, not a decorative passport icon. Exact sponsor/support and applicant conditions still need full extraction.
+
+UK AND NEW ZEALAND
+
+Finding:
+The UK publishes a Creative Worker route; New Zealand has an Entertainers Work Visa and employer-support requirements. [S02] [S03] [S04]
+
+Consequence:
+Different destinations need different document workflows. Never apply one universal actor visa.
+
+CANADIAN AGREEMENTS
+
+Finding:
+ACTRA's IPA excludes British Columbia, which has a separate agreement. [S15]
+
+Consequence:
+Country alone is insufficient to select a labor agreement.
+
+US AGREEMENTS
+
+Finding:
+SAG-AFTRA has ratified 2026 TV/Theatrical agreement resources. [S20] [S21]
+
+Consequence:
+A 2023-only US contract model is not a current default. Keep historical versions for older engagements. Verify the applicable effective dates from the agreement rather than substituting an announcement date.
+
+UK AGREEMENTS
+
+Finding:
+Pact provides separate cinema and television resources and dated rates. [S17] [S18]
+
+Consequence:
+Select the correct agreement, classification, and effective period before calculating pay.
+
+SUNDANCE LOCATION
+
+Finding:
+Sundance announced its 2027 edition for Boulder, Colorado, 21–31 January. [S71]
+
+Consequence:
+Festival city and venue belong to the edition, not a permanent festival record.
+
+SUNDANCE ELIGIBILITY
+
+Finding:
+Sundance short-film and feature eligibility do not share one premiere rule. [S69] [S70]
+
+Consequence:
+Classify format first, then evaluate that section's actual criteria.
+
+OSCARS
+
+Finding:
+The 99th Oscar rules changed acting and International Feature submission provisions. [S43]
+
+Consequence:
+Never reuse an old awards algorithm merely because the ceremony name is unchanged.
+
+AUDIENCE REPORTING
+
+Finding:
+Nielsen published changes to streaming-data delivery in September 2026. [S38]
+
+Consequence:
+Store publication date separately from viewing period. Verify public-chart timing separately from client-product delivery. Never invent instant chart results.
+
+SOURCE FRESHNESS
+
+Finding:
+An official Hulu page retrieved during the research still describes season two of The Bear. [S87]
+
+Consequence:
+“Retrieved today” does not mean “current season.” Store what the source actually covers.
+
+3. ONE WORLD, SEVERAL DISTINCT LOCATIONS
+
+Every engagement needs separate fields for:
+
+1. Story setting: where the fictional narrative occurs.
+2. Production base: where the production operates.
+3. Physical work location: where this specific session happens.
+4. Player physical location: where the performer currently is.
+5. Employer jurisdiction and applicable contract.
+6. Release territories and platforms.
+7. Festival or ceremony location for the specific edition.
+
+A story set in Dallas can film elsewhere.
+
+A remote voice session does not move the player to the studio's headquarters.
+
+A US-commissioned production filming in Australia is not automatically governed by only Australian terms or only US terms. Resolve applicable agreements, local requirements, and the individual's status together.
+
+GLOBAL MAP REQUIREMENTS
+
+Each usable place needs:
+
+- Stable identifier.
+- Real name.
+- Country.
+- Relevant subdivision.
+- Coordinates where supported.
+- IANA time zone.
+- Currency context.
+- Links to researched jurisdiction rules.
+
+The IANA database supplies historical local-time rules; store the database version used by a save. [S33]
+
+Represent transit as a real state.
+
+A player cannot be simultaneously at a Sydney call and an in-person New Haven assessment.
+
+Model airport transfers and local travel as well as the flight.
+
+Travel availability must be checked at both booking and departure.
+
+Use separate time concepts:
+
+- UTC instants for event ordering.
+- Local date/time and zone for calls, departures, deadlines, and player display.
+- Duration for elapsed travel, rehearsal, and work.
+- Date-only obligations where appropriate.
+- Source-defined deadline zone, never silently the player's current zone.
+
+Do not permanently hard-code Sydney's offset.
+
+Handle daylight-saving changes, repeated local times, skipped local times, and crossing the date line.
+
+WEATHER THAT ACTUALLY AFFECTS WORK
+
+Use local and seasonal conditions.
+
+BOM provides historical observations and climate resources for Australia. Historical observations, forecasts, and simulated future weather are different data types. [S34] [S35]
+
+Proposed effects:
+
+- Outdoor scene feasibility.
+- Available daylight.
+- Transport delays.
+- Location access.
+- Safety assessment.
+- Changed call sheets.
+- Overtime implications.
+- Recovery.
+- Rescheduling.
+
+Indoor scenes should not receive the same automatic rain penalty as outdoor scenes.
+
+Weather should not be a random universal disaster generator.
+
+4. TERRITORY RESEARCH MATRIX
+
+The following are research entry points and verified distinctions, not complete jurisdiction implementations.
+
+UNITED STATES
+
+Research established:
+USCIS distinguishes O-1 categories and motion-picture/TV evidence; Yale publishes F-1 employment guidance; SAG-AFTRA has current TV/Theatrical resources. [S05] [S06] [S31] [S21]
+
+Required implementation work:
+Citizenship, residence and work-status branches.
+Student permissions.
+Correct agreement.
+Location-specific labor rules.
+Taxes.
+Expiry and re-entry.
+Casting versus paid-work distinction.
+
+UNITED KINGDOM
+
+Research established:
+Creative Worker route.
+Pact/Equity agreement resources.
+HMRC foreign-entertainer guidance. [S02] [S17] [S29]
+
+Required implementation work:
+Sponsorship and concession applicability.
+Immigration permission.
+Correct engagement class.
+Payroll.
+Local work and publicity days.
+Return obligations.
+
+AUSTRALIA
+
+Research established:
+408 entertainment route.
+MEAA AFFCA/ATPA resources.
+Screen NSW permits.
+Screen-safety guidance.
+ATO foreign-resident withholding sources. [S01] [S13] [S26] [S25] [S28]
+
+Required implementation work:
+Applicant conditions.
+Producer support.
+Agreement applicability.
+State and local rules.
+Rates.
+Tax treatment.
+Transport and accommodation obligations.
+
+CANADA
+
+Research established:
+Government says most foreign nationals need permission.
+ACTRA distinguishes IPA from BC agreements. [S07] [S15] [S16]
+
+Required implementation work:
+The specific film-worker immigration route is not fully verified here.
+Do not implement C14 eligibility from secondary summaries.
+Resolve province, union, payroll and permit type.
+
+NEW ZEALAND
+
+Research established:
+Entertainers Work Visa and employer-support process located. [S03] [S04]
+
+Required implementation work:
+Individual eligibility.
+Employer accreditation or industry consultation where applicable.
+Engagement conditions.
+Local payroll and safety.
+
+FRANCE
+
+Research established:
+France-Visas describes artistic/cultural talent routes and limited-duration audiovisual employment exceptions to prior work authorization. [S08] [S09]
+
+Required implementation work:
+Evaluate contract length, nationality, employment arrangement, visa needs and exact exemption conditions.
+
+Work-authorization exemption is not universal visa exemption.
+
+JAPAN
+
+Research established:
+Ministry of Foreign Affairs publishes a working Entertainer visa route. [S10]
+
+Required implementation work:
+Status requirements.
+Supporting documents.
+Contract and employer specifics.
+Local payroll and work conditions.
+
+INDIA
+
+Research established:
+India Cine Hub describes Film Visa applications after shooting permission.
+MEA separately describes documentary filming. [S11] [S12]
+
+Required implementation work:
+Distinguish fiction from documentary or journalistic work.
+Verify applicant, shoot approvals and applicable entry route.
+
+ALL OTHER DESTINATIONS
+
+No complete jurisdiction package was established in this research pass.
+
+Research and validate individually. Do not inherit US rules or label a generic model legally exact.
+
+Build a destination registry capable of representing the whole map.
+
+Give every jurisdiction an explicit research state:
+
+- Verified for this activity.
+- Partially researched.
+- Unsupported.
+- Approved fictional approximation.
+
+The default should not silently treat missing rules as permission.
+
+For unsupported combinations, allow planning and show what needs to be established.
+
+Do not expose a “realism complete” claim or silently generate a legal right to work.
+
+A later approximation mode can be offered distinctly if the user wants unrestricted fictional access.
+
+5. SCHOOL-TO-CAREER CONTINUITY
+
+Read school status, actual degree requirements, existing permissions, deadlines and availability.
+
+Early graduation must derive from the school model; it must not be granted by the career engine.
+
+Yale's public OISS materials distinguish CPT and OPT and describe limitations on when CPT is processed. School enrollment or graduation alone is not proof of unrestricted work permission. [S31] [S32]
+
+Proposed readiness screen:
+
+- What work the player is ready for artistically.
+- What work they are permitted to perform.
+- What dates they can commit to.
+- Which materials are missing or outdated.
+- Which obligations would conflict.
+- What a practical next step would be.
+
+Never conflate academic graduation, artistic competence, union membership and immigration status.
+
+6. REPRESENTATION AND PROFESSIONAL MATERIALS
+
+CAA, UTA and WME publicly describe talent representation.
+
+That confirms the agencies' functions, not any unverified agent-client relationship, vacancy, acceptance policy or private commission agreement. [S89] [S90] [S91]
+
+Develop one individual representative deeply before multiplying shallow agent screens.
+
+For each agent, support:
+
+- Verified professional identity and office where public.
+- Representation scope.
+- Current agreement.
+- Player goals.
+- Submissions.
+- Existing correspondence.
+- Availability.
+- Relationship history.
+- Negotiated commission rules.
+- Reasons for advice.
+
+Do not invent a real person's private client roster or claim they have actually contacted the player.
+
+Simulated correspondence belongs to the save's fictional career.
+
+PROFESSIONAL MATERIALS
+
+Maintain versioned:
+
+Résumé.
+Headshots.
+Reel.
+Scene samples.
+Voice samples.
+Language and accent evidence.
+Skills.
+Boundaries.
+Credits.
+Training.
+Contact routing.
+Available dates.
+
+A submitted audition must retain the material version actually sent.
+
+COMMISSION
+
+Commission must have a defined base.
+
+SAG-AFTRA publishes locality-specific agency guidance; that is evidence against applying an unexamined global deduction to every type of income. [S24]
+
+Agent, manager, lawyer, publicist and accountant should have distinct responsibilities.
+
+Do not require a new actor to retain all of them at once.
+
+END OF RESEARCH PART 1.
+The dossier continues with Section 7: Real Entity and Production Catalog.
+Do not treat this part alone as the complete research package.
+
+SLATE — GLOBAL ACTING CAREER RESEARCH DOSSIER
+
+SECTIONS 7–14
+
+Research baseline: 23 October 2026.
+
+This document distinguishes:
+- Researched facts.
+- Proposed simulation behavior.
+- Unresolved research.
+
+Source IDs refer to the full source register already supplied.
+
+Later revisions in Sections 27–29 take precedence where they correct or supersede earlier material.
+
+7. REAL ENTITY AND PRODUCTION CATALOG
+
+7A. RESEARCH-BACKED STARTER RECORDS
+
+9-1-1
+
+Official ABC and Disney material identifies the production and provides cast and character information, including Angela Bassett, Jennifer Love Hewitt, Oliver Stark, Aisha Hinds, Kenneth Choi and Ryan Guzman. [S80] [S81] [S88]
+
+Official starting source:
+https://www.detpress.com/abc/shows/9-1-1/
+
+Simulation boundary:
+No public casting vacancy was verified. A role offered to the player is a save-generated event unless a specific actual casting announcement is independently sourced.
+
+Verify character names and season-specific appearances against the relevant source. A series-level credit does not establish appearance in every episode.
+
+SLOW HORSES
+
+Apple’s official materials identify cast including Gary Oldman, Jack Lowden and Kristin Scott Thomas. [S78] [S79]
+
+Official starting source:
+https://www.apple.com/tv-pr/originals/slow-horses/
+
+Research conflict:
+Earlier dossier material and a later general production page identify different directing attachments. Resolve the specific season, announcement date and production credit before encoding the relationship.
+
+Do not assign one director or writer to every season.
+
+Simulation boundary:
+Future player casting remains simulated unless specifically sourced.
+
+SEVERANCE
+
+Apple’s official cast and crew page lists Adam Scott, Britt Lower, Patricia Arquette, Tramell Tillman, John Turturro and Christopher Walken. Dan Erickson and Ben Stiller appear in creative credits. [S85]
+
+Official source:
+https://www.apple.com/tv-pr/originals/severance/cast-crew/
+
+Simulation boundary:
+Bind credits to their season and source context. Do not invent a real hiring announcement.
+
+ABBOTT ELEMENTARY
+
+Official materials identify:
+Quinta Brunson — Janine.
+Tyler James Williams — Gregory.
+Sheryl Lee Ralph — Barbara.
+Janelle James — Ava.
+Lisa Ann Walter — Melissa.
+Chris Perfetti — Jacob. [S86] [S109]
+
+Official starting source:
+https://www.detpress.com/abc/shows/abbott-elementary/
+
+Simulation boundary:
+New player roles, offers and future storylines are simulated.
+
+THE BEAR
+
+The retrieved Hulu page supports historical season-two cast and production information, including FX Productions and Christopher Storer. [S87]
+
+Source:
+https://press.hulu.com/shows/the-bear/
+
+Simulation boundary:
+Mark this record historical. It does not verify the complete October 2026 cast or production status.
+
+THE THOMAS CROWN AFFAIR
+
+Amazon’s published slate names Michael B. Jordan as director and star and Adria Arjona as co-star, with a planned 2027 release. [S82]
+
+Simulation boundary:
+An announced release does not establish available roles or a current shoot schedule.
+
+SPACEBALLS: THE NEW ONE
+
+Amazon’s slate identifies returning and new cast and a planned 2027 release. [S82]
+
+Simulation boundary:
+Preserve the announcement date and planned status. Do not guarantee future release or casting access.
+
+OFFICIAL CATALOG ENTRY POINTS
+
+https://www.aboutamazon.com/news/entertainment/amazon-mgm-studios-films
+https://press.amazonmgmstudios.com/
+https://www.universalpictures.com/movies/
+
+Locating a catalog page does not mean every title and attachment has been extracted.
+
+Refresh individual projects before activating date-sensitive opportunities.
+
+7B. EXPANSION ROSTER
+
+These are discovery targets, not already completed records or an objective ranking.
+
+Companies:
+Universal.
+Warner Bros. Pictures.
+Paramount.
+Sony Pictures.
+Disney.
+Amazon MGM.
+A24.
+NEON.
+Searchlight.
+Focus Features.
+Lionsgate.
+Sony Pictures Classics.
+See-Saw.
+Working Title.
+FilmNation.
+Plan B.
+Blumhouse.
+Legendary.
+Bad Robot.
+
+Broadcasters and platforms:
+ABC.
+CBS.
+NBC.
+FOX.
+FX.
+HBO.
+Netflix.
+Apple TV.
+Hulu.
+Prime Video.
+Disney+.
+Peacock.
+Paramount+.
+BBC.
+ITV.
+Channel 4.
+Sky.
+
+Add regional organizations as country packages are researched.
+
+Directors to research individually:
+Christopher Nolan.
+Ryan Coogler.
+Greta Gerwig.
+Denis Villeneuve.
+Steven Spielberg.
+Jordan Peele.
+Chloé Zhao.
+Martin Scorsese.
+Sofia Coppola.
+Bong Joon Ho.
+Guillermo del Toro.
+
+Listing a director does not verify current schedules, employers, projects or availability.
+
+Animation candidates:
+Pixar.
+Walt Disney Animation Studios.
+DreamWorks Animation.
+Illumination.
+Sony Pictures Animation.
+Aardman.
+LAIKA.
+
+Record public identities, credits and professional relationships.
+
+Do not invent private personalities or use stereotypes as casting rules.
+
+A company’s public brand is not necessarily the legal employing entity.
+
+7C. CATALOG DATA REQUIREMENTS
+
+Each factual field needs:
+Entity ID.
+Field name.
+Value.
+Source ID.
+Publication date when known.
+Retrieval date.
+Applicable season or edition.
+Valid-from and valid-to dates when known.
+Verification status.
+Conflict notes.
+
+Each project needs:
+Title.
+Real or simulated provenance.
+Format.
+Languages.
+Origin and co-production territories.
+Companies by function.
+Development status.
+Role inventory.
+Confirmed attachments.
+Production locations.
+Schedule.
+Release windows.
+Rights territories.
+History.
+
+Each person-project credit needs:
+Professional role.
+Character where applicable.
+Episode or season scope.
+Billing context.
+Source.
+Validity period.
+
+Never collapse performer, fictional character and professional production role into one entity.
+
+8. OPPORTUNITY AND CASTING ENGINE
+
+This section describes proposed simulation behavior.
+
+8A. OPPORTUNITY ROUTES
+
+Representative submission.
+Open call.
+Referral.
+School showcase interest.
+Casting invitation.
+Returning role.
+Creative-team inquiry.
+Direct offer.
+
+Interest is not an offer.
+An offer is not an executed engagement.
+
+8B. CORE STATE SEQUENCE
+
+Discovered.
+Reviewed.
+Availability checked.
+Audition or meeting requested.
+Submitted.
+Callback or test if required.
+Decision.
+Negotiation.
+Executed, declined or expired.
+
+Support branches for:
+Direct offers.
+Withdrawal.
+No response.
+Replacement.
+Delayed decisions.
+Project cancellation.
+
+Do not force every opportunity through identical stages.
+
+8C. REQUIRED OPPORTUNITY INFORMATION
+
+Project provenance.
+Format.
+Role description.
+Creative team.
+Language.
+Location.
+Dates.
+Preparation requirements.
+Compensation status.
+Contract status.
+Boundaries.
+Response deadline.
+
+8D. SELF-TAPES AND AUDITIONS
+
+SAG-AFTRA provides self-tape guidance and contract bulletins. Reconcile older bulletins with applicable current agreements before encoding rules. [S22] [S23] [S21]
+
+Starting sources:
+https://www.sagaftra.org/self-tape-guidelines-members
+https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts
+
+Do not hard-code:
+Every audition as unpaid.
+Every self-tape with one universal page limit.
+Every job as requiring three callbacks.
+
+Determine applicability first.
+
+8E. CASTING RESULTS
+
+Performance quality should influence the result.
+
+Casting can also depend on:
+Role fit.
+Creative choices.
+Chemistry.
+Approvals.
+Budget.
+Availability.
+
+Availability is a hard constraint where required.
+
+Artistic excellence does not allow simultaneous physical presence in two locations.
+
+Use the later matching and balance specifications in Section 27 to separate access, suitability, audition execution and final booking.
+
+9. CONTRACT, WORK REPORT AND MONEY ENGINE
+
+9A. AGREEMENT SELECTION
+
+Select an agreement using:
+Signatory or employer.
+Work type.
+Jurisdiction.
+Performer classification.
+Effective date.
+Applicable cross-border arrangements.
+
+Do not select an agreement by streaming-service logo alone.
+
+9B. CONTRACT RECORDS
+
+Store:
+Parties.
+Role.
+Project.
+Applicable agreement.
+Amendments.
+Guaranteed work.
+Optional work.
+Units.
+Dates.
+Conditions.
+Base pay.
+Separately negotiated terms.
+Applicable premiums.
+
+Track obligations for:
+Rehearsal.
+Fitting.
+Recording.
+Filming.
+ADR.
+Pickups.
+Publicity.
+
+Also track:
+Options.
+Availability.
+Exclusivity.
+Release provisions.
+Transport.
+Temporary accommodation.
+Allowances.
+Reimbursement responsibility.
+Credit and billing.
+Usage.
+Residuals.
+Participation.
+Consent provisions.
+Cancellation.
+Postponement.
+Disputes.
+Signature history.
+Version history.
+Effective timestamps.
+
+9C. RESEARCH DISTINCTIONS
+
+Pact’s dated television rate material distinguishes:
+Engagement fees.
+Production days.
+Post-sync.
+Night work.
+Meal and rest issues.
+Overtime.
+Travel. [S18]
+
+These are separate pay concepts, not one generic daily salary.
+
+Exact current application requires the governing agreement clauses, not isolated figures.
+
+MEAA publishes separate feature-film and television resources.
+
+ACTRA provides contracts, work reports and format-specific resources. [S13] [S15]
+
+These support domain separation. They do not justify one universal contract.
+
+Starting sources:
+https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html
+https://www.equity.org.uk/advice-and-support/rates-and-agreements
+https://www.meaa.org/resources/
+https://www.actra.ca/agreements/ipa/
+
+9D. PROPOSED FINANCIAL CALCULATION STRUCTURE
+
+Gross earned:
+Qualifying base compensation
++ applicable premiums
++ other earned contractual amounts.
+
+Net cash paid:
+Payable gross
+− applicable withholding
+− deductions actually collected in that payment
++ reimbursements paid.
+
+Separate later commission invoices from payroll deductions.
+
+Track separately:
+Advances.
+Reimbursements.
+Residuals.
+Participation.
+Employer contributions.
+Disputed sums.
+
+Withheld tax is not necessarily final tax liability.
+
+9E. MONEY REPRESENTATION
+
+Use exact money representation with currency and rounding rules.
+
+Do not use binary floating-point as the authoritative ledger amount.
+
+When conversion occurs, record:
+Exchange rate.
+Quote time.
+Fees.
+Settlement date.
+
+Do not retroactively revalue historical cash transactions.
+
+9F. TAX AND RESIDUALS
+
+ATO, HMRC and IRS publish foreign-entertainer guidance. Treatment depends on status, income and arrangement. No single global tax percentage is justified. [S28] [S29] [S30]
+
+SAG-AFTRA’s residual resources distinguish payment categories and tracking. [S41]
+
+A release should create only obligations supported by the applicable agreement or contract.
+
+A new stream is not automatically an immediate deposit.
+
+Starting source:
+https://www.sagaftra.org/membership-benefits/residuals
+
+10. OVERSEAS PRODUCTION TRAVEL — AUSTRALIA WALKTHROUGH
+
+This is an illustrative simulation, not an actual offer, airline schedule, fee quote or visa determination.
+
+Australia is an example, not the geographic limit of the engine.
+
+The player starts in New Haven and receives a Sydney engagement.
+
+Exact airports, routing, hotel and schedule must come from suitable researched information or clearly labeled simulation inventory.
+
+STEP 1 — INQUIRY
+
+Player:
+Reads dates, role, location, required materials and response deadline.
+
+System:
+Creates an inquiry thread.
+Runs a tentative conflict check.
+Does not automatically book the player.
+
+STEP 2 — AVAILABILITY
+
+Player:
+Compares school, other work, travel and recovery needs.
+
+System:
+Shows conflicts in the relevant local time zones.
+Identifies viable dates.
+
+STEP 3 — SELECTION
+
+Player:
+Completes the applicable audition or meeting.
+
+System:
+Records the actual submitted material version and performance.
+
+STEP 4 — TERMS
+
+Player:
+Reviews guaranteed work, working days, travel, lodging, allowances and pay schedule.
+
+System:
+Preserves negotiated versions and accepted or rejected changes.
+
+STEP 5 — ELIGIBILITY
+
+Player:
+Supplies requested documents and reviews destination requirements.
+
+System:
+Checks appropriate work authorization for this person and engagement.
+
+Accepting the role does not grant permission to work.
+
+STEP 6 — PRODUCTION READINESS
+
+Producer:
+Handles applicable location approvals, scheduling and safety preparation.
+
+System:
+Does not make the performer personally acquire every production permit.
+
+STEP 7 — ITINERARY
+
+Player:
+Inspects local departure and arrival times, connections, transfers and payer responsibilities.
+
+System:
+Reserves actual elapsed time.
+Creates transport obligations.
+
+STEP 8 — DEPARTURE
+
+Player:
+Completes document and timing checks.
+
+System:
+Moves the player into transit.
+Prevents simultaneous attendance at an in-person New Haven class.
+
+STEP 9 — ARRIVAL
+
+Player:
+Completes the simulated arrival process and transfer.
+
+System:
+Changes physical location to Sydney only after actual arrival.
+
+STEP 10 — ACCOMMODATION
+
+Player:
+Checks into the arranged temporary stay.
+
+System:
+Records stay dates and payer responsibilities.
+Does not require a home-ownership engine.
+
+STEP 11 — PREPARATION
+
+Player:
+Reads the call sheet.
+Attends fitting or rehearsal.
+Prepares scenes.
+
+System:
+Uses time and relevant readiness.
+Records payable preparation where applicable.
+
+STEP 12 — SHOOT
+
+Player:
+Arrives at the specific set.
+Completes scheduled performance tasks.
+
+System:
+Updates work report.
+Updates scene progress.
+Updates relevant condition.
+Records collaborator history.
+
+STEP 13 — DISRUPTION
+
+Event:
+Weather or production changes require a revised plan.
+
+System:
+Recalculates valid work, transport, rest and overlapping obligations.
+
+STEP 14 — PAYROLL
+
+Player:
+Inspects earned amounts and actual payments.
+
+System:
+Reconciles Money and Papers.
+Prevents duplicate payment.
+
+STEP 15 — WRAP
+
+Player:
+Finishes the location block.
+Reviews later obligations.
+
+System:
+Releases only dates and obligations that actually ended.
+
+STEP 16 — RETURN
+
+Player:
+Uses or amends the booked return itinerary.
+
+System:
+Consumes real travel time.
+Does not teleport the player home.
+
+STEP 17 — LATER WORK
+
+Event:
+ADR or pickup request arrives.
+
+System:
+Checks location.
+Checks remote feasibility.
+Checks availability.
+Checks eligibility.
+Checks contract.
+
+STEP 18 — RELEASE
+
+Event:
+The project becomes available in a defined territory and release window.
+
+System:
+Adds public credit.
+Adds measurable exposure.
+Creates eligible downstream events.
+
+10A. PERMITS AND SAFETY
+
+Screen NSW explains that location work may require permission from the authority responsible for the land.
+
+Screen Safe Australia covers production risk management. [S26] [S25]
+
+Starting sources:
+https://www.screen.nsw.gov.au/make-it-in-nsw/filming-regulations-resources
+https://www.screensafety.com.au/safety-guidelines
+
+10B. FAILURE PATHS
+
+VISA UNRESOLVED
+
+Negotiate postponement or another valid outcome.
+Do not treat acceptance as authorization.
+
+FLIGHT DISRUPTION
+
+Recalculate arrival, transfers, accommodation and first-call feasibility.
+Do not automatically charge the performer when the agreement allocates costs elsewhere.
+
+CALL MOVED EARLIER
+
+Notify the player.
+Update the authoritative schedule.
+Evaluate travel and rest constraints.
+
+OUTDOOR SHOOT UNSAFE
+
+Use a feasible alternative scene, reschedule or suspend.
+Do not punish the player for refusing an unavailable unsafe task.
+
+RETURN EXTENDED
+
+Update accommodation.
+Update travel.
+Update other engagements.
+Check permit validity.
+Do not silently extend immigration permission.
+
+SCHOOL CONFLICT
+
+Surface the conflict before acceptance and after schedule changes.
+One approval does not cover every later revision.
+
+11. PRODUCTION WORKFLOWS THAT ARE ACTUALLY DIFFERENT
+
+These are proposed gameplay structures.
+
+11A. NETWORK PROCEDURAL
+
+Playable work:
+Episode preparation.
+Technical language.
+Continuity.
+Guest-cast interaction.
+Location blocks.
+
+Important distinction:
+Series renewal does not guarantee that a guest character returns.
+
+11B. SERIALIZED DRAMA
+
+Playable work:
+Character knowledge.
+Longer story arcs.
+Revisions.
+Emotional continuity across out-of-order scenes.
+
+Important distinction:
+Narrative order differs from filming order.
+
+11C. SINGLE-CAMERA COMEDY
+
+Playable work:
+Timing.
+Listening.
+Reaction.
+Coverage.
+Alternate takes.
+
+Important distinction:
+Comedy skill does not make every joke work independently of context.
+
+11D. MULTICAMERA COMEDY
+
+Playable work:
+Rehearsal.
+Blocking.
+Rewrites.
+Performance timing.
+Audience conditions where used.
+
+Important distinction:
+Do not impose an audience on every comedy production.
+
+11E. FEATURE DRAMA
+
+Playable work:
+Role research.
+Rehearsal where scheduled.
+Production blocks.
+Continuity.
+
+Important distinction:
+A famous director is not an automatic quality multiplier.
+
+11F. ACTION OR THRILLER
+
+Playable work:
+Choreography.
+Technical preparation.
+Stunt coordination.
+Safe alternatives.
+
+Important distinction:
+High athletic attributes do not authorize dangerous unsupervised work.
+
+11G. MUSICAL
+
+Playable work:
+Acting.
+Vocals.
+Movement.
+Separately scheduled recording where required.
+
+Important distinction:
+Playback, live singing and post-recording are different workflows.
+
+11H. ORIGINAL ANIMATION VOICE
+
+Playable work:
+Vocal characterization.
+Recording sessions.
+Direction.
+Revisions.
+Pickups.
+
+Important distinction:
+Do not automatically generate live-action costume fittings or blocking.
+
+11I. DUBBING
+
+Playable work:
+Adapted text.
+Timing and synchronization.
+Consistency with existing picture.
+
+Important distinction:
+Original voice creation and dubbing are not the same task.
+
+11J. PERFORMANCE CAPTURE
+
+Playable work:
+Physical performance.
+Technical setup.
+Capture continuity.
+
+Important distinction:
+A completed capture session is not a finished rendered scene.
+
+11K. DOCUMENTARY NARRATION
+
+Playable work:
+Script interpretation.
+Pronunciation.
+Factual revisions.
+Recording.
+Pickups.
+
+Important distinction:
+A narrator is not automatically a documentary subject or reenactment actor.
+
+11L. DOCUMENTARY INTERVIEW
+
+Playable work:
+Consent and participation.
+Interview scheduling.
+
+Important distinction:
+Do not score truthful personal testimony as fictional acting.
+
+11M. REENACTMENT
+
+Playable work:
+Scripted portrayal within a nonfiction production.
+
+Important distinction:
+Track the performer’s actual credited function.
+
+11N. SHORT, STUDENT AND INDEPENDENT PRODUCTIONS
+
+Playable work:
+Appropriate production scale.
+Resources.
+Release routes.
+Contract category.
+
+Important distinction:
+A smaller budget does not erase obligations or make all rules identical.
+
+11O. ROLE-LEVEL DATA
+
+Store:
+Objective.
+Relationships.
+Stakes.
+Genre mixture.
+Required skills.
+Scene difficulty.
+Languages.
+Physical and vocal load.
+Boundaries.
+Collaborators.
+Direction notes.
+
+The player makes meaningful interpretation and preparation choices and receives specific feedback and consequences.
+
+12. ATTRIBUTES, GENRES, HEALTH AND PERFORMANCE
+
+Keep existing authoritative attributes and genre definitions.
+
+Reuse the current engine where it satisfies requirements.
+
+Do not introduce parallel ratings with slightly different names.
+
+12A. PROPOSED CALCULATION RESPONSIBILITIES
+
+TECHNICAL CAPABILITY
+Relevant trained attributes.
+
+GENRE FLUENCY
+Understanding the actual genre blend and scene demands.
+
+PREPARATION
+Role-specific and scene-specific work.
+
+EXECUTION
+Player choices and adaptation to direction.
+
+CURRENT CONDITION
+Temporary fatigue or other modeled limitations.
+
+ENSEMBLE CONTEXT
+Scene partners and production conditions.
+
+PROJECT OUTCOME
+Separate from individual performance.
+
+12B. GENRE MIXTURES
+
+Normalize applicable genre weights.
+
+Keep contributions independent of genre-list order.
+
+Unrelated skills must not become powerful merely because many tags were added.
+
+Prevent double counting when an attribute already contributes to a higher-level measure.
+
+12C. HIGH SKILL
+
+High relevant skill should increase expected quality and reliability under comparable conditions.
+
+Maxed capability can produce excellent work without guaranteeing:
+Perfect audience reaction.
+An award.
+A booking.
+A commercially successful production.
+
+12D. BALANCE
+
+Numerical coefficients are game-design choices, not real-world scientific constants.
+
+Calibrate with paired scenarios and distributions.
+
+Do not describe untested coefficients as perfect math.
+
+12E. HEALTH AND STAMINA
+
+If both exist, distinguish:
+Longer-term condition.
+Short-term exertion and recovery.
+
+Prefer the established repository model instead of silently renaming or duplicating it.
+
+Time-zone changes and strenuous work may affect recovery through transparent simulation rules, not medical claims.
+
+13. POST-PRODUCTION, RELEASE AND RECEPTION
+
+13A. DISTINCT MILESTONES
+
+Performer wraps.
+Principal photography wraps.
+Editing.
+ADR.
+Pickups.
+Sound and visual effects.
+Delivery.
+Festival screening.
+Theatrical release.
+Television release.
+Streaming release.
+Later distribution windows.
+
+Track which scenes survive in the released version.
+
+Do not remove earned work records merely because a scene was cut.
+
+Billing disputes and contract rights require supported rules.
+
+13B. RELEASE RECORDS
+
+Store:
+Territory.
+Platform or exhibitor.
+Version.
+Language.
+Classification.
+Date and time.
+Exclusivity window.
+Provenance.
+
+13C. CLASSIFICATION
+
+Australia’s classification authority publishes ratings and decision records. [S36]
+
+Starting source:
+https://www.classification.gov.au/classification-ratings/what-are-ratings
+
+Do not assign US R or PG-13 labels globally.
+
+Do not equate age classification with artistic quality.
+
+Other territories require their own verified classification packages.
+
+13D. AUDIENCE MEASUREMENT
+
+Netflix and Nielsen measurements have different scopes and units. [S39] [S37]
+
+Do not treat them as interchangeable counts of individual people.
+
+Starting sources:
+https://www.netflix.com/tudum/top10
+https://www.nielsen.com/data-center/top-ten/
+
+For each metric, record:
+Value.
+Unit.
+Title, season or episode.
+Territory.
+Observation period.
+Publication date.
+Method.
+Source.
+Observed or simulated status.
+
+13E. COMMERCIAL RESULTS
+
+Keep box-office gross separate from:
+Distributor receipts.
+Production budget.
+Marketing.
+Financing.
+Actor participation.
+
+Do not assume a universal “double the budget” profit formula.
+
+13F. PRIVATE INFORMATION
+
+Completion rates.
+Retention.
+Acquisition cost.
+Subscriber contribution.
+Confidential commissioning decisions.
+
+Label these simulated unless publicly documented.
+
+Do not claim that public reporting provides all private platform data.
+
+13G. RENEWAL
+
+Viewership can inform renewal alongside:
+Costs.
+Strategy.
+Rights.
+Obligations.
+Creative feasibility.
+
+No single public number guarantees renewal.
+
+14. FESTIVAL RESEARCH AND MECHANICS
+
+14A. CANNES
+
+Research scope:
+Official submission conditions located. [S65]
+
+Required distinctions:
+Section.
+Runtime.
+Prior exposure.
+Completion timing.
+Invitation or selection.
+
+There is no universal festival eligibility pass.
+
+Source:
+https://www.festival-cannes.com/en/take-part/submit-a-film/
+
+14B. VENICE
+
+Research scope:
+2026 regulations located. [S66]
+
+Required distinctions:
+Edition-specific and section-specific eligibility.
+Selection.
+Juries.
+
+Do not present 2026 rules as verified 2027 rules.
+
+Source:
+https://www.labiennale.org/en/cinema/2026/regulations
+
+14C. BERLIN
+
+Research scope:
+Submission pages located.
+One full guidelines retrieval failed. [S67] [S68]
+
+Required distinction:
+Conflicting deadline fragments must be resolved before dates are activated.
+
+Source:
+https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html
+
+14D. SUNDANCE
+
+Research scope:
+2027 submission material and FAQ inspected.
+Boulder edition announcement located. [S69] [S70] [S71]
+
+Required distinctions:
+Format and origin can determine premiere requirements.
+Shorts and features do not share one rule.
+
+Source:
+https://www.sundance.org/festivals/sundance-film-festival/submit/
+
+14E. TORONTO
+
+Research scope:
+Official submissions page indicated the 2026 cycle was closed. [S72]
+
+Required distinction:
+Do not offer an already-closed submission in an October 2026 baseline.
+
+Source:
+https://tiff.net/submissions
+
+14F. ANNECY
+
+Research scope:
+Category-specific animation submission resources located. [S73] [S74]
+
+Required distinctions:
+Animation categories need their own requirements.
+Do not relabel 2026 dates as 2027 dates.
+
+Source:
+https://www.annecyfestival.com/en/take-part/submit-film
+
+14G. IDFA
+
+Research scope:
+2026 entry rules and closed-entry status inspected. [S75] [S76]
+
+Required distinction:
+Documentary programs, new-media programs and project markets are distinct.
+
+Source:
+https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/
+
+14H. BUSAN
+
+Research scope:
+Official 2026 festival site located. [S77]
+
+Required distinction:
+Detailed section eligibility and jury rules remain to be extracted.
+
+Source:
+https://www.biff.kr/
+
+14I. ADDITIONAL DISCOVERY TARGETS
+
+SXSW.
+Tribeca.
+Telluride.
+Locarno.
+Rotterdam.
+Karlovy Vary.
+San Sebastián.
+Clermont-Ferrand.
+Hot Docs.
+
+These are research backlog, not already functioning verified implementations.
+
+14J. FESTIVAL STATE SEQUENCE
+
+Planned.
+Authorized submission.
+Administrative review.
+Selection or rejection.
+Premiere commitment.
+Materials and accreditation.
+Screening.
+Applicable jury or audience decision.
+Press or acquisition follow-up.
+
+14K. IMPORTANT LIMITS AND INTERACTIONS
+
+Actor attendance does not grant submission rights.
+
+Submission does not guarantee selection.
+
+Selection does not guarantee competition eligibility.
+
+A festival prize does not automatically make every performer a recipient.
+
+Track separately:
+Submission.
+Selection.
+Acceptance.
+Exhibition.
+
+Apply the institution’s actual rule. Prior selection itself can matter, not only a completed public screening.
+
+Track exhibition history by:
+Territory.
+Date.
+Platform.
+Section.
+
+Committing to one screening or selection can affect another eligibility route.
+
+Explain the applicable consequence before the player makes the authorized decision.
+
+END OF SECTIONS 7–14.
+
+Continue with Sections 15–29 and the source register already supplied.
+
+SLATE — RESEARCH DOSSIER CONTINUATION
+SECTIONS 15–25
+
+Research baseline: 23 October 2026.
+
+These are researched findings and proposed implementation requirements. They are not evidence that the game has already implemented or passed them.
+
+Sections 27–29 contain later scope decisions and corrections. Apply them where they supersede earlier material.
+
+15. AWARDS RESEARCH AND RULES
+
+AWARDS COVERAGE REGISTER
+
+OSCARS
+Sources: 99th rules hub, rule-change announcement and calendar. [S42] [S43] [S44] [S92]
+Implementation requires exact category, theatrical or relevant qualification, credits, ballot stages, voter eligibility and eligible recipient.
+Handle special-category qualification paths separately.
+
+PRIMETIME AND CREATIVE ARTS EMMYS
+Source: 2026 rules, version 4 dated 7 April. [S45]
+Implementation requires program and performer category, appearance restrictions, submission, voting and ceremony allocation.
+Do not assume future-year rules have been published.
+
+BAFTA FILM
+Sources: 2027 rules and entry information located. [S46] [S47]
+Full-page retrieval failed during this research pass.
+Extract complete category-specific rounds before coding. Locating a source is not the same as auditing its rules.
+
+ACTOR AWARDS
+Source: 33rd rules PDF inspected in relevant excerpts. [S48]
+Separate film and television nomination committees, final-voting eligibility, ensemble recipients and category constraints.
+
+GOLDEN GLOBES
+Sources: 84th rules PDF and calendar. [S49] [S50]
+Extract categories, qualifying release, voter access, ballots and campaign restrictions.
+Do not assume older rules remain unchanged.
+
+INTERNATIONAL EMMYS
+Sources: 2026 rules and judging process. [S51] [S52]
+Extract origin, initial-broadcast requirements, categories, judging stages and eligible recipients.
+
+SPIRIT AWARDS
+Sources: 2027 FAQ and submissions information. [S53] [S54]
+Distinguish film and television eligibility, committee decisions, member decisions and category exceptions.
+Respect closed submission windows.
+
+AACTA
+Sources: 2027 voting page and rulebook. [S55] [S56]
+Do not merge domestic and international competitions.
+Resolve category rules and nomination/winner rounds.
+
+CRITICS CHOICE
+Source: submissions and categories page. [S57]
+Verify current categories, eligibility, professional voting and dates.
+Do not substitute audience voting.
+
+GOTHAM
+Sources: separate film and television criteria. [S58] [S59]
+Do not apply film rules to television or vice versa.
+
+NATAS COMPETITIONS
+Source: rules hub. [S60]
+Daytime, Children’s & Family, News & Documentary and other relevant competitions need their own current rulebooks.
+
+CÉSAR
+Sources: regulations and voting pages. [S61] [S62]
+Resolve conflicting edition labels before activation.
+Extract national eligibility and voting rules.
+
+GOYA
+Source: edition-specific bases. [S63]
+Extract Spanish-language rules carefully.
+Do not import Academy rules.
+
+ANNIE AWARDS
+Source: official event page. [S64]
+Complete category and voting rules still require extraction.
+
+EXPLICIT EXPANSION WORK
+
+BAFTA Television and Craft.
+Japan Academy Film Prize.
+Blue Dragon.
+Baeksang.
+Filmfare.
+IIFA.
+Relevant guild awards.
+
+These are expansion targets where complete current rules were not established in this research pass.
+
+“Major worldwide awards” is a growing registry with coverage states, not a complete fixed list already verified here.
+
+AWARD CATEGORIES
+
+Keep the complete category inventory for each supported edition, including categories the player cannot personally win.
+
+Distinguish:
+Individual recipients.
+Ensemble recipients.
+Program recipients.
+Film recipients.
+Craft recipients.
+
+Do not give the player a producer’s or editor’s award simply because the player acted in the project.
+
+Model lead, supporting and guest distinctions only where the institution provides them.
+
+Model drama, comedy, limited-series, voice, narration and ensemble categories only where applicable.
+
+Never invent a category to reward the player.
+
+REQUIRED AWARD RULE RECORD
+
+Institution.
+Edition.
+Category ID and exact name.
+Program type.
+Recipient type.
+Eligibility interval.
+Release and territory criteria.
+Credit and participation criteria.
+Authorized entrant.
+Submission deadline.
+Required materials.
+Rounds.
+Electorate or jury.
+Ballot method.
+Nomination count.
+Tie handling.
+Campaign restrictions.
+Appeal or interpretation authority.
+Source.
+Effective version.
+
+Eligibility, entry acceptance, shortlist, nomination and victory are separate states.
+
+Some categories do not have shortlists. Do not force one into every competition.
+
+The 99th Academy rule-change announcement describes changes to multiple acting nominations in one category and an additional qualifying-festival route for International Feature. Extract the precise applicable conditions rather than reusing older assumptions. [S43]
+
+VOTING MODEL
+
+Reproduce published process structure.
+Simulate private preferences transparently.
+
+A modeled jury is not a claim about what real named jurors privately think.
+
+Separate:
+Opportunity to view.
+Eligibility to vote.
+Permitted ballot.
+Vote counting.
+Result publication.
+
+Persist resolved outcomes.
+Save/reload must not reroll a ceremony.
+
+Exact tally methods require the relevant category’s full rules, not a generic weighted random draw.
+
+CEREMONY ENGINE
+
+Invitation.
+RSVP.
+Schedule and location checks.
+Appropriate travel.
+Accreditation or entry.
+Seating and event program.
+Category presentation.
+Result.
+Acceptance or response.
+Backstage obligations.
+Permanent record.
+
+Support multiple ceremonies and non-televised presentations.
+
+A nomination does not automatically guarantee:
+Guest tickets.
+A presenter role.
+Access to every party.
+A televised acceptance speech.
+
+Where logistics are unpublished, identify them as fictional simulation logistics.
+
+Maintain a persistent anonymous competitive field.
+
+Do not display outside nominees or winners by name in this scope.
+
+Offer either detailed attendance or a concise recap without changing the underlying result.
+
+Do not reproduce copyrighted ceremony scripts as a template library.
+
+16. CAREER CONTINUITY AND FRESHNESS
+
+Persist:
+Offers.
+Declines and reasons.
+Submitted materials.
+Agreements.
+Completed work.
+Collaborators.
+Role arcs.
+Public credits.
+Finances.
+Releases.
+Awards.
+Unresolved obligations.
+
+Returning collaborators should reference shared history.
+
+Returning characters should preserve continuity.
+
+A renewal should create a new contract/options decision, not erase the previous engagement.
+
+Possible project futures:
+Release.
+Delay.
+Limited release.
+Shelving.
+Acquisition.
+Cancellation.
+Renewal.
+Final season.
+Revival.
+Recast.
+Returning guest.
+Character departure.
+
+Each must preserve contractual and historical consequences.
+
+NO-REPETITION REQUIREMENTS
+
+Do not repeat a first meeting with an already-known collaborator.
+
+Do not repeat an initial achievement after it has been earned.
+
+Do not duplicate messages or payments on reload.
+
+Do not repeat an identical obstacle without state change.
+
+Do not reuse one generic audition scene across fundamentally different media.
+
+Do not introduce incoherence merely to create novelty.
+
+Real work repeats legitimate processes. Variation should come from context, roles, collaborators, stakes, choices and consequences—not an impossible promise that no action or sentence ever recurs.
+
+17. CONNECTED-SYSTEM ARCHITECTURE
+
+Reuse the repository’s existing boundaries. These are responsibilities, not a demand for a specific framework.
+
+OPPORTUNITY SYSTEM
+Reads: profile, credits, relationships, role requirements and calendar.
+Writes: inquiry or offer and correspondence thread.
+Visible result: relevant opportunity with reasons and deadline.
+
+ELIGIBILITY SYSTEM
+Reads: person status, activity, jurisdiction and date.
+Writes: decision with supporting rules.
+Visible result: allowed, conditional or blocked, with next steps.
+
+CONTRACT SYSTEM
+Reads: offer, agreement and negotiations.
+Writes: versioned obligations.
+Visible result: inspectable guarantee and terms.
+
+SCHEDULING SYSTEM
+Reads: calls, transit, rest, school and other work.
+Writes: reservations and conflicts.
+Visible result: one consistent calendar.
+
+LOCATION AND TRAVEL
+Reads: itinerary, documents, time and disruptions.
+Writes: transit, arrival and stay state.
+Visible result: the player is physically where the narrative says.
+
+PRODUCTION SYSTEM
+Reads: role, scene, preparation, skills and condition.
+Writes: work report, performance and progress.
+Visible result: specific work and feedback.
+
+PAYROLL
+Reads: contract, work report and applicable rules.
+Writes: earned, payable and paid records.
+Visible result: banking and statements reconcile.
+
+POST-PRODUCTION
+Reads: completed material and obligations.
+Writes: ADR, pickups and final-version links.
+Visible result: later work connects to earlier work.
+
+RELEASE
+Reads: delivery, rights and schedule.
+Writes: exhibition history and metrics.
+Visible result: public credit and reception.
+
+FESTIVALS
+Reads: version, exposure and section rules.
+Writes: submission, selection and screening.
+Visible result: valid routes with consequences.
+
+AWARDS
+Reads: release, credits and edition rules.
+Writes: entry, nomination and result.
+Visible result: correct eligibility and history.
+
+RELATIONSHIPS
+Reads: shared events and choices.
+Writes: scoped professional memory.
+Visible result: different future interactions.
+
+TUTORIALS
+Reads: current state and actual rules.
+Writes: help/read progress only.
+Visible result: accurate explanation of the current screen.
+
+EVENT PROCESSING
+
+Prefer stable event IDs, causal parent IDs, timestamps, rule versions and entity references.
+
+Apply each financial or one-time effect exactly once.
+
+Use atomic state changes where one action affects contracts, calendar and money together.
+
+Reading a dossier must not secretly:
+Improve skill.
+Accept a contract.
+Spend money.
+Advance time.
+
+Information can have a useful explanatory purpose without an artificial numerical penalty or bonus.
+
+18. DATA SHAPES AND INVARIANTS
+
+SUGGESTED RECORDS
+
+Person.
+ProfessionalProfile.
+RepresentationAgreement.
+Company.
+Project.
+Season.
+Episode.
+Role.
+Scene.
+Opportunity.
+Audition.
+ContractVersion.
+WorkAuthorization.
+JurisdictionRule.
+Place.
+TravelLeg.
+Stay.
+CalendarCommitment.
+CallSheetVersion.
+WorkReport.
+PaymentObligation.
+LedgerEntry.
+Release.
+ViewingMetric.
+FestivalEdition.
+FestivalEntry.
+AwardEdition.
+AwardCategory.
+AwardEntry.
+BallotRound.
+Ceremony.
+CareerEvent.
+CorrespondenceThread.
+SourceFact.
+
+MANDATORY INVARIANTS
+
+A release cannot precede required completion without a deliberate supported preview path.
+
+A salary payment references a payable obligation or documented advance.
+
+A single payment cannot post twice.
+
+Transit has origin, destination and positive elapsed duration.
+
+An in-person session requires physical presence.
+
+Permissions cover the relevant activity and date.
+
+Festival screening history cannot be erased to regain premiere status.
+
+Awards use the selected edition’s rules, not today’s rules applied retroactively.
+
+A project award is not automatically an individual player award.
+
+Reading UI is side-effect free unless an action explicitly states otherwise.
+
+A fictional event cannot overwrite a historical real-world fact.
+
+External updates cannot silently rewrite resolved career history.
+
+A source outage must not corrupt or halt an otherwise playable save.
+
+EXAMPLE EVENT CONTRACT — DESIGN SKETCH
+
+{
+  "type": "work_session_completed",
+  "event_id": "stable-unique-id",
+  "caused_by": "player-command-id",
+  "occurred_at_utc": "simulation-instant",
+  "person_id": "player",
+  "project_id": "project",
+  "contract_version_id": "signed-version",
+  "session_id": "session",
+  "place_id": "actual-shoot-location",
+  "work_report_id": "work-report",
+  "rule_snapshot_id": "applicable-rule-version"
+}
+
+Adapt this to actual repository types and conventions. It is not drop-in code.
+
+19. NATURAL LANGUAGE AND DRILL-DOWN
+
+Keep established Title Case conventions for appropriate labels.
+Write player-facing sentences naturally.
+
+Arrival example:
+“You’ve arrived in Sydney. Production has arranged your transfer. Your fitting is tomorrow at 10:00 a.m., Sydney time.”
+
+Conflict example:
+“Your new call overlaps with Thursday’s assessment in New Haven. You cannot attend both in person. Ask production about the date or discuss an approved absence with school.”
+
+Payment example:
+“This payment covers your completed work for the first production block. The statement shows the gross amount, withholding and net deposit.”
+
+Award example:
+“Your performance has been submitted. Nominations have not been announced.”
+
+Relevant pages should connect to:
+Contract.
+Schedule.
+Money record.
+Papers.
+Project.
+Collaborators.
+History.
+
+“How It Works” explains the current state and why an action is unavailable.
+
+Do not expose event names, debug IDs or formula jargon as ordinary game prose.
+
+20. COVERAGE MATRIX
+
+These statuses describe research/design, not repository completion.
+
+C01 — School transition
+Status: proposed with Yale sources.
+Proof: valid and invalid work branches preserve school progress.
+
+C02 — Professional materials
+Status: proposed.
+Proof: submitted versions remain unchanged after later edits.
+
+C03 — Representation
+Status: agency functions sourced; broader individual research pending.
+Proof: an individual agent has end-to-end submissions and negotiation.
+
+C04 — Real catalog
+Status: starter records; wider roster pending.
+Proof: every active real fact has provenance and scope.
+
+C05 — Opportunities
+Status: proposed.
+Proof: distinct entry routes converge correctly.
+
+C06 — Casting
+Status: guidance located.
+Proof: applicable audition rules and meaningful choices.
+
+C07 — Contracts
+Status: agreement sources located; clause extraction incomplete.
+Proof: correct version and classification selected.
+
+C08 — World time
+Status: IANA source located.
+Proof: daylight-saving, date-line and conflict cases.
+
+C09 — World location
+Status: proposed.
+Proof: no impossible simultaneous presence.
+
+C10 — Australia
+Status: partial research.
+Proof: complete offer-to-return playthrough.
+
+C11 — UK and New Zealand
+Status: partial research.
+Proof: correct permission and work routes.
+
+C12 — Canada
+Status: agreement distinction verified; immigration incomplete.
+Proof: British Columbia is not treated as the IPA default.
+
+C13 — France, Japan and India
+Status: partial research.
+Proof: exact applicability established before strict-realism activation.
+
+C14 — Remaining world
+Status: schema and backlog.
+Proof: unsupported jurisdictions never marked verified.
+
+C15 — Travel and stays
+Status: proposed.
+Proof: delays, cancellations, changes and payer responsibility work.
+
+C16 — Weather and safety
+Status: sources plus proposed effects.
+Proof: relevant activities affected; irrelevant ones not arbitrarily penalized.
+
+C17 — Daily production
+Status: format design.
+Proof: live-action, voice, dubbing and documentary workflows differ.
+
+C18 — Attributes and genres
+Status: proposed integration.
+Proof: relevant-skill benefit and no unrelated leakage.
+
+C19 — Payroll
+Status: sources located; exact formula coverage incomplete.
+Proof: reconciled ledger and duplicate prevention.
+
+C20 — Papers
+Status: proposed.
+Proof: documents follow actual employment, status and payment events.
+
+C21 — Post-production
+Status: proposed.
+Proof: ADR, pickups and cut scenes preserve history.
+
+C22 — Release and ratings
+Status: metric/classification sources located.
+Proof: territory, version and unit distinctions.
+
+C23 — Festivals
+Status: core sources; worldwide rules incomplete.
+Proof: section and premiere constraints enforced.
+
+C24 — Awards
+Status: edition sources; extraction incomplete.
+Proof: category-specific eligibility and ballots.
+
+C25 — Ceremonies
+Status: proposed.
+Proof: attend and skip preserve the same result.
+
+C26 — Renewal and cancellation
+Status: proposed.
+Proof: obligations and history survive.
+
+C27 — Relationships
+Status: proposed.
+Proof: returning collaborators remember relevant events.
+
+C28 — Tutorials and navigation
+Status: proposed.
+Proof: every enabled action has an accurate explanation.
+
+C29 — Saves and migration
+Status: proposed.
+Proof: stable continuation, no rerolls or duplicate effects.
+
+C30 — Freshness
+Status: proposed.
+Proof: contextual differences across long careers.
+
+21. BASE ACCEPTANCE SCENARIOS — T01–T60
+
+These are tests to implement and run, not tests already passed.
+
+T01 — Graduate with completed requirements.
+Expected: correct career status; school history preserved.
+
+T02 — Attempt early graduation without requirements.
+Expected: clear refusal; no career bypass.
+
+T03 — Student receives conflicting paid work.
+Expected: academic and work-permission checks both evaluated.
+
+T04 — Update reel after audition submission.
+Expected: casting retains the submitted version.
+
+T05 — Agent sends availability inquiry.
+Expected: reading does not accept.
+
+T06 — Decline politely.
+Expected: reason/history retained; no automatic severe punishment.
+
+T07 — Direct offer.
+Expected: unnecessary audition skipped, contract not skipped.
+
+T08 — Audition followed by callback.
+Expected: correct materials, deadline and prior feedback.
+
+T09 — Response deadline expires.
+Expected: one deterministic expiration.
+
+T10 — Project cancelled before booking.
+Expected: thread closes; no nonexistent pay.
+
+T11 — Australia offer with valid permission.
+Expected: planning proceeds under applicable rules.
+
+T12 — Australia offer with unresolved permission.
+Expected: no unauthorized shoot completion.
+
+T13 — Permission expires during engagement.
+Expected: correct boundary behavior and valid next steps.
+
+T14 — UK creative work.
+Expected: correct route, not an Australian form reused.
+
+T15 — Missing New Zealand employer support.
+Expected: conditional/blocked status with explanation.
+
+T16 — Toronto versus Vancouver.
+Expected: correct agreement distinction.
+
+T17 — Short French engagement.
+Expected: exact exemption conditions, not blanket permission.
+
+T18 — India documentary versus scripted film.
+Expected: correct activity classification.
+
+T19 — Unsupported destination.
+Expected: explicit research gap, no false verified badge.
+
+T20 — Multiple nationalities or statuses.
+Expected: correct person-specific branch.
+
+T21 — New Haven to Sydney.
+Expected: positive travel duration and physical-location changes.
+
+T22 — Date-line crossing.
+Expected: correct displayed dates and elapsed time.
+
+T23 — Daylight-saving transition.
+Expected: no duplicate or skipped scheduled event.
+
+T24 — Flight delay.
+Expected: dependent transfer and call reassessed.
+
+T25 — Missed connection.
+Expected: rebooking, payer and availability updated.
+
+T26 — Production extends stay.
+Expected: lodging, return, permissions and conflicts updated.
+
+T27 — Remote voice session.
+Expected: no fictional physical relocation.
+
+T28 — Overlapping in-person calls.
+Expected: impossible attendance rejected.
+
+T29 — Revised call sheet.
+Expected: old version retained; current schedule authoritative.
+
+T30 — Local holiday.
+Expected: applicable calendar and contract consulted.
+
+T31 — Bad weather at outdoor shoot.
+Expected: relevant alternative or rescheduling.
+
+T32 — Rain during indoor recording.
+Expected: no unjustified identical weather penalty.
+
+T33 — Missing required safety preparation.
+Expected: risky activity unavailable; safe next step offered.
+
+T34 — Original animation.
+Expected: voice-specific preparation and report.
+
+T35 — Dubbing.
+Expected: timing/synchronization choices.
+
+T36 — Documentary narration.
+Expected: narration credit, not fictional-character credit.
+
+T37 — Multicamera versus single-camera comedy.
+Expected: distinct production workflow.
+
+T38 — Mixed genres with reordered tags.
+Expected: identical applicability.
+
+T39 — Higher relevant skill under matched conditions.
+Expected: better expected quality across paired runs.
+
+T40 — High unrelated skill.
+Expected: no unjustified scene mastery.
+
+T41 — Fatigue and recovery.
+Expected: temporary effects separate from permanent skill.
+
+T42 — Work completed before release.
+Expected: earnings follow contractual trigger.
+
+T43 — Payroll retry or reload.
+Expected: no duplicate money.
+
+T44 — Foreign-currency payment.
+Expected: amount, conversion and fees reconcile.
+
+T45 — Reimbursement versus wages.
+Expected: separate bases and treatment.
+
+T46 — Scene cut after work.
+Expected: earned pay and work history retained.
+
+T47 — ADR after wrap.
+Expected: new schedule and contract checks.
+
+T48 — Release delayed.
+Expected: reception and award timing updated.
+
+T49 — Regional release and classification.
+Expected: territory-specific availability and labels.
+
+T50 — Netflix views versus Nielsen minutes.
+Expected: units remain distinct.
+
+T51 — Festival premiere conflict.
+Expected: ineligible route explained before the relevant commitment.
+
+T52 — Short versus feature entry.
+Expected: correct section rules.
+
+T53 — Closed entry window.
+Expected: no ordinary late entry without a supported exception.
+
+T54 — Award time boundary.
+Expected: correct edition and deadline time zone.
+
+T55 — Guest, supporting or lead classification.
+Expected: rules enforced, no user-selected loophole.
+
+T56 — Ensemble victory.
+Expected: only eligible recipients receive recognition.
+
+T57 — Attend versus skip ceremony.
+Expected: same result, different attendance history.
+
+T58 — Renewal without player return.
+Expected: no automatic contract.
+
+T59 — Cancellation followed by revival.
+Expected: earlier obligations/history preserved.
+
+T60 — Long career and interrupted-save recovery.
+Expected: no repeated first meetings, rerolls, duplicate threads or lost money.
+
+TEST METHOD
+
+Use targeted tests during development.
+Then run representative full careers with recorded seeds.
+
+Cover:
+High and low skill.
+Modest and high recognition.
+Local and foreign work.
+Student and graduate.
+Accepted and declined offers.
+Success and failure branches.
+
+Hundreds of identical happy-path runs are not complete coverage.
+
+Record which rule, transition, boundary and failure each run exercises.
+Fix the root cause.
+Add regression coverage.
+Rerun affected tests and the required final repository gate.
+
+22. COMPLETION EVIDENCE
+
+For every requirement report:
+Source or assumption.
+Code location.
+Player entry point.
+State read.
+State written.
+Downstream consumer.
+Validation.
+Save behavior.
+Tests.
+Pass, fail or blocked reason.
+
+Track separately:
+Source coverage.
+Rule extraction.
+Implementation.
+Tested transitions.
+Known defects.
+Deferred scope.
+
+Do not delete failed rows or weaken criteria to produce green results.
+
+“Zero known failures in this tested build” can be supported by evidence.
+“No bugs can ever occur” cannot.
+
+A 100% pass rate needs an explicit denominator and scope.
+
+23. OPEN RESEARCH WORK
+
+Remaining areas requiring honest tracking:
+
+1. Country-by-country immigration, employment, taxation and regional rules.
+2. Applicable contract clauses, current rates and overseas exceptions.
+3. Complete category, ballot and eligibility inventories by award edition.
+4. Festival sections, qualifying lists and premiere interactions.
+5. Individual-agent identities, representation facts and current attachments.
+6. Date-specific flight, airport and accommodation availability if live inventory is desired.
+7. Classification authorities outside researched examples.
+8. Licensed audience and box-office access where required.
+9. Unpublished future rules.
+10. Failed or conflicting retrievals, including BAFTA, Berlin, AACTA and César details.
+11. Effective dates for every claimed update.
+12. Source and data-reuse conditions for automated ingestion.
+
+This architecture can expand across the map.
+It does not certify that every destination and institution has already been researched fully.
+
+24. CLAUDE HANDOFF BRIEF
+
+Read Sections 27–29 alongside this brief.
+
+Inspect the actual repository, main SHA, instructions and engine boundaries.
+
+Preserve saves, school, money, papers, attributes, genres, calendar, Advance, weather and retained self-care.
+
+Use one primary agent by default.
+Do not launch multiple agents unless expressly requested.
+Reuse this research.
+Research missing, ambiguous or stale facts needed for implementation.
+
+Build connected end-to-end slices.
+
+Start with a local engagement and an overseas engagement sharing:
+Contracts.
+Calendar.
+Location.
+Work reports.
+Banking.
+Papers.
+History.
+
+Make acceptance, preparation, transit, arrival, work, earnings, return and history function before expanding shallow menus.
+
+Separate facts, design and unresolved rules.
+Do not invent salaries, real offers, private voting, internal metrics or work permission.
+
+Preserve real names with dated provenance.
+Keep edition-specific awards and effective-dated contracts.
+
+Allow save-world divergence without rewriting established history.
+
+Do not restore removed personal-life scope.
+
+Continue implementation, fixes, targeted tests, representative full playthroughs and the final gate.
+
+Checkpoint progress.
+Document genuine blockers.
+Continue independent work.
+Do not invent success or run indefinitely without progress.
+
+Provide tested SHA, commands, counts, scenario evidence, coverage, defects and unresolved research.
+
+25. EXTRACTED RULE EXAMPLES
+
+These are bounded extracts, not substitutes for complete rulebooks.
+
+OSCAR FEATURE LENGTH
+General feature definition exceeds 40 minutes, subject to category rules. [S92]
+Test: exactly 40 minutes fails that general length predicate; 40 minutes plus one second passes only the length predicate.
+
+OSCAR FINAL VIEWING
+Final voters must have seen each nominated film in the relevant category. [S92]
+Test: incomplete viewing prevents that final ballot.
+
+OSCAR NOMINATION COUNTS
+General categories and Best Picture do not share one uniform nominee count. [S92]
+Test: apply the actual category rule rather than five everywhere.
+
+EMMY GUEST APPEARANCES
+2026 comedy/drama guest categories require appearances in fewer than half the eligible episodes, with additional conditions. [S45]
+Test: four of eight fails that appearance predicate; three of eight passes only that predicate.
+
+EMMY GUEST SCREEN-TIME CONDITION
+The cited rules contain a 5% stand-alone/contiguous engagement condition. [S45]
+Extract its exact definition before coding.
+Do not substitute scattered seconds or billing size.
+
+EMMY VOICE AND NARRATION
+Route voice-over/narration to applicable dedicated categories, not ordinary lead/supporting/guest categories. [S45]
+
+GOLDEN GLOBES FINAL VOTE
+The cited edition provides one choice per category and specified tie handling using nomination votes, with co-winners if unresolved. [S49]
+Do not replace it with an arbitrary coin flip.
+
+ACTOR AWARDS DEADLINE
+The cited 33rd rules give 2 November 2026, 5 p.m. Pacific, for submission closure. [S48]
+Test the exact boundary and time zone.
+
+ACTOR AWARDS DUPLICATE ENTRY
+One performance cannot be entered into multiple individual categories under the cited rules; eligible ensemble participation is separate. [S48]
+
+INTERNATIONAL EMMY YEAR
+The 2026 rules refer to qualifying initial non-US broadcast in 2025, with further requirements and exceptions. [S51]
+Do not equate ceremony year and broadcast year.
+
+SUNDANCE FORMAT
+The cited 2027 submission material uses a 50-minute short/feature boundary. [S69]
+A 45-minute work may be a short there while satisfying the general Oscar feature-length predicate.
+
+CANADIAN AGREEMENT GEOGRAPHY
+ACTRA IPA excludes British Columbia. [S15]
+A Toronto-to-Vancouver move triggers agreement review.
+
+ADDITIONAL REALISM FAILURES TO PREVENT
+
+Publicity calling someone a guest star does not override award rules.
+
+Submission, selection and exhibition are distinct.
+
+A contract headline does not create a bank deposit.
+
+A local arrival date before the departure date does not create negative elapsed travel.
+
+Different territories can have different release events.
+
+Premiere attendance and paid filming can require different activity checks.
+
+Union authorization and government immigration permission are separate.
+
+Production permits are not automatically personal actor licenses.
+
+Renewal is not a signed performer contract.
+
+An option, availability hold and guaranteed workday cannot share one booking flag.
+
+A nomination does not automatically confer voting membership.
+
+Authority on one project does not confer authority over another company’s payroll or submissions.
+
+END OF BLOCK 1.
+
+SLATE — RESEARCH SOURCE REGISTER
+SECTION 26, WITH LATER ADDITIONS S93–S110 CONSOLIDATED HERE
+
+Research access date: 23 October 2026 unless otherwise noted.
+
+A source being listed does not mean every clause was extracted or validated.
+Some records were consulted through indexed excerpts or relevant sections.
+No private contracts or private casting databases were accessed.
+Dynamic pages require dated snapshots.
+Recheck applicable editions and effective dates before implementation.
+
+S01 — Australia Temporary Activity 408: Entertainment Activities
+https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-activity-408/entertainment-activities
+
+S02 — UK Creative Worker Visa
+https://www.gov.uk/creative-worker-visa
+
+S03 — New Zealand Entertainers Work Visa
+https://immigration.govt.nz/visas/entertainers-work-visa
+
+S04 — New Zealand: Support an Entertainers Work Visa Candidate
+https://immigration.govt.nz/visas/entertainers-work-visa-eo
+
+S05 — USCIS O-1
+https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement
+
+S06 — USCIS Policy Manual: O-1 Beneficiaries
+https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4
+
+S07 — Canada: Who Can Work Without a Work Permit
+https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/work-without-permit.html
+
+S08 — France-Visas: International Talents
+https://france-visas.gouv.fr/en/talents-internationaux-et-attractivite-economique
+
+S09 — France-Visas: Salaried Employment
+https://www.france-visas.gouv.fr/en/activite-salariee
+
+S10 — Japan: Entertainer Working Visa
+https://www.mofa.go.jp/j_info/visit/visa/long/visa3.html
+
+S11 — India Cine Hub: Film Visa
+https://indiacinehub.gov.in/applying-for-film-visa
+
+S12 — India: Documentary Filming
+https://www.mea.gov.in/documentary-filming-in-india
+
+S13 — MEAA Resources
+https://www.meaa.org/resources/
+
+S14 — MEAA Performer Resources
+https://www.meaa.org/public/Hub/Contents/Portal/Resources.aspx?hkey=e938710c-a2d7-452d-b59c-b1a1cccba2eb&section=Equity
+
+S15 — ACTRA Independent Production Agreement
+https://www.actra.ca/agreements/ipa/
+
+S16 — ACTRA 2025–2027 IPA
+https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf
+
+S17 — Pact: Contracting On-Screen Talent
+https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html
+
+S18 — Pact/Equity Television Rates 2024–2026
+https://www.pact.co.uk/static/5ba494d5-7e25-4185-a6aaf2d71f000ff7/Pact-Equity-TV-Agreement-rate-card-2024-to-2026.pdf
+
+S19 — Equity Rates and Agreements
+https://www.equity.org.uk/advice-and-support/rates-and-agreements
+
+S20 — SAG-AFTRA 2026 Ratification Announcement
+https://www.sagaftra.org/sag-aftra-members-approve-2026-tvtheatrical-contracts-tentative-agreement
+
+S21 — SAG-AFTRA 2026 TV/Theatrical Contracts
+https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts
+
+S22 — SAG-AFTRA Self-Tape Guidelines
+https://www.sagaftra.org/self-tape-guidelines-members
+
+S23 — SAG-AFTRA Self-Tape Bulletin
+https://www.sagaftra.org/sites/default/files/sa_documents/Contract%20Bulletin%20-%20Self%20Tapes.pdf
+
+S24 — SAG-AFTRA Los Angeles Commission Guidance
+https://www.sagaftra.org/agency-bulletin-la-commission-limitations
+
+S25 — Screen Safe Australia
+https://www.screensafety.com.au/safety-guidelines
+
+S26 — Screen NSW Filming Regulations
+https://www.screen.nsw.gov.au/make-it-in-nsw/filming-regulations-resources
+
+S27 — City of Sydney Filming Permit
+https://www.cityofsydney.nsw.gov.au/business-permits-approvals-tenders/apply-for-filming-or-photography-permit
+
+S28 — ATO Foreign-Resident Withholding
+https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/australian-income-of-foreign-residents/foreign-resident-payg-withholding-individual-entities
+
+S29 — UK Foreign Entertainer Tax
+https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer
+
+S30 — IRS Foreign Artists and Athletes Withholding
+https://www.irs.gov/individuals/international-taxpayers/withholding-tax-on-payments-to-foreign-artists-and-athletes
+
+S31 — Yale F-1 Employment
+https://oiss.yale.edu/employment-taxes/employment-for-international-students/employment-for-f-1-students
+
+S32 — Yale CPT
+https://oiss.yale.edu/employment-taxes/employment-for-international-students/f-1-students/f-1-curricular-practical-training
+
+S33 — IANA Time Zones
+https://www.iana.org/time-zones
+
+S34 — Australian Bureau of Meteorology Climate Data
+https://www.bom.gov.au/climate/data/
+
+S35 — Australian Bureau of Meteorology Daily Observations
+https://www.bom.gov.au/climate/dwo/
+
+S36 — Australian Classification Ratings
+https://www.classification.gov.au/classification-ratings/what-are-ratings
+
+S37 — Nielsen Top Ten
+https://www.nielsen.com/data-center/top-ten/
+
+S38 — Nielsen 2026 Streaming Delivery Announcement
+https://www.nielsen.com/news-center/2026/nielsen-accelerates-streaming-data-delivery-with-enhancements-to-streaming-content-ratings/
+
+S39 — Netflix Top Ten Background
+https://about.netflix.com/en/news/top-10-things-about-netflix-top-10
+
+S40 — Netflix Television Top Ten
+https://www.netflix.com/tudum/top10/tv
+
+S41 — SAG-AFTRA Residuals
+https://www.sagaftra.org/membership-benefits/residuals
+
+S42 — Oscars Rules and Eligibility
+https://www.oscars.org/oscars/rules-eligibility
+
+S43 — 99th Oscars Rule Changes
+https://press.oscars.org/news/awards-rules-and-campaign-promotional-regulations-approved-99th-oscarsr
+
+S44 — 99th and 100th Oscars Dates
+https://press.oscars.org/news/academy-and-abc-announce-show-dates-99th-and-100th-oscarsr
+
+S45 — Television Academy 2026 Rules, Version 4
+https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf
+
+S46 — BAFTA Film Awards Information
+https://www.bafta.org/awards/awards-information/film/
+
+S47 — BAFTA Film Rules
+https://www.bafta.org/awards/film-rules/
+
+S48 — 33rd Actor Awards Rules
+https://www.actorawards.org/sites/default/files/33rd%20Annual%20Actor%20Awards%20Presented%20by%20SAG-AFTRA%20Rules%20%26%20Regulations.pdf
+
+S49 — 84th Golden Globes Rules
+https://goldenglobes.com/wp-content/uploads/2026/08/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES_8_3_2026.pdf
+
+S50 — 84th Golden Globes Calendar and Guidelines
+https://goldenglobes.com/articles/the-84th-annual-golden-globes-timetable-eligibility-rules-and-campaign-guidelines-announced/
+
+S51 — 2026 International Emmy Rules
+https://www.iemmys.tv/wp-content/uploads/2025/11/2026-International-Emmy-Awards-Rules-Regulations-.pdf
+
+S52 — International Emmy Judging
+https://www.iemmys.tv/entries-judging/judging-process/
+
+S53 — Spirit Awards FAQ
+https://www.filmindependent.org/spirit-awards/faq/
+
+S54 — Spirit Awards Submissions
+https://www.filmindependent.org/spirit-awards/submissions/
+
+S55 — AACTA 2027 Voting
+https://www.aacta.org/aacta-awards/voting-2027/
+
+S56 — AACTA 2027 Rulebook
+https://s3-ap-southeast-2.amazonaws.com/aacta-org-assets/Uploads/2027-AACTA-Awards-Rule-Book.pdf
+
+S57 — Critics Choice Categories and Submissions
+https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/
+
+S58 — Gotham Film Criteria
+https://awards.thegotham.org/criteria/
+
+S59 — Gotham Television Criteria
+https://televisionawards.thegotham.org/criteria/
+
+S60 — NATAS Rules
+https://theemmys.tv/rules/
+
+S61 — César Regulations
+https://www.academie-cinema.org/lacademie/reglement/
+
+S62 — César Voting
+https://www.academie-cinema.org/le-vote/
+
+S63 — Goya Bases
+https://www.premiosgoya.com/bases/
+
+S64 — Annie Awards
+https://annieawards.org/
+
+S65 — Cannes Submission Rules
+https://www.festival-cannes.com/en/take-part/submit-a-film/
+
+S66 — Venice 2026 Regulations
+https://www.labiennale.org/en/cinema/2026/regulations
+
+S67 — Berlin General Guidelines
+https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html
+
+S68 — Berlin Film Entry
+https://www.berlinale.de/en/film-entry/submission/start.html
+
+S69 — Sundance Submissions
+https://www.sundance.org/festivals/sundance-film-festival/submit/
+
+S70 — Sundance 2027 Submission FAQ
+https://www.sundance.org/wp-content/uploads/2026/06/2027_Submissions_FAQ.pdf
+
+S71 — Sundance 2027 Boulder Announcement
+https://www.sundance.org/blogs/2027-sundance-film-festival-to-take-place-january-21-31-in-boulder-colorado/
+
+S72 — TIFF Submissions
+https://tiff.net/submissions
+
+S73 — Annecy Film Submissions
+https://www.annecyfestival.com/en/take-part/submit-film
+
+S74 — Annecy Category Regulations
+https://helpdesk.annecyfestival.com/en/article/please-read-the-category-regulations-before-submitting-an-animation-film-1e4l5ur/
+
+S75 — IDFA 2026 Entry Regulations
+https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/
+
+S76 — IDFA Festival Entries
+https://professionals.idfa.nl/program/festival-entries/
+
+S77 — Busan International Film Festival
+https://www.biff.kr/
+
+S78 — Slow Horses: Apple Press
+https://www.apple.com/tv-pr/originals/slow-horses/
+
+S79 — Slow Horses Season-Six Announcement
+https://www.apple.com/tv-pr/news/2026/08/apple-tv-debuts-enthralling-trailer-for-season-six-of-emmy-and-bafta-award-winning-espionage-drama-slow-horses-starring-academy-award-winner-sir-gary-oldman/
+
+S80 — 9-1-1: ABC Press
+https://www.detpress.com/abc/shows/9-1-1/
+
+S81 — 9-1-1 Season Ten: Disney+
+https://www.disneyplus.com/explore/articles/911-season-10
+
+S82 — Amazon MGM Film Slate
+https://www.aboutamazon.com/news/entertainment/amazon-mgm-studios-films
+
+S83 — Universal Upcoming Films
+https://www.universalpictures.com/movies/
+
+S84 — Amazon MGM Press
+https://press.amazonmgmstudios.com/
+
+S85 — Severance Cast and Crew
+https://www.apple.com/tv-pr/originals/severance/cast-crew/
+
+S86 — Abbott Elementary Cast
+https://abc.com/show/e4f28254-2fc4-4cc1-b9bb-eee0564c178e/cast
+
+S87 — The Bear: Hulu Press
+https://press.hulu.com/shows/the-bear/
+
+S88 — 9-1-1 Cast
+https://abc.com/show/42bb0821-68c2-4543-8d0f-51ca8e7dbcf4/cast
+
+S89 — CAA Motion Pictures
+https://www.caa.com/entertainmenttalent/motion-pictures
+
+S90 — UTA Talent
+https://www.unitedtalent.com/talent
+
+S91 — WME Acting Talent
+https://www.wmeagency.com/expertise/acting-talent/
+
+S92 — Complete 99th Oscars Rules
+https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf?VersionId=84FilOcTNI7wpFAxl56.8xesZyP5.UWl
+
+S93 — Box Office Mojo: 2026 Week 42
+https://www.boxofficemojo.com/weekly/2026W42/?ref_=bo_wly_table_1
+Recorded measurement period: 16–22 October 2026.
+
+S94 — Netflix Global Movie Top Ten
+https://www.netflix.com/tudum/top10
+Recorded table period: 12–18 October 2026.
+Dynamic page: retain a dated snapshot.
+
+S95 — SAG-AFTRA Standard Television
+https://www.sagaftra.org/industry-resources/rates-agreements/standard-television
+High-level overview, not a universal current rate card.
+
+S96 — SAG-AFTRA Residuals Quick Guide
+https://www.sagaftra.org/sag-aftra-tv-and-theatrical-residuals-quick-guide
+Published 28 January 2021.
+Conceptual background only; current agreement controls.
+
+S97 — SAG-AFTRA 2026 Theatrical–Television Memorandum
+https://www.sagaftra.org/sites/default/files/2026-05/2026%20Theatrical-Television%20MOA.pdf
+Targeted extraction source; not fully clause-validated in this dossier.
+
+S98 — United Agents Roster
+https://www.unitedagents.co.uk/agents/
+
+S99 — United Agents Submissions
+https://www.unitedagents.co.uk/submission-guidelines/
+
+S100 — United Agents: Lindy King
+https://www.unitedagents.co.uk/agent/lindy-king/
+
+S101 — Stewart Talent About
+https://print.stewarttalent.com/about
+
+S102 — Stewart Talent Print Submissions
+https://print.stewarttalent.com/submissions
+
+S103 — Curtis Brown UK Actor Submissions
+https://www.curtisbrown.co.uk/page/actors-becoming-a-client
+Indexed official excerpt consulted; direct retrieval was blocked.
+
+S104 — UK Creative Worker Eligibility
+https://www.gov.uk/creative-worker-visa/eligibility
+
+S105 — Canada Employer-Specific Work Permits
+https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/employer-specific.html
+
+S106 — 99th Oscars Key Dates
+https://www.oscars.org/99th-oscars-and-academy-key-dates
+
+S107 — SAG-AFTRA 2026 Low Budget Theatrical Rate Sheet
+https://www.sagaftra.org/sites/default/files/2026-06/Current%20Low%20Budget%20Agreement%20%28LBA%29%20Rate%20Sheet.pdf
+Relevant rate rows and notes inspected.
+
+S108 — IMDb: Box Office Mojo FAQ
+https://help.imdb.com/article/imdbpro/industry-research/box-office-mojo-by-imdbpro-faq/GCWTV4MQKGWRAUAP
+
+S109 — Abbott Elementary: ABC Press
+https://www.detpress.com/abc/shows/abbott-elementary/
+
+S110 — Amazon: I Play Rocky
+https://www.aboutamazon.com/news/entertainment/i-play-rocky-trailer-cast-release-date-amazon-mgm-studios
+Article updated 22 October 2026.
+
+END OF SOURCE REGISTER.
+
+SLATE — RESEARCH DOSSIER
+SECTION 27
+
+LATEST SCOPE DECISION:
+WEEKLY INDUSTRY RANKINGS AND ANONYMOUS AWARD COMPETITION
+
+Revision: 23 October 2026.
+
+This section supersedes earlier requirements to display named outside nominees or simulate their complete personal careers.
+
+The player remains within an industry of real shows, films, companies, directors and collaborators.
+
+Outside productions currently provide:
+Industry slate.
+Market context.
+Weekly rankings.
+
+Do not build a full autonomous celebrity-career simulation merely to calculate competition.
+
+Real actors can still appear as researched collaborators.
+Anonymous awards are a separate presentation decision.
+Do not erase cast credits because competing nominees remain unnamed.
+
+27A. SHOW AND ROLE MATCHING
+
+Match the player to a role requirement within an active casting window—not directly to a famous show’s logo.
+
+Every opportunity needs a valid reason to exist.
+
+CHECK ORDER
+
+1. Project state
+Is this project or season developing or casting in the save?
+Released episodes are not available auditions.
+
+2. Role state
+Is the role open, already cast, returning, conditional or cancelled?
+Renewal alone does not create an opening.
+
+3. Practical feasibility
+Dates.
+Travel.
+Applicable work permissions.
+Contractual commitments.
+Preparation requirements.
+
+4. Essential capability
+Language.
+Vocal and physical requirements.
+Boundaries.
+Role-specific skills.
+Separate trainable needs from hard prerequisites.
+
+5. Creative fit
+Relevant attributes.
+Weighted genre fluency.
+Interpretation.
+Scene-partner needs.
+Production approach.
+
+6. Evidence
+Relevant samples and prior work.
+Unreleased work is not automatically public evidence.
+
+7. Access
+Agent submission.
+Referral.
+Showcase.
+Invitation.
+Open call.
+Direct interest.
+
+8. Selection
+Audition or meeting where appropriate.
+Creative approval.
+Budget.
+Negotiation.
+
+Conditional preliminary consideration may proceed while paperwork is unresolved where the process permits it.
+Actual paid work still requires applicable permission.
+
+Do not block every inquiry merely because final authorization has not yet been issued.
+
+KEEP FOUR ASSESSMENTS SEPARATE
+
+Likelihood of hearing about a role.
+Suitability for consideration.
+Selection-process performance.
+Final booking.
+
+Fame must not replace all four.
+
+PROPOSED SCORING STRUCTURE
+
+This is game design, not an industry formula.
+
+Normalize relevant signals to 0–1.
+Use nonnegative role-specific weights summing to one.
+Keep hard constraints outside the score.
+Missing evidence does not automatically mean zero ability.
+
+An 80/100 suitability score is not an 80% booking probability.
+Only display a probability after calibrating it as a probability.
+
+Established access and demonstrated ability are distinct.
+
+An excellent newcomer needs plausible entry routes.
+An established star can still be unsuitable.
+
+Avoid “cannot gain experience without experience” lockouts.
+Use appropriate small roles, open calls, showcases and referrals.
+
+SIMULATED MATCH EXPLANATIONS
+
+Slow Horses:
+“Your recent scene work shows controlled tension and dry humor. Casting wants to see your interpretation of this analyst role.”
+
+Abbott Elementary:
+“They liked the timing and listening in your comedy reel. The role is a visiting parent with scenes opposite the regular cast.”
+
+Original animation:
+“Your voice sample fits the character’s energy. The audition is a recording session; screen recognition carries less weight here.”
+
+Returning television role:
+“Production wants to discuss bringing your character back. The dates overlap your existing film commitment.”
+
+Film inquiry:
+“The director’s team saw your released supporting performance. They are checking interest and availability before discussing the role.”
+
+These are invented game-text examples, not actual casting notices.
+
+27B. BALANCE TARGETS
+
+Use matched conditions and paired random seeds.
+
+Improving a relevant attribute must not reduce expected work quality.
+
+Improving an irrelevant genre must not substantially improve unrelated work.
+
+Duplicate genre tags must not improve suitability.
+
+Tag order must not change results.
+
+Fame may affect access without automatically improving acting.
+
+An award may increase recognition but cannot create a role on a cancelled project.
+
+Small successes should create plausible opportunities without every next role becoming larger.
+
+Declining affects the relevant opportunity; generic declines must not produce unexplained global career collapse.
+
+Returning relationships have contextual value, not infinitely farmable bonuses.
+
+Public metrics may affect project interest and bargaining context but are not an automatic salary formula.
+
+Strong supporting work in an unsuccessful film can improve professional reputation.
+
+A successful film must not credit every performer equally for its success.
+
+An outstanding player can lose to a strong field.
+
+An inexperienced player must not receive a universal zero chance.
+
+Variation must follow context, not arbitrary daily rerolls.
+
+Record outcome distributions by:
+Experience.
+Capability.
+Access.
+Role size.
+Genre.
+Production type.
+
+Define target ranges before tuning.
+These are design targets, not discoverable laws of Hollywood.
+
+27C. TWO RANKING DATA LAYERS
+
+PUBLISHED REFERENCE CHARTS
+
+Preserve:
+Source values.
+Units.
+Territory.
+Measured week.
+Publication status.
+
+SAVE-WORLD CHARTS
+
+Reflect fictional productions and altered outcomes.
+Clearly label their numbers as simulated.
+
+Default:
+Keep real-world snapshots as reference data.
+Use a coherent simulated chart for the evolving player world.
+
+Do not insert a fictional player gross into an official table while leaving the table labeled official actuals.
+
+If a combined derived chart is offered:
+Label the ranking simulated.
+Retain provenance for inputs.
+
+An original film starring the player has no real gross to retrieve.
+A fictional extra season has no published actual audience.
+
+No live feed was installed during this research.
+Weekly updates are implementation requirements, not a monitoring service already running.
+
+27D. WEEKLY TABLE DESIGN
+
+DOMESTIC WEEKLY BOX OFFICE
+Rank.
+Title.
+Weekly gross.
+Rank movement.
+Use the provider’s market definition and seven-day period.
+Keep weekend reporting separate.
+
+COUNTRY BOX OFFICE
+Rank.
+Title.
+Local weekly gross.
+Country or grouped territory.
+Currency.
+Do not imply complete worldwide coverage.
+
+WORLDWIDE CHART
+Rank.
+Title.
+Defined-period gross.
+Enable only with comparable coverage and currency methodology.
+Otherwise show unavailable.
+
+NETFLIX MOVIES
+Rank.
+Title.
+Published views.
+Category.
+Week.
+Geographic scope.
+
+NETFLIX TELEVISION
+Rank.
+Series or season.
+Published views.
+Do not merge season records without a defined aggregation rule.
+
+NIELSEN STREAMING
+Rank.
+Title.
+Minutes viewed.
+Measurement scope.
+Chart category.
+
+PLATFORM RANK-ONLY CHART
+Rank.
+Title.
+Movement.
+Do not invent views when only positions are published.
+
+LINEAR TELEVISION
+Rank.
+Title.
+Audience metric.
+Measurement window.
+Unit.
+Do not equate it with streaming views.
+
+MISSING AND MOVEMENT RULES
+
+Unpublished value: Not Reported, not zero.
+
+Absent from a published Top 10: Outside Published Top 10, not automatically eleventh.
+
+“New” means new to the comparable chart record, not necessarily a new release.
+
+Calculate movement only between comparable charts.
+
+27E. DATED SNAPSHOT EXAMPLES
+
+The saved research recorded the following source observations on 23 October 2026.
+
+Treat these as dated ingestion fixtures to revalidate against their source snapshots before use, not permanently current values.
+
+Domestic weekly box office, 16–22 October 2026:
+Street Fighter — rank 1 — $37,177,832. [S93]
+You Can See Everything — rank 2 — $23,407,485. [S93]
+
+Netflix global movies, 12–18 October 2026:
+Animals — rank 1 — 30.8 million reported views. [S94]
+Doing Life — rank 2 — 7.3 million reported views. [S94]
+
+Nielsen US streaming overall, 5–11 October 2026:
+Carrie (2026) — rank 1 — 1,264 million minutes. [S37]
+Below — rank 2 — 1,187 million minutes. [S37]
+
+These are different periods, territories, populations and units.
+
+Preserve published rounding.
+Do not turn 30.8 million into fabricated extra precision.
+
+Preserve source revisions and estimate/actual labels.
+
+Use publication timestamps when known.
+Otherwise record first-observed time without inventing an exact publication timestamp.
+
+27F. WEEKLY UPDATE LOGIC
+
+1. Identify provider, chart and measured period.
+2. Fetch only through permitted access.
+3. Cache the record and provenance.
+4. Validate title IDs, categories, units, ranks, values and periods.
+5. Reject malformed updates without deleting the last valid snapshot.
+6. Store an immutable revision.
+7. Publish when the dataset is actually available.
+8. Update movement and only relevant downstream consumers.
+9. Notify once without flooding the inbox.
+10. Preserve prior weeks for history and trends.
+
+During outages, display the last available measured week and stale status.
+
+A game week ending does not mean every real provider has reported.
+
+SIMULATED FUTURE WEEKS
+
+Use:
+Availability.
+Release age.
+Distribution.
+Audience pool.
+Demand.
+Word of mouth.
+Competition.
+Production quality.
+
+Respect nonnegative values and relevant capacity.
+
+Do not make every film decline by one fixed percentage.
+
+Do not make a small player role determine an entire show’s audience.
+
+Compare weekly and cumulative values only within compatible scopes.
+
+A correction can lower a previously reported cumulative total.
+Preserve revisions rather than silently rewriting history.
+
+Chart publication and residual settlement are separate events.
+
+27G. ANONYMOUS AWARD FIELD
+
+Persist anonymous candidate IDs with:
+Category.
+Edition.
+Eligible work.
+Performance strength.
+Exposure.
+Applicable ballot data.
+
+No rival actor names, biographies, gossip or complete autonomous careers are required.
+
+Candidate attributes are simulation parameters, not secret real-world voter information.
+
+Generate and persist the field for the competition.
+Do not regenerate it when the player opens the screen.
+
+STATES
+
+Not eligible.
+Eligible, not entered.
+Entered, not nominated.
+Nominated, awaiting result.
+Nominated, did not win.
+Won.
+Disqualified or withdrawn where supported.
+
+ILLUSTRATIVE LOSS TEXT
+
+“You were nominated for your work in [Project]. You did not win this year.”
+
+ILLUSTRATIVE WIN TEXT
+
+“You won [Exact Category] for [Project] at the [Edition] Academy Awards.”
+
+Use the institution’s actual applicable category title in shipped UI.
+
+A lost nomination remains a nomination.
+
+“Not nominated” is not “lost at the ceremony.”
+
+When the player loses, persist an unnamed competing winner.
+The UI only needs to report the player’s result.
+
+Preserve supported ties or co-winners.
+
+WHEN THE PLAYER WINS
+
+Create one permanent record:
+Exact category.
+Edition.
+Work.
+Recipient type.
+Date.
+
+Update:
+Profile.
+Applicable résumé references.
+Career history.
+
+Apply bounded, contextual recognition and professional-interest effects.
+
+Generate relevant messages and publicity choices.
+
+Do not automatically:
+Deposit prize money.
+Guarantee a larger role.
+Increase an existing salary.
+Guarantee next year’s victory.
+Re-award the category on reload.
+
+Anonymous visibility does not mean an arbitrary coin flip or automatic player victory.
+Apply eligibility and published competition structure.
+
+27H. ADDITIONAL ACCEPTANCE CASES — T61–T84
+
+T61 — Famous show is not casting.
+Expected: no invented current vacancy labeled verified.
+
+T62 — Series renewed without player’s character.
+Expected: no automatic returning offer.
+
+T63 — Excellent novice versus famous weak fit.
+Expected: ability and fit matter; access remains separate.
+
+T64 — Deadline passes while offer page is open.
+Expected: acceptance revalidates current state.
+
+T65 — Higher relevant capability.
+Expected: better expected performance without forced wins.
+
+T66 — Mixed genres reordered or duplicated.
+Expected: no inflation or order dependency.
+
+T67 — Rank published without number.
+Expected: rank shown; audience Not Reported.
+
+T68 — Title leaves Top 10.
+Expected: no invented rank eleven or zero audience.
+
+T69 — Weekly and weekend charts.
+Expected: separate periods, no double counting.
+
+T70 — Netflix versus Nielsen.
+Expected: units, territories and periods remain visible.
+
+T71 — Provider outage.
+Expected: dated last-valid chart retained.
+
+T72 — Revised chart.
+Expected: revision tracked; no duplicate payment.
+
+T73 — Fictional player film enters market.
+Expected: derived chart labeled simulated.
+
+T74 — Unreleased film.
+Expected: no ordinary released-film box-office revenue.
+
+T75 — Old series returns to streaming chart.
+Expected: possible rediscovery without false new-release label.
+
+T76 — Anonymous award field.
+Expected: no rival names leak through screens or messages.
+
+T77 — Entered but not nominated.
+Expected: correct state, no ceremony-loss record.
+
+T78 — Nominated but did not win.
+Expected: nomination preserved; anonymous winner persisted.
+
+T79 — Award win followed by reload.
+Expected: one award and one recognition update.
+
+T80 — Ceremony skipped.
+Expected: same result; no automatic punishment/disqualification.
+
+T81 — Outdated performance entered later.
+Expected: blocked unless a verified rule permits it.
+
+T82 — Award creates new interest.
+Expected: schedule and eligibility still apply.
+
+T83 — Skill rises after completed work.
+Expected: old performance is not retroactively upgraded.
+
+T84 — Outside celebrity careers disabled.
+Expected: rankings and anonymous awards still function.
+
+27I. COMPLETION STANDARD
+
+Before claiming implementation complete, deliver:
+Working authorized adapters or explicit fixtures.
+Verified rules for supported competitions.
+Calibrated matching tests.
+Persistent anonymous fields.
+UI walkthroughs.
+Required repository gate results.
+
+Unsupported sources and rules remain visible in the coverage register.
+
+This specifies design direction.
+It does not certify exhaustive worldwide research or implementation.
+
+END OF BLOCK 3.
+
+SLATE — RESEARCH DOSSIER
+SECTIONS 28–29
+
+28. RETURNING WORK, DISRUPTIONS AND THE WEEKLY CAREER LOOP
+
+28A. SOURCE BOUNDARY
+
+SAG-AFTRA’s television overview distinguishes per-episode compensation and series options/exclusivity. [S95]
+
+Use it as orientation, not a replacement for the applicable agreement and current rate card.
+
+Consult the 2026 FAQ and memorandum for changes. [S21] [S97]
+
+Do not copy a 2023 option threshold into a 2026 contract without checking applicability.
+
+The 2021 residual guide explains the distinction between initial compensation and later exploitation compensation, including union processing. [S96]
+
+Use that older guide for conceptual background only.
+Its old figures and timing examples are not verified universal current rules.
+
+The lifecycle models below are proposed game design.
+Each entitlement must reference an applicable clause or an explicitly fictional negotiated contract.
+
+28B. SEPARATE LIFECYCLES
+
+SERIES
+Developing.
+Ordered.
+Active.
+Awaiting decision.
+Renewed.
+Final season announced.
+Cancelled.
+Revival under development.
+
+SEASON
+Ordered.
+Casting.
+Preparing.
+Shooting.
+Post-production.
+Releasing.
+Completed.
+Suspended.
+Abandoned.
+
+EPISODE
+Planned.
+Scripted.
+Scheduled.
+Shot.
+Edited.
+Delivered.
+Released.
+Withdrawn.
+
+CHARACTER
+Planned.
+Introduced.
+Continuing.
+Temporarily absent.
+Written out.
+Return possible.
+
+ENGAGEMENT
+Inquiry.
+Audition.
+Offer.
+Negotiation.
+Signed.
+Working.
+Services completed.
+Closed.
+
+OPTION
+Not applicable.
+Pending.
+Exercised.
+Expired.
+Released.
+Disputed.
+
+RELEASE
+Planned.
+Confirmed.
+Delayed.
+Released.
+Withdrawn.
+Use separate territory/window records.
+
+PAYMENT
+Estimated.
+Earned.
+Invoiced where applicable.
+Due.
+Paid.
+Overdue.
+Disputed.
+
+A renewed series does not automatically renew every performer.
+
+A cancelled series may still release completed episodes.
+
+Completed work may remain unreleased.
+
+Writing a character out does not delete an agreement or erase earned pay.
+
+Do not represent all outcomes with one “active” flag.
+
+Every transition records:
+Timestamp.
+Responsible party.
+Reason.
+Previous state.
+New state.
+Dependent events.
+
+Keep spoilers separate from information communicated to the player.
+
+28C. RETURNING-SEASON SEQUENCE
+
+1. Record existing appearances, work, credits and obligations.
+2. Evaluate season results using the correct measurement periods.
+3. Model commissioning using budget, strategy, audience trajectory, rights and creative plans.
+4. Decide whether the character belongs in the next season.
+5. Check the existing option and its exact conditions.
+6. If no option applies, use a new offer/negotiation.
+7. Send a dated message distinguishing inquiry from confirmation.
+8. Show guarantee, expected appearances, pay basis, dates, location, options and unresolved conditions.
+9. Check overlapping commitments and travel.
+10. Seek allowed adjustment or release instead of silently cancelling earlier work.
+11. Apply an actual contractual increase where provided; otherwise negotiate.
+12. Create the engagement only after its acceptance conditions are met.
+13. Carry continuity, preparation and relationships forward.
+14. Resolve the new season through its own work, releases, metrics and award eligibility.
+
+Do not label the commissioning model an actual network’s proprietary formula.
+
+Do not expose private retention as public knowledge.
+
+A multi-season order does not guarantee every episode to the player.
+
+Show separately:
+Ordered episodes.
+Contracted minimum.
+Planned appearances.
+Actually worked episodes.
+
+28D. INBOX ACTIONS AND CONSEQUENCES
+
+AVAILABILITY INQUIRY
+Actions: available, request details, decline.
+Effect: stated availability changes.
+No contract or salary is created.
+
+AUDITION INVITATION
+Actions: accept appointment, request permitted alternative, decline.
+Effect: reserve the appropriate commitment level and record deadline.
+
+OFFER
+Actions: review, counter, decline, accept complete binding terms.
+Effect: version negotiations and recheck conflicts/eligibility.
+
+OPTION NOTICE
+Actions: inspect agreement, acknowledge, request representative review.
+Effect: apply actual contractual rights.
+Do not pretend every option notice is freely optional.
+
+SCHEDULE CHANGE
+Actions: inspect conflicts, request accommodation, confirm.
+Effect: revalidate travel, school and other engagements.
+
+SCRIPT REVISION
+Actions: read, prepare, raise concerns.
+Effect: update scene version and preparation.
+
+PAYMENT NOTICE
+Actions: inspect breakdown, reconcile receipt, report discrepancy.
+Effect: reconcile the ledger, never create a second deposit.
+
+AWARD NOTICE
+Actions: inspect category, submission, ceremony and attendance.
+Effect: correct nomination or award state.
+Attendance alone does not decide victory.
+
+Reading may mark a message read without changing attributes.
+
+Declining one opportunity is not a universal permanent reputation penalty.
+
+Consequences depend on commitments, notice, conduct and relationship history.
+
+28E. DISRUPTION AND RECOVERY
+
+PRODUCTION POSTPONED
+Preserve: signed terms and completed work.
+Recalculate: dates, conflicts, travel and applicable obligations.
+
+EPISODE ORDER REDUCED
+Preserve: actual guarantee and work history.
+Recalculate: appearances, remaining services and clause-based compensation.
+
+CHARACTER CUT IN EDITING
+Preserve: performed work.
+Recalculate: released credit/footage, applicable residual eligibility and awards.
+
+SHOW CANCELLED
+Preserve: history, earned pay and eligible released work.
+Recalculate: future opportunities, option status and unfinished release plans.
+
+TITLE REMOVED FROM PLATFORM
+Preserve: prior releases and audience snapshots.
+Recalculate: current availability and future exploitation.
+
+DISTRIBUTOR CHANGES
+Preserve: stable work identity.
+Recalculate: rights, territories/windows and contractual effects.
+
+REVIVAL YEARS LATER
+Preserve: original dates and results.
+Recalculate: rights, engagement, availability and eligibility.
+
+PERFORMER UNAVAILABLE
+Preserve: other projects’ independent state.
+Recalculate: permitted cover, rescheduling, release or termination.
+
+RELEASE CROSSES A DEADLINE
+Preserve: work and payment history.
+Recalculate: competition eligibility, submission validity and notices.
+
+Do not invent cancellation fees, guaranteed pay, clawbacks or blanket termination rights.
+Apply the specific contract.
+Unsupported clauses remain unresolved.
+
+28F. WEEKLY ADVANCE ORDER
+
+Use timestamps and dependencies.
+
+1. Resolve due deadlines and responses.
+2. Apply calendar obligations, work and elapsed travel.
+3. Record earnings and independently process settlements.
+4. Apply releases and distribution changes.
+5. Ingest dated reference charts or generate labeled simulation.
+6. Update exposure and reception.
+7. Reevaluate project decisions and opportunities.
+8. Deliver messages with believable response windows.
+9. Process festivals and awards on their edition calendars.
+10. Save and show a useful recap.
+
+If Advance crosses an actionable deadline:
+Pause beforehand, or apply an explicitly configured response policy.
+
+Do not automatically accept binding offers to keep time moving.
+
+Do not force repeated clicks through unchanged low-priority information.
+
+Renewals and other events retain their own dates.
+Weekly reporting is a presentation interval.
+
+28G. QUALITY, EXPOSURE AND BUSINESS RESULTS
+
+Keep distinct:
+Player performance quality.
+Whole-project quality.
+Public exposure.
+Audience satisfaction.
+Commercial outcome.
+Awards recognition.
+
+Relevant maxed abilities should produce consistently strong controllable execution under matched conditions.
+
+They do not force:
+An excellent script.
+Large marketing spend.
+Broad distribution.
+A compatible role.
+Profit.
+Awards.
+
+Poor project reception must not erase demonstrably strong acting skills.
+
+For mixed genres, derive scene demands first.
+
+A comic scene in a thriller can use comedy without equally averaging every project genre.
+
+Separate acting from editing, direction and project context.
+
+Do not add the same skill bonus at audition, filming and release as three duplicate boosts to one outcome.
+
+Audience curves should depend on:
+Release pattern.
+Availability.
+Exposure.
+Response.
+Competing releases.
+
+Allow growth, decline and rediscovery.
+
+Do not impose one decay percentage on every title.
+
+Calibrate using distributions and held-out scenarios.
+Do not call coefficients perfect without measured targets.
+
+Awards can affect visibility and suitable opportunities.
+They do not rewrite contracts, create fictional prizes or guarantee future wins.
+
+28H. ILLUSTRATIVE 9-1-1 PLAYTHROUGH
+
+This is fictional save-world gameplay using a real show title, not an actual casting opening.
+
+Your representative forwards an inquiry for a new recurring character in a simulated future season.
+
+You inspect the role, episode range, location, preparation and availability.
+
+You accept an audition appointment.
+It appears alongside school and other commitments.
+
+The audition evaluates relevant scene demands.
+A callback depends on fit and competition, not one overall rating.
+
+An offer arrives:
+Three guaranteed episodes, with possible additional appearances.
+
+This is separate from the season’s overall episode count.
+
+You negotiate or accept terms, resolve requirements, prepare and attend work.
+
+Scenes can be filmed out of broadcast order.
+Reports retain episode and scene IDs.
+
+Payroll follows earnings and settlement rules.
+Release need not happen first.
+
+Episodes air later.
+Weekly reports use correct metrics and truth labels.
+
+Reception and visibility can create inquiries.
+Rankings do not instantly create residual deposits.
+
+Awards use the correct edition and personal eligibility.
+The series being nominated does not automatically nominate you.
+
+If nominated but not selected, the nomination remains.
+
+If you win an eligible personal award, the exact award is permanently recorded.
+
+Renewal still requires the option/new-offer process.
+
+Cancellation preserves history and allows the career to continue.
+
+28I. FINAL ACCEPTANCE CASES — T85–T100
+
+T85 — Series renewed, character not returning.
+Expected: no automatic engagement.
+
+T86 — Multi-season order with limited guarantee.
+Expected: player not paid for every ordered episode.
+
+T87 — Inquiry accepted.
+Expected: no fabricated contract, salary or binding service.
+
+T88 — Offer during existing engagement.
+Expected: conflict visible and explicitly resolved.
+
+T89 — Option exercised.
+Expected: correct contract version and conditions.
+
+T90 — Option expires.
+Expected: status changes once; no endless hold.
+
+T91 — Cancellation after completed work.
+Expected: valid earnings and history survive.
+
+T92 — Entire performance edited out.
+Expected: released-performance checks reevaluated separately from wages.
+
+T93 — Revival years later.
+Expected: new engagement and award cycle; old history unchanged.
+
+T94 — Release crosses eligibility boundary.
+Expected: recalculation using applicable edition rules.
+
+T95 — Advance crosses reply deadline.
+Expected: warning or explicit response policy.
+
+T96 — Payment notice replayed.
+Expected: no duplicate money.
+
+T97 — Chart revised.
+Expected: prior snapshot retained; no duplicate exposure or payments.
+
+T98 — Excellent acting in unsuccessful production.
+Expected: execution and skills distinct from commercial outcome.
+
+T99 — Mixed-genre scene.
+Expected: relevant demands; no duplicate skill stacking.
+
+T100 — Reload during cancellation/renewal.
+Expected: same decisions, history and pending obligations.
+
+29. RESEARCH GAP REGISTER AND VERIFIED STARTER RECORDS
+
+This section adds concrete findings and boundaries.
+It does not reclassify worldwide research or unimplemented code as complete.
+
+29A. REPRESENTATION
+
+UNITED AGENTS
+
+The official actors roster identifies Jess Alford, Sophie Austin, Joel Keating, Lindy King and others. [S98]
+
+These identities can seed individual records.
+Private preferences and current client relationships require separate evidence.
+
+LINDY KING
+
+Official profile identifies her as an agent and Tessa Schiller as associate agent. [S100]
+
+Do not confuse principal agent, associate and assistant.
+Do not invent capacity to accept new clients.
+
+UNITED AGENTS SUBMISSION
+
+Published actor guidance requests:
+CV.
+Headshot.
+Showreel.
+Submission to one agent.
+
+No reply within the stated 4–6 weeks is treated as unsuccessful.
+Telephone submission inquiries are not accepted. [S99]
+
+Implement the actor route.
+Do not copy the department’s writer rules onto performers.
+
+STEWART TALENT
+
+Official material describes offices in Chicago, Atlanta, Los Angeles and New York and multiple representation areas. [S101]
+
+The print site has an image-submission form. [S102]
+
+That does not verify the theatrical submission process or a specific theatrical agent.
+
+CURTIS BROWN UK
+
+An indexed official actor-guidance excerpt identifies a targeted representation approach. [S103]
+
+Direct retrieval returned 403.
+Reverify detailed requirements before enforcing them.
+
+Do not confuse the UK agency with another company’s book-submission rules.
+
+CAA, UTA AND WME
+
+Sources establish acting/motion-picture services. [S89–S91]
+
+They do not establish every agent-client relationship, open-submission policy or guaranteed path.
+
+All simulated interest and dialogue remain fictional.
+No external email or application is authorized.
+
+29B. CONCRETE PRODUCTION SEEDS
+
+These are factual reference records, not verified vacancies.
+Attached performers are not automatically replaceable.
+
+9-1-1
+ABC lists Angela Bassett, Jennifer Love Hewitt, Oliver Stark, Kenneth Choi, Aisha Hinds and Ryan Guzman.
+It identifies 20th Television, Ryan Murphy Television and Brad Falchuk Teley-Vision, with Tim Minear as showrunner. [S80]
+Gameplay: procedural preparation, action coordination, continuity and recurring-role negotiations.
+
+SLOW HORSES
+Apple lists Gary Oldman, Kristin Scott Thomas, Jack Lowden and Saskia Reeves.
+The retrieved general page lists Saul Metzstein as director. [S78]
+Resolve season-specific attachment differences with earlier material before implementation.
+Gameplay: espionage drama and dark-comedy scene demands.
+
+SEVERANCE
+Apple lists Adam Scott, Patricia Arquette, Britt Lower, Tramell Tillman and others.
+Dan Erickson is credited as creator; Ben Stiller appears among executive producers. [S85]
+Gameplay: ensemble serialized storytelling.
+Do not merge creator, producer and director roles.
+
+ABBOTT ELEMENTARY
+ABC lists Quinta Brunson, Tyler James Williams, Janelle James and Sheryl Lee Ralph.
+Warner Bros. Television and 20th Television are identified as producers. [S109]
+Gameplay: workplace comedy, timing, ensemble and mockumentary demands.
+Those gameplay demands are design proposals.
+
+MASTERS OF THE UNIVERSE
+Amazon’s slate names Travis Knight, Nicholas Galitzine, Camila Mendes and Idris Elba. [S82]
+Use as a project reference, not proof of unfilled roles.
+
+HOW TO ROB A BANK
+The slate names David Leitch, Nicholas Hoult, Zoë Kravitz and Anna Sawai. [S82]
+Use for action-heist workflow research, not an invented current casting notice.
+
+THE THOMAS CROWN AFFAIR
+The slate names Michael B. Jordan as director/star and Adria Arjona as co-star. [S82]
+A player offer remains fictional.
+
+SPACEBALLS: THE NEW ONE
+The slate names Josh Greenbaum and cast including Rick Moranis, Josh Gad and Keke Palmer. [S82]
+Announcement does not establish current casting availability.
+
+I PLAY ROCKY
+The updated article identifies Peter Farrelly and Anthony Ippolito.
+It distinguishes a 6 November 2026 select-theater release from wider release later in November. [S110]
+Do not let the older slate’s date overwrite the more specific limited-release event.
+
+Read season-specific cast records individually.
+Do not reuse a previous season’s director or filming location without evidence.
+
+29C. GEOGRAPHY AND COMPENSATION
+
+UK CREATIVE WORKER
+
+Eligibility includes sponsorship and maintenance conditions with exceptions.
+
+The published maintenance example is £1,270 held for 28 days, subject to timing and exemption rules. [S104]
+
+Implement the complete condition, not a simple balance comparison.
+
+This route is not required for every citizenship or immigration status.
+
+CANADA
+
+Employer-specific permit conditions can make employer, occupation and location material. [S105]
+
+Visitor permission is not universal filming authorization.
+
+A specialized film-worker URL was inaccessible.
+Its detailed exemption criteria remain unresolved here.
+
+COUNTRY COVERAGE
+
+Sources S01–S12 support research entry points.
+They are not eight completed immigration and tax engines.
+
+LOW BUDGET THEATRICAL RATE FIXTURE
+
+The cited 2026 SAG-AFTRA sheet lists:
+Day performer: USD834.
+Weekly performer: USD2,896.
+Effective 1 July 2026.
+
+From 1 July 2027:
+Day performer: USD859.
+Weekly performer: USD2,984. [S107]
+
+These apply to that agreement and classification only.
+The governing agreement controls conflicts.
+
+Do not derive the weekly minimum by multiplying the day rate by five.
+
+Keep employer contributions, deductions, commission and reimbursements separate.
+
+Above-scale negotiated wages may be simulated.
+Do not present them as a real celebrity’s confidential salary.
+
+TAX
+
+Evaluate:
+Residency.
+Work location.
+Income type.
+Tax year.
+Applicable treaty or relief.
+Supporting documentation.
+
+Withholding is not final liability.
+Unsupported exact treatment stays unsupported.
+
+29D. AWARD AND FESTIVAL CORRECTIONS
+
+99TH OSCARS CALENDAR
+
+The published calendar gives:
+Final General Entry submission: 12 November 2026.
+Nominations announcement: 21 January 2027.
+Ceremony: 14 March 2027. [S106]
+
+Other categories have different deadlines.
+Dates may change.
+
+Store each deadline separately.
+Ceremony year is not eligibility year.
+
+CANNES
+
+The 2026 guidance distinguishes sections and separate organizations.
+
+The general feature threshold is over 60 minutes.
+
+It restricts prior international festival selection and internet exhibition. [S65]
+
+Important correction:
+Submission alone is not universally the trigger.
+Public screening is not always the only trigger.
+
+Track:
+Submission.
+Selection.
+Acceptance.
+Exhibition.
+
+Apply the specific rule.
+
+VENICE
+
+2026 Official Selection generally requires world premieres and restricts prior distribution/exhibition.
+
+Immersive and independent sections have separate conditions. [S66]
+
+Do not copy one section’s rules onto the entire festival.
+
+EDITION CONTROL
+
+Keep 2026 rules for historical 2026 events.
+
+Do not relabel them as verified 2027 rules.
+
+Extract category inventories and rule references before activating eligibility decisions.
+
+A film-level prize does not necessarily make every actor a personal recipient.
+
+29E. WEEKLY NUMBERS AND ACCESS
+
+Box Office Mojo’s FAQ directs data-licensing inquiries to IMDb’s licensing service.
+
+It also distinguishes grouped-territory reporting from individual-country reporting. [S108]
+
+Public readability does not establish unrestricted ingestion rights.
+
+No subscription or licensed feed was purchased or connected during this research.
+
+Implement:
+Authorized provider integration where available.
+Dated imported reference snapshots.
+Clearly labeled save-world simulation.
+
+Private retention, completion, undisclosed revenue and unreleased results cannot be invented as research.
+
+Rank-only data remains rank-only.
+
+Nielsen client delivery cadence does not establish identical public-chart cadence. [S38]
+
+Future simulated weeks are not current real-world facts.
+
+29F. GAP CLOSURE STATUS
+
+AGENTS
+Delivered:
+Official named roster and one specified actor-submission route.
+Still required:
+Wider individual profiles, representation verification and functioning gameplay.
+
+CATALOG
+Delivered:
+Nine concrete project seeds with collaborators.
+Still required:
+Expanded current catalog and field-level verification.
+
+COUNTRIES
+Delivered:
+Source registry and targeted conditions.
+Still required:
+Complete applicable rule extraction and tests.
+
+PAY
+Delivered:
+One exact effective-dated fixture and agreement sources.
+Still required:
+Rules and exceptions for every enabled workflow.
+
+AWARDS AND FESTIVALS
+Delivered:
+Edition sources, dates and corrected premiere logic.
+Still required:
+Complete category extraction and tested adjudication.
+
+WEEKLY METRICS
+Delivered:
+Providers, units, truth modes and access requirements.
+Still required:
+Authorized integrations or imports, outage handling and refresh.
+
+SOFTWARE PROOF
+Delivered:
+100 proposed acceptance cases and implementation gates.
+Still required:
+Actual repository audit, implementation, executed tests and measured balance.
+
+FINAL HANDOFF INSTRUCTION
+
+The research dossier is now complete as a delivered planning document through Section 29.
+
+It is not a claim of complete worldwide factual verification or completed game implementation.
+
+Use it with the master implementation command.
+
+Preserve the distinction between:
+Verified facts.
+Simulation design.
+Unresolved research.
+Implemented features.
+Executed test results.
+
+Continue through authorized implementation and testing.
+Do not hide external blockers or label unexecuted scenarios as passed.
+
+ALL RESEARCH PARTS SENT — BEGIN THE REPOSITORY AUDIT AND IMPLEMENTATION USING THE MASTER COMMAND.

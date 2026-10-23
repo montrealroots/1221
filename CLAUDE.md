@@ -108,7 +108,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-twenty-two checks: title-case, label-sweep, plural-check, voice-check, tics,
+twenty-three checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
 traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
 which fails an audit row whose cited test or line doesn't hold, and
@@ -140,7 +140,14 @@ names; a row whose feature is gone, still seeded or with an empty field; a statu
 that isn't one of the owner's seven; a mechanic with no consumer at a file and line
 that exists; a verified row or promise with no test the gate runs, or a verified
 command none of whose tests issues it; and an `EFFECTS.md` that isn't the matrix as
-it stands). This said twenty-one until brief 20 on 2026-10-22, twenty until brief 17 on
+it stands) and career-register (added 2026-10-23 at the owner's brief 25, after
+effects: it fails a row of brief 25's coverage register in
+`docs/verification/career-world-2026-10-23/` that was recorded once and is gone, a
+status that isn't one of the owner's seven, a track that isn't yes, no, partial or
+n/a, a file, test or evidence that isn't there, a test whose cited words it doesn't
+hold, a row called verified without tests, a scenario called verified that no test
+names, a source called verified that the build hasn't read, and a `REGISTER.md`
+that isn't the register as it stands). This said twenty-two until brief 25 on 2026-10-23, twenty-one until brief 20 on 2026-10-22, twenty until brief 17 on
 2026-10-20, nineteen until the end of brief 14 on 2026-10-17, eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with
