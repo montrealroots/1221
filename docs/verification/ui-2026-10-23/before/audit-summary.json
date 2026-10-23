@@ -1,0 +1,8685 @@
+{
+ "steps": 2040,
+ "sizes": {
+  "1280x720": {
+   "steps": 224,
+   "pageWider": 0,
+   "bleed": 0,
+   "cut": 8,
+   "squeezed": 13,
+   "clipped": 0,
+   "smallTargetsPerStep": 51.7,
+   "stepsWithSmallTargets": 224,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 92,
+   "railShown": 224,
+   "tabBarsOverflowing": 0,
+   "tabBarsHalfShownNoCue": 0,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "1440x900": {
+   "steps": 224,
+   "pageWider": 0,
+   "bleed": 0,
+   "cut": 7,
+   "squeezed": 13,
+   "clipped": 0,
+   "smallTargetsPerStep": 51.8,
+   "stepsWithSmallTargets": 224,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 94,
+   "railShown": 224,
+   "tabBarsOverflowing": 0,
+   "tabBarsHalfShownNoCue": 0,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "1920x1080": {
+   "steps": 224,
+   "pageWider": 0,
+   "bleed": 0,
+   "cut": 7,
+   "squeezed": 13,
+   "clipped": 0,
+   "smallTargetsPerStep": 51.8,
+   "stepsWithSmallTargets": 224,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 95,
+   "railShown": 224,
+   "tabBarsOverflowing": 0,
+   "tabBarsHalfShownNoCue": 0,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "1024x768": {
+   "steps": 224,
+   "pageWider": 0,
+   "bleed": 0,
+   "cut": 8,
+   "squeezed": 26,
+   "clipped": 0,
+   "smallTargetsPerStep": 51.5,
+   "stepsWithSmallTargets": 224,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 93,
+   "railShown": 224,
+   "tabBarsOverflowing": 0,
+   "tabBarsHalfShownNoCue": 0,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "760x900": {
+   "steps": 224,
+   "pageWider": 1,
+   "bleed": 1,
+   "cut": 8,
+   "squeezed": 27,
+   "clipped": 0,
+   "smallTargetsPerStep": 45.3,
+   "stepsWithSmallTargets": 224,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 94,
+   "railShown": 0,
+   "tabBarsOverflowing": 0,
+   "tabBarsHalfShownNoCue": 0,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "667x375m": {
+   "steps": 232,
+   "pageWider": 232,
+   "bleed": 232,
+   "cut": 8,
+   "squeezed": 232,
+   "clipped": 0,
+   "smallTargetsPerStep": 47.3,
+   "stepsWithSmallTargets": 232,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 85,
+   "railShown": 8,
+   "tabBarsOverflowing": 48,
+   "tabBarsHalfShownNoCue": 48,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "844x390m": {
+   "steps": 232,
+   "pageWider": 0,
+   "bleed": 0,
+   "cut": 8,
+   "squeezed": 17,
+   "clipped": 0,
+   "smallTargetsPerStep": 48.2,
+   "stepsWithSmallTargets": 232,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 86,
+   "railShown": 8,
+   "tabBarsOverflowing": 0,
+   "tabBarsHalfShownNoCue": 0,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "932x430m": {
+   "steps": 224,
+   "pageWider": 0,
+   "bleed": 1,
+   "cut": 8,
+   "squeezed": 29,
+   "clipped": 0,
+   "smallTargetsPerStep": 51.4,
+   "stepsWithSmallTargets": 224,
+   "headerHeight": [
+    56
+   ],
+   "contentShareMin": 87,
+   "railShown": 224,
+   "tabBarsOverflowing": 48,
+   "tabBarsHalfShownNoCue": 48,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  },
+  "390x844m": {
+   "steps": 232,
+   "pageWider": 11,
+   "bleed": 0,
+   "cut": 0,
+   "squeezed": 90,
+   "clipped": 0,
+   "smallTargetsPerStep": 47.9,
+   "stepsWithSmallTargets": 232,
+   "headerHeight": [
+    106
+   ],
+   "contentShareMin": 87,
+   "railShown": 8,
+   "tabBarsOverflowing": 168,
+   "tabBarsHalfShownNoCue": 168,
+   "tabBarsActiveHidden": 0,
+   "dialogsNotFitting": 0,
+   "dialogFootHidden": 0,
+   "rotateScreen": 0
+  }
+ },
+ "failing": {
+  "1280x720 Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1280x720 Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\"",
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Audition: Hester Vane, The Winter Ledger\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"Meeting The Acting Faculty\"",
+     "span.cal-event \"The Building, The Studios And The Library\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Carlotta Festival Of New Plays: Read-Through\"",
+     "span.cal-event \"Carlotta Festival Of New Plays: Blocking Rehears\"",
+     "span.cal-event \"Carlotta Festival Of New Plays: Blocking Rehears\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1280x720 School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 73px wide, 8 lines",
+     "td \"Spring Term 2028\" 73px wide, 8 lines",
+     "td \"Spring Term 2029\" 73px wide, 8 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 73px wide, 8 lines",
+     "td \"Spring Term 2028\" 73px wide, 8 lines",
+     "td \"Spring Term 2029\" 73px wide, 8 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 75px wide, 7 lines",
+     "td \"Spring Term 2028\" 75px wide, 7 lines",
+     "td \"Spring Term 2029\" 75px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 73px wide, 8 lines",
+     "td \"Spring Term 2028\" 73px wide, 8 lines",
+     "td \"Spring Term 2029\" 73px wide, 8 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 75px wide, 7 lines",
+     "td \"Spring Term 2028\" 75px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1440x900 Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 85px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 85px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 82px wide, 4 lines",
+     "td.xs \"Not held back today\" 82px wide, 4 lines",
+     "td.xs \"Not held back today\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 88px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1440x900 Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The Winter Ledger: Rehearsal\"",
+     "span.cal-event \"The Winter Ledger: Rehearsal\"",
+     "span.cal-event \"The Winter Ledger: Rehearsal\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Audition: Hester Vane, The Winter Ledger\"",
+     "span.cal-event \"Casting Decides: Hester Vane\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"The Building, The Studios And The Library\"",
+     "span.cal-event \"The Courses And What They Ask\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Carlotta Festival Of New Plays: Read-Through\"",
+     "span.cal-event \"Carlotta Festival Of New Plays: Blocking Rehears\"",
+     "span.cal-event \"Carlotta Festival Of New Plays: Blocking Rehears\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1440x900 School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 78px wide, 6 lines",
+     "td \"Spring Term 2028\" 78px wide, 6 lines",
+     "td \"Spring Term 2029\" 78px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 78px wide, 6 lines",
+     "td \"Spring Term 2028\" 78px wide, 6 lines",
+     "td \"Spring Term 2029\" 78px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 81px wide, 5 lines",
+     "td \"Spring Term 2028\" 81px wide, 5 lines",
+     "td \"Spring Term 2029\" 81px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 78px wide, 6 lines",
+     "td \"Spring Term 2028\" 78px wide, 6 lines",
+     "td \"Spring Term 2029\" 78px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 81px wide, 5 lines",
+     "td \"Spring Term 2028\" 81px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1920x1080 Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 89px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 89px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 86px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 92px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1920x1080 Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The Winter Ledger: Rehearsal\"",
+     "span.cal-event \"The Winter Ledger: Rehearsal\"",
+     "span.cal-event \"The Winter Ledger: Rehearsal\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Audition: Hester Vane, The Winter Ledger\"",
+     "span.cal-event \"Casting Decides: Hester Vane\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"The Building, The Studios And The Library\"",
+     "span.cal-event \"The Courses And What They Ask\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Carlotta Festival Of New Plays: Read-Through\"",
+     "span.cal-event \"Carlotta Festival Of New Plays: Blocking Rehears\"",
+     "span.cal-event \"Carlotta Festival Of New Plays: Blocking Rehears\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1920x1080 School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 79px wide, 6 lines",
+     "td \"Spring Term 2028\" 79px wide, 6 lines",
+     "td \"Spring Term 2029\" 79px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 79px wide, 6 lines",
+     "td \"Spring Term 2028\" 79px wide, 6 lines",
+     "td \"Spring Term 2029\" 79px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 82px wide, 5 lines",
+     "td \"Spring Term 2028\" 82px wide, 5 lines",
+     "td \"Spring Term 2029\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 79px wide, 6 lines",
+     "td \"Spring Term 2028\" 79px wide, 6 lines",
+     "td \"Spring Term 2029\" 79px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 82px wide, 5 lines",
+     "td \"Spring Term 2028\" 82px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Card Statement\"",
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\"",
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Casting Decides: Ivy\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The Fall Term Begins\"",
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"Meeting Your Class\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"Work-Study Payday\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Work-Study Shift\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 117px wide, 22 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 102px wide, 22 lines",
+     "td \"Spring Term 2027\" 65px wide, 29 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 117px wide, 22 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 102px wide, 22 lines",
+     "td \"Spring Term 2027\" 65px wide, 29 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"2 of 47 Unready or not shown\" 118px wide, 21 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 101px wide, 21 lines",
+     "td \"Spring Term 2027\" 65px wide, 28 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 117px wide, 22 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 102px wide, 22 lines",
+     "td \"Spring Term 2027\" 65px wide, 29 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"8 of 47 Unready or not shown\" 120px wide, 15 lines",
+     "td.small \"You were at 100% of what was asked of you, and y\" 102px wide, 15 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"2 of 47 Unready or not shown\" 118px wide, 21 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 101px wide, 21 lines",
+     "td \"Spring Term 2027\" 65px wide, 28 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 School Terms And Award": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 112px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 112px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 112px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 School Classes": [
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 83px wide, 4 lines",
+     "td \"Fall And Spring\" 83px wide, 4 lines",
+     "td \"Fall And Spring\" 83px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 83px wide, 4 lines",
+     "td \"Fall And Spring\" 83px wide, 4 lines",
+     "td \"Fall And Spring\" 83px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 83px wide, 4 lines",
+     "td \"Fall And Spring\" 83px wide, 4 lines",
+     "td \"Fall And Spring\" 83px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 79px wide, 4 lines",
+     "td \"Fall And Spring\" 79px wide, 4 lines",
+     "button.link \"Professional Preparation And Audition Workshop\" 109px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 School Coursework": [
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 109px wide, 6 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 110px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 109px wide, 6 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 110px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 109px wide, 6 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 110px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 School Casting": [
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "1024x768 Papers Health Cover": [
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"October 11, 2027\" 104px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Card Statement\"",
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\"",
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Casting Decides: Ivy\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The Fall Term Begins\"",
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"Meeting Your Class\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"Work-Study Payday\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Work-Study Shift\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 117px wide, 25 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 95px wide, 25 lines",
+     "td \"Spring Term 2027\" 65px wide, 33 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 117px wide, 25 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 95px wide, 25 lines",
+     "td \"Spring Term 2027\" 65px wide, 33 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"2 of 47 Unready or not shown\" 117px wide, 24 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 94px wide, 24 lines",
+     "td \"Spring Term 2027\" 65px wide, 32 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 117px wide, 25 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 95px wide, 25 lines",
+     "td \"Spring Term 2027\" 65px wide, 33 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"8 of 47 Unready or not shown\" 119px wide, 16 lines",
+     "td.small \"You were at 100% of what was asked of you, and y\" 95px wide, 16 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"2 of 47 Unready or not shown\" 117px wide, 24 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 94px wide, 24 lines",
+     "td \"Spring Term 2027\" 65px wide, 32 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 School Terms And Award": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 108px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 108px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 108px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 Advance Menu": [
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 11:15 AM \u00b7 Saturday, August 4, 2029 Thi\" 5px past the window"
+    ],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 5
+   }
+  ],
+  "760x900 School Classes": [
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 79px wide, 4 lines",
+     "td \"Fall And Spring\" 79px wide, 4 lines",
+     "button.link \"Professional Preparation And Audition Workshop\" 107px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 School Coursework": [
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 109px wide, 6 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 103px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 109px wide, 6 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 103px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 109px wide, 6 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 103px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 School Casting": [
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 119px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "760x900 Papers Health Cover": [
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"October 11, 2027\" 103px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "667x375m Home": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Navigation Open": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Card Statement\"",
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\"",
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Casting Decides: Ivy\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"The Fall Term Begins\"",
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"Meeting Your Class\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Easter Sunday\"",
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"The New Play Lab\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Work-Study Shift\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "cut",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td.small \"4 of 47 Unready or not shown\" 115px wide, 58 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 58 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td.small \"4 of 47 Unready or not shown\" 115px wide, 58 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 58 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines",
+     "td.small \"2 of 47 Unready or not shown\" 115px wide, 54 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 54 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td.small \"4 of 47 Unready or not shown\" 115px wide, 58 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 58 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td.small \"8 of 47 Unready or not shown\" 115px wide, 38 lines",
+     "td.small \"You were at 100% of what was asked of you, and y\" 55px wide, 38 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td.small \"2 of 47 Unready or not shown\" 115px wide, 54 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 54 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m School Classes": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td \"Gregory Wallace\" 118px wide, 7 lines",
+     "td \"Fall And Spring\" 75px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td \"Gregory Wallace\" 118px wide, 7 lines",
+     "td \"Fall And Spring\" 75px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td \"Gregory Wallace\" 118px wide, 7 lines",
+     "td \"Fall And Spring\" 75px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td \"Fall And Spring\" 74px wide, 4 lines",
+     "td \"Fall And Spring\" 74px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m School Coursework": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "span.xs \"Taking the time each thought needs: the choices \" 61px wide, 8 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 87px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "span.xs \"Taking the time each thought needs: the choices \" 61px wide, 8 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 87px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "span.xs \"Taking the time each thought needs: the choices \" 61px wide, 8 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 87px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m School Casting": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "span.xs \"Taking the time each thought needs: the choices \" 69px wide, 8 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 72px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window",
+     "table.table \"STUDENT PRODUCTION PART LAST RUN TO YOU You The \" 78px past its card",
+     "thead \"STUDENT PRODUCTION PART LAST RUN TO YOU\" 78px past its card"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m School Shifts And Pay": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m School Terms And Award": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td \"Living-Expense Scholarship\" 98px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td \"Living-Expense Scholarship\" 98px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines",
+     "td \"Living-Expense Scholarship\" 98px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Career Overview": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Career Portfolio": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Career Representation": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Career Opportunities": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Career Work": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Money Accounts": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Money Cards": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Money Payments And Cash": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Money Borrowing": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Money Statements": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Papers Tax Returns": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Papers Health Cover": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines",
+     "td \"The Dentist, A Cleaning\" 115px wide, 4 lines",
+     "td \"August 22, 2029\" 78px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "td \"October 11, 2027\" 94px wide, 8 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Papers Unemployment": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Papers Passport And ID": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines",
+     "span.xs.dim \"You can\u2019t renew a driving license in the game. U\" 113px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines",
+     "span.xs.dim \"You can\u2019t renew a driving license in the game. U\" 113px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Papers Permission To Work": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Look After Yourself Menu": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Advance Menu": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 3:00 PM \u00b7 Saturday, September 1, 2029 T\" 56px past the window",
+     "button.menu-item \"One Hour 3:00 PM \u00b7 Saturday, September 1, 2029\" 51px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Saturday, September 1, 20\" 51px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 56
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 10:00 AM \u00b7 Sunday, September 2, 2029 Th\" 57px past the window",
+     "button.menu-item \"One Hour 10:00 AM \u00b7 Sunday, September 2, 2029\" 52px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Sunday, September 2, 2029\" 52px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 57
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 11:15 AM \u00b7 Saturday, August 4, 2029 Thi\" 63px past the window",
+     "button.menu-item \"One Hour 11:15 AM \u00b7 Saturday, August 4, 2029\" 58px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Saturday, August 4, 2029\" 58px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 63
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 6:00 PM \u00b7 Thursday, August 16, 2029 Thi\" 56px past the window",
+     "button.menu-item \"One Hour 6:00 PM \u00b7 Thursday, August 16, 2029\" 51px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Thursday, August 16, 2029\" 51px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 56
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 8:30 AM \u00b7 Thursday, August 27, 2026 Thi\" 57px past the window",
+     "button.menu-item \"One Hour 8:30 AM \u00b7 Thursday, August 27, 2026\" 52px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Thursday, August 27, 2026\" 52px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 57
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 3:25 PM \u00b7 Sunday, April 18, 2027 This E\" 56px past the window",
+     "button.menu-item \"One Hour 3:25 PM \u00b7 Sunday, April 18, 2027\" 51px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Sunday, April 18, 2027\" 51px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 56
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 8:30 AM \u00b7 Tuesday, September 1, 2026 Th\" 57px past the window",
+     "button.menu-item \"One Hour 8:30 AM \u00b7 Tuesday, September 1, 2026\" 52px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Tuesday, September 1, 202\" 52px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 57
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "div.menu \"One Hour 8:05 AM \u00b7 Thursday, March 1, 2029 This \" 57px past the window",
+     "button.menu-item \"One Hour 8:05 AM \u00b7 Thursday, March 1, 2029\" 52px past the window",
+     "button.menu-item \"This Evening 6:00 PM \u00b7 Thursday, March 1, 2029\" 52px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 57
+   }
+  ],
+  "667x375m How This Works": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 36px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 69px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 36
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 32px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 73px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 32
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 33px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 72px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 34
+   }
+  ],
+  "667x375m Sleep Dialog": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 80px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 79px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 47px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 75px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 48
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 80px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 79px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 80px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 79px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider",
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "button.btn.btn-ghost \"Save & Exit\" 43px past the window"
+    ],
+    "cut": [],
+    "squeezed": [
+     "button.btn.btn-sm \"Look After Yourself \u25be\" 79px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 43
+   }
+  ],
+  "844x390m Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "844x390m Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\"",
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Casting Decides: Ivy\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The Fall Term Begins\"",
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"Meeting Your Class\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"Work-Study Payday\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "844x390m School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 68px wide, 15 lines",
+     "td \"Spring Term 2028\" 68px wide, 15 lines",
+     "td \"Spring Term 2029\" 68px wide, 15 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 68px wide, 15 lines",
+     "td \"Spring Term 2028\" 68px wide, 15 lines",
+     "td \"Spring Term 2029\" 68px wide, 15 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 68px wide, 15 lines",
+     "td \"Spring Term 2028\" 68px wide, 15 lines",
+     "td \"Spring Term 2029\" 68px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 68px wide, 15 lines",
+     "td \"Spring Term 2028\" 68px wide, 15 lines",
+     "td \"Spring Term 2029\" 68px wide, 15 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 68px wide, 15 lines",
+     "td \"Spring Term 2028\" 68px wide, 15 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "844x390m School Classes": [
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 89px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 89px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 89px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "844x390m Papers Health Cover": [
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"October 11, 2027\" 112px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\"",
+     "span.cal-event \"Paper Moons: Shoot Day 2\"",
+     "span.cal-event \"Paper Moons: Shoot Day 3\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Card Statement\"",
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\"",
+     "span.cal-event \"Casting Answers: Hester Vane\"",
+     "span.cal-event \"Casting Decides: Ivy\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"The Fall Term Begins\"",
+     "span.cal-event \"Registration And Your Account\"",
+     "span.cal-event \"Meeting Your Class\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Easter Sunday\"",
+     "span.cal-event \"The New Play Lab\"",
+     "span.cal-event \"The New Play Lab\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Work-Study Shift\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\"",
+     "span.cal-event \"Drama 50: The Theatrical Event\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "cut"
+    ],
+    "bleed": [],
+    "cut": [
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Rehearsal With Lucia\"",
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\""
+    ],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 115px wide, 58 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 58 lines",
+     "td \"Spring Term 2027\" 64px wide, 78 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 115px wide, 58 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 58 lines",
+     "td \"Spring Term 2027\" 64px wide, 78 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"2 of 47 Unready or not shown\" 115px wide, 54 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 54 lines",
+     "td \"Spring Term 2027\" 64px wide, 73 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"4 of 47 Unready or not shown\" 115px wide, 58 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 58 lines",
+     "td \"Spring Term 2027\" 64px wide, 78 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"8 of 47 Unready or not shown\" 115px wide, 38 lines",
+     "td.small \"You were at 100% of what was asked of you, and y\" 55px wide, 38 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.small \"2 of 47 Unready or not shown\" 115px wide, 54 lines",
+     "td.small \"You came to 100% of the classes, calls and shift\" 55px wide, 54 lines",
+     "td \"Spring Term 2027\" 64px wide, 73 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m School Terms And Award": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 98px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 98px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 98px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m Papers Passport And ID": [
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs.dim \"You can\u2019t renew a driving license in the game. U\" 119px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs.dim \"You can\u2019t renew a driving license in the game. U\" 119px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m School Classes": [
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 76px wide, 7 lines",
+     "td \"Fall And Spring\" 76px wide, 4 lines",
+     "button.link \"Acting Intimacy And Combat For The Stage\" 87px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 76px wide, 7 lines",
+     "td \"Fall And Spring\" 76px wide, 4 lines",
+     "button.link \"Acting Intimacy And Combat For The Stage\" 87px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 76px wide, 7 lines",
+     "td \"Fall And Spring\" 76px wide, 4 lines",
+     "button.link \"Acting Intimacy And Combat For The Stage\" 87px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 74px wide, 4 lines",
+     "td \"Fall And Spring\" 74px wide, 4 lines",
+     "td \"Fall And Spring\" 74px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m School Coursework": [
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 69px wide, 8 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 90px wide, 6 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 70px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 69px wide, 8 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 90px wide, 6 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 70px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 69px wide, 8 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 90px wide, 6 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 70px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m School Casting": [
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 69px wide, 8 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 82px wide, 8 lines",
+     "span.xs \"Less shown than felt: the feeling held under the\" 70px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "bleed",
+     "squeezed"
+    ],
+    "bleed": [
+     "table.table \"STUDENT PRODUCTION PART LAST RUN TO YOU You The \" 69px past its card",
+     "thead \"STUDENT PRODUCTION PART LAST RUN TO YOU\" 69px past its card",
+     "tr \"STUDENT PRODUCTION PART LAST RUN TO YOU\" 69px past its card"
+    ],
+    "cut": [],
+    "squeezed": [
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "932x430m Papers Health Cover": [
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"October 11, 2027\" 95px wide, 8 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Home": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,072.86. Worth $85,073.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,062.86. Worth $85,063.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $78,492.60. Worth $491,657\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $86,018.86. Worth $131,684\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.xs \"You have no health cover. The 2028 return was du\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $258,958. Worth $2,867,654\" 55px wide, 8 lines",
+     "span.small.grow \"Year 1, good standing, 6th of 16 in the class. N\" 67px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $3,119.94. Worth $3,112.\" 55px wide, 7 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 15 lines",
+     "span.small.grow \"Cover: Yale Health. $7,337 of tax owed, with its\" 52px wide, 13 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $90,429.00. Worth $503,473\" 55px wide, 9 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $79,375.81. Worth $492,523\" 55px wide, 9 lines",
+     "span.small.grow \"Year 3, good standing, 1st of 16 in the class. N\" 67px wide, 10 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Navigation Open": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,072.86. Worth $85,073.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,062.86. Worth $85,063.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $78,492.60. Worth $491,657\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $86,018.86. Worth $131,684\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.xs \"You have no health cover. The 2028 return was du\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $258,958. Worth $2,867,654\" 55px wide, 8 lines",
+     "span.small.grow \"Year 1, good standing, 6th of 16 in the class. N\" 67px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $3,119.94. Worth $3,112.\" 55px wide, 7 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 15 lines",
+     "span.small.grow \"Cover: Yale Health. $7,337 of tax owed, with its\" 52px wide, 13 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $90,429.00. Worth $503,473\" 55px wide, 9 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $79,375.81. Worth $492,523\" 55px wide, 9 lines",
+     "span.small.grow \"Year 3, good standing, 1st of 16 in the class. N\" 67px wide, 10 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Player Profile": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td.xs \"Not held back today\" 68px wide, 5 lines",
+     "td.xs \"Believability, Connection\" 112px wide, 5 lines",
+     "td.xs \"Not held back today\" 68px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Calendar": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\" 28px wide, Infinity lines",
+     "span.cal-event \"Paper Moons: Shoot Day 2\" 28px wide, Infinity lines",
+     "span.cal-event \"Paper Moons: Shoot Day 3\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"Paper Moons: Shoot Day 1\" 28px wide, Infinity lines",
+     "span.cal-event \"Paper Moons: Shoot Day 2\" 28px wide, Infinity lines",
+     "span.cal-event \"Paper Moons: Shoot Day 3\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"Bill Due: The Dentist, A Cleaning\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"Audition: Ivy, Paper Moons\" 28px wide, Infinity lines",
+     "span.cal-event \"Casting Answers: Hester Vane\" 28px wide, Infinity lines",
+     "span.cal-event \"Casting Decides: Ivy\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"The Fall Term Begins\" 28px wide, Infinity lines",
+     "span.cal-event \"Registration And Your Account\" 28px wide, Infinity lines",
+     "span.cal-event \"Meeting Your Class\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"The New Play Lab\" 28px wide, Infinity lines",
+     "span.cal-event \"The New Play Lab\" 28px wide, Infinity lines",
+     "span.cal-event \"Work-Study Payday\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"Work-Study Shift\" 28px wide, Infinity lines",
+     "span.cal-event \"Drama 50: The Theatrical Event\" 28px wide, Infinity lines",
+     "span.cal-event \"Drama 50: The Theatrical Event\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.cal-event \"Rehearsal With Lucia\" 28px wide, Infinity lines",
+     "span.cal-event \"Rehearsal With Lucia\" 28px wide, Infinity lines",
+     "span.cal-event \"Much Ado About Nothing: The Run Ends\" 28px wide, Infinity lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m School Standing And Craft": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 71px wide, 9 lines",
+     "td \"Spring Term 2028\" 71px wide, 9 lines",
+     "td \"Spring Term 2029\" 71px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 71px wide, 9 lines",
+     "td \"Spring Term 2028\" 71px wide, 9 lines",
+     "td \"Spring Term 2029\" 71px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 72px wide, 9 lines",
+     "td \"Spring Term 2028\" 72px wide, 9 lines",
+     "td \"Spring Term 2029\" 72px wide, 7 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 71px wide, 9 lines",
+     "td \"Spring Term 2028\" 71px wide, 9 lines",
+     "td \"Spring Term 2029\" 71px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Spring Term 2027\" 72px wide, 9 lines",
+     "td \"Spring Term 2028\" 72px wide, 9 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m School Coursework": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small \"two characters (a quantum physicist and a beekee\" 53px wide, 8 lines",
+     "span.small \"five roles: Howie, Jason, Becca, Nat, Izzy (2m 3\" 53px wide, 7 lines",
+     "span.small \"4f, all playing age at least 70\" 48px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small \"two characters (a quantum physicist and a beekee\" 53px wide, 8 lines",
+     "span.small \"five roles: Howie, Jason, Becca, Nat, Izzy (2m 3\" 53px wide, 7 lines",
+     "span.small \"4f, all playing age at least 70\" 48px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small \"two characters (a quantum physicist and a beekee\" 53px wide, 8 lines",
+     "span.small \"five roles: Howie, Jason, Becca, Nat, Izzy (2m 3\" 53px wide, 7 lines",
+     "span.small \"4f, all playing age at least 70\" 48px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small \"two characters (a quantum physicist and a beekee\" 53px wide, 8 lines",
+     "span.small \"five roles: Howie, Jason, Becca, Nat, Izzy (2m 3\" 53px wide, 7 lines",
+     "span.small \"4f, all playing age at least 70\" 48px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small \"two characters (a quantum physicist and a beekee\" 53px wide, 8 lines",
+     "span.small \"five roles: Howie, Jason, Becca, Nat, Izzy (2m 3\" 53px wide, 7 lines",
+     "span.small \"4f, all playing age at least 70\" 48px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 120px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 102px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 120px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 102px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 107px wide, 5 lines",
+     "li \"Drama\u2019s Played Straight: played with complete ea\" 120px wide, 5 lines",
+     "span.xs \"Picking up cues and pressing on: the scene playe\" 102px wide, 6 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m School Terms And Award": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 114px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 114px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Living-Expense Scholarship\" 114px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Papers Passport And ID": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 190
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 191
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 130
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 190
+   },
+   {
+    "life": "long",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 174
+   },
+   {
+    "life": "older",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 174
+   },
+   {
+    "life": "new",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 174
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 130
+   }
+  ],
+  "390x844m Papers Permission To Work": [
+   {
+    "life": "booked",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 315
+   },
+   {
+    "life": "released",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 315
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "pageWider"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [],
+    "clipped": [],
+    "pageWider": 315
+   }
+  ],
+  "390x844m Look After Yourself Menu": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,072.86. Worth $85,073.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,062.86. Worth $85,063.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $78,492.60. Worth $491,657\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $86,018.86. Worth $131,684\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.xs \"You have no health cover. The 2028 return was du\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $258,958. Worth $2,867,654\" 55px wide, 8 lines",
+     "span.small.grow \"Year 1, good standing, 6th of 16 in the class. N\" 67px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $3,119.94. Worth $3,112.\" 55px wide, 7 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 15 lines",
+     "span.small.grow \"Cover: Yale Health. $7,337 of tax owed, with its\" 52px wide, 13 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $90,429.00. Worth $503,473\" 55px wide, 9 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $79,375.81. Worth $492,523\" 55px wide, 9 lines",
+     "span.small.grow \"Year 3, good standing, 1st of 16 in the class. N\" 67px wide, 10 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Advance Menu": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,072.86. Worth $85,073.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,062.86. Worth $85,063.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $78,492.60. Worth $491,657\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $86,018.86. Worth $131,684\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.xs \"You have no health cover. The 2028 return was du\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $258,958. Worth $2,867,654\" 55px wide, 8 lines",
+     "span.small.grow \"Year 1, good standing, 6th of 16 in the class. N\" 67px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $3,119.94. Worth $3,112.\" 55px wide, 7 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 15 lines",
+     "span.small.grow \"Cover: Yale Health. $7,337 of tax owed, with its\" 52px wide, 13 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $90,429.00. Worth $503,473\" 55px wide, 9 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $79,375.81. Worth $492,523\" 55px wide, 9 lines",
+     "span.small.grow \"Year 3, good standing, 1st of 16 in the class. N\" 67px wide, 10 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m How This Works": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,072.86. Worth $85,073.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,062.86. Worth $85,063.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $78,492.60. Worth $491,657\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $86,018.86. Worth $131,684\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.xs \"You have no health cover. The 2028 return was du\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $258,958. Worth $2,867,654\" 55px wide, 8 lines",
+     "span.small.grow \"Year 1, good standing, 6th of 16 in the class. N\" 67px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $3,119.94. Worth $3,112.\" 55px wide, 7 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 15 lines",
+     "span.small.grow \"Cover: Yale Health. $7,337 of tax owed, with its\" 52px wide, 13 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $90,429.00. Worth $503,473\" 55px wide, 9 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $79,375.81. Worth $492,523\" 55px wide, 9 lines",
+     "span.small.grow \"Year 3, good standing, 1st of 16 in the class. N\" 67px wide, 10 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Sleep Dialog": [
+   {
+    "life": "booked",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,072.86. Worth $85,073.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "released",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $85,062.86. Worth $85,063.\" 55px wide, 8 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.small.grow \"Cover: Marketplace Plan. The 2028 return was due\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "graduate",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $78,492.60. Worth $491,657\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "offer",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $86,018.86. Worth $131,684\" 55px wide, 9 lines",
+     "span.small.grow \"Graduated, 1st of 16 in the class.\" 67px wide, 4 lines",
+     "span.xs \"You have no health cover. The 2028 return was du\" 52px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $258,958. Worth $2,867,654\" 55px wide, 8 lines",
+     "span.small.grow \"Year 1, good standing, 6th of 16 in the class. N\" 67px wide, 14 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $3,119.94. Worth $3,112.\" 55px wide, 7 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 15 lines",
+     "span.small.grow \"Cover: Yale Health. $7,337 of tax owed, with its\" 52px wide, 13 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $90,429.00. Worth $503,473\" 55px wide, 9 lines",
+     "span.small.grow \"Year 1, good standing, 2nd of 16 in the class. N\" 67px wide, 11 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.small.grow \"Chase Total Checking: $79,375.81. Worth $492,523\" 55px wide, 9 lines",
+     "span.small.grow \"Year 3, good standing, 1st of 16 in the class. N\" 67px wide, 10 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m School Classes": [
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines",
+     "td \"Fall And Spring\" 82px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Fall And Spring\" 78px wide, 4 lines",
+     "td \"Fall And Spring\" 78px wide, 4 lines",
+     "td \"Fall And Spring\" 78px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m School Casting": [
+   {
+    "life": "long",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Yale Cabaret, Season 59\" 109px wide, 5 lines",
+     "td \"A Part In A Cabaret Show\" 72px wide, 5 lines",
+     "td \"Yale Cabaret, Season 59\" 109px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "span.xs \"Taking the time each thought needs: the choices \" 119px wide, 5 lines",
+     "td \"Carlotta Festival Of New Plays\" 109px wide, 4 lines",
+     "td \"A Leading Part In A New Play\" 91px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "new",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Yale Cabaret, Season 59\" 109px wide, 5 lines",
+     "td \"A Part In A Cabaret Show\" 72px wide, 5 lines",
+     "td \"Yale Cabaret, Season 59\" 109px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   },
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines",
+     "td \"Much Ado About Nothing\" 109px wide, 4 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Money Statements": [
+   {
+    "life": "older",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "button.link \"Work-study wages, 6 hours: David Geffen School o\" 114px wide, 5 lines",
+     "button.link \"Work-study wages, 6 hours: David Geffen School o\" 114px wide, 5 lines",
+     "button.link \"Work-study wages, 6 hours: David Geffen School o\" 114px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ],
+  "390x844m Papers Health Cover": [
+   {
+    "life": "developed",
+    "bad": [
+     "squeezed"
+    ],
+    "bleed": [],
+    "cut": [],
+    "squeezed": [
+     "td \"October 11, 2027\" 102px wide, 5 lines"
+    ],
+    "clipped": [],
+    "pageWider": 0
+   }
+  ]
+ },
+ "problems": [
+  "Calendar reached from Home (not on the rail)"
+ ]
+}
