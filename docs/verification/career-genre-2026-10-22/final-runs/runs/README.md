@@ -50,7 +50,8 @@ judge's, whose watched files neither brief touched, prefix `f24`, each in a clea
 Folded by `../verify.py`, `../advice/close.py` and `../../../integration-2026-10-16/criteria.py`: the 46 rows hold again
 on the commits they ran on, 633 of 658 before the gate's own figure. The gate on `859bacdb`, which holds the fold, in a
 clean clone, its exit read from its file: 0, 488 of 488 test files, 5,616 of 5,616 tests, every check (`gate.txt`; brief
-22's, on `576a0e88`, stood there until then and is in git). Folded, 634 of 658.
+22's, on `576a0e88`, stood there until then and is in git). Folded, 634 of 658; run again on `1ba6ac00`, which holds
+that: the same (`gate-receipt.txt`, brief 22's in git as gate.txt's is).
 
 ## Played Again On The Paydays Fix, 2026-10-22 And 23
 

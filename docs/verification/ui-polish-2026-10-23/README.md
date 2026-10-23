@@ -223,6 +223,8 @@ JPEG copies at quality 85 of the 2× PNGs the scripts wrote.
 In a clean clone of `859bacdb`, the commit holding the final runs' fold, its exit read from its file
 (`../career-genre-2026-10-22/final-runs/runs/gate.txt`): 0. 488 of 488 test files, 5,616 of 5,616 tests, none skipped,
 and all 22 checks, the completion matrix's last. Its row folded in, the matrix reads 634 of 658, as at brief 22's close.
+Run again on `1ba6ac00`, which holds that fold, the same way: exit 0, the same counts, the matrix holding 634
+(`../career-genre-2026-10-22/final-runs/runs/gate-receipt.txt`).
 
 ## Brief 22's Final Runs
 

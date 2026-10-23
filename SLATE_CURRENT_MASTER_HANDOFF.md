@@ -46,7 +46,8 @@ without my instruction." No pull request is open for it. There is no stash and o
   (Played Again On Brief 24's Commits).
 - **The gate:** in a clean clone of `859bacdb`, which holds the fold, its exit read from its file: 0. 488 of 488 test
   files, 5,616 of 5,616 tests, none skipped, and all 22 checks (`.../final-runs/runs/gate.txt`; brief 22's, on
-  `576a0e88`, stood there until then and is in git). Its row folded in: 634 of 658.
+  `576a0e88`, stood there until then and is in git). Its row folded in: 634 of 658. Run again on `1ba6ac00`, which holds
+  that: exit 0, the same counts, the matrix holding 634 (`gate-receipt.txt`).
 - **Not merged, not deployed.** Base44 deployment waits on the gate and the owner's word (rule 14). The schema stays 94.
 
 # Earlier: Brief 23, The Desktop And Landscape-Only Phone Interface, Not Merged, 2026-10-23
