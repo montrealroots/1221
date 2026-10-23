@@ -331,8 +331,12 @@ The pages captured on the built app after #54's merge (2026-10-22) showed two de
   5,598 tests, none skipped; all 22 checks, the matrix at 588 (`final-runs/runs/gate-after-merge.txt`). Brief 22's own
   gate record (`gate.txt`, `gate-receipt.txt`) stays as it was; only this figure was written after it.
 - **The matrix:** the fix changed `src/engine`, so the 46 rows measured on the engine's or the app's whole source read as
-  measured before what they read last changed until final runs measure them again: 588 of 658 until then. INT-gate is
-  one of them: its figure is brief 22's gate, and this one isn't folded in place of it.
+  measured before what they read last changed, and it said 588 of 658 until the final runs measured them again.
+- **The final runs again** (the owner's "Run the final runs then merge everything.", `final-runs/runs/README.md`, Played
+  Again On The Paydays Fix): every lane but the judge's, whose rows read nothing the fix touched, on `933f1ae6`, and the
+  two advice lanes again on `54b4e96f` once `tools/advice.ts` counted a tree clean but for the runs' own outputs. Against
+  brief 22's first runs: every figure the same; the one number that moved, b20-4's save 45 bytes longer at one
+  transition, is the fix. The 46 rows moved to the commits they ran on, the gate's own last.
 
 ## Not Done, And What Limits This
 

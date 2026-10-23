@@ -21,7 +21,8 @@ lane() {
 export -f lane; export S COMMIT P
 LANES="${2:-JR1 JR2 JR3 M1 M2 M3 M4 BJ1 BJ2 BJ3 B C D J A ADVF ADVR UI APP}"
 printf '%s\n' $LANES | xargs -P 4 -I{} bash -c 'lane {}'
-lane JRC
-# The judge's merge only where its parts ran (a queue of the runs lanes alone has none).
+# The journeys' compare only where they ran, and the judge's merge only where its parts ran: until 2026-10-23 JRC ran after
+# every queue, and after the advice lanes alone (f22e) it had no journeys of its own, and was set aside.
+case " $LANES " in *" JR1 "*) lane JRC ;; esac
 case " $LANES " in *" M1 "*) lane MF ;; esac
 echo "QUEUE DONE $(date -u +%T)"

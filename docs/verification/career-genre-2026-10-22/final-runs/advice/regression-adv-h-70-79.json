@@ -1,6 +1,6 @@
 {
- "commit": "933f1ae6043ff02aa2c0754b772caa729226f8f6",
- "clean": false,
+ "commit": "54b4e96fce30c325b1826d595d94e5b5d60c9043",
+ "clean": true,
  "command": "npx vite-node tools/advice.ts -- --cases adv-h-70..79 --held-out --out docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-70-79.json",
  "roles": {
   "regression": "regression: brief 10’s held-out set, run in brief 10 and brief 11; it informed brief 12’s clarifications, so it isn’t unseen validation from then"

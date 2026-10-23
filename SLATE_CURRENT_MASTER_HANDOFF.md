@@ -8,11 +8,13 @@ without my instruction."); it went to `main` at "lets just merge everything" (20
 `9aed9ed4`, and this record of the merge followed it there. No other pull request was open. Nothing is deployed. There
 is no stash and one worktree.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at #54's merge. The follow-up below changed `src/engine`, so the 46 rows brief 22's final runs measured on the
-  engine's or the app's whole source read as measured before what they read last changed, and this says 588 until final
-  runs measure them again, as it said 588 after brief 20's D2 until brief 20's final runs.)
+  engine's or the app's whole source read as measured before what they read last changed, and this said 588, as after
+  brief 20's D2, until the final runs measured them again on the fix: the runs lanes on `933f1ae6`, the advice lanes on
+  `54b4e96f` (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`, Played Again On The Paydays Fix),
+  every figure the same as brief 22's first runs. INT-gate waits on the gate run on the commit that holds this fold.)
 
   (632 at brief 21's close. Brief 22's final runs measured every row again on its tested commit
   (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`):
@@ -74,7 +76,10 @@ is no stash and one worktree.
   - **"The producers answers soon."** on Opportunities' In Progress: its verb agrees now.
   - **The gate** on `5ccf054e` in a clean clone, its exit read from its file: 0; 486 of 486 test files, 5,598 of 5,598
     tests, all 22 checks (`docs/verification/career-genre-2026-10-22/final-runs/runs/gate-after-merge.txt`).
-  - Merging it waits on the owner's word; measuring the 46 rows again waits on final runs.
+  - **The final runs again,** at the owner's "Run the final runs then merge everything." (2026-10-22): every lane but
+    the judge's, whose rows read nothing the fix touched. The one number that moved from the first runs, b20-4's save 45
+    bytes longer at one transition, is the fix. `tools/advice.ts` counts a tree clean but for the runs' own outputs now,
+    so a lane played again over its first run's committed outputs reads clean where the code is.
 - **For the owner:** the readings in the receipt's For The Owner:
   - auditions while out of status;
   - enjoyment read from tags;

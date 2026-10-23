@@ -263,7 +263,7 @@
   "files": 31,
   "same": 0,
   "explained": {
-   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 92
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 61
   },
   "unexplained": {
    "f2a-adv-0-9.json": {
